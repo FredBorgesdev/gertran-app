@@ -1,0 +1,102 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Motoristas</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="driver.id">
+        Editar Motorista ({{driver.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!driver.id">
+        Adicionar Motorista
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados principais">
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Nome</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="brandName" type="text" value="{{ driver.name }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CPF</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="companyName" type="text" value="{{ driver.cpf }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Celular</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" nz-input value="{{ driver.cellphone }}" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-divider></nz-divider>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CNH</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" value="{{ driver.cnh }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CNH Categoria</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" nz-input value="{{ driver.cnhCategory }}" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CNH Validade</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" nz-input value="{{ driver.cnhExpiration }}" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <button type="button" (click)="save()" nz-button nzType="primary">
+                <i nz-icon nzType="save"></i>Salvar Motorista
+              </button>
+              <button type="button" (click)="listDrivers()" nz-button>
+                <i nz-icon nzType="unordered-list"></i>Listar Motoristas
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Foto do Motorista">
+        <div class="row" *ngIf="driver.profilePhoto">
+          <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate">
+            <nz-card-meta nzTitle="Foto atual" nzDescription=""></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <img alt="example" src="{{ driver.profilePhoto }}" />
+          </ng-template>
+
+        <nz-divider></nz-divider>
+
+        <nz-upload
+          nzType="drag"
+          [nzMultiple]="false"
+          nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        >
+          <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+          </p>
+          <p class="ant-upload-text">Clique aqui ou arraste o arquivo com a foto do motorista</p>
+          <p class="ant-upload-hint">
+            Permitido apenas arquivos de imagem. Somente arquivos de até 5MB. Apenas um arquivo.
+          </p>
+        </nz-upload>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

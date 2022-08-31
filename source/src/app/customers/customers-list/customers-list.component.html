@@ -1,0 +1,90 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Clientes
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <div class="row m-b-30">
+      <div class="col-lg-8">
+        <div class="d-md-flex">
+          <div class="m-b-10 m-r-20">
+            <nz-input-group [nzPrefix]="prefixTemplate">
+              <input type="text" nz-input placeholder="Buscar Cliente" [(ngModel)]="searchInput" (ngModelChange)="search()">
+            </nz-input-group>
+            <ng-template #prefixTemplate>
+              <i nz-icon nzType="search" class="opacity-05"></i>
+            </ng-template>
+          </div>
+          <div class="m-b-10 m-r-20 d-flex align-items-center">
+            <nz-select style="min-width: 220px;" class="w-100" nzPlaceHolder="Status">
+              <nz-option nzLabel="Todos" nzValue="all"></nz-option>
+              <nz-option nzLabel="Ativos" nzValue="0"></nz-option>
+              <nz-option nzLabel="Bloqueados" nzValue="1"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 text-right">
+        <button
+          (click)="create()"
+          nz-button
+          nzType="primary"
+        >
+          <i nz-icon nzType="plus" theme="outline"></i>
+          <span>Adicionar Cliente</span>
+        </button>
+      </div>
+    </div>
+    <nz-table #customersListTable [nzData]="displayData" >
+      <thead>
+      <tr>
+        <th *ngFor="let column of customerColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of customersListTable.data;  let i=index">
+        <td>#{{item.id}}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <h6 class="m-l-10 m-b-0">{{item.brandName}}</h6>
+          </div>
+        </td>
+        <td>{{item.companyName}}</td>
+        <td>{{item.cnpj}}</td>
+        <td>{{item.contactName}}</td>
+        <td>{{item.contactEmail}}</td>
+        <td class="text-md-center">
+          <nz-badge *ngIf="!item.blocked" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="item.blocked" nzStatus="error"></nz-badge>
+        </td>
+        <td class="text-md-center">
+          <a
+            (click)="edit(item)"
+            class="m-r-5"
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Edit"
+          >
+            <i nz-icon nzType="edit" theme="outline"></i>
+          </a>
+          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Delete">
+            <i nz-icon nzType="delete" theme="outline"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+</nz-spin>

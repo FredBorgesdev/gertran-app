@@ -1,0 +1,1 @@
+The docs/ directory contains source files and build scripts for generating project documentation.

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12 p-150" *ngIf="isLoading">
+    <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+    </nz-spin>
+  </div>
+  <div class="col-md-12 col-lg-6" *ngIf="!isLoading">
+    <nz-card>
+      <div class="d-flex justify-content-between align-items-center">
+        <h5>Eventos nos últimos 7 dias</h5>
+      </div>
+      <div class="m-t-10" style="height: 450px">
+        <canvas ngChartjs
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [height]="'100%;'">
+        </canvas>
+      </div>
+    </nz-card>
+  </div>
+  <div class="col-md-12 col-lg-6" *ngIf="!isLoading">
+    <nz-card>
+      <div class="d-flex justify-content-between align-items-center">
+        <h5>Eventos nos últimos 30 dias</h5>
+      </div>
+      <div class="m-t-10 text-center" style="height: 450px">
+        <canvas ngChartjs
+          [data]="polarAreaChartData"
+          [labels]="polarAreaChartLabels"
+          [legend]="polarAreaLegend"
+          [options]="polarAreaChartOptions"
+          [colors]="polarAreaChartColors"
+          [chartType]="polarAreaChartType"
+          [height]="'100%;'">
+        </canvas>
+      </div>
+    </nz-card>
+  </div>
+</div>

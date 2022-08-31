@@ -1,0 +1,1 @@
+The deploy/ directory contains instructions, scripts, and other resources used to deploy the project.

@@ -1,0 +1,92 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="user"></i><span>Usuários</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="user.id">
+        Editar Usuário ({{user.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!user.id">
+        Adicionar Usuário
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados Principais">
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Nome</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="brandName" type="text" value="{{ user.name }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CPF</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="companyName" type="text" value="{{ user.cpf }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">E-mail</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" value="{{ user.email }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-divider></nz-divider>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Celular</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" nz-input value="{{ user.cellphone }}" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <button type="button" (click)="save()" nz-button nzType="primary">
+                <i nz-icon nzType="save"></i>Salvar Usuário
+              </button>
+              <button type="button" (click)="listUsers()" nz-button>
+                <i nz-icon nzType="unordered-list"></i>Listar Usuários
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Permissões de Acesso">
+        <form nz-form nzLayout="vertical">
+          <nz-transfer
+            [nzDataSource]="list"
+            [nzShowSelectAll]="true"
+            [nzRenderList]="[leftRenderList, null]"
+            (nzChange)="change($event)"
+          >
+            <ng-template
+              #leftRenderList
+              let-items
+              let-onItemSelectAll="onItemSelectAll"
+              let-onItemSelect="onItemSelect"
+            >
+              <nz-transfer
+                [nzDataSource]="list"
+                [nzDisabled]="false"
+                [nzTitles]="['Permissões', 'Concedidas']"
+                (nzSelectChange)="select($event)"
+                [nzSelectedKeys]="['0', '1']"
+                (nzChange)="change($event)"
+              >
+              </nz-transfer>
+            </ng-template>
+          </nz-transfer>
+        </form>
+      </nz-tab>
+
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

@@ -1,0 +1,1 @@
+In the development environment, the logs/ directory may be created in project root. It should be excluded from source code and deployments.

@@ -1,0 +1,1 @@
+The provision/ directory contains instructions and (possibly) scripts that may be used to provision deployment resources for the project.

@@ -1,0 +1,86 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Cavalos</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="truck.id">
+        Editar Cavalo ({{truck.brand}} - {{truck.model}} [{{ truck.plate }}])
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!truck.id">
+        Adicionar Cavalo
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+        <form nz-form nzLayout="vertical">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Placa</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" nz-input value="{{ truck.plate }}" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Marca</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="brandName" type="text" value="{{ truck.brand }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Modelo</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="companyName" type="text" value="{{ truck.model }}" nz-input />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-divider></nz-divider>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Sistema de rastreamento</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <nz-select
+                id="eventType"
+                nzPlaceHolder="Selecione o sistema de rastreamento"
+              >
+                <nz-option nzValue="jabursat" nzLabel="Jabursat">Jabursat</nz-option>
+                <nz-option nzValue="controlloc" nzLabel="Controlloc">Controlloc</nz-option>
+                <nz-option nzValue="Omnilink" nzLabel="Omnilink">Omnilink</nz-option>
+                <nz-option nzValue="sistema-x" nzLabel="Sistema X">Sistema X</nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Modelo</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <nz-select
+                id="eventType"
+                nzPlaceHolder="Selecione o modelo"
+              >
+                <nz-option nzValue="modelo-1" nzLabel="Modelo 1">Modelo 1</nz-option>
+                <nz-option nzValue="modelo-2" nzLabel="Modelo 2">Modelo 2</nz-option>
+                <nz-option nzValue="modelo-3" nzLabel="Modelo 3">Modelo 3</nz-option>
+                <nz-option nzValue="modelo-4" nzLabel="Modelo 4">Modelo 4</nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Serial Number</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+              <input id="cnpj" type="text" nz-input value="{{ truck.trackingSerialNumber }}" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <button type="button" (click)="save()" nz-button nzType="primary">
+                <i nz-icon nzType="save"></i>Salvar Cavalo
+              </button>
+              <button type="button" (click)="listTrucks()" nz-button>
+                <i nz-icon nzType="unordered-list"></i>Listar Cavalos
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+  </nz-card>
+</nz-spin>

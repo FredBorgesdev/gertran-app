@@ -1,0 +1,1 @@
+The assets/ directory contains the source files for any static files included in the project.
