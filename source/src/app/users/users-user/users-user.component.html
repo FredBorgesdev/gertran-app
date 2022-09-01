@@ -1,0 +1,38 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="user"></i><span>Usuários</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="user?.id">
+        Editar Usuário ({{user?.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!user?.id">
+        Adicionar Usuário
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados Principais">
+        <app-users-form
+          [user]="user"
+          (onSave)="onSave($event)"
+          *ngIf="user"
+        ></app-users-form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Permissões de Acesso">
+        <app-users-permissions
+          [user]="user"
+          (onSave)="onSave($event)"
+          *ngIf="user"
+        ></app-users-permissions>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

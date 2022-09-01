@@ -1,0 +1,25 @@
+<form nz-form nzLayout="vertical">
+  <nz-transfer
+    [nzDataSource]="list"
+    [nzShowSelectAll]="true"
+    [nzRenderList]="[leftRenderList, null]"
+    (nzChange)="change($event)"
+  >
+    <ng-template
+      #leftRenderList
+      let-items
+      let-onItemSelectAll="onItemSelectAll"
+      let-onItemSelect="onItemSelect"
+    >
+      <nz-transfer
+        [nzDataSource]="list"
+        [nzDisabled]="false"
+        [nzTitles]="['Permissões', 'Concedidas']"
+        (nzSelectChange)="select($event)"
+        [nzSelectedKeys]="['0', '1']"
+        (nzChange)="change($event)"
+      >
+      </nz-transfer>
+    </ng-template>
+  </nz-transfer>
+</form>

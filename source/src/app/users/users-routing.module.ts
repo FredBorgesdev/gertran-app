@@ -4,8 +4,8 @@ import {
   Routes
 } from '@angular/router'
 
-import { UsersFormComponent } from './users-form/users-form.component'
 import { UsersListComponent } from './users-list/users-list.component'
+import { UsersUserComponent } from './users-user/users-user.component'
 
 const routes: Routes = [
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'user-create',
-    component: UsersFormComponent,
+    component: UsersUserComponent,
     data: {
       title: 'Adicionar Usuário ',
       headerDisplay: 'none'
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'user-edit/:id',
-    component: UsersFormComponent,
+    component: UsersUserComponent,
     data: {
       title: 'Editar Usuário ',
       headerDisplay: 'none'
