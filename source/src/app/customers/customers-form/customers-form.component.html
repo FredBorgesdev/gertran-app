@@ -96,117 +96,7 @@
       </nz-tab>
 
       <nz-tab nzTitle="Telefones" [nzDisabled]="!customer.id">
-        <div class="row m-b-30">
-          <div class="col-lg-12 text-right">
-            <button
-              (click)="contactsCreate(newContactContent)"
-              nz-button
-              nzType="primary"
-            >
-              <i nz-icon nzType="plus" theme="outline"></i>
-              <span>Adicionar Contato</span>
-            </button>
-          </div>
-        </div>
-        <nz-table #contactsTable [nzData]="contactsDisplayData" >
-          <thead>
-          <tr>
-            <th *ngFor="let column of contactsOrderColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let item of contactsTable.data;  let i=index">
-            <td>#{{item.id}}</td>
-            <td>
-              <div class="d-flex align-items-center">
-                <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
-              </div>
-            </td>
-            <td>{{item.email}}</td>
-            <td>{{item.businessPhone}}</td>
-            <td>{{item.cellphone}}</td>
-            <td class="text-md-center">
-              <nz-badge *ngIf="item.main" nzStatus="success"></nz-badge>
-              <nz-badge *ngIf="!item.main" nzStatus="error"></nz-badge>
-            </td>
-            <td class="text-md-center">
-              <a
-                *ngIf="!item.main"
-                (click)="contactsEdit(item)"
-                class="m-r-5"
-                nz-button
-                nzType="default"
-                nzShape="circle"
-                nz-tooltip
-                nzTooltipTitle="Tornar contato principal"
-              >
-                <i
-                  nz-icon
-                  nzType="star"
-                  theme="outline"
-                ></i>
-              </a>
-              <a
-                (click)="contactsEdit(item)"
-                class="m-r-5"
-                nz-button
-                nzType="default"
-                nzShape="circle"
-                nz-tooltip
-                nzTooltipTitle="Editar"
-              >
-                <i nz-icon nzType="edit" theme="outline"></i>
-              </a><a
-              (click)="contactsEdit(item)"
-              nz-button
-              nzType="default"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Excluir"
-            >
-              <i nz-icon nzType="delete" theme="outline"></i>
-            </a>
-            </td>
-          </tr>
-          </tbody>
-        </nz-table>
-
-        <ng-template #newContactContent>
-          <form nz-form nzLayout="vertical">
-            <nz-form-item>
-              <nz-form-label>Nome do contato</nz-form-label>
-              <nz-form-control >
-                <input type="text" nz-input placeholder="Informe o nome do contato">
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item>
-              <nz-form-label>Email</nz-form-label>
-              <nz-form-control >
-                <input type="text" nz-input placeholder="">
-              </nz-form-control>
-            </nz-form-item>
-            <div class="row">
-              <div class="col-md-6">
-                <nz-form-item>
-                  <nz-form-label>Telefone comercial</nz-form-label>
-                  <nz-form-control >
-                    <nz-form-control >
-                      <input type="text" nz-input placeholder="">
-                    </nz-form-control>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-              <div class="col-md-6">
-                <nz-form-item>
-                  <nz-form-label>Celular</nz-form-label>
-                  <nz-form-control>
-                    <input type="text" nz-input placeholder="">
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-          </form>
-        </ng-template>
+        <app-contacts-tab [customerId]="customer.id"></app-contacts-tab>
       </nz-tab>
 
       <nz-tab nzTitle="Filiais" [nzDisabled]="!customer.id">
@@ -348,14 +238,6 @@
           </form>
         </ng-template>
       </nz-tab>
-
-<!--      <nz-tab nzTitle="Regras Operacionais">-->
-<!--        Regras Operacionais-->
-<!--      </nz-tab>-->
-
-<!--      <nz-tab nzTitle="Permissões">-->
-<!--        Permissões-->
-<!--      </nz-tab>-->
     </nz-tabset>
   </nz-card>
 </nz-spin>

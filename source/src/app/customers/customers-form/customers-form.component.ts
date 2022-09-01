@@ -11,15 +11,6 @@ import { NzMessageService } from 'ng-zorro-antd/message'
 import { NzModalService } from 'ng-zorro-antd/modal'
 import { TableService } from '../../shared/services/table.service'
 
-interface ContactDataItem {
-  id: number
-  name: string
-  email: string
-  businessPhone: string
-  cellphone: string
-  main: boolean
-}
-
 interface BranchOfficeDataItem {
   id: number
   companyName: string
@@ -88,58 +79,6 @@ export class CustomersFormComponent implements OnInit {
   ]
   customer = null
 
-  contactsDisplayData = []
-
-  contactsOrderColumn = [
-    {
-      title: 'ID',
-      compare: (a: ContactDataItem, b: ContactDataItem) => a.id - b.id,
-    },
-    {
-      title: 'Nome do contato',
-      compare: (a: ContactDataItem, b: ContactDataItem) => a.name.localeCompare(b.name)
-    },
-    {
-      title: 'Email'
-    },
-    {
-      title: 'Telefone comercial'
-    },
-    {
-      title: 'Telefone celular'
-    },
-    {
-      title: 'Principal'
-    }
-  ]
-
-  contactsOrdersList: ContactDataItem[] = [
-    {
-      id: 1,
-      name: 'Sérgio',
-      email: 'sergio@gertran.com.br',
-      businessPhone: '(31) 3333-3333',
-      cellphone: '(31) 99999-9999',
-      main: true
-    },
-    {
-      id: 1,
-      name: 'Fábio Arruda',
-      email: 'fabio@gertran.com.br',
-      businessPhone: '(31) 3333-3333',
-      cellphone: '(31) 99999-9999',
-      main: false
-    },
-    {
-      id: 1,
-      name: 'Rodrigo Zayit',
-      email: 'rodrigo@zayit.com.br',
-      businessPhone: '(31) 3333-3333',
-      cellphone: '(31) 99999-9999',
-      main: false
-    }
-  ]
-
   branchOfficesDisplayData = []
 
   branchOfficesOrderColumn = [
@@ -206,7 +145,6 @@ export class CustomersFormComponent implements OnInit {
     setTimeout(() => {
       this.route.snapshot.paramMap.has('id') ? this.loadCustomer() : this.createNewCustomer()
       this.isLoading = false
-      this.contactsDisplayData = this.contactsOrdersList
       this.branchOfficesDisplayData = this.branchOfficesOrdersList
     }, 333)
   }
@@ -242,32 +180,6 @@ export class CustomersFormComponent implements OnInit {
     this.router.navigate(['/customers/customers-list']);
   }
 
-  contactsCreate(newContactContent: TemplateRef<{}>) {
-    const modal = this.modalService.create({
-      nzTitle: 'Novo contato',
-      nzContent: newContactContent,
-      nzWidth: 600,
-      nzFooter: [
-        {
-          label: 'Cancelar',
-          onClick: () => modal.destroy()
-        },
-        {
-          label: 'Salvar',
-          type: 'primary',
-          onClick: () => {
-            this.contactsOrdersList.push(this.contactsDisplayData[0])
-            modal.destroy()
-          }
-        }
-      ]
-    })
-  }
-
-  contactsEdit(item: ContactDataItem) {
-    console.log('edit')
-  }
-
   branchOfficesCreate(newBranchOfficeContent: TemplateRef<{}>) {
     const modal = this.modalService.create({
       nzTitle: 'Nova filial',
@@ -293,5 +205,4 @@ export class CustomersFormComponent implements OnInit {
   branchOfficesEdit(item: BranchOfficeDataItem) {
     console.log('edit')
   }
-
 }

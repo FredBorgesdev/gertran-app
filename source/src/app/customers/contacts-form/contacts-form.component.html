@@ -1,0 +1,42 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Novo contato"
+  nzWidth="600px"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label>Nome do contato</nz-form-label>
+        <nz-form-control>
+          <input type="text" nz-input placeholder="Informe o nome do contato" formControlName="name">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Email</nz-form-label>
+        <nz-form-control>
+          <input type="text" nz-input placeholder="" formControlName="email">
+        </nz-form-control>
+      </nz-form-item>
+      <div class="row">
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label>Telefone comercial</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="" formControlName="businessPhone">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-6">
+          <nz-form-item>
+            <nz-form-label>Celular</nz-form-label>
+            <nz-form-control>
+              <input type="text" nz-input placeholder="" formControlName="cellphone">
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>
