@@ -8,7 +8,8 @@ import { ContactsFormComponent } from './contacts-form/contacts-form.component';
 import { ContactsTabComponent } from './contacts-tab/contacts-tab.component';
 import { BranchOfficeTableComponent } from './branch-office-table/branch-office-table.component';
 import { BranchOfficeFormComponent } from './branch-office-form/branch-office-form.component';
-import { BranchOfficeTabComponent } from './branch-office-tab/branch-office-tab.component'
+import { BranchOfficeTabComponent } from './branch-office-tab/branch-office-tab.component';
+import { CustomersCustomerComponent } from './customers-customer/customers-customer.component'
 
 const antdModule = []
 
@@ -22,6 +23,7 @@ const antdModule = []
     BranchOfficeTableComponent,
     BranchOfficeFormComponent,
     BranchOfficeTabComponent,
+    CustomersCustomerComponent,
   ],
   imports: [
     SharedModule,

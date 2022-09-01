@@ -1,107 +1,73 @@
-<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
-
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="star"></i><span>Clientes</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="customer?.id">
-        Editar Cliente ({{customer.companyName}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!customer?.id">
-        Adicionar Cliente
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <nz-tabset>
-      <nz-tab nzTitle="Dados da Matriz">
-        <form nz-form nzLayout="vertical">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Nome Fantasia</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="brandName" type="text" value="{{ customer?.brandName }}" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Razão Social</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="companyName" type="text" value="{{ customer?.companyName }}" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CNPJ</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" value="{{ customer?.cnpj }}" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-divider></nz-divider>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CEP</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Logradouro</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Número</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzFor="note">Complemento</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Bairro</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Cidade</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Estado</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-              <input id="cnpj" type="text" nz-input />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-control [nzOffset]="7" [nzSpan]="12">
-              <button type="button" (click)="save()" nz-button nzType="primary">
-                <i nz-icon nzType="save"></i>Salvar Cliente
-              </button>
-              <button type="button" (click)="listCustomers()" nz-button>
-                <i nz-icon nzType="unordered-list"></i>Listar Clientes
-              </button>
-            </nz-form-control>
-          </nz-form-item>
-        </form>
-      </nz-tab>
-
-      <nz-tab nzTitle="Telefones" [nzDisabled]="!customer?.id">
-        <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab>
-      </nz-tab>
-
-      <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
-        <app-branch-office-tab [customerId]="customer?.id"></app-branch-office-tab>
-      </nz-tab>
-    </nz-tabset>
-  </nz-card>
-</nz-spin>
+<form nz-form nzLayout="vertical" [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Nome Fantasia</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="brandName" type="text" nz-input formControlName="brandName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Razão Social</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="companyName" type="text" value="{{ customer?.companyName }}" nz-input formControlName="companyName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CNPJ</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" value="{{ customer?.cnpj }}" nz-input formControlName="cnpj" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-divider></nz-divider>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CEP</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="cep" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Logradouro</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="address" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Número</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="number" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="note">Complemento</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="complement" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Bairro</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="neighborhood" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Cidade</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="city" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Estado</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="cnpj" type="text" nz-input formControlName="state" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button type="button" (click)="save()" nz-button nzType="primary">
+        <i nz-icon nzType="save"></i>Salvar Cliente
+      </button>
+      <button type="button" (click)="listCustomers()" nz-button>
+        <i nz-icon nzType="unordered-list"></i>Listar Clientes
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

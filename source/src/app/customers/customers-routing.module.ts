@@ -4,8 +4,8 @@ import {
   Routes
 } from '@angular/router'
 
-import { CustomersFormComponent } from './customers-form/customers-form.component'
 import { CustomersListComponent } from './customers-list/customers-list.component'
+import { CustomersCustomerComponent } from './customers-customer/customers-customer.component'
 
 const routes: Routes = [
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'customer-create',
-    component: CustomersFormComponent,
+    component: CustomersCustomerComponent,
     data: {
       title: 'Adicionar Cliente ',
       headerDisplay: 'none'
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'customer-edit/:id',
-    component: CustomersFormComponent,
+    component: CustomersCustomerComponent,
     data: {
       title: 'Editar Cliente ',
       headerDisplay: 'none'

@@ -1,12 +1,18 @@
 import {
   Component,
+  Input,
   OnInit,
+  Output,
+  EventEmitter,
+  AfterViewChecked
 } from '@angular/core'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import {
   ActivatedRoute,
   Router
 } from '@angular/router'
 import { NzMessageService } from 'ng-zorro-antd/message'
+import { Customer } from '../customers-customer/customers-customer.component'
 
 @Component({
   selector: 'app-customers-form',
@@ -15,96 +21,33 @@ import { NzMessageService } from 'ng-zorro-antd/message'
 })
 export class CustomersFormComponent implements OnInit {
 
-  isLoading = false
+  @Input() customer: Customer = null
+  @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>()
 
-  customersList = [
-    {
-      id: 1,
-      brandName: 'Gertran',
-      companyName: 'Gertran Transportes Ltda',
-      cnpj: '99.999.999/9999-99',
-      contactName: 'Sergio',
-      contactEmail: 'gertran@gertran.com.br',
-      blocked: false
-    },
-    {
-      id: 999,
-      brandName: 'Zayit Transportes',
-      companyName: 'Zayit Soluções em Transportes Ltda',
-      cnpj: '10.326.985/0001-01',
-      contactName: 'Rodrigo Zayit',
-      contactEmail: 'rodrigo@zayit.com.br',
-      blocked: false
-    },
-    {
-      id: 25,
-      brandName: 'Empresa de Transporte',
-      companyName: 'Empresa de Transportes Ltda',
-      cnpj: '20.326.985/0001-01',
-      contactName: 'John Doe',
-      contactEmail: 'john@doe.com',
-      blocked: true
-    },
-    {
-      id: 325,
-      brandName: '3M Transportadora',
-      companyName: '3 Marias Transportadora de Cargas LTDA',
-      cnpj: '30.085.036/0001-86',
-      contactName: 'Maria',
-      contactEmail: 'maria@3marias.com.br',
-      blocked: false
-    },
-    {
-      id: 187,
-      brandName: '4 Irmãos Transportes',
-      companyName: '4 Irmãos Transportes Ltda',
-      cnpj: '38.471.340/0001-73',
-      contactName: 'Ayslan Sergio',
-      contactEmail: 'ayslansergio@icloud.com',
-      blocked: true
-    },
-  ]
-  customer = null
+  validateForm: FormGroup
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private message: NzMessageService,
+    private formBuilder: FormBuilder,
   ) { }
 
-  ngOnInit(): void {
-    this.isLoading = true
-    setTimeout(() => {
-      this.route.snapshot.paramMap.has('id') ? this.loadCustomer() : this.createNewCustomer()
-      this.isLoading = false
-    }, 333)
-  }
-
-  loadCustomer() {
-    this.customer = this.customersList.find(c => c.id == +this.route.snapshot.paramMap.get('id'))
-  }
-
-  createNewCustomer() {
-    this.customer = {
-      id: null,
-      brandName: '',
-      companyName: '',
-      cnpj: '',
-      contactName: '',
-      contactEmail: '',
-      blocked: false
-    }
-  }
-
   save() {
-    this.isLoading = true
-    setTimeout(() => {
-      this.isLoading = false
-      this.message.success(
-        'As informações foram salvas com sucesso!',
-        { nzDuration: 3000 }
-      )
-    }, 333)
+    this.onSave.emit(this.validateForm.value)
+  }
+
+  ngOnInit(): void {
+    this.validateForm = this.formBuilder.group({
+      brandName: [this.customer?.companyName],
+      companyName: [this.customer?.companyName],
+      cnpj: [this.customer?.cnpj],
+      cep: [this.customer?.cep],
+      address: [this.customer?.address],
+      number: [this.customer?.number],
+      complement: [this.customer?.complement],
+      neighborhood: [this.customer?.neighborhood],
+      city: [this.customer?.city],
+      state: [this.customer?.state],
+    })
   }
 
   listCustomers() {

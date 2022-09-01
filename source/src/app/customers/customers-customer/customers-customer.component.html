@@ -1,0 +1,39 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="star"></i><span>Clientes</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="customer?.id">
+        Editar Cliente ({{customer.companyName}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!customer?.id">
+        Adicionar Cliente
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados da Matriz">
+        <app-customers-form
+          *ngIf="customer"
+          [customer]="customer"
+          (onSave)="onSubmit($event)"
+        ></app-customers-form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Telefones" [nzDisabled]="!customer?.id">
+        <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab>
+      </nz-tab>
+
+      <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
+        <app-branch-office-tab [customerId]="customer?.id"></app-branch-office-tab>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>
