@@ -1,25 +1,12 @@
 import {
   Component,
   OnInit,
-  TemplateRef
 } from '@angular/core'
 import {
   ActivatedRoute,
   Router
 } from '@angular/router'
 import { NzMessageService } from 'ng-zorro-antd/message'
-import { NzModalService } from 'ng-zorro-antd/modal'
-import { TableService } from '../../shared/services/table.service'
-
-interface BranchOfficeDataItem {
-  id: number
-  companyName: string
-  BrandName: string
-  cnpj: string
-  contactName: string
-  contactEmail: string
-  blocked: boolean
-}
 
 @Component({
   selector: 'app-customers-form',
@@ -79,65 +66,10 @@ export class CustomersFormComponent implements OnInit {
   ]
   customer = null
 
-  branchOfficesDisplayData = []
-
-  branchOfficesOrderColumn = [
-    {
-      title: 'ID',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.id - b.id,
-    },
-    {
-      title: 'Razão social',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.companyName.localeCompare(b.companyName)
-    },
-    {
-      title: 'Nome fantasia',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.BrandName.localeCompare(b.BrandName)
-    },
-    {
-      title: 'CNJP',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.cnpj.localeCompare(b.cnpj)
-    },
-    {
-      title: 'Contato',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.contactName.localeCompare(b.contactName)
-    },
-    {
-      title: 'Email',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.contactEmail.localeCompare(b.contactEmail)
-    },
-    {
-      title: 'Bloqueado'
-    }
-  ]
-
-  branchOfficesOrdersList: BranchOfficeDataItem[] = [
-    {
-      id: 1475,
-      companyName: 'Gertran Rio de Janeiro',
-      BrandName: 'Gertran',
-      cnpj: '22.988.988/0001-00',
-      contactName: 'João da Silva',
-      contactEmail: 'joao.silva@gertran.com.br',
-      blocked: false
-    },
-    {
-      id: 1745,
-      companyName: 'Gertran Espirito Santo',
-      BrandName: 'Gertran ES',
-      cnpj: '14.988.988/0001-00',
-      contactName: 'Carlos da Silva',
-      contactEmail: 'carlos.silva@gertran.com.br',
-      blocked: false
-    }
-  ]
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private message: NzMessageService,
-    private modalService: NzModalService,
-    private tableService: TableService
   ) { }
 
   ngOnInit(): void {
@@ -145,7 +77,6 @@ export class CustomersFormComponent implements OnInit {
     setTimeout(() => {
       this.route.snapshot.paramMap.has('id') ? this.loadCustomer() : this.createNewCustomer()
       this.isLoading = false
-      this.branchOfficesDisplayData = this.branchOfficesOrdersList
     }, 333)
   }
 
@@ -178,31 +109,5 @@ export class CustomersFormComponent implements OnInit {
 
   listCustomers() {
     this.router.navigate(['/customers/customers-list']);
-  }
-
-  branchOfficesCreate(newBranchOfficeContent: TemplateRef<{}>) {
-    const modal = this.modalService.create({
-      nzTitle: 'Nova filial',
-      nzContent: newBranchOfficeContent,
-      nzWidth: 720,
-      nzFooter: [
-        {
-          label: 'Cancelar',
-          onClick: () => modal.destroy()
-        },
-        {
-          label: 'Salvar',
-          type: 'primary',
-          onClick: () => {
-            this.branchOfficesOrdersList.push(this.branchOfficesDisplayData[0])
-            modal.destroy()
-          }
-        }
-      ]
-    })
-  }
-
-  branchOfficesEdit(item: BranchOfficeDataItem) {
-    console.log('edit')
   }
 }

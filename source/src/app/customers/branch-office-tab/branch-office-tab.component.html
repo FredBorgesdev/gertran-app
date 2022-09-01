@@ -1,0 +1,20 @@
+<div class="row m-b-30">
+  <div class="col-lg-12 text-right">
+    <button
+      (click)="this.isCreatingBranchOffice = true"
+      nz-button
+      nzType="primary"
+    >
+      <i nz-icon nzType="plus" theme="outline"></i>
+      <span>Adicionar Filial</span>
+    </button>
+  </div>
+</div>
+
+<app-branch-office-table [branchOffices]="branchOffices"></app-branch-office-table>
+
+<app-branch-office-form
+  [isVisible]="isCreatingBranchOffice"
+  (onCancel)="this.isCreatingBranchOffice = false"
+  (onAdd)="addBranchOffice($event)"
+></app-branch-office-form>

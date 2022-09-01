@@ -8,7 +8,7 @@ import { ContactDataItem } from '../contacts-tab/contacts-tab.component';
 })
 export class ContactsTableComponent implements OnInit {
 
-  @Input() contacts: ContactDataItem[];
+  @Input() contacts: ContactDataItem[] = [];
 
   contactsOrderColumn = [
     {

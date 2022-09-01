@@ -1,0 +1,48 @@
+<nz-table #branchOfficesTable [nzData]="branchOffices" >
+  <thead>
+  <tr>
+    <th *ngFor="let column of branchOfficesOrderColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of branchOfficesTable.data;  let i=index">
+    <td>#{{item.id}}</td>
+    <td>
+      <div class="d-flex align-items-center">
+        <h6 class="m-l-10 m-b-0">{{item.companyName}}</h6>
+      </div>
+    </td>
+    <td>{{item.brandName}}</td>
+    <td>{{item.cnpj}}</td>
+    <td>{{item.contactName}}</td>
+    <td>{{item.contactEmail}}</td>
+    <td class="text-md-center">
+      <nz-badge *ngIf="item.blocked" nzStatus="success"></nz-badge>
+      <nz-badge *ngIf="!item.blocked" nzStatus="error"></nz-badge>
+    </td>
+    <td class="text-md-center">
+      <a
+        (click)="contactsEdit(item)"
+        class="m-r-5"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Editar"
+      >
+        <i nz-icon nzType="edit" theme="outline"></i>
+      </a>
+      <a
+        (click)="contactsEdit(item)"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Excluir"
+      >
+        <i nz-icon nzType="delete" theme="outline"></i>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
