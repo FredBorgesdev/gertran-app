@@ -1,0 +1,39 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Motoristas</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="driver?.id">
+        Editar Motorista ({{driver.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!driver?.id">
+        Adicionar Motorista
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados principais">
+        <app-drivers-form
+          [driver]="driver"
+          (onSubmit)="onSubmit($event)"
+          *ngIf="driver"
+        ></app-drivers-form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Foto do Motorista">
+        <app-drivers-profile-picture
+          [driver]="driver"
+          (onSubmit)="onSubmit($event)"
+          *ngIf="driver"
+        ></app-drivers-profile-picture>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

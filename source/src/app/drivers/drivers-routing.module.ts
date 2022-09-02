@@ -3,8 +3,7 @@ import {
   RouterModule,
   Routes
 } from '@angular/router'
-
-import { DriversFormComponent } from './drivers-form/drivers-form.component'
+import { DriversDriverComponent } from './drivers-driver/drivers-driver.component'
 import { DriversListComponent } from './drivers-list/drivers-list.component'
 
 const routes: Routes = [
@@ -18,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'driver-create',
-    component: DriversFormComponent,
+    component: DriversDriverComponent,
     data: {
       title: 'Adicionar Motorista ',
       headerDisplay: 'none'
@@ -26,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'driver-edit/:id',
-    component: DriversFormComponent,
+    component: DriversDriverComponent,
     data: {
       title: 'Editar Motorista ',
       headerDisplay: 'none'
