@@ -37,7 +37,7 @@ export class StopsStopComponent implements OnInit {
       typeId: 0,
       city: '',
       state: '',
-      typeCategoryId: 0
+      typeCategoryIds: []
     }
   }
 }

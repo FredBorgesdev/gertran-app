@@ -12,7 +12,7 @@ export const stopsList: Stop[] = [
     lng: -43.940000,
     radius: 500,
     typeId: 1,
-    typeCategoryId: 1,
+    typeCategoryIds: [2],
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const stopsList: Stop[] = [
     lng: -43.870000,
     radius: 500,
     typeId: 2,
-    typeCategoryId: 2,
+    typeCategoryIds: [1],
     workingHours: {
       monday: {
         start: '08:00',

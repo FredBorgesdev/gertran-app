@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TransferItem } from 'ng-zorro-antd/transfer';
+import { stopsListTypeCategories, stopsListTypes } from '../stops-list/mocked-data';
 import { Stop } from '../stops-list/stops-list.component';
 
 @Component({
@@ -13,6 +15,12 @@ export class StopsFormComponent implements OnInit {
   @Output() onSave: EventEmitter<Stop> = new EventEmitter<Stop>()
 
   validateForm: FormGroup
+  stopTypes = stopsListTypes
+
+  categoriesTransferItems: TransferItem[] = stopsListTypeCategories.map(category => ({
+    key: category.id,
+    title: category.name,
+  }))
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +36,7 @@ export class StopsFormComponent implements OnInit {
       typeId: [this.stop?.typeId],
       city: [this.stop?.city],
       state: [this.stop?.state],
-      typeCategoryId: [this.stop?.typeCategoryId]
+      typeCategoryIds: [this.stop?.typeCategoryIds]
     })
   }
 

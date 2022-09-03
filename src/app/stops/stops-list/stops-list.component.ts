@@ -13,7 +13,7 @@ export interface Stop {
   lng?: number
   radius: number
   typeId: number
-  typeCategoryId: number
+  typeCategoryIds: number[]
   workingHours?: {
     [key: string]: {
       start: string

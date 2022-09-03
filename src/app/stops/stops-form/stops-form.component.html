@@ -42,6 +42,30 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="typeId">Tipo</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <nz-radio-group formControlName="typeId">
+        <label
+          nz-radio
+          *ngFor="let type of stopTypes"
+          [nzValue]="type.id"
+        >{{type.name}}</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="statusId">Categorias</nz-form-label>
+    <nz-form-control>
+      <nz-transfer
+        [nzTargetKeys]="stop.typeCategoryIds"
+        [nzDataSource]="categoriesTransferItems"
+        [nzTitles]="['Tipos', 'Concedidos']"
+      ></nz-transfer>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button type="button" (click)="save()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Ponto
@@ -51,13 +75,4 @@
       </button>
     </nz-form-control>
   </nz-form-item>
-
-  <!-- <nz-form-item> -->
-  <!--   <nz-form-label [nzSpan]="null" nzRequired nzFor="typeId">Tipo</nz-form-label> -->
-  <!--   <nz-form-control [nzSpan]="null" nzErrorTip="inválido!" formControlName="typeId"> -->
-  <!--     <nz-select id="typeId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione um tipo"> -->
-  <!--       <nz-option *ngFor="let type of stopTypes" [nzLabel]="type.name" [nzValue]="type.id"></nz-option> -->
-  <!--     </nz-select> -->
-  <!--   </nz-form-control> -->
-  <!-- </nz-form-item> -->
 </form>
