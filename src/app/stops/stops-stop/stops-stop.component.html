@@ -9,7 +9,7 @@
         <a><i nz-icon nzType="star"></i><span>Pontos</span></a>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="stop?.id">
-        Editar Ponto ({{customer.companyName}})
+        Editar Ponto ({{stop?.name}})
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="!stop?.id">
         Adicionar Ponto
@@ -20,11 +20,11 @@
 
     <nz-tabset>
       <nz-tab nzTitle="Ponto">
-        <!-- <app-customers-form -->
-        <!--   *ngIf="customer" -->
-        <!--   [customer]="customer" -->
-        <!--   (onSave)="onSubmit($event)" -->
-        <!-- ></app-customers-form> -->
+        <app-stops-form
+          *ngIf="stop"
+          [stop]="stop"
+          (onSave)="onSubmit($event)"
+        ></app-stops-form>
       </nz-tab>
 
       <nz-tab nzTitle="Categoria" [nzDisabled]="!stop?.id">

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { stopsList, stopsListTypeCategories, stopsListTypes } from './mocked-data';
 
-export interface DataItem {
-  id: number
+export interface Stop {
+  id?: number
   name: string
   description: string
   address: string
@@ -34,7 +34,7 @@ export interface DataItem {
 export class StopsListComponent implements OnInit {
   isLoading = false
 
-  stopsList: DataItem[] = []
+  stopsList: Stop[] = []
   stopsListTypes = stopsListTypes
   stopsListTypeCategories = stopsListTypeCategories
 
@@ -44,29 +44,29 @@ export class StopsListComponent implements OnInit {
     {
       title: 'ID',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Stop,
+        b: Stop
       ) => a.id - b.id
     },
     {
       title: 'Nome',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Stop,
+        b: Stop
       ) => a.name.localeCompare(b.name)
     },
     {
       title: 'Descrição',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Stop,
+        b: Stop
       ) => a.description.localeCompare(b.description)
     },
     {
       title: 'Endereço',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Stop,
+        b: Stop
       ) => a.address.localeCompare(b.address)
     },
     { title: 'Raio' },
@@ -92,8 +92,10 @@ export class StopsListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['/stops/stop-create'])
+    this.router.navigate(['/stops', 'stop-create'])
   }
 
-  edit() {}
+  edit(stop: Stop) {
+    this.router.navigate(['/stops', 'stop-edit', stop.id])
+  }
 }

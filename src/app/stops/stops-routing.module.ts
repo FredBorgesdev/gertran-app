@@ -19,6 +19,14 @@ const routes: Routes = [
       title: 'Adicionar Ponto ',
       headerDisplay: 'none'
     }
+  },
+  {
+    path: 'stop-edit/:id',
+    component: StopsStopComponent,
+    data: {
+      title: 'Editar Ponto ',
+      headerDisplay: 'none'
+    }
   }
 ];
 

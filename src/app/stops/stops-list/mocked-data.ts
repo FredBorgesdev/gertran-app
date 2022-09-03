@@ -1,6 +1,6 @@
-import { DataItem } from "./stops-list.component";
+import { Stop } from "./stops-list.component";
 
-export const stopsList: DataItem[] = [
+export const stopsList: Stop[] = [
   {
     id: 1,
     name: 'Belo Horizonte – Posto 01',

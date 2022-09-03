@@ -1,0 +1,63 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="name" type="text" nz-input formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="description" type="text" nz-input formControlName="description" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="address">Endereço</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="address" type="text" nz-input formControlName="address" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="state" nz-input formControlName="state" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="city" nz-input formControlName="city" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="radius">Raio</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="radius" type="number" nz-input formControlName="radius" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button type="button" (click)="save()" nz-button nzType="primary">
+        <i nz-icon nzType="save"></i>Salvar Ponto
+      </button>
+      <button type="button" (click)="listStops()" nz-button>
+        <i nz-icon nzType="unordered-list"></i>Listar Pontos
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- <nz-form-item> -->
+  <!--   <nz-form-label [nzSpan]="null" nzRequired nzFor="typeId">Tipo</nz-form-label> -->
+  <!--   <nz-form-control [nzSpan]="null" nzErrorTip="inválido!" formControlName="typeId"> -->
+  <!--     <nz-select id="typeId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione um tipo"> -->
+  <!--       <nz-option *ngFor="let type of stopTypes" [nzLabel]="type.name" [nzValue]="type.id"></nz-option> -->
+  <!--     </nz-select> -->
+  <!--   </nz-form-control> -->
+  <!-- </nz-form-item> -->
+</form>
