@@ -13,6 +13,9 @@
     "build-prod-state": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration production --stats-json",
     "bundle-report": "webpack-bundle-analyzer dist/enlink/stats.json"
   },
+  "engines": {
+    "node": "16.17.0"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.3.3",
