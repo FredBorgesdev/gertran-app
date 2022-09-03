@@ -41,7 +41,8 @@ export class AutomationsListComponent implements OnInit {
 
   isLoading = false
   displayData = []
-  searchInput: string
+
+  searchInput: string = ''
 
   automation: DataItem = {
     id: null,
@@ -204,15 +205,7 @@ export class AutomationsListComponent implements OnInit {
   }
 
   search() {
-    const data = this.automationsList
-    this.displayData = this.tableService.search(
-      this.searchInput,
-      data
-    )
-  }
-
-  create() {
-
+    console.log(this.searchInput)
   }
 
   newAutomationCreate(newAutomationContent: TemplateRef<{}>) {
@@ -257,9 +250,4 @@ export class AutomationsListComponent implements OnInit {
       ]
     })
   }
-
-  edit(item: DataItem) {
-    console.log('edit')
-  }
-
 }

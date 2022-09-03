@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module'
 import { AutomationsRoutingModule } from './automations-routing.module'
 import { SettingsComponent } from './settings/settings.component';
@@ -12,7 +11,7 @@ const antdModule = []
   declarations: [
     SettingsComponent,
     AutomationsFormComponent,
-    AutomationsListComponent
+    AutomationsListComponent,
   ],
   imports: [
     SharedModule,

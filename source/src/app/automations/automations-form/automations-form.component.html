@@ -1,1 +1,154 @@
-<p>automations-form works!</p>
+<form nz-form nzLayout="horizontal">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="2" nzFor="eventType" nzRequired>Evento</nz-form-label>
+    <nz-form-control [nzSpan]="6" nzErrorTip="Please select your eventType!">
+      <nz-select
+        id="eventType"
+        nzPlaceHolder="Selecione o tipo de evento"
+      >
+        <nz-option nzValue="sirene-ativa" nzLabel="Sirene Ativa">Sirene Ativa</nz-option>
+        <nz-option nzValue="parada-sem-informar" nzLabel="Parada Sem Informar">Parada Sem Informar</nz-option>
+        <nz-option nzValue="parada-prolongada" nzLabel="Parada Prolongada">Parada Prolongada</nz-option>
+        <nz-option nzValue="excesso-de-velocidade" nzLabel="Excesso de Velocidade">Excesso de Velocidade</nz-option>
+        <nz-option nzValue="veiculo-fora-de-temperatura" nzLabel="Veículo Fora de Temperatura">Veículo Fora de Temperatura</nz-option>
+        <nz-option nzValue="saida-da-unidade-sem-informar" nzLabel="Saída da Unidade Sem Informar">Saída da Unidade Sem Informar</nz-option>
+      </nz-select>
+    </nz-form-control>
+    <nz-form-label [nzSpan]="2" nzFor="action" nzRequired>Ação</nz-form-label>
+    <nz-radio-group nzButtonStyle="solid">
+      <label nz-radio-button nzValue="A">Entrada</label>
+      <label nz-radio-button nzValue="B">Saída</label>
+      <label nz-radio-button nzValue="C">Passagem</label>
+    </nz-radio-group>
+  </nz-form-item>
+
+  <nz-divider></nz-divider>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>SM - Viagem</nz-form-label>
+    <nz-form-control [nzSpan]="8" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Comando</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="Please select your eventType!">
+      <nz-select
+        id="eventType"
+        nzPlaceHolder="Selecione o comando"
+      >
+        <nz-option nzValue="ativar-sirene" nzLabel="Ativar Sirene">Ativar Sirene</nz-option>
+        <nz-option nzValue="ativar-bloqueio" nzLabel="Ativar Bloqueio">Ativar Bloqueio</nz-option>
+        <nz-option nzValue="ativar-sensor-porta-motorista" nzLabel="Ativar Sensor Porta Motorista">Ativar Sensor Porta Motorista</nz-option>
+        <nz-option nzValue="ativar-sensor-porta-passageiro" nzLabel="Ativar Sensor Porta Passageiro">Ativar Sensor Porta Passageiro</nz-option>
+        <nz-option nzValue="ativar-sensor-porta-carga" nzLabel="Ativar Sensor Porta Carga">Ativar Sensor Porta Carga</nz-option>
+        <nz-option nzValue="ativar-sensor-desengate" nzLabel="Ativar Sensor Desengate">Ativar Sensor Desengate</nz-option>
+        <nz-option nzValue="ativar-trava-bau" nzLabel="Ativar Trava Bau">Ativar Trava Bau</nz-option>
+        <nz-option nzValue="desativar-sirene" nzLabel="Desativar Sirene">Desativar Sirene</nz-option>
+        <nz-option nzValue="desativar-bloqueio" nzLabel="Desativar Bloqueio">Desativar Bloqueio</nz-option>
+        <nz-option nzValue="desativar-sensor-porta-motorista" nzLabel="Desativar Sensor Porta Motorista">Desativar Sensor Porta Motorista</nz-option>
+        <nz-option nzValue="desativar-sensor-porta-passageiro" nzLabel="Desativar Sensor Porta Passageiro">Desativar Sensor Porta Passageiro</nz-option>
+        <nz-option nzValue="desativar-sensor-porta-carga" nzLabel="Desativar Sensor Porta Carga">Desativar Sensor Porta Carga</nz-option>
+        <nz-option nzValue="desativar-sensor-desengate" nzLabel="Desativar Sensor Desengate">Desativar Sensor Desengate</nz-option>
+        <nz-option nzValue="desativar-trava-bau" nzLabel="Desativar Trava Bau">Desativar Trava Bau</nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>MSG - Veículo</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>MSG Envio</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Tempo de Ação</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Alerta Operador</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Velocidade</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Ocorrência</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Ignição</nz-form-label>
+    <nz-form-control [nzSpan]="3" nzErrorTip="">
+      <nz-radio-group nzButtonStyle="solid">
+        <label nz-radio-button nzValue="A">Sim</label>
+        <label nz-radio-button nzValue="B">Não</label>
+      </nz-radio-group>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="5" nzErrorTip="">
+      <input type="text" nz-input placeholder="">
+    </nz-form-control>
+  </nz-form-item>
+</form>
