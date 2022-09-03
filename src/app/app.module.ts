@@ -17,6 +17,7 @@ import { FullLayoutComponent } from './layouts/full-layout/full-layout.component
 
 import { NgChartjsModule } from 'ng-chartjs';
 import { ThemeConstantService } from './shared/services/theme-constant.service';
+import { lineChartPlugin } from './dashboard/line-chart-plugin';
 
 registerLocaleData(ptbr);
 
@@ -33,7 +34,8 @@ registerLocaleData(ptbr);
         NzBreadCrumbModule,
         TemplateModule,
         SharedModule,
-        NgChartjsModule
+        NgChartjsModule,
+        NgChartjsModule.registerPlugin([lineChartPlugin])
     ],
     providers: [
         {

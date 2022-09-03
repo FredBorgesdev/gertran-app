@@ -1,41 +1,189 @@
 <div class="row">
-  <div class="col-md-12 col-lg-12 p-150" *ngIf="isLoading">
-    <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-    </nz-spin>
-  </div>
-  <div class="col-md-12 col-lg-6" *ngIf="!isLoading">
+  <div class="col-md-6 col-lg-3">
     <nz-card>
       <div class="d-flex justify-content-between align-items-center">
-        <h5>Eventos nos últimos 7 dias</h5>
+        <div>
+          <p class="m-b-0">Valor Total - SM</p>
+          <h2 class="m-b-0">
+            <span>R$6.432.342.234,00</span>
+          </h2>
+        </div>
+        <nz-avatar [nzSize]="50" nzIcon="dollar" class="ant-avatar-blue"></nz-avatar>
       </div>
-      <div class="m-t-10" style="height: 450px">
-        <canvas ngChartjs
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          [height]="'100%;'">
+    </nz-card>
+  </div>
+  <div class="col-md-6 col-lg-2">
+    <nz-card>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <p class="m-b-0">Total de NC</p>
+          <h2 class="m-b-0">
+            <span>38402</span>
+          </h2>
+        </div>
+        <nz-avatar [nzSize]="50" nzIcon="bar-chart" class="ant-avatar-cyan"></nz-avatar>
+      </div>
+    </nz-card>
+  </div>
+  <div class="col-md-6 col-lg-2">
+    <nz-card>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <p class="m-b-0">Total de SM</p>
+          <h2 class="m-b-0">
+            <span>40838</span>
+          </h2>
+        </div>
+        <nz-avatar [nzSize]="50" nzIcon="profile" class="ant-avatar-red"></nz-avatar>
+      </div>
+    </nz-card>
+  </div>
+  <div class="col-md-6 col-lg-2">
+    <nz-card>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <p class="m-b-0">Transportadores</p>
+          <h2 class="m-b-0">
+            <span>149</span>
+          </h2>
+        </div>
+        <nz-avatar [nzSize]="50" nzIcon="bar-chart" class="ant-avatar-gold"></nz-avatar>
+      </div>
+    </nz-card>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <nz-card nzSize="small">
+      <nz-table #operationsListTable [nzData]="operationsList"  [nzShowPagination]="false" class="no-border-last" nzSize="small">
+        <thead>
+          <tr>
+            <th>Operação</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of operationsListTable.data">
+            <td>{{item.op}}</td>
+            <td>{{item.total}}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <nz-card>
+      <div class="d-md-flex justify-content-between align-items-center">
+        <h5>Comparativo mês - SM x NC</h5>
+        <div class="d-flex">
+          <div class="m-r-10">
+            <nz-badge nzStatus="default" [nzColor]="blue"></nz-badge>
+            <span class="text-gray font-weight-semibold font-size-13">Contagem de data de envio</span>
+          </div>
+          <div class="m-r-10">
+            <nz-badge nzStatus="default" [nzColor]="blueLight"></nz-badge>
+            <span class="text-gray font-weight-semibold font-size-13">Contagem de NC</span>
+          </div>
+        </div>
+      </div>
+      <div class="m-t-50" style="height: 420px">
+        <canvas ngChartjs 
+                [datasets]="monthlyChartData" 
+                [labels]="monthlyChartLabels"
+                [options]="monthlyChartOptions" 
+                [colors]="monthlyChartColors"
+                [legend]="false" 
+                [chartType]="monthlyChartType">
         </canvas>
       </div>
     </nz-card>
   </div>
-  <div class="col-md-12 col-lg-6" *ngIf="!isLoading">
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <nz-card nzSize="small">
+      <nz-table #disagreementListTable [nzData]="disagreementList"  [nzShowPagination]="false" class="no-border-last">
+        <thead>
+          <tr>
+            <th>Não conformidade</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of disagreementListTable.data">
+            <td>{{item.reason}}</td>
+            <td>{{item.total}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="bg-gray-lightest font-weight-bold">
+            <td>Total</td>
+            <td>983</td>
+          </tr>
+        </tfoot>
+      </nz-table>
+    </nz-card>
+  </div>
+  <div class="col-lg-6">
+    <nz-card>
+      <div class="d-md-flex justify-content-between align-items-center">
+        <h5>Comparativo operação</h5>
+        <div class="d-flex">
+          <div class="m-r-10">
+            <nz-badge nzStatus="default" [nzColor]="blue"></nz-badge>
+            <span class="text-gray font-weight-semibold font-size-13">GL</span>
+          </div>
+          <div class="m-r-10">
+            <nz-badge nzStatus="default" [nzColor]="blueLight"></nz-badge>
+            <span class="text-gray font-weight-semibold font-size-13">GR</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <canvas ngChartjs 
+                style="width: 100%"
+                [datasets]="operationChartData" 
+                [labels]="operationChartLabels"
+                [options]="operationChartOptions" 
+                [colors]="operationChartColors"
+                [legend]="false" 
+                [chartType]="operationChartType">
+        </canvas>
+      </div>
+    </nz-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
     <nz-card>
       <div class="d-flex justify-content-between align-items-center">
-        <h5>Eventos nos últimos 30 dias</h5>
+        <h5>Latest Transactions</h5>
       </div>
-      <div class="m-t-10 text-center" style="height: 450px">
-        <canvas ngChartjs
-          [data]="polarAreaChartData"
-          [labels]="polarAreaChartLabels"
-          [legend]="polarAreaLegend"
-          [options]="polarAreaChartOptions"
-          [colors]="polarAreaChartColors"
-          [chartType]="polarAreaChartType"
-          [height]="'100%;'">
-        </canvas>
+      <div class="m-t-30">
+        <nz-table #originUnitsTable [nzData]="originUnitsList"  [nzShowPagination]="false" class="no-border-last">
+          <thead>
+            <tr>
+              <th>Unidade de origem</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of originUnitsTable.data">
+              <td>{{item.name}}</td>
+              <td>{{item.total}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="bg-gray-lightest font-weight-bold">
+              <td>Total</td>
+              <td>983</td>
+            </tr>
+          </tfoot>
+        </nz-table>
       </div>
     </nz-card>
   </div>

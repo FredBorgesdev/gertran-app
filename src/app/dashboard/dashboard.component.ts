@@ -1,149 +1,225 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core'
+import { Component } from '@angular/core'
 import { ThemeConstantService } from '../shared/services/theme-constant.service'
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+  themeColors = this.colorConfig.get().colors;
+  blue = this.themeColors.blue;
+  blueLight = this.themeColors.blueLight;
+  cyan = this.themeColors.cyan;
+  cyanLight = this.themeColors.cyanLight;
+  gold = this.themeColors.gold;
+  purple = this.themeColors.purple;
+  purpleLight = this.themeColors.purpleLight;
+  red = this.themeColors.red;
 
-  isLoading = false
+  taskListIndex: number = 0;
 
-  expanded = false
-  themeColors = this.colorConfig.get().colors
+  constructor(private colorConfig: ThemeConstantService) {}
 
-  constructor( private colorConfig:ThemeConstantService ) {
-    this.isLoading = true
-    setTimeout(() => {
-      this.isLoading = false
-    }, 1200)
-  }
-
-  ngOnInit() {
-  }
-
-  // lineChart
-  lineChartData: Array<any> = [
-    { data: [0, 0, 0, 3, 0, 1, 2], label: 'Roubo' },
-    { data: [2, 5, 4, 2, 3, 1, 2], label: 'Quebra' },
-    { data: [10, 8, 12, 6, 9, 2, 15], label: 'Inicio de viagem' },
-    { data: [8, 16, 7, 7, 0, 15, 8], label: 'Fim de viagem' }
-  ]
-  lineChartLabels:Array<any> = ["27", "28", "29", "30", "01", "02", "03"]
-  lineChartOptions: any = {
+  monthlyChartOptions: any = {
+    scaleShowVerticalLines: false,
+    maintainAspectRatio: false,
     responsive: true,
-    hover: {
-      mode: 'nearest',
-      intersect: true
-    },
-    tooltips: {
-      mode: 'index'
-    },
     scales: {
       xAxes: [{
-        gridLines: [{
+        display: true,
+        scaleLabel: {
           display: false,
-        }],
+          labelString: 'Mês'
+        },
+        gridLines: false,
         ticks: {
           display: true,
-          fontColor: this.themeColors.grayLight,
+          beginAtZero: true,
           fontSize: 13,
           padding: 10
         }
       }],
       yAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: 'Valor'
+        },
         gridLines: {
           drawBorder: false,
+          offsetGridLines: false,
           drawTicks: false,
           borderDash: [3, 4],
           zeroLineWidth: 1,
           zeroLineBorderDash: [3, 4]
         },
         ticks: {
+          max: 80,                            
+          stepSize: 20,
           display: true,
-          max: 18,
-          stepSize: 3,
-          fontColor: this.themeColors.grayLight,
+          beginAtZero: true,
+          fontSize: 13,
+          padding: 10
+        }
+      }]
+    }
+  };
+  monthlyChartLabels: string[] = ['Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto'];
+  monthlyChartType = 'bar';
+  monthlyChartColors: Array<any> = [
+    { 
+      backgroundColor: this.themeColors.blue,
+      borderWidth: 0
+    },
+    {
+      backgroundColor: this.themeColors.blueLight,
+      borderWidth: 0
+    }
+  ];
+  monthlyChartData: any[] = [
+    { 
+      data: [20, 30, 35, 45, 55, 45],
+      categoryPercentage: 0.70,
+      barPercentage: 0.70,
+    },
+    { 
+      data: [25, 35, 40, 50, 60, 50],
+      categoryPercentage: 0.70,
+      barPercentage: 0.70,
+    }
+  ];
+
+  operationChartOptions: any = {
+    scaleShowVerticalLines: false,
+    maintainAspectRatio: false,
+    responsive: true,
+    scales: {
+      xAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: 'Mês'
+        },
+        gridLines: false,
+        ticks: {
+          display: true,
+          beginAtZero: true,
           fontSize: 13,
           padding: 10
         }
       }],
+      yAxes: [{
+        display: true,
+        scaleLabel: {
+          display: false,
+          labelString: 'Valor'
+        },
+        gridLines: {
+          drawBorder: false,
+          offsetGridLines: false,
+          drawTicks: false,
+          borderDash: [3, 4],
+          zeroLineWidth: 1,
+          zeroLineBorderDash: [3, 4]
+        },
+        ticks: {
+          max: 80,                            
+          stepSize: 20,
+          display: true,
+          beginAtZero: true,
+          fontSize: 13,
+          padding: 10
+        }
+      }]
     }
-  }
-  lineChartColors: Array<any> = [
-    {
-      backgroundColor: this.themeColors.transparent,
-      borderColor: this.themeColors.red,
-      pointBackgroundColor: this.themeColors.red,
-      pointBorderColor: this.themeColors.white,
-      pointHoverBackgroundColor: this.themeColors.blueLight,
-      pointHoverBorderColor: this.themeColors.blueLight
+  };
+  operationChartLabels: string[] = ['Lactalis', 'Itambé'];
+  operationChartType = 'bar';
+  operationChartColors: Array<any> = [
+    { 
+      backgroundColor: this.themeColors.blue,
+      borderWidth: 0
     },
     {
-      backgroundColor: this.themeColors.transparent,
-      borderColor: this.themeColors.orange,
-      pointBackgroundColor: this.themeColors.orange,
-      pointBorderColor: this.themeColors.white,
-      pointHoverBackgroundColor: this.themeColors.blueLight,
-      pointHoverBorderColor: this.themeColors.blueLight
+      backgroundColor: this.themeColors.blueLight,
+      borderWidth: 0
+    }
+  ];
+  operationChartData: any[] = [
+    { 
+      data: [20, 30],
+      categoryPercentage: 0.70,
+      barPercentage: 0.70,
+    },
+    { 
+      data: [25, 35],
+      categoryPercentage: 0.70,
+      barPercentage: 0.70,
+    }
+  ];
+
+  originUnitsList = [
+    {
+      name: 'Unidade Uberlândia',
+      total: 100,
     },
     {
-      backgroundColor: this.themeColors.transparent,
-      borderColor: this.themeColors.blue,
-      pointBackgroundColor: this.themeColors.blue,
-      pointBorderColor: this.themeColors.white,
-      pointHoverBackgroundColor: this.themeColors.blueLight,
-      pointHoverBorderColor: this.themeColors.blueLight
+      name: 'Unidade Uberaba',
+      total: 200,
     },
     {
-      backgroundColor: this.themeColors.transparent,
-      borderColor: this.themeColors.cyan,
-      pointBackgroundColor: this.themeColors.cyan,
-      pointBorderColor: this.themeColors.white,
-      pointHoverBackgroundColor: this.themeColors.cyanLight,
-      pointHoverBorderColor: this.themeColors.cyanLight
+      name: 'Unidade Ituiutaba',
+      total: 150,
+    },
+    {
+      name: 'Unidade Simões Filho',
+      total: 390,
+    },
+    {
+      name: 'Unidade Itambé',
+      total: 90,
+    }
+  ]   
+
+  operationsList = [
+    {
+      op: 'Lactalis',
+      total: 100,
+    },
+    {
+      op: 'Itambé',
+      total: 200,
     }
   ]
-  lineChartLegend = true
-  lineChartType = 'line'
 
-  // PolarArea Chart
-  polarAreaChartLabels: string[] = ['Roubo', 'Quebra', 'Inicio de viagem', 'Fim de viagem']
-  polarAreaChartData: number[] = [20, 42, 180, 165]
-  polarAreaLegend = true
-  polarAreaChartOptions: any = {
-    responsive: true,
-    scale: {
-      ticks: {
-        max: 200,
-        stepSize: 25,
-      },
-      gridLines: {
-        color: this.themeColors.border
-      },
-      angleLines: {
-        color: this.themeColors.border
-      }
+  disagreementList = [
+    {
+      reason: 'Veiculo sem lacre',
+      total: 100,
+    },
+    {
+      reason: 'Veiculo suspeito',
+      total: 200,
+    },
+    {
+      reason: 'Veiculo em manutenção',
+      total: 300,
+    },
+    {
+      reason: 'Veiculo com escolta',
+      total: 400,
+    },
+    {
+      reason: 'Tombamento',
+      total: 400,
+    },
+    {
+      reason: 'Roubo',
+      total: 400,
     }
-  }
+  ]
 
-  polarAreaChartColors: Array<any> = [{
-    backgroundColor: [
-      this.themeColors.redLight,
-      this.themeColors.orangeLight,
-      this.themeColors.blueLight,
-      this.themeColors.cyanLight,
-    ],
-    borderColor : [
-      this.themeColors.red,
-      this.themeColors.orange,
-      this.themeColors.blue,
-      this.themeColors.cyan,
-    ]
-  }]
-  polarAreaChartType = 'polarArea'
+  summaryFormat = () => `$3,531`;
+
 }
