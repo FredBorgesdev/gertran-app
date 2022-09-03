@@ -8,34 +8,34 @@ import { FullLayout_ROUTES } from "./shared/routes/full-layout.routes";
 import { CommonLayout_ROUTES } from "./shared/routes/common-layout.routes";
 
 const appRoutes: Routes = [
-    {
-        path: '',
-        redirectTo: '/dashboard/home',
-        pathMatch: 'full',
-    },
-    {
-        path: '',
-        component: CommonLayoutComponent,
-        children: CommonLayout_ROUTES
-    },
-    {
-        path: '',
-        component: FullLayoutComponent,
-        children: FullLayout_ROUTES
-    }
+  {
+    path: '',
+    redirectTo: '/authentication/login',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    component: CommonLayoutComponent,
+    children: CommonLayout_ROUTES
+  },
+  {
+    path: '',
+    component: FullLayoutComponent,
+    children: FullLayout_ROUTES
+  }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(appRoutes, {
-            preloadingStrategy: PreloadAllModules,
-            anchorScrolling: 'enabled',
-            scrollPositionRestoration: 'enabled'
-        })
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [
+    RouterModule.forRoot(appRoutes, {
+      preloadingStrategy: PreloadAllModules,
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'enabled'
+    })
+  ],
+  exports: [
+    RouterModule
+  ]
 })
 
 export class AppRoutingModule {
