@@ -27,12 +27,8 @@
         ></app-stops-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Categoria" [nzDisabled]="!stop?.id">
-        <!-- <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab> -->
-      </nz-tab>
-
       <nz-tab nzTitle="Funcionamento" [nzDisabled]="!stop?.id">
-        <!-- <app-branch-office-tab [customerId]="customer?.id"></app-branch-office-tab> -->
+        <app-stops-working-hours [stop]="stop"></app-stops-working-hours>
       </nz-tab>
     </nz-tabset>
   </nz-card>

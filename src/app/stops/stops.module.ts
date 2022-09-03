@@ -7,17 +7,21 @@ import { SharedModule } from '../shared/shared.module';
 import { StopsStopComponent } from './stops-stop/stops-stop.component';
 import { StopsFormComponent } from './stops-form/stops-form.component';
 import { NzTransferModule } from 'ng-zorro-antd/transfer';
+import { StopsWorkingHoursComponent } from './stops-working-hours/stops-working-hours.component';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 
 const antdModules = [
-  NzTransferModule
+  NzTransferModule,
+  NzTimePickerModule,
 ]
 
 @NgModule({
   declarations: [
     StopsListComponent,
     StopsStopComponent,
-    StopsFormComponent
+    StopsFormComponent,
+    StopsWorkingHoursComponent
   ],
   imports: [
     CommonModule,

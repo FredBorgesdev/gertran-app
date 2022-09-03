@@ -1,0 +1,41 @@
+<nz-tabset nzType="card">
+  <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.label">
+    <form nz-form nzLayout="vertical">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="start">Funcionamento de</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <input id="start" type="time" nz-input formControlName="start" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="end">Funcionamento até</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <input id="end" type="time" nz-input formControlName="end" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <label nz-checkbox formControlName="fullDay">
+            Funciona 24 horas?
+          </label>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="expectedG2g">G2G Esperado</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <input id="expectedG2g" type="time" nz-input formControlName="expectedG2g" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="hiredG2g">G2G Contratado</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <input id="hiredG2g" type="time" nz-input formControlName="hiredG2g" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-tab>
+</nz-tabset>
