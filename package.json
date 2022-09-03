@@ -14,7 +14,7 @@
     "bundle-report": "webpack-bundle-analyzer dist/enlink/stats.json"
   },
   "engines": {
-    "node": "16.17.0"
+    "node": "14.18.2"
   },
   "private": true,
   "dependencies": {
