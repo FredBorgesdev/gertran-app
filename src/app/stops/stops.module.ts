@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { StopsRoutingModule } from './stops-routing.module';
 import { StopsListComponent } from './stops-list/stops-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { StopsStopComponent } from './stops-stop/stops-stop.component';
 
 
 @NgModule({
   declarations: [
-    StopsListComponent
+    StopsListComponent,
+    StopsStopComponent
   ],
   imports: [
     CommonModule,

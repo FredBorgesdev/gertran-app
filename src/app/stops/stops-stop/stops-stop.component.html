@@ -1,0 +1,39 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="star"></i><span>Pontos</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="stop?.id">
+        Editar Ponto ({{customer.companyName}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!stop?.id">
+        Adicionar Ponto
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Ponto">
+        <!-- <app-customers-form -->
+        <!--   *ngIf="customer" -->
+        <!--   [customer]="customer" -->
+        <!--   (onSave)="onSubmit($event)" -->
+        <!-- ></app-customers-form> -->
+      </nz-tab>
+
+      <nz-tab nzTitle="Categoria" [nzDisabled]="!stop?.id">
+        <!-- <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab> -->
+      </nz-tab>
+
+      <nz-tab nzTitle="Funcionamento" [nzDisabled]="!stop?.id">
+        <!-- <app-branch-office-tab [customerId]="customer?.id"></app-branch-office-tab> -->
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

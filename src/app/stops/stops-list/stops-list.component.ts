@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { stopsList, stopsListTypeCategories, stopsListTypes } from './mocked-data';
 
 export interface DataItem {
@@ -73,7 +74,9 @@ export class StopsListComponent implements OnInit {
     { title: 'Ações' },
   ]
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true
@@ -88,7 +91,9 @@ export class StopsListComponent implements OnInit {
     return this.stopsListTypes.find(type => type.id === id)?.name
   }
 
-  create() {}
+  create() {
+    this.router.navigate(['/stops/stop-create'])
+  }
 
   edit() {}
 }
