@@ -1,0 +1,9 @@
+name: gertran-web
+services:
+- build_command: npm run build
+  environment_slug: node-js
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: zayit/gertran_web_app
+  name: gertran-web
