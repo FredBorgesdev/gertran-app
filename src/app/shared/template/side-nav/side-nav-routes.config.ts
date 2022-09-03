@@ -73,7 +73,7 @@ export const ROUTES: SideNavInterface[] = [
     icon: 'setting',
     submenu: [
       {
-        path: '/',
+        path: '/stops/stops-list',
         title: 'Pontos',
         iconType: 'nzIcon',
         iconTheme: 'outline',

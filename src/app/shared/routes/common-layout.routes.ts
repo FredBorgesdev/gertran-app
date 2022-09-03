@@ -28,5 +28,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'automations',
     loadChildren: () => import('../../automations/automations.module').then(m => m.AutomationsModule)
+  },
+  {
+    path: 'stops',
+    loadChildren: () => import('../../stops/stops.module').then(m => m.StopsModule)
   }
 ]
