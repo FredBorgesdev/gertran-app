@@ -66,4 +66,8 @@ export class RoutesListComponent implements OnInit {
   create() {
     this.router.navigate(['routes', 'route-create'])
   }
+
+  edit(item: Route) {
+    this.router.navigate(['routes', 'route-edit', item.id])
+  }
 }
