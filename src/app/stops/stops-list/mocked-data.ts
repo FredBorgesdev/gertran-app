@@ -37,6 +37,19 @@ export const stopsList: Stop[] = [
       }
     }
   },
+  {
+    id: 3,
+    name: 'Ribeirão Preto – Posto 01',
+    description: 'Stop 1 description',
+    address: 'Rua 1, 100',
+    state: 'MG',
+    city: 'Belo Horizonte',
+    lat: -19.920000,
+    lng: -43.940000,
+    radius: 500,
+    typeId: 1,
+    typeCategoryIds: [2],
+  },
 ]
 
 export const stopsListTypes: any[] = [

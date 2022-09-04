@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Stop } from 'src/app/stops/stops-list/stops-list.component';
 import { routesList } from './mocked-data';
 
@@ -52,7 +53,7 @@ export class RoutesListComponent implements OnInit {
     { title: 'Ações' },
   ]
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.isLoading = true
@@ -62,5 +63,7 @@ export class RoutesListComponent implements OnInit {
     }, 333)
   }
 
-  create() {}
+  create() {
+    this.router.navigate(['routes', 'route-create'])
+  }
 }

@@ -1,0 +1,44 @@
+<nz-transfer
+      [nzDataSource]="list"
+      [nzShowSearch]="true"
+      [nzShowSelectAll]="false"
+      [nzRenderList]="[renderList, renderList]"
+      (nzSelectChange)="select($event)"
+    >
+      <ng-template
+        #renderList
+        let-items
+        let-direction="direction"
+        let-stat="stat"
+        let-onItemSelectAll="onItemSelectAll"
+        let-onItemSelect="onItemSelect"
+      >
+        <nz-table #t [nzData]="items" nzSize="small">
+          <thead>
+            <tr>
+              <th
+                [nzChecked]="stat.checkAll"
+                [nzIndeterminate]="stat.checkHalf"
+                (nzCheckedChange)="onItemSelectAll($event)"
+              ></th>
+              <th>Name</th>
+              <th>Estado</th>
+              <th>Cidade</th>
+            </tr>
+          </thead>
+          <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <tr *ngFor="let data of t.data" (click)="onItemSelect(data)" cdkDrag [cdkDragDisabled]="direction === 'left'">
+              <td
+                [nzChecked]="!!data.checked"
+                (nzCheckedChange)="onItemSelect(data)"
+              ></td>
+              <td>{{ data.name }}</td>
+              <td>
+                {{ data.state }}
+              </td>
+              <td>{{ data.city }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </ng-template>
+    </nz-transfer>

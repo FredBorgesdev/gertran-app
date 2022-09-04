@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RoutesFormComponent } from './routes-form/routes-form.component';
 import { RoutesListComponent } from './routes-list/routes-list.component';
 
 const routes: Routes = [
@@ -11,6 +12,22 @@ const routes: Routes = [
       headerDisplay: 'none'
     }
   },
+  {
+    path: 'route-edit/:id',
+    component: RoutesFormComponent,
+    data: {
+      title: 'Editar Rota ',
+      headerDisplay: 'none'
+    }
+  },
+  {
+    path: 'route-create',
+    component: RoutesFormComponent,
+    data: {
+      title: 'Adicionar Rota ',
+      headerDisplay: 'none'
+    }
+  }
 ];
 
 @NgModule({
