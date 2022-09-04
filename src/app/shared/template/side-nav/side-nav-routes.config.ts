@@ -81,7 +81,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/routes/routes-list',
         title: 'Rotas',
         iconType: 'nzIcon',
         iconTheme: 'outline',
