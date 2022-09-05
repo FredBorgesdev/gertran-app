@@ -27,10 +27,9 @@
         ></app-trucks-form>
       </nz-tab>
       <nz-tab nzTitle="Rastreadores">
-        <app-trucks-trackers-tab
-          [truck]="truck"
-          *ngIf="truck"
-        ></app-trucks-trackers-tab>
+        <app-trackers-tab
+          [trackers]="truck.trackers"
+        ></app-trackers-tab>
       </nz-tab>
     </nz-tabset>
   </nz-card>

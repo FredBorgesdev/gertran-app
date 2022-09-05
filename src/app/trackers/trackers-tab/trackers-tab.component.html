@@ -11,16 +11,15 @@
   </div>
 </div>
 
-<app-trucks-trackers-table
-  [trackers]="truck.trackers"
-  *ngIf="truck"
+<app-trackers-table
+  [trackers]="trackers"
   (onEditTracker)="editTracker($event)"
-></app-trucks-trackers-table>
+></app-trackers-table>
 
-<app-trucks-trackers-form
+<app-trackers-form
   [tracker]="tracker"
   [isVisible]="isCreatingTracker"
   *ngIf="isCreatingTracker"
   (onAdd)="saveTracker($event)"
   (onClose)="closeTrackerForm()"
-></app-trucks-trackers-form>
+></app-trackers-form>

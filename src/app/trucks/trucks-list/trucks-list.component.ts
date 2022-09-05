@@ -3,17 +3,10 @@ import {
   OnInit
 } from '@angular/core'
 import { Router } from '@angular/router'
+import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component';
 
 import { TableService } from '../../shared/services/table.service'
 import { trucksList } from './mocked-data';
-
-export interface TruckTracker {
-  id: number;
-  trackingSystem: string
-  trackingModel: string
-  trackingSerialNumber: string
-  main: boolean
-}
 
 export interface Truck {
   id: number
@@ -22,7 +15,7 @@ export interface Truck {
   year: number
   color: string
   plate: string
-  trackers: TruckTracker[]
+  trackers: Tracker[]
 }
 
 @Component({
@@ -64,15 +57,6 @@ export class TrucksListComponent implements OnInit {
         a: Truck,
         b: Truck
       ) => a.model.localeCompare(b.model)
-    },
-    {
-      title: 'Sis. Rastreamento'
-    },
-    {
-      title: 'Modelo'
-    },
-    {
-      title: 'Número de Série'
     },
     {
       title: 'Ações'
