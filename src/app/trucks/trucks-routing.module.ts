@@ -4,8 +4,8 @@ import {
   Routes
 } from '@angular/router'
 
-import { TrucksFormComponent } from './trucks-form/trucks-form.component'
 import { TrucksListComponent } from './trucks-list/trucks-list.component'
+import { TrucksTruckComponent } from './trucks-truck/trucks-truck.component'
 
 const routes: Routes = [
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'truck-create',
-    component: TrucksFormComponent,
+    component: TrucksTruckComponent,
     data: {
       title: 'Adicionar Usuário ',
       headerDisplay: 'none'
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'truck-edit/:id',
-    component: TrucksFormComponent,
+    component: TrucksTruckComponent,
     data: {
       title: 'Editar Usuário ',
       headerDisplay: 'none'

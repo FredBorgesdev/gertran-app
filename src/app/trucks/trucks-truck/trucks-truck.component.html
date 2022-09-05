@@ -1,0 +1,37 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Cavalos</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="truck?.id">
+        Editar Cavalo ({{truck?.brand}} - {{truck?.model}} [{{ truck?.plate }}])
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!truck?.id">
+        Adicionar Cavalo
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados do cavalo">
+        <app-trucks-form
+          [truck]="truck"
+          (onSave)="save($event)"
+          *ngIf="truck"
+        ></app-trucks-form>
+      </nz-tab>
+      <nz-tab nzTitle="Rastreadores">
+        <app-trucks-trackers-tab
+          [truck]="truck"
+          *ngIf="truck"
+        ></app-trucks-trackers-tab>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

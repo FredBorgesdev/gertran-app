@@ -5,17 +5,24 @@ import {
 import { Router } from '@angular/router'
 
 import { TableService } from '../../shared/services/table.service'
+import { trucksList } from './mocked-data';
 
-interface DataItem {
+export interface TruckTracker {
+  id: number;
+  trackingSystem: string
+  trackingModel: string
+  trackingSerialNumber: string
+  main: boolean
+}
+
+export interface Truck {
   id: number
   brand: string
   model: string
   year: number
   color: string
   plate: string
-  trackingSystem: string
-  trackingModel: string
-  trackingSerialNumber: string
+  trackers: TruckTracker[]
 }
 
 @Component({
@@ -33,37 +40,31 @@ export class TrucksListComponent implements OnInit {
     {
       title: 'ID',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Truck,
+        b: Truck
       ) => a.id - b.id
     },
     {
       title: 'Placa',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Truck,
+        b: Truck
       ) => a.plate.localeCompare(b.plate)
     },
     {
       title: 'Marca',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Truck,
+        b: Truck
       ) => a.brand.localeCompare(b.brand)
     },
     {
       title: 'Modelo',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Truck,
+        b: Truck
       ) => a.model.localeCompare(b.model)
     },
-    // {
-    //   title: 'Ano'
-    // },
-    // {
-    //   title: 'Cor'
-    // },
     {
       title: 'Sis. Rastreamento'
     },
@@ -78,52 +79,7 @@ export class TrucksListComponent implements OnInit {
     }
   ]
 
-  trucksList: DataItem[] = [
-    {
-      id: 1,
-      brand: 'Ford',
-      model: 'Fusion',
-      year: 2020,
-      color: 'Azul',
-      plate: 'ABC-1234',
-      trackingSystem: 'JaburSat',
-      trackingModel: 'JB-SAT-1',
-      trackingSerialNumber: '123456789'
-    },
-    {
-      id: 2,
-      brand: 'Chevrolet',
-      model: 'Onix',
-      year: 2020,
-      color: 'Vermelho',
-      plate: 'ABC-1234',
-      trackingSystem: 'JaburSat',
-      trackingModel: 'JB-SAT-1',
-      trackingSerialNumber: '123456789'
-    },
-    {
-      id: 3,
-      brand: 'Fiat',
-      model: 'Uno',
-      year: 2020,
-      color: 'Preto',
-      plate: 'ABC-1234',
-      trackingSystem: 'JaburSat',
-      trackingModel: 'JB-SAT-2',
-      trackingSerialNumber: '123456789'
-    },
-    {
-      id: 4,
-      brand: 'Toyota',
-      model: 'Corolla',
-      year: 2020,
-      color: 'Branco',
-      plate: 'ABC-1234',
-      trackingSystem: 'OmniLink',
-      trackingModel: 'OM-LINK-1',
-      trackingSerialNumber: '123456789'
-    }
-  ]
+  trucksList: Truck[] = trucksList
 
   constructor(
     private router: Router,
@@ -154,7 +110,7 @@ export class TrucksListComponent implements OnInit {
     this.router.navigate([ '/trucks/truck-create' ])
   }
 
-  edit(item: DataItem) {
+  edit(item: Truck) {
     this.router.navigate([
       '/trucks/truck-edit',
       item.id

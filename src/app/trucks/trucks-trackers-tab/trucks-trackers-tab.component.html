@@ -1,0 +1,26 @@
+<div class="row m-b-30">
+  <div class="col-lg-12 text-right">
+    <button
+      (click)="this.isCreatingTracker = true"
+      nz-button
+      nzType="primary"
+    >
+      <i nz-icon nzType="plus" theme="outline"></i>
+      <span>Adicionar Rastreador</span>
+    </button>
+  </div>
+</div>
+
+<app-trucks-trackers-table
+  [trackers]="truck.trackers"
+  *ngIf="truck"
+  (onEditTracker)="editTracker($event)"
+></app-trucks-trackers-table>
+
+<app-trucks-trackers-form
+  [tracker]="tracker"
+  [isVisible]="isCreatingTracker"
+  *ngIf="isCreatingTracker"
+  (onAdd)="saveTracker($event)"
+  (onClose)="closeTrackerForm()"
+></app-trucks-trackers-form>

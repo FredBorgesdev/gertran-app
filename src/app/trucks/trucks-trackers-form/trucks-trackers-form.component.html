@@ -1,0 +1,48 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Novo rastreador"
+  nzWidth="600px"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Sistema de rastreamento</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <nz-select
+            id="eventType"
+            nzPlaceHolder="Selecione o sistema de rastreamento"
+            formControlName="trackingSystem"
+          >
+            <nz-option nzValue="1" nzLabel="Jabursat">Jabursat</nz-option>
+            <nz-option nzValue="2" nzLabel="Controlloc">Controlloc</nz-option>
+            <nz-option nzValue="3" nzLabel="Omnilink">Omnilink</nz-option>
+            <nz-option nzValue="4" nzLabel="Sistema X">Sistema X</nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Modelo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <nz-select
+            id="eventType"
+            nzPlaceHolder="Selecione o modelo"
+            formControlName="trackingModel"
+          >
+            <nz-option nzValue="1" nzLabel="Modelo 1">Modelo 1</nz-option>
+            <nz-option nzValue="2" nzLabel="Modelo 2">Modelo 2</nz-option>
+            <nz-option nzValue="3" nzLabel="Modelo 3">Modelo 3</nz-option>
+            <nz-option nzValue="4" nzLabel="Modelo 4">Modelo 4</nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Serial Number</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+          <input id="cnpj" type="text" nz-input formControlName="trackingSerialNumber" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>
