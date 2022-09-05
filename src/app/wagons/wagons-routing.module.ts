@@ -4,8 +4,8 @@ import {
   Routes
 } from '@angular/router'
 
-import { WagonsFormComponent } from './wagons-form/wagons-form.component'
 import { WagonsListComponent } from './wagons-list/wagons-list.component'
+import { WagonsWagonComponent } from './wagons-wagon/wagons-wagon.component'
 
 const routes: Routes = [
   {
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'wagons-create',
-    component: WagonsFormComponent,
+    component: WagonsWagonComponent,
     data: {
       title: 'Adicionar Carreta ',
       headerDisplay: 'none'
@@ -26,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'wagons-edit/:id',
-    component: WagonsFormComponent,
+    component: WagonsWagonComponent,
     data: {
       title: 'Editar Carreta ',
       headerDisplay: 'none'

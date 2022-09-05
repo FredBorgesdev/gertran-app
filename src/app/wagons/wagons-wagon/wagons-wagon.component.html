@@ -1,0 +1,38 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Carretas</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="wagon.id">
+        Editar Carreta ({{wagon.brand}} - {{wagon.model}} [{{ wagon.plate }}])
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!wagon.id">
+        Adicionar Carreta
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Carreta">
+        <app-wagons-form
+          [wagon]="wagon"
+          (onSubmit)="onSubmit($event)"
+          *ngIf="wagon"
+        ></app-wagons-form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Rastreadores">
+        <app-trackers-tab
+          [trackers]="wagon.trackers"
+        ></app-trackers-tab>
+      </nz-tab>
+    </nz-tabset>
+
+  </nz-card>
+</nz-spin>

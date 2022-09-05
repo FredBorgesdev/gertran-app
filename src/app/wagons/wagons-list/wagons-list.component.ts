@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component'
 
 import { TableService } from '../../shared/services/table.service'
+import { wagonsList } from './mocked-data'
 
-interface DataItem {
+export interface Wagon {
   id: number
   brand: string
   model: string
   year: number
   color: string
   plate: string
+  trackers: Tracker[]
 }
 
 @Component({
@@ -27,60 +30,37 @@ export class WagonsListComponent implements OnInit {
     {
       title: 'ID',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Wagon,
+        b: Wagon
       ) => a.id - b.id
     },
     {
       title: 'Placa',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Wagon,
+        b: Wagon
       ) => a.plate.localeCompare(b.plate)
     },
     {
       title: 'Marca',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Wagon,
+        b: Wagon
       ) => a.brand.localeCompare(b.brand)
     },
     {
       title: 'Modelo',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Wagon,
+        b: Wagon
       ) => a.model.localeCompare(b.model)
     },
-    {
-      title: 'Ano'
-    },
-    {
-      title: 'Cor'
-    },
-    {
-      title: 'Ações'
-    }
+    { title: 'Ano' },
+    { title: 'Cor' },
+    { title: 'Ações' }
   ]
 
-  wagonsList: DataItem[] = [
-    {
-      id: 1,
-      brand: 'Volvo',
-      model: 'V70',
-      year: 2019,
-      color: 'Azul',
-      plate: 'ABC-1234'
-    },
-    {
-      id: 2,
-      brand: 'Volvo',
-      model: 'XC60',
-      year: 2019,
-      color: 'Vermelho',
-      plate: 'ABC-1235'
-    }
-  ]
+  wagonsList = wagonsList
 
   constructor(
     private router: Router,
@@ -111,7 +91,7 @@ export class WagonsListComponent implements OnInit {
     this.router.navigate([ '/wagons/wagons-create' ])
   }
 
-  edit(item: DataItem) {
+  edit(item: Wagon) {
     this.router.navigate([ '/wagons/wagons-edit', item.id ])
   }
 
