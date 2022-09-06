@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { InsuranceCompaniesRoutingModule } from './insurance-companies-routing.module';
 import { InsuranceCompaniesListComponent } from './insurance-companies-list/insurance-companies-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { InsuranceCompaniesFormComponent } from './insurance-companies-form/insurance-companies-form.component';
 
 
 @NgModule({
   declarations: [
-    InsuranceCompaniesListComponent
+    InsuranceCompaniesListComponent,
+    InsuranceCompaniesFormComponent
   ],
   imports: [
     CommonModule,

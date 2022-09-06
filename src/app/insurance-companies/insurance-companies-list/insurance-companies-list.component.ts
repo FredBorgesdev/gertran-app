@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-companies.service';
 
 @Component({
@@ -33,6 +34,7 @@ export class InsuranceCompaniesListComponent implements OnInit {
 
   constructor(
     private insuranceCompaniesService: InsuranceCompaniesService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class InsuranceCompaniesListComponent implements OnInit {
     })
   }
 
-  create() {}
-
+  create() {
+    this.router.navigate(['insurance-companies/insurance-companies-create'])
+  }
 }

@@ -1,0 +1,74 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-companies.service';
+
+@Component({
+  selector: 'app-insurance-companies-form',
+  templateUrl: './insurance-companies-form.component.html',
+  styleUrls: ['./insurance-companies-form.component.css']
+})
+export class InsuranceCompaniesFormComponent implements OnInit {
+  
+  isLoading = false
+  insuranceCompany: InsuranceCompany = null
+
+  validateForm: FormGroup
+
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private insuranceCompaniesService: InsuranceCompaniesService,
+    private message: NzMessageService,
+  ) { }
+
+  ngOnInit(): void {
+    this.validateForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      website: [null],
+      phone: [null, Validators.required],
+      email: [null],
+      logo: [null],
+    })
+    this.loadInsuranceCompany()
+  }
+
+  loadInsuranceCompany() {
+    if (this.activatedRoute.snapshot.paramMap.has('id')) {
+      const id = this.activatedRoute.snapshot.paramMap.get('id')
+      this.insuranceCompaniesService.get(id).subscribe(insuranceCompany => {
+        this.insuranceCompany = insuranceCompany
+
+        this.validateForm.patchValue({
+          name: insuranceCompany.name,
+          website: insuranceCompany.website,
+          phone: insuranceCompany.phone,
+          email: insuranceCompany.email,
+          logo: insuranceCompany.logo,
+        })
+      })
+    }
+  }
+
+  listInsuranceCompanies() {
+    this.router.navigate(['/insurance-companies/insurance-companies-list'])
+  }
+
+  save() {
+    if (this.validateForm.valid) {
+      this.insuranceCompaniesService.save(this.validateForm.value).subscribe(() => {
+        this.message.success('Seguradora salva com sucesso')
+        this.listInsuranceCompanies()
+      })
+    } else {
+      Object.values(this.validateForm.controls).forEach(control => {
+        if (!control.invalid) return
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
+      });
+    }
+  }
+
+}

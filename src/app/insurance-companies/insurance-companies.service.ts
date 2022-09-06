@@ -23,4 +23,15 @@ export class InsuranceCompaniesService {
   getAll(): Observable<InsuranceCompany[]> {
     return this.http.get<InsuranceCompany[]>('insurance-companies');
   }
+
+  get(id: string): Observable<InsuranceCompany> {
+    return this.http.get<InsuranceCompany>(`insurance-companies/${id}`);
+  }
+  
+  save(insuranceCompany: Omit<InsuranceCompany, 'id'>): Observable<InsuranceCompany> {
+    // TODO: remove when backend is ready
+    delete insuranceCompany.logo
+
+    return this.http.post<InsuranceCompany>('insurance-companies/create', insuranceCompany);
+  }
 }
