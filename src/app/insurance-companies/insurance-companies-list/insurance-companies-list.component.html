@@ -1,0 +1,69 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Carretas
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <div class="row m-b-30">
+      <div class="col-lg-8">
+        <div class="d-md-flex">
+        </div>
+      </div>
+      <div class="col-lg-4 text-right">
+        <button
+          (click)="create()"
+          nz-button
+          nzType="primary"
+        >
+          <i nz-icon nzType="plus" theme="outline"></i>
+          <span>Adicionar Carreta</span>
+        </button>
+      </div>
+    </div>
+    <nz-table #insuranceCompaniesListTable [nzData]="insuranceCompanies" >
+      <thead>
+      <tr>
+        <th *ngFor="let column of insuranceCompaniesColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of insuranceCompaniesListTable.data;  let i=index">
+        <td>
+          <div class="d-flex align-items-center">
+            <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
+          </div>
+        </td>
+        <td>{{item.phone || '-'}}</td>
+        <td>{{item.email || '-'}}</td>
+        <td>{{item.website || '-'}}</td>
+        <td class="text-md-center">
+          <a
+            (click)="edit(item)"
+            class="m-r-5"
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Editar"
+          >
+            <i nz-icon nzType="edit" theme="outline"></i>
+          </a>
+          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+            <i nz-icon nzType="delete" theme="outline"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+</nz-spin>

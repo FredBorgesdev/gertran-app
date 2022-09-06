@@ -67,7 +67,7 @@ export const ROUTES: SideNavInterface[] = [
   },
   {
     path: '',
-    title: 'Definições',
+    title: 'Configurações',
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'setting',
@@ -121,6 +121,23 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'bar-chart',
         submenu: []
       }
+    ]
+  },
+  {
+    path: '',
+    title: 'Definições',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'book',
+    submenu: [
+      {
+        path: '/insurance-companies/insurance-companies-list',
+        title: 'Companhias de seguro',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'heart',
+        submenu: []
+      },
     ]
   }
 ]

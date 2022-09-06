@@ -36,5 +36,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'routes',
     loadChildren: () => import('../../routes/routes.module').then(m => m.RoutesModule)
+  },
+  {
+    path: 'insurance-companies',
+    loadChildren: () => import('../../insurance-companies/insurance-companies.module').then(m => m.InsuranceCompaniesModule)
   }
 ]
