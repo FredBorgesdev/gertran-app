@@ -20,6 +20,7 @@ export class InsuranceCompaniesListComponent implements OnInit {
         b: InsuranceCompany
       ) => a.name.localeCompare(b.name),
     },
+    { title: 'Telefone' },
     {
       title: 'Email',
       compare: (
@@ -27,7 +28,6 @@ export class InsuranceCompaniesListComponent implements OnInit {
         b: InsuranceCompany
       ) => a.email.localeCompare(b.email),
     },
-    { title: 'Telefone' },
     { title: 'Site' },
     { title: 'Ações' },
   ]
@@ -47,5 +47,13 @@ export class InsuranceCompaniesListComponent implements OnInit {
 
   create() {
     this.router.navigate(['insurance-companies/insurance-companies-create'])
+  }
+
+  edit(insuranceCompany: InsuranceCompany) {
+    this.router.navigate([
+      'insurance-companies',
+      'insurance-companies-edit',
+      insuranceCompany.id,
+    ])
   }
 }

@@ -37,6 +37,7 @@ export class InsuranceCompaniesFormComponent implements OnInit {
 
   loadInsuranceCompany() {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
+      this.isLoading = true
       const id = this.activatedRoute.snapshot.paramMap.get('id')
       this.insuranceCompaniesService.get(id).subscribe(insuranceCompany => {
         this.insuranceCompany = insuranceCompany
@@ -48,6 +49,8 @@ export class InsuranceCompaniesFormComponent implements OnInit {
           email: insuranceCompany.email,
           logo: insuranceCompany.logo,
         })
+
+        this.isLoading = false
       })
     }
   }
@@ -57,18 +60,34 @@ export class InsuranceCompaniesFormComponent implements OnInit {
   }
 
   save() {
-    if (this.validateForm.valid) {
-      this.insuranceCompaniesService.save(this.validateForm.value).subscribe(() => {
-        this.message.success('Seguradora salva com sucesso')
-        this.listInsuranceCompanies()
-      })
-    } else {
+    if (!this.validateForm.valid) {
       Object.values(this.validateForm.controls).forEach(control => {
         if (!control.invalid) return
         control.markAsDirty();
         control.updateValueAndValidity({ onlySelf: true });
       });
     }
+
+    this.isLoading = true
+    if (this.insuranceCompany?.id) {
+      this.insuranceCompaniesService.update(
+        this.insuranceCompany.id,
+        this.validateForm.value
+      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+    } else {
+      this.insuranceCompaniesService.save(this.validateForm.value)
+        .subscribe(() => this.handleSuccess(), () => this.handleError())
+    }
   }
 
+  private handleSuccess() {
+    this.message.success('Seguradora salva com sucesso')
+    this.listInsuranceCompanies()
+    this.isLoading = false
+  }
+
+  private handleError() {
+    this.message.error('Ocorreu um erro ao salvar a seguradora')
+    this.isLoading = false
+  }
 }

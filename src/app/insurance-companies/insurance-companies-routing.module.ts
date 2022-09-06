@@ -19,6 +19,14 @@ const routes: Routes = [
       title: 'Criar seguradora ',
       headerDisplay: 'none',
     }
+  },
+  {
+    path: 'insurance-companies-edit/:id',
+    component: InsuranceCompaniesFormComponent,
+    data: {
+      title: 'Editar seguradora ',
+      headerDisplay: 'none',
+    }
   }
 ];
 

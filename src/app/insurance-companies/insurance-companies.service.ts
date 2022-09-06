@@ -34,4 +34,14 @@ export class InsuranceCompaniesService {
 
     return this.http.post<InsuranceCompany>('insurance-companies/create', insuranceCompany);
   }
+
+  update(
+    id: string,
+    insuranceCompany: Omit<InsuranceCompany, 'id'>
+  ): Observable<InsuranceCompany> {
+    // TODO: remove when backend is ready
+    delete insuranceCompany.logo
+
+    return this.http.patch<InsuranceCompany>(`insurance-companies/${id}/update`, insuranceCompany);
+  }
 }
