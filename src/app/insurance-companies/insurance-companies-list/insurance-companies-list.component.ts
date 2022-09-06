@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-companies.service';
 
 @Component({
@@ -35,6 +37,8 @@ export class InsuranceCompaniesListComponent implements OnInit {
   constructor(
     private insuranceCompaniesService: InsuranceCompaniesService,
     private router: Router,
+    private modal: NzModalService,
+    private message: NzMessageService
   ) { }
 
   ngOnInit(): void {
@@ -55,5 +59,28 @@ export class InsuranceCompaniesListComponent implements OnInit {
       'insurance-companies-edit',
       insuranceCompany.id,
     ])
+  }
+
+  delete(insuranceCompany: InsuranceCompany) {
+    this.modal.confirm({
+      nzTitle: 'Deseja realmente excluir?',
+      nzContent: 'Essa ação não poderá ser desfeita',
+      nzOkText: 'Sim',
+      nzOnOk: () => this.deleteInsuranceCompany(insuranceCompany.id),
+    })
+  }
+
+  deleteInsuranceCompany(id: string) {
+    this.isLoading = true
+    this.insuranceCompaniesService.delete(id).subscribe(() => {
+      this.insuranceCompanies = this.insuranceCompanies.filter(
+        (insuranceCompany) => insuranceCompany.id !== id
+      )
+      this.message.success('Seguradora excluída com sucesso')
+      this.isLoading = false
+    }, () => {
+      this.message.error('Erro ao excluir seguradora')
+      this.isLoading = false
+    })
   }
 }

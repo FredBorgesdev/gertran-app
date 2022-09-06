@@ -44,4 +44,8 @@ export class InsuranceCompaniesService {
 
     return this.http.patch<InsuranceCompany>(`insurance-companies/${id}/update`, insuranceCompany);
   }
+
+  delete(id: string): Observable<InsuranceCompany> {
+    return this.http.delete<InsuranceCompany>(`insurance-companies/${id}/delete`);
+  }
 }
