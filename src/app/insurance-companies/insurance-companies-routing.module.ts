@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'insurance-companies-list',
     component: InsuranceCompaniesListComponent,
     data: {
-      title: 'Companhias de seguro ',
+      title: 'Seguradoras',
       headerDisplay: 'none',
     }
   },
@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'insurance-companies-create',
     component: InsuranceCompaniesFormComponent,
     data: {
-      title: 'Criar companhia de seguro ',
+      title: 'Criar seguradora ',
       headerDisplay: 'none',
     }
   }

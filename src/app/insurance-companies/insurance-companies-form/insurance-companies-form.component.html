@@ -6,13 +6,13 @@
         <i nz-icon nzType="dashboard"></i>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Companhias de seguro</span></a>
+        <a><i nz-icon nzType="idcard"></i><span>Seguradoras</span></a>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="insuranceCompany?.id">
-        Editar Companhia de seguro ({{insuranceCompany?.name}})
+        Editar seguradora ({{insuranceCompany?.name}})
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="!insuranceCompany?.id">
-        Adicionar Companhia de seguro
+        Adicionar seguradora
       </nz-breadcrumb-item>
     </nz-breadcrumb>
 
@@ -64,10 +64,10 @@
       <nz-form-item>
         <nz-form-control [nzOffset]="7" [nzSpan]="12">
           <button type="button" (click)="save()" nz-button nzType="primary">
-            <i nz-icon nzType="save"></i>Salvar Companhia
+            <i nz-icon nzType="save"></i>Salvar seguradora
           </button>
           <button type="button" (click)="listInsuranceCompanies()" nz-button>
-            <i nz-icon nzType="unordered-list"></i>Listar Companhias
+            <i nz-icon nzType="unordered-list"></i>Listar Seguradoras
           </button>
         </nz-form-control>
       </nz-form-item>

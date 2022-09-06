@@ -132,7 +132,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [
       {
         path: '/insurance-companies/insurance-companies-list',
-        title: 'Companhias de seguro',
+        title: 'Seguradoras',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'heart',
