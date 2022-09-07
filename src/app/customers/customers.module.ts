@@ -9,7 +9,10 @@ import { ContactsTabComponent } from './contacts-tab/contacts-tab.component';
 import { BranchOfficeTableComponent } from './branch-office-table/branch-office-table.component';
 import { BranchOfficeFormComponent } from './branch-office-form/branch-office-form.component';
 import { BranchOfficeTabComponent } from './branch-office-tab/branch-office-tab.component';
-import { CustomersCustomerComponent } from './customers-customer/customers-customer.component'
+import { CustomersCustomerComponent } from './customers-customer/customers-customer.component';
+import { DocumentsTabComponent } from './documents-tab/documents-tab.component';
+import { DocumentsFormComponent } from './documents-form/documents-form.component';
+import { DocumentsTableComponent } from './documents-table/documents-table.component'
 
 const antdModule = []
 
@@ -24,6 +27,9 @@ const antdModule = []
     BranchOfficeFormComponent,
     BranchOfficeTabComponent,
     CustomersCustomerComponent,
+    DocumentsTabComponent,
+    DocumentsFormComponent,
+    DocumentsTableComponent,
   ],
   imports: [
     SharedModule,

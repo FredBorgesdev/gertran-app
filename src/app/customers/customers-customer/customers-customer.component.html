@@ -27,13 +27,21 @@
         ></app-customers-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Telefones" [nzDisabled]="!customer?.id">
-        <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab>
-      </nz-tab>
-
       <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
         <app-branch-office-tab [customerId]="customer?.id"></app-branch-office-tab>
       </nz-tab>
+
+      <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">
+        <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab>
+      </nz-tab>
+
+      <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
+        <app-documents-tab *ngIf="customer" [customer]="customer"></app-documents-tab>
+      </nz-tab>
+
+      <nz-tab nzTitle="Permissões" [nzDisabled]="!customer?.id">
+      </nz-tab>
+
     </nz-tabset>
   </nz-card>
 </nz-spin>

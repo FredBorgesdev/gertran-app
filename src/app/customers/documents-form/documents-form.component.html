@@ -1,0 +1,50 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Novo Documento"
+  nzWidth="600px"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label>Titulo</nz-form-label>
+        <nz-form-control>
+          <input type="text" nz-input formControlName="title">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Tipo de documento</nz-form-label>
+        <nz-form-control>
+          <nz-select formControlName="documentType">
+            <nz-option 
+              *ngFor="let type of documentTypes"
+              [nzLabel]="type.name"
+              [nzValue]="type.id">
+            </nz-option>
+          </nz-select>
+
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-upload
+          nzType="drag"
+          [nzMultiple]="false"
+          nzAction=""
+          [nzBeforeUpload]="beforeUpload"
+        >
+          <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+          </p>
+          <p class="ant-upload-text">Solte o arquivo com o documento</p>
+          <p class="ant-upload-hint">
+            Permitido apenas arquivos de imagem. Somente arquivos de até 5MB. Apenas um arquivo.
+          </p>
+        </nz-upload>
+      </nz-form-item>
+
+    </form>
+  </ng-container>
+</nz-modal>
