@@ -138,6 +138,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'heart',
         submenu: []
       },
+      {
+        path: '/document-types/document-types-list',
+        title: 'Tipos de Documentos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'idcard',
+        submenu: []
+      },
     ]
   }
 ]
