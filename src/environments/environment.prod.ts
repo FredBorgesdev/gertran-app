@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://api.gertran.zayit.com.br:443/v1'
 };
