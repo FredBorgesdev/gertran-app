@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 import { TableService } from '../../shared/services/table.service'
 import { Customer, CustomersService } from '../customers.service';
@@ -41,6 +42,7 @@ export class CustomersListComponent implements OnInit {
     private tableService: TableService,
     private customersService: CustomersService,
     private message: NzMessageService,
+    private modal: NzModalService,
   ) { }
 
   ngOnInit(): void {
@@ -60,8 +62,24 @@ export class CustomersListComponent implements OnInit {
     this.router.navigate(['/customers', 'customer-create'])
   }
 
-  edit(item: Customer) {
-    this.router.navigate(['/customers', 'customer-edit', item.id])
+  edit(customer: Customer) {
+    this.router.navigate(['/customers', 'customer-edit', customer.id])
+  }
+
+  delete(customer: Customer) {
+    this.modal.confirm({
+      nzTitle: 'Deseja realmente excluir?',
+      nzContent: 'Essa ação não poderá ser desfeita',
+      nzOkText: 'Sim',
+      nzOnOk: () => this.deleteCustomer(customer.id),
+    })
+  }
+
+  private deleteCustomer(id: string) {
+    this.customersService.delete(id).subscribe(() => {
+      this.customers = this.customers.filter(customer => customer.id !== id)
+      this.message.success('Cliente excluído com sucesso')
+    })
   }
 
   private handleError() {
