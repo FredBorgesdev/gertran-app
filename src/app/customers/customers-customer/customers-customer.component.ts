@@ -1,23 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-
-export interface Customer {
-  id: number;
-  brandName: string;
-  companyName: string;
-  contactName: string;
-  contactEmail: string;
-  cnpj: string;
-  cep: string;
-  address: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  blocked?: boolean;
-}
+import { Customer, CustomersService } from '../customers.service';
 
 @Component({
   selector: 'app-customers-customer',
@@ -81,18 +65,25 @@ export class CustomersCustomerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private message: NzMessageService,
+    private customersService: CustomersService,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.isLoading = true
-    setTimeout(() => {
-      this.route.snapshot.paramMap.has('id') ? this.loadCustomer() : this.createNewCustomer()
-      this.isLoading = false
-    }, 333)
+    await this.loadCustomer()
+    this.isLoading = false
   }
 
-  loadCustomer() {
-    this.customer = this.customersList.find(c => c.id == +this.route.snapshot.paramMap.get('id'))
+  async loadCustomer() {
+    if (this.route.snapshot.paramMap.has('id')) {
+      const id = this.route.snapshot.paramMap.get('id')
+      return this.customersService.get(id).subscribe((customer: Customer) => {
+        this.customer = customer
+      })
+    }
+
+    this.createNewCustomer()
   }
 
   createNewCustomer() {
@@ -108,14 +99,34 @@ export class CustomersCustomerComponent implements OnInit {
   }
 
   onSubmit(value: Customer) {
-    console.log(value)
     this.isLoading = true
-    setTimeout(() => {
-      this.isLoading = false
-      this.message.success(
-        'As informações foram salvas com sucesso!',
-        { nzDuration: 3000 }
+    if (this.customer.id) {
+      this.customersService.update(this.customer.id, value).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleError()
       )
-    }, 333)
+    } else {
+      this.customersService.save(value).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleError()
+      )
+    }
+  }
+
+  private handleSuccess() {
+    this.isLoading = false
+    this.message.success(
+      'As informações foram salvas com sucesso!',
+      { nzDuration: 3000 }
+    )
+    this.router.navigate(['/customers', 'customers-list'])
+  }
+
+  private handleError() {
+    this.isLoading = false
+    this.message.error(
+      'Ocorreu um erro ao salvar as informações.',
+      { nzDuration: 3000 }
+    )
   }
 }

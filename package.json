@@ -31,6 +31,7 @@
     "camelcase-keys-deep": "^0.1.0",
     "chart.js": "^3.0.0",
     "date-fns": "^2.16.1",
+    "decamelize-keys-deep": "^0.1.1",
     "jquery": "^3.5.1",
     "js-cookie": "^3.0.1",
     "ng-chartjs": "0.2.5",

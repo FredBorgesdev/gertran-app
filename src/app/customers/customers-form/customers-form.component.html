@@ -1,65 +1,31 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Nome Fantasia</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="brandName" type="text" nz-input formControlName="brandName" />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="tradingName">Nome Fantasia</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
+      <input id="tradingName" type="text" nz-input formControlName="tradingName" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Razão Social</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="companyName" type="text" value="{{ customer?.companyName }}" nz-input formControlName="companyName" />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="corporateName">Razão Social</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a razão social!">
+      <input id="corporateName" type="text" nz-input formControlName="corporateName" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CNPJ</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" value="{{ customer?.cnpj }}" nz-input formControlName="cnpj" />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="cnpj">CNPJ</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="CNPJ Inválido! Insira no formato 99.999.999/0001-99">
+      <input id="cnpj" type="text" nz-input formControlName="cnpj" />
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="domain">Website</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Website inválido!">
+      <input id="domain" type="text" nz-input formControlName="domain" />
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-divider></nz-divider>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CEP</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="cep" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Logradouro</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="address" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Número</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="number" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="note">Complemento</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="complement" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Bairro</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="neighborhood" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Cidade</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="city" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Estado</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="state" />
-    </nz-form-control>
-  </nz-form-item>
+
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button type="button" (click)="save()" nz-button nzType="primary">

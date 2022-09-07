@@ -27,13 +27,11 @@ export class CustomersService implements ApiService<Customer> {
   }
 
   getAll() {
-    return this.http.get<Customer[]>('customers').pipe(
-      map(customers => customers.map<Customer>(camelcaseKeys))
-    );
+    return this.http.get<Customer[]>('customers')
   }
 
   get(id: string) {
-    return this.http.get<Customer>(`customers/${id}`);
+    return this.http.get<Customer>(`customers/${id}`)
   }
 
   update(id: string, customer: Omit<Customer, 'id'>) {
