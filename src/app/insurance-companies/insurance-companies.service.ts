@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import ApiService from '../shared/services/api.service';
 
 export interface InsuranceCompany {
   id: string
@@ -14,21 +14,21 @@ export interface InsuranceCompany {
 @Injectable({
   providedIn: 'root'
 })
-export class InsuranceCompaniesService {
+export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  getAll(): Observable<InsuranceCompany[]> {
+  getAll() {
     return this.http.get<InsuranceCompany[]>('insurance-companies');
   }
 
-  get(id: string): Observable<InsuranceCompany> {
+  get(id: string) {
     return this.http.get<InsuranceCompany>(`insurance-companies/${id}`);
   }
-  
-  save(insuranceCompany: Omit<InsuranceCompany, 'id'>): Observable<InsuranceCompany> {
+
+  save(insuranceCompany: Omit<InsuranceCompany, 'id'>) {
     // TODO: remove when backend is ready
     delete insuranceCompany.logo
 
@@ -38,14 +38,14 @@ export class InsuranceCompaniesService {
   update(
     id: string,
     insuranceCompany: Omit<InsuranceCompany, 'id'>
-  ): Observable<InsuranceCompany> {
+  ) {
     // TODO: remove when backend is ready
     delete insuranceCompany.logo
 
     return this.http.patch<InsuranceCompany>(`insurance-companies/${id}/update`, insuranceCompany);
   }
 
-  delete(id: string): Observable<InsuranceCompany> {
+  delete(id: string) {
     return this.http.delete<InsuranceCompany>(`insurance-companies/${id}/delete`);
   }
 }
