@@ -36,7 +36,7 @@
       </nz-tab>
 
       <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
-        <app-documents-tab *ngIf="customer" [customer]="customer"></app-documents-tab>
+        <app-documents-tab *ngIf="customer?.id" [customer]="customer"></app-documents-tab>
       </nz-tab>
 
       <nz-tab nzTitle="Permissões" [nzDisabled]="!customer?.id">

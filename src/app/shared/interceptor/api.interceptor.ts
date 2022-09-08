@@ -17,14 +17,14 @@ export class ApiInterceptor implements HttpInterceptor {
 
   constructor() {}
 
-  isApplicationJson(request: HttpRequest<unknown>) {
-    return request.headers.get('Content-Type') === 'application/json';
+  isFormData(request: HttpRequest<unknown>) {
+    return request.body instanceof FormData
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const apiReq = request.clone({
       url: `${environment.apiUrl}/${request.url}/`,
-      body: this.isApplicationJson(request) ? decamelizeKeys(request.body) : request.body
+      body: this.isFormData(request) ? request.body : decamelizeKeys(request.body)
     });
 
     return next.handle(apiReq).pipe(
