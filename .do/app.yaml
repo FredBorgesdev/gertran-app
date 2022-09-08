@@ -1,16 +1,25 @@
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DEPLOYMENT_LIVE
+domains:
+- domain: gertran.zayit.com.br
+  type: PRIMARY
+features:
+- enable-kata-build
 name: gertran-web
+region: nyc
 static_sites:
 - build_command: |-
     npm install
     npm install -g @angular/cli@13.3.3
     ng build --prod
+  catchall_document: index.html
   environment_slug: node-js
   github:
     branch: master
     deploy_on_push: true
     repo: zayit/gertran_web_app
   name: gertran-web
-  output_dir: dist
-  catchall_document: index.html
+  output_dir: dist/enlink
   routes:
-    - path: /
+  - path: /
