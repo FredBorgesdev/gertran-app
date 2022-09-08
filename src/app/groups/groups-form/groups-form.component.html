@@ -1,0 +1,18 @@
+<form nz-form nzLayout="vertical" [formGroup]="formGroup">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+      <input id="name" type="text" nz-input formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-transfer
+      [nzDataSource]="list"
+      [nzShowSelectAll]="true"
+      [nzListStyle]="{ 'width': '50%' }"
+      (nzChange)="change($event)"
+    >
+    </nz-transfer>
+  </nz-form-item>
+</form>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { GroupsFormComponent } from '../groups-form/groups-form.component';
 import { Group } from '../groups.service';
 
 @Component({
@@ -25,12 +27,31 @@ export class GroupsListComponent implements OnInit {
     { title: 'Ações' }
   ]
 
-  constructor() { }
+  constructor(
+    private modal: NzModalService,
+  ) { }
 
   ngOnInit(): void {
   }
 
   search() {}
 
-  create() {}
+  create() {
+    this.modal.create({
+      nzTitle: 'Criar novo grupo',
+      nzContent: GroupsFormComponent,
+      nzWidth: '50%',
+      nzOkText: 'Salvar',
+    })
+  }
+
+  edit(group: Group) {
+    this.modal.create({
+      nzTitle: 'Criar novo grupo',
+      nzContent: GroupsFormComponent,
+      nzComponentParams: { group },
+      nzWidth: '50%',
+      nzOkText: 'Salvar',
+    })
+  }
 }
