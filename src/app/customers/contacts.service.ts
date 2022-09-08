@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import ApiService from '../shared/services/api.service';
 
 export interface ContactDataItem {
-  id: number
+  id: string
   name: string
   email: string
   cellPhone: string

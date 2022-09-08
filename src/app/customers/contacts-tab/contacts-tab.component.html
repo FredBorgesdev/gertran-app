@@ -19,8 +19,10 @@
   ></app-contacts-table>
 
   <app-contacts-form
+    *ngIf="isCreatingContact"
+    [contact]="contact"
     [isVisible]="isCreatingContact"
     (onClose)="this.isCreatingContact = false"
-    (onAdd)="addContact($event)"
+    (onSubmit)="save($event)"
   ></app-contacts-form>
 </nz-spin>
