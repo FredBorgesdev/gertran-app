@@ -10,6 +10,7 @@ export class DocumentsTableComponent implements OnInit {
 
   @Input() documents: CustomerDocument[] = []
   @Output() onEdit: EventEmitter<CustomerDocument> = new EventEmitter<CustomerDocument>()
+  @Output() onDelete: EventEmitter<CustomerDocument> = new EventEmitter<CustomerDocument>()
 
   documentsOrderColumn = [
     {
@@ -32,5 +33,7 @@ export class DocumentsTableComponent implements OnInit {
     this.onEdit.emit(document)
   }
 
-  delete() {}
+  delete(document: CustomerDocument) {
+    this.onDelete.emit(document)
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Customer } from '../customers.service';
 import { OnSubmitEvent } from '../documents-form/documents-form.component';
 import { CustomerDocument, DocumentsService } from '../documents.service';
@@ -21,6 +22,7 @@ export class DocumentsTabComponent implements OnInit {
   constructor(
     private documentsService: DocumentsService,
     private message: NzMessageService,
+    private modal: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,19 @@ export class DocumentsTabComponent implements OnInit {
   edit(customerDocument: CustomerDocument) {
     this.document = customerDocument
     this.isCreatingDocument = true
+  }
+
+  delete(customerDocument: CustomerDocument) {
+    this.modal.confirm({
+      nzTitle: 'Deseja realmente excluir este documento?',
+      nzOnOk: () => {
+        this.isLoading = true
+        this.documentsService.delete(customerDocument.id, this.customer.id).subscribe(
+          () => this.handleSuccess(),
+          () => this.handleFailure()
+        )
+      }
+    })
   }
 
   private handleSuccess() {
