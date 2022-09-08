@@ -21,6 +21,6 @@
   *ngIf="isCreatingBranchOffice"
   [branchOffice]="branchOffice"
   [isVisible]="isCreatingBranchOffice"
-  (onCancel)="this.isCreatingBranchOffice = false"
+  (onClose)="this.isCreatingBranchOffice = false"
   (onSubmit)="save($event)"
 ></app-branch-office-form>
