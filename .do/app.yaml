@@ -1,9 +1,16 @@
 name: gertran-web
-services:
-- build_command: npm run build
+static_sites:
+- build_command: |-
+    npm install
+    npm install -g @angular/cli@13.3.3
+    ng build --prod
   environment_slug: node-js
   github:
     branch: master
     deploy_on_push: true
     repo: zayit/gertran_web_app
   name: gertran-web
+  output_dir: dist
+  catchall_document: index.html
+  routes:
+    - path: /
