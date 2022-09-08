@@ -32,7 +32,7 @@ export class DocumentsService implements ApiService<CustomerDocument> {
     if (body.file) {
       const formData = new FormData()
       formData.append('title', body.title)
-      formData.append('document_type_id', body.documentType.toString())
+      formData.append('document_type', body.documentType.toString())
       formData.append('file', body.file)
       requestBody = formData
     }
