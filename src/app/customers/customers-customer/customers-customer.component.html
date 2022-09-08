@@ -28,7 +28,7 @@
       </nz-tab>
 
       <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
-        <app-branch-office-tab [customerId]="customer?.id"></app-branch-office-tab>
+        <app-branch-office-tab *ngIf="customer?.id" [customer]="customer"></app-branch-office-tab>
       </nz-tab>
 
       <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">

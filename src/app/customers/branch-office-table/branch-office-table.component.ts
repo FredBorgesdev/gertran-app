@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BranchOfficeDataItem } from '../branch-office-tab/branch-office-tab.component';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { BranchOffice } from '../branch-offices.service';
 
 @Component({
   selector: 'app-branch-office-table',
@@ -8,36 +8,28 @@ import { BranchOfficeDataItem } from '../branch-office-tab/branch-office-tab.com
 })
 export class BranchOfficeTableComponent implements OnInit {
 
-  @Input() branchOffices: BranchOfficeDataItem[] = []
+  @Input() branchOffices: BranchOffice[] = []
+  @Output() onEdit: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>()
+  @Output() onDelete: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>()
 
   branchOfficesOrderColumn = [
     {
-      title: 'ID',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.id - b.id,
-    },
-    {
       title: 'Razão social',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.companyName.localeCompare(b.companyName)
+      compare: (a: BranchOffice, b: BranchOffice) => a.corporateName.localeCompare(b.corporateName)
     },
     {
       title: 'Nome fantasia',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.brandName.localeCompare(b.brandName)
+      compare: (a: BranchOffice, b: BranchOffice) => a.tradingName.localeCompare(b.tradingName)
     },
     {
-      title: 'CNJP',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.cnpj.localeCompare(b.cnpj)
+      title: 'CNPJ',
+      compare: (a: BranchOffice, b: BranchOffice) => a.cnpj.localeCompare(b.cnpj)
     },
     {
-      title: 'Contato',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.contactName.localeCompare(b.contactName)
+      title: 'Website',
+      compare: (a: BranchOffice, b: BranchOffice) => a.domain.localeCompare(b.domain)
     },
-    {
-      title: 'Email',
-      compare: (a: BranchOfficeDataItem, b: BranchOfficeDataItem) => a.contactEmail.localeCompare(b.contactEmail)
-    },
-    {
-      title: 'Bloqueado'
-    }
+    { title: 'Ações' }
   ]
 
   constructor() { }
@@ -45,7 +37,11 @@ export class BranchOfficeTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  branchOfficesEdit(item: BranchOfficeDataItem) {
-    console.log('edit')
+  edit(item: BranchOffice) {
+    this.onEdit.emit(item)
+  }
+
+  delete(item: BranchOffice) {
+    this.onDelete.emit(item)
   }
 }

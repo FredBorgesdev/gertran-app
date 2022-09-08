@@ -1,4 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { BranchOffice, BranchOfficesService } from '../branch-offices.service';
+import { Customer } from '../customers.service';
 
 export interface BranchOfficeDataItem {
   id: number
@@ -17,43 +21,80 @@ export interface BranchOfficeDataItem {
 })
 export class BranchOfficeTabComponent implements OnInit {
 
-  @Input() customerId: number
+  @Input() customer: Customer
 
-  branchOffices = [
-    {
-      id: 1475,
-      companyName: 'Gertran Rio de Janeiro',
-      brandName: 'Gertran',
-      cnpj: '22.988.988/0001-00',
-      contactName: 'João da Silva',
-      contactEmail: 'joao.silva@gertran.com.br',
-      blocked: false
-    },
-    {
-      id: 1746,
-      companyName: 'Gertran Espirito Santo',
-      brandName: 'Gertran ES',
-      cnpj: '14.988.988/0001-00',
-      contactName: 'Carlos da Silva',
-      contactEmail: 'carlos.silva@gertran.com.br',
-      blocked: false
-    }
-  ]
+  branchOffices: BranchOffice[] = []
 
+  isLoading = false
   isCreatingBranchOffice = false
+  branchOffice: BranchOffice = null
 
-  constructor() { }
+  constructor(
+    private branchOfficeService: BranchOfficesService,
+    private message: NzMessageService,
+    private modal: NzModalService,
+  ) { }
 
   ngOnInit(): void {
+    this.loadBranchOffices()
   }
 
-  addBranchOffice(branchOffice: BranchOfficeDataItem) {
-    const newContact = {
-      id: this.branchOffices.length + 1,
-      ...branchOffice,
+  loadBranchOffices() {
+    this.isLoading = true
+    this.branchOfficeService.getAll(this.customer.id).subscribe(branchOffices => {
+      this.branchOffices = branchOffices 
+      this.isLoading = false
+    }, () => this.handleFailure())
+  }
+
+
+  save(branchOffice: BranchOffice) {
+    this.isLoading = true
+
+    if (this.branchOffice?.id) {
+      this.branchOfficeService.update(this.branchOffice.id, branchOffice, this.customer.id).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleFailure()
+      )
+    } else {
+      this.branchOfficeService.save(branchOffice, this.customer.id).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleFailure()
+      )
     }
-    console.log(newContact)
-    this.branchOffices = [...this.branchOffices, newContact]
+  }
+
+  edit(branchOffice: BranchOffice) {
+    this.isCreatingBranchOffice = true
+    this.branchOffice = branchOffice
+  }
+
+  delete(branchOffice: BranchOffice) {
+    this.modal.confirm({
+      nzTitle: 'Tem certeza que deseja excluir esta filial?',
+      nzContent: 'Esta ação não pode ser desfeita.',
+      nzOkText: 'Sim',
+      nzOnOk: () => {
+        this.isLoading = true
+        this.branchOfficeService.delete(branchOffice.id, this.customer.id).subscribe(
+          () => this.handleSuccess(),
+          () => this.handleFailure()
+        )
+      },
+    })
+  }
+
+
+  private handleSuccess() {
     this.isCreatingBranchOffice = false
+    this.isLoading = false
+    this.branchOffice = null
+    this.message.success('Filial salva com sucesso')
+    this.loadBranchOffices()
+  }
+
+  private handleFailure() {
+    this.isLoading = false
+    this.message.error('Erro ao salvar filial')
   }
 }

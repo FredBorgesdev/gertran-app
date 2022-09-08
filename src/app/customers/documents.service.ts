@@ -51,7 +51,7 @@ export class DocumentsService implements ApiService<CustomerDocument> {
     } else {
       requestBody = {
         title: body.title,
-        document_type: body.documentType
+        document_type_id: body.documentType
       }
     }
 

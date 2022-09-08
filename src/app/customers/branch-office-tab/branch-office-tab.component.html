@@ -11,10 +11,16 @@
   </div>
 </div>
 
-<app-branch-office-table [branchOffices]="branchOffices"></app-branch-office-table>
+<app-branch-office-table
+  [branchOffices]="branchOffices"
+  (onEdit)="edit($event)"
+  (onDelete)="delete($event)"
+></app-branch-office-table>
 
 <app-branch-office-form
+  *ngIf="isCreatingBranchOffice"
+  [branchOffice]="branchOffice"
   [isVisible]="isCreatingBranchOffice"
   (onCancel)="this.isCreatingBranchOffice = false"
-  (onAdd)="addBranchOffice($event)"
+  (onSubmit)="save($event)"
 ></app-branch-office-form>

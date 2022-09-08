@@ -88,6 +88,7 @@ export class DocumentsTabComponent implements OnInit {
     this.loadDocuments()
     this.isCreatingDocument = false
     this.isLoading = false
+    this.document = null
     this.message.success('Documento salvo com sucesso')
   }
 
