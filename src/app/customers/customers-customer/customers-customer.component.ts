@@ -98,19 +98,23 @@ export class CustomersCustomerComponent implements OnInit {
     }
   }
 
-  onSubmit(value: Customer) {
+  onSubmit() {
     this.isLoading = true
     if (this.customer.id) {
-      this.customersService.update(this.customer.id, value).subscribe(
+      this.customersService.update(this.customer.id, this.customer).subscribe(
         () => this.handleSuccess(),
         () => this.handleError()
       )
     } else {
-      this.customersService.save(value).subscribe(
+      this.customersService.save(this.customer).subscribe(
         ({ id }) => this.handleSuccess(id),
         () => this.handleError()
       )
     }
+  }
+
+  onChangeCustomer(value: Customer) {
+    this.customer = { ...this.customer, ...value }
   }
 
   private handleSuccess(id?: string) {

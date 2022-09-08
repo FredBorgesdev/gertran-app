@@ -11,12 +11,14 @@ export class AddressesFormComponent implements OnInit {
 
   @Input() customer: Customer
   @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>();
+  @Output() onChange: EventEmitter<Customer> = new EventEmitter<Customer>();
 
   validateForm: FormGroup
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    console.log(this.customer)
     this.validateForm = this.formBuilder.group({
       zipCode: [this.customer?.zipCode, [Validators.pattern('[0-9]{5}-[0-9]{3}')]],
       street: [this.customer?.street, []],
@@ -25,6 +27,9 @@ export class AddressesFormComponent implements OnInit {
       neighborhood: [this.customer?.neighborhood, []],
       city: [this.customer?.city, []],
       state: [this.customer?.state, []],
+    })
+    this.validateForm.valueChanges.subscribe((form) => {
+      this.onChange.emit(form);
     })
   }
 

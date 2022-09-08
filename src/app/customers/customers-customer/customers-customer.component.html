@@ -24,14 +24,16 @@
           *ngIf="customer"
           [customer]="customer"
           (onSave)="onSubmit($event)"
+          (onChange)="onChangeCustomer($event)"
         ></app-customers-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Endereço" [nzDisabled]="!customer?.id">
+      <nz-tab nzTitle="Endereço">
         <app-addresses-form
           *ngIf="customer"
           [customer]="customer"
           (onSave)="onSubmit($event)"
+          (onChange)="onChangeCustomer($event)"
         ></app-addresses-form>
       </nz-tab>
 

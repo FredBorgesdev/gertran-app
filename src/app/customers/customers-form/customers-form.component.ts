@@ -18,6 +18,7 @@ export class CustomersFormComponent implements OnInit {
 
   @Input() customer: Customer = null
   @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>()
+  @Output() onChange: EventEmitter<Customer> = new EventEmitter<Customer>()
 
   validateForm: FormGroup
 
@@ -43,6 +44,9 @@ export class CustomersFormComponent implements OnInit {
       tradingName: [this.customer?.tradingName, Validators.required],
       cnpj: [this.customer?.cnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
       domain: [this.customer?.domain, [Validators.pattern('^(http(s)?:\/\/)?((w){3}.)?([^\.]+).([a-z]+)(.[a-z]+)?$')]],
+    })
+    this.validateForm.valueChanges.subscribe(form => {
+      this.onChange.emit(form)
     })
   }
 
