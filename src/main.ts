@@ -10,7 +10,7 @@ Sentry.init({
   dsn: environment.sentryDsn,
   integrations: [
     new BrowserTracing({
-      tracingOrigins: ["localhost", environment.apiUrl],
+      tracingOrigins: ["localhost", environment.appUrl],
       routingInstrumentation: Sentry.routingInstrumentation,
     }),
   ],

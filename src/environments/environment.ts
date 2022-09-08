@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: '',
-  sentryDsn: ''
+  sentryDsn: '',
+  appUrl: ''
 };
 
 /*
