@@ -1,13 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-export interface ContactDataItem {
-  id: number
-  name: string
-  email: string
-  businessPhone: string
-  cellphone: string
-  main: boolean
-}
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ContactDataItem, ContactsService } from '../contacts.service';
+import { Customer } from '../customers.service';
 
 @Component({
   selector: 'app-contacts-tab',
@@ -16,48 +10,41 @@ export interface ContactDataItem {
 })
 export class ContactsTabComponent implements OnInit {
 
-  @Input() customerId: number
+  @Input() customer: Customer
 
-  contactsDisplayData: ContactDataItem[] = [
-    {
-      id: 1,
-      name: 'Sérgio',
-      email: 'sergio@gertran.com.br',
-      businessPhone: '(31) 3333-3333',
-      cellphone: '(31) 99999-9999',
-      main: true
-    },
-    {
-      id: 2,
-      name: 'Fábio Arruda',
-      email: 'fabio@gertran.com.br',
-      businessPhone: '(31) 3333-3333',
-      cellphone: '(31) 99999-9999',
-      main: false
-    },
-    {
-      id: 3,
-      name: 'Rodrigo Zayit',
-      email: 'rodrigo@zayit.com.br',
-      businessPhone: '(31) 3333-3333',
-      cellphone: '(31) 99999-9999',
-      main: false
-    }
-  ]
+  contactsDisplayData: ContactDataItem[] = []
 
   isCreatingContact = false
+  isLoading = false
 
-  constructor() { }
+  constructor(
+    private contactsService: ContactsService,
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
+    this.contactsService.getAll(this.customer.id).subscribe(contacts => {
+      this.contactsDisplayData = contacts
+    })
   }
 
   addContact(contact: ContactDataItem) {
-    const newContact = {
-      id: this.contactsDisplayData.length + 1,
-      ...contact,
-    }
-    this.contactsDisplayData = [...this.contactsDisplayData, newContact]
-    this.isCreatingContact = false
+    this.isLoading = true
+    this.contactsService.save(contact, this.customer.id).subscribe((contact) => {
+      this.contactsDisplayData = [...this.contactsDisplayData, contact]
+      this.isCreatingContact = false
+      this.isLoading = false
+    }, () => this.handleFailure())
+  }
+
+  edit(contact: ContactDataItem) {
+  }
+
+  delete(contact: ContactDataItem) {
+  }
+
+  private handleFailure() {
+    this.message.error('Ocorreu um erro ao salvar o contato')
+    this.isLoading = false
   }
 }

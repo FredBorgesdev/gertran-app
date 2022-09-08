@@ -6,15 +6,14 @@
   </thead>
   <tbody>
   <tr *ngFor="let item of contactsTable.data;  let i=index">
-    <td>#{{item.id}}</td>
     <td>
       <div class="d-flex align-items-center">
         <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
       </div>
     </td>
     <td>{{item.email}}</td>
-    <td>{{item.businessPhone}}</td>
-    <td>{{item.cellphone}}</td>
+    <td>{{item.phone}}</td>
+    <td>{{item.cellPhone}}</td>
     <td class="text-md-center">
       <nz-badge *ngIf="item.main" nzStatus="success"></nz-badge>
       <nz-badge *ngIf="!item.main" nzStatus="error"></nz-badge>
@@ -22,7 +21,7 @@
     <td class="text-md-center">
       <a
         *ngIf="!item.main"
-        (click)="contactsEdit(item)"
+        (click)="edit(item)"
         class="m-r-5"
         nz-button
         nzType="default"
@@ -37,7 +36,7 @@
         ></i>
       </a>
       <a
-        (click)="contactsEdit(item)"
+        (click)="edit(item)"
         class="m-r-5"
         nz-button
         nzType="default"
@@ -47,7 +46,7 @@
       >
         <i nz-icon nzType="edit" theme="outline"></i>
       </a><a
-      (click)="contactsEdit(item)"
+      (click)="delete(item)"
       nz-button
       nzType="default"
       nzShape="circle"

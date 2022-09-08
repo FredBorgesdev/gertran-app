@@ -11,10 +11,16 @@
   </div>
 </div>
 
-<app-contacts-table [contacts]="contactsDisplayData"></app-contacts-table>
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <app-contacts-table
+    [contacts]="contactsDisplayData"
+    (onEdit)="edit($event)"
+    (onDelete)="delete($event)"
+  ></app-contacts-table>
 
-<app-contacts-form
-  [isVisible]="isCreatingContact"
-  (onClose)="this.isCreatingContact = false"
-  (onAdd)="addContact($event)"
-></app-contacts-form>
+  <app-contacts-form
+    [isVisible]="isCreatingContact"
+    (onClose)="this.isCreatingContact = false"
+    (onAdd)="addContact($event)"
+  ></app-contacts-form>
+</nz-spin>

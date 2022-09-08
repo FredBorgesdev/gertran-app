@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ContactDataItem } from '../contacts-tab/contacts-tab.component';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { ContactDataItem } from '../contacts.service';
 
 @Component({
   selector: 'app-contacts-table',
@@ -9,28 +9,19 @@ import { ContactDataItem } from '../contacts-tab/contacts-tab.component';
 export class ContactsTableComponent implements OnInit {
 
   @Input() contacts: ContactDataItem[] = [];
+  @Output() onEdit: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>()
+  @Output() onDelete: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>()
 
   contactsOrderColumn = [
-    {
-      title: 'ID',
-      compare: (a: ContactDataItem, b: ContactDataItem) => a.id - b.id,
-    },
     {
       title: 'Nome do contato',
       compare: (a: ContactDataItem, b: ContactDataItem) => a.name.localeCompare(b.name)
     },
-    {
-      title: 'Email'
-    },
-    {
-      title: 'Telefone comercial'
-    },
-    {
-      title: 'Telefone celular'
-    },
-    {
-      title: 'Principal'
-    }
+    { title: 'Email' },
+    { title: 'Telefone comercial' },
+    { title: 'Telefone celular' },
+    { title: 'Principal' },
+    { title: 'Ações' }
   ]
 
   constructor() { }
@@ -38,8 +29,12 @@ export class ContactsTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  contactsEdit(item: ContactDataItem) {
-    console.log('edit')
+  edit(item: ContactDataItem) {
+    this.onEdit.emit(item)
+  }
+
+  delete(item: ContactDataItem) {
+    this.onDelete.emit(item)
   }
 
 }

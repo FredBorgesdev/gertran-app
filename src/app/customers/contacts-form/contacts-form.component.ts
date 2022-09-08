@@ -20,8 +20,8 @@ export class ContactsFormComponent implements OnInit {
     this.validateForm = this.formBuilder.group({
       name: [null],
       email: [null],
-      businessPhone: [null],
-      cellphone: [null],
+      phone: [null],
+      cellPhone: [null],
     })
   }
 

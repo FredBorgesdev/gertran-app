@@ -32,7 +32,7 @@
       </nz-tab>
 
       <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">
-        <app-contacts-tab [customerId]="customer?.id"></app-contacts-tab>
+        <app-contacts-tab *ngIf="customer?.id" [customer]="customer"></app-contacts-tab>
       </nz-tab>
 
       <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
