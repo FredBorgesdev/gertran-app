@@ -44,5 +44,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'document-types',
     loadChildren: () => import('../../document-types/document-types.module').then(m => m.DocumentTypesModule)
+  },
+  {
+    path: 'groups',
+    loadChildren: () => import('../../groups/groups.module').then(m => m.GroupsModule)
   }
 ]
