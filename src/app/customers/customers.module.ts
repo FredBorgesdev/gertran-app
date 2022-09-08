@@ -12,7 +12,8 @@ import { BranchOfficeTabComponent } from './branch-office-tab/branch-office-tab.
 import { CustomersCustomerComponent } from './customers-customer/customers-customer.component';
 import { DocumentsTabComponent } from './documents-tab/documents-tab.component';
 import { DocumentsFormComponent } from './documents-form/documents-form.component';
-import { DocumentsTableComponent } from './documents-table/documents-table.component'
+import { DocumentsTableComponent } from './documents-table/documents-table.component';
+import { AddressesFormComponent } from './addresses-form/addresses-form.component'
 
 const antdModule = []
 
@@ -30,6 +31,7 @@ const antdModule = []
     DocumentsTabComponent,
     DocumentsFormComponent,
     DocumentsTableComponent,
+    AddressesFormComponent,
   ],
   imports: [
     SharedModule,

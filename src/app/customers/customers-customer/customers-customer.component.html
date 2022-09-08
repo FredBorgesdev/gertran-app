@@ -9,7 +9,7 @@
         <a><i nz-icon nzType="star"></i><span>Clientes</span></a>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="customer?.id">
-        Editar Cliente ({{customer.companyName}})
+        Editar Cliente ({{customer.tradingName}})
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="!customer?.id">
         Adicionar Cliente
@@ -25,6 +25,14 @@
           [customer]="customer"
           (onSave)="onSubmit($event)"
         ></app-customers-form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Endereço" [nzDisabled]="!customer?.id">
+        <app-addresses-form
+          *ngIf="customer"
+          [customer]="customer"
+          (onSave)="onSubmit($event)"
+        ></app-addresses-form>
       </nz-tab>
 
       <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">

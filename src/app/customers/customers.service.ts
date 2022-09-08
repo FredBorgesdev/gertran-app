@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import ApiService from '../shared/services/api.service';
-import camelcaseKeys from 'camelcase-keys-deep';
 
 export interface Customer {
   id: string
@@ -11,6 +9,16 @@ export interface Customer {
   cnpj: string
   seller: string | null
   domain: string | null
+
+  // address
+
+  zipCode: string
+  street: string
+  complement: string
+  number: string
+  neighborhood: string
+  city: string
+  state: string
 }
 
 @Injectable({

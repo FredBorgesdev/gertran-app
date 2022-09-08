@@ -1,0 +1,54 @@
+<form nz-form nzLayout="vertical" [formGroup]="validateForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="zipCode">CEP</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CEP no formato 99999-999">
+      <input id="zipCode" type="text" nz-input formControlName="zipCode" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="street">Rua</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a rua">
+      <input id="street" type="text" nz-input formControlName="street" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="complement">CNPJ</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Insira o complemento">
+      <input id="complement" type="text" nz-input formControlName="complement" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="number">Número</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o número">
+      <input id="number" type="number" nz-input formControlName="number" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="neighborhood">Bairro</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o bairro">
+      <input id="neighborhood" type="text" nz-input formControlName="neighborhood" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="city">Cidade</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
+      <input id="city" type="text" nz-input formControlName="city" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="state">Estado</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
+      <input id="state" type="text" nz-input formControlName="state" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-divider></nz-divider>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button type="button" (click)="save()" nz-button nzType="primary">
+        <i nz-icon nzType="save"></i>Salvar Endereço
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

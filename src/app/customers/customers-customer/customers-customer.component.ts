@@ -107,19 +107,23 @@ export class CustomersCustomerComponent implements OnInit {
       )
     } else {
       this.customersService.save(value).subscribe(
-        () => this.handleSuccess(),
+        ({ id }) => this.handleSuccess(id),
         () => this.handleError()
       )
     }
   }
 
-  private handleSuccess() {
+  private handleSuccess(id?: string) {
     this.isLoading = false
     this.message.success(
       'As informações foram salvas com sucesso!',
       { nzDuration: 3000 }
     )
-    this.router.navigate(['/customers', 'customers-list'])
+    if (id) {
+      this.router.navigate(['/customers', 'customer-edit', id])
+    } else {
+      this.router.navigate(['/customers', 'customers-list'])
+    }
   }
 
   private handleError() {
