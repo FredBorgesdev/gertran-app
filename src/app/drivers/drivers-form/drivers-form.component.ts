@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router'
+import { conformToMask } from 'angular2-text-mask';
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 import { Customer, CustomersService } from 'src/app/customers/customers.service';
 import { Driver } from '../drivers.service';
@@ -16,6 +17,7 @@ export class DriversFormComponent implements OnInit {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
 
   validateForm: FormGroup
+  cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
 
   customers: Customer[] = []
 
@@ -27,12 +29,14 @@ export class DriversFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false })
+
     this.validateForm = this.formBuilder.group({
       customer: [this.driver?.customer, [Validators.required]],
       workingSituation: [this.driver?.workingSituation, [Validators.required]],
       name: [this.driver?.name, [Validators.required]],
       rg: [this.driver?.rg, [Validators.required]],
-      cpf: [this.driver?.cpf, [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}')]],
+      cpf: [maskedCpf, [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}')]],
       cnhNumber: [this.driver?.cnhNumber, [Validators.required]],
       cnhCategory: [this.driver?.cnhCategory, [Validators.required]],
       cnhValidity: [this.driver?.cnhValidity, [Validators.required]],
@@ -51,6 +55,7 @@ export class DriversFormComponent implements OnInit {
   }
 
   save() {
+    console.log(this.validateForm.get('cpf').value)
     if (this.validateForm.valid) {
       this.onSubmit.emit(this.validateForm.value)
     } else {

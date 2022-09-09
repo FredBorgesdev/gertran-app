@@ -16,7 +16,13 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">CPF</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CPF no formato 999.999.999-99">
-      <input id="cpf" type="text" nz-input formControlName="cpf" />
+      <input
+        [textMask]="{ mask: cpfMask, guide: false }"
+        id="cpf"
+        type="text"
+        nz-input
+        formControlName="cpf"
+      />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
