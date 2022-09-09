@@ -1,10 +1,13 @@
+import { HttpClient } from '@angular/common/http'
 import {
   Component,
   OnInit
 } from '@angular/core'
 import { Router } from '@angular/router'
+import { NzMessageService } from 'ng-zorro-antd/message'
 
 import { TableService } from '../../shared/services/table.service'
+import { Driver, DriversService } from '../drivers.service'
 
 interface DataItem {
   id: number
@@ -30,113 +33,53 @@ export class DriversListComponent implements OnInit {
 
   driverColumn = [
     {
-      title: 'ID',
-      compare: (
-        a: DataItem,
-        b: DataItem
-      ) => a.id - b.id
-    },
-    {
       title: 'Nome',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: Driver,
+        b: Driver
       ) => a.name.localeCompare(b.name)
     },
-    {
-      title: 'CPF'
-    },
-    {
-      title: 'CNH'
-    },
-    {
-      title: 'Categoria'
-    },
-    {
-      title: 'Validade'
-    },
-    {
-      title: 'Celular'
-    },
-    {
-      title: 'Ações'
-    }
-  ]
-
-  driversList: DataItem[] = [
-    {
-      id: 1,
-      name: 'João',
-      cpf: '111.111.111-11',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRjkIZc1kOSO-A2njZqJ_xJVBiti5XrAwVHqKsXbXqFSEioDbaZvYwteEQLITv0dV3mLs&usqp=CAU'
-    },
-    {
-      id: 2,
-      name: 'Maria',
-      cpf: '222.222.222-22',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: 'https://conteudo.imguol.com.br/c/entretenimento/fc/2021/04/20/dayana-morais-da-cruz-1618961307572_v2_300x225.jpg'
-    },
-    {
-      id: 4,
-      name: 'Tobias',
-      cpf: '111.111.111-11',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: ''
-    },
-    {
-      id: 3,
-      name: 'José',
-      cpf: '333.333.333-33',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: 'https://img.ibxk.com.br/materias/7057/27038.jpg'
-    }
+    { title: 'CPF' },
+    { title: 'CNH' },
+    { title: 'Categoria' },
+    { title: 'Validade' },
+    { title: 'Ações' }
   ]
 
   constructor(
     private router: Router,
-    private tableService: TableService
-  ) {
+    private tableService: TableService,
+    private driversService: DriversService,
+    private message: NzMessageService
+  ) {}
+
+  ngOnInit(): void {
     this.isLoading = true
-    setTimeout(
-      () => {
+    this.driversService.getAll().subscribe(
+      (data: Driver[]) => {
+        this.displayData = data
         this.isLoading = false
-        this.displayData = this.driversList
       },
-      333
+      () => {
+        this.message.error('Falha ao carregar motoristas')
+        this.isLoading = false
+      }
     )
   }
 
-  ngOnInit(): void {
-  }
-
   search() {
-    const data = this.driversList
     this.displayData = this.tableService.search(
       this.searchInput,
-      data
+      this.displayData
     )
   }
 
   create() {
-    this.router.navigate([ '/drivers/driver-create' ])
+    this.router.navigate(['/drivers/driver-create'])
   }
 
-  edit(item: DataItem) {
-    this.router.navigate([ '/drivers/driver-edit', item.id ])
+  edit(item: Driver) {
+    this.router.navigate(['/drivers/driver-edit', item.id])
   }
 
 }

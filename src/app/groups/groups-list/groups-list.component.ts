@@ -54,4 +54,19 @@ export class GroupsListComponent implements OnInit {
       nzOkText: 'Salvar',
     })
   }
+
+  delete(group: Group) {
+    this.modal.confirm({
+      nzTitle: 'Deseja realmente excluir este grupo?',
+      nzOnOk: () => this.handleDelete(group)
+    })
+  }
+
+  private handleDelete(group: Group) {
+    this.isLoading = true
+    // this.groupsService.delete(group.id).subscribe(
+    //   () => this.handleSuccess(),
+    //   () => this.handleFailure()
+    // )
+  }
 }
