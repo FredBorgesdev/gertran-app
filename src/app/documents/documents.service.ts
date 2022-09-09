@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService from '../shared/services/api.service';
 
-export interface CustomerDocument {
+export interface Document {
   id: string
   title: string
   documentType: {
@@ -12,22 +12,27 @@ export interface CustomerDocument {
   file: string | File
 }
 
+export enum DocumentResource {
+  CUSTOMER = 'customers',
+  DRIVERS = 'drivers',
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class DocumentsService implements ApiService<CustomerDocument> {
+export class DocumentsService implements ApiService<Document> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(customerId: string) {
-    return this.http.get<CustomerDocument[]>(`customers/${customerId}/documents`);
+  getAll(resource: DocumentResource, resourceId: string) {
+    return this.http.get<Document[]>(`${resource}/${resourceId}/documents`);
   }
 
-  get(id: string, customerId: string) {
-    return this.http.get<CustomerDocument>(`customers/${customerId}/documents/${id}`);
+  get(id: string, resource: DocumentResource, resourceId: string) {
+    return this.http.get<Document>(`${resource}/${resourceId}/documents/${id}`);
   }
 
-  save(body: Omit<CustomerDocument, 'id'>, customerId: string) {
+  save(body: Omit<Document, 'id'>, resource: DocumentResource, resourceId: string) {
     let requestBody: any = body
     if (body.file) {
       const formData = new FormData()
@@ -37,10 +42,10 @@ export class DocumentsService implements ApiService<CustomerDocument> {
       requestBody = formData
     }
 
-    return this.http.post<CustomerDocument>(`customers/${customerId}/documents/create`, requestBody);
+    return this.http.post<Document>(`${resource}/${resourceId}/documents/create`, requestBody);
   }
 
-  update(id: string, body: Omit<CustomerDocument, 'id'>, customerId: string) {
+  update(id: string, body: Omit<Document, 'id'>, resource: DocumentResource, resourceId: string) {
     let requestBody: any = body
     if (body.file) {
       const formData = new FormData()
@@ -55,10 +60,10 @@ export class DocumentsService implements ApiService<CustomerDocument> {
       }
     }
 
-    return this.http.patch<CustomerDocument>(`customers/${customerId}/documents/${id}/update`, requestBody);
+    return this.http.patch<Document>(`${resource}/${resourceId}/documents/${id}/update`, requestBody);
   }
 
-  delete(id: string, customerId: string) {
-    return this.http.delete<CustomerDocument>(`customers/${customerId}/documents/${id}/delete`);
+  delete(id: string, resource:string, resourceId: string) {
+    return this.http.delete<Document>(`${resource}/${resourceId}/documents/${id}/delete`);
   }
 }

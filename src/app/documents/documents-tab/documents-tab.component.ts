@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Customer } from '../customers.service';
 import { OnSubmitEvent } from '../documents-form/documents-form.component';
-import { CustomerDocument, DocumentsService } from '../documents.service';
+import { Document, DocumentResource, DocumentsService } from '../documents.service';
 
 @Component({
   selector: 'app-documents-tab',
@@ -12,12 +11,14 @@ import { CustomerDocument, DocumentsService } from '../documents.service';
 })
 export class DocumentsTabComponent implements OnInit {
 
-  @Input() customer: Customer = null
+  @Input() resource: DocumentResource = null
+  @Input() resourceId: string = null
+
   isCreatingDocument = false
   isLoading = false
 
-  documents: CustomerDocument[] = []
-  document: CustomerDocument = null
+  documents: Document[] = []
+  document: Document = null
 
   constructor(
     private documentsService: DocumentsService,
@@ -31,7 +32,7 @@ export class DocumentsTabComponent implements OnInit {
 
   loadDocuments() {
     this.isLoading = true
-    this.documentsService.getAll(this.customer.id).subscribe(documents => {
+    this.documentsService.getAll(this.resource, this.resourceId).subscribe(documents => {
       this.documents = documents
       this.isLoading = false
     }, () => this.handleFailure())
@@ -50,7 +51,8 @@ export class DocumentsTabComponent implements OnInit {
       this.documentsService.update(
         this.document.id,
         body,
-        this.customer.id
+        this.resource,
+        this.resourceId
       ).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
@@ -58,7 +60,8 @@ export class DocumentsTabComponent implements OnInit {
     } else {
       this.documentsService.save(
         body,
-        this.customer.id
+        this.resource,
+        this.resourceId
       ).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
@@ -66,17 +69,21 @@ export class DocumentsTabComponent implements OnInit {
     }
   }
 
-  edit(customerDocument: CustomerDocument) {
-    this.document = customerDocument
+  edit(document: Document) {
+    this.document = document
     this.isCreatingDocument = true
   }
 
-  delete(customerDocument: CustomerDocument) {
+  delete(document: Document) {
     this.modal.confirm({
       nzTitle: 'Deseja realmente excluir este documento?',
       nzOnOk: () => {
         this.isLoading = true
-        this.documentsService.delete(customerDocument.id, this.customer.id).subscribe(
+        this.documentsService.delete(
+          document.id,
+          this.resource,
+          this.resourceId
+        ).subscribe(
           () => this.handleSuccess(),
           () => this.handleFailure()
         )

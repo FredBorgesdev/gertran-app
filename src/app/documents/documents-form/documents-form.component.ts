@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DocumentTypesService, DocumentType } from 'src/app/document-types/document-types.service';
-import { CustomerDocument } from '../documents.service';
+import { Document } from '../documents.service';
 
 export interface OnSubmitEvent {
-  form: CustomerDocument,
+  form: Document,
   file: File,
 }
 
@@ -15,7 +15,7 @@ export interface OnSubmitEvent {
 })
 export class DocumentsFormComponent implements OnInit {
 
-  @Input() document: CustomerDocument = null
+  @Input() document: Document = null
   @Input() isVisible = false;
   @Output() onSubmit: EventEmitter<OnSubmitEvent> = new EventEmitter<OnSubmitEvent>()
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>()
