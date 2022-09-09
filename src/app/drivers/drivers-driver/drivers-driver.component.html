@@ -27,6 +27,14 @@
         ></app-drivers-form>
       </nz-tab>
 
+      <nz-tab nzTitle="Documentos" [nzDisabled]="!driver?.id">
+        <app-documents-tab
+          *ngIf="driver?.id"
+          resource="drivers"
+          [resourceId]="driver?.id"
+        ></app-documents-tab>
+      </nz-tab>
+
       <nz-tab nzTitle="Foto do Motorista" nzDisabled>
         <app-drivers-profile-picture
           [driver]="driver"
