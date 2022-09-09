@@ -5,6 +5,7 @@ import {
 } from '@angular/core'
 import { Router } from '@angular/router'
 import { NzMessageService } from 'ng-zorro-antd/message'
+import { NzModalService } from 'ng-zorro-antd/modal'
 
 import { TableService } from '../../shared/services/table.service'
 import { Driver, DriversService } from '../drivers.service'
@@ -50,7 +51,8 @@ export class DriversListComponent implements OnInit {
     private router: Router,
     private tableService: TableService,
     private driversService: DriversService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private modal: NzModalService,
   ) {}
 
   ngOnInit(): void {
@@ -82,4 +84,22 @@ export class DriversListComponent implements OnInit {
     this.router.navigate(['/drivers/driver-edit', item.id])
   }
 
+  delete(item: Driver) {
+    this.modal.confirm({
+      nzTitle: 'Você tem certeza que deseja excluir este motorista?',
+      nzOnOk: () => {
+        this.driversService.delete(item.id).subscribe(
+          () => {
+            this.message.success('Motorista excluído com sucesso')
+            this.displayData = this.displayData.filter(
+              (driver: Driver) => driver.id !== item.id
+            )
+          },
+          () => {
+            this.message.error('Falha ao excluir motorista')
+          }
+        )
+      }
+    })
+  }
 }

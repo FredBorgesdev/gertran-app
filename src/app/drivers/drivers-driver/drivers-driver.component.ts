@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Driver, DriversService } from '../drivers.service';
 
 @Component({
   selector: 'app-drivers-driver',
@@ -9,69 +10,34 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class DriversDriverComponent implements OnInit {
 
-  driversList = [
-    {
-      id: 1,
-      name: 'João',
-      cpf: '111.111.111-11',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRjkIZc1kOSO-A2njZqJ_xJVBiti5XrAwVHqKsXbXqFSEioDbaZvYwteEQLITv0dV3mLs&usqp=CAU'
-    },
-    {
-      id: 2,
-      name: 'Maria',
-      cpf: '222.222.222-22',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: 'https://conteudo.imguol.com.br/c/entretenimento/fc/2021/04/20/dayana-morais-da-cruz-1618961307572_v2_300x225.jpg'
-    },
-    {
-      id: 4,
-      name: 'Tobias',
-      cpf: '111.111.111-11',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: ''
-    },
-    {
-      id: 3,
-      name: 'José',
-      cpf: '333.333.333-33',
-      cnh: '123456789',
-      cnhCategory: 'AE',
-      cnhExpiration: '20/20/2020',
-      cellphone: '(11) 99999-9999',
-      profilePhoto: 'https://img.ibxk.com.br/materias/7057/27038.jpg'
-    }
-  ]
   driver = null
   isLoading = false
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
+    private message: NzMessageService,
+    private driversService: DriversService,
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadDriver() : this.createNewDriver()
+    this.loadDriver()
   }
 
   loadDriver() {
     this.isLoading = true
-    setTimeout(() => {
+    if (this.activatedRoute.snapshot.paramMap.has('id')) {
+      this.driversService.get(this.activatedRoute.snapshot.paramMap.get('id')).subscribe(driver => {
+        this.driver = driver
+        this.isLoading = false
+      }, () => {
+        this.isLoading = false
+      })
+    } else {
+      this.createNewDriver()
       this.isLoading = false
-      this.driver = this.driversList.find(
-        driver => driver.id === +this.activatedRoute.snapshot.paramMap.get('id')
-      )
-    }, 666)
+    }
   }
 
   createNewDriver() {
@@ -87,16 +53,40 @@ export class DriversDriverComponent implements OnInit {
     }
   }
 
-  onSubmit(value: any) {
+  onSubmit(value: Driver) {
     this.isLoading = true
-    setTimeout(() => {
-      this.isLoading = false
-      this.messageService.success('As informações foram salvas com sucesso!')
-    }, 666)
+
+    if (this.driver?.id) {
+      this.driversService.update(this.driver.id, value).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleFailure()
+      )
+    } else {
+      this.driversService.save(value).subscribe(
+        ({ id }) => this.handleSuccess(id),
+        () => this.handleFailure()
+      )
+    }
   }
 
   listDrivers() {
     this.router.navigate(['/drivers/drivers-list'])
+  }
+
+  private handleSuccess(id?: string) {
+    this.isLoading = false
+    this.messageService.success('Motorista salvo com sucesso')
+
+    if (id) {
+      this.router.navigate(['/drivers/driver-edit', id])
+    } else {
+      this.listDrivers()
+    }
+  }
+
+  private handleFailure() {
+    this.isLoading = false
+    this.messageService.error('Erro ao salvar motorista')
   }
 
 }
