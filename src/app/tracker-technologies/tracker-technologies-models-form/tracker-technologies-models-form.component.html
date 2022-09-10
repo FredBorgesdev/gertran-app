@@ -1,0 +1,18 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Novo contato"
+  nzWidth="600px"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="save()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

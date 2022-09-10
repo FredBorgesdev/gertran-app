@@ -18,26 +18,38 @@
 
     <nz-divider></nz-divider>
 
-    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
-          <input id="name" type="text" nz-input formControlName="name" />
-        </nz-form-control>
-      </nz-form-item>
-      
-      <nz-divider></nz-divider>
+    <nz-tabset>
+      <nz-tab nzTitle="Tecnologia">
+        <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+              <input id="name" type="text" nz-input formControlName="name" />
+            </nz-form-control>
+          </nz-form-item>
+          
+          <nz-divider></nz-divider>
 
-      <nz-form-item>
-        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-          <button type="button" (click)="save()" nz-button nzType="primary">
-            <i nz-icon nzType="save"></i>Salvar Tecnologias
-          </button>
-          <button type="button" (click)="list()" nz-button>
-            <i nz-icon nzType="unordered-list"></i>Listar Tecnologias
-          </button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <button type="button" (click)="save()" nz-button nzType="primary">
+                <i nz-icon nzType="save"></i>Salvar Tecnologias
+              </button>
+              <button type="button" (click)="list()" nz-button>
+                <i nz-icon nzType="unordered-list"></i>Listar Tecnologias
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Modelos" [nzDisabled]="!trackerTechnology?.id">
+        <app-tracker-technologies-models-list
+          *ngIf="trackerTechnology"
+          [trackerTechnology]="trackerTechnology"
+        ></app-tracker-technologies-models-list>
+      </nz-tab>
+
+    </nz-tabset>
   </nz-card>
 </nz-spin>
