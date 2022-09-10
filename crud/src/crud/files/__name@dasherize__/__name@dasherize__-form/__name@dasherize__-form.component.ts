@@ -70,7 +70,7 @@ export class <%= classify(name) %>FormComponent implements OnInit {
 
   private handleSuccess() {
     this.message.success('Registro salvo com sucesso')
-    this.list(name) %>()
+    this.list()
     this.isLoading = false
   }
 
