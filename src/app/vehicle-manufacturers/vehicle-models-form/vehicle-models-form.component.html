@@ -1,0 +1,37 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Novo modelo"
+  nzWidth="600px"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="save()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="vehicleModelType">Tipo de modelo</nz-form-label>
+        <form-control nzErrorTip="Preencha o campo!">
+          <nz-select
+            id="vehicleModelType"
+            style="width: 100%"
+            formControlName="vehicleModelType"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione o tipo de modelo"
+          >
+            <nz-option
+              *ngFor="let vehicleModelType of vehicleModelTypes"
+              [nzLabel]="vehicleModelType.name"
+              [nzValue]="vehicleModelType.id"
+            ></nz-option>
+          </nz-select>
+        </form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

@@ -5,12 +5,16 @@ import { VehicleManufacturersRoutingModule } from './vehicle-manufacturers-routi
 import { VehicleManufacturersListComponent } from './vehicle-manufacturers-list/vehicle-manufacturers-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { VehicleManufacturersFormComponent } from './vehicle-manufacturers-form/vehicle-manufacturers-form.component';
+import { VehicleModelsListComponent } from './vehicle-models-list/vehicle-models-list.component';
+import { VehicleModelsFormComponent } from './vehicle-models-form/vehicle-models-form.component';
 
 
 @NgModule({
   declarations: [
     VehicleManufacturersListComponent,
-    VehicleManufacturersFormComponent
+    VehicleManufacturersFormComponent,
+    VehicleModelsListComponent,
+    VehicleModelsFormComponent,
   ],
   imports: [
     CommonModule,
