@@ -26,6 +26,7 @@ export class <%= classify(name) %>FormComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
     })
+    this.load<%= classify(name) %>()
   }
 
   load<%= classify(name) %>() {
@@ -69,7 +70,7 @@ export class <%= classify(name) %>FormComponent implements OnInit {
 
   private handleSuccess() {
     this.message.success('Registro salvo com sucesso')
-    this.list<%= classify(name) %>()
+    this.list(name) %>()
     this.isLoading = false
   }
 

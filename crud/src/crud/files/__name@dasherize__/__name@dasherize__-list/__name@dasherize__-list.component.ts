@@ -15,7 +15,7 @@ export class <%= classify(name) %>ListComponent implements OnInit {
 
   <%= camelize(name) %>Columns = [
     { title: 'Id' },
-    { title: 'Nome' }
+    { title: 'Nome' },
     { title: 'Ações' },
   ]
 
