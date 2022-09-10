@@ -163,6 +163,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'idcard',
         submenu: []
       },
+      {
+        path: '/tracker-technologies/tracker-technologies-list',
+        title: 'Tecnologias',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'wifi',
+        submenu: []
+      },
     ]
   }
 ]

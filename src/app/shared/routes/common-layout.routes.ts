@@ -48,5 +48,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'groups',
     loadChildren: () => import('../../groups/groups.module').then(m => m.GroupsModule)
+  },
+  {
+    path: 'tracker-technologies',
+    loadChildren: () => import('../../tracker-technologies/tracker-technologies.module').then(m => m.TrackerTechnologiesModule)
   }
 ]
