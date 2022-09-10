@@ -1,4 +1,4 @@
-# Enlink
+# Gertran
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
 
@@ -22,6 +22,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+## Crud generator
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Run `npm run generator:crud --name <resource_name> --pt-name <plural_name_in_portuguese>`
