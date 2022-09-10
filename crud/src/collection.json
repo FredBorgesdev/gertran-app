@@ -2,7 +2,7 @@
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "crud": {
-      "description": "A blank schematic.",
+      "description": "Generate a CRUD module",
       "factory": "./crud/index#crud",
       "schema": "./crud/schema.json"
     }
