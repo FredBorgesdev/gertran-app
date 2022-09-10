@@ -179,6 +179,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'wifi',
         submenu: []
       },
+      {
+        path: '/vehicle-model-types/vehicle-model-types-list',
+        title: 'Tipos de veiculos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'car',
+        submenu: []
+      },
     ]
   }
 ]
