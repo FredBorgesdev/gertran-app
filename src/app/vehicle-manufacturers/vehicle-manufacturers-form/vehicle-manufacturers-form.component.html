@@ -1,0 +1,61 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Construtoras</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="vehicleManufacturers?.id">
+        Editar Construtoras ({{vehicleManufacturers.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!vehicleManufacturers?.id">
+        Adicionar Construtoras
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="makesTrucks">
+              <span>Faz caminhões?</span>
+            </label>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="makesWagons">
+              <span>Faz carretas?</span>
+            </label>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+      
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Construtoras
+          </button>
+          <button type="button" (click)="list()" nz-button>
+            <i nz-icon nzType="unordered-list"></i>Listar Construtoras
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card>
+</nz-spin>

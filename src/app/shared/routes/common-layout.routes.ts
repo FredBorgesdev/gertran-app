@@ -52,5 +52,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'tracker-technologies',
     loadChildren: () => import('../../tracker-technologies/tracker-technologies.module').then(m => m.TrackerTechnologiesModule)
+  },
+  {
+    path: 'vehicle-manufacturers',
+    loadChildren: () => import('../../vehicle-manufacturers/vehicle-manufacturers.module').then(m => m.VehicleManufacturersModule)
   }
 ]

@@ -164,6 +164,14 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
+        path: '/vehicle-manufacturers/vehicle-manufacturers-list',
+        title: 'Construtoras',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'car',
+        submenu: []
+      },
+      {
         path: '/tracker-technologies/tracker-technologies-list',
         title: 'Tecnologias',
         iconType: 'nzIcon',
