@@ -60,5 +60,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'vehicle-model-types',
     loadChildren: () => import('../../vehicle-model-types/vehicle-model-types.module').then(m => m.VehicleModelTypesModule)
+  },
+  {
+    path: 'vehicle-peripherals',
+    loadChildren: () => import('../../vehicle-peripherals/vehicle-peripherals.module').then(m => m.VehiclePeripheralsModule)
   }
 ]

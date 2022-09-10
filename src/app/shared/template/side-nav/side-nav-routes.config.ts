@@ -187,6 +187,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'car',
         submenu: []
       },
+      {
+        path: '/vehicle-peripherals/vehicle-peripherals-list',
+        title: 'Periféricos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'car',
+        submenu: []
+      },
     ]
   }
 ]
