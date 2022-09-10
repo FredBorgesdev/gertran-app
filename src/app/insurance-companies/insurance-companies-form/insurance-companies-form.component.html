@@ -32,14 +32,14 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="email">Email</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="email">Email</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira um email válido">
           <input id="email" type="email" formControlName="email" nz-input />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="website">Website</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="website">Website</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira um website válido começando com https://">
           <input id="website" type="url" formControlName="website" nz-input />
         </nz-form-control>
       </nz-form-item>

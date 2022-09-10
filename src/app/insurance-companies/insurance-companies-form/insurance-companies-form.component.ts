@@ -26,10 +26,10 @@ export class InsuranceCompaniesFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      website: [null],
-      phone: [null, Validators.required],
-      email: [null],
+      name: [null, [Validators.required]],
+      website: [null, [Validators.required, Validators.pattern(/^(http(s)?:\/\/)?((w){3}.)?[\w-]+(\.[\w-]+)+[/#?]?.*$/)]],
+      phone: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       logo: [null],
     })
     this.loadInsuranceCompany()
