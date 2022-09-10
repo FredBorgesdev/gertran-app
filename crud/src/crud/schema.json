@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "CrudSchematics",
+  "title": "CRUD Schema",
+  "type": "object",
+  "description": "Generate CRUD",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the CRUD resource",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+    },
+    "ptName": {
+      "type": "string",
+      "description": "Name of the CRUD resource in portuguese",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+    },
+  },
+  "required": [
+    "name"
+  ]
+}
