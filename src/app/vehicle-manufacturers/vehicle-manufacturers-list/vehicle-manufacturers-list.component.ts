@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { VehicleManufacturersService, VehicleManufacturers } from '../vehicle-manufacturers.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { VehicleManufacturersService, VehicleManufacturers } from '../vehicle-ma
 })
 export class VehicleManufacturersListComponent implements OnInit {
   isLoading = false
-  vehicleManufacturersList: VehicleManufacturers[] = []
+  vehicleManufacturersList: GetAllResponse<VehicleManufacturers> = null
 
   vehicleManufacturersColumns = [
     { title: 'Nome' },
@@ -28,8 +30,12 @@ export class VehicleManufacturersListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadVehicleManufacturers()
+  }
+
+  loadVehicleManufacturers(url?: string) {
     this.isLoading = true
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll({ url }).subscribe((data) => {
       this.vehicleManufacturersList = data
       this.isLoading = false
     })
@@ -55,14 +61,24 @@ export class VehicleManufacturersListComponent implements OnInit {
   handleDelete(id: string) {
     this.isLoading = true
     this.service.delete(id).subscribe(() => {
-      this.vehicleManufacturersList = this.vehicleManufacturersList.filter(
-        (item) => item.id !== id
-      )
+      this.loadVehicleManufacturers()
       this.message.success('Construtoras excluído com sucesso')
       this.isLoading = false
     }, () => {
       this.message.error('Erro ao excluir Construtoras')
       this.isLoading = false
     })
+  }
+
+  get page() {
+    return getCurrentPage(this.vehicleManufacturersList)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadVehicleManufacturers(this.vehicleManufacturersList.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadVehicleManufacturers(this.vehicleManufacturersList.next)
+    }
   }
 }

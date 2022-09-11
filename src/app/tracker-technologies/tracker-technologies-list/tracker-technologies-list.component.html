@@ -29,7 +29,15 @@
         </button>
       </div>
     </div>
-    <nz-table #table [nzData]="trackerTechnologiesList" >
+    <nz-table
+      #table
+      [nzData]="trackerTechnologiesList?.results"
+      [nzTotal]="trackerTechnologiesList?.count"
+      [nzPageSize]="trackerTechnologiesList?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of trackerTechnologiesColumns" [nzSortFn]="column.compare">{{ column.title }}</th>

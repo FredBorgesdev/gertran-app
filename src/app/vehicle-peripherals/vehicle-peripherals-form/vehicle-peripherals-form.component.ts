@@ -54,7 +54,7 @@ export class VehiclePeripheralsFormComponent implements OnInit {
 
   save() {
     if (!this.validateForm.valid) {
-      Object.values(this.validateForm.controls).forEach(control => {
+      return Object.values(this.validateForm.controls).forEach(control => {
         control.markAsDirty();
         control.updateValueAndValidity({ onlySelf: true });
       });

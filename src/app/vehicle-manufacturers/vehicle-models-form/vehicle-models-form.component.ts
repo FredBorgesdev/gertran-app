@@ -30,8 +30,8 @@ export class VehicleModelsFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.vehicleModelTypeService.getAll().subscribe(vehicleModelTypes => {
-      this.vehicleModelTypes = vehicleModelTypes 
+    this.vehicleModelTypeService.getAll({}).subscribe(vehicleModelTypes => {
+      this.vehicleModelTypes = vehicleModelTypes.results
     })
 
     this.validateForm = this.formBuilder.group({

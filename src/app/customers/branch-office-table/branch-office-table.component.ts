@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { BranchOffice } from '../branch-offices.service';
 
 @Component({
@@ -8,9 +10,10 @@ import { BranchOffice } from '../branch-offices.service';
 })
 export class BranchOfficeTableComponent implements OnInit {
 
-  @Input() branchOffices: BranchOffice[] = []
+  @Input() branchOffices: GetAllResponse<BranchOffice> = null
   @Output() onEdit: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>()
   @Output() onDelete: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>()
+  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>()
 
   branchOfficesOrderColumn = [
     {
@@ -31,6 +34,18 @@ export class BranchOfficeTableComponent implements OnInit {
     },
     { title: 'Ações' }
   ]
+
+  get page() {
+    return getCurrentPage(this.branchOffices)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.onPaginate.emit(this.branchOffices.previous)
+    } else if (params.pageIndex > this.page) {
+      this.onPaginate.emit(this.branchOffices.next)
+    }
+  }
 
   constructor() { }
 

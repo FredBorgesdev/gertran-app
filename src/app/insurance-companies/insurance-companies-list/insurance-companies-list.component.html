@@ -29,7 +29,15 @@
         </button>
       </div>
     </div>
-    <nz-table #insuranceCompaniesListTable [nzData]="insuranceCompanies" >
+    <nz-table
+      #insuranceCompaniesListTable
+      [nzData]="insuranceCompanies?.results"
+      [nzTotal]="insuranceCompanies?.count"
+      [nzPageSize]="insuranceCompanies?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+      >
       <thead>
       <tr>
         <th *ngFor="let column of insuranceCompaniesColumns" [nzSortFn]="column.compare">{{ column.title }}</th>

@@ -26,10 +26,12 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-radio-group nzName="radiogroup" formControlName="peripheralType">
-          <label nz-radio nzValue="actuator">Atuador</label>
-          <label nz-radio nzValue="sensor">Sensor</label>
-        </nz-radio-group>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o tipo!">
+          <nz-radio-group nzName="radiogroup" formControlName="peripheralType">
+            <label nz-radio nzValue="actuator">Atuador</label>
+            <label nz-radio nzValue="sensor">Sensor</label>
+          </nz-radio-group>
+        </nz-form-control>
       </nz-form-item>
       
       <nz-divider></nz-divider>

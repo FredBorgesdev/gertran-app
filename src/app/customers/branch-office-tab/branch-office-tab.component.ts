@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { GetAllResponse } from 'src/app/shared/services/api.service';
 import { BranchOffice, BranchOfficesService } from '../branch-offices.service';
 import { Customer } from '../customers.service';
 
@@ -23,7 +24,7 @@ export class BranchOfficeTabComponent implements OnInit {
 
   @Input() customer: Customer
 
-  branchOffices: BranchOffice[] = []
+  branchOffices: GetAllResponse<BranchOffice> = null
 
   isLoading = false
   isCreatingBranchOffice = false
@@ -39,10 +40,10 @@ export class BranchOfficeTabComponent implements OnInit {
     this.loadBranchOffices()
   }
 
-  loadBranchOffices() {
+  loadBranchOffices(url?: string) {
     this.isLoading = true
-    this.branchOfficeService.getAll(this.customer.id).subscribe(branchOffices => {
-      this.branchOffices = branchOffices 
+    this.branchOfficeService.getAll({ url }, this.customer.id).subscribe(branchOffices => {
+      this.branchOffices = branchOffices
       this.isLoading = false
     }, () => this.handleFailure())
   }
@@ -83,7 +84,6 @@ export class BranchOfficeTabComponent implements OnInit {
       },
     })
   }
-
 
   private handleSuccess() {
     this.isCreatingBranchOffice = false

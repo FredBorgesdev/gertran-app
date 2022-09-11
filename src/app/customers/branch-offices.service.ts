@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService from '../shared/services/api.service';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface BranchOffice {
   id: string
@@ -17,8 +17,17 @@ export class BranchOfficesService implements ApiService<BranchOffice> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(customerId: string) {
-    return this.http.get<BranchOffice[]>(`customers/${customerId}/branch-offices`);
+  getAll(pagination: Pagination, customerId: string) {
+    const params = { limit: DEFAULT_LIMIT }
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value 
+      }) 
+    }
+    return this.http.get<GetAllResponse<BranchOffice>>(
+      `customers/${customerId}/branch-offices`,
+      { params }
+    );
   }
 
   get(id: string, customerId: string) {

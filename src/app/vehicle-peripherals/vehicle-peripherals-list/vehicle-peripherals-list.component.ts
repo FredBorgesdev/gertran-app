@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { VehiclePeripheralsService, VehiclePeripherals } from '../vehicle-peripherals.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { VehiclePeripheralsService, VehiclePeripherals } from '../vehicle-periph
 })
 export class VehiclePeripheralsListComponent implements OnInit {
   isLoading = false
-  vehiclePeripheralsList: VehiclePeripherals[] = []
+  vehiclePeripheralsList: GetAllResponse<VehiclePeripherals> = null
 
   vehiclePeripheralsColumns = [
     { title: 'Nome' },
@@ -27,8 +29,12 @@ export class VehiclePeripheralsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadVehiclePeripherals()
+  }
+
+  loadVehiclePeripherals(url?: string) {
     this.isLoading = true
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll({ url }).subscribe((data) => {
       this.vehiclePeripheralsList = data
       this.isLoading = false
     })
@@ -54,13 +60,11 @@ export class VehiclePeripheralsListComponent implements OnInit {
   handleDelete(id: string) {
     this.isLoading = true
     this.service.delete(id).subscribe(() => {
-      this.vehiclePeripheralsList = this.vehiclePeripheralsList.filter(
-        (item) => item.id !== id
-      )
-      this.message.success('Perifericos excluído com sucesso')
+      this.loadVehiclePeripherals()
+      this.message.success('Periferico excluído com sucesso')
       this.isLoading = false
     }, () => {
-      this.message.error('Erro ao excluir Perifericos')
+      this.message.error('Erro ao excluir periferico')
       this.isLoading = false
     })
   }
@@ -68,5 +72,17 @@ export class VehiclePeripheralsListComponent implements OnInit {
   getPeripheralType(type: string) {
     if (type === 'actuator') return 'Atuador'
     if (type === 'sensor') return 'Sensor'
+  }
+
+  get page() {
+    return getCurrentPage(this.vehiclePeripheralsList)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadVehiclePeripherals(this.vehiclePeripheralsList.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadVehiclePeripherals(this.vehiclePeripheralsList.next)
+    }
   }
 }

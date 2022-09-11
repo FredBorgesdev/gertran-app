@@ -37,7 +37,15 @@
         </button>
       </div>
     </div>
-    <nz-table #driversListTable [nzData]="displayData" >
+    <nz-table
+      #driversListTable
+      [nzData]="displayData?.results"
+      [nzTotal]="displayData?.count"
+      [nzPageSize]="displayData?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of driverColumn" [nzSortFn]="column.compare">{{ column.title }}</th>

@@ -1,4 +1,12 @@
-<nz-table #documentsTable [nzData]="documents" >
+<nz-table
+  #documentsTable
+  [nzData]="documents?.results"
+  [nzTotal]="documents?.count"
+  [nzPageSize]="documents?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+>
   <thead>
   <tr>
     <th *ngFor="let column of documentsOrderColumn" [nzSortFn]="column.compare">{{ column.title }}</th>

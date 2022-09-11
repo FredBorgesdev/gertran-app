@@ -1,4 +1,12 @@
-<nz-table #branchOfficesTable [nzData]="branchOffices" >
+<nz-table
+  #branchOfficesTable
+  [nzData]="branchOffices?.results"
+  [nzTotal]="branchOffices?.count"
+  [nzPageSize]="branchOffices?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+>
   <thead>
   <tr>
     <th *ngFor="let column of branchOfficesOrderColumn" [nzSortFn]="column.compare">{{ column.title }}</th>

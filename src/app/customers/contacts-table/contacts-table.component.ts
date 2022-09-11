@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { ContactDataItem } from '../contacts.service';
 
 @Component({
@@ -8,9 +10,11 @@ import { ContactDataItem } from '../contacts.service';
 })
 export class ContactsTableComponent implements OnInit {
 
-  @Input() contacts: ContactDataItem[] = [];
+  @Input() contacts: GetAllResponse<ContactDataItem> = null;
   @Output() onEdit: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>()
   @Output() onDelete: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>()
+  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>()
+
 
   contactsOrderColumn = [
     {
@@ -23,6 +27,10 @@ export class ContactsTableComponent implements OnInit {
     { title: 'Principal' },
     { title: 'Ações' }
   ]
+
+  get page() {
+    return getCurrentPage(this.contacts)
+  }
 
   constructor() { }
 
@@ -37,4 +45,11 @@ export class ContactsTableComponent implements OnInit {
     this.onDelete.emit(item)
   }
 
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.onPaginate.emit(this.contacts.previous)
+    } else if (params.pageIndex > this.page) {
+      this.onPaginate.emit(this.contacts.next)
+    }
+  }
 }

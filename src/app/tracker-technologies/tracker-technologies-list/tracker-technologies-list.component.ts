@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { TrackerTechnologiesService, TrackerTechnologies } from '../tracker-technologies.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { TrackerTechnologiesService, TrackerTechnologies } from '../tracker-tech
 })
 export class TrackerTechnologiesListComponent implements OnInit {
   isLoading = false
-  trackerTechnologiesList: TrackerTechnologies[] = []
+  trackerTechnologiesList: GetAllResponse<TrackerTechnologies> = null
 
   trackerTechnologiesColumns = [
     { title: 'Id' },
@@ -27,8 +29,12 @@ export class TrackerTechnologiesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadTrackerTechnologiesList()
+  }
+
+  loadTrackerTechnologiesList(url?: string) {
     this.isLoading = true
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll({ url }).subscribe((data) => {
       this.trackerTechnologiesList = data
       this.isLoading = false
     })
@@ -54,14 +60,24 @@ export class TrackerTechnologiesListComponent implements OnInit {
   handleDelete(id: string) {
     this.isLoading = true
     this.service.delete(id).subscribe(() => {
-      this.trackerTechnologiesList = this.trackerTechnologiesList.filter(
-        (item) => item.id !== id
-      )
-      this.message.success('Tecnologias excluído com sucesso')
+      this.loadTrackerTechnologiesList()
+      this.message.success('Tecnologia excluído com sucesso')
       this.isLoading = false
     }, () => {
-      this.message.error('Erro ao excluir Tecnologias')
+      this.message.error('Erro ao excluir tecnologia')
       this.isLoading = false
     })
+  }
+
+  get page() {
+    return getCurrentPage(this.trackerTechnologiesList)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadTrackerTechnologiesList(this.trackerTechnologiesList.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadTrackerTechnologiesList(this.trackerTechnologiesList.next)
+    }
   }
 }

@@ -1,4 +1,12 @@
-<nz-table #contactsTable [nzData]="contacts" >
+<nz-table
+  #contactsTable
+  [nzData]="contacts?.results"
+  [nzTotal]="contacts?.count"
+  [nzPageSize]="contacts?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+>
   <thead>
   <tr>
     <th *ngFor="let column of contactsOrderColumn" [nzSortFn]="column.compare">{{ column.title }}</th>

@@ -47,15 +47,14 @@ export class DriversFormComponent implements OnInit {
       admissionDate: [this.driver?.admissionDate, [Validators.required]],
     })
 
-    this.customersService.getAll().subscribe((customers) => {
-      this.customers = customers
+    this.customersService.getAll({}).subscribe((customers) => {
+      this.customers = customers.results
     })
 
     this.i18n.setLocale(en_US)
   }
 
   save() {
-    console.log(this.validateForm.get('cpf').value)
     if (this.validateForm.valid) {
       this.onSubmit.emit(this.validateForm.value)
     } else {

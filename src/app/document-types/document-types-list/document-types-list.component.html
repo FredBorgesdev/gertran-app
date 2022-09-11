@@ -25,7 +25,15 @@
         </button>
       </div>
     </div>
-    <nz-table #documentTypesListTable [nzData]="documentTypes">
+    <nz-table
+      #documentTypesListTable
+      [nzData]="documentTypes?.results"
+      [nzTotal]="documentTypes?.count"
+      [nzPageSize]="documentTypes?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
         <tr>
           <th *ngFor="let column of documentTypesColumns" [nzSortFn]="column.compare">{{ column.title }}</th>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 
 import { TableService } from '../../shared/services/table.service'
 import { Customer, CustomersService } from '../customers.service';
@@ -14,7 +16,7 @@ import { Customer, CustomersService } from '../customers.service';
 export class CustomersListComponent implements OnInit {
 
   isLoading = false
-  customers = []
+  customers: GetAllResponse<Customer> = null
   searchInput: string
 
   customerColumn = [
@@ -45,9 +47,17 @@ export class CustomersListComponent implements OnInit {
     private modal: NzModalService,
   ) { }
 
+  get page() {
+    return getCurrentPage(this.customers)
+  }
+
   ngOnInit(): void {
+    this.loadCustomers()
+  }
+
+  loadCustomers(url?: string) {
     this.isLoading = true
-    this.customersService.getAll().subscribe((data: Customer[]) => {
+    this.customersService.getAll({ url }).subscribe((data) => {
       this.isLoading = false
       this.customers = data
     }, () => this.handleError())
@@ -55,7 +65,7 @@ export class CustomersListComponent implements OnInit {
 
   search() {
     const data = this.customers
-    this.customers = this.tableService.search(this.searchInput, data)
+    this.customers.results = this.tableService.search(this.searchInput, data.results)
   }
 
   create() {
@@ -75,9 +85,17 @@ export class CustomersListComponent implements OnInit {
     })
   }
 
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadCustomers(this.customers.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadCustomers(this.customers.next)
+    }
+  }
+
   private deleteCustomer(id: string) {
     this.customersService.delete(id).subscribe(() => {
-      this.customers = this.customers.filter(customer => customer.id !== id)
+      this.loadCustomers()
       this.message.success('Cliente excluído com sucesso')
     })
   }

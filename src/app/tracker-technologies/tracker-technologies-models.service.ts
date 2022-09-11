@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService from '../shared/services/api.service';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface TrackerTechnologiesModels {
   id: string
@@ -16,8 +16,18 @@ export class TrackerTechnologiesModelsService implements ApiService<TrackerTechn
     private http: HttpClient,
   ) { }
 
-  getAll(trackerTechnologyId: string) {
-    return this.http.get<TrackerTechnologiesModels[]>(`trackers/tracker-technologies/${trackerTechnologyId}/tracker-models`);
+  getAll(pagination: Pagination, trackerTechnologyId: string) {
+    const params = { limit: DEFAULT_LIMIT }
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value 
+      })
+    }
+
+    return this.http.get<GetAllResponse<TrackerTechnologiesModels>>(
+      `trackers/tracker-technologies/${trackerTechnologyId}/tracker-models`,
+      { params }
+    );
   }
 
   get(id: string, trackerTechnologyId: string) {

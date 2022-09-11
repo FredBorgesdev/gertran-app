@@ -29,7 +29,15 @@
         </button>
       </div>
     </div>
-    <nz-table #table [nzData]="vehiclePeripheralsList" >
+    <nz-table
+      #table
+      [nzData]="vehiclePeripheralsList?.results"
+      [nzTotal]="vehiclePeripheralsList?.count"
+      [nzPageSize]="vehiclePeripheralsList?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of vehiclePeripheralsColumns" [nzSortFn]="column.compare">{{ column.title }}</th>

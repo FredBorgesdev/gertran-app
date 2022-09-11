@@ -30,8 +30,8 @@ export class DocumentsFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.documentTypeService.getAll().subscribe(documentTypes => {
-      this.documentTypes = documentTypes
+    this.documentTypeService.getAll({ url: '' }).subscribe(documentTypes => {
+      this.documentTypes = documentTypes.results
     })
 
     this.validateForm = this.formBuilder.group({

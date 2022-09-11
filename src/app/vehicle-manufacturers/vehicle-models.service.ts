@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService from '../shared/services/api.service';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface VehicleModels {
   id: string
@@ -17,8 +17,17 @@ export class VehicleModelsService implements ApiService<VehicleModels> {
     private http: HttpClient,
   ) { }
 
-  getAll(vehicleManufacturerId: string) {
-    return this.http.get<VehicleModels[]>(`vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models`);
+  getAll(pagination: Pagination, vehicleManufacturerId: string) {
+    const params = { limit: DEFAULT_LIMIT }
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value 
+      })
+    }
+    return this.http.get<GetAllResponse<VehicleModels>>(
+      `vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models`,
+      { params }
+    );
   }
 
   get(id: string, vehicleManufacturerId: string) {

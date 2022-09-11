@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService from '../shared/services/api.service';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface ContactDataItem {
   id: string
@@ -18,8 +18,17 @@ export class ContactsService implements ApiService<ContactDataItem> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(customerId: string) {
-    return this.http.get<ContactDataItem[]>(`customers/${customerId}/contacts`);
+  getAll(pagination: Pagination, customerId: string) {
+    const params = { limit: DEFAULT_LIMIT }
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value 
+      }) 
+    }
+
+    return this.http.get<GetAllResponse<ContactDataItem>>(`customers/${customerId}/contacts`, { 
+      params
+    });
   }
 
   get(id: string, customerId: string) {

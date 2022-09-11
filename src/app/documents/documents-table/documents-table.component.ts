@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { Document } from '../documents.service';
 
 @Component({
@@ -8,9 +10,10 @@ import { Document } from '../documents.service';
 })
 export class DocumentsTableComponent implements OnInit {
 
-  @Input() documents: Document[] = []
+  @Input() documents: GetAllResponse<Document> = null
   @Output() onEdit: EventEmitter<Document> = new EventEmitter<Document>()
   @Output() onDelete: EventEmitter<Document> = new EventEmitter<Document>()
+  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>()
 
   documentsOrderColumn = [
     {
@@ -35,5 +38,17 @@ export class DocumentsTableComponent implements OnInit {
 
   delete(document: Document) {
     this.onDelete.emit(document)
+  }
+
+  get page() {
+    return getCurrentPage(this.documents)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.onPaginate.emit(this.documents.previous)
+    } else if (params.pageIndex > this.page) {
+      this.onPaginate.emit(this.documents.next)
+    }
   }
 }

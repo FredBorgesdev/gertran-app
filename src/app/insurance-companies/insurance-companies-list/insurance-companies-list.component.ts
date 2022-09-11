@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-companies.service';
 
 @Component({
@@ -12,7 +14,7 @@ import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-compan
 export class InsuranceCompaniesListComponent implements OnInit {
 
   isLoading = false
-  insuranceCompanies: InsuranceCompany[] = []
+  insuranceCompanies: GetAllResponse<InsuranceCompany> = null
 
   insuranceCompaniesColumns = [
     {
@@ -42,8 +44,12 @@ export class InsuranceCompaniesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadInsuranceCompanies()
+  }
+
+  loadInsuranceCompanies(url?: string) {
     this.isLoading = true
-    this.insuranceCompaniesService.getAll().subscribe((data) => {
+    this.insuranceCompaniesService.getAll({ url }).subscribe((data) => {
       this.insuranceCompanies = data
       this.isLoading = false
     })
@@ -73,14 +79,24 @@ export class InsuranceCompaniesListComponent implements OnInit {
   deleteInsuranceCompany(id: string) {
     this.isLoading = true
     this.insuranceCompaniesService.delete(id).subscribe(() => {
-      this.insuranceCompanies = this.insuranceCompanies.filter(
-        (insuranceCompany) => insuranceCompany.id !== id
-      )
+      this.loadInsuranceCompanies()
       this.message.success('Seguradora excluída com sucesso')
       this.isLoading = false
     }, () => {
       this.message.error('Erro ao excluir seguradora')
       this.isLoading = false
     })
+  }
+
+  get page() {
+    return getCurrentPage(this.insuranceCompanies)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadInsuranceCompanies(this.insuranceCompanies.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadInsuranceCompanies(this.insuranceCompanies.next)
+    }
   }
 }

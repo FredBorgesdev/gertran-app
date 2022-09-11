@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http'
 import {
   Component,
   OnInit
@@ -6,20 +5,11 @@ import {
 import { Router } from '@angular/router'
 import { NzMessageService } from 'ng-zorro-antd/message'
 import { NzModalService } from 'ng-zorro-antd/modal'
+import { NzTableQueryParams } from 'ng-zorro-antd/table'
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service'
 
 import { TableService } from '../../shared/services/table.service'
 import { Driver, DriversService } from '../drivers.service'
-
-interface DataItem {
-  id: number
-  name: string
-  cpf: string
-  cnh: string
-  cnhCategory: string
-  cnhExpiration: string
-  cellphone: string
-  profilePhoto: string
-}
 
 @Component({
   selector: 'app-drivers-list',
@@ -29,7 +19,7 @@ interface DataItem {
 export class DriversListComponent implements OnInit {
 
   isLoading = false
-  displayData = []
+  displayData: GetAllResponse<Driver> = null
   searchInput: string
 
   driverColumn = [
@@ -56,9 +46,13 @@ export class DriversListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadDrivers()
+  }
+
+  loadDrivers(url?: string) {
     this.isLoading = true
-    this.driversService.getAll().subscribe(
-      (data: Driver[]) => {
+    this.driversService.getAll({ url }).subscribe(
+      data => {
         this.displayData = data
         this.isLoading = false
       },
@@ -69,10 +63,11 @@ export class DriversListComponent implements OnInit {
     )
   }
 
+
   search() {
-    this.displayData = this.tableService.search(
+    this.displayData.results = this.tableService.search(
       this.searchInput,
-      this.displayData
+      this.displayData.results
     )
   }
 
@@ -91,15 +86,23 @@ export class DriversListComponent implements OnInit {
         this.driversService.delete(item.id).subscribe(
           () => {
             this.message.success('Motorista excluído com sucesso')
-            this.displayData = this.displayData.filter(
-              (driver: Driver) => driver.id !== item.id
-            )
+            this.loadDrivers()
           },
-          () => {
-            this.message.error('Falha ao excluir motorista')
-          }
+          () => this.message.error('Falha ao excluir motorista')
         )
       }
     })
+  }
+
+  get page() {
+    return getCurrentPage(this.displayData)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadDrivers(this.displayData.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadDrivers(this.displayData.next)
+    }
   }
 }

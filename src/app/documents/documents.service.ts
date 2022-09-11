@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService from '../shared/services/api.service';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface Document {
   id: string
@@ -24,8 +24,15 @@ export class DocumentsService implements ApiService<Document> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(resource: DocumentResource, resourceId: string) {
-    return this.http.get<Document[]>(`${resource}/${resourceId}/documents`);
+  getAll(pagination: Pagination, resource: DocumentResource, resourceId: string) {
+    const params = { limit: DEFAULT_LIMIT } 
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value 
+      }) 
+    }
+
+    return this.http.get<GetAllResponse<Document>>(`${resource}/${resourceId}/documents`, { params });
   }
 
   get(id: string, resource: DocumentResource, resourceId: string) {

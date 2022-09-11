@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { VehicleManufacturers } from '../vehicle-manufacturers.service';
 import { VehicleModelsService, VehicleModels } from '../vehicle-models.service';
 
@@ -14,7 +16,7 @@ export class VehicleModelsListComponent implements OnInit {
 
   isLoading = false
   isCreatingModel = false
-  vehicleModelsList: VehicleModels[] = []
+  vehicleModelsList: GetAllResponse<VehicleModels> = null
   vehicleModel: VehicleModels = null
 
   vehicleModelsColumns = [
@@ -33,13 +35,14 @@ export class VehicleModelsListComponent implements OnInit {
     this.loadVehicleModels()
   }
 
-  loadVehicleModels() {
+  loadVehicleModels(url?: string) {
     this.isLoading = true
-    this.service.getAll(this.vehicleManufacturer.id).subscribe((data) => {
+    this.service.getAll({ url }, this.vehicleManufacturer.id).subscribe((data) => {
       this.vehicleModelsList = data
       this.isLoading = false
     })
   }
+
   edit(item: VehicleModels) {
     this.vehicleModel = item
     this.isCreatingModel = true
@@ -67,14 +70,24 @@ export class VehicleModelsListComponent implements OnInit {
   handleDelete(id: string) {
     this.isLoading = true
     this.service.delete(id, this.vehicleManufacturer.id).subscribe(() => {
-      this.vehicleModelsList = this.vehicleModelsList.filter(
-        (item) => item.id !== id
-      )
+      this.loadVehicleModels()
       this.message.success('Modelos excluído com sucesso')
       this.isLoading = false
     }, () => {
       this.message.error('Erro ao excluir Modelos')
       this.isLoading = false
     })
+  }
+
+  get page() {
+    return getCurrentPage(this.vehicleModelsList)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadVehicleModels(this.vehicleModelsList.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadVehicleModels(this.vehicleModelsList.next)
+    }
   }
 }

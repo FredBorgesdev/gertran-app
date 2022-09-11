@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 import { VehicleModelTypesService, VehicleModelTypes } from '../vehicle-model-types.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { VehicleModelTypesService, VehicleModelTypes } from '../vehicle-model-ty
 })
 export class VehicleModelTypesListComponent implements OnInit {
   isLoading = false
-  vehicleModelTypesList: VehicleModelTypes[] = []
+  vehicleModelTypesList: GetAllResponse<VehicleModelTypes> = null
 
   vehicleModelTypesColumns = [
     { title: 'Id' },
@@ -27,8 +29,12 @@ export class VehicleModelTypesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadVehicleModelTypes()
+  }
+
+  loadVehicleModelTypes(url?: string) {
     this.isLoading = true
-    this.service.getAll().subscribe((data) => {
+    this.service.getAll({ url }).subscribe((data) => {
       this.vehicleModelTypesList = data
       this.isLoading = false
     })
@@ -54,14 +60,24 @@ export class VehicleModelTypesListComponent implements OnInit {
   handleDelete(id: string) {
     this.isLoading = true
     this.service.delete(id).subscribe(() => {
-      this.vehicleModelTypesList = this.vehicleModelTypesList.filter(
-        (item) => item.id !== id
-      )
+      this.loadVehicleModelTypes()
       this.message.success('Tipos de Veiculos excluído com sucesso')
       this.isLoading = false
     }, () => {
       this.message.error('Erro ao excluir Tipos de Veiculos')
       this.isLoading = false
     })
+  }
+
+  get page() {
+    return getCurrentPage(this.vehicleModelTypesList)
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      this.loadVehicleModelTypes(this.vehicleModelTypesList.previous)
+    } else if (params.pageIndex > this.page) {
+      this.loadVehicleModelTypes(this.vehicleModelTypesList.next)
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService from '../shared/services/api.service';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface Customer {
   id: string
@@ -34,8 +34,15 @@ export class CustomersService implements ApiService<Customer> {
     return this.http.post<Customer>('customers/create', customer);
   }
 
-  getAll() {
-    return this.http.get<Customer[]>('customers')
+  getAll(pagination: Pagination) {
+    const params = { limit: DEFAULT_LIMIT }
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value
+      })
+    }
+
+    return this.http.get<GetAllResponse<Customer>>('customers', { params })
   }
 
   get(id: string) {

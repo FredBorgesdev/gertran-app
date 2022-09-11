@@ -16,6 +16,7 @@
     [contacts]="contactsDisplayData"
     (onEdit)="edit($event)"
     (onDelete)="delete($event)"
+    (onPaginate)="loadContacts($event)"
   ></app-contacts-table>
 
   <app-contacts-form

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { GetAllResponse } from 'src/app/shared/services/api.service';
 import { OnSubmitEvent } from '../documents-form/documents-form.component';
 import { Document, DocumentResource, DocumentsService } from '../documents.service';
 
@@ -17,7 +18,7 @@ export class DocumentsTabComponent implements OnInit {
   isCreatingDocument = false
   isLoading = false
 
-  documents: Document[] = []
+  documents: GetAllResponse<Document> = null
   document: Document = null
 
   constructor(
@@ -30,9 +31,9 @@ export class DocumentsTabComponent implements OnInit {
     this.loadDocuments()
   }
 
-  loadDocuments() {
+  loadDocuments(url?: string) {
     this.isLoading = true
-    this.documentsService.getAll(this.resource, this.resourceId).subscribe(documents => {
+    this.documentsService.getAll({ url }, this.resource, this.resourceId).subscribe(documents => {
       this.documents = documents
       this.isLoading = false
     }, () => this.handleFailure())

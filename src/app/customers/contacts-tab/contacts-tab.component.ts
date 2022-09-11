@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { GetAllResponse } from 'src/app/shared/services/api.service';
 import { ContactDataItem, ContactsService } from '../contacts.service';
 import { Customer } from '../customers.service';
 
@@ -13,7 +14,7 @@ export class ContactsTabComponent implements OnInit {
 
   @Input() customer: Customer
 
-  contactsDisplayData: ContactDataItem[] = []
+  contactsDisplayData: GetAllResponse<ContactDataItem> = null
 
   isCreatingContact = false
   isLoading = false
@@ -29,8 +30,8 @@ export class ContactsTabComponent implements OnInit {
     this.loadContacts()
   }
 
-  loadContacts() {
-    this.contactsService.getAll(this.customer.id).subscribe(contacts => {
+  loadContacts(url?: string) {
+    this.contactsService.getAll({ url }, this.customer.id).subscribe(contacts => {
       this.contactsDisplayData = contacts
     })
   }
@@ -62,7 +63,7 @@ export class ContactsTabComponent implements OnInit {
       nzOnOk: () => {
         this.isLoading = true
         this.contactsService.delete(contact.id, this.customer.id).subscribe(() => {
-          this.contactsDisplayData = this.contactsDisplayData.filter(c => c.id !== contact.id)
+          this.loadContacts()
           this.isLoading = false
         }, () => this.handleFailure())
       }
