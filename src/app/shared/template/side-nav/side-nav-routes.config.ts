@@ -124,7 +124,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [
       {
         path: '/',
-        title: 'Relatório A',
+        title: 'Violações',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'bar-chart',
@@ -132,12 +132,117 @@ export const ROUTES: SideNavInterface[] = [
       },
       {
         path: '/',
-        title: 'Relatório B',
+        title: 'Inicio de Viagem',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'bar-chart',
         submenu: []
-      }
+      },
+      {
+        path: '/',
+        title: 'Carga e descarga',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Viagens em atraso',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Solicitação',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Veiculos liberados',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Fim de viagem',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Fechamento',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Macros',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Posições',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Alertas',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Comandos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Checklist',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Temperatura',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+      {
+        path: '/',
+        title: 'Analítico',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: []
+      },
+
     ]
   },
   {
