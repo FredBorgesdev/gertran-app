@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private message: NzMessageService,
   ) {}
 
   async submitForm(): Promise<void> {
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
       )
       this.router.navigate(['/dashboard/home']);
     } catch (error) {
-      // TODO: Handle error
+      this.message.error('Email ou senha inválidos.');
     } finally {
       this.isLoading = false;
     }
