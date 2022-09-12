@@ -36,7 +36,10 @@ export class AuthenticationService {
 
     const isTokenValid = await this.http.post('auth/jwt/verify', {
       token: Cookies.get(GERTRAN_WEB_TOKEN)
-    }).toPromise().catch(() => false);
+    }).toPromise().catch(() => {
+        this.logout()
+        return false
+      });
 
     return isTokenValid
   }
