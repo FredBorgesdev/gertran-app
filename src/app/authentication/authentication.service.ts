@@ -1,24 +1,27 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Cookies from 'js-cookie';
 
 const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN'
+const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  login(
+  async login(
     email: string,
     password: string
   ) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        Cookies.set(GERTRAN_WEB_TOKEN, '1234567890');
-        resolve(true);
-      }, 500)
+    return this.http.post('auth/jwt/create', {
+      email,
+      password 
+    }).toPromise().then((response: any) => {
+      Cookies.set(GERTRAN_WEB_TOKEN, response.access);
+      Cookies.set(GERTRAN_REFRESH_TOKEN, response.refresh);
     })
   }
 
