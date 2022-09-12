@@ -25,9 +25,19 @@ export class AuthenticationService {
     })
   }
 
-  logout() {}
+  logout() {
+    Cookies.remove(GERTRAN_WEB_TOKEN);
+    Cookies.remove(GERTRAN_REFRESH_TOKEN);
+  }
 
-  isAuthenticated() {
-    return Boolean(Cookies.get(GERTRAN_WEB_TOKEN));
+  async isAuthenticated() {
+    const token = Cookies.get(GERTRAN_WEB_TOKEN);
+    if (!token) return false;
+
+    const isTokenValid = await this.http.post('auth/jwt/verify', {
+      token: Cookies.get(GERTRAN_WEB_TOKEN)
+    }).toPromise().catch(() => false);
+
+    return isTokenValid
   }
 }

@@ -29,7 +29,7 @@
         <a (click)="quickViewToggle()">
           <i nz-icon nzType="appstore" theme="outline"></i>
         </a>
-        <nz-drawer [nzWidth]="280" nzTitle="Quick View" [nzClosable]="false" [nzVisible]="quickViewVisible" nzPlacement="right" (nzOnClose)="quickViewToggle()">
+        <nz-drawer [nzWidth]="280" nzTitle="Menu" [nzClosable]="false" [nzVisible]="quickViewVisible" nzPlacement="right" (nzOnClose)="quickViewToggle()">
           <ng-container *nzDrawerContent>
             <app-quick-view></app-quick-view>
           </ng-container>
