@@ -1,7 +1,7 @@
 import { SideNavInterface } from '../../interfaces/side-nav.type';
 export const ROUTES: SideNavInterface[] = [
   {
-    path: '',
+    path: '/dashboard/home',
     title: 'Dashboard',
     iconType: 'nzIcon',
     iconTheme: 'outline',
@@ -123,7 +123,7 @@ export const ROUTES: SideNavInterface[] = [
     icon: 'line-chart',
     submenu: [
       {
-        path: '/',
+        path: '/dashboard/reports1',
         title: 'Violações',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -131,7 +131,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports2',
         title: 'Inicio de Viagem',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -139,7 +139,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports3',
         title: 'Carga e descarga',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -147,7 +147,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports4',
         title: 'Viagens em atraso',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -155,7 +155,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports5',
         title: 'Solicitação',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -163,7 +163,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports6',
         title: 'Veiculos liberados',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -171,7 +171,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports7',
         title: 'Fim de viagem',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -179,7 +179,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports8',
         title: 'Fechamento',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -187,7 +187,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports9',
         title: 'Macros',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -195,7 +195,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports10',
         title: 'Posições',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -203,7 +203,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports11',
         title: 'Alertas',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -211,7 +211,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports12',
         title: 'Comandos',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -219,7 +219,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports13',
         title: 'Checklist',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -227,7 +227,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports14',
         title: 'Temperatura',
         iconType: 'nzIcon',
         iconTheme: 'outline',
@@ -235,14 +235,13 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       {
-        path: '/',
+        path: '/dashboard/reports15',
         title: 'Analítico',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'bar-chart',
         submenu: []
       },
-
     ]
   },
   {

@@ -33,7 +33,7 @@
                         <span>{{subItem.title}}</span>
                         <i class="ant-menu-submenu-arrow"></i>
                     </a>
-                    <a [routerLink]="subItem.path" (click)="closeMobileMenu()" class="p-l-30" *ngIf="subItem.submenu.length === 0">
+                    <a [routerLink]="subItem.path || subItem.redirectTo" (click)="closeMobileMenu()" class="p-l-30" *ngIf="subItem.submenu.length === 0">
                         <i *ngIf="subItem.iconType == 'nzIcon'" nz-icon [nzType]="subItem.icon" [theme]="subItem.iconTheme"></i>
                         <i *ngIf="subItem.iconType == 'fontawesome'" class="m-r-10" [ngClass]="[subItem.iconTheme , subItem.icon]"></i>
                         <span>{{subItem.title}}</span>

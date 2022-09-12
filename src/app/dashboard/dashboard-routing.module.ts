@@ -13,6 +13,13 @@ const routes: Routes = [
   }
 ];
 
+new Array(15).fill(0).forEach((_, i) => {
+  routes.push({
+    path: `reports${i}`,
+    component: DashboardComponent
+  })
+})
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],

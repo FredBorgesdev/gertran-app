@@ -1,4 +1,5 @@
 export interface SideNavInterface {
+    redirectTo?: string;
     path: string;
     title: string;
     iconType: "" | "nzIcon" | "fontawesome";
