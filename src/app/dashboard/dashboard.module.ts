@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { NgChartjsModule } from 'ng-chartjs'
+import { NgChartjsModule } from 'ng-chartjs';
 import { SharedModule } from '../shared/shared.module';
-import { DashboardRoutingModule } from "./dashboard-routing.module";
+import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 
 /** Import any ng-zorro components as the module required except icon module */
@@ -11,7 +11,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 const antdModule = [
     NzButtonModule,
   NgChartjsModule
-]
+];
 
 @NgModule({
     imports: [

@@ -4,9 +4,9 @@ import {
   OnInit,
   Output,
   EventEmitter,
-} from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
-import { Router } from '@angular/router'
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-form',
@@ -15,8 +15,8 @@ import { Router } from '@angular/router'
 })
 export class UsersFormComponent implements OnInit {
 
-  @Input() user: any
-  @Output() onSave: EventEmitter<any> = new EventEmitter()
+  @Input() user: any;
+  @Output() onSave: EventEmitter<any> = new EventEmitter();
 
   validateForm: FormGroup;
 
@@ -31,14 +31,14 @@ export class UsersFormComponent implements OnInit {
       cpf: [this.user?.cpf],
       email: [this.user?.email],
       cellphone: [this.user?.cellphone],
-    })
+    });
   }
 
   save() {
-    this.onSave.emit(this.validateForm.value)
+    this.onSave.emit(this.validateForm.value);
   }
 
   listUsers() {
-    this.router.navigate([ '/users/users-list' ])
+    this.router.navigate([ '/users/users-list' ]);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { Wagon } from '../wagons-list/wagons-list.component';
 
 @Component({
@@ -9,10 +9,10 @@ import { Wagon } from '../wagons-list/wagons-list.component';
 })
 export class WagonsFormComponent implements OnInit {
 
-  @Input() wagon: Wagon = null
-  @Output() onSubmit: EventEmitter<Wagon> = new EventEmitter<Wagon>()
+  @Input() wagon: Wagon = null;
+  @Output() onSubmit: EventEmitter<Wagon> = new EventEmitter<Wagon>();
 
-  isLoading = false
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -22,11 +22,11 @@ export class WagonsFormComponent implements OnInit {
   }
 
   save() {
-    this.onSubmit.emit(this.wagon)
+    this.onSubmit.emit(this.wagon);
   }
 
   listWagons() {
-    this.router.navigate(['/wagons/wagons-list'])
+    this.router.navigate(['/wagons/wagons-list']);
   }
 
 }

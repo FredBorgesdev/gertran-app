@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 export const DEFAULT_LIMIT = 2;
 
@@ -16,9 +16,9 @@ export interface GetAllResponse<T> {
 }
 
 export const getCurrentPage = (response: GetAllResponse<any>) => {
-  if (!response || response.offset === 0) return 1;
+  if (!response || response.offset === 0) { return 1; }
   return response.offset / response.limit + 1;
-}
+};
 
 interface ApiService<T> {
   get(id: string, ...params: any): Observable<T>;
@@ -28,4 +28,4 @@ interface ApiService<T> {
   delete(id: string, ...params: any): Observable<T>;
 }
 
-export default ApiService
+export default ApiService;

@@ -11,16 +11,16 @@ import { Stop } from '../stops-list/stops-list.component';
   styleUrls: ['./stops-form.component.css']
 })
 export class StopsFormComponent implements OnInit {
-  @Input() stop: Stop
-  @Output() onSave: EventEmitter<Stop> = new EventEmitter<Stop>()
+  @Input() stop: Stop;
+  @Output() onSave: EventEmitter<Stop> = new EventEmitter<Stop>();
 
-  validateForm: FormGroup
-  stopTypes = stopsListTypes
+  validateForm: FormGroup;
+  stopTypes = stopsListTypes;
 
   categoriesTransferItems: TransferItem[] = stopsListTypeCategories.map(category => ({
     key: category.id,
     title: category.name,
-  }))
+  }));
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,15 +37,15 @@ export class StopsFormComponent implements OnInit {
       city: [this.stop?.city],
       state: [this.stop?.state],
       typeCategoryIds: [this.stop?.typeCategoryIds]
-    })
+    });
   }
 
   save() {
-    this.onSave.emit(this.validateForm.value)
+    this.onSave.emit(this.validateForm.value);
   }
 
   listStops() {
-    this.router.navigate(['/stops/stops-list'])
+    this.router.navigate(['/stops/stops-list']);
   }
 
 }

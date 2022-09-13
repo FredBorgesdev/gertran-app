@@ -10,8 +10,8 @@ import { Driver, DriversService } from '../drivers.service';
 })
 export class DriversDriverComponent implements OnInit {
 
-  driver = null
-  isLoading = false
+  driver = null;
+  isLoading = false;
 
   constructor(
     private router: Router,
@@ -22,21 +22,21 @@ export class DriversDriverComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadDriver()
+    this.loadDriver();
   }
 
   loadDriver() {
-    this.isLoading = true
+    this.isLoading = true;
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
       this.driversService.get(this.activatedRoute.snapshot.paramMap.get('id')).subscribe(driver => {
-        this.driver = driver
-        this.isLoading = false
+        this.driver = driver;
+        this.isLoading = false;
       }, () => {
-        this.isLoading = false
-      })
+        this.isLoading = false;
+      });
     } else {
-      this.createNewDriver()
-      this.isLoading = false
+      this.createNewDriver();
+      this.isLoading = false;
     }
   }
 
@@ -50,43 +50,43 @@ export class DriversDriverComponent implements OnInit {
       cnhExpiration: '',
       cellphone: '',
       profilePhoto: ''
-    }
+    };
   }
 
   onSubmit(value: Driver) {
-    this.isLoading = true
+    this.isLoading = true;
 
     if (this.driver?.id) {
       this.driversService.update(this.driver.id, value).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     } else {
       this.driversService.save(value).subscribe(
         ({ id }) => this.handleSuccess(id),
         () => this.handleFailure()
-      )
+      );
     }
   }
 
   listDrivers() {
-    this.router.navigate(['/drivers/drivers-list'])
+    this.router.navigate(['/drivers/drivers-list']);
   }
 
   private handleSuccess(id?: string) {
-    this.isLoading = false
-    this.messageService.success('Motorista salvo com sucesso')
+    this.isLoading = false;
+    this.messageService.success('Motorista salvo com sucesso');
 
     if (id) {
-      this.router.navigate(['/drivers/driver-edit', id])
+      this.router.navigate(['/drivers/driver-edit', id]);
     } else {
-      this.listDrivers()
+      this.listDrivers();
     }
   }
 
   private handleFailure() {
-    this.isLoading = false
-    this.messageService.error('Erro ao salvar motorista')
+    this.isLoading = false;
+    this.messageService.error('Erro ao salvar motorista');
   }
 
 }

@@ -10,15 +10,15 @@ import { TrackerTechnologies } from '../tracker-technologies.service';
   styleUrls: ['./tracker-technologies-models-form.component.css'],
 })
 export class TrackerTechnologiesModelsFormComponent implements OnInit {
-  @Input() trackerTechnology: TrackerTechnologies = null
-  @Input() trackerTechnologyModel: TrackerTechnologiesModels = null
-  @Input() isVisible = false
+  @Input() trackerTechnology: TrackerTechnologies = null;
+  @Input() trackerTechnologyModel: TrackerTechnologiesModels = null;
+  @Input() isVisible = false;
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSuccess: EventEmitter<void> = new EventEmitter<void>();
 
-  isLoading = false
+  isLoading = false;
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +29,7 @@ export class TrackerTechnologiesModelsFormComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       name: [this.trackerTechnologyModel?.name, [Validators.required]],
-    })
+    });
   }
 
   save() {
@@ -40,16 +40,16 @@ export class TrackerTechnologiesModelsFormComponent implements OnInit {
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.trackerTechnologyModel?.id) {
       this.service.update(
         this.trackerTechnologyModel.id,
         this.validateForm.value,
         this.trackerTechnology.id
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.service.save(this.validateForm.value, this.trackerTechnology.id)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
@@ -58,13 +58,13 @@ export class TrackerTechnologiesModelsFormComponent implements OnInit {
   }
 
   private handleSuccess() {
-    this.message.success('Registro salvo com sucesso')
-    this.isLoading = false
+    this.message.success('Registro salvo com sucesso');
+    this.isLoading = false;
     this.onSuccess.emit();
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar o registro')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar o registro');
+    this.isLoading = false;
   }
 }

@@ -36,9 +36,9 @@ export class StopsWorkingHoursComponent implements OnInit {
       key: 'saturday',
       label: 'Sábado'
     }
-  ]
+  ];
 
-  @Input() stop: Stop
+  @Input() stop: Stop;
 
   constructor() { }
 

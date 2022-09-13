@@ -22,20 +22,20 @@ export class CustomersCustomerComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.isLoading = true
-    await this.loadCustomer()
-    this.isLoading = false
+    this.isLoading = true;
+    await this.loadCustomer();
+    this.isLoading = false;
   }
 
   async loadCustomer() {
     if (this.route.snapshot.paramMap.has('id')) {
-      const id = this.route.snapshot.paramMap.get('id')
+      const id = this.route.snapshot.paramMap.get('id');
       return this.customersService.get(id).subscribe((customer: Customer) => {
-        this.customer = customer
-      })
+        this.customer = customer;
+      });
     }
 
-    this.createNewCustomer()
+    this.createNewCustomer();
   }
 
   createNewCustomer() {
@@ -47,46 +47,46 @@ export class CustomersCustomerComponent implements OnInit {
       contactName: '',
       contactEmail: '',
       blocked: false
-    }
+    };
   }
 
   onSubmit() {
-    this.isLoading = true
+    this.isLoading = true;
     if (this.customer.id) {
       this.customersService.update(this.customer.id, this.customer).subscribe(
         () => this.handleSuccess(),
         () => this.handleError()
-      )
+      );
     } else {
       this.customersService.save(this.customer).subscribe(
         ({ id }) => this.handleSuccess(id),
         () => this.handleError()
-      )
+      );
     }
   }
 
   onChangeCustomer(value: Customer) {
-    this.customer = { ...this.customer, ...value }
+    this.customer = { ...this.customer, ...value };
   }
 
   private handleSuccess(id?: string) {
-    this.isLoading = false
+    this.isLoading = false;
     this.message.success(
       'As informações foram salvas com sucesso!',
       { nzDuration: 3000 }
-    )
+    );
     if (id) {
-      this.router.navigate(['/customers', 'customers-edit', id])
+      this.router.navigate(['/customers', 'customers-edit', id]);
     } else {
-      this.router.navigate(['/customers', 'customers-list'])
+      this.router.navigate(['/customers', 'customers-list']);
     }
   }
 
   private handleError() {
-    this.isLoading = false
+    this.isLoading = false;
     this.message.error(
       'Ocorreu um erro ao salvar as informações.',
       { nzDuration: 3000 }
-    )
+    );
   }
 }

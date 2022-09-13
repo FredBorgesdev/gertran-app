@@ -10,10 +10,10 @@ import { Document } from '../documents.service';
 })
 export class DocumentsTableComponent implements OnInit {
 
-  @Input() documents: GetAllResponse<Document> = null
-  @Output() onEdit: EventEmitter<Document> = new EventEmitter<Document>()
-  @Output() onDelete: EventEmitter<Document> = new EventEmitter<Document>()
-  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>()
+  @Input() documents: GetAllResponse<Document> = null;
+  @Output() onEdit: EventEmitter<Document> = new EventEmitter<Document>();
+  @Output() onDelete: EventEmitter<Document> = new EventEmitter<Document>();
+  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>();
 
   documentsOrderColumn = [
     {
@@ -25,7 +25,7 @@ export class DocumentsTableComponent implements OnInit {
       compare: (a: Document, b: Document) => a.documentType.name.localeCompare(b.documentType.name)
     },
     { title: 'Ações' }
-  ]
+  ];
 
   constructor() { }
 
@@ -33,22 +33,22 @@ export class DocumentsTableComponent implements OnInit {
   }
 
   edit(document: Document) {
-    this.onEdit.emit(document)
+    this.onEdit.emit(document);
   }
 
   delete(document: Document) {
-    this.onDelete.emit(document)
+    this.onDelete.emit(document);
   }
 
   get page() {
-    return getCurrentPage(this.documents)
+    return getCurrentPage(this.documents);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.onPaginate.emit(this.documents.previous)
+      this.onPaginate.emit(this.documents.previous);
     } else if (params.pageIndex > this.page) {
-      this.onPaginate.emit(this.documents.next)
+      this.onPaginate.emit(this.documents.next);
     }
   }
 }

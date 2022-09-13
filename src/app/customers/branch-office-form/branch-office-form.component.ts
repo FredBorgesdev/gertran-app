@@ -9,7 +9,7 @@ import { BranchOffice } from '../branch-offices.service';
 })
 export class BranchOfficeFormComponent implements OnInit {
 
-  @Input() branchOffice: BranchOffice = null
+  @Input() branchOffice: BranchOffice = null;
   @Input() isVisible = false;
   @Output() onClose = new EventEmitter<void>();
   @Output() onSubmit = new EventEmitter<BranchOffice>();
@@ -24,7 +24,7 @@ export class BranchOfficeFormComponent implements OnInit {
       tradingName: [this.branchOffice?.tradingName, [Validators.required]],
       corporateName: [this.branchOffice?.corporateName, [Validators.required]],
       domain: [this.branchOffice?.domain, []],
-    })
+    });
   }
 
   handleOk() {
@@ -34,7 +34,7 @@ export class BranchOfficeFormComponent implements OnInit {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty();
         this.validateForm.controls[key].updateValueAndValidity();
-      })
+      });
     }
   }
 

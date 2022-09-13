@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core'
+import { NgModule } from '@angular/core';
 import {
   RouterModule,
   Routes
-} from '@angular/router'
+} from '@angular/router';
 
-import { UsersListComponent } from './users-list/users-list.component'
-import { UsersUserComponent } from './users-user/users-user.component'
+import { UsersListComponent } from './users-list/users-list.component';
+import { UsersUserComponent } from './users-user/users-user.component';
 
 const routes: Routes = [
   {
@@ -32,7 +32,7 @@ const routes: Routes = [
       headerDisplay: 'none'
     }
   }
-]
+];
 
 @NgModule({
   imports: [ RouterModule.forChild(routes) ],

@@ -11,9 +11,9 @@ import { ContactDataItem } from '../contacts.service';
 export class ContactsTableComponent implements OnInit {
 
   @Input() contacts: GetAllResponse<ContactDataItem> = null;
-  @Output() onEdit: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>()
-  @Output() onDelete: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>()
-  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>()
+  @Output() onEdit: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>();
+  @Output() onDelete: EventEmitter<ContactDataItem> = new EventEmitter<ContactDataItem>();
+  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>();
 
 
   contactsOrderColumn = [
@@ -26,10 +26,10 @@ export class ContactsTableComponent implements OnInit {
     { title: 'Telefone celular' },
     { title: 'Principal' },
     { title: 'Ações' }
-  ]
+  ];
 
   get page() {
-    return getCurrentPage(this.contacts)
+    return getCurrentPage(this.contacts);
   }
 
   constructor() { }
@@ -38,18 +38,18 @@ export class ContactsTableComponent implements OnInit {
   }
 
   edit(item: ContactDataItem) {
-    this.onEdit.emit(item)
+    this.onEdit.emit(item);
   }
 
   delete(item: ContactDataItem) {
-    this.onDelete.emit(item)
+    this.onDelete.emit(item);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.onPaginate.emit(this.contacts.previous)
+      this.onPaginate.emit(this.contacts.previous);
     } else if (params.pageIndex > this.page) {
-      this.onPaginate.emit(this.contacts.next)
+      this.onPaginate.emit(this.contacts.next);
     }
   }
 }

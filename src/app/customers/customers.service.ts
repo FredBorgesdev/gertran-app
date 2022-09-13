@@ -3,22 +3,22 @@ import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface Customer {
-  id: string
-  corporateName: string
-  tradingName: string
-  cnpj: string
-  seller: string | null
-  domain: string | null
+  id: string;
+  corporateName: string;
+  tradingName: string;
+  cnpj: string;
+  seller: string | null;
+  domain: string | null;
 
   // address
 
-  zipCode: string
-  street: string
-  complement: string
-  number: string
-  neighborhood: string
-  city: string
-  state: string
+  zipCode: string;
+  street: string;
+  complement: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
 }
 
 @Injectable({
@@ -35,18 +35,18 @@ export class CustomersService implements ApiService<Customer> {
   }
 
   getAll(pagination: Pagination) {
-    const params = { limit: DEFAULT_LIMIT }
+    const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
-        params[key] = value
-      })
+        params[key] = value;
+      });
     }
 
-    return this.http.get<GetAllResponse<Customer>>('customers', { params })
+    return this.http.get<GetAllResponse<Customer>>('customers', { params });
   }
 
   get(id: string) {
-    return this.http.get<Customer>(`customers/${id}`)
+    return this.http.get<Customer>(`customers/${id}`);
   }
 
   update(id: string, customer: Omit<Customer, 'id'>) {

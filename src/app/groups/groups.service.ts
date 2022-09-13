@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export interface Group {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 @Injectable({

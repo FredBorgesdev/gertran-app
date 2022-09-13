@@ -8,29 +8,29 @@ import { Tracker } from '../trackers-form/trackers-form.component';
 })
 export class TrackersTabComponent implements OnInit {
 
-  @Input() trackers: Tracker[] = null
+  @Input() trackers: Tracker[] = null;
 
-  tracker: any = null
-  isCreatingTracker = false
+  tracker: any = null;
+  isCreatingTracker = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.trackers)
+    console.log(this.trackers);
   }
 
   saveTracker(tracker: Tracker) {
-    this.isCreatingTracker = false
+    this.isCreatingTracker = false;
   }
 
   editTracker(tracker: Tracker) {
-    this.tracker = tracker
-    this.isCreatingTracker = true
+    this.tracker = tracker;
+    this.isCreatingTracker = true;
   }
 
   closeTrackerForm() {
-    this.isCreatingTracker = false
-    this.tracker = null
+    this.isCreatingTracker = false;
+    this.tracker = null;
   }
 
 }

@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
-import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component'
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component';
 
-import { TableService } from '../../shared/services/table.service'
-import { wagonsList } from './mocked-data'
+import { TableService } from '../../shared/services/table.service';
+import { wagonsList } from './mocked-data';
 
 export interface Wagon {
-  id: number
-  brand: string
-  model: string
-  year: number
-  color: string
-  plate: string
-  trackers: Tracker[]
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  color: string;
+  plate: string;
+  trackers: Tracker[];
 }
 
 @Component({
@@ -22,9 +22,9 @@ export interface Wagon {
 })
 export class WagonsListComponent implements OnInit {
 
-  isLoading = false
-  displayData = []
-  searchInput: string
+  isLoading = false;
+  displayData = [];
+  searchInput: string;
 
   wagonColumn = [
     {
@@ -58,41 +58,41 @@ export class WagonsListComponent implements OnInit {
     { title: 'Ano' },
     { title: 'Cor' },
     { title: 'Ações' }
-  ]
+  ];
 
-  wagonsList = wagonsList
+  wagonsList = wagonsList;
 
   constructor(
     private router: Router,
     private tableService: TableService
   ) {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.displayData = this.wagonsList
+        this.isLoading = false;
+        this.displayData = this.wagonsList;
       },
       333
-    )
+    );
   }
 
   ngOnInit(): void {
   }
 
   search() {
-    const data = this.wagonsList
+    const data = this.wagonsList;
     this.displayData = this.tableService.search(
       this.searchInput,
       data
-    )
+    );
   }
 
   create() {
-    this.router.navigate([ '/wagons/wagons-create' ])
+    this.router.navigate([ '/wagons/wagons-create' ]);
   }
 
   edit(item: Wagon) {
-    this.router.navigate([ '/wagons/wagons-edit', item.id ])
+    this.router.navigate([ '/wagons/wagons-edit', item.id ]);
   }
 
 }

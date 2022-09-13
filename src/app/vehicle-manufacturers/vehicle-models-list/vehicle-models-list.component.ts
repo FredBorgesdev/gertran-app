@@ -12,18 +12,18 @@ import { VehicleModelsService, VehicleModels } from '../vehicle-models.service';
   styleUrls: ['./vehicle-models-list.component.css'],
 })
 export class VehicleModelsListComponent implements OnInit {
-  @Input() vehicleManufacturer: VehicleManufacturers = null
+  @Input() vehicleManufacturer: VehicleManufacturers = null;
 
-  isLoading = false
-  isCreatingModel = false
-  vehicleModelsList: GetAllResponse<VehicleModels> = null
-  vehicleModel: VehicleModels = null
+  isLoading = false;
+  isCreatingModel = false;
+  vehicleModelsList: GetAllResponse<VehicleModels> = null;
+  vehicleModel: VehicleModels = null;
 
   vehicleModelsColumns = [
     { title: 'Id' },
     { title: 'Nome' },
     { title: 'Ações' },
-  ]
+  ];
 
   constructor(
     private service: VehicleModelsService,
@@ -32,20 +32,20 @@ export class VehicleModelsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadVehicleModels()
+    this.loadVehicleModels();
   }
 
   loadVehicleModels(url?: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.service.getAll({ url }, this.vehicleManufacturer.id).subscribe((data) => {
-      this.vehicleModelsList = data
-      this.isLoading = false
-    })
+      this.vehicleModelsList = data;
+      this.isLoading = false;
+    });
   }
 
   edit(item: VehicleModels) {
-    this.vehicleModel = item
-    this.isCreatingModel = true
+    this.vehicleModel = item;
+    this.isCreatingModel = true;
   }
 
   delete(item: VehicleModels) {
@@ -54,40 +54,40 @@ export class VehicleModelsListComponent implements OnInit {
       nzContent: 'Essa ação não poderá ser desfeita',
       nzOkText: 'Sim',
       nzOnOk: () => this.handleDelete(item.id),
-    })
+    });
   }
 
   handleCancel() {
-    this.isCreatingModel = false
-    this.vehicleModel = null
+    this.isCreatingModel = false;
+    this.vehicleModel = null;
   }
 
   handleSuccess() {
-    this.isCreatingModel = false
-    this.loadVehicleModels()
+    this.isCreatingModel = false;
+    this.loadVehicleModels();
   }
 
   handleDelete(id: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.service.delete(id, this.vehicleManufacturer.id).subscribe(() => {
-      this.loadVehicleModels()
-      this.message.success('Modelos excluído com sucesso')
-      this.isLoading = false
+      this.loadVehicleModels();
+      this.message.success('Modelos excluído com sucesso');
+      this.isLoading = false;
     }, () => {
-      this.message.error('Erro ao excluir Modelos')
-      this.isLoading = false
-    })
+      this.message.error('Erro ao excluir Modelos');
+      this.isLoading = false;
+    });
   }
 
   get page() {
-    return getCurrentPage(this.vehicleModelsList)
+    return getCurrentPage(this.vehicleModelsList);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.loadVehicleModels(this.vehicleModelsList.previous)
+      this.loadVehicleModels(this.vehicleModelsList.previous);
     } else if (params.pageIndex > this.page) {
-      this.loadVehicleModels(this.vehicleModelsList.next)
+      this.loadVehicleModels(this.vehicleModelsList.next);
     }
   }
 }

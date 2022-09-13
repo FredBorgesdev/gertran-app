@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface DocumentType {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 @Injectable({
@@ -18,11 +18,11 @@ export class DocumentTypesService implements ApiService<DocumentType> {
   ) { }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<DocumentType>> {
-    const params = { limit: DEFAULT_LIMIT }
+    const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
-        params[key] = value 
-      }) 
+        params[key] = value;
+      });
     }
 
     return this.http.get<GetAllResponse<DocumentType>>('documents/document-types', { params });

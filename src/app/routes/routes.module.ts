@@ -10,7 +10,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 
 const antdModules = [
   NzTransferModule
-]
+];
 
 @NgModule({
   declarations: [

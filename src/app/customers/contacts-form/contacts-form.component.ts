@@ -9,7 +9,7 @@ import { ContactDataItem } from '../contacts.service';
 })
 export class ContactsFormComponent implements OnInit {
 
-  @Input() contact: ContactDataItem = null
+  @Input() contact: ContactDataItem = null;
   @Input() isVisible = false;
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onSubmit = new EventEmitter<any>();
@@ -19,13 +19,13 @@ export class ContactsFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log(this.contact)
+    console.log(this.contact);
     this.validateForm = this.formBuilder.group({
       name: [this.contact?.name, [Validators.required]],
       email: [this.contact?.email, [Validators.required]],
       phone: [this.contact?.phone, [Validators.required]],
       cellPhone: [this.contact?.cellPhone, [Validators.required]],
-    })
+    });
   }
 
   handleOk() {
@@ -35,7 +35,7 @@ export class ContactsFormComponent implements OnInit {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty();
         this.validateForm.controls[key].updateValueAndValidity();
-      })
+      });
     }
   }
 

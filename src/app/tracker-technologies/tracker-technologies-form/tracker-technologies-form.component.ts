@@ -10,10 +10,10 @@ import { TrackerTechnologiesService, TrackerTechnologies } from '../tracker-tech
   styleUrls: ['./tracker-technologies-form.component.css'],
 })
 export class TrackerTechnologiesFormComponent implements OnInit {
-  isLoading = false
-  trackerTechnology: TrackerTechnologies = null
+  isLoading = false;
+  trackerTechnology: TrackerTechnologies = null;
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -26,28 +26,28 @@ export class TrackerTechnologiesFormComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-    })
-    this.loadTrackerTechnologies()
+    });
+    this.loadTrackerTechnologies();
   }
 
   loadTrackerTechnologies() {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
-      this.isLoading = true
-      const id = this.activatedRoute.snapshot.paramMap.get('id')
+      this.isLoading = true;
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.service.get(id).subscribe(trackerTechnologies => {
-        this.trackerTechnology = trackerTechnologies
+        this.trackerTechnology = trackerTechnologies;
 
         this.validateForm.patchValue({
           name: this.trackerTechnology.name,
-        })
+        });
 
-        this.isLoading = false
-      })
+        this.isLoading = false;
+      });
     }
   }
 
   list() {
-    this.router.navigate(['/tracker-technologies/tracker-technologies-list'])
+    this.router.navigate(['/tracker-technologies/tracker-technologies-list']);
   }
 
   save() {
@@ -58,26 +58,26 @@ export class TrackerTechnologiesFormComponent implements OnInit {
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.trackerTechnology?.id) {
       this.service.update(
         this.trackerTechnology.id,
         this.validateForm.value
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.service.save(this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
   private handleSuccess() {
-    this.message.success('Registro salvo com sucesso')
-    this.list()
-    this.isLoading = false
+    this.message.success('Registro salvo com sucesso');
+    this.list();
+    this.isLoading = false;
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar o registro')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar o registro');
+    this.isLoading = false;
   }
 }

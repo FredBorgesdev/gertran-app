@@ -11,16 +11,16 @@ import { VehicleModelsService, VehicleModels } from '../vehicle-models.service';
   styleUrls: ['./vehicle-models-form.component.css'],
 })
 export class VehicleModelsFormComponent implements OnInit {
-  @Input() isVisible = false
-  @Input() vehicleModel: VehicleModels = null
-  @Input() vehicleManufacturer: VehicleManufacturers = null
+  @Input() isVisible = false;
+  @Input() vehicleModel: VehicleModels = null;
+  @Input() vehicleManufacturer: VehicleManufacturers = null;
   @Output() onSuccess: EventEmitter<void> = new EventEmitter<void>();
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
 
-  isLoading = false
-  vehicleModelTypes: VehicleModelTypes[] = []
+  isLoading = false;
+  vehicleModelTypes: VehicleModelTypes[] = [];
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,13 +31,13 @@ export class VehicleModelsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.vehicleModelTypeService.getAll({}).subscribe(vehicleModelTypes => {
-      this.vehicleModelTypes = vehicleModelTypes.results
-    })
+      this.vehicleModelTypes = vehicleModelTypes.results;
+    });
 
     this.validateForm = this.formBuilder.group({
       name: [this.vehicleModel?.name, [Validators.required]],
       vehicleModelType: [this.vehicleModel?.vehicleModelType, [Validators.required]],
-    })
+    });
   }
 
   save() {
@@ -48,31 +48,31 @@ export class VehicleModelsFormComponent implements OnInit {
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.vehicleModel?.id) {
       this.service.update(
         this.vehicleModel.id,
         this.validateForm.value,
         this.vehicleManufacturer.id
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.service.save(this.validateForm.value, this.vehicleManufacturer.id)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
   handleCancel() {
-    this.onCancel.emit()
+    this.onCancel.emit();
   }
 
   private handleSuccess() {
-    this.message.success('Registro salvo com sucesso')
-    this.isLoading = false
-    this.onSuccess.emit()
+    this.message.success('Registro salvo com sucesso');
+    this.isLoading = false;
+    this.onSuccess.emit();
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar o registro')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar o registro');
+    this.isLoading = false;
   }
 }

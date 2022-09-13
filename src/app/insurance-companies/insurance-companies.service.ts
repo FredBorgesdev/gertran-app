@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface InsuranceCompany {
-  id: string
-  email?: string
-  logo?: string
-  name: string
-  phone: string
-  website?: string
+  id: string;
+  email?: string;
+  logo?: string;
+  name: string;
+  phone: string;
+  website?: string;
 }
 
 @Injectable({
@@ -21,11 +21,11 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
   ) { }
 
   getAll(pagination: Pagination) {
-    const params = { limit: DEFAULT_LIMIT }
-    if (pagination.url) { 
+    const params = { limit: DEFAULT_LIMIT };
+    if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
-        params[key] = value
-      })
+        params[key] = value;
+      });
     }
 
     return this.http.get<GetAllResponse<InsuranceCompany>>('insurance-companies', { params });
@@ -37,7 +37,7 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
 
   save(insuranceCompany: Omit<InsuranceCompany, 'id'>) {
     // TODO: remove when backend is ready
-    delete insuranceCompany.logo
+    delete insuranceCompany.logo;
 
     return this.http.post<InsuranceCompany>('insurance-companies/create', insuranceCompany);
   }
@@ -47,7 +47,7 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
     insuranceCompany: Omit<InsuranceCompany, 'id'>
   ) {
     // TODO: remove when backend is ready
-    delete insuranceCompany.logo
+    delete insuranceCompany.logo;
 
     return this.http.patch<InsuranceCompany>(`insurance-companies/${id}/update`, insuranceCompany);
   }

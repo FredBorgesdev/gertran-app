@@ -1,17 +1,17 @@
 import {
   Component,
   OnInit
-} from '@angular/core'
-import { Router } from '@angular/router'
+} from '@angular/core';
+import { Router } from '@angular/router';
 
-import { TableService } from '../../shared/services/table.service'
+import { TableService } from '../../shared/services/table.service';
 
 interface DataItem {
-  id: number
-  name: string
-  cpf: string
-  email: string
-  cellphone: string
+  id: number;
+  name: string;
+  cpf: string;
+  email: string;
+  cellphone: string;
 }
 
 @Component({
@@ -21,9 +21,9 @@ interface DataItem {
 })
 export class UsersListComponent implements OnInit {
 
-  isLoading = false
-  displayData = []
-  searchInput: string
+  isLoading = false;
+  displayData = [];
+  searchInput: string;
 
   userColumn = [
     {
@@ -52,7 +52,7 @@ export class UsersListComponent implements OnInit {
     {
       title: 'Ações'
     }
-  ]
+  ];
 
   usersList: DataItem[] = [
     {
@@ -76,39 +76,39 @@ export class UsersListComponent implements OnInit {
       email: 'jose@empresa.com',
       cellphone: '(11) 99999-9999'
     }
-  ]
+  ];
 
   constructor(
     private router: Router,
     private tableService: TableService
   ) {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.displayData = this.usersList
+        this.isLoading = false;
+        this.displayData = this.usersList;
       },
       333
-    )
+    );
   }
 
   ngOnInit(): void {
   }
 
   search() {
-    const data = this.usersList
+    const data = this.usersList;
     this.displayData = this.tableService.search(
       this.searchInput,
       data
-    )
+    );
   }
 
   create() {
-    this.router.navigate([ '/users/user-create' ])
+    this.router.navigate([ '/users/user-create' ]);
   }
 
   edit(item: DataItem) {
-    this.router.navigate([ '/users/user-edit', item.id ])
+    this.router.navigate([ '/users/user-edit', item.id ]);
   }
 
 }

@@ -11,10 +11,10 @@ import { Wagon } from '../wagons-list/wagons-list.component';
 })
 export class WagonsWagonComponent implements OnInit {
 
-  wagon: Wagon = null
-  isLoading = false
+  wagon: Wagon = null;
+  isLoading = false;
 
-  wagonsList = wagonsList
+  wagonsList = wagonsList;
 
   constructor(
     private router: Router,
@@ -23,12 +23,12 @@ export class WagonsWagonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadWagon() : this.createNewWagon()
+    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadWagon() : this.createNewWagon();
   }
 
   loadWagon() {
-    const id = +this.activatedRoute.snapshot.params.id
-    this.wagon = this.wagonsList.find(wagon => wagon.id == id)
+    const id = +this.activatedRoute.snapshot.params.id;
+    this.wagon = this.wagonsList.find(wagon => wagon.id == id);
   }
 
   createNewWagon() {
@@ -40,15 +40,15 @@ export class WagonsWagonComponent implements OnInit {
       color: '',
       plate: '',
       trackers: []
-    }
+    };
   }
 
   save() {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.messageService.success('Dados salvos com sucesso!')
-      } , 333)
+        this.isLoading = false;
+        this.messageService.success('Dados salvos com sucesso!');
+      } , 333);
   }
 }

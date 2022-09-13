@@ -1,4 +1,4 @@
-import { Stop } from "./stops-list.component";
+import { Stop } from './stops-list.component';
 
 export const stopsList: Stop[] = [
   {
@@ -50,7 +50,7 @@ export const stopsList: Stop[] = [
     typeId: 1,
     typeCategoryIds: [2],
   },
-]
+];
 
 export const stopsListTypes: any[] = [
   {
@@ -61,7 +61,7 @@ export const stopsListTypes: any[] = [
     id: 2,
     name: 'Parada intermediária',
   }
-]
+];
 
 export const stopsListTypeCategories: any[] = [
   {
@@ -72,4 +72,4 @@ export const stopsListTypeCategories: any[] = [
     id: 2,
     name: 'Posto de gasolina',
   }
-]
+];

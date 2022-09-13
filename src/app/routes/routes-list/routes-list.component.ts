@@ -4,15 +4,15 @@ import { Stop } from 'src/app/stops/stops-list/stops-list.component';
 import { routesList } from './mocked-data';
 
 export interface Route {
-  id: number | null
-  name: string
-  code?: string
-  description?: string
-  lead?: number
+  id: number | null;
+  name: string;
+  code?: string;
+  description?: string;
+  lead?: number;
   stops: {
     stop: Stop
     stopTypeId: number
-  }[]
+  }[];
 }
 
 @Component({
@@ -22,9 +22,9 @@ export interface Route {
 })
 export class RoutesListComponent implements OnInit {
 
-  isLoading = false
-  routesList = []
-  searchInput = ''
+  isLoading = false;
+  routesList = [];
+  searchInput = '';
 
   routesColumns = [
     {
@@ -51,23 +51,23 @@ export class RoutesListComponent implements OnInit {
     { title: 'Descrição' },
     { title: 'Lead' },
     { title: 'Ações' },
-  ]
+  ];
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(() => {
-      this.routesList = routesList
-      this.isLoading = false
-    }, 333)
+      this.routesList = routesList;
+      this.isLoading = false;
+    }, 333);
   }
 
   create() {
-    this.router.navigate(['routes', 'route-create'])
+    this.router.navigate(['routes', 'route-create']);
   }
 
   edit(item: Route) {
-    this.router.navigate(['routes', 'route-edit', item.id])
+    this.router.navigate(['routes', 'route-edit', item.id]);
   }
 }

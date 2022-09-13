@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -25,14 +25,14 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls[control].updateValueAndValidity();
     }
 
-    if (!this.loginForm.valid) return
+    if (!this.loginForm.valid) { return; }
 
     this.isLoading = true;
     try {
       await this.authService.login(
         this.loginForm.value.email,
         this.loginForm.value.password
-      )
+      );
       this.router.navigate(['/dashboard/home']);
     } catch (error) {
       this.message.error('Email ou senha inválidos.');
@@ -51,4 +51,4 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard/home']);
     }
   }
-}    
+}

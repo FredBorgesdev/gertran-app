@@ -12,18 +12,18 @@ import { TrackerTechnologies } from '../tracker-technologies.service';
   styleUrls: ['./tracker-technologies-models-list.component.css'],
 })
 export class TrackerTechnologiesModelsListComponent implements OnInit {
-  @Input() trackerTechnology: TrackerTechnologies = null
+  @Input() trackerTechnology: TrackerTechnologies = null;
 
-  trackerTechnologyModel: TrackerTechnologiesModels = null
-  isCreatingModel = false
-  isLoading = false
-  trackerTechnologiesModelsList: GetAllResponse<TrackerTechnologiesModels> = null
+  trackerTechnologyModel: TrackerTechnologiesModels = null;
+  isCreatingModel = false;
+  isLoading = false;
+  trackerTechnologiesModelsList: GetAllResponse<TrackerTechnologiesModels> = null;
 
   trackerTechnologiesModelsColumns = [
     { title: 'Id' },
     { title: 'Nome' },
     { title: 'Ações' },
-  ]
+  ];
 
   constructor(
     private service: TrackerTechnologiesModelsService,
@@ -32,20 +32,20 @@ export class TrackerTechnologiesModelsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadTrackerTechnologiesModels()
+    this.loadTrackerTechnologiesModels();
   }
 
   loadTrackerTechnologiesModels(url?: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.service.getAll({ url }, this.trackerTechnology.id).subscribe((data) => {
-      this.trackerTechnologiesModelsList = data
-      this.isLoading = false
-    })
+      this.trackerTechnologiesModelsList = data;
+      this.isLoading = false;
+    });
   }
 
   edit(item: TrackerTechnologiesModels) {
-    this.trackerTechnologyModel = item 
-    this.isCreatingModel = true
+    this.trackerTechnologyModel = item;
+    this.isCreatingModel = true;
   }
 
   delete(item: TrackerTechnologiesModels) {
@@ -54,41 +54,41 @@ export class TrackerTechnologiesModelsListComponent implements OnInit {
       nzContent: 'Essa ação não poderá ser desfeita',
       nzOkText: 'Sim',
       nzOnOk: () => this.handleDelete(item.id),
-    })
+    });
   }
 
   handleCancel() {
-    this.isCreatingModel = false
-    this.trackerTechnologyModel = null
+    this.isCreatingModel = false;
+    this.trackerTechnologyModel = null;
   }
 
   handleSuccess() {
-    this.isCreatingModel = false
-    this.trackerTechnologyModel = null
-    this.loadTrackerTechnologiesModels()
+    this.isCreatingModel = false;
+    this.trackerTechnologyModel = null;
+    this.loadTrackerTechnologiesModels();
   }
-  
+
   handleDelete(id: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.service.delete(id, this.trackerTechnology.id).subscribe(() => {
-      this.loadTrackerTechnologiesModels()
-      this.message.success('Modelos excluído com sucesso')
-      this.isLoading = false
+      this.loadTrackerTechnologiesModels();
+      this.message.success('Modelos excluído com sucesso');
+      this.isLoading = false;
     }, () => {
-      this.message.error('Erro ao excluir Modelos')
-      this.isLoading = false
-    })
+      this.message.error('Erro ao excluir Modelos');
+      this.isLoading = false;
+    });
   }
 
   get page() {
-    return getCurrentPage(this.trackerTechnologiesModelsList)
+    return getCurrentPage(this.trackerTechnologiesModelsList);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.loadTrackerTechnologiesModels(this.trackerTechnologiesModelsList.previous)
+      this.loadTrackerTechnologiesModels(this.trackerTechnologiesModelsList.previous);
     } else if (params.pageIndex > this.page) {
-      this.loadTrackerTechnologiesModels(this.trackerTechnologiesModelsList.next)
+      this.loadTrackerTechnologiesModels(this.trackerTechnologiesModelsList.next);
     }
   }
 }

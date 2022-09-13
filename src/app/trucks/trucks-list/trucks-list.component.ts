@@ -1,21 +1,21 @@
 import {
   Component,
   OnInit
-} from '@angular/core'
-import { Router } from '@angular/router'
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component';
 
-import { TableService } from '../../shared/services/table.service'
+import { TableService } from '../../shared/services/table.service';
 import { trucksList } from './mocked-data';
 
 export interface Truck {
-  id: number
-  brand: string
-  model: string
-  year: number
-  color: string
-  plate: string
-  trackers: Tracker[]
+  id: number;
+  brand: string;
+  model: string;
+  year: number;
+  color: string;
+  plate: string;
+  trackers: Tracker[];
 }
 
 @Component({
@@ -25,9 +25,9 @@ export interface Truck {
 })
 export class TrucksListComponent implements OnInit {
 
-  isLoading = false
-  displayData = []
-  searchInput: string
+  isLoading = false;
+  displayData = [];
+  searchInput: string;
 
   truckColumn = [
     {
@@ -61,44 +61,44 @@ export class TrucksListComponent implements OnInit {
     {
       title: 'Ações'
     }
-  ]
+  ];
 
-  trucksList: Truck[] = trucksList
+  trucksList: Truck[] = trucksList;
 
   constructor(
     private router: Router,
     private tableService: TableService
   ) {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.displayData = this.trucksList
+        this.isLoading = false;
+        this.displayData = this.trucksList;
       },
       333
-    )
+    );
   }
 
   ngOnInit(): void {
   }
 
   search() {
-    const data = this.trucksList
+    const data = this.trucksList;
     this.displayData = this.tableService.search(
       this.searchInput,
       data
-    )
+    );
   }
 
   create() {
-    this.router.navigate([ '/trucks/truck-create' ])
+    this.router.navigate([ '/trucks/truck-create' ]);
   }
 
   edit(item: Truck) {
     this.router.navigate([
       '/trucks/truck-edit',
       item.id
-    ])
+    ]);
   }
 
 }

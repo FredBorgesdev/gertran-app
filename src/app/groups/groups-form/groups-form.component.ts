@@ -10,7 +10,7 @@ import { Group } from '../groups.service';
 })
 export class GroupsFormComponent implements OnInit {
 
-  @Input() group: Group
+  @Input() group: Group;
 
   list: TransferItem[] = [
     {
@@ -73,9 +73,9 @@ export class GroupsFormComponent implements OnInit {
       id: 15,
       title: 'Excluir Veiculo',
     }
-  ]
+  ];
 
-  formGroup: FormGroup
+  formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -83,7 +83,7 @@ export class GroupsFormComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: [this.group?.name, [Validators.required]],
       permissions: [[]]
-    })
+    });
   }
 
   change(items: TransferItem[]): void {

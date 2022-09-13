@@ -3,17 +3,17 @@ import { Router } from '@angular/router';
 import { stopsList, stopsListTypeCategories, stopsListTypes } from './mocked-data';
 
 export interface Stop {
-  id?: number
-  name: string
-  description: string
-  address: string
-  state: string
-  city: string
-  lat?: number
-  lng?: number
-  radius: number
-  typeId: number
-  typeCategoryIds: number[]
+  id?: number;
+  name: string;
+  description: string;
+  address: string;
+  state: string;
+  city: string;
+  lat?: number;
+  lng?: number;
+  radius: number;
+  typeId: number;
+  typeCategoryIds: number[];
   workingHours?: {
     [key: string]: {
       start: string
@@ -23,7 +23,7 @@ export interface Stop {
       hiredG2g: string
       checkedG2g: string
     }
-  }
+  };
 }
 
 @Component({
@@ -32,13 +32,13 @@ export interface Stop {
   styleUrls: ['./stops-list.component.css']
 })
 export class StopsListComponent implements OnInit {
-  isLoading = false
+  isLoading = false;
 
-  stopsList: Stop[] = []
-  stopsListTypes = stopsListTypes
-  stopsListTypeCategories = stopsListTypeCategories
+  stopsList: Stop[] = [];
+  stopsListTypes = stopsListTypes;
+  stopsListTypeCategories = stopsListTypeCategories;
 
-  searchInput: string = ''
+  searchInput = '';
 
   stopColumns = [
     {
@@ -72,30 +72,30 @@ export class StopsListComponent implements OnInit {
     { title: 'Raio' },
     { title: 'Tipo' },
     { title: 'Ações' },
-  ]
+  ];
 
   constructor(
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true
+    this.isLoading = true;
 
     setTimeout(() => {
-      this.stopsList = stopsList
-      this.isLoading = false
-    }, 333)
+      this.stopsList = stopsList;
+      this.isLoading = false;
+    }, 333);
   }
 
   getStopTypeName(id: number) {
-    return this.stopsListTypes.find(type => type.id === id)?.name
+    return this.stopsListTypes.find(type => type.id === id)?.name;
   }
 
   create() {
-    this.router.navigate(['/stops', 'stop-create'])
+    this.router.navigate(['/stops', 'stop-create']);
   }
 
   edit(stop: Stop) {
-    this.router.navigate(['/stops', 'stop-edit', stop.id])
+    this.router.navigate(['/stops', 'stop-edit', stop.id]);
   }
 }

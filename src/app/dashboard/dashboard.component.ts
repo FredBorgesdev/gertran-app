@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { ThemeConstantService } from '../shared/services/theme-constant.service'
+import { Component } from '@angular/core';
+import { ThemeConstantService } from '../shared/services/theme-constant.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,7 @@ export class DashboardComponent {
   purpleLight = this.themeColors.purpleLight;
   red = this.themeColors.red;
 
-  taskListIndex: number = 0;
+  taskListIndex = 0;
 
   constructor(private colorConfig: ThemeConstantService) {}
 
@@ -55,7 +55,7 @@ export class DashboardComponent {
           zeroLineBorderDash: [3, 4]
         },
         ticks: {
-          max: 80,                            
+          max: 80,
           stepSize: 20,
           display: true,
           beginAtZero: true,
@@ -68,7 +68,7 @@ export class DashboardComponent {
   monthlyChartLabels: string[] = ['Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto'];
   monthlyChartType = 'bar';
   monthlyChartColors: Array<any> = [
-    { 
+    {
       backgroundColor: this.themeColors.blue,
       borderWidth: 0
     },
@@ -78,12 +78,12 @@ export class DashboardComponent {
     }
   ];
   monthlyChartData: any[] = [
-    { 
+    {
       data: [20, 30, 35, 45, 55, 45],
       categoryPercentage: 0.70,
       barPercentage: 0.70,
     },
-    { 
+    {
       data: [25, 35, 40, 50, 60, 50],
       categoryPercentage: 0.70,
       barPercentage: 0.70,
@@ -124,7 +124,7 @@ export class DashboardComponent {
           zeroLineBorderDash: [3, 4]
         },
         ticks: {
-          max: 80,                            
+          max: 80,
           stepSize: 20,
           display: true,
           beginAtZero: true,
@@ -137,7 +137,7 @@ export class DashboardComponent {
   operationChartLabels: string[] = ['Lactalis', 'Itambé'];
   operationChartType = 'bar';
   operationChartColors: Array<any> = [
-    { 
+    {
       backgroundColor: this.themeColors.blue,
       borderWidth: 0
     },
@@ -147,12 +147,12 @@ export class DashboardComponent {
     }
   ];
   operationChartData: any[] = [
-    { 
+    {
       data: [20, 30],
       categoryPercentage: 0.70,
       barPercentage: 0.70,
     },
-    { 
+    {
       data: [25, 35],
       categoryPercentage: 0.70,
       barPercentage: 0.70,
@@ -180,7 +180,7 @@ export class DashboardComponent {
       name: 'Unidade Itambé',
       total: 90,
     }
-  ]   
+  ];
 
   operationsList = [
     {
@@ -191,7 +191,7 @@ export class DashboardComponent {
       op: 'Itambé',
       total: 200,
     }
-  ]
+  ];
 
   disagreementList = [
     {
@@ -218,7 +218,7 @@ export class DashboardComponent {
       reason: 'Roubo',
       total: 400,
     }
-  ]
+  ];
 
   summaryFormat = () => `$3,531`;
 

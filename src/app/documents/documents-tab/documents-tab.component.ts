@@ -12,14 +12,14 @@ import { Document, DocumentResource, DocumentsService } from '../documents.servi
 })
 export class DocumentsTabComponent implements OnInit {
 
-  @Input() resource: DocumentResource = null
-  @Input() resourceId: string = null
+  @Input() resource: DocumentResource = null;
+  @Input() resourceId: string = null;
 
-  isCreatingDocument = false
-  isLoading = false
+  isCreatingDocument = false;
+  isLoading = false;
 
-  documents: GetAllResponse<Document> = null
-  document: Document = null
+  documents: GetAllResponse<Document> = null;
+  document: Document = null;
 
   constructor(
     private documentsService: DocumentsService,
@@ -28,15 +28,15 @@ export class DocumentsTabComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadDocuments()
+    this.loadDocuments();
   }
 
   loadDocuments(url?: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.documentsService.getAll({ url }, this.resource, this.resourceId).subscribe(documents => {
-      this.documents = documents
-      this.isLoading = false
-    }, () => this.handleFailure())
+      this.documents = documents;
+      this.isLoading = false;
+    }, () => this.handleFailure());
   }
 
   save(formResult: OnSubmitEvent) {
@@ -44,9 +44,9 @@ export class DocumentsTabComponent implements OnInit {
       title: formResult.form.title,
       documentType: formResult.form.documentType as any,
       file: formResult.file
-    }
+    };
 
-    this.isLoading = true
+    this.isLoading = true;
 
     if (this.document?.id) {
       this.documentsService.update(
@@ -57,7 +57,7 @@ export class DocumentsTabComponent implements OnInit {
       ).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     } else {
       this.documentsService.save(
         body,
@@ -66,20 +66,20 @@ export class DocumentsTabComponent implements OnInit {
       ).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     }
   }
 
   edit(document: Document) {
-    this.document = document
-    this.isCreatingDocument = true
+    this.document = document;
+    this.isCreatingDocument = true;
   }
 
   delete(document: Document) {
     this.modal.confirm({
       nzTitle: 'Deseja realmente excluir este documento?',
       nzOnOk: () => {
-        this.isLoading = true
+        this.isLoading = true;
         this.documentsService.delete(
           document.id,
           this.resource,
@@ -87,22 +87,22 @@ export class DocumentsTabComponent implements OnInit {
         ).subscribe(
           () => this.handleSuccess(),
           () => this.handleFailure()
-        )
+        );
       }
-    })
+    });
   }
 
   private handleSuccess() {
-    this.loadDocuments()
-    this.isCreatingDocument = false
-    this.isLoading = false
-    this.document = null
-    this.message.success('Documento salvo com sucesso')
+    this.loadDocuments();
+    this.isCreatingDocument = false;
+    this.isLoading = false;
+    this.document = null;
+    this.message.success('Documento salvo com sucesso');
   }
 
   private handleFailure() {
-    this.isCreatingDocument = false
-    this.isLoading = false
-    this.message.error('Erro ao salvar documento')
+    this.isCreatingDocument = false;
+    this.isLoading = false;
+    this.message.error('Erro ao salvar documento');
   }
 }

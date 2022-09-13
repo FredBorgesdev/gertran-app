@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core'
+import { NgModule } from '@angular/core';
 import {
   RouterModule,
   Routes
-} from '@angular/router'
-import { DriversDriverComponent } from './drivers-driver/drivers-driver.component'
-import { DriversListComponent } from './drivers-list/drivers-list.component'
+} from '@angular/router';
+import { DriversDriverComponent } from './drivers-driver/drivers-driver.component';
+import { DriversListComponent } from './drivers-list/drivers-list.component';
 
 const routes: Routes = [
   {
@@ -31,7 +31,7 @@ const routes: Routes = [
       headerDisplay: 'none'
     }
   }
-]
+];
 
 @NgModule({
   imports: [ RouterModule.forChild(routes) ],

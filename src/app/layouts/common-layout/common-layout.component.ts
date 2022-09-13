@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { distinctUntilChanged, filter, map, startWith } from "rxjs/operators";
-import { IBreadcrumb } from "../../shared/interfaces/breadcrumb.type";
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { distinctUntilChanged, filter, map, startWith } from 'rxjs/operators';
+import { IBreadcrumb } from '../../shared/interfaces/breadcrumb.type';
 import { ThemeConstantService } from '../../shared/services/theme-constant.service';
 
 @Component({
@@ -14,8 +14,8 @@ export class CommonLayoutComponent  {
 
     breadcrumbs$: Observable<IBreadcrumb[]>;
     contentHeaderDisplay: string;
-    isFolded : boolean ;
-    isSideNavDark : boolean;
+    isFolded: boolean ;
+    isSideNavDark: boolean;
     isExpand: boolean;
     selectedHeaderColor: string;
 
@@ -27,8 +27,8 @@ export class CommonLayoutComponent  {
                 while (child) {
                     if (child.firstChild) {
                         child = child.firstChild;
-                    } else if (child.snapshot.data && child.snapshot.data['headerDisplay']) {
-                        return child.snapshot.data['headerDisplay'];
+                    } else if (child.snapshot.data && child.snapshot.data.headerDisplay) {
+                        return child.snapshot.data.headerDisplay;
                     } else {
                         return null;
                     }
@@ -43,13 +43,13 @@ export class CommonLayoutComponent  {
     ngOnInit() {
         this.breadcrumbs$ = this.router.events.pipe(
             startWith(new NavigationEnd(0, '/', '/')),
-            filter(event => event instanceof NavigationEnd),distinctUntilChanged(),
+            filter(event => event instanceof NavigationEnd), distinctUntilChanged(),
             map(data => this.buildBreadCrumb(this.activatedRoute.root))
         );
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isSideNavDarkChanges.subscribe(isDark => this.isSideNavDark = isDark);
-        this.themeService.selectedHeaderColor.subscribe(color => this.selectedHeaderColor = color);   
-        this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);     
+        this.themeService.selectedHeaderColor.subscribe(color => this.selectedHeaderColor = color);
+        this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
     }
 
     private buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadcrumb[] = []): IBreadcrumb[] {
@@ -57,7 +57,7 @@ export class CommonLayoutComponent  {
 
         if (route.routeConfig) {
             if (route.routeConfig.data) {
-                label = route.routeConfig.data['title'];
+                label = route.routeConfig.data.title;
                 path += route.routeConfig.path;
             }
         } else {
@@ -66,9 +66,9 @@ export class CommonLayoutComponent  {
         }
 
         const nextUrl = path && path !== '/dashboard' ? `${url}${path}` : url;
-        const breadcrumb = <IBreadcrumb>{
-            label: label, url: nextUrl
-        };
+        const breadcrumb = {
+            label, url: nextUrl
+        } as IBreadcrumb;
 
         const newBreadcrumbs = label ? [...breadcrumbs, breadcrumb] : [...breadcrumbs];
         if (route.firstChild) {

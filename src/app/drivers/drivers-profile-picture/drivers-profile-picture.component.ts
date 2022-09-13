@@ -7,7 +7,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class DriversProfilePictureComponent implements OnInit {
 
-  @Input() driver: any
+  @Input() driver: any;
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }

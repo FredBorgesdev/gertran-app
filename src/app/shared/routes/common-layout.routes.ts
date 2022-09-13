@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router'
+import { Routes } from '@angular/router';
 
 export const CommonLayout_ROUTES: Routes = [
   {
@@ -65,4 +65,4 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'vehicle-peripherals',
     loadChildren: () => import('../../vehicle-peripherals/vehicle-peripherals.module').then(m => m.VehiclePeripheralsModule)
   }
-]
+];

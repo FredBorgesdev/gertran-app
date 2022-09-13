@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface Tracker {
   id: number;
-  trackingSystem: string
-  trackingModel: string
-  trackingSerialNumber: string
-  main: boolean
+  trackingSystem: string;
+  trackingModel: string;
+  trackingSerialNumber: string;
+  main: boolean;
 }
 
 @Component({
@@ -16,7 +16,7 @@ export interface Tracker {
 })
 export class TrackersFormComponent implements OnInit {
 
-  @Input() tracker: Tracker = null
+  @Input() tracker: Tracker = null;
   @Input() isVisible = false;
   @Output() onClose = new EventEmitter<boolean>();
   @Output() onAdd = new EventEmitter<any>();
@@ -32,7 +32,7 @@ export class TrackersFormComponent implements OnInit {
       trackingSerialNumber: [this.tracker?.trackingSerialNumber],
       main: [this.tracker?.main],
     });
-    console.log(this.tracker)
+    console.log(this.tracker);
   }
 
   handleOk() {

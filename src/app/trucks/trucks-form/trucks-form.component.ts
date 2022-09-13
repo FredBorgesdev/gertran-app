@@ -4,12 +4,12 @@ import {
   OnInit,
   Output,
   EventEmitter
-} from '@angular/core'
+} from '@angular/core';
 import {
   ActivatedRoute,
   Router
-} from '@angular/router'
-import { NzMessageService } from 'ng-zorro-antd/message'
+} from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-trucks-form',
@@ -18,8 +18,8 @@ import { NzMessageService } from 'ng-zorro-antd/message'
 })
 export class TrucksFormComponent implements OnInit {
 
-  @Input() truck: any
-  @Output() onSave: EventEmitter<any> = new EventEmitter()
+  @Input() truck: any;
+  @Output() onSave: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -32,11 +32,11 @@ export class TrucksFormComponent implements OnInit {
 
   save() {
     // TODO: validate truck
-    this.onSave.emit(this.truck)
+    this.onSave.emit(this.truck);
   }
 
   listTrucks() {
-    this.router.navigate([ '/trucks/trucks-list' ])
+    this.router.navigate([ '/trucks/trucks-list' ]);
   }
 
 }

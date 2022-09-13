@@ -2,34 +2,34 @@ import {
   Component,
   OnInit,
   TemplateRef
-} from '@angular/core'
-import { Router } from '@angular/router'
-import { NzModalService } from 'ng-zorro-antd/modal'
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
-import { TableService } from '../../shared/services/table.service'
+import { TableService } from '../../shared/services/table.service';
 
 interface DataItem {
-  id: number
-  eventType: string
-  eventTypeValue: string
-  action: string
-  travelSm: boolean
-  vehicleMessage?: boolean
-  vehicleMessageText?: string
-  timeAction?: boolean
-  timeParam?: number
-  velocity?: boolean
-  velocityParam?: number
-  ignition?: boolean
-  ignitionParam?: string
-  command?: boolean
-  commandType?: string
-  sentMessage?: boolean
-  sentMessageText?: string
-  operatorAlert?: boolean
-  operatorAlertText?: string
-  incident?: boolean
-  incidentText?: string
+  id: number;
+  eventType: string;
+  eventTypeValue: string;
+  action: string;
+  travelSm: boolean;
+  vehicleMessage?: boolean;
+  vehicleMessageText?: string;
+  timeAction?: boolean;
+  timeParam?: number;
+  velocity?: boolean;
+  velocityParam?: number;
+  ignition?: boolean;
+  ignitionParam?: string;
+  command?: boolean;
+  commandType?: string;
+  sentMessage?: boolean;
+  sentMessageText?: string;
+  operatorAlert?: boolean;
+  operatorAlertText?: string;
+  incident?: boolean;
+  incidentText?: string;
 }
 
 @Component({
@@ -39,10 +39,10 @@ interface DataItem {
 })
 export class AutomationsListComponent implements OnInit {
 
-  isLoading = false
-  displayData = []
+  isLoading = false;
+  displayData = [];
 
-  searchInput: string = ''
+  searchInput = '';
 
   automation: DataItem = {
     id: null,
@@ -66,7 +66,7 @@ export class AutomationsListComponent implements OnInit {
     operatorAlertText: '',
     incident: false,
     incidentText: ''
-  }
+  };
 
   automationColumn = [
     {
@@ -111,7 +111,7 @@ export class AutomationsListComponent implements OnInit {
     {
       title: 'Ações'
     }
-  ]
+  ];
 
   automationsList: DataItem[] = [
     {
@@ -184,28 +184,28 @@ export class AutomationsListComponent implements OnInit {
       incident: true,
       incidentText: 'Incidente 3'
     }
-  ]
+  ];
 
   constructor(
     private router: Router,
     private tableService: TableService,
     private modalService: NzModalService
   ) {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.displayData = this.automationsList
+        this.isLoading = false;
+        this.displayData = this.automationsList;
       },
       333
-    )
+    );
   }
 
   ngOnInit(): void {
   }
 
   search() {
-    console.log(this.searchInput)
+    console.log(this.searchInput);
   }
 
   newAutomationCreate(newAutomationContent: TemplateRef<{}>) {
@@ -222,15 +222,15 @@ export class AutomationsListComponent implements OnInit {
           label: 'Salvar',
           type: 'primary',
           onClick: () => {
-            modal.destroy()
+            modal.destroy();
           }
         }
       ]
-    })
+    });
   }
 
   editAutomation(editAutomationContent: TemplateRef<{}>, item: DataItem) {
-    this.automation = item
+    this.automation = item;
     const modal = this.modalService.create({
       nzTitle: 'Editar Automação',
       nzContent: editAutomationContent,
@@ -244,10 +244,10 @@ export class AutomationsListComponent implements OnInit {
           label: 'Salvar',
           type: 'primary',
           onClick: () => {
-            modal.destroy()
+            modal.destroy();
           }
         }
       ]
-    })
+    });
   }
 }

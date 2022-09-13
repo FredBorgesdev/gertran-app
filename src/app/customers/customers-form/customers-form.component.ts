@@ -4,10 +4,10 @@ import {
   OnInit,
   Output,
   EventEmitter,
-} from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
-import { Customer } from '../customers.service'
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Customer } from '../customers.service';
 
 @Component({
   selector: 'app-customers-form',
@@ -16,11 +16,11 @@ import { Customer } from '../customers.service'
 })
 export class CustomersFormComponent implements OnInit {
 
-  @Input() customer: Customer = null
-  @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>()
-  @Output() onChange: EventEmitter<Customer> = new EventEmitter<Customer>()
+  @Input() customer: Customer = null;
+  @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>();
+  @Output() onChange: EventEmitter<Customer> = new EventEmitter<Customer>();
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -29,11 +29,11 @@ export class CustomersFormComponent implements OnInit {
 
   save(): void {
     if (this.validateForm.valid) {
-      this.onSave.emit(this.validateForm.value)
+      this.onSave.emit(this.validateForm.value);
     } else {
       Object.keys(this.validateForm.controls).forEach(key => {
-        this.validateForm.controls[key].markAsDirty()
-        this.validateForm.controls[key].updateValueAndValidity()
+        this.validateForm.controls[key].markAsDirty();
+        this.validateForm.controls[key].updateValueAndValidity();
       });
     }
   }
@@ -44,10 +44,10 @@ export class CustomersFormComponent implements OnInit {
       tradingName: [this.customer?.tradingName, Validators.required],
       cnpj: [this.customer?.cnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
       domain: [this.customer?.domain, [Validators.required, Validators.pattern('^(http(s)?:\/\/)?((w){3}.)?([^\.]+).([a-z]+)(.[a-z]+)?$')]],
-    })
+    });
     this.validateForm.valueChanges.subscribe(form => {
-      this.onChange.emit(form)
-    })
+      this.onChange.emit(form);
+    });
   }
 
   listCustomers() {

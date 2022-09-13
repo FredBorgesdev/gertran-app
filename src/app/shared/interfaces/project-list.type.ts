@@ -7,7 +7,7 @@ export interface ProjectList {
     progress: number;
     member: Member[];
 }
-  
+
 interface Member {
     avatar: string;
     name: string;

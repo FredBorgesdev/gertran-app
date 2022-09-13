@@ -8,8 +8,8 @@ import { Tracker } from '../trackers-form/trackers-form.component';
 })
 export class TrackersTableComponent implements OnInit {
 
-  @Input() trackers: Tracker[]
-  @Output() onEditTracker: EventEmitter<Tracker> = new EventEmitter<Tracker>()
+  @Input() trackers: Tracker[];
+  @Output() onEditTracker: EventEmitter<Tracker> = new EventEmitter<Tracker>();
 
   trackersOrderColumn = [
     {
@@ -24,7 +24,7 @@ export class TrackersTableComponent implements OnInit {
     { title: 'Número de série' },
     { title: 'Principal' },
     { title: 'Ações' },
-  ]
+  ];
 
   constructor() { }
 
@@ -32,6 +32,6 @@ export class TrackersTableComponent implements OnInit {
   }
 
   editTracker(tracker: Tracker) {
-    this.onEditTracker.emit(tracker)
+    this.onEditTracker.emit(tracker);
   }
 }

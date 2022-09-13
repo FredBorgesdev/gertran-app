@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface TrackerTechnologiesModels {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 @Injectable({
@@ -17,11 +17,11 @@ export class TrackerTechnologiesModelsService implements ApiService<TrackerTechn
   ) { }
 
   getAll(pagination: Pagination, trackerTechnologyId: string) {
-    const params = { limit: DEFAULT_LIMIT }
+    const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
-        params[key] = value 
-      })
+        params[key] = value;
+      });
     }
 
     return this.http.get<GetAllResponse<TrackerTechnologiesModels>>(

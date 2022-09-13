@@ -1,15 +1,15 @@
 import {
   Component,
   OnInit
-} from '@angular/core'
-import { Router } from '@angular/router'
-import { NzMessageService } from 'ng-zorro-antd/message'
-import { NzModalService } from 'ng-zorro-antd/modal'
-import { NzTableQueryParams } from 'ng-zorro-antd/table'
-import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service'
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from 'src/app/shared/services/api.service';
 
-import { TableService } from '../../shared/services/table.service'
-import { Driver, DriversService } from '../drivers.service'
+import { TableService } from '../../shared/services/table.service';
+import { Driver, DriversService } from '../drivers.service';
 
 @Component({
   selector: 'app-drivers-list',
@@ -18,9 +18,9 @@ import { Driver, DriversService } from '../drivers.service'
 })
 export class DriversListComponent implements OnInit {
 
-  isLoading = false
-  displayData: GetAllResponse<Driver> = null
-  searchInput: string
+  isLoading = false;
+  displayData: GetAllResponse<Driver> = null;
+  searchInput: string;
 
   driverColumn = [
     {
@@ -35,7 +35,7 @@ export class DriversListComponent implements OnInit {
     { title: 'Categoria' },
     { title: 'Validade' },
     { title: 'Ações' }
-  ]
+  ];
 
   constructor(
     private router: Router,
@@ -46,21 +46,21 @@ export class DriversListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadDrivers()
+    this.loadDrivers();
   }
 
   loadDrivers(url?: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.driversService.getAll({ url }).subscribe(
       data => {
-        this.displayData = data
-        this.isLoading = false
+        this.displayData = data;
+        this.isLoading = false;
       },
       () => {
-        this.message.error('Falha ao carregar motoristas')
-        this.isLoading = false
+        this.message.error('Falha ao carregar motoristas');
+        this.isLoading = false;
       }
-    )
+    );
   }
 
 
@@ -68,15 +68,15 @@ export class DriversListComponent implements OnInit {
     this.displayData.results = this.tableService.search(
       this.searchInput,
       this.displayData.results
-    )
+    );
   }
 
   create() {
-    this.router.navigate(['/drivers/driver-create'])
+    this.router.navigate(['/drivers/driver-create']);
   }
 
   edit(item: Driver) {
-    this.router.navigate(['/drivers/driver-edit', item.id])
+    this.router.navigate(['/drivers/driver-edit', item.id]);
   }
 
   delete(item: Driver) {
@@ -85,24 +85,24 @@ export class DriversListComponent implements OnInit {
       nzOnOk: () => {
         this.driversService.delete(item.id).subscribe(
           () => {
-            this.message.success('Motorista excluído com sucesso')
-            this.loadDrivers()
+            this.message.success('Motorista excluído com sucesso');
+            this.loadDrivers();
           },
           () => this.message.error('Falha ao excluir motorista')
-        )
+        );
       }
-    })
+    });
   }
 
   get page() {
-    return getCurrentPage(this.displayData)
+    return getCurrentPage(this.displayData);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.loadDrivers(this.displayData.previous)
+      this.loadDrivers(this.displayData.previous);
     } else if (params.pageIndex > this.page) {
-      this.loadDrivers(this.displayData.next)
+      this.loadDrivers(this.displayData.next);
     }
   }
 }

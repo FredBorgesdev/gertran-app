@@ -10,10 +10,10 @@ import { VehiclePeripheralsService, VehiclePeripherals } from '../vehicle-periph
   styleUrls: ['./vehicle-peripherals-form.component.css'],
 })
 export class VehiclePeripheralsFormComponent implements OnInit {
-  isLoading = false
-  vehiclePeripherals: VehiclePeripherals = null
+  isLoading = false;
+  vehiclePeripherals: VehiclePeripherals = null;
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -27,29 +27,29 @@ export class VehiclePeripheralsFormComponent implements OnInit {
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       peripheralType: [null, [Validators.required]],
-    })
-    this.loadVehiclePeripherals()
+    });
+    this.loadVehiclePeripherals();
   }
 
   loadVehiclePeripherals() {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
-      this.isLoading = true
-      const id = this.activatedRoute.snapshot.paramMap.get('id')
+      this.isLoading = true;
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.service.get(id).subscribe(vehiclePeripherals => {
-        this.vehiclePeripherals = vehiclePeripherals
+        this.vehiclePeripherals = vehiclePeripherals;
 
         this.validateForm.patchValue({
           name: this.vehiclePeripherals.name,
           peripheralType: this.vehiclePeripherals.peripheralType,
-        })
+        });
 
-        this.isLoading = false
-      })
+        this.isLoading = false;
+      });
     }
   }
 
   list() {
-    this.router.navigate(['/vehicle-peripherals/vehicle-peripherals-list'])
+    this.router.navigate(['/vehicle-peripherals/vehicle-peripherals-list']);
   }
 
   save() {
@@ -60,26 +60,26 @@ export class VehiclePeripheralsFormComponent implements OnInit {
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.vehiclePeripherals?.id) {
       this.service.update(
         this.vehiclePeripherals.id,
         this.validateForm.value
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.service.save(this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
   private handleSuccess() {
-    this.message.success('Registro salvo com sucesso')
-    this.list()
-    this.isLoading = false
+    this.message.success('Registro salvo com sucesso');
+    this.list();
+    this.isLoading = false;
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar o registro')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar o registro');
+    this.isLoading = false;
   }
 }

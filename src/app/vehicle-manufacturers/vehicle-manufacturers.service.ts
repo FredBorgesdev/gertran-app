@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface VehicleManufacturers {
-  id: string
-  name: string
-  makesTrucks: boolean
-  makesWagons: boolean
+  id: string;
+  name: string;
+  makesTrucks: boolean;
+  makesWagons: boolean;
 }
 
 @Injectable({
@@ -19,11 +19,11 @@ export class VehicleManufacturersService implements ApiService<VehicleManufactur
   ) { }
 
   getAll(pagination: Pagination) {
-    const params = { limit: DEFAULT_LIMIT }
+    const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
-        params[key] = value 
-      })
+        params[key] = value;
+      });
     }
 
     return this.http.get<GetAllResponse<VehicleManufacturers>>('vehicles/manufacturers', { params });

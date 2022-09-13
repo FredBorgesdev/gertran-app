@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 // import sdk from '@stackblitz/sdk';
-import { VERSION } from 'ng-zorro-antd/version'
+import { VERSION } from 'ng-zorro-antd/version';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { CodeBoxService, DemoCode } from './codebox.service';

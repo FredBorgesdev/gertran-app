@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
 
 export interface Document {
-  id: string
-  title: string
+  id: string;
+  title: string;
   documentType: {
     id: number
     name: string
-  }
-  file: string | File
+  };
+  file: string | File;
 }
 
 export enum DocumentResource {
@@ -25,11 +25,11 @@ export class DocumentsService implements ApiService<Document> {
   constructor(private http: HttpClient) { }
 
   getAll(pagination: Pagination, resource: DocumentResource, resourceId: string) {
-    const params = { limit: DEFAULT_LIMIT } 
+    const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
-        params[key] = value 
-      }) 
+        params[key] = value;
+      });
     }
 
     return this.http.get<GetAllResponse<Document>>(`${resource}/${resourceId}/documents`, { params });
@@ -40,37 +40,37 @@ export class DocumentsService implements ApiService<Document> {
   }
 
   save(body: Omit<Document, 'id'>, resource: DocumentResource, resourceId: string) {
-    let requestBody: any = body
+    let requestBody: any = body;
     if (body.file) {
-      const formData = new FormData()
-      formData.append('title', body.title)
-      formData.append('document_type', body.documentType.toString())
-      formData.append('file', body.file)
-      requestBody = formData
+      const formData = new FormData();
+      formData.append('title', body.title);
+      formData.append('document_type', body.documentType.toString());
+      formData.append('file', body.file);
+      requestBody = formData;
     }
 
     return this.http.post<Document>(`${resource}/${resourceId}/documents/create`, requestBody);
   }
 
   update(id: string, body: Omit<Document, 'id'>, resource: DocumentResource, resourceId: string) {
-    let requestBody: any = body
+    let requestBody: any = body;
     if (body.file) {
-      const formData = new FormData()
-      formData.append('title', body.title)
-      formData.append('document_type', body.documentType.toString())
-      formData.append('file', body.file)
-      requestBody = formData
+      const formData = new FormData();
+      formData.append('title', body.title);
+      formData.append('document_type', body.documentType.toString());
+      formData.append('file', body.file);
+      requestBody = formData;
     } else {
       requestBody = {
         title: body.title,
         document_type: body.documentType
-      }
+      };
     }
 
     return this.http.patch<Document>(`${resource}/${resourceId}/documents/${id}/update`, requestBody);
   }
 
-  delete(id: string, resource:string, resourceId: string) {
+  delete(id: string, resource: string, resourceId: string) {
     return this.http.delete<Document>(`${resource}/${resourceId}/documents/${id}/delete`);
   }
 }

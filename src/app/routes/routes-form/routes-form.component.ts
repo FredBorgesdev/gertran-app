@@ -9,7 +9,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./routes-form.component.css']
 })
 export class RoutesFormComponent implements OnInit {
-  list: TransferItem[] = []
+  list: TransferItem[] = [];
 
   constructor() { }
 
@@ -18,17 +18,17 @@ export class RoutesFormComponent implements OnInit {
       key: stop.id,
       title: stop.name,
       ...stop
-    }))
+    }));
   }
 
   select(item: TransferSelectChange) {
-    console.log(item)
+    console.log(item);
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    const rightItems = this.list.filter(item => item.direction === 'right')
-    const leftItems = this.list.filter(item => item.direction === 'left')
+    const rightItems = this.list.filter(item => item.direction === 'right');
+    const leftItems = this.list.filter(item => item.direction === 'left');
     moveItemInArray(rightItems, event.previousIndex, event.currentIndex);
-    this.list = [...leftItems, ...rightItems]
+    this.list = [...leftItems, ...rightItems];
   }
 }

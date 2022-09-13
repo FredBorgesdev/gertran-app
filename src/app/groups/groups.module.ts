@@ -9,7 +9,7 @@ import { NzTransferModule } from 'ng-zorro-antd/transfer';
 
 const antdModules = [
   NzTransferModule
-]
+];
 
 @NgModule({
   declarations: [

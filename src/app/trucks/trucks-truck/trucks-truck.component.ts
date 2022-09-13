@@ -10,10 +10,10 @@ import { trucksList } from '../trucks-list/mocked-data';
 })
 export class TrucksTruckComponent implements OnInit {
 
-  truck = null
-  isLoading = false
+  truck = null;
+  isLoading = false;
 
-  trucksList = trucksList
+  trucksList = trucksList;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -21,18 +21,18 @@ export class TrucksTruckComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadTruck() : this.createNewTruck()
+    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadTruck() : this.createNewTruck();
   }
 
   loadTruck() {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.truck = this.trucksList.find(truck => truck.id == +this.activatedRoute.snapshot.params.id)
+        this.isLoading = false;
+        this.truck = this.trucksList.find(truck => truck.id == +this.activatedRoute.snapshot.params.id);
       },
       666
-    )
+    );
   }
 
   createNewTruck() {
@@ -46,16 +46,16 @@ export class TrucksTruckComponent implements OnInit {
       trackingSystem: '',
       trackingModel: '',
       trackingSerialNumber: ''
-    }
+    };
   }
 
   save() {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(
       () => {
-        this.isLoading = false
-        this.messageService.success('As informações foram salvas com sucesso!')
-      }, 666)
+        this.isLoading = false;
+        this.messageService.success('As informações foram salvas com sucesso!');
+      }, 666);
   }
 
 }

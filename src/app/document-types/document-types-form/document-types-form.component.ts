@@ -11,10 +11,10 @@ import { DocumentTypesService, DocumentType } from '../document-types.service';
 })
 export class DocumentTypesFormComponent implements OnInit {
 
-  isLoading = false
-  documentType: DocumentType = null
+  isLoading = false;
+  documentType: DocumentType = null;
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -27,59 +27,59 @@ export class DocumentTypesFormComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       name: [null, Validators.required],
-    })
-    this.loadDocumentType()
+    });
+    this.loadDocumentType();
   }
 
   loadDocumentType() {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
-      this.isLoading = true
-      const id = this.activatedRoute.snapshot.paramMap.get('id')
+      this.isLoading = true;
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.documentTypesService.get(id).subscribe(documentType => {
-        this.documentType = documentType
+        this.documentType = documentType;
 
         this.validateForm.patchValue({
           name: documentType.name,
-        })
+        });
 
-        this.isLoading = false
-      })
+        this.isLoading = false;
+      });
     }
   }
 
   listDocumentTypes() {
-    this.router.navigate(['/document-types/document-types-list'])
+    this.router.navigate(['/document-types/document-types-list']);
   }
 
   save() {
     if (!this.validateForm.valid) {
       Object.values(this.validateForm.controls).forEach(control => {
-        if (!control.invalid) return
+        if (!control.invalid) { return; }
         control.markAsDirty();
         control.updateValueAndValidity({ onlySelf: true });
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.documentType?.id) {
       this.documentTypesService.update(
         this.documentType.id,
         this.validateForm.value
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.documentTypesService.save(this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
   private handleSuccess() {
-    this.message.success('Seguradora salva com sucesso')
-    this.listDocumentTypes()
-    this.isLoading = false
+    this.message.success('Seguradora salva com sucesso');
+    this.listDocumentTypes();
+    this.isLoading = false;
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar a seguradora')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar a seguradora');
+    this.isLoading = false;
   }
 }

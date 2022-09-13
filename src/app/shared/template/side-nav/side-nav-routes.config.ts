@@ -301,4 +301,4 @@ export const ROUTES: SideNavInterface[] = [
       },
     ]
   }
-]
+];

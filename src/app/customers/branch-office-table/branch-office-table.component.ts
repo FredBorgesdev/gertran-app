@@ -10,10 +10,10 @@ import { BranchOffice } from '../branch-offices.service';
 })
 export class BranchOfficeTableComponent implements OnInit {
 
-  @Input() branchOffices: GetAllResponse<BranchOffice> = null
-  @Output() onEdit: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>()
-  @Output() onDelete: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>()
-  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>()
+  @Input() branchOffices: GetAllResponse<BranchOffice> = null;
+  @Output() onEdit: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>();
+  @Output() onDelete: EventEmitter<BranchOffice> = new EventEmitter<BranchOffice>();
+  @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>();
 
   branchOfficesOrderColumn = [
     {
@@ -33,17 +33,17 @@ export class BranchOfficeTableComponent implements OnInit {
       compare: (a: BranchOffice, b: BranchOffice) => a.domain.localeCompare(b.domain)
     },
     { title: 'Ações' }
-  ]
+  ];
 
   get page() {
-    return getCurrentPage(this.branchOffices)
+    return getCurrentPage(this.branchOffices);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.onPaginate.emit(this.branchOffices.previous)
+      this.onPaginate.emit(this.branchOffices.previous);
     } else if (params.pageIndex > this.page) {
-      this.onPaginate.emit(this.branchOffices.next)
+      this.onPaginate.emit(this.branchOffices.next);
     }
   }
 
@@ -53,10 +53,10 @@ export class BranchOfficeTableComponent implements OnInit {
   }
 
   edit(item: BranchOffice) {
-    this.onEdit.emit(item)
+    this.onEdit.emit(item);
   }
 
   delete(item: BranchOffice) {
-    this.onDelete.emit(item)
+    this.onDelete.emit(item);
   }
 }

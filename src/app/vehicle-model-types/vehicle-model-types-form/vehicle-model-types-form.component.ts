@@ -10,10 +10,10 @@ import { VehicleModelTypesService, VehicleModelTypes } from '../vehicle-model-ty
   styleUrls: ['./vehicle-model-types-form.component.css'],
 })
 export class VehicleModelTypesFormComponent implements OnInit {
-  isLoading = false
-  vehicleModelTypes: VehicleModelTypes = null
+  isLoading = false;
+  vehicleModelTypes: VehicleModelTypes = null;
 
-  validateForm: FormGroup
+  validateForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -26,28 +26,28 @@ export class VehicleModelTypesFormComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-    })
-    this.loadVehicleModelTypes()
+    });
+    this.loadVehicleModelTypes();
   }
 
   loadVehicleModelTypes() {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
-      this.isLoading = true
-      const id = this.activatedRoute.snapshot.paramMap.get('id')
+      this.isLoading = true;
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.service.get(id).subscribe(vehicleModelTypes => {
-        this.vehicleModelTypes = vehicleModelTypes
+        this.vehicleModelTypes = vehicleModelTypes;
 
         this.validateForm.patchValue({
           name: this.vehicleModelTypes.name,
-        })
+        });
 
-        this.isLoading = false
-      })
+        this.isLoading = false;
+      });
     }
   }
 
   list() {
-    this.router.navigate(['/vehicle-model-types/vehicle-model-types-list'])
+    this.router.navigate(['/vehicle-model-types/vehicle-model-types-list']);
   }
 
   save() {
@@ -58,26 +58,26 @@ export class VehicleModelTypesFormComponent implements OnInit {
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.vehicleModelTypes?.id) {
       this.service.update(
         this.vehicleModelTypes.id,
         this.validateForm.value
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.service.save(this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
   private handleSuccess() {
-    this.message.success('Registro salvo com sucesso')
-    this.list()
-    this.isLoading = false
+    this.message.success('Registro salvo com sucesso');
+    this.list();
+    this.isLoading = false;
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar o registro')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar o registro');
+    this.isLoading = false;
   }
 }

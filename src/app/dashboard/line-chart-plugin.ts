@@ -1,5 +1,5 @@
 function lineChart(chartInstance: any) {
-  const yScale = chartInstance.scales['y'];
+  const yScale = chartInstance.scales.y;
   const canvas = chartInstance.canvas;
   const ctx = chartInstance.ctx;
   let index: any;
@@ -7,7 +7,7 @@ function lineChart(chartInstance: any) {
   let style: any;
   let yValue: any;
 
-  if (!chartInstance.options.lineChart) return
+  if (!chartInstance.options.lineChart) { return; }
 
   for (index = 0; index < chartInstance.options.lineChart.length; index++) {
     line = chartInstance.options.lineChart[index];
@@ -15,7 +15,7 @@ function lineChart(chartInstance: any) {
 
     ctx.beginPath();
     ctx.strokeStyle = style;
-    let previousY: any
+    let previousY: any;
 
     line.data.forEach((data: any) => {
       if (data) {
@@ -31,7 +31,7 @@ function lineChart(chartInstance: any) {
         ctx.lineTo(previousY, yValue);
         previousY = yValue;
       }
-    })
+    });
 
     ctx.stroke();
 

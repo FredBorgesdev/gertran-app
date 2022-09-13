@@ -51,7 +51,7 @@ import { NzMessageService } from 'ng-zorro-antd';
         }
         `
     ]
-})   
+})
 
 export class CodeBoxComponent implements OnInit {
 
@@ -62,10 +62,10 @@ export class CodeBoxComponent implements OnInit {
 
     @Input() nzExpanded = false;
 
-    copyCodeAction: string = "Copy Code";
+    copyCodeAction = 'Copy Code';
 
     copyCode(val: string){
-        let selBox = document.createElement('textarea');
+        const selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
         selBox.style.left = '0';
         selBox.style.top = '0';
@@ -78,7 +78,7 @@ export class CodeBoxComponent implements OnInit {
         document.body.removeChild(selBox);
         this.message.success('Copied');
     }
-    
+
     ngOnInit() {
     }
-}    
+}

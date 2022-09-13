@@ -13,8 +13,8 @@ import { DocumentType, DocumentTypesService } from '../document-types.service';
 })
 export class DocumentTypesListComponent implements OnInit {
 
-  isLoading = false
-  documentTypes: GetAllResponse<DocumentType> = null
+  isLoading = false;
+  documentTypes: GetAllResponse<DocumentType> = null;
 
   documentTypesColumns = [
     { title: 'ID' },
@@ -26,7 +26,7 @@ export class DocumentTypesListComponent implements OnInit {
       ) => a.name.localeCompare(b.name),
     },
     { title: 'Ações' },
-  ]
+  ];
 
   constructor(
     private documentTypesService: DocumentTypesService,
@@ -36,20 +36,20 @@ export class DocumentTypesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadDocumentTypes()
+    this.loadDocumentTypes();
   }
 
   loadDocumentTypes(url?: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.documentTypesService.getAll({ url }).subscribe((data) => {
-      this.documentTypes = data
-      this.isLoading = false
-    }, () => this.handleError())
+      this.documentTypes = data;
+      this.isLoading = false;
+    }, () => this.handleError());
   }
 
 
   create() {
-    this.router.navigate(['document-types/document-types-create'])
+    this.router.navigate(['document-types/document-types-create']);
   }
 
   edit(documentType: DocumentType) {
@@ -57,7 +57,7 @@ export class DocumentTypesListComponent implements OnInit {
       'document-types',
       'document-types-edit',
       documentType.id,
-    ])
+    ]);
   }
 
   delete(documentType: DocumentType) {
@@ -66,35 +66,35 @@ export class DocumentTypesListComponent implements OnInit {
       nzContent: 'Essa ação não poderá ser desfeita',
       nzOkText: 'Sim',
       nzOnOk: () => this.deleteDocumentType(documentType.id),
-    })
+    });
   }
 
   deleteDocumentType(id: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.documentTypesService.delete(id).subscribe(() => {
-      this.loadDocumentTypes()
-      this.message.success('Tipo de document excluída com sucesso')
-      this.isLoading = false
+      this.loadDocumentTypes();
+      this.message.success('Tipo de document excluída com sucesso');
+      this.isLoading = false;
     }, () => {
-      this.message.error('Erro ao excluir tipo de documento')
-      this.isLoading = false
-    })
+      this.message.error('Erro ao excluir tipo de documento');
+      this.isLoading = false;
+    });
   }
 
   get page() {
-    return getCurrentPage(this.documentTypes)
+    return getCurrentPage(this.documentTypes);
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
     if (params.pageIndex < this.page) {
-      this.loadDocumentTypes(this.documentTypes.previous)
+      this.loadDocumentTypes(this.documentTypes.previous);
     } else if (params.pageIndex > this.page) {
-      this.loadDocumentTypes(this.documentTypes.next)
+      this.loadDocumentTypes(this.documentTypes.next);
     }
   }
 
   private handleError() {
-    this.message.error('Erro ao carregar tipos de documentos')
-    this.isLoading = false
+    this.message.error('Erro ao carregar tipos de documentos');
+    this.isLoading = false;
   }
 }

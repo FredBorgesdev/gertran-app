@@ -14,7 +14,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 const antdModules = [
   NzTransferModule,
   NzTimePickerModule,
-]
+];
 
 @NgModule({
   declarations: [

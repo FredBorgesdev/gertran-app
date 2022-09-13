@@ -8,7 +8,7 @@ const routes: Routes = [
     component: DashboardComponent,
     data: {
       title: 'Dashboard ',
-      headerDisplay: "none"
+      headerDisplay: 'none'
     }
   }
 ];
@@ -17,8 +17,8 @@ new Array(15).fill(0).forEach((_, i) => {
   routes.push({
     path: `reports${i}`,
     component: DashboardComponent
-  })
-})
+  });
+});
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

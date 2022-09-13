@@ -5,10 +5,10 @@ export interface Mail {
     date: string;
     to: string;
     content: string;
-    checked : boolean,
+    checked: boolean;
     attachment: Attachment[];
 }
-  
+
 export interface Attachment {
     file: string;
     size: string;

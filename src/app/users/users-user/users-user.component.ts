@@ -30,9 +30,9 @@ export class UsersUserComponent implements OnInit {
       email: 'jose@empresa.com',
       cellphone: '(11) 99999-9999'
     }
-  ]
-  user = null
-  isLoading = false
+  ];
+  user = null;
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,19 +40,19 @@ export class UsersUserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadUser() : this.createNewUser()
+    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadUser() : this.createNewUser();
   }
 
   loadUser() {
-    this.isLoading = true
+    this.isLoading = true;
 
     setTimeout(
       () => {
-        this.user = this.usersList.find(user => user.id === +this.activatedRoute.snapshot.paramMap.get('id'))
-        this.isLoading = false
+        this.user = this.usersList.find(user => user.id === +this.activatedRoute.snapshot.paramMap.get('id'));
+        this.isLoading = false;
       },
       666
-    )
+    );
   }
 
   createNewUser() {
@@ -62,14 +62,14 @@ export class UsersUserComponent implements OnInit {
       cpf: '',
       email: '',
       cellphone: ''
-    }
+    };
   }
 
   onSave(value: any) {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(() => {
-      this.isLoading = false
-      this.messageService.success('Dados salvos com sucesso!')
-    }, 666)
+      this.isLoading = false;
+      this.messageService.success('Dados salvos com sucesso!');
+    }, 666);
   }
 }

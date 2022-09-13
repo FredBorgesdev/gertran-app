@@ -3,7 +3,7 @@ import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from '@sentry/angular';
 
 import { registerLocaleData, PathLocationStrategy, LocationStrategy } from '@angular/common';
 import ptbr from '@angular/common/locales/en';

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 import { conformToMask } from 'angular2-text-mask';
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 import { Customer, CustomersService } from 'src/app/customers/customers.service';
@@ -13,13 +13,13 @@ import { Driver } from '../drivers.service';
 })
 export class DriversFormComponent implements OnInit {
 
-  @Input() driver: Driver
+  @Input() driver: Driver;
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
 
-  validateForm: FormGroup
-  cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/]
+  validateForm: FormGroup;
+  cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
 
-  customers: Customer[] = []
+  customers: Customer[] = [];
 
   constructor(
     private router: Router,
@@ -29,7 +29,7 @@ export class DriversFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false })
+    const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false });
 
     this.validateForm = this.formBuilder.group({
       customer: [this.driver?.customer, [Validators.required]],
@@ -45,27 +45,27 @@ export class DriversFormComponent implements OnInit {
       cnhFirstIssue: [this.driver?.cnhFirstIssue, [Validators.required]],
       cnhEmission: [this.driver?.cnhEmission, [Validators.required]],
       admissionDate: [this.driver?.admissionDate, [Validators.required]],
-    })
+    });
 
     this.customersService.getAll({}).subscribe((customers) => {
-      this.customers = customers.results
-    })
+      this.customers = customers.results;
+    });
 
-    this.i18n.setLocale(en_US)
+    this.i18n.setLocale(en_US);
   }
 
   save() {
     if (this.validateForm.valid) {
-      this.onSubmit.emit(this.validateForm.value)
+      this.onSubmit.emit(this.validateForm.value);
     } else {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty();
         this.validateForm.controls[key].updateValueAndValidity();
-      })
+      });
     }
   }
 
   listDrivers() {
-    this.router.navigate(['/drivers/drivers-list'])
+    this.router.navigate(['/drivers/drivers-list']);
   }
 }

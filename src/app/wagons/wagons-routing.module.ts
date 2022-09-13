@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core'
+import { NgModule } from '@angular/core';
 import {
   RouterModule,
   Routes
-} from '@angular/router'
+} from '@angular/router';
 
-import { WagonsListComponent } from './wagons-list/wagons-list.component'
-import { WagonsWagonComponent } from './wagons-wagon/wagons-wagon.component'
+import { WagonsListComponent } from './wagons-list/wagons-list.component';
+import { WagonsWagonComponent } from './wagons-wagon/wagons-wagon.component';
 
 const routes: Routes = [
   {
@@ -32,7 +32,7 @@ const routes: Routes = [
       headerDisplay: 'none'
     }
   }
-]
+];
 
 @NgModule({
   imports: [ RouterModule.forChild(routes) ],

@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core'
+import { NgModule } from '@angular/core';
 import {
   RouterModule,
   Routes
-} from '@angular/router'
+} from '@angular/router';
 
-import { AutomationsFormComponent } from './automations-form/automations-form.component'
-import { AutomationsListComponent } from './automations-list/automations-list.component'
+import { AutomationsFormComponent } from './automations-form/automations-form.component';
+import { AutomationsListComponent } from './automations-list/automations-list.component';
 
 const routes: Routes = [
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
       headerDisplay: 'none'
     }
   }
-]
+];
 
 @NgModule({
   imports: [ RouterModule.forChild(routes) ],

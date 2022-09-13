@@ -69,7 +69,7 @@ export class UsersPermissionsComponent implements OnInit {
       id: 15,
       title: 'Excluir Veiculo',
     }
-  ]
+  ];
 
   constructor() { }
 

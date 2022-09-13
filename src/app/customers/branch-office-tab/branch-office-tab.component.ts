@@ -6,13 +6,13 @@ import { BranchOffice, BranchOfficesService } from '../branch-offices.service';
 import { Customer } from '../customers.service';
 
 export interface BranchOfficeDataItem {
-  id: number
-  companyName: string
-  brandName: string
-  cnpj: string
-  contactName: string
-  contactEmail: string
-  blocked: boolean
+  id: number;
+  companyName: string;
+  brandName: string;
+  cnpj: string;
+  contactName: string;
+  contactEmail: string;
+  blocked: boolean;
 }
 
 @Component({
@@ -22,13 +22,13 @@ export interface BranchOfficeDataItem {
 })
 export class BranchOfficeTabComponent implements OnInit {
 
-  @Input() customer: Customer
+  @Input() customer: Customer;
 
-  branchOffices: GetAllResponse<BranchOffice> = null
+  branchOffices: GetAllResponse<BranchOffice> = null;
 
-  isLoading = false
-  isCreatingBranchOffice = false
-  branchOffice: BranchOffice = null
+  isLoading = false;
+  isCreatingBranchOffice = false;
+  branchOffice: BranchOffice = null;
 
   constructor(
     private branchOfficeService: BranchOfficesService,
@@ -37,37 +37,37 @@ export class BranchOfficeTabComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadBranchOffices()
+    this.loadBranchOffices();
   }
 
   loadBranchOffices(url?: string) {
-    this.isLoading = true
+    this.isLoading = true;
     this.branchOfficeService.getAll({ url }, this.customer.id).subscribe(branchOffices => {
-      this.branchOffices = branchOffices
-      this.isLoading = false
-    }, () => this.handleFailure())
+      this.branchOffices = branchOffices;
+      this.isLoading = false;
+    }, () => this.handleFailure());
   }
 
 
   save(branchOffice: BranchOffice) {
-    this.isLoading = true
+    this.isLoading = true;
 
     if (this.branchOffice?.id) {
       this.branchOfficeService.update(this.branchOffice.id, branchOffice, this.customer.id).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     } else {
       this.branchOfficeService.save(branchOffice, this.customer.id).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     }
   }
 
   edit(branchOffice: BranchOffice) {
-    this.isCreatingBranchOffice = true
-    this.branchOffice = branchOffice
+    this.isCreatingBranchOffice = true;
+    this.branchOffice = branchOffice;
   }
 
   delete(branchOffice: BranchOffice) {
@@ -76,25 +76,25 @@ export class BranchOfficeTabComponent implements OnInit {
       nzContent: 'Esta ação não pode ser desfeita.',
       nzOkText: 'Sim',
       nzOnOk: () => {
-        this.isLoading = true
+        this.isLoading = true;
         this.branchOfficeService.delete(branchOffice.id, this.customer.id).subscribe(
           () => this.handleSuccess(),
           () => this.handleFailure()
-        )
+        );
       },
-    })
+    });
   }
 
   private handleSuccess() {
-    this.isCreatingBranchOffice = false
-    this.isLoading = false
-    this.branchOffice = null
-    this.message.success('Filial salva com sucesso')
-    this.loadBranchOffices()
+    this.isCreatingBranchOffice = false;
+    this.isLoading = false;
+    this.branchOffice = null;
+    this.message.success('Filial salva com sucesso');
+    this.loadBranchOffices();
   }
 
   private handleFailure() {
-    this.isLoading = false
-    this.message.error('Erro ao salvar filial')
+    this.isLoading = false;
+    this.message.error('Erro ao salvar filial');
   }
 }

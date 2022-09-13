@@ -18,7 +18,7 @@ export class ApiInterceptor implements HttpInterceptor {
   constructor() {}
 
   isFormData(request: HttpRequest<unknown>) {
-    return request.body instanceof FormData
+    return request.body instanceof FormData;
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

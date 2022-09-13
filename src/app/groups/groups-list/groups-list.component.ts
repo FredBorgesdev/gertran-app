@@ -10,14 +10,14 @@ import { Group } from '../groups.service';
 })
 export class GroupsListComponent implements OnInit {
 
-  isLoading = false
-  searchInput = ''
+  isLoading = false;
+  searchInput = '';
   displayData: Group[] = [
     {
       id: '1',
       name: 'Group 1',
     }
-  ]
+  ];
 
   groupsColumn = [
     {
@@ -25,7 +25,7 @@ export class GroupsListComponent implements OnInit {
       compare: (a: Group, b: Group) => a.name.localeCompare(b.name)
     },
     { title: 'Ações' }
-  ]
+  ];
 
   constructor(
     private modal: NzModalService,
@@ -42,7 +42,7 @@ export class GroupsListComponent implements OnInit {
       nzContent: GroupsFormComponent,
       nzWidth: '50%',
       nzOkText: 'Salvar',
-    })
+    });
   }
 
   edit(group: Group) {
@@ -52,18 +52,18 @@ export class GroupsListComponent implements OnInit {
       nzComponentParams: { group },
       nzWidth: '50%',
       nzOkText: 'Salvar',
-    })
+    });
   }
 
   delete(group: Group) {
     this.modal.confirm({
       nzTitle: 'Deseja realmente excluir este grupo?',
       nzOnOk: () => this.handleDelete(group)
-    })
+    });
   }
 
   private handleDelete(group: Group) {
-    this.isLoading = true
+    this.isLoading = true;
     // this.groupsService.delete(group.id).subscribe(
     //   () => this.handleSuccess(),
     //   () => this.handleFailure()

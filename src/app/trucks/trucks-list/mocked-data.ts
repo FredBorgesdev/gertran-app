@@ -1,6 +1,6 @@
-import { Truck } from "./trucks-list.component";
+import { Truck } from './trucks-list.component';
 
-  export const trucksList: Truck[] = [
+export const trucksList: Truck[] = [
     {
       id: 1,
       brand: 'Ford',
@@ -69,5 +69,5 @@ import { Truck } from "./trucks-list.component";
         }
       ]
     }
-  ]
+  ];
 

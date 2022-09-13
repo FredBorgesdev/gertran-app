@@ -10,10 +10,10 @@ import { SideNavInterface } from '../../interfaces/side-nav.type';
 
 export class SideNavComponent{
 
-  public menuItems: any[]
-  isFolded : boolean;
-  isSideNavDark : boolean;
-  isExpand : boolean;
+  public menuItems: any[];
+  isFolded: boolean;
+  isSideNavDark: boolean;
+  isExpand: boolean;
 
   constructor( private themeService: ThemeConstantService) {}
 

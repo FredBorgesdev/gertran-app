@@ -1,4 +1,4 @@
-import { stopsList } from "src/app/stops/stops-list/mocked-data";
+import { stopsList } from 'src/app/stops/stops-list/mocked-data';
 
 export const routesList = [
   {
@@ -18,7 +18,7 @@ export const routesList = [
       }
     ]
   }
-]
+];
 
 export const routesStopTypeList = [
   {
@@ -37,4 +37,4 @@ export const routesStopTypeList = [
     id: 4,
     name: 'Ponto auxiliar'
   }
-]
+];

@@ -9,23 +9,23 @@ import { Stop } from '../stops-list/stops-list.component';
   styleUrls: ['./stops-stop.component.css']
 })
 export class StopsStopComponent implements OnInit {
-  isLoading = false
-  stop: Stop
+  isLoading = false;
+  stop: Stop;
 
   constructor(
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.isLoading = true
+    this.isLoading = true;
     setTimeout(() => {
-      this.route.snapshot.paramMap.has('id') ? this.loadStop() : this.createNewStop()
-      this.isLoading = false
-    }, 333)
+      this.route.snapshot.paramMap.has('id') ? this.loadStop() : this.createNewStop();
+      this.isLoading = false;
+    }, 333);
   }
 
   loadStop() {
-    this.stop = stopsList.find(stop => stop.id === Number(this.route.snapshot.paramMap.get('id')))
+    this.stop = stopsList.find(stop => stop.id === Number(this.route.snapshot.paramMap.get('id')));
   }
 
   createNewStop() {
@@ -38,6 +38,6 @@ export class StopsStopComponent implements OnInit {
       city: '',
       state: '',
       typeCategoryIds: []
-    }
+    };
   }
 }

@@ -12,13 +12,13 @@ import { Customer } from '../customers.service';
 })
 export class ContactsTabComponent implements OnInit {
 
-  @Input() customer: Customer
+  @Input() customer: Customer;
 
-  contactsDisplayData: GetAllResponse<ContactDataItem> = null
+  contactsDisplayData: GetAllResponse<ContactDataItem> = null;
 
-  isCreatingContact = false
-  isLoading = false
-  contact: ContactDataItem = null
+  isCreatingContact = false;
+  isLoading = false;
+  contact: ContactDataItem = null;
 
   constructor(
     private contactsService: ContactsService,
@@ -27,59 +27,59 @@ export class ContactsTabComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadContacts()
+    this.loadContacts();
   }
 
   loadContacts(url?: string) {
     this.contactsService.getAll({ url }, this.customer.id).subscribe(contacts => {
-      this.contactsDisplayData = contacts
-    })
+      this.contactsDisplayData = contacts;
+    });
   }
 
   save(contact: ContactDataItem) {
-    this.isLoading = true
+    this.isLoading = true;
 
     if (this.contact?.id) {
       this.contactsService.update(this.contact.id, contact, this.customer.id).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     } else {
       this.contactsService.save(contact, this.customer.id).subscribe(
         () => this.handleSuccess(),
         () => this.handleFailure()
-      )
+      );
     }
   }
 
   edit(contact: ContactDataItem) {
-    this.isCreatingContact = true
-    this.contact = contact
+    this.isCreatingContact = true;
+    this.contact = contact;
   }
 
   delete(contact: ContactDataItem) {
     this.modal.confirm({
       nzTitle: 'Deseja realmente excluir este contato?',
       nzOnOk: () => {
-        this.isLoading = true
+        this.isLoading = true;
         this.contactsService.delete(contact.id, this.customer.id).subscribe(() => {
-          this.loadContacts()
-          this.isLoading = false
-        }, () => this.handleFailure())
+          this.loadContacts();
+          this.isLoading = false;
+        }, () => this.handleFailure());
       }
-    })
+    });
   }
 
   private handleSuccess() {
-    this.message.success('Contato salvo com sucesso')
-    this.isCreatingContact = false
-    this.isLoading = false
-    this.contact = null
-    this.loadContacts()
+    this.message.success('Contato salvo com sucesso');
+    this.isCreatingContact = false;
+    this.isLoading = false;
+    this.contact = null;
+    this.loadContacts();
   }
 
   private handleFailure() {
-    this.message.error('Ocorreu um erro ao salvar o contato')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar o contato');
+    this.isLoading = false;
   }
 }

@@ -1,4 +1,4 @@
-import { Wagon } from "./wagons-list.component";
+import { Wagon } from './wagons-list.component';
 
 export const wagonsList: Wagon[] = [
   {
@@ -35,5 +35,5 @@ export const wagonsList: Wagon[] = [
       }
     ]
   }
-]
+];
 

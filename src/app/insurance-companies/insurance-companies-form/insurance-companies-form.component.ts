@@ -10,11 +10,11 @@ import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-compan
   styleUrls: ['./insurance-companies-form.component.css']
 })
 export class InsuranceCompaniesFormComponent implements OnInit {
-  
-  isLoading = false
-  insuranceCompany: InsuranceCompany = null
 
-  validateForm: FormGroup
+  isLoading = false;
+  insuranceCompany: InsuranceCompany = null;
+
+  validateForm: FormGroup;
 
   constructor(
     private router: Router,
@@ -31,16 +31,16 @@ export class InsuranceCompaniesFormComponent implements OnInit {
       phone: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       logo: [null],
-    })
-    this.loadInsuranceCompany()
+    });
+    this.loadInsuranceCompany();
   }
 
   loadInsuranceCompany() {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
-      this.isLoading = true
-      const id = this.activatedRoute.snapshot.paramMap.get('id')
+      this.isLoading = true;
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.insuranceCompaniesService.get(id).subscribe(insuranceCompany => {
-        this.insuranceCompany = insuranceCompany
+        this.insuranceCompany = insuranceCompany;
 
         this.validateForm.patchValue({
           name: insuranceCompany.name,
@@ -48,46 +48,46 @@ export class InsuranceCompaniesFormComponent implements OnInit {
           phone: insuranceCompany.phone,
           email: insuranceCompany.email,
           logo: insuranceCompany.logo,
-        })
+        });
 
-        this.isLoading = false
-      })
+        this.isLoading = false;
+      });
     }
   }
 
   listInsuranceCompanies() {
-    this.router.navigate(['/insurance-companies/insurance-companies-list'])
+    this.router.navigate(['/insurance-companies/insurance-companies-list']);
   }
 
   save() {
     if (!this.validateForm.valid) {
       Object.values(this.validateForm.controls).forEach(control => {
-        if (!control.invalid) return
+        if (!control.invalid) { return; }
         control.markAsDirty();
         control.updateValueAndValidity({ onlySelf: true });
       });
     }
 
-    this.isLoading = true
+    this.isLoading = true;
     if (this.insuranceCompany?.id) {
       this.insuranceCompaniesService.update(
         this.insuranceCompany.id,
         this.validateForm.value
-      ).subscribe(() => this.handleSuccess(), () => this.handleError())
+      ).subscribe(() => this.handleSuccess(), () => this.handleError());
     } else {
       this.insuranceCompaniesService.save(this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError())
+        .subscribe(() => this.handleSuccess(), () => this.handleError());
     }
   }
 
   private handleSuccess() {
-    this.message.success('Seguradora salva com sucesso')
-    this.listInsuranceCompanies()
-    this.isLoading = false
+    this.message.success('Seguradora salva com sucesso');
+    this.listInsuranceCompanies();
+    this.isLoading = false;
   }
 
   private handleError() {
-    this.message.error('Ocorreu um erro ao salvar a seguradora')
-    this.isLoading = false
+    this.message.error('Ocorreu um erro ao salvar a seguradora');
+    this.isLoading = false;
   }
 }

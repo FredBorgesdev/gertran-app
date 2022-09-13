@@ -4,8 +4,8 @@ import { DocumentTypesService, DocumentType } from 'src/app/document-types/docum
 import { Document } from '../documents.service';
 
 export interface OnSubmitEvent {
-  form: Document,
-  file: File,
+  form: Document;
+  file: File;
 }
 
 @Component({
@@ -15,14 +15,14 @@ export interface OnSubmitEvent {
 })
 export class DocumentsFormComponent implements OnInit {
 
-  @Input() document: Document = null
+  @Input() document: Document = null;
   @Input() isVisible = false;
-  @Output() onSubmit: EventEmitter<OnSubmitEvent> = new EventEmitter<OnSubmitEvent>()
-  @Output() onCancel: EventEmitter<void> = new EventEmitter<void>()
+  @Output() onSubmit: EventEmitter<OnSubmitEvent> = new EventEmitter<OnSubmitEvent>();
+  @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
 
-  documentTypes: DocumentType[] = []
-  validateForm: FormGroup
-  file: File = null
+  documentTypes: DocumentType[] = [];
+  validateForm: FormGroup;
+  file: File = null;
 
   constructor(
     private documentTypeService: DocumentTypesService,
@@ -31,13 +31,13 @@ export class DocumentsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentTypeService.getAll({ url: '' }).subscribe(documentTypes => {
-      this.documentTypes = documentTypes.results
-    })
+      this.documentTypes = documentTypes.results;
+    });
 
     this.validateForm = this.formBuilder.group({
       title: [this.document?.title, [Validators.required]],
       documentType: [this.document?.documentType.id, [Validators.required]],
-    })
+    });
   }
 
   handleOk() {
@@ -45,21 +45,21 @@ export class DocumentsFormComponent implements OnInit {
       this.onSubmit.emit({
         form: this.validateForm.value,
         file: this.file
-      })
+      });
     } else {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty();
         this.validateForm.controls[key].updateValueAndValidity();
-      })
+      });
     }
   }
 
   handleCancel() {
-    this.onCancel.emit()
+    this.onCancel.emit();
   }
 
   beforeUpload = (file: File) => {
-    this.file = file
-    return false
+    this.file = file;
+    return false;
   }
 }
