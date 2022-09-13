@@ -29,7 +29,15 @@
         </button>
       </div>
     </div>
-    <nz-table #table [nzData]="<%= camelize(name) %>List" >
+    <nz-table
+      #table
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of <%= camelize(name) %>Columns" [nzSortFn]="column.compare">{{ column.title }}</th>
