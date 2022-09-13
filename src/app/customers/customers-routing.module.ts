@@ -17,7 +17,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'customer-create',
+    path: 'customers-create',
     component: CustomersCustomerComponent,
     data: {
       title: 'Adicionar Cliente ',
@@ -25,7 +25,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'customer-edit/:id',
+    path: 'customers-edit/:id',
     component: CustomersCustomerComponent,
     data: {
       title: 'Editar Cliente ',

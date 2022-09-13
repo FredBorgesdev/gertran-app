@@ -27,14 +27,14 @@ export class CustomersFormComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) { }
 
-  save() {
+  save(): void {
     if (this.validateForm.valid) {
       this.onSave.emit(this.validateForm.value)
     } else {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty()
         this.validateForm.controls[key].updateValueAndValidity()
-      })
+      });
     }
   }
 
@@ -43,7 +43,7 @@ export class CustomersFormComponent implements OnInit {
       corporateName: [this.customer?.corporateName, Validators.required],
       tradingName: [this.customer?.tradingName, Validators.required],
       cnpj: [this.customer?.cnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
-      domain: [this.customer?.domain, [Validators.pattern('^(http(s)?:\/\/)?((w){3}.)?([^\.]+).([a-z]+)(.[a-z]+)?$')]],
+      domain: [this.customer?.domain, [Validators.required, Validators.pattern('^(http(s)?:\/\/)?((w){3}.)?([^\.]+).([a-z]+)(.[a-z]+)?$')]],
     })
     this.validateForm.valueChanges.subscribe(form => {
       this.onChange.emit(form)

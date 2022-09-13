@@ -46,9 +46,9 @@
     </div>
     <nz-table
       #customersListTable
-      [nzData]="customers?.results"
-      [nzTotal]="customers?.count"
-      [nzPageSize]="customers?.limit"
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"

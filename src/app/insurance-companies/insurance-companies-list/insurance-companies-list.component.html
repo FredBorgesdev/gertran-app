@@ -31,9 +31,9 @@
     </div>
     <nz-table
       #insuranceCompaniesListTable
-      [nzData]="insuranceCompanies?.results"
-      [nzTotal]="insuranceCompanies?.count"
-      [nzPageSize]="insuranceCompanies?.limit"
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"

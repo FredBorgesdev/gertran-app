@@ -31,9 +31,9 @@
     </div>
     <nz-table
       #table
-      [nzData]="vehicleManufacturersList?.results"
-      [nzTotal]="vehicleManufacturersList?.count"
-      [nzPageSize]="vehicleManufacturersList?.limit"
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
