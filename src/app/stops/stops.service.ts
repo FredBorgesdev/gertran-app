@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ApiService, {GetAllResponse} from '../shared/services/api.service';
+import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -34,8 +34,15 @@ export class StopsService implements ApiService<Stop> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<GetAllResponse<Stop>> {
-    return this.http.get<GetAllResponse<Stop>>('/stops');
+  getAll(pagination: Pagination): Observable<GetAllResponse<Stop>> {
+    const params = { limit: DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+
+    return this.http.get<GetAllResponse<Stop>>('/stops', { params });
   }
 
   get(id: string): Observable<Stop> {

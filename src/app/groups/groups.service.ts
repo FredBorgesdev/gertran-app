@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ApiService, {GetAllResponse} from '../shared/services/api.service';
+import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -15,8 +15,15 @@ export class GroupsService implements ApiService<Group> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<GetAllResponse<Group>> {
-    return this.http.get<GetAllResponse<Group>>('/groups');
+  getAll(pagination: Pagination): Observable<GetAllResponse<Group>> {
+    const params = { limit: DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+
+    return this.http.get<GetAllResponse<Group>>('/groups', { params });
   }
 
   get(id: string): Observable<Group> {

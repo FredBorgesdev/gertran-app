@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface VehiclePeripherals {
   id: string;
@@ -17,7 +18,7 @@ export class VehiclePeripheralsService implements ApiService<VehiclePeripherals>
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination) {
+  getAll(pagination: Pagination): Observable<GetAllResponse<VehiclePeripherals>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
