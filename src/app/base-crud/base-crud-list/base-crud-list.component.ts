@@ -27,7 +27,11 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   loadResources(url?: string): void {
-    throw new Error('Method not implemented.');
+    this.isLoading = true;
+    this.service.getAll({ url }).subscribe(data => {
+      this.resources = data;
+      this.isLoading = false;
+    });
   }
 
   create(): void {

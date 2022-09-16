@@ -32,14 +32,6 @@ export class VehiclePeripheralsListComponent extends BaseCrudListComponent<Vehic
     );
   }
 
-  loadResources(url?: string): void {
-    this.isLoading = true;
-    this.service.getAll({ url }).subscribe((data) => {
-      this.resources = data;
-      this.isLoading = false;
-    });
-  }
-
   getPeripheralType(type: string): string {
     if (type === 'actuator') {
       return 'Atuador';

@@ -31,12 +31,4 @@ export class VehicleModelTypesListComponent extends BaseCrudListComponent<Vehicl
       modal,
     );
   }
-
-  loadResources(url?: string): void {
-    this.isLoading = true;
-    this.service.getAll({ url }).subscribe((resources) => {
-      this.resources = resources;
-      this.isLoading = false;
-    });
-  }
 }

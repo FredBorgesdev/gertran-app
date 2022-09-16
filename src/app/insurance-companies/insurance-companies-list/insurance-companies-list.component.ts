@@ -46,12 +46,4 @@ export class InsuranceCompaniesListComponent extends BaseCrudListComponent<Insur
       modal,
     );
   }
-
-  loadResources(url?: string): void {
-    this.isLoading = true;
-    this.service.getAll({ url }).subscribe((data) => {
-      this.resources = data;
-      this.isLoading = false;
-    });
-  }
 }
