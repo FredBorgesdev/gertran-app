@@ -1,23 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { GroupsFormComponent } from '../groups-form/groups-form.component';
-import { Group } from '../groups.service';
+import {Group, GroupsService} from '../groups.service';
+import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
+import {Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {TableService} from '../../shared/services/table.service';
 
 @Component({
   selector: 'app-groups-list',
   templateUrl: './groups-list.component.html',
   styleUrls: ['./groups-list.component.css']
 })
-export class GroupsListComponent implements OnInit {
-
-  isLoading = false;
-  searchInput = '';
-  displayData: Group[] = [
-    {
-      id: '1',
-      name: 'Group 1',
-    }
-  ];
+export class GroupsListComponent extends BaseCrudListComponent<Group> {
+  searchInput: string;
 
   groupsColumn = [
     {
@@ -28,45 +24,23 @@ export class GroupsListComponent implements OnInit {
   ];
 
   constructor(
-    private modal: NzModalService,
-  ) { }
-
-  ngOnInit(): void {
+    private tableService: TableService,
+    router: Router,
+    service: GroupsService,
+    message: NzMessageService,
+    modal: NzModalService
+  ) {
+    super(
+      'groups',
+      router,
+      service,
+      message,
+      modal
+    );
   }
 
-  search() {}
-
-  create() {
-    this.modal.create({
-      nzTitle: 'Criar novo grupo',
-      nzContent: GroupsFormComponent,
-      nzWidth: '50%',
-      nzOkText: 'Salvar',
-    });
-  }
-
-  edit(group: Group) {
-    this.modal.create({
-      nzTitle: 'Criar novo grupo',
-      nzContent: GroupsFormComponent,
-      nzComponentParams: { group },
-      nzWidth: '50%',
-      nzOkText: 'Salvar',
-    });
-  }
-
-  delete(group: Group) {
-    this.modal.confirm({
-      nzTitle: 'Deseja realmente excluir este grupo?',
-      nzOnOk: () => this.handleDelete(group)
-    });
-  }
-
-  private handleDelete(group: Group) {
-    this.isLoading = true;
-    // this.groupsService.delete(group.id).subscribe(
-    //   () => this.handleSuccess(),
-    //   () => this.handleFailure()
-    // )
+  search(): void {
+    const data = this.resources;
+    this.resources.results = this.tableService.search(this.searchInput, data.results);
   }
 }

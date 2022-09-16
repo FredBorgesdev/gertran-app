@@ -1,7 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-
   <nz-card>
-
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -37,7 +35,15 @@
         </button>
       </div>
     </div>
-    <nz-table #groupsListTable [nzData]="displayData" >
+    <nz-table
+      #groupsListTable
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of groupsColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
@@ -70,5 +76,4 @@
       </tbody>
     </nz-table>
   </nz-card>
-
 </nz-spin>
