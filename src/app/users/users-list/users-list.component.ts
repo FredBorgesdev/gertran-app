@@ -1,114 +1,54 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TableService } from '../../shared/services/table.service';
-
-interface DataItem {
-  id: number;
-  name: string;
-  cpf: string;
-  email: string;
-  cellphone: string;
-}
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import {User, UsersService} from '../users.service';
+import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: [ './users-list.component.css' ]
 })
-export class UsersListComponent implements OnInit {
-
-  isLoading = false;
-  displayData = [];
+export class UsersListComponent extends BaseCrudListComponent<User> {
   searchInput: string;
 
   userColumn = [
     {
-      title: 'ID',
-      compare: (
-        a: DataItem,
-        b: DataItem
-      ) => a.id - b.id
-    },
-    {
       title: 'Nome',
       compare: (
-        a: DataItem,
-        b: DataItem
+        a: User,
+        b: User
       ) => a.name.localeCompare(b.name)
     },
-    {
-      title: 'CPF'
-    },
-    {
-      title: 'Email'
-    },
-    {
-      title: 'Celular'
-    },
-    {
-      title: 'Ações'
-    }
-  ];
-
-  usersList: DataItem[] = [
-    {
-      id: 1,
-      name: 'João',
-      cpf: '111.111.111-11',
-      email: 'joao@empresa.com',
-      cellphone: '(11) 99999-9999'
-    },
-    {
-      id: 2,
-      name: 'Maria',
-      cpf: '222.222.222-22',
-      email: 'maria@empresa.com',
-      cellphone: '(11) 99999-9999'
-    },
-    {
-      id: 3,
-      name: 'José',
-      cpf: '333.333.333-33',
-      email: 'jose@empresa.com',
-      cellphone: '(11) 99999-9999'
-    }
+    { title: 'CPF' },
+    { title: 'Email' },
+    { title: 'Celular' },
+    { title: 'Ações' }
   ];
 
   constructor(
-    private router: Router,
-    private tableService: TableService
+    private tableService: TableService,
+    router: Router,
+    message: NzMessageService,
+    modal: NzModalService,
+    service: UsersService
   ) {
-    this.isLoading = true;
-    setTimeout(
-      () => {
-        this.isLoading = false;
-        this.displayData = this.usersList;
-      },
-      333
+    super(
+      'users',
+      router,
+      service,
+      message,
+      modal
     );
   }
 
-  ngOnInit(): void {
-  }
-
-  search() {
-    const data = this.usersList;
-    this.displayData = this.tableService.search(
+  search(): void {
+    this.resources.results = this.tableService.search(
       this.searchInput,
-      data
+      this.resources.results
     );
   }
-
-  create() {
-    this.router.navigate([ '/users/user-create' ]);
-  }
-
-  edit(item: DataItem) {
-    this.router.navigate([ '/users/user-edit', item.id ]);
-  }
-
 }
