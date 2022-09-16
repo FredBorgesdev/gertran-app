@@ -1,44 +1,39 @@
 import {
   Component,
   Input,
-  OnInit,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-users-form',
   templateUrl: './users-form.component.html',
   styleUrls: [ './users-form.component.css' ]
 })
-export class UsersFormComponent implements OnInit {
+export class UsersFormComponent {
+  isChangePasswordModalVisible = false;
+  validatePasswordForm: FormGroup;
 
   @Input() user: any;
-  @Output() onSave: EventEmitter<any> = new EventEmitter();
+  @Input() formGroup: FormGroup;
 
-  validateForm: FormGroup;
+  @Output() save: EventEmitter<void> = new EventEmitter<void>();
+  @Output() list: EventEmitter<void> = new EventEmitter<void>();
+  @Output() changePassword: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private router: Router,
-    private formBuilder: FormBuilder
-  ) { }
-
-  async ngOnInit(): Promise<void> {
-    this.validateForm = this.formBuilder.group({
-      name: [this.user?.name],
-      cpf: [this.user?.cpf],
-      email: [this.user?.email],
-      cellphone: [this.user?.cellphone],
+    private formBuilder: FormBuilder,
+  ) {
+    this.validatePasswordForm = formBuilder.group({
+      password: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  save() {
-    this.onSave.emit(this.validateForm.value);
-  }
-
-  listUsers() {
-    this.router.navigate([ '/users/users-list' ]);
+  submitPassword(): void {
+    if (this.validatePasswordForm.valid) {
+      this.changePassword.emit(this.validatePasswordForm.controls.password.value);
+      this.isChangePasswordModalVisible = false;
+    }
   }
 }

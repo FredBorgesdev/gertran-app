@@ -17,7 +17,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'user-create',
+    path: 'users-create',
     component: UsersUserComponent,
     data: {
       title: 'Adicionar Usuário ',
@@ -25,7 +25,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'user-edit/:id',
+    path: 'users-edit/:id',
     component: UsersUserComponent,
     data: {
       title: 'Editar Usuário ',

@@ -1,37 +1,88 @@
-<form nz-form nzLayout="vertical" [formGroup]="validateForm" *ngIf="validateForm">
+<form nz-form nzLayout="vertical" [formGroup]="formGroup" *ngIf="formGroup">
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Nome</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="brandName" type="text" nz-input formControlName="name" />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="email">E-mail</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o email corretamente">
+      <input id="email" type="text" nz-input formControlName="email" />
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">CPF</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="companyName" type="text" nz-input formControlName="cpf" />
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="isAdmin">
+          <span>É administrador?</span>
+        </label>
+      </div>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">E-mail</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="email" />
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="isSuperuser">
+          <span>É super usuário?</span>
+        </label>
+      </div>
     </nz-form-control>
   </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox formControlName="isActive">
+          <span>Está ativo?</span>
+        </label>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-divider></nz-divider>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Celular</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input formControlName="cellphone" />
-    </nz-form-control>
-  </nz-form-item>
+
+  <a
+    nz-button
+    nzType="link"
+    class="m-b-50"
+    (click)="isChangePasswordModalVisible = true"
+  >Trocar senha</a>
+
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="save()" nz-button nzType="primary">
+      <button type="button" (click)="save.emit()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Usuário
       </button>
-      <button type="button" (click)="listUsers()" nz-button>
+      <button type="button" (click)="list.emit()" nz-button>
         <i nz-icon nzType="unordered-list"></i>Listar Usuários
       </button>
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<nz-modal
+  [(nzVisible)]="isChangePasswordModalVisible"
+  nzTitle="Trocar senha"
+  (nzOnCancel)="isChangePasswordModalVisible = false"
+>
+  <div *nzModalContent>
+    <form nzLayout="vertical" nz-form [formGroup]="validatePasswordForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="password">Senha</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo com no mínimo 6 caracteres">
+          <input id="password" type="password" nz-input formControlName="password" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <div *nzModalFooter>
+    <button
+      nz-button
+      nzType="default"
+      (click)="isChangePasswordModalVisible = false"
+    >Fechar</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="submitPassword()"
+    >Enviar</button>
+  </div>
+</nz-modal>

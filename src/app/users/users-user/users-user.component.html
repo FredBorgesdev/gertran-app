@@ -7,10 +7,10 @@
       <nz-breadcrumb-item>
         <a><i nz-icon nzType="user"></i><span>Usuários</span></a>
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="user?.id">
-        Editar Usuário ({{user?.name}})
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Usuário ({{resource?.email}})
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!user?.id">
+      <nz-breadcrumb-item *ngIf="!resource?.id">
         Adicionar Usuário
       </nz-breadcrumb-item>
     </nz-breadcrumb>
@@ -20,17 +20,17 @@
     <nz-tabset>
       <nz-tab nzTitle="Dados Principais">
         <app-users-form
-          [user]="user"
-          (onSave)="onSave($event)"
-          *ngIf="user"
+          [user]="resource"
+          [formGroup]="validateForm"
+          (save)="save()"
+          (list)="list()"
+          (changePassword)="changePassword($event)"
         ></app-users-form>
       </nz-tab>
 
       <nz-tab nzTitle="Permissões de Acesso">
         <app-users-permissions
-          [user]="user"
-          (onSave)="onSave($event)"
-          *ngIf="user"
+          *ngIf="resource"
         ></app-users-permissions>
       </nz-tab>
     </nz-tabset>

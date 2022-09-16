@@ -53,12 +53,18 @@
       <tr *ngFor="let item of usersListTable.data;  let i=index">
         <td>
           <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
+            <h6 class="m-l-10 m-b-0">{{item.email}}</h6>
           </div>
         </td>
-        <td>{{item.cpf}}</td>
-        <td>{{item.email}}</td>
-        <td>{{item.cellphone}}</td>
+        <td>{{(item.lastLogin | date: 'dd/MM/yyyy') || '-'}}</td>
+        <td>
+          <nz-badge *ngIf="item.isAdmin" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.isAdmin" nzStatus="error"></nz-badge>
+        </td>
+        <td>
+          <nz-badge *ngIf="item.isActive" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.isActive" nzStatus="error"></nz-badge>
+        </td>
         <td class="text-md-center">
           <a
             (click)="edit(item)"
@@ -71,9 +77,16 @@
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
-          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+          <a
+            (click)="delete(item)"
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Excluir"
+          >
             <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
+          </a>
         </td>
       </tr>
       </tbody>

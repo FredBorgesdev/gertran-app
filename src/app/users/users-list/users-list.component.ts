@@ -17,15 +17,15 @@ export class UsersListComponent extends BaseCrudListComponent<User> {
 
   userColumn = [
     {
-      title: 'Nome',
+      title: 'Email',
       compare: (
         a: User,
         b: User
-      ) => a.name.localeCompare(b.name)
+      ) => a.email.localeCompare(b.email)
     },
-    { title: 'CPF' },
-    { title: 'Email' },
-    { title: 'Celular' },
+    { title: 'Último Login' },
+    { title: 'Admnistrador?' },
+    { title: 'Usuário Ativo?' },
     { title: 'Ações' }
   ];
 
