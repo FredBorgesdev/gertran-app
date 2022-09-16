@@ -13,7 +13,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'stop-create',
+    path: 'stops-create',
     component: StopsStopComponent,
     data: {
       title: 'Adicionar Ponto ',
@@ -21,7 +21,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'stop-edit/:id',
+    path: 'stops-edit/:id',
     component: StopsStopComponent,
     data: {
       title: 'Editar Ponto ',

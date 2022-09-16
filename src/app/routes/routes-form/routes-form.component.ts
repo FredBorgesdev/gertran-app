@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TransferChange, TransferItem, TransferSelectChange } from 'ng-zorro-antd/transfer';
-import { stopsList } from 'src/app/stops/stops-list/mocked-data';
+import { TransferItem, TransferSelectChange } from 'ng-zorro-antd/transfer';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {Stop, StopsService} from '../../stops/stops.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-routes-form',
@@ -11,18 +12,17 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 export class RoutesFormComponent implements OnInit {
   list: TransferItem[] = [];
 
-  constructor() { }
+  constructor(
+    private stopsService: StopsService,
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
-    this.list = stopsList.map(stop => ({
-      key: stop.id,
-      title: stop.name,
-      ...stop
-    }));
-  }
-
-  select(item: TransferSelectChange) {
-    console.log(item);
+    this.stopsService.getAll({}).subscribe((stops) => {
+      this.list = this.mapStopsToTransferItems(stops.results);
+    }, () => {
+      this.message.error('Erro ao carregar paradas');
+    });
   }
 
   drop(event: CdkDragDrop<string[]>): void {
@@ -30,5 +30,15 @@ export class RoutesFormComponent implements OnInit {
     const leftItems = this.list.filter(item => item.direction === 'left');
     moveItemInArray(rightItems, event.previousIndex, event.currentIndex);
     this.list = [...leftItems, ...rightItems];
+  }
+
+  private mapStopsToTransferItems(stops: Stop[]): TransferItem[] {
+    return stops.map((stop) => {
+      return {
+        key: stop.id,
+        title: stop.name,
+        ...stop,
+      };
+    });
   }
 }

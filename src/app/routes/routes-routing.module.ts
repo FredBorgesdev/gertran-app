@@ -13,7 +13,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'route-edit/:id',
+    path: 'routes-edit/:id',
     component: RoutesFormComponent,
     data: {
       title: 'Editar Rota ',
@@ -21,7 +21,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'route-create',
+    path: 'routes-create',
     component: RoutesFormComponent,
     data: {
       title: 'Adicionar Rota ',

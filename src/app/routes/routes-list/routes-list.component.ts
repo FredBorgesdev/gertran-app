@@ -1,39 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { routesList } from './mocked-data';
-import {Stop} from '../../stops/stops.service';
-
-export interface Route {
-  id: number | null;
-  name: string;
-  code?: string;
-  description?: string;
-  lead?: number;
-  stops: {
-    stop: Stop
-    stopTypeId: number
-  }[];
-}
+import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
+import {Route, RoutesService} from '../routes.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-routes-list',
   templateUrl: './routes-list.component.html',
   styleUrls: ['./routes-list.component.css']
 })
-export class RoutesListComponent implements OnInit {
-
-  isLoading = false;
-  routesList = [];
+export class RoutesListComponent extends BaseCrudListComponent<Route> {
   searchInput = '';
 
   routesColumns = [
-    {
-      title: 'ID',
-      compare: (
-        a: Route,
-        b: Route
-      ) => a.id - b.id
-    },
     {
       title: 'Nome',
       compare: (
@@ -53,21 +33,18 @@ export class RoutesListComponent implements OnInit {
     { title: 'Ações' },
   ];
 
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.routesList = routesList;
-      this.isLoading = false;
-    }, 333);
-  }
-
-  create() {
-    this.router.navigate(['routes', 'route-create']);
-  }
-
-  edit(item: Route) {
-    this.router.navigate(['routes', 'route-edit', item.id]);
+  constructor(
+    router: Router,
+    service: RoutesService,
+    message: NzMessageService,
+    modal: NzModalService
+  ) {
+    super(
+      'routes',
+      router,
+      service,
+      message,
+      modal
+    );
   }
 }
