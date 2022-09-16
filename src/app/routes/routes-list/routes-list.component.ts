@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Stop } from 'src/app/stops/stops-list/stops-list.component';
 import { routesList } from './mocked-data';
+import {Stop} from '../../stops/stops.service';
 
 export interface Route {
   id: number | null;

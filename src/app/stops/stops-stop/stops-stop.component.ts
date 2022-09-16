@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { stopsList } from '../stops-list/mocked-data';
-import { Stop } from '../stops-list/stops-list.component';
+import {Stop} from '../stops.service';
 
 @Component({
   selector: 'app-stops-stop',
@@ -24,12 +24,13 @@ export class StopsStopComponent implements OnInit {
     }, 333);
   }
 
-  loadStop() {
-    this.stop = stopsList.find(stop => stop.id === Number(this.route.snapshot.paramMap.get('id')));
+  loadStop(): void {
+    this.stop = stopsList.find(stop => stop.id === this.route.snapshot.paramMap.get('id'));
   }
 
-  createNewStop() {
+  createNewStop(): void {
     this.stop = {
+      id: null,
       name: '',
       description: '',
       address: '',

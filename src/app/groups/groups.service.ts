@@ -28,7 +28,7 @@ export class GroupsService implements ApiService<Group> {
   }
 
   update(id: string, data: Group): Observable<Group> {
-    return this.http.put<Group>(`/groups/${id}/update`, data);
+    return this.http.patch<Group>(`/groups/${id}/update`, data);
   }
 
   delete(id: string): Observable<Group> {

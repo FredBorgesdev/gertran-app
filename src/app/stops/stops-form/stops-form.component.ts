@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TransferItem } from 'ng-zorro-antd/transfer';
 import { stopsListTypeCategories, stopsListTypes } from '../stops-list/mocked-data';
-import { Stop } from '../stops-list/stops-list.component';
+import {Stop} from '../stops.service';
 
 @Component({
   selector: 'app-stops-form',

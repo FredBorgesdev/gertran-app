@@ -1,8 +1,8 @@
-import { Stop } from './stops-list.component';
+import {Stop} from '../stops.service';
 
 export const stopsList: Stop[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Belo Horizonte – Posto 01',
     description: 'Stop 1 description',
     address: 'Rua 1, 100',
@@ -15,7 +15,7 @@ export const stopsList: Stop[] = [
     typeCategoryIds: [2],
   },
   {
-    id: 2,
+    id: '2',
     name: 'Graal Monlevade',
     description: 'Restaurante',
     address: 'Rua 2, 200',
@@ -38,7 +38,7 @@ export const stopsList: Stop[] = [
     }
   },
   {
-    id: 3,
+    id: '3',
     name: 'Ribeirão Preto – Posto 01',
     description: 'Stop 1 description',
     address: 'Rua 1, 100',

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Stop } from '../stops-list/stops-list.component';
+import {Stop} from '../stops.service';
 
 @Component({
   selector: 'app-stops-working-hours',
@@ -40,9 +40,8 @@ export class StopsWorkingHoursComponent implements OnInit {
 
   @Input() stop: Stop;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
-
 }

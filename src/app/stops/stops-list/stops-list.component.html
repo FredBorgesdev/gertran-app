@@ -39,7 +39,15 @@
       </div>
     </div>
 
-    <nz-table #stopsListTable [nzData]="stopsList" >
+    <nz-table
+      #stopsListTable
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of stopColumns" [nzSortFn]="column.compare">{{ column.title }}</th>

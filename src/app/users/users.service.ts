@@ -31,7 +31,7 @@ export class UsersService implements ApiService<User> {
   }
 
   update(id: string, data: User): Observable<User> {
-    return this.http.put<User>(`users/${id}/update`, data);
+    return this.http.patch<User>(`users/${id}/update`, data);
   }
 
   delete(id: string): Observable<User> {
