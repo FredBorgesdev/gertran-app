@@ -31,6 +31,9 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     this.service.getAll({ url }).subscribe(data => {
       this.resources = data;
       this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao carregar os registros. Tente novamente.');
     });
   }
 
