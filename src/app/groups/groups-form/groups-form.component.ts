@@ -1,18 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferItem } from 'ng-zorro-antd/transfer';
-import { Group } from '../groups.service';
+import {Group, GroupsService} from '../groups.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-groups-form',
   templateUrl: './groups-form.component.html',
   styleUrls: ['./groups-form.component.css']
 })
-export class GroupsFormComponent implements OnInit {
+export class GroupsFormComponent extends BaseCrudFormComponent<Group> {
 
-  @Input() group: Group;
+  group: Group;
 
-  list: TransferItem[] = [
+  permissions: TransferItem[] = [
     {
       id: 1,
       title: 'Motoristas',
@@ -75,19 +78,27 @@ export class GroupsFormComponent implements OnInit {
     }
   ];
 
-  formGroup: FormGroup;
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    service: GroupsService,
+    message: NzMessageService,
+    activatedRoute: ActivatedRoute
+  ) {
+    super(
+      service,
+      message,
+      activatedRoute,
+    );
+  }
 
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({
-      name: [this.group?.name, [Validators.required]],
-      permissions: [[]]
+  loadFormBuilder(): void {
+    this.validateForm = this.formBuilder.group({
+      name: [null, [Validators.required]],
     });
   }
 
-  change(items: TransferItem[]): void {
-    console.log(items);
+  list(): void {
+    this.router.navigate(['groups', 'groups-list']);
   }
-
 }

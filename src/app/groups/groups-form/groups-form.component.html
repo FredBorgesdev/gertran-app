@@ -1,4 +1,4 @@
-<form nz-form nzLayout="vertical" [formGroup]="formGroup">
+<form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
@@ -6,13 +6,22 @@
     </nz-form-control>
   </nz-form-item>
 
+<!--  <nz-form-item>-->
+<!--    <nz-transfer-->
+<!--      [nzDataSource]="permissions"-->
+<!--      [nzShowSelectAll]="true"-->
+<!--      [nzListStyle]="{ 'width': '50%' }"-->
+<!--    >-->
+<!--    </nz-transfer>-->
+<!--  </nz-form-item>-->
   <nz-form-item>
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzShowSelectAll]="true"
-      [nzListStyle]="{ 'width': '50%' }"
-      (nzChange)="change($event)"
-    >
-    </nz-transfer>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button type="button" (click)="save()" nz-button nzType="primary">
+        <i nz-icon nzType="save"></i>Salvar Grupo
+      </button>
+      <button type="button" (click)="list()" nz-button>
+        <i nz-icon nzType="unordered-list"></i>Listar Grupos
+      </button>
+    </nz-form-control>
   </nz-form-item>
 </form>

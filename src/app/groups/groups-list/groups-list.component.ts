@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { GroupsFormComponent } from '../groups-form/groups-form.component';
 import {Group, GroupsService} from '../groups.service';
 import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
 import {Router} from '@angular/router';

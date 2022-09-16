@@ -23,22 +23,22 @@ export class GroupsService implements ApiService<Group> {
       });
     }
 
-    return this.http.get<GetAllResponse<Group>>('/groups', { params });
+    return this.http.get<GetAllResponse<Group>>('groups', { params });
   }
 
   get(id: string): Observable<Group> {
-    return this.http.get<Group>(`/groups/${id}`);
+    return this.http.get<Group>(`groups/${id}`);
   }
 
   save(data: Group): Observable<Group> {
-    return this.http.post<Group>('/groups/create', data);
+    return this.http.post<Group>('groups/create', data);
   }
 
   update(id: string, data: Group): Observable<Group> {
-    return this.http.patch<Group>(`/groups/${id}/update`, data);
+    return this.http.patch<Group>(`groups/${id}/update`, data);
   }
 
   delete(id: string): Observable<Group> {
-    return this.http.delete<Group>(`/groups/${id}/delete`);
+    return this.http.delete<Group>(`groups/${id}/delete`);
   }
 }

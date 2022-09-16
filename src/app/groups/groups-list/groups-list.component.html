@@ -68,9 +68,16 @@
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
-          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+          <a
+            (click)="delete(item)"
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Excluir"
+          >
             <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
+          </a>
         </td>
       </tr>
       </tbody>

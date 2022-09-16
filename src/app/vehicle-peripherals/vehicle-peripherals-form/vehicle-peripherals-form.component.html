@@ -8,10 +8,10 @@
       <nz-breadcrumb-item>
         <a><i nz-icon nzType="idcard"></i><span>Perifericos</span></a>
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="vehiclePeripherals?.id">
-        Editar Perifericos ({{vehiclePeripherals.name}})
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Perifericos ({{resource.name}})
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!vehiclePeripherals?.id">
+      <nz-breadcrumb-item *ngIf="!resource?.id">
         Adicionar Perifericos
       </nz-breadcrumb-item>
     </nz-breadcrumb>
@@ -33,7 +33,7 @@
           </nz-radio-group>
         </nz-form-control>
       </nz-form-item>
-      
+
       <nz-divider></nz-divider>
 
       <nz-form-item>
