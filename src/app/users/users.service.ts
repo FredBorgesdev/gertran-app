@@ -5,11 +5,15 @@ import {Observable} from 'rxjs';
 
 export interface User {
   id: string;
+  name: string;
   email: string;
+  password?: string;
   isActive: string;
   isAdmin: string;
   isSuperuser: string;
   lastLogin: string;
+  permissions: number[];
+  groups: number[];
 }
 
 @Injectable({
@@ -39,6 +43,8 @@ export class UsersService implements ApiService<User> {
   }
 
   update(id: string, data: User): Observable<User> {
+    delete data.password;
+
     return this.http.patch<User>(`users/${id}/update`, data);
   }
 

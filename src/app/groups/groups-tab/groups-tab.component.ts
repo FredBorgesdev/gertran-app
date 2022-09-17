@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { TransferItem, TransferChange } from 'ng-zorro-antd/transfer';
-import {PermissionsService} from '../../shared/services/permissions.service';
+import {TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
+import {GroupsService} from '../groups.service';
 
 @Component({
-  selector: 'app-users-permissions',
-  templateUrl: './users-permissions.component.html',
-  styleUrls: ['./users-permissions.component.css']
+  selector: 'app-groups-tab',
+  templateUrl: './groups-tab.component.html',
+  styleUrls: ['./groups-tab.component.css']
 })
-export class UsersPermissionsComponent implements OnInit {
+export class GroupsTabComponent implements OnInit {
   list: TransferItem[] = [];
   selectedPermissions: number[] = [];
 
@@ -15,11 +15,11 @@ export class UsersPermissionsComponent implements OnInit {
   @Output() save: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   constructor(
-    private permissionService: PermissionsService,
+    private groupService: GroupsService,
   ) { }
 
   ngOnInit(): void {
-    this.permissionService.getAll().subscribe(data => {
+    this.groupService.getAll({ limit: 999 }).subscribe(data => {
       this.list = data.results.map(item => ({
         id: item.id,
         title: item.name,
@@ -34,7 +34,8 @@ export class UsersPermissionsComponent implements OnInit {
       .map(item => item.id);
   }
 
-  savePermissions(): void {
+  saveGroups(): void {
     this.save.emit(this.selectedPermissions);
   }
+
 }

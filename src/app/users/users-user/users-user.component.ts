@@ -28,6 +28,8 @@ export class UsersUserComponent extends BaseCrudFormComponent<User> {
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
+      name: [null, [Validators.required]],
+      password: [null, [Validators.minLength(6)]],
       isActive: [false, [Validators.required]],
       isAdmin: [false, [Validators.required]],
       isSuperuser: [false, [Validators.required]],
@@ -44,5 +46,22 @@ export class UsersUserComponent extends BaseCrudFormComponent<User> {
     }, () => {
       this.message.error('Não foi possível alterar a senha. Tente novamente.');
     });
+  }
+
+  updateField(field: string, value: any): void {
+    this.resource[field] = value;
+    this.service.update(this.resource.id, this.resource).subscribe(() => {
+      this.message.success('Campo salvo com sucesso!');
+    }, () => {
+      this.message.error('Não foi possível salvar o campo. Tente novamente.');
+    });
+  }
+
+  numbersToStrings(numbers?: number[]): string[] {
+    if (!numbers) {
+      return [];
+    }
+
+    return numbers.map(String);
   }
 }

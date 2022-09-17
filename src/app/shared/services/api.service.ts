@@ -4,6 +4,7 @@ export const DEFAULT_LIMIT = 2;
 
 export interface Pagination {
   url?: string;
+  limit?: number;
 }
 
 export interface GetAllResponse<T> {

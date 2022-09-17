@@ -1,8 +1,22 @@
 <form nz-form nzLayout="vertical" [formGroup]="formGroup" *ngIf="formGroup">
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
+      <input id="name" type="text" nz-input formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="email">E-mail</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o email corretamente">
       <input id="email" type="text" nz-input formControlName="email" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="!user?.id">
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="password">Senha</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Insira uma senha com no minimo 6 caracteres">
+      <input id="password" type="password" nz-input formControlName="password" />
     </nz-form-control>
   </nz-form-item>
 

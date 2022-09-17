@@ -31,7 +31,17 @@
       <nz-tab nzTitle="Permissões de Acesso">
         <app-users-permissions
           *ngIf="resource"
+          [targetKeys]="numbersToStrings(resource.permissions)"
+          (save)="updateField('permissions', $event)"
         ></app-users-permissions>
+      </nz-tab>
+
+      <nz-tab nzTitle="Grupos">
+        <app-groups-tab
+          *ngIf="resource"
+          [targetKeys]="numbersToStrings(resource.groups)"
+          (save)="updateField('groups', $event)"
+        ></app-groups-tab>
       </nz-tab>
     </nz-tabset>
   </nz-card>

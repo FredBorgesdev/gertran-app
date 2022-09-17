@@ -5,6 +5,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../users.service';
 
 @Component({
   selector: 'app-users-form',
@@ -15,7 +16,7 @@ export class UsersFormComponent {
   isChangePasswordModalVisible = false;
   validatePasswordForm: FormGroup;
 
-  @Input() user: any;
+  @Input() user: User;
   @Input() formGroup: FormGroup;
 
   @Output() save: EventEmitter<void> = new EventEmitter<void>();

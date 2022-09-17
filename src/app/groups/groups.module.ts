@@ -6,6 +6,7 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { GroupsFormComponent } from './groups-form/groups-form.component';
 import { NzTransferModule } from 'ng-zorro-antd/transfer';
+import { GroupsTabComponent } from './groups-tab/groups-tab.component';
 
 const antdModules = [
   NzTransferModule
@@ -14,7 +15,11 @@ const antdModules = [
 @NgModule({
   declarations: [
     GroupsListComponent,
-    GroupsFormComponent
+    GroupsFormComponent,
+    GroupsTabComponent
+  ],
+  exports: [
+    GroupsTabComponent
   ],
   imports: [
     CommonModule,

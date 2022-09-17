@@ -8,6 +8,7 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersUserComponent } from './users-user/users-user.component';
 import { UsersPermissionsComponent } from './users-permissions/users-permissions.component';
+import {GroupsModule} from '../groups/groups.module';
 
 const antdModule = [
   NzTransferModule
@@ -23,6 +24,7 @@ const antdModule = [
   imports: [
     SharedModule,
     UsersRoutingModule,
+    GroupsModule,
     ...antdModule
   ]
 })
