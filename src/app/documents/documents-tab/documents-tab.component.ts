@@ -31,15 +31,18 @@ export class DocumentsTabComponent implements OnInit {
     this.loadDocuments();
   }
 
-  loadDocuments(url?: string) {
+  loadDocuments(url?: string): void {
     this.isLoading = true;
     this.documentsService.getAll({ url }, this.resource, this.resourceId).subscribe(documents => {
       this.documents = documents;
       this.isLoading = false;
-    }, () => this.handleFailure());
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao carregar documentos');
+    });
   }
 
-  save(formResult: OnSubmitEvent) {
+  save(formResult: OnSubmitEvent): void {
     const body = {
       title: formResult.form.title,
       documentType: formResult.form.documentType as any,
@@ -70,12 +73,12 @@ export class DocumentsTabComponent implements OnInit {
     }
   }
 
-  edit(document: Document) {
+  edit(document: Document): void {
     this.document = document;
     this.isCreatingDocument = true;
   }
 
-  delete(document: Document) {
+  delete(document: Document): void {
     this.modal.confirm({
       nzTitle: 'Deseja realmente excluir este documento?',
       nzOnOk: () => {
@@ -92,7 +95,7 @@ export class DocumentsTabComponent implements OnInit {
     });
   }
 
-  private handleSuccess() {
+  private handleSuccess(): void {
     this.loadDocuments();
     this.isCreatingDocument = false;
     this.isLoading = false;
@@ -100,7 +103,7 @@ export class DocumentsTabComponent implements OnInit {
     this.message.success('Documento salvo com sucesso');
   }
 
-  private handleFailure() {
+  private handleFailure(): void {
     this.isCreatingDocument = false;
     this.isLoading = false;
     this.message.error('Erro ao salvar documento');
