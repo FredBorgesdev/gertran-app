@@ -1,104 +1,40 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component';
 
 import { TableService } from '../../shared/services/table.service';
-import { trucksList } from './mocked-data';
-
-export interface Truck {
-  id: number;
-  brand: string;
-  model: string;
-  year: number;
-  color: string;
-  plate: string;
-  trackers: Tracker[];
-}
+import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
+import {Truck, TrucksService} from '../trucks.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-trucks-list',
   templateUrl: './trucks-list.component.html',
   styleUrls: [ './trucks-list.component.css' ]
 })
-export class TrucksListComponent implements OnInit {
-
-  isLoading = false;
-  displayData = [];
+export class TrucksListComponent extends BaseCrudListComponent<Truck> {
   searchInput: string;
 
-  truckColumn = [
-    {
-      title: 'ID',
-      compare: (
-        a: Truck,
-        b: Truck
-      ) => a.id - b.id
-    },
-    {
-      title: 'Placa',
-      compare: (
-        a: Truck,
-        b: Truck
-      ) => a.plate.localeCompare(b.plate)
-    },
-    {
-      title: 'Marca',
-      compare: (
-        a: Truck,
-        b: Truck
-      ) => a.brand.localeCompare(b.brand)
-    },
-    {
-      title: 'Modelo',
-      compare: (
-        a: Truck,
-        b: Truck
-      ) => a.model.localeCompare(b.model)
-    },
-    {
-      title: 'Ações'
-    }
-  ];
-
-  trucksList: Truck[] = trucksList;
-
   constructor(
-    private router: Router,
-    private tableService: TableService
+    private tableService: TableService,
+    router: Router,
+    service: TrucksService,
+    message: NzMessageService,
+    modal: NzModalService
   ) {
-    this.isLoading = true;
-    setTimeout(
-      () => {
-        this.isLoading = false;
-        this.displayData = this.trucksList;
-      },
-      333
+    super(
+      'trucks',
+      router,
+      service,
+      message,
+      modal
     );
   }
 
-  ngOnInit(): void {
-  }
-
-  search() {
-    const data = this.trucksList;
-    this.displayData = this.tableService.search(
+  search(): void {
+    this.resources.results = this.tableService.search(
       this.searchInput,
-      data
+      this.resources.results
     );
   }
-
-  create() {
-    this.router.navigate([ '/trucks/truck-create' ]);
-  }
-
-  edit(item: Truck) {
-    this.router.navigate([
-      '/trucks/truck-edit',
-      item.id
-    ]);
-  }
-
 }

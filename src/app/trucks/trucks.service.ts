@@ -1,0 +1,49 @@
+import { Injectable } from '@angular/core';
+import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
+export interface Truck {
+  id: string;
+  brand: string;
+  model: string;
+  year: number;
+  color: string;
+  plate: string;
+  trackers: any[];
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TrucksService implements ApiService<Truck> {
+
+  constructor(private http: HttpClient) {}
+
+  getAll(pagination: Pagination): Observable<GetAllResponse<Truck>> {
+    const params = { limit: DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+
+    return this.http.get<GetAllResponse<Truck>>('vehicles/trucks', { params });
+  }
+
+  get(id: string): Observable<Truck> {
+    return this.http.get<Truck>(`vehicles/trucks/${id}`);
+  }
+
+  save(truck: Omit<Truck, 'id'>): Observable<Truck> {
+    return this.http.post<Truck>('vehicles/trucks/create', truck);
+  }
+
+  update(id: string, truck: Omit<Truck, 'id'>): Observable<Truck> {
+    return this.http.patch<Truck>(`vehicles/trucks/${id}/update`, truck);
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`vehicles/trucks/${id}/delete`);
+  }
+}
