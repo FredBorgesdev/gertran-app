@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { GroupsFormComponent } from './groups-form/groups-form.component';
 import { NzTransferModule } from 'ng-zorro-antd/transfer';
 import { GroupsTabComponent } from './groups-tab/groups-tab.component';
+import {PermissionsModule} from '../permissions/permissions.module';
 
 const antdModules = [
   NzTransferModule
@@ -25,7 +26,8 @@ const antdModules = [
     CommonModule,
     SharedModule,
     GroupsRoutingModule,
-    ...antdModules
+    PermissionsModule,
+    ...antdModules,
   ]
 })
 export class GroupsModule { }

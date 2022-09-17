@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
+import {TransferItem} from 'ng-zorro-antd/transfer';
 import {PermissionsService} from '../../shared/services/permissions.service';
 
 @Component({
@@ -12,7 +12,9 @@ export class PermissionsTabComponent implements OnInit {
   selectedPermissions: number[] = [];
 
   @Input() targetKeys: string[] = [];
+  @Input() hideSubmit: boolean = false;
   @Output() save: EventEmitter<number[]> = new EventEmitter<number[]>();
+  @Output() change: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   constructor(
     private permissionService: PermissionsService,
@@ -28,10 +30,12 @@ export class PermissionsTabComponent implements OnInit {
     });
   }
 
-  change(transferChange: TransferChange): void {
-    this.selectedPermissions = transferChange.list
+  changeTransfer(): void {
+    this.selectedPermissions = this.list
       .filter(item => item.direction === 'right')
       .map(item => item.id);
+
+    this.change?.emit(this.selectedPermissions);
   }
 
   savePermissions(): void {

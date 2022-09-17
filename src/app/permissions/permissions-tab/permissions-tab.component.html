@@ -3,11 +3,11 @@
     [nzDataSource]="list"
     [nzShowSelectAll]="true"
     [nzListStyle]="{ 'width': '50%', 'height.px': '700' }"
-    (nzChange)="change($event)"
+    (nzChange)="changeTransfer()"
   >
   </nz-transfer>
 
-  <nz-form-item class="m-t-55">
+  <nz-form-item class="m-t-55" *ngIf="!hideSubmit">
     <nz-form-control>
       <button nz-button nzType="primary" (click)="savePermissions()">Salvar permissões</button>
     </nz-form-control>
