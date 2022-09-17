@@ -12,6 +12,7 @@ import { BranchOfficeTabComponent } from './branch-office-tab/branch-office-tab.
 import { CustomersCustomerComponent } from './customers-customer/customers-customer.component';
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';
 import { DocumentsModule } from '../documents/documents.module';
+import {TextMaskModule} from 'angular2-text-mask';
 
 const antdModule = [];
 
@@ -32,6 +33,7 @@ const antdModule = [];
     SharedModule,
     CustomersRoutingModule,
     DocumentsModule,
+    TextMaskModule,
     ...antdModule
   ],
   exports: []

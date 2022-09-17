@@ -15,6 +15,7 @@ import { Customer } from '../customers.service';
   styleUrls: ['./customers-form.component.css']
 })
 export class CustomersFormComponent implements OnInit {
+  cnpjMask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
 
   @Input() customer: Customer = null;
   @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>();

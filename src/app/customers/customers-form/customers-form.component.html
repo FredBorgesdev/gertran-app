@@ -14,7 +14,13 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="cnpj">CNPJ</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="CNPJ Inválido! Insira no formato 99.999.999/0001-99">
-      <input id="cnpj" type="text" nz-input formControlName="cnpj" />
+      <input
+        [textMask]="{ mask: cnpjMask, guide: false }"
+        id="cnpj"
+        type="text"
+        nz-input
+        formControlName="cnpj"
+      />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
