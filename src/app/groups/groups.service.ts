@@ -38,7 +38,7 @@ export class GroupsService implements ApiService<Group> {
     return this.http.patch<Group>(`groups/${id}/update`, data);
   }
 
-  delete(id: string): Observable<Group> {
-    return this.http.delete<Group>(`groups/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`groups/${id}/delete`);
   }
 }

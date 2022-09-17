@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface BranchOffice {
   id: string;
@@ -17,7 +18,7 @@ export class BranchOfficesService implements ApiService<BranchOffice> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(pagination: Pagination, customerId: string) {
+  getAll(pagination: Pagination, customerId: string): Observable<GetAllResponse<BranchOffice>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -30,19 +31,19 @@ export class BranchOfficesService implements ApiService<BranchOffice> {
     );
   }
 
-  get(id: string, customerId: string) {
+  get(id: string, customerId: string): Observable<BranchOffice> {
     return this.http.get<BranchOffice>(`customers/${customerId}/branch-offices/${id}`);
   }
 
-  save(body: any, customerId: string) {
+  save(body: any, customerId: string): Observable<BranchOffice> {
     return this.http.post<BranchOffice>(`customers/${customerId}/branch-offices/create`, body);
   }
 
-  update(id: string, body: any, customerId: string) {
+  update(id: string, body: any, customerId: string): Observable<BranchOffice> {
     return this.http.patch<BranchOffice>(`customers/${customerId}/branch-offices/${id}/update`, body);
   }
 
-  delete(id: string, customerId: string) {
-    return this.http.delete<BranchOffice>(`customers/${customerId}/branch-offices/${id}/delete`);
+  delete(id: string, customerId: string): Observable<void> {
+    return this.http.delete<void>(`customers/${customerId}/branch-offices/${id}/delete`);
   }
 }

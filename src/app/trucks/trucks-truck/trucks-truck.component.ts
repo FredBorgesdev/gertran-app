@@ -29,7 +29,7 @@ export class TrucksTruckComponent implements OnInit {
     setTimeout(
       () => {
         this.isLoading = false;
-        this.truck = this.trucksList.find(truck => truck.id == +this.activatedRoute.snapshot.params.id);
+        this.truck = this.trucksList.find(truck => truck.id === this.activatedRoute.snapshot.params.id);
       },
       666
     );

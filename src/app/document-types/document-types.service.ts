@@ -43,7 +43,7 @@ export class DocumentTypesService implements ApiService<DocumentType> {
     return this.http.patch<DocumentType>(`documents/document-types/${id}/update`, documentType);
   }
 
-  delete(id: string): Observable<DocumentType> {
-    return this.http.delete<DocumentType>(`documents/document-types/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`documents/document-types/${id}/delete`);
   }
 }

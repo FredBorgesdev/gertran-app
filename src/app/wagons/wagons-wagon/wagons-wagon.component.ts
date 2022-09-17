@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { wagonsList } from '../wagons-list/mocked-data';
-import { Wagon } from '../wagons-list/wagons-list.component';
+import {Wagon} from '../wagons.service';
 
 @Component({
   selector: 'app-wagons-wagon',
@@ -27,13 +27,14 @@ export class WagonsWagonComponent implements OnInit {
   }
 
   loadWagon() {
-    const id = +this.activatedRoute.snapshot.params.id;
-    this.wagon = this.wagonsList.find(wagon => wagon.id == id);
+    const id = this.activatedRoute.snapshot.params.id;
+    this.wagon = this.wagonsList.find(wagon => wagon.id === id);
   }
 
   createNewWagon() {
     this.wagon = {
       id: null,
+      name: '',
       brand: '',
       model: '',
       year: null,

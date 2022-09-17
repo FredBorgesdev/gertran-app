@@ -37,10 +37,10 @@
         </button>
       </div>
     </div>
-    <nz-table #trucksListTable [nzData]="displayData" >
+    <nz-table #trucksListTable [nzData]="resources.results" >
       <thead>
       <tr>
-        <th *ngFor="let column of truckColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
+        <th *ngFor="let column of truckColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
       </tr>
       </thead>
       <tbody>

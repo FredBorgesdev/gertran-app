@@ -42,8 +42,8 @@ export class UsersService implements ApiService<User> {
     return this.http.patch<User>(`users/${id}/update`, data);
   }
 
-  delete(id: string): Observable<User> {
-    return this.http.delete<User>(`users/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`users/${id}/delete`);
   }
 
   changePassword(id: string, password: string): Observable<void> {

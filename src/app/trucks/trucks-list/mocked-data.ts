@@ -1,8 +1,8 @@
-import { Truck } from './trucks-list.component';
+import {Truck} from '../trucks.service';
 
 export const trucksList: Truck[] = [
     {
-      id: 1,
+      id: '1',
       brand: 'Ford',
       model: 'Fusion',
       year: 2020,
@@ -19,7 +19,7 @@ export const trucksList: Truck[] = [
       ]
     },
     {
-      id: 2,
+      id: '2',
       brand: 'Chevrolet',
       model: 'Onix',
       year: 2020,
@@ -36,7 +36,7 @@ export const trucksList: Truck[] = [
       ]
     },
     {
-      id: 3,
+      id: '3',
       brand: 'Fiat',
       model: 'Uno',
       year: 2020,
@@ -53,7 +53,7 @@ export const trucksList: Truck[] = [
       ]
     },
     {
-      id: 4,
+      id: '4',
       brand: 'Toyota',
       model: 'Corolla',
       year: 2020,

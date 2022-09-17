@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface VehicleManufacturers {
   id: string;
@@ -18,7 +19,7 @@ export class VehicleManufacturersService implements ApiService<VehicleManufactur
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination) {
+  getAll(pagination: Pagination): Observable<GetAllResponse<VehicleManufacturers>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -29,23 +30,23 @@ export class VehicleManufacturersService implements ApiService<VehicleManufactur
     return this.http.get<GetAllResponse<VehicleManufacturers>>('vehicles/manufacturers', { params });
   }
 
-  get(id: string) {
+  get(id: string): Observable<VehicleManufacturers> {
     return this.http.get<VehicleManufacturers>(`vehicles/manufacturers/${id}`);
   }
 
-  save(vehicleManufacturers: Omit<VehicleManufacturers, 'id'>) {
+  save(vehicleManufacturers: Omit<VehicleManufacturers, 'id'>): Observable<VehicleManufacturers> {
     return this.http.post<VehicleManufacturers>('vehicles/manufacturers/create', vehicleManufacturers);
   }
 
   update(
     id: string,
     vehicleManufacturers: Omit<VehicleManufacturers, 'id'>
-  ) {
+  ): Observable<VehicleManufacturers> {
     return this.http.patch<VehicleManufacturers>(`vehicles/manufacturers/${id}/update`, vehicleManufacturers);
   }
 
-  delete(id: string) {
-    return this.http.delete<VehicleManufacturers>(`vehicles/manufacturers/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`vehicles/manufacturers/${id}/delete`);
   }
 }
 

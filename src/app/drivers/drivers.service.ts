@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface Driver {
   id: string;
@@ -26,7 +27,7 @@ export class DriversService implements ApiService<Driver> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(pagination: Pagination) {
+  getAll(pagination: Pagination): Observable<GetAllResponse<Driver>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -37,30 +38,30 @@ export class DriversService implements ApiService<Driver> {
     return this.http.get<GetAllResponse<Driver>>('drivers', { params });
   }
 
-  get(id: string) {
+  get(id: string): Observable<Driver> {
     return this.http.get<Driver>(`drivers/${id}`);
   }
 
-  save(body: Omit<Driver, 'id'>) {
+  save(body: Omit<Driver, 'id'>): Observable<Driver> {
     return this.http.post<Driver>('drivers/create', this.getBody(body));
   }
 
-  update(id: string, body: Omit<Driver, 'id'>) {
+  update(id: string, body: Omit<Driver, 'id'>): Observable<Driver> {
     return this.http.patch<Driver>(`drivers/${id}/update`, this.getBody(body));
   }
 
-  delete(id: string) {
-    return this.http.delete<Driver>(`drivers/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`drivers/${id}/delete`);
   }
 
-  private getBody(body: Omit<Driver, 'id'>) {
+  private getBody(body: Omit<Driver, 'id'>): Omit<Driver, 'id'> {
     return {
       ...this.parseDatesToYearMonthDay(body),
       cpf: this.removeSpecialCharactersFromCpf(body),
     };
   }
 
-  private parseDatesToYearMonthDay(body: Omit<Driver, 'id'>) {
+  private parseDatesToYearMonthDay(body: Omit<Driver, 'id'>): Omit<Driver, 'id'> {
     const bodyCopy = { ...body };
     const dateFields = ['cnhValidity', 'cnhFirstIssue', 'cnhEmission', 'admissionDate'];
     dateFields.forEach((field) => {
@@ -72,7 +73,7 @@ export class DriversService implements ApiService<Driver> {
     return bodyCopy;
   }
 
-  private removeSpecialCharactersFromCpf(body: Omit<Driver, 'id'>) {
+  private removeSpecialCharactersFromCpf(body: Omit<Driver, 'id'>): string {
     return body.cpf.replace(/\D/g, '');
   }
 }

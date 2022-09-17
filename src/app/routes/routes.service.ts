@@ -46,7 +46,7 @@ export class RoutesService implements ApiService<Route> {
     return this.http.patch<Route>(`/routes/${id}/update`, data);
   }
 
-  delete(id: string): Observable<Route> {
-    return this.http.delete<Route>(`/routes/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/routes/${id}/delete`);
   }
 }

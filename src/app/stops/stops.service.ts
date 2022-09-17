@@ -57,7 +57,7 @@ export class StopsService implements ApiService<Stop> {
     return this.http.patch<Stop>(`/stops/${id}/update`, resource);
   }
 
-  delete(id: string): Observable<Stop> {
-    return this.http.delete<Stop>(`/stops/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`/stops/${id}/delete`);
   }
 }

@@ -29,7 +29,7 @@
         </button>
       </div>
     </div>
-    <nz-table #wagonsListTable [nzData]="displayData" >
+    <nz-table #wagonsListTable [nzData]="resources" >
       <thead>
       <tr>
         <th *ngFor="let column of wagonColumn" [nzSortFn]="column.compare">{{ column.title }}</th>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { Wagon } from '../wagons-list/wagons-list.component';
+import {Wagon} from '../wagons.service';
 
 @Component({
   selector: 'app-wagons-form',

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface Customer {
   id: string;
@@ -30,11 +31,11 @@ export class CustomersService implements ApiService<Customer> {
     private http: HttpClient
   ) { }
 
-  save(customer: Omit<Customer, 'id'>) {
+  save(customer: Omit<Customer, 'id'>): Observable<Customer> {
     return this.http.post<Customer>('customers/create', customer);
   }
 
-  getAll(pagination: Pagination) {
+  getAll(pagination: Pagination): Observable<GetAllResponse<Customer>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -45,15 +46,15 @@ export class CustomersService implements ApiService<Customer> {
     return this.http.get<GetAllResponse<Customer>>('customers', { params });
   }
 
-  get(id: string) {
+  get(id: string): Observable<Customer> {
     return this.http.get<Customer>(`customers/${id}`);
   }
 
-  update(id: string, customer: Omit<Customer, 'id'>) {
+  update(id: string, customer: Omit<Customer, 'id'>): Observable<Customer> {
     return this.http.patch<Customer>(`customers/${id}/update`, customer);
   }
 
-  delete(id: string) {
-    return this.http.delete<Customer>(`customers/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`customers/${id}/delete`);
   }
 }

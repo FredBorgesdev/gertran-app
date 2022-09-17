@@ -9,6 +9,9 @@ export interface Wagon {
   plate: string;
   brand: string;
   model: string;
+  year: number;
+  color: string;
+  trackers: any[];
 }
 
 @Injectable({

@@ -1,8 +1,9 @@
-import { Wagon } from './wagons-list.component';
+import {Wagon} from '../wagons.service';
 
 export const wagonsList: Wagon[] = [
   {
-    id: 1,
+    id: '1',
+    name: 'Wagon 1',
     brand: 'Volvo',
     model: 'V70',
     year: 2019,
@@ -19,7 +20,8 @@ export const wagonsList: Wagon[] = [
     ]
   },
   {
-    id: 2,
+    id: '2',
+    name: 'Wagon 2',
     brand: 'Volvo',
     model: 'XC60',
     year: 2019,

@@ -15,6 +15,13 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 export class TrucksListComponent extends BaseCrudListComponent<Truck> {
   searchInput: string;
 
+  truckColumns = [
+    { title: 'ID' },
+    { title: 'Placa' },
+    { title: 'Marca' },
+    { title: 'Modelo' },
+  ];
+
   constructor(
     private tableService: TableService,
     router: Router,

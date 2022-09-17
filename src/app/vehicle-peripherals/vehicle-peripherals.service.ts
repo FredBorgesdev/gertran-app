@@ -29,23 +29,23 @@ export class VehiclePeripheralsService implements ApiService<VehiclePeripherals>
     return this.http.get<GetAllResponse<VehiclePeripherals>>('vehicles/peripherals', { params });
   }
 
-  get(id: string) {
+  get(id: string): Observable<VehiclePeripherals> {
     return this.http.get<VehiclePeripherals>(`vehicles/peripherals/${id}`);
   }
 
-  save(vehiclePeripherals: Omit<VehiclePeripherals, 'id'>) {
+  save(vehiclePeripherals: Omit<VehiclePeripherals, 'id'>): Observable<VehiclePeripherals> {
     return this.http.post<VehiclePeripherals>('vehicles/peripherals/create', vehiclePeripherals);
   }
 
   update(
     id: string,
     vehiclePeripherals: Omit<VehiclePeripherals, 'id'>
-  ) {
+  ): Observable<VehiclePeripherals> {
     return this.http.patch<VehiclePeripherals>(`vehicles/peripherals/${id}/update`, vehiclePeripherals);
   }
 
-  delete(id: string) {
-    return this.http.delete<VehiclePeripherals>(`vehicles/peripherals/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`vehicles/peripherals/${id}/delete`);
   }
 }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface ContactDataItem {
   id: string;
@@ -18,7 +19,7 @@ export class ContactsService implements ApiService<ContactDataItem> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(pagination: Pagination, customerId: string) {
+  getAll(pagination: Pagination, customerId: string): Observable<GetAllResponse<ContactDataItem>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -31,19 +32,19 @@ export class ContactsService implements ApiService<ContactDataItem> {
     });
   }
 
-  get(id: string, customerId: string) {
+  get(id: string, customerId: string): Observable<ContactDataItem> {
     return this.http.get<ContactDataItem>(`customers/${customerId}/contacts/${id}`);
   }
 
-  save(body: any, customerId: string) {
+  save(body: any, customerId: string): Observable<ContactDataItem> {
     return this.http.post<ContactDataItem>(`customers/${customerId}/contacts/create`, body);
   }
 
-  update(id: string, body: any, customerId: string) {
+  update(id: string, body: any, customerId: string): Observable<ContactDataItem> {
     return this.http.patch<ContactDataItem>(`customers/${customerId}/contacts/${id}/update`, body);
   }
 
-  delete(id: string, customerId: string) {
-    return this.http.delete<ContactDataItem>(`customers/${customerId}/contacts/${id}/delete`);
+  delete(id: string, customerId: string): Observable<void> {
+    return this.http.delete<void>(`customers/${customerId}/contacts/${id}/delete`);
   }
 }

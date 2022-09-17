@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface VehicleModels {
   id: string;
@@ -17,7 +18,10 @@ export class VehicleModelsService implements ApiService<VehicleModels> {
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination, vehicleManufacturerId: string) {
+  getAll(
+    pagination: Pagination,
+    vehicleManufacturerId: string
+  ): Observable<GetAllResponse<VehicleModels>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -30,14 +34,14 @@ export class VehicleModelsService implements ApiService<VehicleModels> {
     );
   }
 
-  get(id: string, vehicleManufacturerId: string) {
+  get(id: string, vehicleManufacturerId: string): Observable<VehicleModels> {
     return this.http.get<VehicleModels>(`vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models/${id}`);
   }
 
   save(
     vehicleModels: Omit<VehicleModels, 'id'>,
     vehicleManufacturerId: string
-  ) {
+  ): Observable<VehicleModels> {
     return this.http.post<VehicleModels>(
       `vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models/create`,
       vehicleModels
@@ -48,15 +52,20 @@ export class VehicleModelsService implements ApiService<VehicleModels> {
     id: string,
     vehicleModels: Omit<VehicleModels, 'id'>,
     vehicleManufacturerId: string
-  ) {
+  ): Observable<VehicleModels> {
     return this.http.patch<VehicleModels>(
       `vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models/${id}/update`,
       vehicleModels
     );
   }
 
-  delete(id: string, vehicleManufacturerId: string) {
-    return this.http.delete<VehicleModels>(`vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models/${id}/delete`);
+  delete(
+    id: string,
+    vehicleManufacturerId: string
+  ): Observable<void> {
+    return this.http.delete<void>(
+      `vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models/${id}/delete`
+    );
   }
 }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import {Observable} from 'rxjs';
 
 export interface InsuranceCompany {
   id: string;
@@ -20,7 +21,7 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination) {
+  getAll(pagination: Pagination): Observable<GetAllResponse<InsuranceCompany>> {
     const params = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -31,11 +32,11 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
     return this.http.get<GetAllResponse<InsuranceCompany>>('insurance-companies', { params });
   }
 
-  get(id: string) {
+  get(id: string): Observable<InsuranceCompany> {
     return this.http.get<InsuranceCompany>(`insurance-companies/${id}`);
   }
 
-  save(insuranceCompany: Omit<InsuranceCompany, 'id'>) {
+  save(insuranceCompany: Omit<InsuranceCompany, 'id'>): Observable<InsuranceCompany> {
     // TODO: remove when backend is ready
     delete insuranceCompany.logo;
 
@@ -45,14 +46,14 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
   update(
     id: string,
     insuranceCompany: Omit<InsuranceCompany, 'id'>
-  ) {
+  ): Observable<InsuranceCompany> {
     // TODO: remove when backend is ready
     delete insuranceCompany.logo;
 
     return this.http.patch<InsuranceCompany>(`insurance-companies/${id}/update`, insuranceCompany);
   }
 
-  delete(id: string) {
-    return this.http.delete<InsuranceCompany>(`insurance-companies/${id}/delete`);
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`insurance-companies/${id}/delete`);
   }
 }
