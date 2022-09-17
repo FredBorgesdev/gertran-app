@@ -25,7 +25,7 @@ interface ApiService<T> {
   getAll(pagination: Pagination, ...params: any): Observable<GetAllResponse<T>>;
   save(data: T, ...params: any): Observable<T>;
   update(id: string, data: T, ...params: any): Observable<T>;
-  delete(id: string, ...params: any): Observable<T>;
+  delete(id: string, ...params: any): Observable<void>;
 }
 
 export default ApiService;

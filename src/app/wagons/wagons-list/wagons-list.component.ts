@@ -1,39 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Tracker } from 'src/app/trackers/trackers-form/trackers-form.component';
 
 import { TableService } from '../../shared/services/table.service';
-import { wagonsList } from './mocked-data';
-
-export interface Wagon {
-  id: number;
-  brand: string;
-  model: string;
-  year: number;
-  color: string;
-  plate: string;
-  trackers: Tracker[];
-}
+import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
+import {Wagon, WagonsService} from '../wagons.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-wagons-list',
   templateUrl: './wagons-list.component.html',
   styleUrls: ['./wagons-list.component.css']
 })
-export class WagonsListComponent implements OnInit {
-
-  isLoading = false;
-  displayData = [];
+export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
   searchInput: string;
 
   wagonColumn = [
-    {
-      title: 'ID',
-      compare: (
-        a: Wagon,
-        b: Wagon
-      ) => a.id - b.id
-    },
     {
       title: 'Placa',
       compare: (
@@ -60,39 +42,26 @@ export class WagonsListComponent implements OnInit {
     { title: 'Ações' }
   ];
 
-  wagonsList = wagonsList;
-
   constructor(
-    private router: Router,
-    private tableService: TableService
+    private tableService: TableService,
+    router: Router,
+    service: WagonsService,
+    message: NzMessageService,
+    modal: NzModalService,
   ) {
-    this.isLoading = true;
-    setTimeout(
-      () => {
-        this.isLoading = false;
-        this.displayData = this.wagonsList;
-      },
-      333
+    super(
+      'wagons',
+      router,
+      service,
+      message,
+      modal,
     );
   }
 
-  ngOnInit(): void {
-  }
-
-  search() {
-    const data = this.wagonsList;
-    this.displayData = this.tableService.search(
+  search(): void {
+    this.resources.results = this.tableService.search(
       this.searchInput,
-      data
+      this.resources.results
     );
   }
-
-  create() {
-    this.router.navigate([ '/wagons/wagons-create' ]);
-  }
-
-  edit(item: Wagon) {
-    this.router.navigate([ '/wagons/wagons-edit', item.id ]);
-  }
-
 }
