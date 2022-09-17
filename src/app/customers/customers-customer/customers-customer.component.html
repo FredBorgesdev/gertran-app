@@ -23,7 +23,7 @@
         <app-customers-form
           *ngIf="customer"
           [customer]="customer"
-          (onSave)="onSubmit($event)"
+          (onSave)="onSubmit()"
           (onChange)="onChangeCustomer($event)"
         ></app-customers-form>
       </nz-tab>
@@ -32,7 +32,7 @@
         <app-addresses-form
           *ngIf="customer"
           [customer]="customer"
-          (onSave)="onSubmit($event)"
+          (onSave)="onSubmit()"
           (onChange)="onChangeCustomer($event)"
         ></app-addresses-form>
       </nz-tab>
@@ -54,6 +54,11 @@
       </nz-tab>
 
       <nz-tab nzTitle="Permissões" [nzDisabled]="!customer?.id">
+        <app-permissions-tab
+          *ngIf="customer?.id"
+          [targetKeys]="numbersToStrings(customer?.permissions)"
+          (save)="savePermission($event)"
+        ></app-permissions-tab>
       </nz-tab>
     </nz-tabset>
   </nz-card>

@@ -13,6 +13,7 @@ import { CustomersCustomerComponent } from './customers-customer/customers-custo
 import { AddressesFormComponent } from './addresses-form/addresses-form.component';
 import { DocumentsModule } from '../documents/documents.module';
 import {TextMaskModule} from 'angular2-text-mask';
+import {PermissionsModule} from '../permissions/permissions.module';
 
 const antdModule = [];
 
@@ -29,13 +30,14 @@ const antdModule = [];
     CustomersCustomerComponent,
     AddressesFormComponent,
   ],
-  imports: [
-    SharedModule,
-    CustomersRoutingModule,
-    DocumentsModule,
-    TextMaskModule,
-    ...antdModule
-  ],
+    imports: [
+        SharedModule,
+        CustomersRoutingModule,
+        DocumentsModule,
+        TextMaskModule,
+        PermissionsModule,
+        ...antdModule,
+    ],
   exports: []
 })
 export class CustomersModule { }

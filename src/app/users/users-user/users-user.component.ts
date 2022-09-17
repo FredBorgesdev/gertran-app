@@ -58,10 +58,6 @@ export class UsersUserComponent extends BaseCrudFormComponent<User> {
   }
 
   numbersToStrings(numbers?: number[]): string[] {
-    if (!numbers) {
-      return [];
-    }
-
-    return numbers.map(String);
+    return numbers?.map(String) ?? [];
   }
 }

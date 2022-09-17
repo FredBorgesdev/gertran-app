@@ -10,6 +10,7 @@ export interface Customer {
   cnpj: string;
   seller: string | null;
   domain: string | null;
+  permissions?: number[];
 
   // address
 

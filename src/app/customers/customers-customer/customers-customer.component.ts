@@ -27,7 +27,7 @@ export class CustomersCustomerComponent implements OnInit {
     this.isLoading = false;
   }
 
-  async loadCustomer() {
+  async loadCustomer(): Promise<any> {
     if (this.route.snapshot.paramMap.has('id')) {
       const id = this.route.snapshot.paramMap.get('id');
       return this.customersService.get(id).subscribe((customer: Customer) => {
@@ -38,7 +38,7 @@ export class CustomersCustomerComponent implements OnInit {
     this.createNewCustomer();
   }
 
-  createNewCustomer() {
+  createNewCustomer(): void {
     this.customer = {
       id: null,
       brandName: '',
@@ -50,7 +50,7 @@ export class CustomersCustomerComponent implements OnInit {
     };
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.isLoading = true;
     if (this.customer.id) {
       this.customersService.update(this.customer.id, this.customer).subscribe(
@@ -65,11 +65,20 @@ export class CustomersCustomerComponent implements OnInit {
     }
   }
 
-  onChangeCustomer(value: Customer) {
+  onChangeCustomer(value: Customer): void {
     this.customer = { ...this.customer, ...value };
   }
 
-  private handleSuccess(id?: string) {
+  savePermission(permissions: number[]): void {
+    this.customer.permissions = permissions;
+    this.onSubmit();
+  }
+
+  numbersToStrings(numbers?: number[]): string[] {
+    return numbers?.map(String) ?? [];
+  }
+
+  private handleSuccess(id?: string): void {
     this.isLoading = false;
     this.message.success(
       'As informações foram salvas com sucesso!',
@@ -82,7 +91,7 @@ export class CustomersCustomerComponent implements OnInit {
     }
   }
 
-  private handleError() {
+  private handleError(): void {
     this.isLoading = false;
     this.message.error(
       'Ocorreu um erro ao salvar as informações.',
