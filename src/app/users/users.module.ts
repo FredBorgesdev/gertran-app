@@ -7,8 +7,8 @@ import { UsersFormComponent } from './users-form/users-form.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersUserComponent } from './users-user/users-user.component';
-import { UsersPermissionsComponent } from './users-permissions/users-permissions.component';
 import {GroupsModule} from '../groups/groups.module';
+import {PermissionsModule} from '../permissions/permissions.module';
 
 const antdModule = [
   NzTransferModule
@@ -19,12 +19,12 @@ const antdModule = [
     UsersFormComponent,
     UsersListComponent,
     UsersUserComponent,
-    UsersPermissionsComponent
   ],
   imports: [
     SharedModule,
     UsersRoutingModule,
     GroupsModule,
+    PermissionsModule,
     ...antdModule
   ]
 })

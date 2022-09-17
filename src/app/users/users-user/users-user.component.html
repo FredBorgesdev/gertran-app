@@ -29,11 +29,11 @@
       </nz-tab>
 
       <nz-tab nzTitle="Permissões de Acesso">
-        <app-users-permissions
+        <app-permissions-tab
           *ngIf="resource"
           [targetKeys]="numbersToStrings(resource.permissions)"
           (save)="updateField('permissions', $event)"
-        ></app-users-permissions>
+        ></app-permissions-tab>
       </nz-tab>
 
       <nz-tab nzTitle="Grupos">

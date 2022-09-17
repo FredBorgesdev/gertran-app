@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { TransferItem, TransferChange } from 'ng-zorro-antd/transfer';
+import {TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
 import {PermissionsService} from '../../shared/services/permissions.service';
 
 @Component({
-  selector: 'app-users-permissions',
-  templateUrl: './users-permissions.component.html',
-  styleUrls: ['./users-permissions.component.css']
+  selector: 'app-permissions-tab',
+  templateUrl: './permissions-tab.component.html',
+  styleUrls: ['./permissions-tab.component.css']
 })
-export class UsersPermissionsComponent implements OnInit {
+export class PermissionsTabComponent implements OnInit {
   list: TransferItem[] = [];
   selectedPermissions: number[] = [];
 
@@ -37,4 +37,5 @@ export class UsersPermissionsComponent implements OnInit {
   savePermissions(): void {
     this.save.emit(this.selectedPermissions);
   }
+
 }
