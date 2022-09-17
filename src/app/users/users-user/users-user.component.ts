@@ -29,7 +29,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<User> {
     this.validateForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       name: [null, [Validators.required]],
-      password: [null, [Validators.minLength(6)]],
+      password: [null, []],
       isActive: [false, [Validators.required]],
       isAdmin: [false, [Validators.required]],
       isSuperuser: [false, [Validators.required]],
