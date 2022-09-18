@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Vehicle} from '../vehicles/vehicles-form/vehicles-form.component';
 
-export interface Truck {
-  id: string;
-  brand: string;
-  model: string;
-  year: number;
-  color: string;
-  plate: string;
-  trackers: any[];
+export interface Truck extends Vehicle {
+  chargingMethod: string;
+  numberOfAxles: number;
+  cubage: number;
+  vehicle: Vehicle;
 }
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { trucksList } from '../trucks-list/mocked-data';
+import {TrucksService} from '../trucks.service';
 
 @Component({
   selector: 'app-trucks-truck',
@@ -9,53 +9,30 @@ import { trucksList } from '../trucks-list/mocked-data';
   styleUrls: ['./trucks-truck.component.css']
 })
 export class TrucksTruckComponent implements OnInit {
-
   truck = null;
   isLoading = false;
 
-  trucksList = trucksList;
-
   constructor(
     private activatedRoute: ActivatedRoute,
-    private messageService: NzMessageService
+    private message: NzMessageService,
+    private service: TrucksService
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.snapshot.paramMap.has('id') ? this.loadTruck() : this.createNewTruck();
+    if (this.activatedRoute.snapshot.paramMap.has('id')) {
+      this.loadTruck();
+    }
   }
 
-  loadTruck() {
+  loadTruck(): void {
     this.isLoading = true;
-    setTimeout(
-      () => {
+    this.service.get(this.activatedRoute.snapshot.paramMap.get('id'))
+      .subscribe(data => {
+        this.truck = data;
         this.isLoading = false;
-        this.truck = this.trucksList.find(truck => truck.id === this.activatedRoute.snapshot.params.id);
-      },
-      666
-    );
-  }
-
-  createNewTruck() {
-    this.truck = {
-      id: null,
-      brand: '',
-      model: '',
-      year: null,
-      color: '',
-      plate: '',
-      trackingSystem: '',
-      trackingModel: '',
-      trackingSerialNumber: ''
-    };
-  }
-
-  save() {
-    this.isLoading = true;
-    setTimeout(
-      () => {
+      }, () => {
         this.isLoading = false;
-        this.messageService.success('As informações foram salvas com sucesso!');
-      }, 666);
+        this.message.error('Erro ao carregar o registro. Tente novamente.');
+      });
   }
-
 }

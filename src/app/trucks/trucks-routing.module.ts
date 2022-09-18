@@ -17,18 +17,18 @@ const routes: Routes = [
     }
   },
   {
-    path: 'truck-create',
+    path: 'trucks-create',
     component: TrucksTruckComponent,
     data: {
-      title: 'Adicionar Usuário ',
+      title: 'Adicionar Carreta ',
       headerDisplay: 'none'
     }
   },
   {
-    path: 'truck-edit/:id',
+    path: 'trucks-edit/:id',
     component: TrucksTruckComponent,
     data: {
-      title: 'Editar Usuário ',
+      title: 'Editar Carreta ',
       headerDisplay: 'none'
     }
   }

@@ -37,7 +37,7 @@ export class CustomersService implements ApiService<Customer> {
   }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Customer>> {
-    const params = { limit: DEFAULT_LIMIT };
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;

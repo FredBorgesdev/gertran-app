@@ -3,6 +3,7 @@ import {FormGroup} from '@angular/forms';
 import ApiService from '../../shared/services/api.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-base-crud-form',
@@ -18,7 +19,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     @Inject('service') protected service: ApiService<T>,
     protected message: NzMessageService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadFormBuilder();
@@ -51,7 +52,14 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  save(): void {
+  save(customHandlers?: {
+    success?: () => void,
+    error?: (err: HttpErrorResponse) => void
+  }): void {
+    const {
+      success = this.handleSuccess.bind(this),
+      error = this.handleError.bind(this)
+    } = customHandlers || {};
     if (!this.validateForm.valid) {
       return Object.values(this.validateForm.controls).forEach(control => {
         control.markAsDirty();
@@ -62,20 +70,20 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     this.isLoading = true;
     if (this.resource?.id) {
       this.service.update(this.resource.id, this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError());
+        .subscribe(() => success(), (err) => error(err));
     } else {
       this.service.save(this.validateForm.value)
-        .subscribe(() => this.handleSuccess(), () => this.handleError());
+        .subscribe(() => success(), (err) => error(err));
     }
   }
 
-  private handleSuccess(): void {
+  protected handleSuccess(): void {
     this.message.success('Registro salvo com sucesso');
     this.list();
     this.isLoading = false;
   }
 
-  private handleError(): void {
+  protected handleError(): void {
     this.message.error('Ocorreu um erro ao salvar o registro');
     this.isLoading = false;
   }

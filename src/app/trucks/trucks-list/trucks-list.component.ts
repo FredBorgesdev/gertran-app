@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TableService } from '../../shared/services/table.service';
@@ -12,14 +12,21 @@ import {NzModalService} from 'ng-zorro-antd/modal';
   templateUrl: './trucks-list.component.html',
   styleUrls: [ './trucks-list.component.css' ]
 })
-export class TrucksListComponent extends BaseCrudListComponent<Truck> {
+export class TrucksListComponent extends BaseCrudListComponent<Truck> implements OnInit {
   searchInput: string;
 
   truckColumns = [
     { title: 'ID' },
-    { title: 'Placa' },
-    { title: 'Marca' },
     { title: 'Modelo' },
+    { title: 'Tipo de modelo' },
+    { title: 'Placa' },
+    { title: 'Cidade/Estado' },
+    { title: 'Cor' },
+    { title: 'Ano' },
+    { title: 'Chassi' },
+    { title: 'Renavam' },
+    { title: 'Eixos' },
+    { title: 'Cubagem' },
   ];
 
   constructor(
@@ -43,5 +50,9 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> {
       this.searchInput,
       this.resources.results
     );
+  }
+
+  getCityState(truck: Truck): string {
+    return `${truck.vehicle.city} - ${truck.vehicle.state}`;
   }
 }
