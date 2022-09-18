@@ -15,7 +15,7 @@ export class AuthenticationService {
   async login(
     email: string,
     password: string
-  ) {
+  ): Promise<void> {
     return this.http.post('auth/jwt/create', {
       email,
       password
@@ -25,12 +25,30 @@ export class AuthenticationService {
     });
   }
 
-  logout() {
+  logout(): void {
     Cookies.remove(GERTRAN_WEB_TOKEN);
     Cookies.remove(GERTRAN_REFRESH_TOKEN);
   }
 
-  async isAuthenticated() {
+  async refresh(): Promise<boolean> {
+    const refreshToken = Cookies.get(GERTRAN_REFRESH_TOKEN);
+    if (!refreshToken) {
+      this.logout();
+      return false;
+    }
+
+    return this.http.post('auth/jwt/refresh', {
+      refresh: refreshToken
+    }).toPromise().then((response: any) => {
+      Cookies.set(GERTRAN_WEB_TOKEN, response.access);
+      return true;
+    }).catch(() => {
+      this.logout();
+      return false;
+    });
+  }
+
+  async isAuthenticated(): Promise<boolean> {
     const token = Cookies.get(GERTRAN_WEB_TOKEN);
     if (!token) { return false; }
 
@@ -41,6 +59,6 @@ export class AuthenticationService {
         return false;
       });
 
-    return isTokenValid;
+    return !!isTokenValid;
   }
 }
