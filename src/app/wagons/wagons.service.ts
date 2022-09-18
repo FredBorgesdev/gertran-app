@@ -2,16 +2,10 @@ import { Injectable } from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Vehicle} from '../vehicles/vehicles-form/vehicles-form.component';
 
-export interface Wagon {
-  id: string;
-  name: string;
-  plate: string;
-  brand: string;
-  model: string;
-  year: number;
-  color: string;
-  trackers: any[];
+export interface Wagon extends Vehicle {
+  vehicle: Vehicle;
 }
 
 @Injectable({
@@ -29,22 +23,22 @@ export class WagonsService implements ApiService<Wagon> {
       });
     }
 
-    return this.http.get<GetAllResponse<Wagon>>('wagons', { params });
+    return this.http.get<GetAllResponse<Wagon>>('vehicles/wagons', { params });
   }
 
   get(id: string): Observable<Wagon> {
-    return this.http.get<Wagon>(`wagons/${id}`);
+    return this.http.get<Wagon>(`vehicles/wagons/${id}`);
   }
 
   save(wagon: Omit<Wagon, 'id'>): Observable<Wagon> {
-    return this.http.post<Wagon>('wagons/create', wagon);
+    return this.http.post<Wagon>('vehicles/wagons/create', wagon);
   }
 
   update(id: string, wagon: Omit<Wagon, 'id'>): Observable<Wagon> {
-    return this.http.patch<Wagon>(`wagons/${id}/update`, wagon);
+    return this.http.patch<Wagon>(`vehicles/wagons/${id}/update`, wagon);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`wagons/${id}/delete`);
+    return this.http.delete<void>(`vehicles/wagons/${id}/delete`);
   }
 }

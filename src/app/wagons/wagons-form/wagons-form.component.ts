@@ -1,32 +1,55 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import {Wagon} from '../wagons.service';
+import { Component, Input, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Wagon, WagonsService} from '../wagons.service';
+import {CustomersService} from '../../customers/customers.service';
+import {VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
+import {VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
+import {VehicleManufacturersService} from '../../vehicle-manufacturers/vehicle-manufacturers.service';
+import {FormBuilder} from '@angular/forms';
+import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 
 @Component({
   selector: 'app-wagons-form',
   templateUrl: './wagons-form.component.html',
   styleUrls: ['./wagons-form.component.css']
 })
-export class WagonsFormComponent implements OnInit {
-
+export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements OnInit {
   @Input() wagon: Wagon = null;
-  @Output() onSubmit: EventEmitter<Wagon> = new EventEmitter<Wagon>();
-
-  isLoading = false;
 
   constructor(
     private router: Router,
-  ) { }
+    customersService: CustomersService,
+    vehicleModelsService: VehicleModelsService,
+    vehicleModelTypesService: VehicleModelTypesService,
+    vehicleManufacturersService: VehicleManufacturersService,
+    formBuilder: FormBuilder,
+    vehiclePeripheralsService: VehiclePeripheralsService,
+    service: WagonsService,
+    activatedRoute: ActivatedRoute,
+    message: NzMessageService
+  ) {
+    super(
+      service,
+      message,
+      activatedRoute,
+      formBuilder,
+      vehiclePeripheralsService,
+      vehicleModelsService,
+      vehicleModelTypesService,
+      vehicleManufacturersService,
+      customersService,
+    );
+  }
 
   ngOnInit(): void {
+    this.resource = this.wagon;
+
+    super.ngOnInit();
   }
 
-  save() {
-    this.onSubmit.emit(this.wagon);
+  list(): void {
+    this.router.navigate([ '/wagons/wagons-list' ]);
   }
-
-  listWagons() {
-    this.router.navigate(['/wagons/wagons-list']);
-  }
-
 }

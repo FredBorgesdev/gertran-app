@@ -17,30 +17,14 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
 
   wagonColumn = [
     { title: 'ID' },
-    {
-      title: 'Placa',
-      compare: (
-        a: Wagon,
-        b: Wagon
-      ) => a.plate.localeCompare(b.plate)
-    },
-    {
-      title: 'Marca',
-      compare: (
-        a: Wagon,
-        b: Wagon
-      ) => a.brand.localeCompare(b.brand)
-    },
-    {
-      title: 'Modelo',
-      compare: (
-        a: Wagon,
-        b: Wagon
-      ) => a.model.localeCompare(b.model)
-    },
-    { title: 'Ano' },
+    { title: 'Modelo' },
+    { title: 'Tipo de modelo' },
+    { title: 'Placa' },
+    { title: 'Cidade/Estado' },
     { title: 'Cor' },
-    { title: 'Ações' }
+    { title: 'Ano' },
+    { title: 'Chassi' },
+    { title: 'Renavam' },
   ];
 
   constructor(
@@ -64,5 +48,9 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
       this.searchInput,
       this.resources.results
     );
+  }
+
+  getCityState(wagon: Wagon): string {
+    return `${wagon.vehicle.city} - ${wagon.vehicle.state}`;
   }
 }

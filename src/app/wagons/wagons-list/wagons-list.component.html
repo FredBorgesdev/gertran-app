@@ -29,24 +29,35 @@
         </button>
       </div>
     </div>
-    <nz-table #wagonsListTable [nzData]="resources" >
+    <nz-table
+      #wagonsListTable
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
-      <tr>
-        <th *ngFor="let column of wagonColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
-      </tr>
+        <tr>
+          <th *ngFor="let column of wagonColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
+        </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of wagonsListTable.data;  let i=index">
         <td>{{item.id | id}}</td>
         <td>
           <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.plate}}</h6>
+            <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel}}</h6>
           </div>
         </td>
-        <td>{{item.brand}}</td>
-        <td>{{item.model}}</td>
-        <td>{{item.year}}</td>
-        <td>{{item.color}}</td>
+        <td>{{item.vehicle.vehicleModelType}}</td>
+        <td>{{item.vehicle.plate}}</td>
+        <td>{{getCityState(item)}}</td>
+        <td>{{item.vehicle.color}}</td>
+        <td>{{item.vehicle.year}}</td>
+        <td>{{item.vehicle.chassis}}</td>
+        <td>{{item.vehicle.renavam}}</td>
         <td class="text-md-center">
           <a
             (click)="edit(item)"
@@ -59,9 +70,16 @@
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
-          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+          <a
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Excluir"
+            (click)="delete(item)"
+          >
             <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
+          </a>
         </td>
       </tr>
       </tbody>

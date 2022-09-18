@@ -1,29 +1,176 @@
-<form nz-form nzLayout="vertical">
+<form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Placa</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="cnpj" type="text" nz-input value="{{ wagon.plate }}" />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+      <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
+        <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Marca</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="brandName" type="text" value="{{ wagon.brand }}" nz-input />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="manufacturer">Montadora</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Montadora inválida!">
+      <nz-select
+        (ngModelChange)="loadModels()"
+        id="manufacturer"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Selecione uma montadora"
+        formControlName="manufacturer"
+      >
+        <nz-option *ngFor="let manufacturer of manufacturers" [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="vehicleModel">Modelo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Modelo inválido!">
+          <nz-select
+            [nzDisabled]="vehicleModels.length === 0"
+            (ngModelChange)="selectType()"
+            id="vehicleModel"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione um modelo"
+            formControlName="vehicleModel"
+          >
+            <nz-option *ngFor="let vehicleModel of vehicleModels" [nzLabel]="vehicleModel.name" [nzValue]="vehicleModel.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="vehicleModelType">Tipo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Tipo inválido!">
+          <nz-select
+            nzDisabled
+            id="vehicleModel"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione um tipo"
+            formControlName="vehicleModelType"
+          >
+            <nz-option *ngFor="let vehicleModelType of vehicleModelTypes" [nzLabel]="vehicleModelType.name" [nzValue]="vehicleModelType.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="peripherals">Periféricos</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Selecione um periférico">
+          <nz-select
+            id="peripherals"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione periféricos"
+            formControlName="peripherals"
+            nzMode="multiple"
+          >
+            <nz-option *ngFor="let peripheral of peripherals" [nzLabel]="peripheral.name" [nzValue]="peripheral.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a situação">
+          <nz-select
+            id="workingSituation"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma situação"
+            formControlName="workingSituation"
+          >
+            <nz-option nzLabel="Frota" nzValue="fleet"></nz-option>
+            <nz-option nzLabel="Agregado" nzValue="aggregate"></nz-option>
+            <nz-option nzLabel="Terceiros" nzValue="third_party"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Modelo</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="companyName" type="text" value="{{ wagon.model }}" nz-input />
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="plate">Placa</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a placa">
+      <input id="plate" type="text" nz-input formControlName="plate" />
     </nz-form-control>
   </nz-form-item>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
+          <input id="state" type="text" nz-input formControlName="state" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
+          <input id="city" type="text" nz-input formControlName="city" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="color">Cor</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cor">
+          <input id="color" type="text" nz-input formControlName="color" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="year">Ano modelo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o ano modelo">
+          <input id="year" type="text" nz-input formControlName="year" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="chassis">Chassi</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o chassi">
+          <input id="chassis" type="text" nz-input formControlName="chassis" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="renavam">Renavam</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o renavam">
+          <input id="renavam" type="text" nz-input formControlName="renavam" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
+    <nz-form-control [nzSpan]="null">
+      <textarea rows="4" id="description" type="text" nz-input formControlName="description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-divider></nz-divider>
+
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="save()" nz-button nzType="primary">
+      <button type="button" (click)="saveWithErrorHandling()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Carreta
       </button>
-      <button type="button" (click)="listWagons()" nz-button>
+      <button type="button" (click)="list()" nz-button>
         <i nz-icon nzType="unordered-list"></i>Listar Carretas
       </button>
     </nz-form-control>

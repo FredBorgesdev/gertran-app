@@ -8,10 +8,10 @@
       <nz-breadcrumb-item>
         <a><i nz-icon nzType="idcard"></i><span>Carretas</span></a>
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="wagon.id">
-        Editar Carreta ({{wagon.brand}} - {{wagon.model}} [{{ wagon.plate }}])
+      <nz-breadcrumb-item *ngIf="wagon?.id">
+        Editar Carreta ({{ wagon?.vehicle.plate }})
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!wagon.id">
+      <nz-breadcrumb-item *ngIf="!wagon?.id">
         Adicionar Carreta
       </nz-breadcrumb-item>
     </nz-breadcrumb>
@@ -22,14 +22,13 @@
       <nz-tab nzTitle="Carreta">
         <app-wagons-form
           [wagon]="wagon"
-          (onSubmit)="onSubmit($event)"
-          *ngIf="wagon"
+          *ngIf="!isLoading"
         ></app-wagons-form>
       </nz-tab>
 
       <nz-tab nzTitle="Rastreadores">
         <app-trackers-tab
-          [trackers]="wagon.trackers"
+          [trackers]="[]"
         ></app-trackers-tab>
       </nz-tab>
     </nz-tabset>

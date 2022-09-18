@@ -51,8 +51,4 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
       this.resources.results
     );
   }
-
-  getCityState(truck: Truck): string {
-    return `${truck.vehicle.city} - ${truck.vehicle.state}`;
-  }
 }
