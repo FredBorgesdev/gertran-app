@@ -53,6 +53,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of driversListTable.data;  let i=index">
+        <td>{{item.id | id}}</td>
         <td>
           <div class="d-flex align-items-center">
             <nz-avatar [nzSize]="30" nzIcon="user" [nzSrc]="item.profilePhoto"></nz-avatar>

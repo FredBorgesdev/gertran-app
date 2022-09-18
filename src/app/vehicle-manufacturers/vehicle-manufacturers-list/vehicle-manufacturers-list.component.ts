@@ -12,6 +12,7 @@ import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-
 })
 export class VehicleManufacturersListComponent extends BaseCrudListComponent<VehicleManufacturers> {
   vehicleManufacturersColumns = [
+    { title: 'ID' },
     { title: 'Nome' },
     { title: 'Faz caminhões?' },
     { title: 'Faz carretas?' },

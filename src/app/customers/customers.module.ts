@@ -30,14 +30,14 @@ const antdModule = [];
     CustomersCustomerComponent,
     AddressesFormComponent,
   ],
-    imports: [
-        SharedModule,
-        CustomersRoutingModule,
-        DocumentsModule,
-        TextMaskModule,
-        PermissionsModule,
-        ...antdModule,
-    ],
+  imports: [
+    SharedModule,
+    CustomersRoutingModule,
+    DocumentsModule,
+    TextMaskModule,
+    PermissionsModule,
+    ...antdModule,
+  ],
   exports: []
 })
 export class CustomersModule { }

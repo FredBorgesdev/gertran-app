@@ -16,6 +16,7 @@ export class UsersListComponent extends BaseCrudListComponent<User> {
   searchInput: string;
 
   userColumn = [
+    { title: 'ID' },
     {
       title: 'Nome',
       compare: (

@@ -13,6 +13,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
 export class InsuranceCompaniesListComponent extends BaseCrudListComponent<InsuranceCompany> {
 
   insuranceCompaniesColumns = [
+    { title: 'ID' },
     {
       title: 'Nome',
       compare: (

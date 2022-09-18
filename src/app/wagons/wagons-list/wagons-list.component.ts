@@ -16,6 +16,7 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
   searchInput: string;
 
   wagonColumn = [
+    { title: 'ID' },
     {
       title: 'Placa',
       compare: (

@@ -20,7 +20,7 @@ export class VehicleModelsListComponent implements OnInit {
   vehicleModel: VehicleModels = null;
 
   vehicleModelsColumns = [
-    { title: 'Id' },
+    { title: 'ID' },
     { title: 'Nome' },
     { title: 'Ações' },
   ];

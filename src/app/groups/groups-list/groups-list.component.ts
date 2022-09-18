@@ -15,6 +15,7 @@ export class GroupsListComponent extends BaseCrudListComponent<Group> {
   searchInput: string;
 
   groupsColumn = [
+    { title: 'ID' },
     {
       title: 'Nome do grupo',
       compare: (a: Group, b: Group) => a.name.localeCompare(b.name)

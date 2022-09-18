@@ -55,12 +55,11 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of stopsListTable.data;  let i=index">
-        <td>#{{item.id}}</td>
+        <td>{{item.id | id}}</td>
         <td>{{item.name}}</td>
         <td>{{item.description}}</td>
         <td>{{item.address}}</td>
         <td>{{item.radius}}</td>
-        <td>{{getStopTypeName(item.typeId)}}</td>
         <td class="text-md-center">
           <a
             (click)="edit(item)"

@@ -15,6 +15,7 @@ export class StopsListComponent extends BaseCrudListComponent<Stop> {
   searchInput = '';
 
   stopColumns = [
+    { title: 'ID' },
     {
       title: 'Nome',
       compare: (
@@ -37,7 +38,6 @@ export class StopsListComponent extends BaseCrudListComponent<Stop> {
       ) => a.address.localeCompare(b.address)
     },
     { title: 'Raio' },
-    { title: 'Tipo' },
     { title: 'Ações' },
   ];
 

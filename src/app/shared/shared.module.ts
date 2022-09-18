@@ -41,6 +41,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SearchPipe } from './pipes/search.pipe';
 import { TableService } from './services/table.service';
 import { ThemeConstantService } from './services/theme-constant.service';
+import { IdPipe } from './pipes/id.pipe';
 
 const antdModule = [
   NzIconModule,
@@ -81,7 +82,8 @@ const antdModule = [
     NzIconModule,
     PerfectScrollbarModule,
     SearchPipe,
-    ...antdModule
+    IdPipe,
+    ...antdModule,
   ],
   imports: [
     RouterModule,
@@ -90,7 +92,8 @@ const antdModule = [
     ...antdModule
   ],
   declarations: [
-    SearchPipe
+    SearchPipe,
+    IdPipe
   ],
   providers: [
     ThemeConstantService,

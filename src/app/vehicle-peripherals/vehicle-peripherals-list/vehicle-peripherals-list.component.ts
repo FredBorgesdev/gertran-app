@@ -12,6 +12,7 @@ import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-
 })
 export class VehiclePeripheralsListComponent extends BaseCrudListComponent<VehiclePeripherals> {
   vehiclePeripheralsColumns = [
+    { title: 'ID' },
     { title: 'Nome' },
     { title: 'Tipo de periferico' },
     { title: 'Ações' },

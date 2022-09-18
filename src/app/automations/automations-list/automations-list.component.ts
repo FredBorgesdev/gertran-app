@@ -69,13 +69,7 @@ export class AutomationsListComponent implements OnInit {
   };
 
   automationColumn = [
-    {
-      title: 'ID',
-      compare: (
-        a: DataItem,
-        b: DataItem
-      ) => a.id - b.id
-    },
+    { title: 'ID' },
     {
       title: 'Evento',
       compare: (

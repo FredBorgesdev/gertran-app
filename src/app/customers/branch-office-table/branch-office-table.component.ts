@@ -16,6 +16,7 @@ export class BranchOfficeTableComponent implements OnInit {
   @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>();
 
   branchOfficesOrderColumn = [
+    { title: 'ID' },
     {
       title: 'Razão social',
       compare: (a: BranchOffice, b: BranchOffice) => a.corporateName.localeCompare(b.corporateName)

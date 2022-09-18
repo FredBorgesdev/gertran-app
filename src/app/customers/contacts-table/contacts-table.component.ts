@@ -17,6 +17,7 @@ export class ContactsTableComponent implements OnInit {
 
 
   contactsOrderColumn = [
+    { title: 'ID' },
     {
       title: 'Nome do contato',
       compare: (a: ContactDataItem, b: ContactDataItem) => a.name.localeCompare(b.name)

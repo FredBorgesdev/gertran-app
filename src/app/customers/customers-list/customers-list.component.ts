@@ -16,6 +16,7 @@ export class CustomersListComponent extends BaseCrudListComponent<Customer> {
   searchInput: string;
 
   customerColumn = [
+    { title: 'ID' },
     {
       title: 'Nome Fantasia',
       compare: (a: Customer, b: Customer) => a.tradingName.localeCompare(b.tradingName)

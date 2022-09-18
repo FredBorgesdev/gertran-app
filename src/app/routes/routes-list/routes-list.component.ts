@@ -14,6 +14,7 @@ export class RoutesListComponent extends BaseCrudListComponent<Route> {
   searchInput = '';
 
   routesColumns = [
+    { title: 'ID' },
     {
       title: 'Nome',
       compare: (

@@ -23,6 +23,7 @@ export class DriversListComponent implements OnInit {
   searchInput: string;
 
   driverColumn = [
+    { title: 'ID' },
     {
       title: 'Nome',
       compare: (

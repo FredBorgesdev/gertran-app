@@ -16,6 +16,7 @@ export class DocumentsTableComponent implements OnInit {
   @Output() onPaginate: EventEmitter<string> = new EventEmitter<string>();
 
   documentsOrderColumn = [
+    { title: 'ID' },
     {
       title: 'Titulo',
       compare: (a: Document, b: Document) => a.title.localeCompare(b.title)
