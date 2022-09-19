@@ -23,14 +23,16 @@ export class RoutesListComponent extends BaseCrudListComponent<Route> {
       ) => a.name.localeCompare(b.name)
     },
     {
-      title: 'Code',
+      title: 'Código',
       compare: (
         a: Route,
         b: Route
       ) => a.code.localeCompare(b.code)
     },
     { title: 'Descrição' },
-    { title: 'Lead' },
+    { title: 'Distância (km)' },
+    { title: 'Vel. Média' },
+    { title: 'Duração (minutos)' },
     { title: 'Ações' },
   ];
 

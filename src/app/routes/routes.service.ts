@@ -10,9 +10,10 @@ export interface Route {
   code?: string;
   description?: string;
   lead?: number;
-  stops: {
-    stop: Stop
-    stopTypeId: number
+  points: {
+    id: string;
+    point: string;
+    order: number;
   }[];
 }
 
@@ -31,22 +32,22 @@ export class RoutesService implements ApiService<Route> {
       });
     }
 
-    return this.http.get<GetAllResponse<Route>>('/routes', { params });
+    return this.http.get<GetAllResponse<Route>>('settings/routes', { params });
   }
 
   get(id: string): Observable<Route> {
-    return this.http.get<Route>(`/routes/${id}`);
+    return this.http.get<Route>(`settings/routes/${id}`);
   }
 
   save(data: Route): Observable<Route> {
-    return this.http.post<Route>('/routes/create', data);
+    return this.http.post<Route>('settings/routes/create', data);
   }
 
   update(id: string, data: Route): Observable<Route> {
-    return this.http.patch<Route>(`/routes/${id}/update`, data);
+    return this.http.patch<Route>(`settings/routes/${id}/update`, data);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`/routes/${id}/delete`);
+    return this.http.delete<void>(`settings/routes/${id}/delete`);
   }
 }

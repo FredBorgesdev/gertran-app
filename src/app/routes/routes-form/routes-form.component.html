@@ -1,43 +1,131 @@
-<nz-transfer
-  [nzDataSource]="list"
-  [nzShowSearch]="true"
-  [nzShowSelectAll]="false"
-  [nzRenderList]="[renderList, renderList]"
->
-  <ng-template
-    #renderList
-    let-items
-    let-direction="direction"
-    let-stat="stat"
-    let-onItemSelectAll="onItemSelectAll"
-    let-onItemSelect="onItemSelect"
-  >
-    <nz-table #table [nzData]="items" nzSize="small">
-      <thead>
-        <tr>
-          <th
-            [nzChecked]="stat.checkAll"
-            [nzIndeterminate]="stat.checkHalf"
-            (nzCheckedChange)="onItemSelectAll($event)"
-          ></th>
-          <th>Name</th>
-          <th>Estado</th>
-          <th>Cidade</th>
-        </tr>
-      </thead>
-      <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-        <tr *ngFor="let data of table.data" (click)="onItemSelect(data)" cdkDrag [cdkDragDisabled]="direction === 'left'">
-          <td
-            [nzChecked]="!!data.checked"
-            (nzCheckedChange)="onItemSelect(data)"
-          ></td>
-          <td>{{ data.name }}</td>
-          <td>
-            {{ data.state }}
-          </td>
-          <td>{{ data.city }}</td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </ng-template>
-</nz-transfer>
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="radius-setting"></i><span>Rotas</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Rota ({{resource.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!resource?.id">
+        Adicionar Rota
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <form nzLayout="vertical" nz-form [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+          <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
+            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="code">Código</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o código">
+          <input id="code" type="text" nz-input formControlName="code" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
+          <input id="description" type="text" nz-input formControlName="description" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="distance">Distância (km)</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a distância">
+          <input id="distance" type="text" nz-input formControlName="distance" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="averageSpeed">Velocidade média</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a velocidade">
+          <input id="averageSpeed" type="text" nz-input formControlName="averageSpeed" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="durationInMinutes">Duração (minutos)</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a velocidade">
+          <input id="durationInMinutes" type="number" nz-input formControlName="durationInMinutes" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-transfer
+        [nzDataSource]="points"
+        [nzShowSearch]="true"
+        [nzShowSelectAll]="false"
+        [nzRenderList]="[renderList, renderList]"
+        [nzListStyle]="{ width: '100%' }"
+      >
+        <ng-template
+          #renderList
+          let-items
+          let-direction="direction"
+          let-stat="stat"
+          let-onItemSelectAll="onItemSelectAll"
+          let-onItemSelect="onItemSelect"
+        >
+          <nz-table #table [nzData]="items" nzSize="small" [nzShowPagination]="false">
+            <thead>
+            <tr>
+              <th
+                [nzChecked]="stat.checkAll"
+                [nzIndeterminate]="stat.checkHalf"
+                (nzCheckedChange)="onItemSelectAll($event)"
+              ></th>
+              <th>Nome</th>
+              <th>Estado</th>
+              <th>Cidade</th>
+            </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <tr *ngFor="let data of table.data" (click)="onItemSelect(data)" cdkDrag [cdkDragDisabled]="direction === 'left'">
+              <td
+                [nzChecked]="!!data.checked"
+                (nzCheckedChange)="onItemSelect(data)"
+              ></td>
+              <td>{{ data.name }}</td>
+              <td>
+                {{ data.state }}
+              </td>
+              <td>{{ data.city }}</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </ng-template>
+      </nz-transfer>
+    </form>
+
+    <nz-form-item class="m-t-50">
+      <nz-form-control>
+        <button type="button" (click)="save()" nz-button nzType="primary">
+          <i nz-icon nzType="save"></i>Salvar Rota
+        </button>
+
+        <button type="button" (click)="list()" nz-button>
+          <i nz-icon nzType="unordered-list"></i>Listar Rotas
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-card>
+</nz-spin>

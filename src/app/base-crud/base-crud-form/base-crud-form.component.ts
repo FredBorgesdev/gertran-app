@@ -36,6 +36,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
       const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.service.get(id).subscribe(resource => {
         this.resource = resource;
+        this.performResourceChange();
 
         Object.keys(this.resource).forEach(key => {
           if (this.validateForm.controls[key]) {
@@ -50,6 +51,9 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
 
   list(): void {
     throw new Error('Method not implemented.');
+  }
+
+  performResourceChange(): void {
   }
 
   save(customHandlers?: {

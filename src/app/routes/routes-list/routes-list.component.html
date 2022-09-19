@@ -59,7 +59,9 @@
         <td>{{item.name}}</td>
         <td>{{item.code}}</td>
         <td>{{item.description}}</td>
-        <td>{{item.lead}}</td>
+        <td>{{item.distance}}</td>
+        <td>{{item.averageSpeed}}</td>
+        <td>{{item.durationInMinutes}}</td>
         <td class="text-md-center">
           <a
             (click)="edit(item)"
@@ -72,9 +74,16 @@
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
-          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+          <a
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Excluir"
+            (click)="delete(item)"
+          >
             <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
+          </a>
         </td>
       </tr>
       </tbody>
