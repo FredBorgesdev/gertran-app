@@ -13,10 +13,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(): Promise<boolean> {
     const isAuthenticated = await this.authService.isAuthenticated();
-    if (!isAuthenticated) {
-      const isRefreshed = await this.authService.refresh();
-      if (isRefreshed) { return true; }
-    } else {
+    if (isAuthenticated) {
       return true;
     }
 

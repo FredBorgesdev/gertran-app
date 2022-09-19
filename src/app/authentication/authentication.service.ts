@@ -33,7 +33,6 @@ export class AuthenticationService {
   async refresh(): Promise<boolean> {
     const refreshToken = Cookies.get(GERTRAN_REFRESH_TOKEN);
     if (!refreshToken) {
-      this.logout();
       return false;
     }
 
@@ -42,10 +41,7 @@ export class AuthenticationService {
     }).toPromise().then((response: any) => {
       Cookies.set(GERTRAN_WEB_TOKEN, response.access);
       return true;
-    }).catch(() => {
-      this.logout();
-      return false;
-    });
+    }).catch(() => false);
   }
 
   async isAuthenticated(): Promise<boolean> {
@@ -54,10 +50,15 @@ export class AuthenticationService {
 
     const isTokenValid = await this.http.post('auth/jwt/verify', {
       token: Cookies.get(GERTRAN_WEB_TOKEN)
-    }).toPromise().catch(() => {
-        this.logout();
-        return false;
-      });
+    }).toPromise().catch(async () => {
+      const isRefreshed = await this.refresh();
+      if (isRefreshed) {
+        return true;
+      }
+
+      this.logout();
+      return false;
+    });
 
     return !!isTokenValid;
   }
