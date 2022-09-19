@@ -9,6 +9,7 @@ import { StopsFormComponent } from './stops-form/stops-form.component';
 import { NzTransferModule } from 'ng-zorro-antd/transfer';
 import { StopsWorkingHoursComponent } from './stops-working-hours/stops-working-hours.component';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
 
 
 const antdModules = [
@@ -27,6 +28,7 @@ const antdModules = [
     CommonModule,
     SharedModule,
     StopsRoutingModule,
+    GooglePlaceModule,
     ...antdModules,
   ]
 })

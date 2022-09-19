@@ -34,8 +34,8 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
       this.isLoading = true;
       const id = this.activatedRoute.snapshot.paramMap.get('id');
-      this.service.get(id).subscribe(vehiclePeripherals => {
-        this.resource = vehiclePeripherals;
+      this.service.get(id).subscribe(resource => {
+        this.resource = resource;
 
         Object.keys(this.resource).forEach(key => {
           if (this.validateForm.controls[key]) {

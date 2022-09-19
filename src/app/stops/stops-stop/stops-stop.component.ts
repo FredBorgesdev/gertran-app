@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { stopsList } from '../stops-list/mocked-data';
-import {Stop} from '../stops.service';
+import {Stop, StopsService} from '../stops.service';
 
 @Component({
   selector: 'app-stops-stop',
@@ -13,32 +12,19 @@ export class StopsStopComponent implements OnInit {
   stop: Stop;
 
   constructor(
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private service: StopsService,
   ) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
-    setTimeout(() => {
-      this.route.snapshot.paramMap.has('id') ? this.loadStop() : this.createNewStop();
-      this.isLoading = false;
-    }, 333);
-  }
+    if (this.activatedRoute.snapshot.paramMap.has('id')) {
+      this.isLoading = true;
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-  loadStop(): void {
-    this.stop = stopsList.find(stop => stop.id === this.route.snapshot.paramMap.get('id'));
-  }
-
-  createNewStop(): void {
-    this.stop = {
-      id: null,
-      name: '',
-      description: '',
-      address: '',
-      radius: 0,
-      typeId: 0,
-      city: '',
-      state: '',
-      typeCategoryIds: []
-    };
+      this.service.get(id).subscribe(stop => {
+        this.stop = stop;
+        this.isLoading = false;
+      });
+    }
   }
 }

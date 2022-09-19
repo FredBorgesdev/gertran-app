@@ -1,55 +1,78 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
+    <nz-form-control [nzSpan]="null" [nzOffset]="null">
+      <label nz-checkbox formControlName="isMain">É a principal?</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+      <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
+        <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
       <input id="name" type="text" nz-input formControlName="name" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
       <input id="description" type="text" nz-input formControlName="description" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="address">Endereço</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <input id="address" type="text" nz-input formControlName="address" />
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
+      <input
+        ngx-google-places-autocomplete
+        (onAddressChange)="handleAddressChange($event)"
+        id="address"
+        type="text"
+        nz-input
+        placeholder="Digite o endereço"
+        formControlName="address"
+      />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
       <input id="state" nz-input formControlName="state" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
       <input id="city" nz-input formControlName="city" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="radius">Raio</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o raio">
       <input id="radius" type="number" nz-input formControlName="radius" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="typeId">Tipo</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-      <nz-radio-group formControlName="typeId">
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="pointType">Tipo</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o tipo">
+      <nz-radio-group formControlName="pointType">
         <label
           nz-radio
           *ngFor="let type of stopTypes"
-          [nzValue]="type.id"
-        >{{type.name}}</label>
+          [nzValue]="type.value"
+        >{{type.label}}</label>
       </nz-radio-group>
     </nz-form-control>
   </nz-form-item>
@@ -58,7 +81,7 @@
     <nz-form-label [nzSpan]="null" nzRequired nzFor="statusId">Categorias</nz-form-label>
     <nz-form-control>
       <nz-transfer
-        [nzTargetKeys]="stop.typeCategoryIds"
+        [nzTargetKeys]="[]"
         [nzDataSource]="categoriesTransferItems"
         [nzTitles]="['Tipos', 'Concedidos']"
       ></nz-transfer>
@@ -70,7 +93,7 @@
       <button type="button" (click)="save()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Ponto
       </button>
-      <button type="button" (click)="listStops()" nz-button>
+      <button type="button" (click)="list()" nz-button>
         <i nz-icon nzType="unordered-list"></i>Listar Pontos
       </button>
     </nz-form-control>

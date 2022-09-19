@@ -42,22 +42,26 @@ export class StopsService implements ApiService<Stop> {
       });
     }
 
-    return this.http.get<GetAllResponse<Stop>>('/stops', { params });
+    return this.http.get<GetAllResponse<Stop>>('settings/points', { params });
   }
 
   get(id: string): Observable<Stop> {
-    return this.http.get<Stop>(`/stops/${id}`);
+    return this.http.get<Stop>(`settings/points/${id}`);
   }
 
   save(resource: Stop): Observable<Stop> {
-    return this.http.post<Stop>('/stops/create', resource);
+    return this.http.post<Stop>('settings/points/create', resource);
   }
 
   update(id: string, resource: Stop): Observable<Stop> {
-    return this.http.patch<Stop>(`/stops/${id}/update`, resource);
+    return this.http.patch<Stop>(`settings/points/${id}/update`, resource);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`/stops/${id}/delete`);
+    return this.http.delete<void>(`settings/points/${id}/delete`);
+  }
+
+  getTypes(): Observable<{ id: number, name: string }[]> {
+    return this.http.get<{ id: number, name: string }[]>('settings/point-types');
   }
 }

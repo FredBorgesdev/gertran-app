@@ -1,6 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
   <nz-card>
-
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -20,15 +19,11 @@
 
     <nz-tabset>
       <nz-tab nzTitle="Ponto">
-        <app-stops-form
-          *ngIf="stop"
-          [stop]="stop"
-          (onSave)="onSubmit($event)"
-        ></app-stops-form>
+        <app-stops-form [stop]="stop" *ngIf="!isLoading"></app-stops-form>
       </nz-tab>
 
       <nz-tab nzTitle="Funcionamento" [nzDisabled]="!stop?.id">
-        <app-stops-working-hours [stop]="stop"></app-stops-working-hours>
+        <app-stops-working-hours></app-stops-working-hours>
       </nz-tab>
     </nz-tabset>
   </nz-card>

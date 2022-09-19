@@ -1,21 +1,23 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import { TransferItem } from 'ng-zorro-antd/transfer';
-import { stopsListTypeCategories, stopsListTypes } from '../stops-list/mocked-data';
-import {Stop} from '../stops.service';
+import { stopsListTypeCategories } from '../stops-list/mocked-data';
+import {Stop, StopsService} from '../stops.service';
+import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {Customer, CustomersService} from '../../customers/customers.service';
 
 @Component({
   selector: 'app-stops-form',
   templateUrl: './stops-form.component.html',
   styleUrls: ['./stops-form.component.css']
 })
-export class StopsFormComponent implements OnInit {
+export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements OnInit {
   @Input() stop: Stop;
-  @Output() onSave: EventEmitter<Stop> = new EventEmitter<Stop>();
 
-  validateForm: FormGroup;
-  stopTypes = stopsListTypes;
+  stopTypes = [];
+  customers: Customer[] = [];
 
   categoriesTransferItems: TransferItem[] = stopsListTypeCategories.map(category => ({
     key: category.id,
@@ -25,27 +27,73 @@ export class StopsFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-  ) { }
+    private customersService: CustomersService,
+    service: StopsService,
+    message: NzMessageService,
+    activatedRoute: ActivatedRoute
+  ) {
+    super(service, message, activatedRoute);
+  }
 
   ngOnInit(): void {
-    this.validateForm = this.formBuilder.group({
-      name: [this.stop?.name],
-      description: [this.stop?.description],
-      address: [this.stop?.address],
-      radius: [this.stop?.radius],
-      typeId: [this.stop?.typeId],
-      city: [this.stop?.city],
-      state: [this.stop?.state],
-      typeCategoryIds: [this.stop?.typeCategoryIds]
+    super.ngOnInit();
+
+    (this.service as StopsService).getTypes().subscribe(types => {
+      this.stopTypes = types;
+    });
+
+    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
+      this.customers = customers.results;
     });
   }
 
-  save() {
-    this.onSave.emit(this.validateForm.value);
+  loadFormBuilder(): void {
+    this.validateForm = this.formBuilder.group({
+      name: [null, [Validators.required]],
+      description: [null, [Validators.required]],
+      address: [null, [Validators.required]],
+      radius: [null, [Validators.required]],
+      city: [null, [Validators.required]],
+      state: [null, [Validators.required]],
+      pointType: [null, [Validators.required]],
+      latitude: [null, [Validators.required]],
+      longitude: [null, [Validators.required]],
+      isMain: [false, [Validators.required]],
+      customer: [null, [Validators.required]],
+    });
   }
 
-  listStops() {
+  loadResource(): void {
+    this.resource = this.stop;
+
+    if (!this.resource) {
+      return;
+    }
+
+    Object.keys(this.resource).forEach(key => {
+      if (this.validateForm.controls[key]) {
+        this.validateForm.controls[key].setValue(this.resource[key]);
+      }
+    });
+  }
+
+  list(): void {
     this.router.navigate(['/stops/stops-list']);
   }
 
+  handleAddressChange(address: any): void {
+    const city = address.address_components?.find(component => component.types.includes('administrative_area_level_2'));
+    const state = address.address_components?.find(component => component.types.includes('administrative_area_level_1'));
+    const latitude = address.geometry?.location.lat();
+    const longitude = address.geometry?.location.lng();
+    const formattedAddress = address.formatted_address;
+
+    this.validateForm.patchValue({
+      city: city?.long_name,
+      state: state?.short_name,
+      latitude,
+      longitude,
+      address: formattedAddress,
+    });
+  }
 }
