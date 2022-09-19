@@ -37,12 +37,6 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
   async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    await this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
-      this.points = this.mapStopsToTransferItems(stops.results);
-    }, () => {
-      this.message.error('Não foi possível carregar os pontos');
-    });
-
     this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
       this.customers = customers.results;
     });
@@ -62,7 +56,12 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
   }
 
   performResourceChange(): void {
-    this.loadCurrentPoints();
+    this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
+      this.points = this.mapStopsToTransferItems(stops.results);
+      this.loadCurrentPoints();
+    }, () => {
+      this.message.error('Não foi possível carregar os pontos');
+    });
   }
 
   loadCurrentPoints(): void {
