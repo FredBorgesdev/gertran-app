@@ -1,0 +1,19 @@
+tr {
+  font-size: 10px;
+}
+
+.bg-warning {
+  background-color: #fdf2da !important;
+}
+
+.bg-danger {
+  background-color: #ffdfdf !important;
+}
+
+.bg-success {
+  background-color: #deffe2 !important;
+}
+
+.bg-info {
+  background-color: #ddffff !important;
+}

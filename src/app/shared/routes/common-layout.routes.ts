@@ -64,5 +64,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'vehicle-peripherals',
     loadChildren: () => import('../../vehicle-peripherals/vehicle-peripherals.module').then(m => m.VehiclePeripheralsModule)
+  },
+  {
+    path: 'monitoring',
+    loadChildren: () => import('../../monitoring/monitoring.module').then(m => m.MonitoringModule)
   }
 ];

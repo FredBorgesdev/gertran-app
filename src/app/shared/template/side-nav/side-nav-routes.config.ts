@@ -33,6 +33,14 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
+    path: '/monitoring/monitoring-list',
+    title: 'Monitoramento',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'eye',
+    submenu: []
+  },
+  {
     path: '',
     title: 'Veículos',
     iconType: 'nzIcon',
