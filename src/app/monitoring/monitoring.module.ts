@@ -6,6 +6,7 @@ import { MonitoringRoutingModule } from './monitoring-routing.module';
 import { MonitoringListComponent } from './monitoring-list/monitoring-list.component';
 import {SharedModule} from '../shared/shared.module';
 import { MonitoringMapComponent } from './monitoring-map/monitoring-map.component';
+import {NzPopoverModule} from 'ng-zorro-antd/popover';
 
 const antdModules = [
 ];
@@ -21,6 +22,7 @@ const antdModules = [
     MonitoringRoutingModule,
     GoogleMapsModule,
     ...antdModules,
+    NzPopoverModule,
   ]
 })
 export class MonitoringModule { }

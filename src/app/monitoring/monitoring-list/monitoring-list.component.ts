@@ -37,6 +37,7 @@ export class MonitoringListComponent implements OnInit {
     { title: 'Int. Emb.' },
     { title: 'Isca' },
     { title: 'Temp.' },
+    { title: '' },
   ];
 
   monitoringData: Monitoring[] = [];

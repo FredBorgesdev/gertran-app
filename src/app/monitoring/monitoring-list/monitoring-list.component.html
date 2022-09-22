@@ -81,8 +81,45 @@
           <nz-badge *ngIf="!item.bait" nzStatus="error"></nz-badge>
         </td>
         <td>{{ item.temperature }}</td>
+        <td>
+          <a
+            nz-dropdown
+            nzTrigger="click"
+            nzPlacement="bottomCenter"
+            [nzDropdownMenu]="moreActions"
+            class="text-dark font-size-20"
+          >
+            <span nz-icon nzType="more" nzTheme="outline"></span>
+          </a>
+        </td>
       </tr>
       </tbody>
     </nz-table>
   </nz-card>
 </nz-spin>
+
+<nz-dropdown-menu #moreActions="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>Solicitação de monitoramento</li>
+    <li nz-menu-item>Histórico de ocorrencia</li>
+    <li nz-menu-item>Histórico de temperatura</li>
+    <li nz-menu-item>Propriedades gerais</li>
+    <li nz-menu-item>Comandos</li>
+    <li nz-menu-item>Mensagens</li>
+    <li nz-menu-item>Alertas</li>
+
+    <li nz-menu-divider></li>
+
+    <li nz-menu-item>Alterar status</li>
+    <li nz-menu-item>Observação</li>
+
+    <li nz-menu-divider></li>
+
+    <li nz-menu-item>Relatório analitico</li>
+    <li nz-menu-item>Relatório comandos</li>
+    <li nz-menu-item>Relatório posição</li>
+    <li nz-menu-item>Relatório alerta</li>
+    <li nz-menu-item>Relatório mensagem</li>
+    <li nz-menu-item>Relatório de isca</li>
+  </ul>
+</nz-dropdown-menu>
