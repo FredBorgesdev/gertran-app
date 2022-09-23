@@ -4,6 +4,7 @@ import {Monitoring, MonitoringService} from '../monitoring.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MonitoringMapComponent} from '../monitoring-map/monitoring-map.component';
+import {Customer, CustomersService} from '../../customers/customers.service';
 
 @Component({
   selector: 'app-monitoring-list',
@@ -42,15 +43,22 @@ export class MonitoringListComponent implements OnInit {
 
   monitoringData: Monitoring[] = [];
 
+  customers: Customer[] = [];
+
   constructor(
     private router: Router,
     private service: MonitoringService,
     private message: NzMessageService,
     private modal: NzModalService,
+    private customerService: CustomersService,
   ) { }
 
   ngOnInit(): void {
     this.monitoringData = this.service.getAll();
+
+    this.customerService.getAll({ limit: 999 }).subscribe(data => {
+      this.customers = data.results;
+    });
   }
 
   getAlertColor(alert: string): string {

@@ -11,6 +11,149 @@
 
     <nz-divider></nz-divider>
 
+    <div nz-row nzGutter="12" nzAlign="middle">
+      <div nz-col nzSpan="4">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cliente">
+          <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-select nzPlaceHolder="Agrupamento">
+          <nz-option nzLabel="Não agrupar" nzValue="not-group"></nz-option>
+          <nz-option nzLabel="Agrupar por alertas" nzValue="alert"></nz-option>
+          <nz-option nzLabel="Agrupar por jornadas" nzValue="journey"></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-select nzPlaceHolder="Terminal">
+          <nz-option nzLabel="Terminal BH 1 - Itambé" nzValue="1"></nz-option>
+          <nz-option nzLabel="Terminal BH 2 - Lactalis" nzValue="2"></nz-option>
+          <nz-option nzLabel="Terminal BH 3 - Itambé/Lactalis" nzValue="3"></nz-option>
+        </nz-select>
+      </div>
+      <div nz-col nzSpan="4">
+        <label nz-checkbox nzChecked>Ocultar antigos</label>
+        <label nz-checkbox nzChecked>Em viagem</label>
+      </div>
+      <div nz-col nzSpan="8" style="margin-left: auto; flex: none">
+        <nz-badge [nzCount]="5" class="m-r-15">
+          <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="menu">
+            Alertas
+            <span nz-icon nzType="down"></span>
+          </button>
+        </nz-badge>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul nz-menu nzSelectable>
+            <li nz-menu-item>(55) Mensagem</li>
+            <li nz-menu-item nz>(8) Alerta</li>
+            <li nz-menu-item nzDanger>(0) Urgente</li>
+          </ul>
+        </nz-dropdown-menu>
+
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+        >
+          <span nz-icon nzType="car"></span>
+          Placa
+        </button>
+      </div>
+    </div>
+
+    <div nz-row nzGutter="12" nzAlign="middle" class="m-t-50">
+      <nz-col nzSpan="2">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-all"
+        >
+          Todos
+        </button>
+      </nz-col>
+      <nz-col nzSpan="2">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-ag-start"
+        >
+          Ag. Inicio
+        </button>
+      </nz-col>
+      <nz-col nzSpan="3">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-contingency"
+        >
+          Contigência
+        </button>
+      </nz-col>
+      <nz-col nzSpan="3">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-client"
+        >
+          Cliente
+        </button>
+      </nz-col>
+      <nz-col nzSpan="3">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-travelling"
+        >
+          Em viagem
+        </button>
+      </nz-col>
+      <nz-col nzSpan="3">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-standby"
+        >
+          Parado
+        </button>
+      </nz-col>
+      <nz-col nzSpan="3">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-overnight"
+        >
+          Pernoite
+        </button>
+      </nz-col>
+      <nz-col nzSpan="3">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-out-of-point"
+        >
+          Fora do ponto
+        </button>
+      </nz-col>
+      <nz-col nzSpan="2">
+        <button
+          nz-button
+          nzType="primary"
+          nz-dropdown
+          class="status-filter border-none"
+        >
+          Nenhum
+        </button>
+      </nz-col>
+    </div>
+
     <div class="row m-b-30">
       <div class="col-lg-8">
         <div class="d-md-flex">

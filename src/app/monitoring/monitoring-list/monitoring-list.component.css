@@ -17,3 +17,57 @@ tr {
 .bg-info {
   background-color: #ddffff !important;
 }
+
+nz-select,
+.status-filter {
+  width: 100%;
+}
+
+.status-filter {
+  border: none;
+}
+
+.status-filter:hover {
+  opacity: 0.3;
+}
+
+.border-all,
+.border-none {
+  background: #f3f3f3;
+  color: #626262;
+}
+
+.border-ag-start {
+  background-color: #deffe2;
+  color: #007217;
+}
+
+.border-contingency {
+  background-color: #ffdfdf;
+  color: #832222;
+}
+
+.border-client {
+  background-color: #fdf2da;
+  color: #654500;
+}
+
+.border-travelling {
+  background-color: #e3ffdd;
+  color: #115900;
+}
+
+.border-standby {
+  background-color: #ddffff;
+  color: #005656;
+}
+
+.border-overnight {
+  background-color: #fff7e3;
+  color: #573d00;
+}
+
+.border-out-of-point {
+  background-color: #e3e3e3;
+  color: #505050;
+}
