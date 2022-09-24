@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 
 export interface VehiclePeripherals {
@@ -46,6 +46,10 @@ export class VehiclePeripheralsService implements ApiService<VehiclePeripherals>
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`vehicles/peripherals/${id}/delete`);
+  }
+
+  getPeripheralTypes(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('vehicles/peripheral-types');
   }
 }
 

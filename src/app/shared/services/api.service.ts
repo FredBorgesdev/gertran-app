@@ -16,6 +16,11 @@ export interface GetAllResponse<T> {
   offset: number;
 }
 
+export interface Choice {
+  value: string;
+  label: string;
+}
+
 export const getCurrentPage = (response: GetAllResponse<any>) => {
   if (!response || response.offset === 0) { return 1; }
   return response.offset / response.limit + 1;
