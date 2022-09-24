@@ -12,14 +12,16 @@
 </div>
 
 <app-trackers-table
-  [trackers]="trackers"
-  (onEditTracker)="editTracker($event)"
+  [vehicleId]="vehicleId"
+  [refreshTrackers]="refreshTrackers"
+  (openForm)="setTrackerAndOpenForm($event)"
 ></app-trackers-table>
 
 <app-trackers-form
-  [tracker]="tracker"
-  [isVisible]="isCreatingTracker"
-  *ngIf="isCreatingTracker"
-  (onAdd)="saveTracker($event)"
-  (onClose)="closeTrackerForm()"
+  *ngIf="this.isCreatingTracker"
+  [vehicleId]="vehicleId"
+  [visible]="this.isCreatingTracker"
+  [trackerId]="tracker?.id"
+  (cancel)="closeForm()"
+  (success)="closeFormAndRefreshList()"
 ></app-trackers-form>

@@ -28,7 +28,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
 
   loadResources(url?: string): void {
     this.isLoading = true;
-    this.service.getAll({ url }).subscribe(data => {
+    this.service.getAll({ url }, ...this.additionalParams()).subscribe(data => {
       this.resources = data;
       this.isLoading = false;
     }, () => {
@@ -56,7 +56,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
 
   handleDelete(id: string): void {
     this.isLoading = true;
-    this.service.delete(id).subscribe(() => {
+    this.service.delete(id, ...this.additionalParams()).subscribe(() => {
       this.loadResources();
       this.message.success('Registro excluído com sucesso');
       this.isLoading = false;
@@ -76,5 +76,9 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     } else if (params.pageIndex > this.page) {
       this.loadResources(this.resources.next);
     }
+  }
+
+  additionalParams(): any[] {
+    return [];
   }
 }

@@ -1,4 +1,12 @@
-<nz-table #trackersTable [nzData]="trackers" >
+<nz-table
+  #trackersTable
+  [nzData]="resources?.results"
+  [nzTotal]="resources?.count"
+  [nzPageSize]="resources?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+>
   <thead>
   <tr>
     <th *ngFor="let column of trackersOrderColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
@@ -6,37 +14,36 @@
   </thead>
   <tbody>
   <tr *ngFor="let item of trackersTable.data;  let i=index">
-    <td>#{{item.id}}</td>
+    <td>{{item.id | id}}</td>
     <td>
       <div class="d-flex align-items-center">
-        <h6 class="m-l-10 m-b-0">{{item.trackingSystem}}</h6>
+        <h6 class="m-l-10 m-b-0">{{item.trackerModel.name}}</h6>
       </div>
     </td>
-    <td>{{item.trackingModel}}</td>
-    <td>{{item.trackingSerialNumber}}</td>
+    <td>{{item.trackerId}}</td>
     <td class="text-md-center">
-      <nz-badge *ngIf="item.main" nzStatus="success"></nz-badge>
-      <nz-badge *ngIf="!item.main" nzStatus="error"></nz-badge>
+      <nz-badge *ngIf="item.isMain" nzStatus="success"></nz-badge>
+      <nz-badge *ngIf="!item.isMain" nzStatus="error"></nz-badge>
     </td>
     <td class="text-md-center">
+<!--      <a-->
+<!--        *ngIf="!item.main"-->
+<!--        (click)="edit()"-->
+<!--        class="m-r-5"-->
+<!--        nz-button-->
+<!--        nzType="default"-->
+<!--        nzShape="circle"-->
+<!--        nz-tooltip-->
+<!--        nzTooltipTitle="Tornar contato principal"-->
+<!--      >-->
+<!--        <i-->
+<!--          nz-icon-->
+<!--          nzType="star"-->
+<!--          theme="outline"-->
+<!--        ></i>-->
+<!--      </a>-->
       <a
-        *ngIf="!item.main"
-        (click)="trackersEdit(item)"
-        class="m-r-5"
-        nz-button
-        nzType="default"
-        nzShape="circle"
-        nz-tooltip
-        nzTooltipTitle="Tornar contato principal"
-      >
-        <i
-          nz-icon
-          nzType="star"
-          theme="outline"
-        ></i>
-      </a>
-      <a
-        (click)="editTracker(item)"
+        (click)="edit(item)"
         class="m-r-5"
         nz-button
         nzType="default"
@@ -46,7 +53,7 @@
       >
         <i nz-icon nzType="edit" theme="outline"></i>
       </a><a
-      (click)="trackersEdit(item)"
+      (click)="delete(item)"
       nz-button
       nzType="default"
       nzShape="circle"

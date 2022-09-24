@@ -30,23 +30,28 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     throw new Error('Method not implemented.');
   }
 
+  getId(): string {
+    return this.activatedRoute.snapshot.paramMap.get('id');
+  }
+
   loadResource(): void {
-    if (this.activatedRoute.snapshot.paramMap.has('id')) {
+    if (this.getId()) {
       this.isLoading = true;
-      const id = this.activatedRoute.snapshot.paramMap.get('id');
-      this.service.get(id).subscribe(resource => {
+      this.service.get(this.getId(), ...this.additionalParams()).subscribe(resource => {
         this.resource = resource;
         this.performResourceChange();
-
-        Object.keys(this.resource).forEach(key => {
-          if (this.validateForm.controls[key]) {
-            this.validateForm.controls[key].setValue(this.resource[key]);
-          }
-        });
-
+        this.performFormGroupSetValues();
         this.isLoading = false;
       });
     }
+  }
+
+  performFormGroupSetValues(): void {
+    Object.keys(this.resource).forEach(key => {
+      if (this.validateForm.controls[key]) {
+        this.validateForm.controls[key].setValue(this.resource[key]);
+      }
+    });
   }
 
   list(): void {
@@ -73,10 +78,10 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
 
     this.isLoading = true;
     if (this.resource?.id) {
-      this.service.update(this.resource.id, this.validateForm.value)
+      this.service.update(this.resource.id, this.getValues(), ...this.additionalParams())
         .subscribe(() => success(), (err) => error(err));
     } else {
-      this.service.save(this.validateForm.value)
+      this.service.save(this.getValues(), ...this.additionalParams())
         .subscribe(() => success(), (err) => error(err));
     }
   }
@@ -90,5 +95,13 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
   protected handleError(): void {
     this.message.error('Ocorreu um erro ao salvar o registro');
     this.isLoading = false;
+  }
+
+  additionalParams(): any[] {
+    return [];
+  }
+
+  getValues(): T {
+    return this.validateForm.value;
   }
 }

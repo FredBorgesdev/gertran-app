@@ -1,36 +1,36 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Tracker } from '../trackers-form/trackers-form.component';
+import { Component, Input } from '@angular/core';
+import {Subject} from 'rxjs';
+import {Tracker} from '../trackers.service';
 
 @Component({
   selector: 'app-trackers-tab',
   templateUrl: './trackers-tab.component.html',
   styleUrls: ['./trackers-tab.component.css']
 })
-export class TrackersTabComponent implements OnInit {
+export class TrackersTabComponent {
+  @Input() vehicleId: string;
 
-  @Input() trackers: Tracker[] = null;
+  tracker: Tracker = null;
+  refreshTrackers = new Subject<void>();
 
-  tracker: any = null;
   isCreatingTracker = false;
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.trackers);
-  }
-
-  saveTracker(tracker: Tracker) {
+  closeFormAndRefreshList(): void {
     this.isCreatingTracker = false;
+    this.refreshTrackers.next();
   }
 
-  editTracker(tracker: Tracker) {
-    this.tracker = tracker;
+  setTrackerAndOpenForm(tracker?: Tracker): void {
+    if (tracker) {
+      this.tracker = tracker;
+    }
     this.isCreatingTracker = true;
   }
 
-  closeTrackerForm() {
+  closeForm(): void {
     this.isCreatingTracker = false;
     this.tracker = null;
   }
-
 }

@@ -1,48 +1,61 @@
 <nz-modal
-  [(nzVisible)]="isVisible"
+  [(nzVisible)]="visible"
   nzTitle="Novo rastreador"
   nzWidth="600px"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
+  (nzOnCancel)="cancel.emit()"
+  (nzOnOk)="saveAndCloseModal()"
 >
   <ng-container *nzModalContent>
     <form nz-form nzLayout="vertical" [formGroup]="validateForm">
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Sistema de rastreamento</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="technology">Tecnologia</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Tecnologia inválida!">
           <nz-select
-            id="eventType"
-            nzPlaceHolder="Selecione o sistema de rastreamento"
-            formControlName="trackingSystem"
+            (ngModelChange)="loadTrackerTechnologiesModels($event)"
+            id="technology"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="technology"
           >
-            <nz-option nzValue="1" nzLabel="Jabursat">Jabursat</nz-option>
-            <nz-option nzValue="2" nzLabel="Controlloc">Controlloc</nz-option>
-            <nz-option nzValue="3" nzLabel="Omnilink">Omnilink</nz-option>
-            <nz-option nzValue="4" nzLabel="Sistema X">Sistema X</nz-option>
+            <nz-option *ngFor="let technology of trackerTechnologies" [nzLabel]="technology.name" [nzValue]="technology.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
+
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Modelo</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="trackerModel">Modelo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
           <nz-select
-            id="eventType"
-            nzPlaceHolder="Selecione o modelo"
-            formControlName="trackingModel"
+            id="trackerModel"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="trackerModel"
+            [nzDisabled]="!validateForm.get('technology').value"
           >
-            <nz-option nzValue="1" nzLabel="Modelo 1">Modelo 1</nz-option>
-            <nz-option nzValue="2" nzLabel="Modelo 2">Modelo 2</nz-option>
-            <nz-option nzValue="3" nzLabel="Modelo 3">Modelo 3</nz-option>
-            <nz-option nzValue="4" nzLabel="Modelo 4">Modelo 4</nz-option>
+            <nz-option *ngFor="let trackerModel of trackerTechnologiesModels" [nzLabel]="trackerModel.name" [nzValue]="trackerModel.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
+
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="note">Serial Number</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-          <input id="cnpj" type="text" nz-input formControlName="trackingSerialNumber" />
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="trackerId">Serial Number</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Campo obrigatório">
+          <input id="trackerId" type="text" nz-input formControlName="trackerId" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="isMain">
+              <span>É o principal?</span>
+            </label>
+          </div>
         </nz-form-control>
       </nz-form-item>
     </form>
   </ng-container>
 </nz-modal>
+
