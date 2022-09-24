@@ -3,6 +3,7 @@ import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/s
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Vehicle} from '../vehicles/vehicles-form/vehicles-form.component';
+import {VehiclesService} from '../vehicles/vehicles.service';
 
 export interface Wagon extends Vehicle {
   vehicle: Vehicle;
@@ -11,9 +12,11 @@ export interface Wagon extends Vehicle {
 @Injectable({
   providedIn: 'root'
 })
-export class WagonsService implements ApiService<Wagon> {
+export class WagonsService extends VehiclesService<Wagon> {
 
-  constructor(private http: HttpClient) { }
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Wagon>> {
     const params = { limit: DEFAULT_LIMIT };

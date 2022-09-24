@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {ActivatedRoute} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import ApiService from '../../shared/services/api.service';
+import {Choice} from '../../shared/services/api.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {VehiclePeripherals, VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {VehicleModels, VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
@@ -10,6 +10,7 @@ import {VehicleModelTypes, VehicleModelTypesService} from '../../vehicle-model-t
 import {VehicleManufacturers, VehicleManufacturersService} from '../../vehicle-manufacturers/vehicle-manufacturers.service';
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {VehiclesService} from '../vehicles.service';
 
 export interface Vehicle {
   id: string;
@@ -45,9 +46,10 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   vehicleModelTypes: VehicleModelTypes[] = [];
   manufacturers: VehicleManufacturers[] = [];
   peripherals: VehiclePeripherals[] = [];
+  workingSituations: Choice[] = [];
 
   constructor(
-    @Inject('service') protected service: ApiService<T>,
+    @Inject('service') protected service: VehiclesService<T>,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -71,6 +73,9 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     });
     this.vehiclePeripheralsService.getAll({ limit: 999 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
+    });
+    (this.service as any).getWorkingSituations().subscribe((workingSituations) => {
+      this.workingSituations = workingSituations;
     });
 
     if (this.resource?.vehicle.manufacturer) {

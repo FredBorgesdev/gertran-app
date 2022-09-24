@@ -88,9 +88,11 @@
             nzPlaceHolder="Selecione uma situação"
             formControlName="workingSituation"
           >
-            <nz-option nzLabel="Frota" nzValue="fleet"></nz-option>
-            <nz-option nzLabel="Agregado" nzValue="aggregate"></nz-option>
-            <nz-option nzLabel="Terceiros" nzValue="third_party"></nz-option>
+            <nz-option
+              *ngFor="let workingSituation of workingSituations"
+              [nzLabel]="workingSituation.label"
+              [nzValue]="workingSituation.value"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
