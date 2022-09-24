@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
+import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -61,7 +61,7 @@ export class StopsService implements ApiService<Stop> {
     return this.http.delete<void>(`settings/points/${id}/delete`);
   }
 
-  getTypes(): Observable<{ id: number, name: string }[]> {
-    return this.http.get<{ id: number, name: string }[]>('settings/point-types');
+  getTypes(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('settings/point-types');
   }
 }
