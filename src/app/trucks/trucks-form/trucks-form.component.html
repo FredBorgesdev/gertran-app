@@ -196,8 +196,7 @@
         nzPlaceHolder="Selecione um tipo"
         formControlName="chargingMethod"
       >
-        <nz-option nzLabel="Mensal" nzValue="monthly"></nz-option>
-        <nz-option nzLabel="Avulso" nzValue="single"></nz-option>
+        <nz-option *ngFor="let option of chargingMethods" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

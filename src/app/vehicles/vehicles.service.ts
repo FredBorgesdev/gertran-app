@@ -33,4 +33,8 @@ export class VehiclesService<T> implements ApiService<T> {
   getWorkingSituations(): Observable<Choice[]> {
     return this.http.get<Choice[]>('vehicles/working-situations');
   }
+
+  getChargingMethods(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('vehicles/charging-methods');
+  }
 }

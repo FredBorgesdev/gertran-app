@@ -47,6 +47,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   manufacturers: VehicleManufacturers[] = [];
   peripherals: VehiclePeripherals[] = [];
   workingSituations: Choice[] = [];
+  chargingMethods: Choice[] = [];
 
   constructor(
     @Inject('service') protected service: VehiclesService<T>,
@@ -74,8 +75,11 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     this.vehiclePeripheralsService.getAll({ limit: 999 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
     });
-    (this.service as any).getWorkingSituations().subscribe((workingSituations) => {
+    this.service.getWorkingSituations().subscribe((workingSituations) => {
       this.workingSituations = workingSituations;
+    });
+    this.service.getChargingMethods().subscribe((chargingMethods) => {
+      this.chargingMethods = chargingMethods;
     });
 
     if (this.resource?.vehicle.manufacturer) {
