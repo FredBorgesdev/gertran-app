@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 
 export interface Driver {
@@ -52,6 +52,10 @@ export class DriversService implements ApiService<Driver> {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`drivers/${id}/delete`);
+  }
+
+  getWorkingSituations(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('drivers/working-situations');
   }
 
   private getBody(body: Omit<Driver, 'id'>): Omit<Driver, 'id'> {

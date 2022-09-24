@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { conformToMask } from 'angular2-text-mask';
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 import { Customer, CustomersService } from 'src/app/customers/customers.service';
-import { Driver } from '../drivers.service';
+import {Driver, DriversService} from '../drivers.service';
+import {Choice} from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-drivers-form',
@@ -12,6 +13,7 @@ import { Driver } from '../drivers.service';
   styleUrls: ['./drivers-form.component.css']
 })
 export class DriversFormComponent implements OnInit {
+  workingSituations: Choice[] = [];
 
   @Input() driver: Driver;
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
@@ -25,7 +27,8 @@ export class DriversFormComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private customersService: CustomersService,
-    private i18n: NzI18nService
+    private i18n: NzI18nService,
+    private service: DriversService,
   ) { }
 
   ngOnInit(): void {
@@ -51,10 +54,14 @@ export class DriversFormComponent implements OnInit {
       this.customers = customers.results;
     });
 
+    this.service.getWorkingSituations().subscribe((workingSituations) => {
+      this.workingSituations = workingSituations;
+    })
+
     this.i18n.setLocale(en_US);
   }
 
-  save() {
+  save(): void {
     if (this.validateForm.valid) {
       this.onSubmit.emit(this.validateForm.value);
     } else {
@@ -65,7 +72,7 @@ export class DriversFormComponent implements OnInit {
     }
   }
 
-  listDrivers() {
+  listDrivers(): void {
     this.router.navigate(['/drivers/drivers-list']);
   }
 }
