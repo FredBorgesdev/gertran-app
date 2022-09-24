@@ -26,8 +26,11 @@
         ></app-wagons-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Rastreadores">
-        <app-trackers-tab></app-trackers-tab>
+      <nz-tab nzTitle="Rastreadores" [nzDisabled]="!wagon?.id">
+        <app-trackers-tab
+          *ngIf="wagon?.id"
+          [vehicleId]="wagon?.vehicle.id"
+        ></app-trackers-tab>
       </nz-tab>
     </nz-tabset>
 
