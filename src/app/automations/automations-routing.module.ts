@@ -17,10 +17,18 @@ const routes: Routes = [
     }
   },
   {
-    path: 'automation-create',
+    path: 'automations-create',
     component: AutomationsFormComponent,
     data: {
       title: 'Adicionar Usuário ',
+      headerDisplay: 'none'
+    }
+  },
+  {
+    path: 'automations-edit/:id',
+    component: AutomationsFormComponent,
+    data: {
+      title: 'Editar Usuário ',
       headerDisplay: 'none'
     }
   }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Cookies from 'js-cookie';
 
-const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
+export const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
 const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
 
 @Injectable({

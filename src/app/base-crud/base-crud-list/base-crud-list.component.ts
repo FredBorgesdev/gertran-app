@@ -42,6 +42,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   edit(resource: T): void {
+    console.log(resource)
     this.router.navigate([this.resource, `${this.resource}-edit`, resource.id]);
   }
 

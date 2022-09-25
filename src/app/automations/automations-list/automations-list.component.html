@@ -45,7 +45,7 @@
 
       <div class="col-lg-4 text-right">
         <button
-          (click)="newAutomationCreate(newAutomationContent)"
+          (click)="create()"
           nz-button
           nzType="primary"
         >
@@ -54,7 +54,15 @@
         </button>
       </div>
     </div>
-    <nz-table #automationsListTable [nzData]="displayData" >
+    <nz-table
+      #automationsListTable
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
+      [nzPageIndex]="page"
+      [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)"
+    >
       <thead>
       <tr>
         <th *ngFor="let column of automationColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
@@ -65,13 +73,14 @@
         <td>{{item.id | id}}</td>
         <td>
           <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.eventType}}</h6>
+            <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
           </div>
         </td>
+        <td>{{item.event}}</td>
         <td>{{item.action}}</td>
         <td class="text-md-center">
-          <nz-badge *ngIf="item.travelSm" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.travelSm" nzStatus="error"></nz-badge>
+          <nz-badge *ngIf="item.hasTravelSm" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.hasTravelSm" nzStatus="error"></nz-badge>
         </td>
         <td class="text-md-center">
           <nz-badge *ngIf="item.vehicleMessage" nzStatus="success"></nz-badge>
@@ -86,8 +95,8 @@
           <nz-badge *ngIf="!item.velocity" nzStatus="error"></nz-badge>
         </td>
         <td class="text-md-center">
-          <nz-badge *ngIf="item.ignition" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>
+          <nz-badge *ngIf="item.hasIgnition" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.hasIgnition" nzStatus="error"></nz-badge>
         </td>
         <td class="text-md-center">
           <nz-badge *ngIf="item.command" nzStatus="success"></nz-badge>
@@ -95,7 +104,7 @@
         </td>
         <td class="text-md-center">
           <a
-            (click)="editAutomation(editAutomationContent, item)"
+            (click)="edit(item)"
             class="m-r-5"
             nz-button
             nzType="default"
@@ -105,9 +114,16 @@
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
-          <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+          <a
+            (click)="delete(item)"
+            nz-button
+            nzType="default"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Excluir"
+          >
             <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
+          </a>
         </td>
       </tr>
       </tbody>
