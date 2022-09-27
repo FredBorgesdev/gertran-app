@@ -34,10 +34,16 @@ export interface Monitoring {
 }
 
 export interface MonitoringMapData {
-  path: {
-    lat: number;
-    lng: number;
-  }[];
+  directions: {
+    destination: {
+      lat: number;
+      lng: number;
+    }
+    origin: {
+      lat: number;
+      lng: number;
+    }
+  };
   travelDuration: string;
   predictedArrival: string;
   predictedDeparture: string;
@@ -130,10 +136,10 @@ export class MonitoringService {
 
   getMapData(id: string): MonitoringMapData {
     return {
-      path: [
-        { lat: 40.7128, lng: -74.0060 },
-        { lat: 34.0522, lng: -118.2437 },
-      ],
+      directions: {
+        origin: { lat: 40.7128, lng: -74.0060 },
+        destination: { lat: 34.0522, lng: -118.2437 },
+      },
       calculatedArrival: '01/01/2021 12:00:00',
       lastUpdatedAt: '01/01/2021 12:00:00',
       timeToArrival: '10:30:00',

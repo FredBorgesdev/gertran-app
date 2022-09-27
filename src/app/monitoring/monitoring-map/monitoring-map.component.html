@@ -141,8 +141,9 @@
     width="100%"
     [center]="center"
   >
-    <map-polyline
-      [path]="details.path"
-    ></map-polyline>
+    <map-directions-renderer
+      *ngIf="(directionsResult | async) as directions"
+      [directions]="directions"
+    ></map-directions-renderer>
   </google-map>
 </ng-template>
