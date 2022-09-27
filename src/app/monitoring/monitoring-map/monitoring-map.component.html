@@ -136,14 +136,36 @@
 </nz-tabset>
 
 <ng-template #map>
-  <google-map
-    height="500px"
-    width="100%"
-    [center]="center"
+  <mgl-map
+    [style]="'mapbox://styles/mapbox/streets-v9'"
+    [zoom]="[9]"
+    [center]="[center.lng, center.lat]"
   >
-    <map-directions-renderer
-      *ngIf="(directionsResult | async) as directions"
-      [directions]="directions"
-    ></map-directions-renderer>
-  </google-map>
+    <ng-container *ngIf="directionsGeoJson">
+      <mgl-layer
+        id="route"
+        type="line"
+        [source]="{ type: 'geojson', data: directionsGeoJson }"
+        [paint]="{
+          'line-color': '#BF93E4',
+          'line-width': 5
+        }"
+        [layout]="{
+          'line-join': 'round',
+          'line-cap': 'round'
+        }"
+      ></mgl-layer>
+    </ng-container>
+  </mgl-map>
+
+<!--  <google-map-->
+<!--    height="500px"-->
+<!--    width="100%"-->
+<!--    [center]="center"-->
+<!--  >-->
+<!--    <map-directions-renderer-->
+<!--      *ngIf="(directionsResult | async) as directions"-->
+<!--      [directions]="directions"-->
+<!--    ></map-directions-renderer>-->
+<!--  </google-map>-->
 </ng-template>

@@ -31,7 +31,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss" 
+              "src/styles.scss",
+              "mapbox-gl/dist/mapbox-gl.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
