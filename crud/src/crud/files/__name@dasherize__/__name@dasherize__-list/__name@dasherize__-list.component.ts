@@ -31,12 +31,4 @@ export class <%= classify(name) %>ListComponent extends BaseCrudListComponent<<%
       modal,
     );
   }
-
-  loadResources(url?: string): void {
-    this.isLoading = true;
-    this.service.getAll({ url }).subscribe((data) => {
-      this.resources = data;
-      this.isLoading = false;
-    });
-  }
 }

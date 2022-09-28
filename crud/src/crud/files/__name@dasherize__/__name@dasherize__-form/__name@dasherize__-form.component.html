@@ -8,10 +8,10 @@
       <nz-breadcrumb-item>
         <a><i nz-icon nzType="idcard"></i><span><%= ptName %></span></a>
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="<%= camelize(name) %>?.id">
-        Editar <%= ptName %> ({{<%= camelize(name) %>.name}})
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar <%= ptName %> ({{resource.name}})
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!<%= camelize(name) %>?.id">
+      <nz-breadcrumb-item *ngIf="!resource?.id">
         Adicionar <%= ptName %>
       </nz-breadcrumb-item>
     </nz-breadcrumb>
@@ -25,7 +25,7 @@
           <input id="name" type="text" nz-input formControlName="name" />
         </nz-form-control>
       </nz-form-item>
-      
+
       <nz-divider></nz-divider>
 
       <nz-form-item>
