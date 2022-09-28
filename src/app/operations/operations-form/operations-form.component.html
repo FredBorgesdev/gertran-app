@@ -222,6 +222,197 @@
       <nz-divider></nz-divider>
 
       <nz-form-item>
+        <h3>Regras por valor</h3>
+
+        <nz-list>
+          <nz-list-item
+            nz-row
+            nzGutter="16"
+            formArrayName="rules"
+            *ngFor="let rule of getRulesControls(); let i = index"
+          >
+            <ng-container [formGroup]="rule">
+              <div nz-col nzSpan="6">
+                <nz-form-label nzRequired nzFor="minValue">Valor minimo</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <input
+                    id="minValue"
+                    type="text"
+                    nz-input
+                    formControlName="minValue"
+                    [textMask]="{ mask: reaisMask }"
+                  />
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-label nzRequired nzFor="maxValue">Valor máximo</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <input
+                    id="maxValue"
+                    type="text"
+                    nz-input
+                    formControlName="maxValue"
+                    [textMask]="{ mask: reaisMask }"
+                  />
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-label nzRequired nzFor="minRedundancy">Mínimo redundancia</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <nz-select
+                    id="minRedundancy"
+                    type="text"
+                    formControlName="minRedundancy"
+                  >
+                    <nz-option nzLabel="Nenhuma" nzValue="1"></nz-option>
+                    <nz-option nzLabel="Uma" nzValue="1"></nz-option>
+                    <nz-option nzLabel="Duas" nzValue="1"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="6">
+                <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                  <div nz-col [nzSpan]="12">
+                    <label nz-checkbox formControlName="armedGuard">
+                      <span>Escolta armada</span>
+                    </label>
+                  </div>
+                </nz-form-control>
+                <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                  <div nz-col [nzSpan]="12">
+                    <label nz-checkbox formControlName="bait">
+                      <span>Isca RF</span>
+                    </label>
+                  </div>
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="2">
+                <nz-form-label></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="danger" (click)="removeRule(i)">
+                    <i nz-icon nzType="delete"></i>
+                  </button>
+                </nz-form-control>
+              </div>
+            </ng-container>
+          </nz-list-item>
+        </nz-list>
+
+        <nz-form-item>
+          <button nz-button nzType="link" (click)="addRule()">
+            Nova regra
+          </button>
+        </nz-form-item>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <h3>Pedido de posição</h3>
+
+        <nz-list>
+          <nz-list-item
+            nz-row
+            nzGutter="16"
+            formArrayName="rules"
+            *ngFor="let position of getPositionsControls(); let i = index"
+          >
+            <ng-container [formGroup]="position">
+              <div nz-col nzSpan="4">
+                <nz-form-label nzRequired nzFor="positionTime">Tempo de posição</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <nz-select
+                    id="positionTime"
+                    type="text"
+                    formControlName="positionTime"
+                  >
+                    <nz-option nzLabel="2 minutos" nzValue="1"></nz-option>
+                    <nz-option nzLabel="3 minutos" nzValue="2"></nz-option>
+                    <nz-option nzLabel="5 minutos" nzValue="3"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-label nzRequired nzFor="area">Area / Percurso</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <nz-select
+                    id="area"
+                    type="text"
+                    formControlName="area"
+                  >
+                    <nz-option nzLabel="Metropolitana" nzValue="1"></nz-option>
+                    <nz-option nzLabel="Urbana" nzValue="2"></nz-option>
+                    <nz-option nzLabel="Rodoviária" nzValue="3"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="3">
+                <nz-form-label nzRequired nzFor="startAt">Hora inicial</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <input
+                    id="startAt"
+                    type="time"
+                    nz-input
+                    formControlName="startAt"
+                  />
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="3">
+                <nz-form-label nzRequired nzFor="endAt">Hora final</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <input
+                    id="endAt"
+                    type="time"
+                    nz-input
+                    formControlName="endAt"
+                  />
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="4">
+                <nz-form-label nzRequired nzFor="tolerance">Tolerância</nz-form-label>
+                <nz-form-control nzErrorTip="Preencha o campo">
+                  <nz-select
+                    id="tolerance"
+                    type="text"
+                    formControlName="tolerance"
+                  >
+                    <nz-option nzLabel="2 minutos" nzValue="1"></nz-option>
+                    <nz-option nzLabel="3 minutos" nzValue="2"></nz-option>
+                    <nz-option nzLabel="5 minutos" nzValue="3"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="2">
+                <nz-form-label></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="danger" (click)="removePosition(i)">
+                    <i nz-icon nzType="delete"></i>
+                  </button>
+                </nz-form-control>
+              </div>
+            </ng-container>
+          </nz-list-item>
+        </nz-list>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="link" (click)="addPosition()">
+          Nova posição
+        </button>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
         <nz-form-control [nzOffset]="7" [nzSpan]="12">
           <button type="button" (click)="save()" nz-button nzType="primary">
             <i nz-icon nzType="save"></i>Salvar Operações

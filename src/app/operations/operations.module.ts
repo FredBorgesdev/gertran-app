@@ -5,6 +5,7 @@ import { OperationsRoutingModule } from './operations-routing.module';
 import { OperationsListComponent } from './operations-list/operations-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { OperationsFormComponent } from './operations-form/operations-form.component';
+import {TextMaskModule} from 'angular2-text-mask';
 
 
 @NgModule({
@@ -12,11 +13,12 @@ import { OperationsFormComponent } from './operations-form/operations-form.compo
     OperationsListComponent,
     OperationsFormComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    OperationsRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        OperationsRoutingModule,
+        TextMaskModule
+    ]
 })
 export class OperationsModule { }
 

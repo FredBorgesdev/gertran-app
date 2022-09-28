@@ -11,6 +11,7 @@ import {VehicleModelTypes, VehicleModelTypesService} from '../../vehicle-model-t
 import {VehiclePeripherals, VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {InsuranceCompaniesService, InsuranceCompany} from '../../insurance-companies/insurance-companies.service';
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 @Component({
   selector: 'app-operations-form',
@@ -23,6 +24,11 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   vehicleModelTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
+
+  reaisMask = createNumberMask({
+    prefix: 'R$ ',
+    allowDecimal: true,
+  });
 
   constructor(
     private router: Router,
@@ -92,7 +98,46 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       brokerName: [null, [Validators.required]],
       brokerPhone: [null, [Validators.required]],
       brokerPersonInCharge: [null, [Validators.required]],
+      //
+      rules: this.formBuilder.array([]),
+      positions: this.formBuilder.array([])
     });
+  }
+
+  getRulesControls(): FormGroup[] {
+    return (this.validateForm.controls.rules as any).controls;
+  }
+
+  addRule(): void {
+    (this.validateForm.controls.rules as any).push(this.formBuilder.group({
+      minValue: [null, [Validators.required]],
+      maxValue: [null, [Validators.required]],
+      minRedundancy: [null, [Validators.required]],
+      armedGuard: [null, [Validators.required]],
+      bait: [null, [Validators.required]],
+    }));
+  }
+
+  removeRule(index: number): void {
+    (this.validateForm.controls.rules as any).removeAt(index);
+  }
+
+  getPositionsControls(): FormGroup[] {
+    return (this.validateForm.controls.positions as any).controls;
+  }
+
+  addPosition(): void {
+    (this.validateForm.controls.positions as any).push(this.formBuilder.group({
+      positionTime: [null, [Validators.required]],
+      area: [null, [Validators.required]],
+      startAt: [null, [Validators.required]],
+      endAt: [null, [Validators.required]],
+      tolerance: [null, [Validators.required]],
+    }));
+  }
+
+  removePosition(index: number): void {
+    (this.validateForm.controls.positions as any).removeAt(index);
   }
 
   list(): void {
