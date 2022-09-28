@@ -120,6 +120,14 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'robot',
         submenu: []
+      },
+      {
+        path: '/operations/operations-list',
+        title: 'Operações',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'control',
+        submenu: []
       }
     ]
   },

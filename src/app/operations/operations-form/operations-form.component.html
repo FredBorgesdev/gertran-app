@@ -1,0 +1,251 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Operações</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Operações ({{resource.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!resource?.id">
+        Adicionar Operações
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+          <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
+            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="technology">Tecnologia</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Tecnologia inválida!">
+          <nz-select
+            (ngModelChange)="loadTrackerTechnologiesModels($event)"
+            id="technology"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="technology"
+          >
+            <nz-option *ngFor="let technology of trackerTechnologies" [nzLabel]="technology.name" [nzValue]="technology.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTrackerModels">Modelo de rastreadores permitidos</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
+          <nz-select
+            id="allowedTrackerModels"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="allowedTrackerModels"
+            nzMode="multiple"
+            [nzDisabled]="!validateForm.get('technology').value"
+          >
+            <nz-option *ngFor="let trackerModel of trackerTechnologiesModels" [nzLabel]="trackerModel.name" [nzValue]="trackerModel.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTruckTypes">Tipos de cavalo permitidos</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
+          <nz-select
+            id="allowedTruckTypes"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="allowedTruckTypes"
+            nzMode="multiple"
+          >
+            <nz-option *ngFor="let truckType of vehicleModelTypes" [nzLabel]="truckType.name" [nzValue]="truckType.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedWagonTypes">Tipos de carreta permitidos</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
+          <nz-select
+            id="allowedWagonTypes"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="allowedWagonTypes"
+            nzMode="multiple"
+          >
+            <nz-option *ngFor="let wagonType of vehicleModelTypes" [nzLabel]="wagonType.name" [nzValue]="wagonType.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="requiredPeripherals">Periféricos obrigatórios</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha os periféricos">
+          <nz-select
+            id="requiredPeripherals"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma tecnologia"
+            formControlName="requiredPeripherals"
+            nzMode="multiple"
+          >
+            <nz-option *ngFor="let peripheral of vehiclePeripherals" [nzLabel]="peripheral.name" [nzValue]="peripheral.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="insuranceCompany">Seguradora</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a seguradora">
+          <nz-select
+            id="insuranceCompany"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione a seguradora"
+            formControlName="insuranceCompany"
+            nzMode="multiple"
+          >
+            <nz-option *ngFor="let insuranceCompany of insuranceCompanies" [nzLabel]="insuranceCompany.name" [nzValue]="insuranceCompany.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <div nz-col [nzSpan]="12">
+                <label nz-checkbox formControlName="authorizedAutomaticMonitoring">
+                  <span>Monitoramento automático?</span>
+                </label>
+              </div>
+            </nz-form-control>
+
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <div nz-col [nzSpan]="12">
+                <label nz-checkbox formControlName="followMonitoring">
+                  <span>Acompanhar monitoramento?</span>
+                </label>
+              </div>
+            </nz-form-control>
+          </div>
+
+          <div nz-col  nzSpan="12">
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <div nz-col [nzSpan]="12">
+                <label nz-checkbox formControlName="isMain">
+                  <span>É o principal?</span>
+                </label>
+              </div>
+            </nz-form-control>
+
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <div nz-col [nzSpan]="12">
+                <label nz-checkbox formControlName="followMonitoring">
+                  <span>DDR</span>
+                </label>
+              </div>
+            </nz-form-control>
+          </div>
+        </div>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="operationType">Tipo de operação</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <nz-select
+            id="operationType"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione o tipo de operação"
+            formControlName="operationType"
+          >
+            <nz-option nzLabel="GL" nzValue="GL"></nz-option>
+            <nz-option nzLabel="GR" nzValue="GR"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="radiusToActivateRouteDeviation">Raio de ativação</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <input
+            id="radiusToActivateRouteDeviation"
+            type="number"
+            nz-input
+            formControlName="radiusToActivateRouteDeviation"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="policyEffectiveDate">Data de ativação</nz-form-label>
+        <nz-form-control nzErrorTip="Data inválida!">
+          <nz-date-picker
+            style="width: 100%;"
+            id="policyEffectiveDate"
+            nzFormat="dd/MM/yyyy"
+            formControlName="policyEffectiveDate"
+            nzPlaceHolder="Selecione a data"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerName">Nome da corretora</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+          <input id="brokerName" type="text" nz-input formControlName="brokerName" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerPhone">Telefone da corretora</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <input id="brokerPhone" type="text" nz-input formControlName="brokerPhone" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerPersonInCharge">Responsável</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <input id="brokerPersonInCharge" type="text" nz-input formControlName="brokerPersonInCharge" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Operações
+          </button>
+          <button type="button" (click)="list()" nz-button>
+            <i nz-icon nzType="unordered-list"></i>Listar Operações
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card>
+</nz-spin>
