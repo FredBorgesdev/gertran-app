@@ -14,6 +14,8 @@ export interface Route {
     id: string;
     point: string;
     order: number;
+    latitude: number;
+    longitude: number;
   }[];
 }
 

@@ -18,7 +18,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
   constructor(
     @Inject('service') protected service: ApiService<T>,
     protected message: NzMessageService,
-    private activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

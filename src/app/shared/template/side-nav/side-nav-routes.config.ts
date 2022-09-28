@@ -41,6 +41,14 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
+    path: '/monitoring-requests/monitoring-requests-list',
+    title: 'Solicitações de monitoramento',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'database',
+    submenu: []
+  },
+  {
     path: '',
     title: 'Veículos',
     iconType: 'nzIcon',

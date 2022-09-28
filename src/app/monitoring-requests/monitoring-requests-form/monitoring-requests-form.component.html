@@ -1,0 +1,101 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Requisições de monitoramento</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Requisições de monitoramento ({{resource.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!resource?.id">
+        Adicionar Requisições de monitoramento
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+          <input id="name" type="text" nz-input formControlName="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+
+        <nz-list cdkDropList (cdkDropListDropped)="drop($event)">
+          <nz-list-item
+            nz-row
+            nzGutter="16"
+            formArrayName="points"
+            *ngFor="let point of getPointsControls(); let i = index"
+            cdkDrag
+          >
+            <ng-container [formGroup]="point">
+              <div nz-col nzSpan="12">
+                <nz-form-label nzRequired nzFor="address">Localização</nz-form-label>
+                <nz-form-control nzErrorTip="Insira o endereço">
+                  <input
+                    ngx-google-places-autocomplete
+                    (onAddressChange)="handleAddressChange($event, point)"
+                    id="address"
+                    type="text"
+                    nz-input
+                    placeholder="Digite o endereço"
+                    formControlName="address"
+                  />
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="10">
+                <nz-form-label nzRequired nzFor="time">Data e hora do ponto</nz-form-label>
+                <nz-form-control>
+                  <nz-date-picker
+                    style="width: 100%"
+                    [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }"
+                    nzFormat="dd/MM/yyyy HH:mm:ss"
+                    formControlName="time"
+                    nzPlaceHolder="Selecione a data e hora"
+                  ></nz-date-picker>
+                </nz-form-control>
+              </div>
+
+              <div nz-col nzSpan="2">
+                <nz-form-label></nz-form-label>
+                <nz-form-control>
+                  <button nz-button nzType="danger" (click)="removePoint(i)">
+                    <i nz-icon nzType="delete"></i>
+                  </button>
+                </nz-form-control>
+              </div>
+            </ng-container>
+          </nz-list-item>
+        </nz-list>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button nz-button nzType="link" (click)="addPoint()">
+          Novo ponto
+        </button>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Requisições de monitoramento
+          </button>
+          <button type="button" (click)="list()" nz-button>
+            <i nz-icon nzType="unordered-list"></i>Listar Requisições de monitoramento
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card>
+</nz-spin>

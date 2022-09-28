@@ -17,7 +17,7 @@ export class <%= classify(name) %>Service implements ApiService<<%= classify(nam
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination): GetAllResponse<<%= classify(name) %>> {
+  getAll(pagination: Pagination): Observable<GetAllResponse<<%= classify(name) %>>> {
     const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
