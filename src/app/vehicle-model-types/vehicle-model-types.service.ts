@@ -18,7 +18,7 @@ export class VehicleModelTypesService implements ApiService<VehicleModelTypes> {
   ) { }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<VehicleModelTypes>> {
-    const params = { limit: DEFAULT_LIMIT };
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;

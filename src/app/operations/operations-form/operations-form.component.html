@@ -29,22 +29,6 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="technology">Tecnologia</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Tecnologia inválida!">
-          <nz-select
-            (ngModelChange)="loadTrackerTechnologiesModels($event)"
-            id="technology"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Selecione uma tecnologia"
-            formControlName="technology"
-          >
-            <nz-option *ngFor="let technology of trackerTechnologies" [nzLabel]="technology.name" [nzValue]="technology.id"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTrackerModels">Modelo de rastreadores permitidos</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
           <nz-select
@@ -54,9 +38,10 @@
             nzPlaceHolder="Selecione uma tecnologia"
             formControlName="allowedTrackerModels"
             nzMode="multiple"
-            [nzDisabled]="!validateForm.get('technology').value"
           >
-            <nz-option *ngFor="let trackerModel of trackerTechnologiesModels" [nzLabel]="trackerModel.name" [nzValue]="trackerModel.id"></nz-option>
+            <nz-option-group *ngFor="let group of trackerTechnologies" [nzLabel]="group.name">
+              <nz-option *ngFor="let option of group.models" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-option-group>
           </nz-select>
         </nz-form-control>
       </nz-form-item>

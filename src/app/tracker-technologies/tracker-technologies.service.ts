@@ -18,7 +18,7 @@ export class TrackerTechnologiesService implements ApiService<TrackerTechnologie
   ) { }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<TrackerTechnologies>> {
-    const params = { limit: DEFAULT_LIMIT };
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;

@@ -19,8 +19,7 @@ import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 })
 export class OperationsFormComponent extends BaseCrudFormComponent<Operations> implements OnInit {
   customers: Customer[] = [];
-  trackerTechnologies: TrackerTechnologies[] = [];
-  trackerTechnologiesModels: TrackerTechnologiesModels[] = [];
+  trackerTechnologies: (TrackerTechnologies & { models?: TrackerTechnologiesModels[] })[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
@@ -56,6 +55,12 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     });
     this.trackerTechnologiesService.getAll({ limit: 999 }).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologies = trackerTechnologiesModels.results;
+
+      this.trackerTechnologies.forEach(trackerTechnology => {
+        this.trackerTechnologiesModelsService.getAll({ limit: 999 }, trackerTechnology.id).subscribe(data => {
+          trackerTechnology.models = data.results;
+        });
+      });
     });
     this.vehicleModelTypesService.getAll({ limit: 999 }).subscribe(vehicleModelTypes => {
       this.vehicleModelTypes = vehicleModelTypes.results;
@@ -68,17 +73,10 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     });
   }
 
-  loadTrackerTechnologiesModels(trackerTechnologyId: string): void {
-    this.trackerTechnologiesModelsService.getAll({ limit: 999 }, trackerTechnologyId).subscribe(trackerTechnologiesModels => {
-      this.trackerTechnologiesModels = trackerTechnologiesModels.results;
-    });
-  }
-
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       customer: [null, [Validators.required]],
-      technology: [null, [Validators.required]],
       allowedTrackerModels: [[], [Validators.required]],
       allowedTruckTypes: [[], [Validators.required]],
       allowedWagonTypes: [[], [Validators.required]],
