@@ -33,20 +33,29 @@ export const ROUTES: SideNavInterface[] = [
     submenu: []
   },
   {
-    path: '/monitoring/monitoring-list',
+    path: '',
     title: 'Monitoramento',
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'eye',
-    submenu: []
-  },
-  {
-    path: '/monitoring-requests/monitoring-requests-list',
-    title: 'Solicitações de monitoramento',
-    iconType: 'nzIcon',
-    iconTheme: 'outline',
-    icon: 'database',
-    submenu: []
+    submenu: [
+      {
+        path: '/monitoring/monitoring-list',
+        title: 'Dashboard',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'eye',
+        submenu: []
+      },
+      {
+        path: '/monitoring-requests/monitoring-requests-list',
+        title: 'Solicitações',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'database',
+        submenu: []
+      },
+    ]
   },
   {
     path: '',
