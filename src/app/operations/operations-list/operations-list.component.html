@@ -45,11 +45,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of table.data; let i=index">
-          <td>{{item.id}}</td>
+          <td>{{item.id | id}}</td>
           <td>
             <div class="d-flex align-items-center">
               <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
             </div>
+          </td>
+          <td>{{item.radiusToActivateRouteDeviation}}</td>
+          <td>
+            <nz-badge *ngIf="item.isMain" nzStatus="success"></nz-badge>
+            <nz-badge *ngIf="!item.isMain" nzStatus="error"></nz-badge>
           </td>
           <td class="text-md-center">
             <a

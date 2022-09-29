@@ -12,6 +12,7 @@ import {VehiclePeripherals, VehiclePeripheralsService} from '../../vehicle-perip
 import {InsuranceCompaniesService, InsuranceCompany} from '../../insurance-companies/insurance-companies.service';
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import {Choice} from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-operations-form',
@@ -24,6 +25,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   vehicleModelTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
+  operationTypes: Choice[] = [];
 
   reaisMask = createNumberMask({
     prefix: 'R$ ',
@@ -77,6 +79,9 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     this.insuranceCompaniesService.getAll({ limit: 999 }).subscribe(insuranceCompanies => {
       this.insuranceCompanies = insuranceCompanies.results;
     });
+    (this.service as OperationsService).getOperationTypes().subscribe(data => {
+      this.operationTypes = data;
+    });
   }
 
   loadFormBuilder(): void {
@@ -88,7 +93,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       allowedWagonTypes: [[], [Validators.required]],
       requiredPeripherals: [[], [Validators.required]],
       insuranceCompany: [null, [Validators.required]],
-      authorizedAutomaticMonitoring: [false, [Validators.required]],
+      authorizeAutomaticMonitoring: [false, [Validators.required]],
       followMonitoring: [false, [Validators.required]],
       isMain: [false, [Validators.required]],
       isDdr: [false, [Validators.required]],
@@ -101,6 +106,18 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       //
       rules: this.formBuilder.array([]),
       positions: this.formBuilder.array([])
+    });
+  }
+
+  performFormGroupSetValues(): void {
+    super.performFormGroupSetValues();
+
+    this.validateForm.patchValue({
+      allowedTrackerModels: this.resource.allowedTrackerModels.map(({ id }) => id),
+      allowedTruckTypes: this.resource.allowedTruckTypes.map(({ id }) => id),
+      allowedWagonTypes: this.resource.allowedWagonTypes.map(({ id }) => id),
+      requiredPeripherals: this.resource.requiredPeripherals.map(({ id }) => id),
+      insuranceCompany: this.resource.insuranceCompany.id,
     });
   }
 

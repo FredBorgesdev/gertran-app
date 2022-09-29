@@ -14,6 +14,8 @@ export class OperationsListComponent extends BaseCrudListComponent<Operations> {
   operationsColumns = [
     { title: 'Id' },
     { title: 'Nome' },
+    { title: 'Raio de ativação' },
+    { title: 'Principal' },
     { title: 'Ações' },
   ];
 

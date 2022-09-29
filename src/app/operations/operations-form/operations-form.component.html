@@ -103,7 +103,6 @@
             nzAllowClear
             nzPlaceHolder="Selecione a seguradora"
             formControlName="insuranceCompany"
-            nzMode="multiple"
           >
             <nz-option *ngFor="let insuranceCompany of insuranceCompanies" [nzLabel]="insuranceCompany.name" [nzValue]="insuranceCompany.id"></nz-option>
           </nz-select>
@@ -122,7 +121,7 @@
           <div nz-col nzSpan="12">
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <div nz-col [nzSpan]="12">
-                <label nz-checkbox formControlName="authorizedAutomaticMonitoring">
+                <label nz-checkbox formControlName="authorizeAutomaticMonitoring">
                   <span>Monitoramento automático?</span>
                 </label>
               </div>
@@ -167,8 +166,11 @@
             nzPlaceHolder="Selecione o tipo de operação"
             formControlName="operationType"
           >
-            <nz-option nzLabel="GL" nzValue="GL"></nz-option>
-            <nz-option nzLabel="GR" nzValue="GR"></nz-option>
+            <nz-option
+              *ngFor="let option of operationTypes"
+              [nzLabel]="option.label"
+              [nzValue]="option.value"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -267,8 +269,8 @@
                     formControlName="minRedundancy"
                   >
                     <nz-option nzLabel="Nenhuma" nzValue="1"></nz-option>
-                    <nz-option nzLabel="Uma" nzValue="1"></nz-option>
-                    <nz-option nzLabel="Duas" nzValue="1"></nz-option>
+                    <nz-option nzLabel="Uma" nzValue="2"></nz-option>
+                    <nz-option nzLabel="Duas" nzValue="3"></nz-option>
                   </nz-select>
                 </nz-form-control>
               </div>

@@ -1,11 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService, {GetAllResponse} from '../shared/services/api.service';
+import ApiService, {Choice, GetAllResponse} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
+import {format} from 'date-fns';
 
 export interface Operations {
-  id: string
-  name: string
+  id: string;
+  name: string;
+  policyEffectiveDate: string;
+  allowedTrackerModels: {
+    id: string;
+    name: string;
+  }[];
+  allowedTruckTypes: {
+    id: string;
+    name: string;
+  }[];
+  allowedWagonTypes: {
+    id: string;
+    name: string;
+  }[];
+  authorizeAutomaticMonitoring: false;
+  brokerName: string;
+  brokerPersonInCharge: string;
+  brokerPhone: string;
+  customer: string;
+  followMonitoring: string;
+  insuranceCompany: {
+    id: string;
+    name: string;
+  };
+  isDdr: boolean;
+  isMain: boolean;
+  operationType: string;
+  radiusToActivateRouteDeviation: number;
+  requiredPeripherals: {
+    id: string;
+    name: string;
+  }[];
 }
 
 @Injectable({
@@ -26,6 +58,7 @@ export class OperationsService implements ApiService<Operations> {
   }
 
   save(operations: Omit<Operations, 'id'>): Observable<Operations> {
+    operations.policyEffectiveDate = format(new Date(operations.policyEffectiveDate), 'yyyy-MM-dd');
     return this.http.post<Operations>('settings/operations/create', operations);
   }
 
@@ -38,6 +71,10 @@ export class OperationsService implements ApiService<Operations> {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`settings/operations/${id}/delete`);
+  }
+
+  getOperationTypes(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('settings/operations/operation-types');
   }
 }
 
