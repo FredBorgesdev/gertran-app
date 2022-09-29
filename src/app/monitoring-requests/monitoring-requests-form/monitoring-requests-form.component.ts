@@ -105,29 +105,42 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       return;
     }
 
-    this.routesService.get(routeId).subscribe(async (route) => {
+    this.routesService.get(routeId).subscribe((route) => {
       for (const point of route.points) {
         const formGroup = this.addPoint();
-        const previousPoint = this.getPointsControls()[this.getPointsControls().length - 2];
-
-        let time = new Date();
-        if (previousPoint) {
-          const eta = await this.calculateETA(
-            { lat: previousPoint.value.latitude, lng: previousPoint.value.longitude },
-            { lat: point.latitude, lng: point.longitude },
-          );
-          time = addSeconds(previousPoint.value.time, eta);
-        }
 
         formGroup.patchValue({
           pointId: point.id,
           address: point.point,
           latitude: point.latitude,
           longitude: point.longitude,
-          time,
         });
       }
+
+      this.calculateEtaForAllPoints();
     });
+  }
+
+  async calculateEtaForAllPoints(): Promise<void> {
+    const points = this.getPointsControls();
+    points[0]?.patchValue({ time: new Date() });
+
+    for (let index = 1; index < points.length; index++) {
+      const previousPoint = points[index - 1];
+      const currentPoint = points[index];
+
+      if (!previousPoint || !currentPoint) {
+        return;
+      }
+
+      const eta = await this.calculateETA(
+        { lat: previousPoint.value.latitude, lng: previousPoint.value.longitude },
+        { lat: currentPoint.value.latitude, lng: currentPoint.value.longitude },
+      );
+      currentPoint.patchValue({
+        time: addSeconds(previousPoint.value.time, eta),
+      });
+    }
   }
 
   getPointsControls(): any {
@@ -169,6 +182,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.getPointsControls(), event.previousIndex, event.currentIndex);
+    this.calculateEtaForAllPoints();
   }
 
   list(): void {
