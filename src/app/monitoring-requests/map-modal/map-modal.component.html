@@ -1,0 +1,33 @@
+<mgl-map
+  [style]="'mapbox://styles/mapbox/streets-v9'"
+  [zoom]="[9]"
+  [center]="[center.longitude, center.latitude]"
+>
+  <ng-container *ngIf="directionsGeoJson">
+    <mgl-layer
+      id="route"
+      type="line"
+      [source]="{ type: 'geojson', data: directionsGeoJson }"
+      [paint]="{
+          'line-color': '#BF93E4',
+          'line-width': 5
+        }"
+      [layout]="{
+          'line-join': 'round',
+          'line-cap': 'round'
+        }"
+    ></mgl-layer>
+
+    <mgl-marker
+      *ngFor="let marker of markers"
+      [lngLat]="marker"
+    >
+      <span
+        nz-icon
+        nzType="pushpin"
+        nzTheme="fill"
+        style="color: red; font-size: 24px"
+      ></span>
+    </mgl-marker>
+  </ng-container>
+</mgl-map>

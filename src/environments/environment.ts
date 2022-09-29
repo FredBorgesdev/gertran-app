@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   apiUrl: '',
   sentryDsn: '',
-  appUrl: ''
+  appUrl: '',
+  mapboxAccessToken: ''
 };
 
 /*

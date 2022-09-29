@@ -10,6 +10,14 @@ import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {addSeconds, setHours} from 'date-fns';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import {Stop, StopsService} from '../../stops/stops.service';
+import {Customer, CustomersService} from '../../customers/customers.service';
+import {Driver, DriversService} from '../../drivers/drivers.service';
+import {Truck, TrucksService} from '../../trucks/trucks.service';
+import {Wagon, WagonsService} from '../../wagons/wagons.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {MapModalComponent} from '../map-modal/map-modal.component';
+import {environment} from '../../../environments/environment';
 
 interface LatLng {
   lat: number;
@@ -24,11 +32,25 @@ interface LatLng {
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
   timeDefaultValue = setHours(new Date(), 0);
 
+  stops: Stop[] = [];
+  customers: Customer[] = [];
+  drivers: Driver[] = [];
+  trucks: Truck[] = [];
+  wagons: Wagon[] = [];
+
+  operations: any[] = [];
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
+    private modal: NzModalService,
     private routesService: RoutesService,
     private i18n: NzI18nService,
+    private stopsService: StopsService,
+    private customersService: CustomersService,
+    private driversService: DriversService,
+    private trucksService: TrucksService,
+    private wagonsService: WagonsService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -43,17 +65,43 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   ngOnInit(): void {
     super.ngOnInit();
     this.i18n.setLocale(en_US);
+
+    this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
+      this.stops = stops.results;
+    });
+    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
+      this.customers = customers.results;
+    });
+    this.driversService.getAll({ limit: 999 }).subscribe((drivers) => {
+      this.drivers = drivers.results;
+    });
+    this.trucksService.getAll({ limit: 999 }).subscribe((trucks) => {
+      this.trucks = trucks.results;
+    });
+    this.wagonsService.getAll({ limit: 999 }).subscribe((wagons) => {
+      this.wagons = wagons.results;
+    });
   }
 
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
+      transporter: [null, [Validators.required]],
+      shipper: [null, [Validators.required]],
       name: [null, [Validators.required]],
+      chosenPoint: [BLANK_ROUTE.id],
       points: this.formBuilder.array([]),
       address: [null, [Validators.required]],
+      truck: [null, [Validators.required]],
+      firstWagon: [null, [Validators.required]],
+      secondWagon: [null, [Validators.required]],
+      operation: [null, [Validators.required]],
+      loadingOrder: [null, [Validators.required]],
+      notes: [null, [Validators.required]],
+      isSimulation: [false, [Validators.required]],
     });
 
     const { routeId } = this.activatedRoute.snapshot.queryParams || {};
-    if (!routeId || routeId === BLANK_ROUTE) {
+    if (!routeId || routeId === BLANK_ROUTE.id) {
       return;
     }
 
@@ -62,7 +110,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
         const formGroup = this.addPoint();
         const previousPoint = this.getPointsControls()[this.getPointsControls().length - 2];
 
-        let time = null;
+        let time = new Date();
         if (previousPoint) {
           const eta = await this.calculateETA(
             { lat: previousPoint.value.latitude, lng: previousPoint.value.longitude },
@@ -74,6 +122,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
         formGroup.patchValue({
           pointId: point.id,
           address: point.point,
+          latitude: point.latitude,
+          longitude: point.longitude,
           time,
         });
       }
@@ -85,10 +135,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   addPoint(): FormGroup {
+    const chosenPoint = this.validateForm.get('chosenPoint').value;
+    const address = chosenPoint?.address || null;
+
     (this.validateForm.get('points') as FormArray).push(
       new FormGroup({
         pointId: new FormControl(null),
-        address: new FormControl(null, [Validators.required]),
+        address: new FormControl(address, [Validators.required]),
         latitude: new FormControl(null),
         longitude: new FormControl(null),
         time: new FormControl(null),
@@ -125,7 +178,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   calculateETA(origin: LatLng, destination: LatLng): Promise<number> {
     return new Promise((resolve, reject) => {
       const directions = new MapboxDirections({
-        accessToken: 'pk.eyJ1Ijoidml0b3JsZGZyZWl0YXMiLCJhIjoiY2w4amppY25kMDQ4ODNucWc5Ynh6MTc4biJ9.9T9N2GtMEAwgo88NSwHayA',
+        accessToken: environment.mapboxAccessToken,
         unit: 'metric',
         profile: 'mapbox/driving',
         controls: {
@@ -139,9 +192,19 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       });
       directions.setOrigin([origin.lng, origin.lat]);
       directions.setDestination([destination.lng, destination.lat]);
-      directions.on('route', (e) => {
-        console.log(e)
+      directions.on('route', ({ route }) => {
+        resolve(route[0].duration);
       });
+    });
+  }
+
+  showMap(): void {
+    this.modal.create({
+      nzTitle: 'Mapa',
+      nzContent: MapModalComponent,
+      nzComponentParams: {
+        points: this.getPointsControls().map((point) => point.value),
+      }
     });
   }
 }

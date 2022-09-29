@@ -4,6 +4,7 @@ import {MapDirectionsService} from '@angular/google-maps';
 import {Observable} from 'rxjs';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import polyline from '@mapbox/polyline';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-monitoring-map',
@@ -33,7 +34,7 @@ export class MonitoringMapComponent implements OnInit {
     this.details = this.service.getMapData(this.item.id);
 
     const directions = new MapboxDirections({
-      accessToken: 'pk.eyJ1Ijoidml0b3JsZGZyZWl0YXMiLCJhIjoiY2w4amppY25kMDQ4ODNucWc5Ynh6MTc4biJ9.9T9N2GtMEAwgo88NSwHayA',
+      accessToken: environment.mapboxAccessToken,
       unit: 'metric',
       profile: 'mapbox/driving',
       controls: {

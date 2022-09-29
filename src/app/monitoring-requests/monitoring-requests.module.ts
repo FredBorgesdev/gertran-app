@@ -8,13 +8,17 @@ import { MonitoringRequestsFormComponent } from './monitoring-requests-form/moni
 import { RoutesModalComponent } from './routes-modal/routes-modal.component';
 import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MapModalComponent } from './map-modal/map-modal.component';
+import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
+import {environment} from '../../environments/environment';
 
 
 @NgModule({
   declarations: [
     MonitoringRequestsListComponent,
     MonitoringRequestsFormComponent,
-    RoutesModalComponent
+    RoutesModalComponent,
+    MapModalComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +26,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MonitoringRequestsRoutingModule,
     GooglePlaceModule,
     DragDropModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapboxAccessToken,
+    }),
   ]
 })
 export class MonitoringRequestsModule { }

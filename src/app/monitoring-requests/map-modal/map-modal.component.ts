@@ -1,0 +1,54 @@
+import {Component, Input, OnInit} from '@angular/core';
+import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import {environment} from '../../../environments/environment';
+import polyline from '@mapbox/polyline';
+
+@Component({
+  selector: 'app-map-modal',
+  templateUrl: './map-modal.component.html',
+  styleUrls: ['./map-modal.component.css']
+})
+export class MapModalComponent implements OnInit {
+  @Input() points: any[] = [];
+  directionsGeoJson: any;
+  markers = [];
+  center = { latitude: 0, longitude: 0 };
+
+  constructor() { }
+
+  ngOnInit(): void {
+    const directions = new MapboxDirections({
+      accessToken: environment.mapboxAccessToken,
+      unit: 'metric',
+      profile: 'mapbox/driving',
+      controls: {
+        inputs: false,
+        instructions: false,
+        profileSwitcher: false
+      },
+      geocoder: {
+        geometries: 'geojson',
+      },
+    });
+
+    this.markers = this.points.map(point => ([point.longitude, point.latitude]));
+    console.log(this.markers);
+
+    const origin = this.points[0];
+    directions.setOrigin([origin.longitude, origin.latitude]);
+    this.center = { latitude: origin.latitude, longitude: origin.longitude };
+
+    const waypoints = this.points.slice(1, this.points.length - 1);
+    waypoints.forEach((point) => {
+      directions.addWaypoint(0, [point.longitude, point.latitude]);
+    });
+
+    const destination = this.points[this.points.length - 1];
+    directions.setDestination([destination.longitude, destination.latitude]);
+
+    directions.on('route', (e) => {
+      this.directionsGeoJson = polyline.toGeoJSON(e.route[0].geometry);
+    });
+  }
+
+}

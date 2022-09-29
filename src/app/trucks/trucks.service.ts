@@ -22,7 +22,7 @@ export class TrucksService extends VehiclesService<Truck> {
   }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Truck>> {
-    const params = { limit: DEFAULT_LIMIT };
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;

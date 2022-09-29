@@ -8,6 +8,7 @@ import {SharedModule} from '../shared/shared.module';
 import { MonitoringMapComponent } from './monitoring-map/monitoring-map.component';
 import {NzPopoverModule} from 'ng-zorro-antd/popover';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
+import {environment} from '../../environments/environment';
 
 const antdModules = [
 ];
@@ -25,7 +26,7 @@ const antdModules = [
     ...antdModules,
     NzPopoverModule,
     NgxMapboxGLModule.withConfig({
-      accessToken: 'pk.eyJ1Ijoidml0b3JsZGZyZWl0YXMiLCJhIjoiY2w4amppY25kMDQ4ODNucWc5Ynh6MTc4biJ9.9T9N2GtMEAwgo88NSwHayA'
+      accessToken: environment.mapboxAccessToken,
     })
   ]
 })
