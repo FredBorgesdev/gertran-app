@@ -42,6 +42,7 @@ import { SearchPipe } from './pipes/search.pipe';
 import { TableService } from './services/table.service';
 import { ThemeConstantService } from './services/theme-constant.service';
 import { IdPipe } from './pipes/id.pipe';
+import { ReaisPipe } from './pipes/reais.pipe';
 
 const antdModule = [
   NzIconModule,
@@ -83,6 +84,7 @@ const antdModule = [
     PerfectScrollbarModule,
     SearchPipe,
     IdPipe,
+    ReaisPipe,
     ...antdModule,
   ],
   imports: [
@@ -93,7 +95,8 @@ const antdModule = [
   ],
   declarations: [
     SearchPipe,
-    IdPipe
+    IdPipe,
+    ReaisPipe
   ],
   providers: [
     ThemeConstantService,

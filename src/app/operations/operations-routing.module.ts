@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OperationsFormComponent } from './operations-form/operations-form.component';
 import { OperationsListComponent } from './operations-list/operations-list.component';
+import { OperationsOperationComponent } from './operations-operation/operations-operation.component';
 
 const routes: Routes = [
   {
@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'operations-create',
-    component: OperationsFormComponent,
+    component: OperationsOperationComponent,
     data: {
       title: 'Criar Operações ',
       headerDisplay: 'none',
@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'operations-edit/:id',
-    component: OperationsFormComponent,
+    component: OperationsOperationComponent,
     data: {
       title: 'Editar Operações ',
       headerDisplay: 'none',

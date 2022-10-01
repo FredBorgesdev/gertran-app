@@ -1,0 +1,34 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Operações</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="operation?.id">
+        Editar Operações ({{operation.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!operation?.id">
+        Adicionar Operações
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Operação">
+        <app-operations-form
+          *ngIf="!isLoading"
+          [operation]="operation"
+        ></app-operations-form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Regras por valor" [nzDisabled]="!operation">
+        <app-operations-rules-by-value-tab
+          *ngIf="!isLoading && operation?.id"
+          [operationId]="operation.id"
+        ></app-operations-rules-by-value-tab>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>

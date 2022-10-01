@@ -6,12 +6,16 @@ import { OperationsListComponent } from './operations-list/operations-list.compo
 import { SharedModule } from '../shared/shared.module';
 import { OperationsFormComponent } from './operations-form/operations-form.component';
 import {TextMaskModule} from 'angular2-text-mask';
+import { OperationsOperationComponent } from './operations-operation/operations-operation.component';
+import { OperationsRulesByValueTabComponent } from './operations-rules-by-value-tab/operations-rules-by-value-tab.component';
 
 
 @NgModule({
   declarations: [
     OperationsListComponent,
-    OperationsFormComponent
+    OperationsFormComponent,
+    OperationsOperationComponent,
+    OperationsRulesByValueTabComponent
   ],
     imports: [
         CommonModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -20,17 +20,14 @@ import {Choice} from '../../shared/services/api.service';
   styleUrls: ['./operations-form.component.css'],
 })
 export class OperationsFormComponent extends BaseCrudFormComponent<Operations> implements OnInit {
+  @Input() operation: Operations = null;
+
   customers: Customer[] = [];
   trackerTechnologies: (TrackerTechnologies & { models?: TrackerTechnologiesModels[] })[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
   operationTypes: Choice[] = [];
-
-  reaisMask = createNumberMask({
-    prefix: 'R$ ',
-    allowDecimal: true,
-  });
 
   constructor(
     private router: Router,
@@ -51,6 +48,16 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       message,
       activatedRoute,
     );
+  }
+
+  loadResource(): void {
+    if (!this.operation) {
+      return;
+    }
+
+    this.resource = this.operation;
+    this.performResourceChange();
+    this.performFormGroupSetValues();
   }
 
   ngOnInit(): void {
