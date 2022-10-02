@@ -14,8 +14,11 @@ import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.co
 export class MonitoringRequestsListComponent extends BaseCrudListComponent<MonitoringRequests> {
   monitoringRequestsColumns = [
     { title: 'Id' },
-    { title: 'Nome' },
-    { title: 'Ações' },
+    { title: 'Embarcador' },
+    { title: 'Transportador' },
+    { title: 'Motorista' },
+    { title: 'Operação' },
+    { title: 'Simulação' },
   ];
 
   constructor(
@@ -40,12 +43,11 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzOkText: 'Criar',
       nzCancelText: 'Cancelar',
       nzOnOk: (componentInstance) => {
-        if (componentInstance.checkedId === BLANK_ROUTE.id) {
-          return;
-        }
+        const route = componentInstance.checkedId !== BLANK_ROUTE.id ?
+          componentInstance.checkedId : null;
 
         (this.service as MonitoringRequestsService).save({
-          route: componentInstance.checkedId as string
+          route
         }).subscribe((result) => {
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
         });

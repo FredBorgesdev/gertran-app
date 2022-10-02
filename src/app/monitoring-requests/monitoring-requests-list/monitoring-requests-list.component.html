@@ -1,7 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-
   <nz-card>
-
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -45,12 +43,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of table.data; let i=index">
-          <td>{{item.id}}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
-            </div>
-          </td>
+          <td>{{item.id | id}}</td>
+          <td>{{item.shipper?.tradingName ?? '-'}}</td>
+          <td>{{item.transporter?.tradingName ?? '-'}}</td>
+          <td>{{item.driver?.name ?? '-'}}</td>
+          <td>{{item.operation?.name ?? '-'}}</td>
           <td class="text-md-center">
             <a
               (click)="edit(item)"
@@ -78,5 +75,4 @@
       </tbody>
     </nz-table>
   </nz-card>
-
 </nz-spin>
