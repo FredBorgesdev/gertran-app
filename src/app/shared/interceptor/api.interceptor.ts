@@ -43,13 +43,13 @@ export class ApiInterceptor implements HttpInterceptor {
           }
         }
       }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          window.location.href = '/authentication/login';
-        } else {
-          return throwError(error);
-        }
-      }),
+      // catchError((error: HttpErrorResponse) => {
+      //   if (error.status === 401) {
+      //     window.location.href = '/authentication/login';
+      //   } else {
+      //     return throwError(error);
+      //   }
+      // }),
     );
   }
 }

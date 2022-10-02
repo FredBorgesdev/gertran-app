@@ -36,25 +36,16 @@
         <label nz-checkbox nzChecked>Em viagem</label>
       </div>
       <div nz-col nzSpan="8" style="margin-left: auto; flex: none">
-        <nz-badge [nzCount]="5" class="m-r-15">
-          <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="menu">
-            Alertas
-            <span nz-icon nzType="down"></span>
-          </button>
-        </nz-badge>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <ul nz-menu nzSelectable>
-            <li nz-menu-item>(55) Mensagem</li>
-            <li nz-menu-item nz>(8) Alerta</li>
-            <li nz-menu-item nzDanger>(0) Urgente</li>
-          </ul>
-        </nz-dropdown-menu>
-
-        <button
-          nz-button
-          nzType="primary"
-          nz-dropdown
-        >
+        <button nzSize="small" nz-button nzType="secondary" class="m-r-10">
+          (55) Mensagens
+        </button>
+        <button nzSize="small" nz-button nzType="primary" class="m-r-10">
+          (8) Alertas
+        </button>
+        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10">
+          (0) Urgente
+        </button>
+        <button nzSize="small" nz-button nzType="dashed">
           <span nz-icon nzType="car"></span>
           Placa
         </button>
@@ -166,7 +157,7 @@
       [nzData]="monitoringData"
       [nzFrontPagination]="false"
       nzTableLayout="fixed"
-      [nzScroll]="{ y: '800px' }"
+      [nzScroll]="{ y: '800px', x: '1800px' }"
     >
       <thead>
       <tr>
