@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MonitoringRequestsFormComponent } from './monitoring-requests-form/monitoring-requests-form.component';
 import { MonitoringRequestsListComponent } from './monitoring-requests-list/monitoring-requests-list.component';
+import {MonitoringRequestComponent} from './monitoring-request/monitoring-request.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'monitoring-requests-create',
-    component: MonitoringRequestsFormComponent,
+    component: MonitoringRequestComponent,
     data: {
       title: 'Criar Requisições de monitoramento ',
       headerDisplay: 'none',
@@ -22,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'monitoring-requests-edit/:id',
-    component: MonitoringRequestsFormComponent,
+    component: MonitoringRequestComponent,
     data: {
       title: 'Editar Requisições de monitoramento ',
       headerDisplay: 'none',

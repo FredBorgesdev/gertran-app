@@ -1,37 +1,18 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
-
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Requisições de monitoramento</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="resource?.id">
-        Editar Requisições de monitoramento ({{resource.name}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!resource?.id">
-        Adicionar Requisições de monitoramento
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
     <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
-          <input id="name" type="text" nz-input formControlName="name" />
-        </nz-form-control>
-      </nz-form-item>
-
       <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Embarcador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-              <nz-select id="shipper" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="shipper">
+              <nz-select
+                id="shipper"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione uma empresa"
+                formControlName="shipper"
+                (ngModelChange)="saveDraft('shipper')"
+              >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
             </nz-form-control>
@@ -39,7 +20,14 @@
           <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter">Transportador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-              <nz-select id="transporter" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="transporter">
+              <nz-select
+                id="transporter"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione uma empresa"
+                formControlName="transporter"
+                (ngModelChange)="saveDraft('transporter')"
+              >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
             </nz-form-control>
@@ -50,17 +38,31 @@
       <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Motorista</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="driver">Motorista</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select id="shipper" nzShowSearch nzAllowClear nzPlaceHolder="Selecione um motorista" formControlName="shipper">
+              <nz-select
+                id="driver"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione um motorista"
+                formControlName="driver"
+                (ngModelChange)="saveDraft('driver')"
+              >
                 <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Motorista Auxiliar</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="auxiliaryDriver">Motorista Auxiliar</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select id="shipper" nzShowSearch nzAllowClear nzPlaceHolder="Selecione um motorista" formControlName="shipper">
+              <nz-select
+                id="auxiliaryDriver"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione um motorista"
+                formControlName="auxiliaryDriver"
+                (ngModelChange)="saveDraft('auxiliaryDriver')"
+              >
                 <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
               </nz-select>
             </nz-form-control>
@@ -70,27 +72,35 @@
 
       <nz-form-item>
         <div nz-row nzGutter="6">
-          <div nz-col nzSpan="8">
+          <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="truck">Cavalo</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select id="truck" nzShowSearch nzAllowClear nzPlaceHolder="Selecione um cavalo" formControlName="truck">
-                <nz-option *ngFor="let truck of trucks" [nzLabel]="truck.plate" [nzValue]="truck.id"></nz-option>
+              <nz-select
+                id="truck"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione um cavalo"
+                formControlName="truck"
+                (ngModelChange)="saveDraft('truck')"
+              >
+                <nz-option *ngFor="let truck of trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="firstWagon">1a carreta</nz-form-label>
+          <div nz-col nzSpan="12">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="wagons">Carretas</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select id="firstWagon" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma carreta" formControlName="firstWagon">
-                <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.plate" [nzValue]="wagon.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="secondWagon">2a carreta</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select id="secondWagon" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma carreta" formControlName="secondWagon">
-                <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.plate" [nzValue]="wagon.id"></nz-option>
+              <nz-select
+                id="wagons"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione uma carreta"
+                formControlName="wagons"
+                nzMode="multiple"
+                nzMaxMultipleCount="2"
+                (ngModelChange)="saveDraft('wagons')"
+              >
+                <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
@@ -99,24 +109,25 @@
 
       <nz-form-item>
         <div nz-row nzGutter="6">
-          <div nz-col nzSpan="8">
+          <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="operation">Operação</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select id="operation" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma operação" formControlName="operation">
+              <nz-select
+                id="operation"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione uma operação"
+                formControlName="operation"
+                (ngModelChange)="saveDraft('operation')"
+              >
                 <nz-option *ngFor="let operation of operations" [nzLabel]="operation.name" [nzValue]="operation.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadingOrder">Ordem de carregamento / OCR</nz-form-label>
+          <div nz-col nzSpan="12">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadDescription">Ordem de carregamento / OCR</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input id="loadingOrder" nz-input formControlName="loadingOrder" />
-            </nz-form-control>
-          </div>
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="notes">2a carreta</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input id="notes" nz-input formControlName="notes" />
+              <input id="loadDescription" nz-input formControlName="loadDescription" (blur)="saveDraft('loadDescription')" />
             </nz-form-control>
           </div>
         </div>
@@ -125,121 +136,30 @@
       <nz-form-item>
         <div nz-row nzGutter="12">
           <div nz-col nzSpan="12">
+            <nz-form-label nzFor="surveyConductedBy">Pesquisa cadastral realizada por</nz-form-label>
             <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <nz-select>
-                <nz-option nzLabel="Gertran" nzValue="1"></nz-option>
-                <nz-option nzLabel="Outros" nzValue="1"></nz-option>
+              <nz-select
+                id="surveyConductedBy"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione uma operação"
+                formControlName="surveyConductedBy"
+                (ngModelChange)="saveDraft('surveyConductedBy')"
+              >
+                <nz-option *ngFor="let surveyConductor of surveyConductors" [nzLabel]="surveyConductor.label" [nzValue]="surveyConductor.value"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
 
           <div nz-col nzSpan="12">
+            <nz-form-label></nz-form-label>
             <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <label nz-checkbox formControlName="isSimulation">Criar como simulação</label>
+              <label
+                nz-checkbox
+                formControlName="isSimulation"
+                (nzCheckedChange)="saveDraft('isSimulation')"
+              >Criar como simulação</label>
             </nz-form-control>
-          </div>
-        </div>
-      </nz-form-item>
-
-      <nz-divider></nz-divider>
-
-      <nz-form-item>
-        <h3>
-          Pontos
-
-          <button
-            nz-button
-            nzType="link"
-            (click)="showMap()"
-          >
-            <i nz-icon nzType="pushpin"></i>
-            Mostrar rota no mapa
-          </button>
-        </h3>
-
-
-        <nz-list cdkDropList (cdkDropListDropped)="drop($event)">
-          <nz-list-item
-            nz-row
-            nzGutter="16"
-            formArrayName="points"
-            *ngFor="let point of getPointsControls(); let i = index"
-            cdkDrag
-          >
-            <ng-container [formGroup]="point">
-              <div nz-col nzSpan="12">
-                <nz-form-label nzRequired nzFor="address">Localização</nz-form-label>
-                <nz-form-control nzErrorTip="Insira o endereço">
-                  <input
-                    ngx-google-places-autocomplete
-                    (onAddressChange)="handleAddressChange($event, point)"
-                    id="address"
-                    type="text"
-                    nz-input
-                    placeholder="Digite o endereço"
-                    formControlName="address"
-                  />
-                </nz-form-control>
-              </div>
-
-              <div nz-col nzSpan="10">
-                <nz-form-label nzRequired nzFor="time">Data e hora do ponto</nz-form-label>
-                <nz-form-control>
-                  <nz-date-picker
-                    style="width: 100%"
-                    [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }"
-                    nzFormat="dd/MM/yyyy HH:mm:ss"
-                    formControlName="time"
-                    nzPlaceHolder="Selecione a data e hora"
-                  ></nz-date-picker>
-                </nz-form-control>
-              </div>
-
-              <div nz-col nzSpan="2">
-                <nz-form-label></nz-form-label>
-                <nz-form-control>
-                  <button nz-button nzType="danger" (click)="removePoint(i)">
-                    <i nz-icon nzType="delete"></i>
-                  </button>
-                </nz-form-control>
-              </div>
-            </ng-container>
-          </nz-list-item>
-        </nz-list>
-      </nz-form-item>
-
-      <nz-form-item>
-        <div nz-row nzGutter="12">
-          <div nz-col nzSpan="12">
-            <nz-select
-              nzShowSearch
-              nzAllowClear
-              nzPlaceHolder="Pontos"
-              nzServerSearch
-              style="width: 100%"
-              formControlName="chosenPoint"
-            >
-              <nz-option
-                nzLabel="Ponto em branco"
-                nzValue="blank"
-              ></nz-option>
-              <nz-option
-                *ngFor="let point of stops"
-                [nzLabel]="point.name"
-                [nzValue]="point"
-              ></nz-option>
-            </nz-select>
-          </div>
-
-          <div nz-col nzSpan="12">
-            <button
-              nz-button
-              nzType="dashed"
-              (click)="addPoint()"
-              style="width: 100%"
-            >
-              Novo ponto
-            </button>
           </div>
         </div>
       </nz-form-item>
@@ -248,8 +168,8 @@
 
       <nz-form-item>
         <nz-form-control [nzOffset]="7" [nzSpan]="12">
-          <button type="button" (click)="save()" nz-button nzType="primary">
-            <i nz-icon nzType="save"></i>Salvar Requisições de monitoramento
+          <button type="button" (click)="save()" nz-button nzDanger nzType="primary">
+            <i nz-icon nzType="send"></i>Enviar solicitação de monitoramento
           </button>
           <button type="button" (click)="list()" nz-button>
             <i nz-icon nzType="unordered-list"></i>Listar Requisições de monitoramento
@@ -257,5 +177,4 @@
         </nz-form-control>
       </nz-form-item>
     </form>
-  </nz-card>
 </nz-spin>

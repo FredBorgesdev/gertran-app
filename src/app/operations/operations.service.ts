@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import ApiService, {Choice, GetAllResponse} from '../shared/services/api.service';
+import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {format} from 'date-fns';
 
@@ -49,8 +49,14 @@ export class OperationsService implements ApiService<Operations> {
     private http: HttpClient,
   ) { }
 
-  getAll(): Observable<GetAllResponse<Operations>> {
-    return this.http.get<GetAllResponse<Operations>>('settings/operations');
+  getAll(pagination: Pagination): Observable<GetAllResponse<Operations>> {
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+    return this.http.get<GetAllResponse<Operations>>('settings/operations', { params });
   }
 
   get(id: string): Observable<Operations> {

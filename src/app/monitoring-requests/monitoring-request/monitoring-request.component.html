@@ -1,0 +1,39 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Requisições de monitoramento</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Requisições de monitoramento ({{resource.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!resource?.id">
+        Adicionar Requisições de monitoramento
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Requisição de monitoramento">
+        <app-monitoring-requests-form
+          *ngIf="!isLoading"
+        ></app-monitoring-requests-form>
+      </nz-tab>
+      <nz-tab nzTitle="Etapas da viagem">
+        <app-points-tab
+          *ngIf="!isLoading"
+        ></app-points-tab>
+      </nz-tab>
+      <nz-tab nzTitle="Ordens de carregamento"></nz-tab>
+      <nz-tab nzTitle="Notas/minutas"></nz-tab>
+      <nz-tab nzTitle="Iscas"></nz-tab>
+      <nz-tab nzTitle="Escoltas"></nz-tab>
+    </nz-tabset>
+
+  </nz-card>
+</nz-spin>

@@ -4,11 +4,11 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpResponse, HttpHeaders
+  HttpResponse, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
@@ -42,7 +42,14 @@ export class ApiInterceptor implements HttpInterceptor {
             return event.clone({ body: camelcaseKeys(event.body) });
           }
         }
-      })
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          window.location.href = '/authentication/login';
+        } else {
+          return throwError(error);
+        }
+      }),
     );
   }
 }

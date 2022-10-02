@@ -4,8 +4,30 @@ import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../
 import {Observable} from 'rxjs';
 
 export interface MonitoringRequests {
-  id: string
-  name: string
+  id: string;
+  name: string;
+  route: string;
+  shipper: {
+    id: string;
+  };
+  transporter: {
+    id: string;
+  };
+  driver: {
+    id: string;
+  };
+  auxiliaryDriver: {
+    id: string;
+  };
+  truck: {
+    id: string;
+  };
+  wagons: {
+    id: string;
+  }[];
+  operation: {
+    id: string;
+  };
 }
 
 @Injectable({
@@ -25,26 +47,34 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
       });
     }
 
-    return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring-requests', { params });
+    return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', { params });
   }
 
   get(id: string): Observable<MonitoringRequests> {
-    return this.http.get<MonitoringRequests>(`monitoring-requests/${id}`);
+    return this.http.get<MonitoringRequests>(`monitoring/monitoring-requests/${id}`);
   }
 
-  save(monitoringRequests: Omit<MonitoringRequests, 'id'>): Observable<MonitoringRequests> {
-    return this.http.post<MonitoringRequests>('monitoring-requests/create', monitoringRequests);
+  save(monitoringRequests: Partial<MonitoringRequests>): Observable<MonitoringRequests> {
+    return this.http.post<MonitoringRequests>('monitoring/monitoring-requests/create', monitoringRequests);
   }
 
   update(
     id: string,
     monitoringRequests: Omit<MonitoringRequests, 'id'>
   ): Observable<MonitoringRequests> {
-    return this.http.patch<MonitoringRequests>(`monitoring-requests/${id}/update`, monitoringRequests);
+    return this.http.patch<MonitoringRequests>(`monitoring/monitoring-requests/${id}/update`, monitoringRequests);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`monitoring-requests/${id}/delete`);
+    return this.http.delete<void>(`monitoring/monitoring-requests/${id}/delete`);
+  }
+
+  getSurveyConductors(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('monitoring/survey-conductors');
+  }
+
+  getMonitoringRequests(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('monitoring/monitoring-requests');
   }
 }
 

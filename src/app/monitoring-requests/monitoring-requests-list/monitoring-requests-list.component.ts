@@ -4,7 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MonitoringRequestsService, MonitoringRequests } from '../monitoring-requests.service';
 import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
-import {RoutesModalComponent} from '../routes-modal/routes-modal.component';
+import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.component';
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -40,10 +40,14 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzOkText: 'Criar',
       nzCancelText: 'Cancelar',
       nzOnOk: (componentInstance) => {
-        this.router.navigate(['monitoring-requests', 'monitoring-requests-create'], {
-          queryParams: {
-            routeId: componentInstance.checkedId,
-          }
+        if (componentInstance.checkedId === BLANK_ROUTE.id) {
+          return;
+        }
+
+        (this.service as MonitoringRequestsService).save({
+          route: componentInstance.checkedId as string
+        }).subscribe((result) => {
+          this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
         });
       }
     });

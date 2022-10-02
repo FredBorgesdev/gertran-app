@@ -11,6 +11,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MapModalComponent } from './map-modal/map-modal.component';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
+import { PointsTabComponent } from './points-tab/points-tab.component';
+import { MonitoringRequestComponent } from './monitoring-request/monitoring-request.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import {environment} from '../../environments/environment';
     MonitoringRequestsListComponent,
     MonitoringRequestsFormComponent,
     RoutesModalComponent,
-    MapModalComponent
+    MapModalComponent,
+    PointsTabComponent,
+    MonitoringRequestComponent
   ],
   imports: [
     CommonModule,

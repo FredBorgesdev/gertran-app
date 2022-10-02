@@ -32,11 +32,12 @@ export class MapModalComponent implements OnInit {
     });
 
     this.markers = this.points.map(point => ([point.longitude, point.latitude]));
-    console.log(this.markers);
 
     const origin = this.points[0];
-    directions.setOrigin([origin.longitude, origin.latitude]);
-    this.center = { latitude: origin.latitude, longitude: origin.longitude };
+    if (origin) {
+      directions.setOrigin([origin.longitude, origin.latitude]);
+      this.center = { latitude: origin.latitude, longitude: origin.longitude };
+    }
 
     const waypoints = this.points.slice(1, this.points.length - 1);
     waypoints.forEach((point) => {
@@ -44,7 +45,9 @@ export class MapModalComponent implements OnInit {
     });
 
     const destination = this.points[this.points.length - 1];
-    directions.setDestination([destination.longitude, destination.latitude]);
+    if (destination) {
+      directions.setDestination([destination.longitude, destination.latitude]);
+    }
 
     directions.on('route', (e) => {
       this.directionsGeoJson = polyline.toGeoJSON(e.route[0].geometry);
