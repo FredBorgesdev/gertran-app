@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Cookies from 'js-cookie';
+import {from, Observable} from 'rxjs';
 
 export const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
 const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
@@ -42,6 +43,10 @@ export class AuthenticationService {
       Cookies.set(GERTRAN_WEB_TOKEN, response.access);
       return true;
     }).catch(() => false);
+  }
+
+  refreshObservable(): Observable<boolean> {
+    return from(this.refresh());
   }
 
   async isAuthenticated(): Promise<boolean> {

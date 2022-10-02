@@ -8,16 +8,16 @@ import {
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, mergeMap, retry} from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
-import {GERTRAN_WEB_TOKEN} from '../../authentication/authentication.service';
+import {AuthenticationService, GERTRAN_WEB_TOKEN} from '../../authentication/authentication.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private authService: AuthenticationService) {}
 
   isFormData(request: HttpRequest<unknown>): boolean {
     return request.body instanceof FormData;
@@ -45,8 +45,16 @@ export class ApiInterceptor implements HttpInterceptor {
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && !error.url.includes('auth/jwt/verify')) {
-          window.location.href = '/authentication/login';
-          return;
+          return this.authService.refreshObservable().pipe(
+            mergeMap(
+              () => {
+                return next.handle(apiReq.clone({
+                  headers: new HttpHeaders({
+                    authorization: `Bearer ${Cookie.get(GERTRAN_WEB_TOKEN)}`,
+                  })
+                }));
+              }
+            ));
         } else {
           return throwError(error);
         }
