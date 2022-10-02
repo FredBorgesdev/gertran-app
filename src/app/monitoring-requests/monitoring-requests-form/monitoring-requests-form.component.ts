@@ -84,6 +84,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
   }
 
+  get disabled(): boolean {
+    return this.resource?.status !== 'draft';
+  }
+
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
       transporter: [null, []],
@@ -132,5 +136,27 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
         this.message.success('Rascunho salvo com sucesso!');
       });
     }
+  }
+
+  save(): void {
+    this.modal.confirm({
+      nzTitle: 'Deseja enviar a solicitação?',
+      nzContent: 'Ao enviar a solicitação, não será mais possível editá-la.',
+      nzOnOk: () => {
+        this.isLoading = true;
+        (this.service as MonitoringRequestsService).send(
+          this.resource.id,
+        ).subscribe(
+          () => {
+            this.message.success('Solicitação enviada com sucesso!');
+            this.isLoading = false;
+            this.list();
+          },
+          () => {
+            this.isLoading = false;
+            this.message.error('Erro ao enviar a solicitação!');
+          });
+      },
+    });
   }
 }

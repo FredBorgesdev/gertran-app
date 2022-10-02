@@ -7,6 +7,7 @@ export interface MonitoringRequests {
   id: string;
   name: string;
   route: string;
+  status: string;
   shipper: {
     id: string;
   };
@@ -67,6 +68,10 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`monitoring/monitoring-requests/${id}/delete`);
+  }
+
+  send(id: string): Observable<void> {
+    return this.http.post<void>(`monitoring/monitoring-requests/${id}/send`, {});
   }
 
   getSurveyConductors(): Observable<Choice[]> {

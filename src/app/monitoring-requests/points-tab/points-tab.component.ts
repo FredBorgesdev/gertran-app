@@ -10,6 +10,7 @@ import {addSeconds, setHours} from 'date-fns';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {LoadingOrdersService} from '../loading-orders.service';
 
 interface LatLng {
   lat: number;

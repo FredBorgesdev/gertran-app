@@ -13,6 +13,7 @@ import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
 import { PointsTabComponent } from './points-tab/points-tab.component';
 import { MonitoringRequestComponent } from './monitoring-request/monitoring-request.component';
+import { LoadingOrderTabComponent } from './loading-order-tab/loading-order-tab.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MonitoringRequestComponent } from './monitoring-request/monitoring-requ
     RoutesModalComponent,
     MapModalComponent,
     PointsTabComponent,
-    MonitoringRequestComponent
+    MonitoringRequestComponent,
+    LoadingOrderTabComponent
   ],
   imports: [
     CommonModule,

@@ -29,7 +29,12 @@
           *ngIf="!isLoading"
         ></app-points-tab>
       </nz-tab>
-      <nz-tab nzTitle="Ordens de carregamento"></nz-tab>
+      <nz-tab nzTitle="Ordens de carregamento" [nzDisabled]="!resource">
+        <app-loading-order-tab
+          *ngIf="!isLoading && resource?.id"
+          [monitoringRequestId]="resource?.id"
+        ></app-loading-order-tab>
+      </nz-tab>
       <nz-tab nzTitle="Notas/minutas"></nz-tab>
       <nz-tab nzTitle="Iscas"></nz-tab>
       <nz-tab nzTitle="Escoltas"></nz-tab>

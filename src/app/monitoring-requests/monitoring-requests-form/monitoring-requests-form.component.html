@@ -12,6 +12,7 @@
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="shipper"
                 (ngModelChange)="saveDraft('shipper')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
@@ -27,6 +28,7 @@
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="transporter"
                 (ngModelChange)="saveDraft('transporter')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
@@ -47,6 +49,7 @@
                 nzPlaceHolder="Selecione um motorista"
                 formControlName="driver"
                 (ngModelChange)="saveDraft('driver')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
               </nz-select>
@@ -62,6 +65,7 @@
                 nzPlaceHolder="Selecione um motorista"
                 formControlName="auxiliaryDriver"
                 (ngModelChange)="saveDraft('auxiliaryDriver')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
               </nz-select>
@@ -82,6 +86,7 @@
                 nzPlaceHolder="Selecione um cavalo"
                 formControlName="truck"
                 (ngModelChange)="saveDraft('truck')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let truck of trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
               </nz-select>
@@ -99,6 +104,7 @@
                 nzMode="multiple"
                 nzMaxMultipleCount="2"
                 (ngModelChange)="saveDraft('wagons')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
               </nz-select>
@@ -119,6 +125,7 @@
                 nzPlaceHolder="Selecione uma operação"
                 formControlName="operation"
                 (ngModelChange)="saveDraft('operation')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let operation of operations" [nzLabel]="operation.name" [nzValue]="operation.id"></nz-option>
               </nz-select>
@@ -127,7 +134,13 @@
           <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="loadDescription">Ordem de carregamento / OCR</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input id="loadDescription" nz-input formControlName="loadDescription" (blur)="saveDraft('loadDescription')" />
+              <input
+                id="loadDescription"
+                nz-input
+                formControlName="loadDescription"
+                (blur)="saveDraft('loadDescription')"
+                [disabled]="disabled"
+              />
             </nz-form-control>
           </div>
         </div>
@@ -145,6 +158,7 @@
                 nzPlaceHolder="Selecione uma operação"
                 formControlName="surveyConductedBy"
                 (ngModelChange)="saveDraft('surveyConductedBy')"
+                [disabled]="disabled"
               >
                 <nz-option *ngFor="let surveyConductor of surveyConductors" [nzLabel]="surveyConductor.label" [nzValue]="surveyConductor.value"></nz-option>
               </nz-select>
