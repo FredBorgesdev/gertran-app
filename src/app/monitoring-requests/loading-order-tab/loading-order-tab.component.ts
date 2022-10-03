@@ -16,6 +16,7 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
 
   validateForm: FormGroup;
   isCreating = false;
+  loadingOrderId: string = null;
 
   loadingOrdersColumns = [
     { title: 'Id' },
@@ -49,25 +50,37 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
   }
 
   save(): void {
-    this.service.save(this.validateForm.value, this.monitoringRequestId).subscribe(
-      () => {
-        this.message.success('Salvo com sucesso');
-        this.validateForm.reset();
-        this.isCreating = false;
-        this.loadResources();
-      },
-      () => {
-        this.message.error('Erro ao salvar');
-      }
-    );
+    if (this.loadingOrderId) {
+      this.service.update(this.loadingOrderId, this.validateForm.value, this.monitoringRequestId).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleError(),
+      );
+    } else {
+      this.service.save(this.validateForm.value, this.monitoringRequestId).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleError()
+      );
+    }
   }
 
   edit(item: LoadingOrders): void {
     this.validateForm.patchValue(item);
+    this.loadingOrderId = item.id;
     this.isCreating = true;
   }
 
   additionalParams(): any[] {
     return [this.monitoringRequestId];
+  }
+
+  private handleSuccess(): void {
+    this.message.success('Salvo com sucesso');
+    this.validateForm.reset();
+    this.isCreating = false;
+    this.loadResources();
+  }
+
+  private handleError(): void {
+    this.message.error('Erro ao salvar');
   }
 }

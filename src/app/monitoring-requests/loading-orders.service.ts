@@ -41,13 +41,13 @@ export class LoadingOrdersService implements ApiService<LoadingOrders> {
     loadingOrders: Partial<LoadingOrders>,
     monitoringRequestId: string,
   ): Observable<LoadingOrders> {
-    return this.http.put<LoadingOrders>(`monitoring/monitoring-requests/${monitoringRequestId}/loading-orders/${id}`, loadingOrders);
+    return this.http.patch<LoadingOrders>(`monitoring/monitoring-requests/${monitoringRequestId}/loading-orders/${id}/update`, loadingOrders);
   }
 
   delete(
     id: string,
     monitoringRequestId: string,
   ): Observable<void> {
-    return this.http.delete<void>(`monitoring/monitoring-requests/${monitoringRequestId}/loading-orders/${id}`);
+    return this.http.delete<void>(`monitoring/monitoring-requests/${monitoringRequestId}/loading-orders/${id}/delete`);
   }
 }
