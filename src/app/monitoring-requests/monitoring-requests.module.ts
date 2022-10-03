@@ -14,6 +14,8 @@ import {environment} from '../../environments/environment';
 import { PointsTabComponent } from './points-tab/points-tab.component';
 import { MonitoringRequestComponent } from './monitoring-request/monitoring-request.component';
 import { LoadingOrderTabComponent } from './loading-order-tab/loading-order-tab.component';
+import {InvoicesTabComponent} from './invoices-tab/invoices-tab.component';
+import {BaitsTabComponent} from './baits-tab/baits-tab.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { LoadingOrderTabComponent } from './loading-order-tab/loading-order-tab.
     MapModalComponent,
     PointsTabComponent,
     MonitoringRequestComponent,
-    LoadingOrderTabComponent
+    LoadingOrderTabComponent,
+    InvoicesTabComponent,
+    BaitsTabComponent,
   ],
   imports: [
     CommonModule,

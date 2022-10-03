@@ -1,0 +1,116 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <div class="row m-b-30">
+    <div class="col-lg-12 text-right">
+      <button
+        (click)="this.isCreating = true"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar ordem</span>
+      </button>
+    </div>
+  </div>
+
+  <nz-table
+    #table
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th *ngFor="let column of loadingOrdersColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of table.data; let i=index">
+      <td> {{item.id | id}} </td>
+      <td>{{item.technology}}</td>
+      <td>{{item.installationLocation}}</td>
+      <td>{{item.serialNumber}}</td>
+      <td class="text-md-center">
+        <a
+          (click)="edit(item)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nz-tooltip
+          nzTooltipTitle="Editar"
+        >
+          <i nz-icon nzType="edit" theme="outline"></i>
+        </a>
+        <button
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nz-tooltip
+          nzTooltipTitle="Excluir"
+          (click)="delete(item)"
+        >
+          <i nz-icon nzType="delete" theme="outline"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+
+<nz-modal
+  [nzVisible]="isCreating"
+  nzTitle="Criar nova ordem de carregamento"
+  (nzOnCancel)="isCreating = false"
+  (nzOnOk)="save()"
+>
+  <ng-container *nzModalContent>
+    <form [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="technology">Tecnologia</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="technology"
+            id="technology"
+            placeholder="Insira a tecnologia"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="description">Descrição</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select
+            formControlName="installationLocation"
+            id="installationLocation"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione a descrição"
+          >
+            <nz-option
+              *ngFor="let option of installationLocations"
+              [nzLabel]="option.label"
+              [nzValue]="option.value"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="serialNumber">Número de serie</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="serialNumber"
+            id="serialNumber"
+            placeholder="Insira o número de serie"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+
+  </ng-container>
+</nz-modal>

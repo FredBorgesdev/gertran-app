@@ -35,8 +35,18 @@
           [monitoringRequestId]="resource?.id"
         ></app-loading-order-tab>
       </nz-tab>
-      <nz-tab nzTitle="Notas/minutas"></nz-tab>
-      <nz-tab nzTitle="Iscas"></nz-tab>
+      <nz-tab nzTitle="Notas/minutas">
+        <app-invoices-tab
+          *ngIf="!isLoading && resource?.id"
+          [monitoringRequestId]="resource?.id"
+        ></app-invoices-tab>
+      </nz-tab>
+      <nz-tab nzTitle="Iscas">
+        <app-baits-tab
+          *ngIf="!isLoading && resource?.id"
+          [monitoringRequestId]="resource?.id"
+        ></app-baits-tab>
+      </nz-tab>
       <nz-tab nzTitle="Escoltas"></nz-tab>
     </nz-tabset>
 
