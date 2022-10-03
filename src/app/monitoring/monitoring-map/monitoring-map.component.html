@@ -138,8 +138,8 @@
 <ng-template #map>
   <mgl-map
     [style]="'mapbox://styles/mapbox/streets-v9'"
-    [zoom]="[9]"
-    [center]="[center.lng, center.lat]"
+    [fitBounds]="bounds"
+    [fitBoundsOptions]="{ padding: 50 }"
   >
     <ng-container *ngIf="directionsGeoJson">
       <mgl-layer

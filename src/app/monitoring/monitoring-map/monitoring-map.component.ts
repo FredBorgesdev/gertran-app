@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Monitoring, MonitoringMapData, MonitoringService} from '../monitoring.service';
-import {MapDirectionsService} from '@angular/google-maps';
-import {Observable} from 'rxjs';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import polyline from '@mapbox/polyline';
 import {environment} from '../../../environments/environment';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-monitoring-map',
@@ -15,22 +14,15 @@ export class MonitoringMapComponent implements OnInit {
   @Input() item: Monitoring;
 
   details: MonitoringMapData;
-  center: google.maps.LatLngLiteral;
 
-  directionsResult: Observable<google.maps.DirectionsResult | undefined>;
+  bounds = null;
   directionsGeoJson: any;
 
   constructor(
     private service: MonitoringService,
-    private mapDirectionsService: MapDirectionsService,
   ) { }
 
   ngOnInit(): void {
-    this.center = {
-      lat: 40.7128,
-      lng: -74.0060,
-    };
-
     this.details = this.service.getMapData(this.item.id);
 
     const directions = new MapboxDirections({
@@ -50,7 +42,10 @@ export class MonitoringMapComponent implements OnInit {
     directions.setDestination([this.details.directions.destination.lng, this.details.directions.destination.lat]);
     directions.on('route', (e) => {
       this.directionsGeoJson = polyline.toGeoJSON(e.route[0].geometry);
-      console.log(this.directionsGeoJson)
+      this.bounds = new mapboxgl.LngLatBounds(
+        this.directionsGeoJson.coordinates[0],
+        this.directionsGeoJson.coordinates[this.directionsGeoJson.coordinates.length - 1]
+      );
     });
 
     // const directionsRequest = {

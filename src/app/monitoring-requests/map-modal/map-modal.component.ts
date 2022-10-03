@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {environment} from '../../../environments/environment';
 import polyline from '@mapbox/polyline';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-map-modal',
@@ -12,7 +13,7 @@ export class MapModalComponent implements OnInit {
   @Input() points: any[] = [];
   directionsGeoJson: any;
   markers = [];
-  center = { latitude: 0, longitude: 0 };
+  bounds = null;
 
   constructor() { }
 
@@ -36,7 +37,6 @@ export class MapModalComponent implements OnInit {
     const origin = this.points[0];
     if (origin) {
       directions.setOrigin([origin.longitude, origin.latitude]);
-      this.center = { latitude: origin.latitude, longitude: origin.longitude };
     }
 
     const waypoints = this.points.slice(1, this.points.length - 1);
@@ -51,6 +51,10 @@ export class MapModalComponent implements OnInit {
 
     directions.on('route', (e) => {
       this.directionsGeoJson = polyline.toGeoJSON(e.route[0].geometry);
+      this.bounds = new mapboxgl.LngLatBounds(
+        this.directionsGeoJson.coordinates[0],
+        this.directionsGeoJson.coordinates[this.directionsGeoJson.coordinates.length - 1]
+      );
     });
   }
 
