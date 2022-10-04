@@ -24,9 +24,10 @@
           *ngIf="!isLoading"
         ></app-monitoring-requests-form>
       </nz-tab>
-      <nz-tab nzTitle="Etapas da viagem">
+      <nz-tab nzTitle="Etapas da viagem" [nzDisabled]="!resource">
         <app-points-tab
-          *ngIf="!isLoading"
+          *ngIf="!isLoading && resource?.id"
+          [monitoringRequestId]="resource?.id"
         ></app-points-tab>
       </nz-tab>
       <nz-tab nzTitle="Ordens de carregamento" [nzDisabled]="!resource">
@@ -35,19 +36,19 @@
           [monitoringRequestId]="resource?.id"
         ></app-loading-order-tab>
       </nz-tab>
-      <nz-tab nzTitle="Notas/minutas">
+      <nz-tab nzTitle="Notas/minutas" [nzDisabled]="!resource">
         <app-invoices-tab
           *ngIf="!isLoading && resource?.id"
           [monitoringRequestId]="resource?.id"
         ></app-invoices-tab>
       </nz-tab>
-      <nz-tab nzTitle="Iscas">
+      <nz-tab nzTitle="Iscas" [nzDisabled]="!resource">
         <app-baits-tab
           *ngIf="!isLoading && resource?.id"
           [monitoringRequestId]="resource?.id"
         ></app-baits-tab>
       </nz-tab>
-      <nz-tab nzTitle="Escoltas">
+      <nz-tab nzTitle="Escoltas" [nzDisabled]="!resource">
         <app-armed-guard-tab
           *ngIf="!isLoading && resource?.id"
           [monitoringRequestId]="resource?.id"

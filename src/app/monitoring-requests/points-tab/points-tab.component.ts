@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RoutesService} from '../../routes/routes.service';
 import {BLANK_ROUTE} from '../routes-modal/routes-modal.component';
@@ -6,11 +6,15 @@ import {ActivatedRoute} from '@angular/router';
 
 import {MapModalComponent} from '../map-modal/map-modal.component';
 import {environment} from '../../../environments/environment';
-import {addSeconds, setHours} from 'date-fns';
+import {addSeconds, format, setHours} from 'date-fns';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {LoadingOrdersService} from '../loading-orders.service';
+import {Choice} from '../../shared/services/api.service';
+import {StopsService} from '../../stops/stops.service';
+import {TravelStepService} from '../travel-step.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {forkJoin} from 'rxjs';
 
 interface LatLng {
   lat: number;
@@ -23,21 +27,42 @@ interface LatLng {
   styleUrls: ['./points-tab.component.css']
 })
 export class PointsTabComponent implements OnInit {
+  @Input() monitoringRequestId: string;
+
   stops = [];
   validateForm: FormGroup;
-  timeDefaultValue = setHours(new Date(), 0);
+  dateDefaultValue = setHours(new Date(), 0);
+  pointTypes: Choice[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private routesService: RoutesService,
     private activatedRoute: ActivatedRoute,
     private modal: NzModalService,
+    private pointService: StopsService,
+    private service: TravelStepService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       points: this.formBuilder.array([]),
       chosenPoint: [BLANK_ROUTE.id],
+    });
+
+    this.pointService.getTypes().subscribe((pointTypes) => {
+      this.pointTypes = pointTypes;
+    });
+
+    this.service.getAll({ limit: 999 }, this.monitoringRequestId).subscribe((points) => {
+      points.results.forEach((point) => {
+        const formGroup = this.addPoint();
+        const pointWithDate = {
+          ...point,
+          date: new Date(`${point.date} ${point.time}`),
+        };
+        formGroup.patchValue(pointWithDate);
+      });
     });
 
     const { routeId } = this.activatedRoute.snapshot.queryParams || {};
@@ -74,11 +99,16 @@ export class PointsTabComponent implements OnInit {
 
     (this.validateForm.get('points') as FormArray).push(
       new FormGroup({
+        id: new FormControl(null),
         pointId: new FormControl(null),
         address: new FormControl(address, [Validators.required]),
-        latitude: new FormControl(null),
-        longitude: new FormControl(null),
-        time: new FormControl(null),
+        latitude: new FormControl(null, [Validators.required]),
+        longitude: new FormControl(null, [Validators.required]),
+        date: new FormControl(new Date(), [Validators.required]),
+        pointType: new FormControl(null, [Validators.required]),
+        state: new FormControl(null, [Validators.required]),
+        city: new FormControl(null, [Validators.required]),
+        zipCode: new FormControl(null, []),
       }),
     );
 
@@ -86,18 +116,36 @@ export class PointsTabComponent implements OnInit {
   }
 
   removePoint(index: number): void {
-    (this.validateForm.get('points') as FormArray).removeAt(index);
+    const point = this.getPointsControls()[index]?.value;
+    if (!point?.id) {
+      return (this.validateForm.get('points') as FormArray).removeAt(index);
+    }
+
+    this.modal.confirm({
+      nzTitle: 'Você tem certeza que deseja remover esse ponto?',
+      nzOnOk: () => {
+        this.service.delete(point.id, this.monitoringRequestId).subscribe(() => {
+          (this.validateForm.get('points') as FormArray).removeAt(index);
+        });
+      }
+    });
   }
 
   handleAddressChange(address: any, formGroup: FormGroup): void {
-    const latitude = address.geometry?.location.lat();
-    const longitude = address.geometry?.location.lng();
+    const latitude = address.geometry?.location.lat().toFixed(6);
+    const longitude = address.geometry?.location.lng().toFixed(6);
     const formattedAddress = address.formatted_address;
+    const state = address.address_components.find((component) => component.types.includes('administrative_area_level_1')).short_name;
+    const city = address.address_components.find((component) => component.types.includes('administrative_area_level_2')).short_name;
+    const zipCode = address.address_components.find((component) => component.types.includes('postal_code'));
 
     formGroup.patchValue({
       address: formattedAddress,
       latitude,
       longitude,
+      state,
+      city,
+      zipCode,
     });
   }
 
@@ -108,7 +156,7 @@ export class PointsTabComponent implements OnInit {
 
   async calculateEtaForAllPoints(): Promise<void> {
     const points = this.getPointsControls();
-    points[0]?.patchValue({ time: new Date() });
+    points[0]?.patchValue({ date: new Date() });
 
     for (let index = 1; index < points.length; index++) {
       const previousPoint = points[index - 1];
@@ -124,8 +172,9 @@ export class PointsTabComponent implements OnInit {
       );
 
       currentPoint.patchValue({
-        time: addSeconds(previousPoint.value.time, eta),
+        date: addSeconds(previousPoint.value.date, eta),
       });
+      currentPoint.markAsDirty();
     }
   }
 
@@ -164,5 +213,51 @@ export class PointsTabComponent implements OnInit {
         points: this.getPointsControls().map((point) => point.value),
       }
     });
+  }
+
+  save(): void {
+    const pointsWithOrder = this.getChangedPointsWithOrder();
+
+    const points = this.validateForm.get('points') as FormArray;
+    if (!points.valid) {
+      this.message.error('Preencha todos os campos');
+      return;
+    }
+
+    const operations = pointsWithOrder.map((point) => {
+      if (point.id) {
+        return this.service.update(point.id, point, this.monitoringRequestId);
+      }
+
+      return this.service.save(point, this.monitoringRequestId);
+    });
+
+    forkJoin(operations).subscribe(
+      () => this.handleSuccess(),
+      () => this.handleError(),
+    );
+  }
+
+  getChangedPointsWithOrder(): any[] {
+    return this.getPointsControls().reduce((acc, point, index) => {
+      if (!point.dirty) { return acc; }
+
+      const pointWithOrder = {
+        ...point.value,
+        order: index,
+        date: format(point.value.date, 'yyyy-MM-dd'),
+        time: format(point.value.date, 'HH:mm:ss'),
+      };
+
+      return [...acc, pointWithOrder];
+    }, []);
+  }
+
+  private handleSuccess(): void {
+    this.message.success('Pontos salvos com sucesso!');
+  }
+
+  private handleError(): void {
+    this.message.error('Erro ao salvar pontos!');
   }
 }

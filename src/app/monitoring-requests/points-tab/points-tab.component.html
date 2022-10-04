@@ -19,7 +19,7 @@
         cdkDrag
       >
         <ng-container [formGroup]="point">
-          <div nz-col nzSpan="12">
+          <div nz-col nzSpan="8">
             <nz-form-label nzRequired nzFor="address">Localização</nz-form-label>
             <nz-form-control nzErrorTip="Insira o endereço">
               <input
@@ -34,16 +34,32 @@
             </nz-form-control>
           </div>
 
-          <div nz-col nzSpan="10">
-            <nz-form-label nzRequired nzFor="time">Data e hora do ponto</nz-form-label>
-            <nz-form-control>
+          <div nz-col nzSpan="8">
+            <nz-form-label nzRequired nzFor="date">Data e hora do ponto</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
               <nz-date-picker
                 style="width: 100%"
-                [nzShowTime]="{ nzDefaultOpenValue: timeDefaultValue }"
+                [nzShowTime]="{ nzDefaultOpenValue: dateDefaultValue }"
                 nzFormat="dd/MM/yyyy HH:mm:ss"
-                formControlName="time"
+                formControlName="date"
                 nzPlaceHolder="Selecione a data e hora"
               ></nz-date-picker>
+            </nz-form-control>
+          </div>
+
+          <div nz-col nzSpan="6">
+            <nz-form-label nzRequired nzFor="pointType">Tipo de parada</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+              <nz-select
+                nzPlaceHolder="Selecione o tipo"
+                formControlName="pointType"
+              >
+                <nz-option
+                  *ngFor="let pointType of pointTypes"
+                  [nzLabel]="pointType.label"
+                  [nzValue]="pointType.value"
+                ></nz-option>
+              </nz-select>
             </nz-form-control>
           </div>
 
@@ -94,5 +110,11 @@
         </button>
       </div>
     </div>
+  </nz-form-item>
+
+  <nz-form-item>
+    <button nz-button nzType="primary" (click)="save()">
+      Salvar
+    </button>
   </nz-form-item>
 </form>
