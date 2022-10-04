@@ -28,10 +28,13 @@
     </thead>
     <tbody>
     <tr *ngFor="let item of table.data; let i=index">
-      <td> {{item.id | id}} </td>
+      <td>{{item.id | id}}</td>
       <td>{{item.technology}}</td>
-      <td>{{item.installationLocation}}</td>
       <td>{{item.serialNumber}}</td>
+      <td>{{item.plate}}</td>
+      <td>{{item.contact}}</td>
+      <td>{{item.firstAgent}}</td>
+      <td>{{item.secondAgent}}</td>
       <td class="text-md-center">
         <a
           (click)="edit(item)"
@@ -62,7 +65,7 @@
 
 <nz-modal
   [nzVisible]="isCreating"
-  nzTitle="Criar Isca"
+  nzTitle="Criar nova ordem de carregamento"
   (nzOnCancel)="isCreating = false"
   (nzOnOk)="save()"
 >
@@ -81,25 +84,6 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="description">Descrição</nz-form-label>
-        <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-select
-            formControlName="installationLocation"
-            id="installationLocation"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Selecione a descrição"
-          >
-            <nz-option
-              *ngFor="let option of installationLocations"
-              [nzLabel]="option.label"
-              [nzValue]="option.value"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
         <nz-form-label nzRequired nzFor="serialNumber">Número de serie</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <input
@@ -107,6 +91,54 @@
             formControlName="serialNumber"
             id="serialNumber"
             placeholder="Insira o número de serie"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="plate">Placa</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="plate"
+            id="plate"
+            placeholder="Insira a placa"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="contact">Contato</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="contact"
+            id="contact"
+            placeholder="Insira o contato"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="firstAgent">Primeiro agente</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="firstAgent"
+            id="firstAgent"
+            placeholder="Insira o agente"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzFor="secondAgent">Segundo agente</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="secondAgent"
+            id="secondAgent"
+            placeholder="Insira o contato"
           />
         </nz-form-control>
       </nz-form-item>

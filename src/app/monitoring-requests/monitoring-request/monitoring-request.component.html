@@ -47,7 +47,12 @@
           [monitoringRequestId]="resource?.id"
         ></app-baits-tab>
       </nz-tab>
-      <nz-tab nzTitle="Escoltas"></nz-tab>
+      <nz-tab nzTitle="Escoltas">
+        <app-armed-guard-tab
+          *ngIf="!isLoading && resource?.id"
+          [monitoringRequestId]="resource?.id"
+        ></app-armed-guard-tab>
+      </nz-tab>
     </nz-tabset>
 
   </nz-card>

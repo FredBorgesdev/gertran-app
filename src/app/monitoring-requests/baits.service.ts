@@ -5,6 +5,9 @@ import {Observable} from 'rxjs';
 
 export interface Bait {
   id: string;
+  technology: string;
+  installationLocation: string;
+  serialNumber: string;
 }
 
 @Injectable({

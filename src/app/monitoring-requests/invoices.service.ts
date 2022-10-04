@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 
 export interface Invoice {
   id: string;
+  invoiceNumber: string;
 }
 
 @Injectable({
