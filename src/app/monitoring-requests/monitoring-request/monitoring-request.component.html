@@ -27,7 +27,8 @@
       <nz-tab nzTitle="Etapas da viagem" [nzDisabled]="!resource">
         <app-points-tab
           *ngIf="!isLoading && resource?.id"
-          [monitoringRequestId]="resource?.id"
+          [monitoringRequest]="resource"
+          (updateRouteCoordinates)="updateRouteCoordinates($event)"
         ></app-points-tab>
       </nz-tab>
       <nz-tab nzTitle="Ordens de carregamento" [nzDisabled]="!resource">

@@ -29,6 +29,7 @@ export interface MonitoringRequests {
   operation: {
     id: string;
   };
+  routeCoordinates: any[];
 }
 
 @Injectable({

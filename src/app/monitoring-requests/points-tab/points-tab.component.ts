@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RoutesService} from '../../routes/routes.service';
 import {BLANK_ROUTE} from '../routes-modal/routes-modal.component';
 import {ActivatedRoute} from '@angular/router';
+import polyline from '@mapbox/polyline';
 
 import {MapModalComponent} from '../map-modal/map-modal.component';
 import {environment} from '../../../environments/environment';
@@ -15,6 +16,8 @@ import {StopsService} from '../../stops/stops.service';
 import {TravelStepService} from '../travel-step.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {forkJoin} from 'rxjs';
+import {DirectionsService} from '../../shared/services/directions.service';
+import {MonitoringRequests} from '../monitoring-requests.service';
 
 interface LatLng {
   lat: number;
@@ -27,7 +30,8 @@ interface LatLng {
   styleUrls: ['./points-tab.component.css']
 })
 export class PointsTabComponent implements OnInit {
-  @Input() monitoringRequestId: string;
+  @Input() monitoringRequest: MonitoringRequests;
+  @Output() updateRouteCoordinates = new EventEmitter<any[]>();
 
   stops = [];
   validateForm: FormGroup;
@@ -42,6 +46,7 @@ export class PointsTabComponent implements OnInit {
     private pointService: StopsService,
     private service: TravelStepService,
     private message: NzMessageService,
+    private directionsService: DirectionsService,
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +59,7 @@ export class PointsTabComponent implements OnInit {
       this.pointTypes = pointTypes;
     });
 
-    this.service.getAll({ limit: 999 }, this.monitoringRequestId).subscribe((points) => {
+    this.service.getAll({ limit: 999 }, this.monitoringRequest.id).subscribe((points) => {
       points.results.forEach((point) => {
         const formGroup = this.addPoint();
         const pointWithDate = {
@@ -124,7 +129,7 @@ export class PointsTabComponent implements OnInit {
     this.modal.confirm({
       nzTitle: 'Você tem certeza que deseja remover esse ponto?',
       nzOnOk: () => {
-        this.service.delete(point.id, this.monitoringRequestId).subscribe(() => {
+        this.service.delete(point.id, this.monitoringRequest.id).subscribe(() => {
           (this.validateForm.get('points') as FormArray).removeAt(index);
         });
       }
@@ -211,11 +216,12 @@ export class PointsTabComponent implements OnInit {
       nzContent: MapModalComponent,
       nzComponentParams: {
         points: this.getPointsControls().map((point) => point.value),
+        routeCoordinates: this.monitoringRequest.routeCoordinates,
       }
     });
   }
 
-  save(): void {
+  async save(): Promise<void> {
     const pointsWithOrder = this.getChangedPointsWithOrder();
 
     const points = this.validateForm.get('points') as FormArray;
@@ -224,18 +230,29 @@ export class PointsTabComponent implements OnInit {
       return;
     }
 
+    await this.emitUpdateRouteCoordinates();
+
     const operations = pointsWithOrder.map((point) => {
       if (point.id) {
-        return this.service.update(point.id, point, this.monitoringRequestId);
+        return this.service.update(point.id, point, this.monitoringRequest.id);
       }
 
-      return this.service.save(point, this.monitoringRequestId);
+      return this.service.save(point, this.monitoringRequest.id);
     });
 
     forkJoin(operations).subscribe(
       () => this.handleSuccess(),
       () => this.handleError(),
     );
+  }
+
+  async emitUpdateRouteCoordinates(): Promise<void> {
+    const routeCoordinates = await this.directionsService.getDirections(
+      this.getPointsControls().map((point) => point.value),
+    );
+    const directionsGeoJson = polyline.toGeoJSON(routeCoordinates.route[0].geometry);
+
+    this.updateRouteCoordinates.emit(directionsGeoJson.coordinates);
   }
 
   getChangedPointsWithOrder(): any[] {
