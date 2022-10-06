@@ -61,7 +61,7 @@
 <nz-modal
   [nzVisible]="isCreating"
   nzTitle="Criar nova ordem de carregamento"
-  (nzOnCancel)="isCreating = false"
+  (nzOnCancel)="closeModal()"
   (nzOnOk)="save()"
 >
   <ng-container *nzModalContent>

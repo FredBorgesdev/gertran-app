@@ -50,13 +50,13 @@ export class DriversFormComponent implements OnInit {
       admissionDate: [this.driver?.admissionDate, [Validators.required]],
     });
 
-    this.customersService.getAll({}).subscribe((customers) => {
+    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
       this.customers = customers.results;
     });
 
     this.service.getWorkingSituations().subscribe((workingSituations) => {
       this.workingSituations = workingSituations;
-    })
+    });
 
     this.i18n.setLocale(en_US);
   }

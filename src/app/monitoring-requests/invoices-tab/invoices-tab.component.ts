@@ -77,10 +77,17 @@ export class InvoicesTabComponent extends BaseCrudListComponent<Invoice> impleme
     this.message.success('Salvo com sucesso');
     this.validateForm.reset();
     this.isCreating = false;
+    this.invoiceId = null;
     this.loadResources();
   }
 
   private handleError(): void {
     this.message.error('Erro ao salvar');
+  }
+
+  closeModal(): void {
+    this.isCreating = false;
+    this.validateForm.reset();
+    this.invoiceId = null;
   }
 }

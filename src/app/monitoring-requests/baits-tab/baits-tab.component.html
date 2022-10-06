@@ -63,7 +63,7 @@
 <nz-modal
   [nzVisible]="isCreating"
   nzTitle="Criar Isca"
-  (nzOnCancel)="isCreating = false"
+  (nzOnCancel)="closeModal()"
   (nzOnOk)="save()"
 >
   <ng-container *nzModalContent>

@@ -39,8 +39,8 @@ export class TravelStepService implements ApiService<TravelStep> {
     return this.http.get<TravelStep>(`monitoring/monitoring-requests/${monitoringRequestId}/travel-steps/${id}`);
   }
 
-  save(invoice: Partial<TravelStep>, monitoringRequestId: string): Observable<TravelStep> {
-    return this.http.post<TravelStep>(`monitoring/monitoring-requests/${monitoringRequestId}/travel-steps/create`, invoice);
+  save(travelStep: Partial<TravelStep>, monitoringRequestId: string): Observable<TravelStep> {
+    return this.http.post<TravelStep>(`monitoring/monitoring-requests/${monitoringRequestId}/travel-steps/create`, travelStep);
   }
 
   update(id: string, invoice: Partial<TravelStep>, monitoringRequestId: string): Observable<TravelStep> {

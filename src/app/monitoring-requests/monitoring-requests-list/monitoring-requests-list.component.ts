@@ -5,6 +5,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { MonitoringRequestsService, MonitoringRequests } from '../monitoring-requests.service';
 import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
 import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.component';
+import {TravelStepService} from '../travel-step.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -22,6 +24,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   ];
 
   constructor(
+    private travelStepService: TravelStepService,
     router: Router,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -45,13 +48,22 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzOnOk: (componentInstance) => {
         const route = componentInstance.checkedId !== BLANK_ROUTE.id ?
           componentInstance.checkedId : null;
+        const points = componentInstance.routes.find((r) => r.id === componentInstance.checkedId)?.points ?? [];
 
         (this.service as MonitoringRequestsService).save({
           route
         }).subscribe((result) => {
+          this.createPoints(result.id, points);
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
         });
       }
     });
+  }
+
+  createPoints(monitoringRequestId: string, points: any[]): void {
+    const points$ = points.map((point) => {
+    });
+
+    forkJoin(points$).subscribe();
   }
 }

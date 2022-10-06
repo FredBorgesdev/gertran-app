@@ -40,7 +40,7 @@ export class DocumentsFormComponent implements OnInit {
     });
   }
 
-  handleOk() {
+  handleOk(): void {
     if (this.validateForm.valid) {
       this.onSubmit.emit({
         form: this.validateForm.value,
@@ -54,7 +54,7 @@ export class DocumentsFormComponent implements OnInit {
     }
   }
 
-  handleCancel() {
+  handleCancel(): void {
     this.onCancel.emit();
   }
 

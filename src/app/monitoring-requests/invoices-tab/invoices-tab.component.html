@@ -61,7 +61,7 @@
 <nz-modal
   [nzVisible]="isCreating"
   nzTitle="Criar nova nova"
-  (nzOnCancel)="isCreating = false"
+  (nzOnCancel)="closeModal()"
   (nzOnOk)="save()"
 >
   <ng-container *nzModalContent>

@@ -104,7 +104,6 @@ export class DocumentsTabComponent implements OnInit {
   }
 
   private handleFailure(): void {
-    this.isCreatingDocument = false;
     this.isLoading = false;
     this.message.error('Erro ao salvar documento');
   }

@@ -16,7 +16,7 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
 
   validateForm: FormGroup;
   isCreating = false;
-  loadingOrderId: string = null;
+  baitId: string = null;
 
   loadingOrdersColumns = [
     { title: 'Id' },
@@ -60,8 +60,8 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
   }
 
   save(): void {
-    if (this.loadingOrderId) {
-      this.service.update(this.loadingOrderId, this.validateForm.value, this.monitoringRequestId).subscribe(
+    if (this.baitId) {
+      this.service.update(this.baitId, this.validateForm.value, this.monitoringRequestId).subscribe(
         () => this.handleSuccess(),
         () => this.handleError(),
       );
@@ -75,7 +75,7 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
 
   edit(item: Bait): void {
     this.validateForm.patchValue(item);
-    this.loadingOrderId = item.id;
+    this.baitId = item.id;
     this.isCreating = true;
   }
 
@@ -87,10 +87,17 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
     this.message.success('Salvo com sucesso');
     this.validateForm.reset();
     this.isCreating = false;
+    this.baitId = null;
     this.loadResources();
   }
 
   private handleError(): void {
     this.message.error('Erro ao salvar');
+  }
+
+  closeModal(): void {
+    this.isCreating = false;
+    this.validateForm.reset();
+    this.baitId = null;
   }
 }
