@@ -43,6 +43,10 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
   }
 
   loadTrackerTechnologiesModels(trackerTechnologyId: string): void {
+    if (!trackerTechnologyId) {
+      return;
+    }
+
     this.trackerTechnologiesModelsService.getAll({ limit: 999 }, trackerTechnologyId).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologiesModels = trackerTechnologiesModels.results;
     });
@@ -70,6 +74,7 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
       success: () => {
         this.message.success('Rastreador salvo com sucesso!');
         this.success.emit();
+        this.validateForm.reset();
         this.isLoading = false;
       }
     });

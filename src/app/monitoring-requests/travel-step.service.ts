@@ -15,6 +15,7 @@ export interface TravelStep {
   state: string;
   city: string;
   zipCode: string;
+  order: number;
 }
 
 @Injectable({

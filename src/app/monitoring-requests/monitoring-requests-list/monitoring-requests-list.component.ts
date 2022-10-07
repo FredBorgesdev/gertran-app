@@ -7,6 +7,7 @@ import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-
 import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.component';
 import {TravelStepService} from '../travel-step.service';
 import {forkJoin} from 'rxjs';
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -61,7 +62,19 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   }
 
   createPoints(monitoringRequestId: string, points: any[]): void {
-    const points$ = points.map((point) => {
+    const points$ = points.map(({ point }, index) => {
+      return this.travelStepService.save({
+        pointId: point.id,
+        pointType: point.pointType,
+        order: index + 1,
+        address: point.address,
+        latitude: point.latitude.toFixed(6),
+        longitude: point.longitude.toFixed(6),
+        city: point.city,
+        state: point.state,
+        date: format(new Date(), 'yyyy-MM-dd'),
+        time: format(new Date(), 'HH:mm:ss'),
+      }, monitoringRequestId);
     });
 
     forkJoin(points$).subscribe();

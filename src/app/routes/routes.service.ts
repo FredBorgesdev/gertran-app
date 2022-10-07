@@ -27,7 +27,7 @@ export class RoutesService implements ApiService<Route> {
   constructor(private http: HttpClient) { }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Route>> {
-    const params = { limit: DEFAULT_LIMIT };
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
