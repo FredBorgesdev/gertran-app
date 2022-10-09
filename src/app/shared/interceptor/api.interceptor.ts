@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {catchError, map, mergeMap, retry} from 'rxjs/operators';
+import {catchError, map, mergeMap} from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
@@ -44,7 +44,10 @@ export class ApiInterceptor implements HttpInterceptor {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 && !error.url.includes('auth/jwt/verify')) {
+        if (
+          error.status === 401 &&
+          ['auth/jwt/verify', 'auth/jwt/refresh'].indexOf(request.url) === -1
+        ) {
           return this.authService.refreshObservable().pipe(
             mergeMap(
               () => {

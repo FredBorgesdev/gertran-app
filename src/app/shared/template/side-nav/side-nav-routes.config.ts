@@ -145,6 +145,14 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'control',
         submenu: []
+      },
+      {
+        path: '/terminals/terminals-list',
+        title: 'Terminais',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'car',
+        submenu: []
       }
     ]
   },

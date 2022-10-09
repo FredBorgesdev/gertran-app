@@ -1,0 +1,64 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Terminais
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <div class="row m-b-30">
+      <div class="col-lg-8">
+        <div class="d-md-flex">
+        </div>
+      </div>
+      <div class="col-lg-4 text-right">
+        <button (click)="openTerminalGroupForm()" nz-button nzType="primary" class="m-r-30">
+          <i nz-icon nzType="plus" theme="outline"></i>
+          <span>Novo grupo</span>
+        </button>
+        <button (click)="create()" nz-button nzType="primary">
+          <i nz-icon nzType="plus" theme="outline"></i>
+          <span>Novo terminal</span>
+        </button>
+      </div>
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <nz-collapse *ngIf="resources">
+      <nz-collapse-panel
+        *ngFor="let terminalGroup of terminalGroups"
+        [nzHeader]="collapsePanelHeader"
+        [nzExtra]="collapsePanelExtra"
+      >
+        <nz-list nzGrid>
+          <div nz-row nzGutter="16">
+            <div nz-col nzSpan="8" *ngFor="let terminal of terminalGroup.terminals">
+              <nz-card [nzTitle]="terminal.name" [nzExtra]="extraTemplate">
+                <ng-template #extraTemplate>
+                  <a class="m-r-10" (click)="edit(terminal)">Editar</a>
+                  <a (click)="delete(terminal)">Deletar</a>
+                </ng-template>
+                <p>Descrição: {{terminal.description}}</p>
+                <p>Empresa: {{terminal.customer.tradingName}} - {{terminal.customer.cnpj}}</p>
+              </nz-card>
+            </div>
+          </div>
+        </nz-list>
+
+        <ng-template #collapsePanelHeader>
+          <span class="m-r-10">{{terminalGroup.terminalGroup.name}}</span>
+          <nz-badge [nzCount]="terminalGroup.terminals.length"></nz-badge>
+        </ng-template>
+
+        <ng-template #collapsePanelExtra>
+          <span class="m-r-10" nz-icon nzType="edit" (click)="openTerminalGroupForm(terminalGroup.terminalGroup)"></span>
+          <span nz-icon nzType="delete" (click)="deleteTerminalGroup(terminalGroup)"></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </nz-card>
+</nz-spin>

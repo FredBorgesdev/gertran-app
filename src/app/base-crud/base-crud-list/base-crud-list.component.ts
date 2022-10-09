@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import ApiService, {GetAllResponse, getCurrentPage} from 'src/app/shared/services/api.service';
+import ApiService, {DEFAULT_LIMIT, GetAllResponse, getCurrentPage, Pagination} from 'src/app/shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
 
 @Component({
@@ -26,11 +26,14 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     this.loadResources();
   }
 
+  performPostLoadActions(): void {}
+
   loadResources(url?: string): void {
     this.isLoading = true;
-    this.service.getAll({ url }, ...this.additionalParams()).subscribe(data => {
+    this.service.getAll(this.pagination(), ...this.additionalParams()).subscribe(data => {
       this.resources = data;
       this.isLoading = false;
+      this.performPostLoadActions();
     }, () => {
       this.isLoading = false;
       this.message.error('Erro ao carregar os registros. Tente novamente.');
@@ -81,5 +84,11 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
 
   additionalParams(): any[] {
     return [];
+  }
+
+  pagination(url?: string): Pagination {
+    return {
+      url,
+    };
   }
 }

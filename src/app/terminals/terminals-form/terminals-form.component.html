@@ -1,0 +1,84 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Terminais</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="resource?.id">
+        Editar Terminal ({{resource?.name}})
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="!resource?.id">
+        Adicionar Terminal
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Dados do terminal">
+        <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="customer">Empresa</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+              <nz-select formControlName="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione a empresa" nzServerSearch>
+                <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="terminalGroup">Grupo</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="terminalGroup" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o grupo" nzServerSearch>
+                <nz-option *ngFor="let terminalGroup of terminalGroups" [nzLabel]="terminalGroup.name" [nzValue]="terminalGroup.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="name">Nome</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+              <input nz-input formControlName="name" id="name" placeholder="Nome do terminal" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired nzFor="description">Descrição</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+              <input nz-input formControlName="description" id="description" />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <button type="button" (click)="save()" nz-button nzType="primary">
+                <i nz-icon nzType="save"></i>Salvar
+              </button>
+              <button type="button" (click)="list()" nz-button>
+                <i nz-icon nzType="unordered-list"></i>Listar Terminais
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </nz-tab>
+
+      <nz-tab nzTitle="Veiculos">
+        <nz-transfer
+          [nzDataSource]="vehicleTransferItems"
+          [nzTitles]="['Veiculos', 'Veiculos do terminal']"
+          [nzShowSearch]="true"
+          [nzSearchPlaceholder]="'Pesquisar veiculo'"
+          [nzNotFoundContent]="'Nenhum veiculo encontrado'"
+          [nzOperations]="['Adicionar', 'Remover']"
+          [nzListStyle]="{ 'width': '50%', 'height.px': '700' }"
+          [nzItemUnit]="'Veiculo'"
+          [nzItemsUnit]="'Veiculos'"
+        ></nz-transfer>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+</nz-spin>
