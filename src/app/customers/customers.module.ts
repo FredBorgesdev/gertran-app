@@ -14,6 +14,8 @@ import { AddressesFormComponent } from './addresses-form/addresses-form.componen
 import { DocumentsModule } from '../documents/documents.module';
 import {TextMaskModule} from 'angular2-text-mask';
 import {PermissionsModule} from '../permissions/permissions.module';
+import { CustomersTransferComponent } from './customers-transfer/customers-transfer.component';
+import {NzTransferModule} from 'ng-zorro-antd/transfer';
 
 const antdModule = [];
 
@@ -29,6 +31,7 @@ const antdModule = [];
     BranchOfficeTabComponent,
     CustomersCustomerComponent,
     AddressesFormComponent,
+    CustomersTransferComponent,
   ],
   imports: [
     SharedModule,
@@ -37,7 +40,10 @@ const antdModule = [];
     TextMaskModule,
     PermissionsModule,
     ...antdModule,
+    NzTransferModule,
   ],
-  exports: []
+  exports: [
+    CustomersTransferComponent,
+  ]
 })
 export class CustomersModule { }

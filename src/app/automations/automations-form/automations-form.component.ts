@@ -6,6 +6,8 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Customer, CustomersService} from '../../customers/customers.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {CustomersTransferComponent} from '../../customers/customers-transfer/customers-transfer.component';
 
 @Component({
   selector: 'app-automations-form',
@@ -25,7 +27,8 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
     activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private customersService: CustomersService,
-    private router: Router
+    private router: Router,
+    private modal: NzModalService,
   ) {
     super(
       service,
@@ -84,6 +87,14 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
     });
   }
 
+  performFormGroupSetValues(): void {
+    super.performFormGroupSetValues();
+
+    this.validateForm.patchValue({
+      customers: this.resource?.customers.map(customer => customer.id),
+    });
+  }
+
   validateControlRequired(value: string, control: string): void {
     if (value) {
       this.validateForm.get(control).setValidators([Validators.required]);
@@ -119,5 +130,22 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
 
   list(): void {
     this.router.navigate(['automations', 'automations-list']);
+  }
+
+  showCustomersModal(): void {
+    this.modal.create({
+      nzTitle: 'Empresas',
+      nzContent: CustomersTransferComponent,
+      nzWidth: '70%',
+      nzComponentParams: {
+        selectedCustomerIds: this.validateForm.get('customers').value,
+      },
+      nzOnOk: (componentInstance) => {
+        const customers = componentInstance.getSelectedCustomers();
+        const customersIds = customers.map(customer => customer.id);
+
+        this.validateForm.get('customers').setValue(customersIds);
+      }
+    });
   }
 }

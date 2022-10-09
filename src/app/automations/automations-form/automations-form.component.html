@@ -194,22 +194,14 @@
             <label nz-radio-button [nzValue]="false">Não</label>
           </nz-radio-group>
         </nz-form-control>
+
         <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <nz-select
-            id="customer"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Selecione uma empresa"
-            formControlName="customers"
-            nzMode="multiple"
-            [nzDisabled]="this.validateForm.get('isForAllCustomers').value"
-          >
-            <nz-option
-              *ngFor="let customer of customers"
-              [nzLabel]="customer.tradingName"
-              [nzValue]="customer.id"
-            ></nz-option>
-          </nz-select>
+          <button
+            nz-button
+            nzType="primary"
+            (click)="showCustomersModal()"
+            [disabled]="this.validateForm.get('isForAllCustomers').value"
+          >Selecionar Clientes</button>
         </nz-form-control>
       </nz-form-item>
 

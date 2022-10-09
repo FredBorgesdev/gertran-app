@@ -30,7 +30,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
 
   loadResources(url?: string): void {
     this.isLoading = true;
-    this.service.getAll(this.pagination(), ...this.additionalParams()).subscribe(data => {
+    this.service.getAll(this.pagination(url), ...this.additionalParams()).subscribe(data => {
       this.resources = data;
       this.isLoading = false;
       this.performPostLoadActions();
@@ -45,7 +45,6 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   edit(resource: T): void {
-    console.log(resource)
     this.router.navigate([this.resource, `${this.resource}-edit`, resource.id]);
   }
 
