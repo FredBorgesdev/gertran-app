@@ -50,6 +50,8 @@ export class MonitoringRequestComponent implements OnInit {
       routeCoordinates,
     };
 
-    this.service.update(this.resource.id, payload).subscribe();
+    this.service.update(this.resource.id, payload).subscribe(() => {
+      this.loadMonitoringRequest();
+    });
   }
 }

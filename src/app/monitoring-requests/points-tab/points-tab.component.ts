@@ -33,10 +33,13 @@ export class PointsTabComponent implements OnInit {
   @Input() monitoringRequest: MonitoringRequests;
   @Output() updateRouteCoordinates = new EventEmitter<any[]>();
 
+  isLoading = false;
   stops = [];
   validateForm: FormGroup;
   dateDefaultValue = setHours(new Date(), 0);
   pointTypes: Choice[] = [];
+
+  _routeCoordinates: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,6 +62,9 @@ export class PointsTabComponent implements OnInit {
       this.pointTypes = pointTypes;
     });
 
+    this._routeCoordinates = this.monitoringRequest.routeCoordinates;
+
+    this.isLoading = true;
     this.service.getAll({ limit: 999 }, this.monitoringRequest.id).subscribe((points) => {
       points.results.forEach((point) => {
         const formGroup = this.addPoint();
@@ -67,7 +73,11 @@ export class PointsTabComponent implements OnInit {
           date: new Date(`${point.date} ${point.time}`),
         };
         formGroup.patchValue(pointWithDate);
+        this.isLoading = false;
       });
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao carregar paradas');
     });
 
     const { routeId } = this.activatedRoute.snapshot.queryParams || {};
@@ -120,23 +130,30 @@ export class PointsTabComponent implements OnInit {
     return this.getPointsControls()[this.getPointsControls().length - 1];
   }
 
-  removePoint(index: number): void {
+  async removePoint(index: number): Promise<void> {
     const point = this.getPointsControls()[index]?.value;
     if (!point?.id) {
-      return (this.validateForm.get('points') as FormArray).removeAt(index);
+      (this.validateForm.get('points') as FormArray).removeAt(index);
+      this._routeCoordinates = await this.getRouteCoordinates();
+
+      return;
     }
 
     this.modal.confirm({
       nzTitle: 'Você tem certeza que deseja remover esse ponto?',
       nzOnOk: () => {
-        this.service.delete(point.id, this.monitoringRequest.id).subscribe(() => {
+        this.isLoading = true;
+
+        this.service.delete(point.id, this.monitoringRequest.id).subscribe(async () => {
           (this.validateForm.get('points') as FormArray).removeAt(index);
+          this._routeCoordinates = await this.getRouteCoordinates();
+          this.isLoading = false;
         });
       }
     });
   }
 
-  handleAddressChange(address: any, formGroup: FormGroup): void {
+  async handleAddressChange(address: any, formGroup: FormGroup): Promise<void> {
     const latitude = address.geometry?.location.lat().toFixed(6);
     const longitude = address.geometry?.location.lng().toFixed(6);
     const formattedAddress = address.formatted_address;
@@ -152,6 +169,8 @@ export class PointsTabComponent implements OnInit {
       city,
       zipCode,
     });
+
+    this._routeCoordinates = await this.getRouteCoordinates();
   }
 
   drop(event: CdkDragDrop<string[]>): void {
@@ -216,12 +235,14 @@ export class PointsTabComponent implements OnInit {
       nzContent: MapModalComponent,
       nzComponentParams: {
         points: this.getPointsControls().map((point) => point.value),
-        routeCoordinates: this.monitoringRequest.routeCoordinates,
+        routeCoordinates: this._routeCoordinates,
       }
     });
   }
 
   async save(): Promise<void> {
+    this.isLoading = true;
+
     const pointsWithOrder = this.getChangedPointsWithOrder();
 
     const points = this.validateForm.get('points') as FormArray;
@@ -230,7 +251,9 @@ export class PointsTabComponent implements OnInit {
       return;
     }
 
-    await this.emitUpdateRouteCoordinates();
+    const routeCoordinates = await this.getRouteCoordinates();
+    await this.updateRouteCoordinates.emit(routeCoordinates);
+    this._routeCoordinates = routeCoordinates;
 
     const operations = pointsWithOrder.map((point) => {
       if (point.id) {
@@ -246,13 +269,13 @@ export class PointsTabComponent implements OnInit {
     );
   }
 
-  async emitUpdateRouteCoordinates(): Promise<void> {
+  async getRouteCoordinates(): Promise<any[]> {
     const routeCoordinates = await this.directionsService.getDirections(
       this.getPointsControls().map((point) => point.value),
     );
     const directionsGeoJson = polyline.toGeoJSON(routeCoordinates.route[0].geometry);
 
-    this.updateRouteCoordinates.emit(directionsGeoJson.coordinates);
+    return directionsGeoJson.coordinates;
   }
 
   getChangedPointsWithOrder(): any[] {
@@ -271,10 +294,12 @@ export class PointsTabComponent implements OnInit {
   }
 
   private handleSuccess(): void {
+    this.isLoading = false;
     this.message.success('Pontos salvos com sucesso!');
   }
 
   private handleError(): void {
+    this.isLoading = false;
     this.message.error('Erro ao salvar pontos!');
   }
 }

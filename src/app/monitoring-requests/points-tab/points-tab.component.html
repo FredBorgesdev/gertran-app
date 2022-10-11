@@ -1,120 +1,122 @@
-<form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <nz-form-item>
-    <button
-      nz-button
-      nzType="link"
-      (click)="showMap()"
-    >
-      <i nz-icon nzType="pushpin"></i>
-      Mostrar rota no mapa
-    </button>
-
-
-    <nz-list cdkDropList (cdkDropListDropped)="drop($event)">
-      <nz-list-item
-        nz-row
-        nzGutter="16"
-        formArrayName="points"
-        *ngFor="let point of getPointsControls(); let i = index"
-        cdkDrag
+<nz-spin [nzSpinning]="isLoading" nzTip="Aguarde...">
+  <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+    <nz-form-item>
+      <button
+        nz-button
+        nzType="link"
+        (click)="showMap()"
       >
-        <ng-container [formGroup]="point">
-          <div nz-col nzSpan="8">
-            <nz-form-label nzRequired nzFor="address">Localização</nz-form-label>
-            <nz-form-control nzErrorTip="Insira o endereço">
-              <input
-                ngx-google-places-autocomplete
-                (onAddressChange)="handleAddressChange($event, point)"
-                id="address"
-                type="text"
-                nz-input
-                placeholder="Digite o endereço"
-                formControlName="address"
-              />
-            </nz-form-control>
-          </div>
+        <i nz-icon nzType="pushpin"></i>
+        Mostrar rota no mapa
+      </button>
 
-          <div nz-col nzSpan="8">
-            <nz-form-label nzRequired nzFor="date">Data e hora do ponto</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <nz-date-picker
-                style="width: 100%"
-                [nzShowTime]="{ nzDefaultOpenValue: dateDefaultValue }"
-                nzFormat="dd/MM/yyyy HH:mm:ss"
-                formControlName="date"
-                nzPlaceHolder="Selecione a data e hora"
-              ></nz-date-picker>
-            </nz-form-control>
-          </div>
 
-          <div nz-col nzSpan="6">
-            <nz-form-label nzRequired nzFor="pointType">Tipo de parada</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <nz-select
-                nzPlaceHolder="Selecione o tipo"
-                formControlName="pointType"
-              >
-                <nz-option
-                  *ngFor="let pointType of pointTypes"
-                  [nzLabel]="pointType.label"
-                  [nzValue]="pointType.value"
-                ></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-
-          <div nz-col nzSpan="2">
-            <nz-form-label></nz-form-label>
-            <nz-form-control>
-              <button nz-button nzType="danger" (click)="removePoint(i)">
-                <i nz-icon nzType="delete"></i>
-              </button>
-            </nz-form-control>
-          </div>
-        </ng-container>
-      </nz-list-item>
-    </nz-list>
-  </nz-form-item>
-
-  <nz-form-item>
-    <div nz-row nzGutter="12">
-      <div nz-col nzSpan="12">
-        <nz-select
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Pontos"
-          nzServerSearch
-          style="width: 100%"
-          formControlName="chosenPoint"
+      <nz-list cdkDropList (cdkDropListDropped)="drop($event)">
+        <nz-list-item
+          nz-row
+          nzGutter="16"
+          formArrayName="points"
+          *ngFor="let point of getPointsControls(); let i = index"
+          cdkDrag
         >
-          <nz-option
-            nzLabel="Ponto em branco"
-            nzValue="blank"
-          ></nz-option>
-          <nz-option
-            *ngFor="let point of stops"
-            [nzLabel]="point.name"
-            [nzValue]="point"
-          ></nz-option>
-        </nz-select>
-      </div>
+          <ng-container [formGroup]="point">
+            <div nz-col nzSpan="8">
+              <nz-form-label nzRequired nzFor="address">Localização</nz-form-label>
+              <nz-form-control nzErrorTip="Insira o endereço">
+                <input
+                  ngx-google-places-autocomplete
+                  (onAddressChange)="handleAddressChange($event, point)"
+                  id="address"
+                  type="text"
+                  nz-input
+                  placeholder="Digite o endereço"
+                  formControlName="address"
+                />
+              </nz-form-control>
+            </div>
 
-      <div nz-col nzSpan="12">
-        <button
-          nz-button
-          nzType="dashed"
-          (click)="addPoint()"
-          style="width: 100%"
-        >
-          Novo ponto
-        </button>
-      </div>
-    </div>
-  </nz-form-item>
+            <div nz-col nzSpan="8">
+              <nz-form-label nzRequired nzFor="date">Data e hora do ponto</nz-form-label>
+              <nz-form-control nzErrorTip="Preencha o campo">
+                <nz-date-picker
+                  style="width: 100%"
+                  [nzShowTime]="{ nzDefaultOpenValue: dateDefaultValue }"
+                  nzFormat="dd/MM/yyyy HH:mm:ss"
+                  formControlName="date"
+                  nzPlaceHolder="Selecione a data e hora"
+                ></nz-date-picker>
+              </nz-form-control>
+            </div>
 
-  <nz-form-item>
-    <button nz-button nzType="primary" (click)="save()">
-      Salvar
-    </button>
-  </nz-form-item>
-</form>
+            <div nz-col nzSpan="6">
+              <nz-form-label nzRequired nzFor="pointType">Tipo de parada</nz-form-label>
+              <nz-form-control nzErrorTip="Preencha o campo">
+                <nz-select
+                  nzPlaceHolder="Selecione o tipo"
+                  formControlName="pointType"
+                >
+                  <nz-option
+                    *ngFor="let pointType of pointTypes"
+                    [nzLabel]="pointType.label"
+                    [nzValue]="pointType.value"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </div>
+
+            <div nz-col nzSpan="2">
+              <nz-form-label></nz-form-label>
+              <nz-form-control>
+                <button nz-button nzType="danger" (click)="removePoint(i)">
+                  <i nz-icon nzType="delete"></i>
+                </button>
+              </nz-form-control>
+            </div>
+          </ng-container>
+        </nz-list-item>
+      </nz-list>
+    </nz-form-item>
+
+    <nz-form-item>
+      <div nz-row nzGutter="12">
+        <div nz-col nzSpan="12">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Pontos"
+            nzServerSearch
+            style="width: 100%"
+            formControlName="chosenPoint"
+          >
+            <nz-option
+              nzLabel="Ponto em branco"
+              nzValue="blank"
+            ></nz-option>
+            <nz-option
+              *ngFor="let point of stops"
+              [nzLabel]="point.name"
+              [nzValue]="point"
+            ></nz-option>
+          </nz-select>
+        </div>
+
+        <div nz-col nzSpan="12">
+          <button
+            nz-button
+            nzType="dashed"
+            (click)="addPoint()"
+            style="width: 100%"
+          >
+            Novo ponto
+          </button>
+        </div>
+      </div>
+    </nz-form-item>
+
+    <nz-form-item>
+      <button nz-button nzType="primary" (click)="save()">
+        Salvar
+      </button>
+    </nz-form-item>
+  </form>
+</nz-spin>
