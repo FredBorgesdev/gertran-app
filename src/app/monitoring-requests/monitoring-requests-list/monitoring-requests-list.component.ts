@@ -8,6 +8,8 @@ import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.co
 import {TravelStepService} from '../travel-step.service';
 import {forkJoin} from 'rxjs';
 import {format} from 'date-fns';
+import {DirectionsService} from '../../shared/services/directions.service';
+import {Route} from '../../routes/routes.service';
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -26,6 +28,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
   constructor(
     private travelStepService: TravelStepService,
+    private directionsService: DirectionsService,
     router: Router,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -46,13 +49,17 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzContent: RoutesModalComponent,
       nzOkText: 'Criar',
       nzCancelText: 'Cancelar',
-      nzOnOk: (componentInstance) => {
+      nzOnOk: async (componentInstance) => {
         const route = componentInstance.checkedId !== BLANK_ROUTE.id ?
           componentInstance.checkedId : null;
         const points = componentInstance.routes.find((r) => r.id === componentInstance.checkedId)?.points ?? [];
 
+        const lngLat = points.map(({ point: { longitude, latitude } }) => ({ latitude, longitude }));
+        const routeCoordinates = await this.directionsService.getDirections(lngLat);
+
         (this.service as MonitoringRequestsService).save({
-          route
+          route,
+          routeCoordinates
         }).subscribe((result) => {
           this.createPoints(result.id, points);
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
@@ -61,7 +68,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     });
   }
 
-  createPoints(monitoringRequestId: string, points: any[]): void {
+  createPoints(monitoringRequestId: string, points: Route['points']): void {
     const points$ = points.map(({ point }, index) => {
       return this.travelStepService.save({
         pointId: point.id,

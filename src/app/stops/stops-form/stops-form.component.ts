@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { TransferItem } from 'ng-zorro-antd/transfer';
-import { stopsListTypeCategories } from '../stops-list/mocked-data';
 import {Stop, StopsService} from '../stops.service';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -19,10 +18,7 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
   stopTypes = [];
   customers: Customer[] = [];
 
-  categoriesTransferItems: TransferItem[] = stopsListTypeCategories.map(category => ({
-    key: category.id,
-    title: category.name,
-  }));
+  categoriesTransferItems: TransferItem[] = [];
 
   constructor(
     private formBuilder: FormBuilder,

@@ -10,10 +10,7 @@ export interface Stop {
   address: string;
   state: string;
   city: string;
-  lat?: number;
-  lng?: number;
   radius: number;
-  typeId: number;
   typeCategoryIds: number[];
   workingHours?: {
     [key: string]: {
@@ -25,6 +22,10 @@ export interface Stop {
       checkedG2g: string
     }
   };
+
+  pointType: string;
+  latitude: any;
+  longitude: any;
 }
 
 @Injectable({

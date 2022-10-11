@@ -12,7 +12,7 @@ export interface Route {
   lead?: number;
   points: {
     id: string;
-    point: string;
+    point: Stop;
     order: number;
     latitude: number;
     longitude: number;

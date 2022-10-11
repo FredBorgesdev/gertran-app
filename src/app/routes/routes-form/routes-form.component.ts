@@ -77,7 +77,7 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
   loadCurrentPoints(): void {
     const pointsCopy = [...this.points];
     this.resource.points.forEach((point) => {
-      const index = this.points.findIndex((item) => item.title === point.point);
+      const index = this.points.findIndex((item) => item.id === point.point.id);
       pointsCopy[index].direction = 'right';
       pointsCopy[index].order = point.order;
     });

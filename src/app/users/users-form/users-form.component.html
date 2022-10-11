@@ -57,6 +57,7 @@
     nzType="link"
     class="m-b-50"
     (click)="isChangePasswordModalVisible = true"
+    *ngIf="user?.id"
   >Trocar senha</a>
 
   <nz-form-item>
