@@ -66,6 +66,8 @@ export class ArmedGuardTabComponent extends BaseCrudListComponent<ArmedGuard> im
   }
 
   save(): void {
+    this.isLoading = true;
+
     if (this.armedGuardId) {
       this.service.update(this.armedGuardId, this.validateForm.value, this.monitoringRequestId).subscribe(
         () => this.handleSuccess(),
@@ -94,11 +96,13 @@ export class ArmedGuardTabComponent extends BaseCrudListComponent<ArmedGuard> im
     this.validateForm.reset();
     this.isCreating = false;
     this.armedGuardId = null;
+    this.isLoading = false;
     this.loadResources();
   }
 
   private handleError(): void {
     this.message.error('Erro ao salvar');
+    this.isLoading = false;
   }
 
   closeModal(): void {

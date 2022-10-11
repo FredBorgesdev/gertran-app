@@ -50,6 +50,7 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
   }
 
   save(): void {
+    this.isLoading = true;
     if (this.loadingOrderId) {
       this.service.update(this.loadingOrderId, this.validateForm.value, this.monitoringRequestId).subscribe(
         () => this.handleSuccess(),
@@ -78,10 +79,12 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
     this.validateForm.reset();
     this.isCreating = false;
     this.loadingOrderId = null;
+    this.isLoading = false;
     this.loadResources();
   }
 
   private handleError(): void {
+    this.isLoading = false;
     this.message.error('Erro ao salvar');
   }
 

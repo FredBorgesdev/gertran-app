@@ -50,6 +50,8 @@ export class InvoicesTabComponent extends BaseCrudListComponent<Invoice> impleme
   }
 
   save(): void {
+    this.isLoading = true;
+
     if (this.invoiceId) {
       this.service.update(this.invoiceId, this.validateForm.value, this.monitoringRequestId).subscribe(
         () => this.handleSuccess(),
@@ -78,11 +80,13 @@ export class InvoicesTabComponent extends BaseCrudListComponent<Invoice> impleme
     this.validateForm.reset();
     this.isCreating = false;
     this.invoiceId = null;
+    this.isLoading = false;
     this.loadResources();
   }
 
   private handleError(): void {
     this.message.error('Erro ao salvar');
+    this.isLoading = false;
   }
 
   closeModal(): void {

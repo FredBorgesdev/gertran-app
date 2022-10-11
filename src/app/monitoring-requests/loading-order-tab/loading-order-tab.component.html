@@ -63,6 +63,9 @@
   nzTitle="Criar nova ordem de carregamento"
   (nzOnCancel)="closeModal()"
   (nzOnOk)="save()"
+  nzOkText="Salvar"
+  nzCancelText="Cancelar"
+  [nzOkLoading]="isLoading"
 >
   <ng-container *nzModalContent>
     <form [formGroup]="validateForm">

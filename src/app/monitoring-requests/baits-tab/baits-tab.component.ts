@@ -18,7 +18,7 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
   isCreating = false;
   baitId: string = null;
 
-  loadingOrdersColumns = [
+  baitsColumns = [
     { title: 'Id' },
     { title: 'Tecnologia' },
     { title: 'Local de instalação' },
@@ -60,6 +60,8 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
   }
 
   save(): void {
+    this.isLoading = true;
+
     if (this.baitId) {
       this.service.update(this.baitId, this.validateForm.value, this.monitoringRequestId).subscribe(
         () => this.handleSuccess(),
@@ -88,11 +90,13 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
     this.validateForm.reset();
     this.isCreating = false;
     this.baitId = null;
+    this.isLoading = false;
     this.loadResources();
   }
 
   private handleError(): void {
     this.message.error('Erro ao salvar');
+    this.isLoading = false;
   }
 
   closeModal(): void {
