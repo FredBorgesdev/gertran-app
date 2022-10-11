@@ -74,11 +74,20 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
+
     if (params.pageIndex < this.page) {
-      this.loadResources(this.resources.previous);
+      const url = this.replaceOffsetWithPage(this.resources.previous, params.pageIndex);
+      this.loadResources(url);
     } else if (params.pageIndex > this.page) {
-      this.loadResources(this.resources.next);
+      const url = this.replaceOffsetWithPage(this.resources.next, params.pageIndex);
+      this.loadResources(url);
     }
+  }
+
+  replaceOffsetWithPage(url: string, page: number): string {
+    const limit = +url.match(/limit=\d+/)[0].split('=')[1];
+
+    return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
   }
 
   additionalParams(): any[] {
