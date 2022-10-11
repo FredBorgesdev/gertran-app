@@ -98,7 +98,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       vehicleModelType: [null, [Validators.required]],
       peripherals: [[], []],
       workingSituation: [null, [Validators.required]],
-      plate: [null, [Validators.required]],
+      plate: [null, [Validators.required, Validators.maxLength(7)]],
       state: [null, [Validators.required, Validators.maxLength(2)]],
       city: [null, [Validators.required]],
       color: [null, [Validators.required]],
