@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {catchError, map, mergeMap, retryWhen} from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
@@ -24,16 +24,30 @@ export class ApiInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const headers = new HttpHeaders({
-      authorization: `Bearer ${Cookie.get(GERTRAN_WEB_TOKEN)}`,
-    });
     const apiReq = request.clone({
       url: `${environment.apiUrl}/${request.url}/`,
-      body: this.isFormData(request) ? request.body : decamelizeKeys(request.body),
-      headers,
+      body: this.getBody(request),
+      headers: this.getHeaders(),
     });
 
     return next.handle(apiReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (
+          error.status === 401
+          && ['auth/jwt/verify', 'auth/jwt/refresh'].indexOf(request.url) === -1
+        ) {
+          return this.authService.refreshObservable().pipe(
+            mergeMap(
+              () => {
+                return next.handle(apiReq.clone({
+                  headers: this.getHeaders(),
+                }));
+              }
+            ));
+        } else {
+          return throwError(error);
+        }
+      }),
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           if (Array.isArray(event.body)) {
@@ -43,25 +57,16 @@ export class ApiInterceptor implements HttpInterceptor {
           }
         }
       }),
-      catchError((error: HttpErrorResponse) => {
-        if (
-          error.status === 401 &&
-          ['auth/jwt/verify', 'auth/jwt/refresh'].indexOf(request.url) === -1
-        ) {
-          return this.authService.refreshObservable().pipe(
-            mergeMap(
-              () => {
-                return next.handle(apiReq.clone({
-                  headers: new HttpHeaders({
-                    authorization: `Bearer ${Cookie.get(GERTRAN_WEB_TOKEN)}`,
-                  })
-                }));
-              }
-            ));
-        } else {
-          return throwError(error);
-        }
-      }),
     );
+  }
+
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      authorization: `Bearer ${Cookie.get(GERTRAN_WEB_TOKEN)}`,
+    });
+  }
+
+  private getBody(request: HttpRequest<any>): any {
+    return this.isFormData(request) ? request.body : decamelizeKeys(request.body);
   }
 }

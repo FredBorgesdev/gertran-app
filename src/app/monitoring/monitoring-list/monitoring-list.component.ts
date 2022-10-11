@@ -5,6 +5,8 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MonitoringMapComponent} from '../monitoring-map/monitoring-map.component';
 import {Customer, CustomersService} from '../../customers/customers.service';
+import {Terminals, TerminalsService} from '../../terminals/terminals.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-monitoring-list',
@@ -40,10 +42,12 @@ export class MonitoringListComponent implements OnInit {
     { title: 'Temp.' },
     { title: '' },
   ];
+  validateForm: FormGroup;
 
   monitoringData: Monitoring[] = [];
 
   customers: Customer[] = [];
+  terminals: Terminals[] = [];
 
   constructor(
     private router: Router,
@@ -51,6 +55,8 @@ export class MonitoringListComponent implements OnInit {
     private message: NzMessageService,
     private modal: NzModalService,
     private customerService: CustomersService,
+    private terminalsService: TerminalsService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +64,15 @@ export class MonitoringListComponent implements OnInit {
 
     this.customerService.getAll({ limit: 999 }).subscribe(data => {
       this.customers = data.results;
+    });
+    this.terminalsService.getAll({ limit: 999 }).subscribe(data => {
+      this.terminals = data.results;
+    });
+
+    this.validateForm = this.formBuilder.group({
+      customer: [null],
+      terminal: [null],
+      groupBy: [null],
     });
   }
 

@@ -68,7 +68,20 @@ export class TerminalsListComponent extends BaseCrudListComponent<Terminals> {
 
   groupTerminalsByTerminalGroup(): void {
     const terminals = this.resources.results;
-    const groupedByTerminalGroup = groupBy((terminal) => terminal.terminalGroup.id, terminals);
+
+    if (terminals.length === 0) {
+      return;
+    }
+
+    const groupedByTerminalGroup = groupBy((terminal) => {
+      // console.log(terminal)
+      return terminal.terminalGroup?.id
+    }, terminals);
+
+    // console.log({
+    //   groupedByTerminalGroup,
+    //   terminals
+    // });
 
     this.terminalGroups = Object.keys(groupedByTerminalGroup).map((key) => ({
       terminalGroup: groupedByTerminalGroup[key][0].terminalGroup,

@@ -11,48 +11,49 @@
 
     <nz-divider></nz-divider>
 
-    <div nz-row nzGutter="12" nzAlign="middle">
-      <div nz-col nzSpan="4">
-        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cliente">
-          <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
-        </nz-select>
+    <form [formGroup]="validateForm" class="m-b-30">
+      <div nz-row nzGutter="12" nzAlign="middle">
+        <div nz-col nzSpan="4">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cliente" formControlName="customer">
+            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col nzSpan="4">
+          <nz-select nzPlaceHolder="Agrupamento" formControlName="groupBy">
+            <nz-option nzLabel="Não agrupar" nzValue="not-group"></nz-option>
+            <nz-option nzLabel="Agrupar por alertas" nzValue="alert"></nz-option>
+            <nz-option nzLabel="Agrupar por jornadas" nzValue="journey"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col nzSpan="4">
+          <nz-select nzPlaceHolder="Terminal" formControlName="terminal">
+            <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col nzSpan="4">
+          <label nz-checkbox nzChecked>Ocultar antigos</label>
+          <label nz-checkbox nzChecked>Em viagem</label>
+        </div>
       </div>
-      <div nz-col nzSpan="4">
-        <nz-select nzPlaceHolder="Agrupamento">
-          <nz-option nzLabel="Não agrupar" nzValue="not-group"></nz-option>
-          <nz-option nzLabel="Agrupar por alertas" nzValue="alert"></nz-option>
-          <nz-option nzLabel="Agrupar por jornadas" nzValue="journey"></nz-option>
-        </nz-select>
-      </div>
-      <div nz-col nzSpan="4">
-        <nz-select nzPlaceHolder="Terminal">
-          <nz-option nzLabel="Terminal BH 1 - Itambé" nzValue="1"></nz-option>
-          <nz-option nzLabel="Terminal BH 2 - Lactalis" nzValue="2"></nz-option>
-          <nz-option nzLabel="Terminal BH 3 - Itambé/Lactalis" nzValue="3"></nz-option>
-        </nz-select>
-      </div>
-      <div nz-col nzSpan="4">
-        <label nz-checkbox nzChecked>Ocultar antigos</label>
-        <label nz-checkbox nzChecked>Em viagem</label>
-      </div>
-      <div nz-col nzSpan="8" style="margin-left: auto; flex: none">
-        <button nzSize="small" nz-button nzType="secondary" class="m-r-10">
-          (55) Mensagens
-        </button>
-        <button nzSize="small" nz-button nzType="primary" class="m-r-10">
-          (8) Alertas
-        </button>
-        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10">
-          (0) Urgente
-        </button>
-        <button nzSize="small" nz-button nzType="dashed">
-          <span nz-icon nzType="car"></span>
-          Placa
-        </button>
-      </div>
+    </form>
+
+    <div nzSpan="8">
+      <button nzSize="small" nz-button nzType="secondary" class="m-r-10">
+        (55) Mensagens
+      </button>
+      <button nzSize="small" nz-button nzType="primary" class="m-r-10">
+        (8) Alertas
+      </button>
+      <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10">
+        (0) Urgente
+      </button>
+      <button nzSize="small" nz-button nzType="dashed">
+        <span nz-icon nzType="car"></span>
+        Placa
+      </button>
     </div>
 
-    <div nz-row nzGutter="12" nzAlign="middle" class="m-t-50">
+    <div nz-row nzGutter="12" nzAlign="middle" class="m-t-10 m-b-50">
       <nz-col nzSpan="2">
         <button
           nz-button
@@ -143,13 +144,6 @@
           Nenhum
         </button>
       </nz-col>
-    </div>
-
-    <div class="row m-b-30">
-      <div class="col-lg-8">
-        <div class="d-md-flex">
-        </div>
-      </div>
     </div>
 
     <nz-table
