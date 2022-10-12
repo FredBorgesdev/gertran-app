@@ -161,17 +161,19 @@
       <tbody>
       <tr *ngFor="let item of table.data; let i=index" [class]="getRowBackgroundColor(item.status)">
         <td>
-          <img [src]="item.tec" alt="logo" width="35px" height="35px" />
+<!--          <img [src]="item.tec" alt="logo" width="35px" height="35px" />-->
+          {{ item.technology }}
         </td>
-        <td>{{ item.tracker }}</td>
-        <td>{{ item.trip }}</td>
-        <td>{{ item.plate }}</td>
+        <td>{{ item.trackerCode || '-' }}</td>
+        <td>{{ item.trip || 'TODO' }}</td>
+        <td>{{ item.vehiclePlate || '-' }}</td>
         <td class="text-md-center">
           <nz-badge *ngIf="item.ignition" nzStatus="success"></nz-badge>
           <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>
         </td>
         <td class="text-md-center">
-          <nz-badge [nzColor]="getAlertColor(item.alert)"></nz-badge>
+<!--          <nz-badge [nzColor]="getAlertColor(item.alert)"></nz-badge>-->
+          TODO
         </td>
         <td>
           <button
@@ -182,33 +184,37 @@
           ><span nz-icon nzType="pushpin" nzTheme="fill"></span></button>
         </td>
         <td class="text-md-center">
-          <nz-progress [nzPercent]="item.progress"></nz-progress>
+<!--          <nz-progress [nzPercent]="item.progress"></nz-progress>-->
+          TODO
         </td>
         <td>{{ item.speed }}</td>
-        <td>{{ item.client }}</td>
-        <td>{{ item.date }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.position">{{ item.position }}</td>
+        <td>{{ item.client || 'TODO' }}</td>
+        <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.position">{{ item.position || 'TODO' }}</td>
         <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.origin">{{ item.origin }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.destination">{{ item.destination }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.destination">{{ item.destiny }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts || 'TODO' }}</td>
         <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
-        <td>{{ item.observation }}</td>
-        <td>{{ item.driver }}</td>
-        <td>{{ item.wagon }}</td>
-        <td>{{ item.communication }}</td>
+        <td>{{ item.observation || 'TODO' }}</td>
+        <td>{{ item.driverName || '-' }}</td>
+        <td>{{ item.wagon || 'TODO' }}</td>
+        <td>{{ item.communication || 'TODO' }}</td>
         <td class="text-md-center">
-          <nz-badge *ngIf="item.macro" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.macro" nzStatus="error"></nz-badge>
+<!--          <nz-badge *ngIf="item.macro" nzStatus="success"></nz-badge>-->
+<!--          <nz-badge *ngIf="!item.macro" nzStatus="error"></nz-badge>-->
+          TODO
         </td>
         <td class="text-md-center">
-          <nz-badge *ngIf="item.embeddedIntelligence" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.embeddedIntelligence" nzStatus="error"></nz-badge>
+<!--          <nz-badge *ngIf="item.embeddedIntelligence" nzStatus="success"></nz-badge>-->
+<!--          <nz-badge *ngIf="!item.embeddedIntelligence" nzStatus="error"></nz-badge>-->
+          TODO
         </td>
         <td class="text-md-center">
-          <nz-badge *ngIf="item.bait" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.bait" nzStatus="error"></nz-badge>
+<!--          <nz-badge *ngIf="item.bait" nzStatus="success"></nz-badge>-->
+<!--          <nz-badge *ngIf="!item.bait" nzStatus="error"></nz-badge>-->
+          TODO
         </td>
-        <td>{{ item.temperature }}</td>
+        <td>{{ item.temperature || 'TODO' }}</td>
         <td>
           <a
             nz-dropdown

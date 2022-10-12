@@ -7,6 +7,7 @@ import {MonitoringMapComponent} from '../monitoring-map/monitoring-map.component
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Position, PositionsService} from '../positions.service';
 
 @Component({
   selector: 'app-monitoring-list',
@@ -44,7 +45,7 @@ export class MonitoringListComponent implements OnInit {
   ];
   validateForm: FormGroup;
 
-  monitoringData: Monitoring[] = [];
+  monitoringData: Position[] = [];
 
   customers: Customer[] = [];
   terminals: Terminals[] = [];
@@ -57,16 +58,18 @@ export class MonitoringListComponent implements OnInit {
     private customerService: CustomersService,
     private terminalsService: TerminalsService,
     private formBuilder: FormBuilder,
+    private positionsService: PositionsService,
   ) { }
 
   ngOnInit(): void {
-    this.monitoringData = this.service.getAll();
-
     this.customerService.getAll({ limit: 999 }).subscribe(data => {
       this.customers = data.results;
     });
     this.terminalsService.getAll({ limit: 999 }).subscribe(data => {
       this.terminals = data.results;
+    });
+    this.positionsService.getAll({ limit: 999 }).subscribe(data => {
+      this.monitoringData = data.results;
     });
 
     this.validateForm = this.formBuilder.group({
@@ -92,7 +95,7 @@ export class MonitoringListComponent implements OnInit {
     }[status];
   }
 
-  openMap(item: Monitoring): void {
+  openMap(item: Position): void {
     this.modal.create({
       nzTitle: 'Mapa',
       nzContent: MonitoringMapComponent,

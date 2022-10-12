@@ -4,6 +4,7 @@ import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-d
 import polyline from '@mapbox/polyline';
 import {environment} from '../../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
+import {Position} from '../positions.service';
 
 @Component({
   selector: 'app-monitoring-map',
@@ -11,7 +12,7 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./monitoring-map.component.css']
 })
 export class MonitoringMapComponent implements OnInit {
-  @Input() item: Monitoring;
+  @Input() item: Position;
 
   details: MonitoringMapData;
 
