@@ -217,9 +217,13 @@
     </thead>
     <tbody>
     <tr *ngFor="let item of table.data; let i=index" [class]="getRowBackgroundColor(item.status)">
-      <td>
-        <!--          <img [src]="item.tec" alt="logo" width="35px" height="35px" />-->
-        {{ item.technology }}
+      <td style="text-align: center">
+        <img
+          [src]="'assets/images/brand/' + item.technology.toLowerCase() + '.jpg'"
+          alt="logo"
+          width="35px"
+          height="35px"
+        />
       </td>
       <td>{{ item.trackerCode || '-' }}</td>
       <td>{{ item.trip || 'TODO' }}</td>
@@ -244,10 +248,10 @@
         <!--          <nz-progress [nzPercent]="item.progress"></nz-progress>-->
         TODO
       </td>
-      <td>{{ item.speed }}</td>
+      <td>{{ item.speed }}km</td>
       <td>{{ item.client || 'TODO' }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.position">{{ item.position || 'TODO' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.street">{{ item.street }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.origin">{{ item.origin }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.destination">{{ item.destiny }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts || 'TODO' }}</td>
