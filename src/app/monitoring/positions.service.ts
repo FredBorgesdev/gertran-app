@@ -26,7 +26,10 @@ export interface Position {
   timePosition: string;
   trackerCode: string;
   trackerModel: string;
-  vehiclePlate: string;
+  vehicle: {
+    plate: string;
+    id: string;
+  };
   vehicleStatus: string;
 }
 
