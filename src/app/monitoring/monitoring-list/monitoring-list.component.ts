@@ -50,6 +50,8 @@ export class MonitoringListComponent implements OnInit {
   customers: Customer[] = [];
   terminals: Terminals[] = [];
 
+  isTableFullscreen = false;
+
   constructor(
     private router: Router,
     private service: MonitoringService,

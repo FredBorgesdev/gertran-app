@@ -146,94 +146,11 @@
       </nz-col>
     </div>
 
-    <nz-table
-      #table
-      [nzData]="monitoringData"
-      [nzFrontPagination]="false"
-      nzTableLayout="fixed"
-      [nzScroll]="{ y: '800px', x: '1800px' }"
-    >
-      <thead>
-      <tr>
-        <th
-          *ngFor="let column of monitoringColumns"
-          [nzSortFn]="column.compare"
-          nzWidth="110px"
-          style="text-align: center"
-        >{{ column.title }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of table.data; let i=index" [class]="getRowBackgroundColor(item.status)">
-        <td>
-<!--          <img [src]="item.tec" alt="logo" width="35px" height="35px" />-->
-          {{ item.technology }}
-        </td>
-        <td>{{ item.trackerCode || '-' }}</td>
-        <td>{{ item.trip || 'TODO' }}</td>
-        <td>{{ item.vehiclePlate || '-' }}</td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.ignition" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-<!--          <nz-badge [nzColor]="getAlertColor(item.alert)"></nz-badge>-->
-          TODO
-        </td>
-        <td>
-          <button
-            nz-button
-            nzType="link"
-            nzSize="small"
-            (click)="openMap(item)"
-          ><span nz-icon nzType="pushpin" nzTheme="fill"></span></button>
-        </td>
-        <td class="text-md-center">
-<!--          <nz-progress [nzPercent]="item.progress"></nz-progress>-->
-          TODO
-        </td>
-        <td>{{ item.speed }}</td>
-        <td>{{ item.client || 'TODO' }}</td>
-        <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.position">{{ item.position || 'TODO' }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.origin">{{ item.origin }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.destination">{{ item.destiny }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts || 'TODO' }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
-        <td>{{ item.observation || 'TODO' }}</td>
-        <td>{{ item.driverName || '-' }}</td>
-        <td>{{ item.wagon || 'TODO' }}</td>
-        <td>{{ item.communication || 'TODO' }}</td>
-        <td class="text-md-center">
-<!--          <nz-badge *ngIf="item.macro" nzStatus="success"></nz-badge>-->
-<!--          <nz-badge *ngIf="!item.macro" nzStatus="error"></nz-badge>-->
-          TODO
-        </td>
-        <td class="text-md-center">
-<!--          <nz-badge *ngIf="item.embeddedIntelligence" nzStatus="success"></nz-badge>-->
-<!--          <nz-badge *ngIf="!item.embeddedIntelligence" nzStatus="error"></nz-badge>-->
-          TODO
-        </td>
-        <td class="text-md-center">
-<!--          <nz-badge *ngIf="item.bait" nzStatus="success"></nz-badge>-->
-<!--          <nz-badge *ngIf="!item.bait" nzStatus="error"></nz-badge>-->
-          TODO
-        </td>
-        <td>{{ item.temperature || 'TODO' }}</td>
-        <td>
-          <a
-            nz-dropdown
-            nzTrigger="click"
-            nzPlacement="bottomCenter"
-            [nzDropdownMenu]="moreActions"
-            class="text-dark font-size-20"
-          >
-            <span nz-icon nzType="more" nzTheme="outline"></span>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
+    <button nz-button nzSize="small" class="m-b-5" (click)="isTableFullscreen = true">
+      <span nz-icon nzType="fullscreen"></span>
+    </button>
+
+    <div *ngIf="isTableFullscreen else monitoringDataTable"></div>
   </nz-card>
 </nz-spin>
 
@@ -262,3 +179,111 @@
     <li nz-menu-item>Relatório de isca</li>
   </ul>
 </nz-dropdown-menu>
+
+<nz-modal
+  nzTitle="Monitoramento"
+  [nzVisible]="isTableFullscreen"
+  (nzOnCancel)="isTableFullscreen = false"
+  (nzOnOk)="isTableFullscreen = false"
+  nzWidth="95%"
+  [nzBodyStyle]="{ height: '80vh' }"
+  [nzStyle]="{ top: '10px' }"
+  nzOkText="Fechar"
+  nzCancelText="Cancelar"
+>
+  <div *nzModalContent>
+    <div *ngIf="!isTableFullscreen else monitoringDataTable"></div>
+  </div>
+
+</nz-modal>
+
+<ng-template #monitoringDataTable>
+  <nz-table
+    #table
+    [nzData]="monitoringData"
+    [nzFrontPagination]="false"
+    nzTableLayout="fixed"
+    [nzScroll]="{ y: isTableFullscreen ? '1000px' : '800px', x: '1800px' }"
+  >
+    <thead>
+    <tr>
+      <th
+        *ngFor="let column of monitoringColumns"
+        [nzSortFn]="column.compare"
+        nzWidth="110px"
+        style="text-align: center"
+      >{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of table.data; let i=index" [class]="getRowBackgroundColor(item.status)">
+      <td>
+        <!--          <img [src]="item.tec" alt="logo" width="35px" height="35px" />-->
+        {{ item.technology }}
+      </td>
+      <td>{{ item.trackerCode || '-' }}</td>
+      <td>{{ item.trip || 'TODO' }}</td>
+      <td>{{ item.vehiclePlate || '-' }}</td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.ignition" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center">
+        <!--          <nz-badge [nzColor]="getAlertColor(item.alert)"></nz-badge>-->
+        TODO
+      </td>
+      <td>
+        <button
+          nz-button
+          nzType="link"
+          nzSize="small"
+          (click)="openMap(item)"
+        ><span nz-icon nzType="pushpin" nzTheme="fill"></span></button>
+      </td>
+      <td class="text-md-center">
+        <!--          <nz-progress [nzPercent]="item.progress"></nz-progress>-->
+        TODO
+      </td>
+      <td>{{ item.speed }}</td>
+      <td>{{ item.client || 'TODO' }}</td>
+      <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.position">{{ item.position || 'TODO' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.origin">{{ item.origin }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.destination">{{ item.destiny }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts || 'TODO' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
+      <td>{{ item.observation || 'TODO' }}</td>
+      <td>{{ item.driverName || '-' }}</td>
+      <td>{{ item.wagon || 'TODO' }}</td>
+      <td>{{ item.communication || 'TODO' }}</td>
+      <td class="text-md-center">
+        <!--          <nz-badge *ngIf="item.macro" nzStatus="success"></nz-badge>-->
+        <!--          <nz-badge *ngIf="!item.macro" nzStatus="error"></nz-badge>-->
+        TODO
+      </td>
+      <td class="text-md-center">
+        <!--          <nz-badge *ngIf="item.embeddedIntelligence" nzStatus="success"></nz-badge>-->
+        <!--          <nz-badge *ngIf="!item.embeddedIntelligence" nzStatus="error"></nz-badge>-->
+        TODO
+      </td>
+      <td class="text-md-center">
+        <!--          <nz-badge *ngIf="item.bait" nzStatus="success"></nz-badge>-->
+        <!--          <nz-badge *ngIf="!item.bait" nzStatus="error"></nz-badge>-->
+        TODO
+      </td>
+      <td>{{ item.temperature || 'TODO' }}</td>
+      <td>
+        <a
+          nz-dropdown
+          nzTrigger="click"
+          nzPlacement="bottomCenter"
+          [nzDropdownMenu]="moreActions"
+          class="text-dark font-size-20"
+        >
+          <span nz-icon nzType="more" nzTheme="outline"></span>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</ng-template>
