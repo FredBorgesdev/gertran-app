@@ -155,7 +155,12 @@
     >
       <thead>
       <tr>
-        <th *ngFor="let column of monitoringColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+        <th
+          *ngFor="let column of monitoringColumns"
+          [nzSortFn]="column.compare"
+          nzWidth="110px"
+          style="text-align: center"
+        >{{ column.title }}</th>
       </tr>
       </thead>
       <tbody>
