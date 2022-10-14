@@ -7,6 +7,8 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {TerminalGroups, TerminalGroupsService} from '../terminal-groups.service';
 import {TransferItem} from 'ng-zorro-antd/transfer';
+import {WagonsService} from '../../wagons/wagons.service';
+import {Truck, TrucksService} from '../../trucks/trucks.service';
 
 @Component({
   selector: 'app-terminals-form',
@@ -24,6 +26,8 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     private customersService: CustomersService,
     private terminalGroupsService: TerminalGroupsService,
     private router: Router,
+    private wagonsService: WagonsService,
+    private trucksService: TrucksService,
     service: TerminalsService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
@@ -38,6 +42,7 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
   ngOnInit(): void {
     super.ngOnInit();
 
+    this.setVehicles();
     this.customersService.getAll({ limit: 999 }).subscribe((response) => {
       this.customers = response.results;
     });
@@ -61,7 +66,53 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     this.validateForm.patchValue({
       customer: (this.resource.customer as Customer).id,
       terminalGroup: (this.resource.terminalGroup as TerminalGroups).id,
+      vehicles: (this.resource.vehicles as Truck[]).map(({ id }) => id),
     });
+  }
+
+  performResourceChange(): void {
+    this.vehicleTransferItems = this.vehicleTransferItems.map((item) => {
+      const hasVehicle = this.resource.vehicles.some((vehicle) => vehicle.id === item.key);
+      if (!hasVehicle) {
+        return item;
+      }
+
+      return {
+        ...item,
+        direction: 'right',
+      };
+    });
+  }
+
+  saveVehicles(): void {
+    this.isLoading = true;
+
+    this.service.update(
+      this.resource.id,
+      {
+        ...this.validateForm.value,
+        vehicles: this.vehicleTransferItems.filter((item) => item.direction === 'right').map((item) => item.key),
+      }
+    ).subscribe(() => {
+      this.isLoading = false;
+      this.message.success('Veiculos atualizados com sucesso!');
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao atualizar veiculos');
+    });
+  }
+
+  setVehicles(): void {
+    this.trucksService.getAll({ limit: 999 }).subscribe((response) => {
+      this.vehicleTransferItems = response.results.map(this.toTransferItem);
+    });
+  }
+
+  toTransferItem(item: Truck): TransferItem {
+    return {
+      key: item.vehicle.id,
+      title: item.vehicle.plate,
+    };
   }
 
   list(): void {

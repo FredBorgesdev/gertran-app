@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TerminalGroups} from './terminal-groups.service';
 import {Customer} from '../customers/customers.service';
+import {Truck} from '../trucks/trucks.service';
 
 export interface Terminals {
   id: string;
@@ -11,7 +12,7 @@ export interface Terminals {
   description: string;
   terminalGroup: TerminalGroups | string;
   customer: Customer | string;
-  vehicles: string[];
+  vehicles: string[] | Truck['vehicle'][];
 }
 
 @Injectable({
