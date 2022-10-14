@@ -249,7 +249,7 @@
         TODO
       </td>
       <td>{{ item.speed }}km</td>
-      <td>{{ item.client || 'TODO' }}</td>
+      <td>{{ item.client?.name }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.street">{{ item.street }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(item)">{{ getOrigin(item) }}</td>

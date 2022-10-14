@@ -40,6 +40,10 @@ export interface Position {
     destinyState: string;
     bait: boolean;
   };
+  customer: {
+    id: string;
+    name: string;
+  }
 }
 
 @Injectable({
