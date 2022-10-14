@@ -5,6 +5,7 @@ import polyline from '@mapbox/polyline';
 import {environment} from '../../../environments/environment';
 import * as mapboxgl from 'mapbox-gl';
 import {Position} from '../positions.service';
+import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 
 @Component({
   selector: 'app-monitoring-map',
@@ -18,36 +19,30 @@ export class MonitoringMapComponent implements OnInit {
 
   bounds = null;
   directionsGeoJson: any;
+  driverLocation = null;
 
   constructor(
     private service: MonitoringService,
+    private monitoringRequestService: MonitoringRequestsService,
   ) { }
 
   ngOnInit(): void {
-    this.details = this.service.getMapData(this.item.id);
-
-    const directions = new MapboxDirections({
-      accessToken: environment.mapboxAccessToken,
-      unit: 'metric',
-      profile: 'mapbox/driving',
-      controls: {
-        inputs: false,
-        instructions: false,
-        profileSwitcher: false
-      },
-      geocoder: {
-        geometries: 'geojson',
-      },
-    });
-    directions.setOrigin([this.details.directions.origin.lng, this.details.directions.origin.lat]);
-    directions.setDestination([this.details.directions.destination.lng, this.details.directions.destination.lat]);
-    directions.on('route', (e) => {
-      this.directionsGeoJson = polyline.toGeoJSON(e.route[0].geometry);
+    this.driverLocation = [this.item.longitude, this.item.latitude];
+    this.monitoringRequestService.get(this.item.monitoringRequest.id).subscribe(({ routeCoordinates }) => {
+      this.directionsGeoJson = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates: routeCoordinates
+        }
+      };
       this.bounds = new mapboxgl.LngLatBounds(
-        this.directionsGeoJson.coordinates[0],
-        this.directionsGeoJson.coordinates[this.directionsGeoJson.coordinates.length - 1]
+        this.driverLocation,
+        routeCoordinates[routeCoordinates.length - 1]
       );
     });
+  }
 
     // const directionsRequest = {
     //   origin: this.details.directions.origin,
@@ -57,6 +52,4 @@ export class MonitoringMapComponent implements OnInit {
     // this.directionsResult = this.mapDirectionsService.route(directionsRequest).pipe(
     //   map(response => response.result),
     // );
-  }
-
 }

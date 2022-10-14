@@ -1,136 +1,136 @@
 <nz-tabset>
   <nz-tab nzTitle="Mapa">
     <nz-card [nzCover]="map">
-      <nz-list>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Tempo de viagem"
-            [nzDescription]="details.travelDuration"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Saida Prevista"
-            [nzDescription]="details.predictedDeparture"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Chegada Prevista"
-            [nzDescription]="details.predictedArrival"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Lead time"
-            [nzDescription]="details.leadTime"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Chegada calculada"
-            [nzDescription]="details.calculatedArrival"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Última atualização em"
-            [nzDescription]="details.lastUpdatedAt"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Tempo veículo até chegada"
-            [nzDescription]="details.timeToArrival"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Distância veículo até chegada"
-            [nzDescription]="details.distanceToArrival"
-          ></nz-list-item-meta>
-        </nz-list-item>
-      </nz-list>
+<!--      <nz-list>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Tempo de viagem"-->
+<!--            [nzDescription]="details.travelDuration"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Saida Prevista"-->
+<!--            [nzDescription]="details.predictedDeparture"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Chegada Prevista"-->
+<!--            [nzDescription]="details.predictedArrival"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Lead time"-->
+<!--            [nzDescription]="details.leadTime"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Chegada calculada"-->
+<!--            [nzDescription]="details.calculatedArrival"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Última atualização em"-->
+<!--            [nzDescription]="details.lastUpdatedAt"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Tempo veículo até chegada"-->
+<!--            [nzDescription]="details.timeToArrival"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Distância veículo até chegada"-->
+<!--            [nzDescription]="details.distanceToArrival"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--      </nz-list>-->
 
-      <h4 class="m-t-50">Trajeto: {{details.route.id | id}}</h4>
+<!--      <h4 class="m-t-50">Trajeto: {{details.route.id | id}}</h4>-->
 
-      <nz-list>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Saída"
-            [nzDescription]="details.route.departure"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Chegada"
-            [nzDescription]="details.route.arrival"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Tempo até destino"
-            [nzDescription]="details.route.timeToArrive"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Distância até destino"
-            [nzDescription]="details.route.distanceToArrive"
-          ></nz-list-item-meta>
-        </nz-list-item>
-        <nz-list-item>
-          <nz-list-item-meta
-            nzTitle="Tempo parado no destino"
-            [nzDescription]="details.route.timeIdle"
-          ></nz-list-item-meta>
-        </nz-list-item>
-      </nz-list>
+<!--      <nz-list>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Saída"-->
+<!--            [nzDescription]="details.route.departure"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Chegada"-->
+<!--            [nzDescription]="details.route.arrival"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Tempo até destino"-->
+<!--            [nzDescription]="details.route.timeToArrive"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Distância até destino"-->
+<!--            [nzDescription]="details.route.distanceToArrive"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--        <nz-list-item>-->
+<!--          <nz-list-item-meta-->
+<!--            nzTitle="Tempo parado no destino"-->
+<!--            [nzDescription]="details.route.timeIdle"-->
+<!--          ></nz-list-item-meta>-->
+<!--        </nz-list-item>-->
+<!--      </nz-list>-->
     </nz-card>
   </nz-tab>
 
-  <nz-tab nzTitle="Próxima viagem">
-    <nz-list>
-      <nz-list-item>
-        <nz-list-item-meta
-          nzTitle="Saída prevista"
-          [nzDescription]="details.nextTravel.predictedDeparture"
-        ></nz-list-item-meta>
-      </nz-list-item>
-      <nz-list-item>
-        <nz-list-item-meta
-          nzTitle="Chegada prevista"
-          [nzDescription]="details.nextTravel.predictedArrival"
-        ></nz-list-item-meta>
-      </nz-list-item>
-      <nz-list-item>
-        <nz-list-item-meta
-          nzTitle="Chegada calculada"
-          [nzDescription]="details.nextTravel.calculatedArrival"
-        ></nz-list-item-meta>
-      </nz-list-item>
-      <nz-list-item>
-        <nz-list-item-meta
-          nzTitle="Tempo até destino"
-          [nzDescription]="details.nextTravel.timeToArrival"
-        ></nz-list-item-meta>
-      </nz-list-item>
-      <nz-list-item>
-        <nz-list-item-meta
-          nzTitle="Lead time"
-          [nzDescription]="details.nextTravel.leadTime"
-        ></nz-list-item-meta>
-      </nz-list-item>
-      <nz-list-item>
-        <nz-list-item-meta
-          nzTitle="Distância até destino"
-          [nzDescription]="details.nextTravel.distanceToArrival"
-        ></nz-list-item-meta>
-      </nz-list-item>
-    </nz-list>
+  <nz-tab nzTitle="Próxima viagem" nzDisabled>
+<!--    <nz-list>-->
+<!--      <nz-list-item>-->
+<!--        <nz-list-item-meta-->
+<!--          nzTitle="Saída prevista"-->
+<!--          [nzDescription]="details.nextTravel.predictedDeparture"-->
+<!--        ></nz-list-item-meta>-->
+<!--      </nz-list-item>-->
+<!--      <nz-list-item>-->
+<!--        <nz-list-item-meta-->
+<!--          nzTitle="Chegada prevista"-->
+<!--          [nzDescription]="details.nextTravel.predictedArrival"-->
+<!--        ></nz-list-item-meta>-->
+<!--      </nz-list-item>-->
+<!--      <nz-list-item>-->
+<!--        <nz-list-item-meta-->
+<!--          nzTitle="Chegada calculada"-->
+<!--          [nzDescription]="details.nextTravel.calculatedArrival"-->
+<!--        ></nz-list-item-meta>-->
+<!--      </nz-list-item>-->
+<!--      <nz-list-item>-->
+<!--        <nz-list-item-meta-->
+<!--          nzTitle="Tempo até destino"-->
+<!--          [nzDescription]="details.nextTravel.timeToArrival"-->
+<!--        ></nz-list-item-meta>-->
+<!--      </nz-list-item>-->
+<!--      <nz-list-item>-->
+<!--        <nz-list-item-meta-->
+<!--          nzTitle="Lead time"-->
+<!--          [nzDescription]="details.nextTravel.leadTime"-->
+<!--        ></nz-list-item-meta>-->
+<!--      </nz-list-item>-->
+<!--      <nz-list-item>-->
+<!--        <nz-list-item-meta-->
+<!--          nzTitle="Distância até destino"-->
+<!--          [nzDescription]="details.nextTravel.distanceToArrival"-->
+<!--        ></nz-list-item-meta>-->
+<!--      </nz-list-item>-->
+<!--    </nz-list>-->
   </nz-tab>
 
-  <nz-tab nzTitle="Grade">
+  <nz-tab nzTitle="Grade" nzDisabled>
     Nenhum registro encontrado
   </nz-tab>
 </nz-tabset>
@@ -147,7 +147,7 @@
         type="line"
         [source]="{ type: 'geojson', data: directionsGeoJson }"
         [paint]="{
-          'line-color': '#BF93E4',
+          'line-color': '#5a83ff',
           'line-width': 5
         }"
         [layout]="{
@@ -155,6 +155,18 @@
           'line-cap': 'round'
         }"
       ></mgl-layer>
+
+      <mgl-marker
+        [lngLat]="driverLocation"
+      >
+        <span
+          nz-icon
+          nzType="car"
+          nzTheme="fill"
+          style="color: red; font-size: 24px"
+        ></span>
+      </mgl-marker>
+
     </ng-container>
   </mgl-map>
 
