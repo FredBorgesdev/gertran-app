@@ -12,7 +12,7 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {Choice} from '../../shared/services/api.service';
-import {StopsService} from '../../stops/stops.service';
+import {PointTypes, StopsService} from '../../stops/stops.service';
 import {TravelStepService} from '../travel-step.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {forkJoin} from 'rxjs';
@@ -101,14 +101,14 @@ export class PointsTabComponent implements OnInit {
     });
   }
 
-  getPointsControls(): any {
+  getPointsControls(): FormControl[] {
     if (!this.validateForm) {
       return [];
     }
-    return (this.validateForm.get('points') as FormArray).controls;
+    return (this.validateForm.get('points') as FormArray).controls as FormControl[];
   }
 
-  addPoint(): FormGroup {
+  addPoint(): FormControl {
     const chosenPoint = this.validateForm.get('chosenPoint').value;
     const address = chosenPoint?.address || null;
 
@@ -176,6 +176,19 @@ export class PointsTabComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.getPointsControls(), event.previousIndex, event.currentIndex);
     this.calculateEtaForAllPoints();
+    this.setPointsCorrectTypes();
+  }
+
+  async setPointsCorrectTypes(): Promise<void> {
+    const firstPoint = this.getPointsControls()[0];
+    const lastPoint = this.getPointsControls()[this.getPointsControls().length - 1];
+    const waypoints = this.getPointsControls().slice(1, this.getPointsControls().length - 1);
+
+    firstPoint.patchValue({ pointType: PointTypes.START });
+    waypoints.forEach((point) => {
+      point.patchValue({ pointType: PointTypes.WAYPOINT });
+    });
+    lastPoint.patchValue({ pointType: PointTypes.END });
   }
 
   async calculateEtaForAllPoints(): Promise<void> {

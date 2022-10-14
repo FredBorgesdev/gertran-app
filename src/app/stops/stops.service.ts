@@ -28,6 +28,12 @@ export interface Stop {
   longitude: any;
 }
 
+export enum PointTypes {
+  START = 'start',
+  END = 'end',
+  WAYPOINT = 'waypoint',
+}
+
 @Injectable({
   providedIn: 'root'
 })
