@@ -164,125 +164,396 @@ export const ROUTES: SideNavInterface[] = [
     icon: 'line-chart',
     submenu: [
       {
-        path: '/dashboard/reports1',
-        title: 'Violações',
+        path: '',
+        title: 'Viagens monitoradas',
         iconType: 'nzIcon',
         iconTheme: 'outline',
-        icon: 'bar-chart',
+        icon: 'line-chart',
+        submenu: [
+          {
+            path: '/reports/load-unload-by-macro',
+            title: 'Carga e descarga por Macro',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports2',
+            title: 'Carga e descarga por Ponto',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports3',
+            title: 'Carga e descarga por Ponto Raio',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports4',
+            title: 'Viagens em atraso',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports5',
+            title: 'Solicitações',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports6',
+            title: 'Veiculos liberados',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports7',
+            title: 'Relatórios Logisticos',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports8',
+            title: 'Inicio de viagem',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports9',
+            title: 'Fim de viagem',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports10',
+            title: 'Fechamento',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports11',
+            title: 'Programação de viagens',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports12',
+            title: 'Seguradoras',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+        ]
+      },
+      {
+        path: '',
+        title: 'Rastreamento',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: [
+          {
+            path: '/dashboard/reports13',
+            title: 'Macros do veiculo',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports14',
+            title: 'Posições do veiculo',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports15',
+            title: 'Histórico de alertas',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports16',
+            title: 'Histórico de comandos',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports17',
+            title: 'Histórico de check list',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports18',
+            title: 'Histórico temperatura (analítico)',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports19',
+            title: 'Histórico temperatura (gráfico)',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports20',
+            title: 'Relatório analítico por S.M.',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+        ],
+      },
+      {
+        path: '',
+        title: 'Eventos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: [
+          {
+            path: '/dashboard/reports21',
+            title: 'Histórico de ocorrências',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports22',
+            title: 'Relatório analítico',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports23',
+            title: 'Relatório de isca',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports24',
+            title: 'Relatório de pânico',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports25',
+            title: 'Ocorrências por turno',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports26',
+            title: 'Auditoria Operacional Comandos',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+          {
+            path: '/dashboard/reports27',
+            title: 'Auditoria Operacional Mensagens',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: []
+          },
+        ]
+      },
+      {
+        path: '/dashboard/reports28',
+        title: 'Relatório de jornada',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
         submenu: []
       },
       {
-        path: '/dashboard/reports2',
-        title: 'Inicio de Viagem',
+        path: '/dashboard/reports29',
+        title: 'Relatório de eventos',
         iconType: 'nzIcon',
         iconTheme: 'outline',
-        icon: 'bar-chart',
+        icon: 'line-chart',
         submenu: []
       },
       {
-        path: '/dashboard/reports3',
-        title: 'Carga e descarga',
+        path: '/dashboard/reports30',
+        title: 'Relatório Gráficos',
         iconType: 'nzIcon',
         iconTheme: 'outline',
-        icon: 'bar-chart',
+        icon: 'line-chart',
         submenu: []
-      },
-      {
-        path: '/dashboard/reports4',
-        title: 'Viagens em atraso',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports5',
-        title: 'Solicitação',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports6',
-        title: 'Veiculos liberados',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports7',
-        title: 'Fim de viagem',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports8',
-        title: 'Fechamento',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports9',
-        title: 'Macros',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports10',
-        title: 'Posições',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports11',
-        title: 'Alertas',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports12',
-        title: 'Comandos',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports13',
-        title: 'Checklist',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports14',
-        title: 'Temperatura',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports15',
-        title: 'Analítico',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'bar-chart',
-        submenu: []
-      },
+      }
+
+
+
+
+      // {
+      //   path: '/dashboard/reports1',
+      //   title: 'Violações',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports2',
+      //   title: 'Inicio de Viagem',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports3',
+      //   title: 'Carga e descarga',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports4',
+      //   title: 'Viagens em atraso',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports5',
+      //   title: 'Solicitação',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports6',
+      //   title: 'Veiculos liberados',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports7',
+      //   title: 'Fim de viagem',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports8',
+      //   title: 'Fechamento',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports9',
+      //   title: 'Macros',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports10',
+      //   title: 'Posições',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports11',
+      //   title: 'Alertas',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports12',
+      //   title: 'Comandos',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports13',
+      //   title: 'Checklist',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports14',
+      //   title: 'Temperatura',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports15',
+      //   title: 'Analítico',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'bar-chart',
+      //   submenu: []
+      // },
     ]
   },
   {

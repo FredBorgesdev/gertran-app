@@ -22,7 +22,10 @@
             </a>
 
             <!-- Second Level -->
-            <ul class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu" *ngIf="item.submenu.length > 0">
+            <ul
+              class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu"
+              *ngIf="item.submenu.length > 0"
+            >
                 <li [ngClass]="subItem.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
                     *ngFor="let subItem of item.submenu"
                     [routerLinkActive]="subItem.submenu.length > 0 ? 'ant-menu-submenu-open' : 'ant-menu-item-selected'"
@@ -40,7 +43,10 @@
                     </a>
 
                     <!-- Third Level -->
-                    <ul class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu" *ngIf="subItem.submenu.length > 0">
+                    <ul
+                      class="ant-menu ant-menu-inline ant-menu-sub dropdown-menu"
+                      *ngIf="subItem.submenu.length > 0"
+                    >
                         <li [ngClass]="subItem.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
                             *ngFor="let subItem of subItem.submenu" routerLinkActive="ant-menu-item-selected"
                             [routerLinkActiveOptions]="{exact: true}">

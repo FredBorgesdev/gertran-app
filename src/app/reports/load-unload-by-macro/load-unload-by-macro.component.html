@@ -1,0 +1,67 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Carga e descarga por macro</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <!-- Filters -->
+    <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
+      <div nz-row nzGutter="16">
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label>Cliente</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="customer" nzAllowClear nzPlaceHolder="Selecione um cliente">
+                <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label>Data inicial</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker
+                style="width: 100%;"
+                nzFormat="dd/MM/yyyy"
+                formControlName="startDate"
+                nzPlaceHolder="Selecione uma data"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label>Data final</nz-form-label>
+            <nz-form-control>
+              <nz-date-picker
+                style="width: 100%;"
+                nzFormat="dd/MM/yyyy"
+                formControlName="endDate"
+                nzPlaceHolder="Selecione uma data"
+              ></nz-date-picker>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label>Formato de relatório</nz-form-label>
+            <nz-form-control>
+              <nz-select formControlName="reportFormat" nzAllowClear>
+                <nz-option nzLabel="Analítico" nzValue="analytic"></nz-option>
+                <nz-option nzLabel="Sintético" nzValue="synthetic"></nz-option>
+                <nz-option nzLabel="Ambos" nzValue="all"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+    </form>
+  </nz-card>
+</nz-spin>
