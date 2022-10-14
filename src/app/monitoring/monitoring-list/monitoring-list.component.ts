@@ -107,4 +107,12 @@ export class MonitoringListComponent implements OnInit {
       }
     });
   }
+
+  getOrigin(item: Position): string {
+    return item.monitoringRequest.originCity + ', ' + item.monitoringRequest.originState;
+  }
+
+  getDestiny(item: Position): string {
+    return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
+  }
 }

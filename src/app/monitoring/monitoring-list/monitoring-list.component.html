@@ -252,12 +252,12 @@
       <td>{{ item.client || 'TODO' }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.street">{{ item.street }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.origin">{{ item.origin }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.destination">{{ item.destiny }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(item)">{{ getOrigin(item) }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getDestiny(item)">{{ getDestiny(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts || 'TODO' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
       <td>{{ item.observation || 'TODO' }}</td>
-      <td>{{ item.driverName || '-' }}</td>
+      <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ item.wagon || 'TODO' }}</td>
       <td>{{ item.communication || 'TODO' }}</td>
       <td class="text-md-center">

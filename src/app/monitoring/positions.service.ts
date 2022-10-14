@@ -31,6 +31,14 @@ export interface Position {
     id: string;
   };
   vehicleStatus: string;
+  monitoringRequest: {
+    id: string;
+    driverName: string;
+    originCity: string;
+    originState: string;
+    destinyCity: string;
+    destinyState: string;
+  };
 }
 
 @Injectable({
