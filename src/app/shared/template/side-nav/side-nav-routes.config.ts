@@ -179,7 +179,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports2',
+            path: '/reports/load-unload-by-point',
             title: 'Carga e descarga por Ponto',
             iconType: 'nzIcon',
             iconTheme: 'outline',
