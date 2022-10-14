@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Monitoring, MonitoringService} from '../monitoring.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -8,13 +8,16 @@ import {Customer, CustomersService} from '../../customers/customers.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Position, PositionsService} from '../positions.service';
+import {Observable, Subject, timer} from 'rxjs';
+import {share, switchMap, takeUntil} from 'rxjs/operators';
+import {GetAllResponse} from '../../shared/services/api.service';
 
 @Component({
   selector: 'app-monitoring-list',
   templateUrl: './monitoring-list.component.html',
   styleUrls: ['./monitoring-list.component.css']
 })
-export class MonitoringListComponent implements OnInit {
+export class MonitoringListComponent implements OnInit, OnDestroy {
   isLoading = false;
   monitoringColumns = [
     { title: 'Tec' },
@@ -45,6 +48,8 @@ export class MonitoringListComponent implements OnInit {
   ];
   validateForm: FormGroup;
 
+  stopMonitoring = new Subject();
+  monitoringData$: Observable<GetAllResponse<Position>>;
   monitoringData: Position[] = [];
 
   customers: Customer[] = [];
@@ -70,15 +75,28 @@ export class MonitoringListComponent implements OnInit {
     this.terminalsService.getAll({ limit: 999 }).subscribe(data => {
       this.terminals = data.results;
     });
-    this.positionsService.getAll({ limit: 999 }).subscribe(data => {
-      this.monitoringData = data.results;
-    });
+
+    this.monitoringData$ = timer(0, 1500).pipe(
+      switchMap(() => this.positionsService.getAll(
+        { limit: 999 },
+        {
+          customer: this.validateForm.get('customer').value,
+          terminal: this.validateForm.get('terminal').value,
+        })
+      ),
+      share(),
+      takeUntil(this.stopMonitoring)
+    );
 
     this.validateForm = this.formBuilder.group({
       customer: [null],
       terminal: [null],
       groupBy: [null],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.stopMonitoring.next();
   }
 
   getAlertColor(alert: string): string {
@@ -114,5 +132,17 @@ export class MonitoringListComponent implements OnInit {
 
   getDestiny(item: Position): string {
     return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
+  }
+
+  loadList(): void {
+    this.isLoading = true;
+    this.monitoringData$.subscribe(data => {
+      this.monitoringData = data.results;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao carregar lista');
+    });
+
   }
 }
