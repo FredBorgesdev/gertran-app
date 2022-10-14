@@ -38,6 +38,7 @@ export interface Position {
     originState: string;
     destinyCity: string;
     destinyState: string;
+    bait: boolean;
   };
 }
 

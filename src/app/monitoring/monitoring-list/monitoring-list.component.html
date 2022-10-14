@@ -271,9 +271,8 @@
         TODO
       </td>
       <td class="text-md-center">
-        <!--          <nz-badge *ngIf="item.bait" nzStatus="success"></nz-badge>-->
-        <!--          <nz-badge *ngIf="!item.bait" nzStatus="error"></nz-badge>-->
-        TODO
+        <nz-badge *ngIf="item.monitoringRequest.bait" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.monitoringRequest.bait" nzStatus="error"></nz-badge>
       </td>
       <td>{{ item.temperature || 'TODO' }}</td>
       <td>
