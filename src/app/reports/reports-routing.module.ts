@@ -9,6 +9,7 @@ import {AvailableVehiclesComponent} from './available-vehicles/available-vehicle
 import {LogisticsComponent} from './logistics/logistics.component';
 import {TravelStartComponent} from './travel-start/travel-start.component';
 import {TravelEndComponent} from './travel-end/travel-end.component';
+import {ClosingComponent} from './closing/closing.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'travel-end',
     component: TravelEndComponent
+  },
+  {
+    path: 'closing',
+    component: ClosingComponent
   }
 ];
 

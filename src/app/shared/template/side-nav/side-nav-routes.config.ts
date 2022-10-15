@@ -243,7 +243,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports10',
+            path: '/reports/closing',
             title: 'Fechamento',
             iconType: 'nzIcon',
             iconTheme: 'outline',
