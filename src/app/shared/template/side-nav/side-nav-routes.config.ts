@@ -187,7 +187,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports3',
+            path: '/reports/load-unload-by-radius',
             title: 'Carga e descarga por Ponto Raio',
             iconType: 'nzIcon',
             iconTheme: 'outline',
@@ -195,7 +195,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports4',
+            path: '/reports/trips-late',
             title: 'Viagens em atraso',
             iconType: 'nzIcon',
             iconTheme: 'outline',
