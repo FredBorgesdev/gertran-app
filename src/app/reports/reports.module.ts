@@ -8,16 +8,21 @@ import { BaseCustomerFilterComponent } from './filters/base-customer-filter/base
 import { LoadUnloadByPointComponent } from './load-unload-by-point/load-unload-by-point.component';
 import { LoadUnloadByRadiusComponent } from './load-unload-by-radius/load-unload-by-radius.component';
 import { TripsLateComponent } from './trips-late/trips-late.component';
+import { TravelRequestsComponent } from './travel-requests/travel-requests.component';
+import { BaseGenericFiltersComponent } from './filters/base-generic-filters/base-generic-filters.component';
 
 
 @NgModule({
-  declarations: [
-    LoadUnloadByMacroComponent,
-    BaseCustomerFilterComponent,
-    LoadUnloadByPointComponent,
-    LoadUnloadByRadiusComponent,
-    TripsLateComponent
-  ],
+    declarations: [
+        LoadUnloadByMacroComponent,
+        BaseCustomerFilterComponent,
+        LoadUnloadByPointComponent,
+        LoadUnloadByRadiusComponent,
+        TripsLateComponent,
+        TravelRequestsComponent,
+        BaseGenericFiltersComponent,
+        BaseGenericFiltersComponent
+    ],
   imports: [
     SharedModule,
     CommonModule,

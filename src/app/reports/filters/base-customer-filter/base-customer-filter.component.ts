@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Customer, CustomersService} from '../../../customers/customers.service';
@@ -17,6 +17,7 @@ export interface BaseCustomerFilter {
 })
 export class BaseCustomerFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<BaseCustomerFilter>();
+  @Input() hideButtons = false;
 
   validateForm: FormGroup;
   customers: Customer[] = [];

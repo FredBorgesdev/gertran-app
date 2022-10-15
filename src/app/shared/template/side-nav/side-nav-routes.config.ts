@@ -203,7 +203,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports5',
+            path: '/reports/travel-requests',
             title: 'Solicitações',
             iconType: 'nzIcon',
             iconTheme: 'outline',

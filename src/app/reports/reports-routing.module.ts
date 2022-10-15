@@ -4,6 +4,7 @@ import {LoadUnloadByMacroComponent} from './load-unload-by-macro/load-unload-by-
 import {LoadUnloadByPointComponent} from './load-unload-by-point/load-unload-by-point.component';
 import {LoadUnloadByRadiusComponent} from './load-unload-by-radius/load-unload-by-radius.component';
 import {TripsLateComponent} from './trips-late/trips-late.component';
+import {TravelRequestsComponent} from './travel-requests/travel-requests.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'trips-late',
     component: TripsLateComponent,
+  },
+  {
+    path: 'travel-requests',
+    component: TravelRequestsComponent,
   }
 ];
 

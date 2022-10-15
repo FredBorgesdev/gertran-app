@@ -2,49 +2,33 @@
   <div nz-row nzGutter="16">
     <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
-        <nz-form-label>Cliente</nz-form-label>
+        <nz-form-label>Placa</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-select formControlName="customer" nzAllowClear nzPlaceHolder="Selecione um cliente">
-            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
-          </nz-select>
+          <input nz-input formControlName="plate" placeholder="Digite a placa" />
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
-        <nz-form-label>Data inicial</nz-form-label>
+        <nz-form-label>Ponto</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-date-picker
-            style="width: 100%;"
-            nzFormat="dd/MM/yyyy"
-            formControlName="startDate"
-            nzPlaceHolder="Selecione uma data"
-          ></nz-date-picker>
+          <input nz-input formControlName="point" placeholder="Digite o ponto" />
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
-        <nz-form-label>Data final</nz-form-label>
+        <nz-form-label>Cod. Interno</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-date-picker
-            style="width: 100%;"
-            nzFormat="dd/MM/yyyy"
-            formControlName="endDate"
-            nzPlaceHolder="Selecione uma data"
-          ></nz-date-picker>
+          <input nz-input formControlName="internalCode" placeholder="Digite o código interno" />
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
-        <nz-form-label>Formato de relatório</nz-form-label>
+        <nz-form-label>Nota/minuta</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-select formControlName="reportFormat" nzAllowClear>
-            <nz-option nzLabel="Analítico" nzValue="analytic"></nz-option>
-            <nz-option nzLabel="Sintético" nzValue="synthetic"></nz-option>
-            <nz-option nzLabel="Ambos" nzValue="all"></nz-option>
-          </nz-select>
+          <input nz-input formControlName="invoice" placeholder="Digite a nota/minuta" />
         </nz-form-control>
       </nz-form-item>
     </div>
