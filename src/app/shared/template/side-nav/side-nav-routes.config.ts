@@ -219,7 +219,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports7',
+            path: '/reports/logistics',
             title: 'Relatórios Logisticos',
             iconType: 'nzIcon',
             iconTheme: 'outline',

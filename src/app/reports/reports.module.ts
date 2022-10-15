@@ -11,6 +11,7 @@ import { TripsLateComponent } from './trips-late/trips-late.component';
 import { TravelRequestsComponent } from './travel-requests/travel-requests.component';
 import { BaseGenericFiltersComponent } from './filters/base-generic-filters/base-generic-filters.component';
 import { AvailableVehiclesComponent } from './available-vehicles/available-vehicles.component';
+import { LogisticsComponent } from './logistics/logistics.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AvailableVehiclesComponent } from './available-vehicles/available-vehic
         TravelRequestsComponent,
         BaseGenericFiltersComponent,
         BaseGenericFiltersComponent,
-        AvailableVehiclesComponent
+        AvailableVehiclesComponent,
+        LogisticsComponent
     ],
   imports: [
     SharedModule,

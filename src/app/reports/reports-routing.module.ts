@@ -6,6 +6,7 @@ import {LoadUnloadByRadiusComponent} from './load-unload-by-radius/load-unload-b
 import {TripsLateComponent} from './trips-late/trips-late.component';
 import {TravelRequestsComponent} from './travel-requests/travel-requests.component';
 import {AvailableVehiclesComponent} from './available-vehicles/available-vehicles.component';
+import {LogisticsComponent} from './logistics/logistics.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'available-vehicles',
     component: AvailableVehiclesComponent,
+  },
+  {
+    path: 'logistics',
+    component: LogisticsComponent
   }
 ];
 
