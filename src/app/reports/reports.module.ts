@@ -10,6 +10,7 @@ import { LoadUnloadByRadiusComponent } from './load-unload-by-radius/load-unload
 import { TripsLateComponent } from './trips-late/trips-late.component';
 import { TravelRequestsComponent } from './travel-requests/travel-requests.component';
 import { BaseGenericFiltersComponent } from './filters/base-generic-filters/base-generic-filters.component';
+import { AvailableVehiclesComponent } from './available-vehicles/available-vehicles.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { BaseGenericFiltersComponent } from './filters/base-generic-filters/base
         TripsLateComponent,
         TravelRequestsComponent,
         BaseGenericFiltersComponent,
-        BaseGenericFiltersComponent
+        BaseGenericFiltersComponent,
+        AvailableVehiclesComponent
     ],
   imports: [
     SharedModule,

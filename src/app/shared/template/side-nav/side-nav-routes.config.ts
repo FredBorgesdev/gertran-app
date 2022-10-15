@@ -211,7 +211,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports6',
+            path: '/reports/available-vehicles',
             title: 'Veiculos liberados',
             iconType: 'nzIcon',
             iconTheme: 'outline',
