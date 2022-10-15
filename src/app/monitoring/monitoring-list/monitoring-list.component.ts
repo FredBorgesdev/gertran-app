@@ -56,6 +56,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   terminals: Terminals[] = [];
 
   isTableFullscreen = false;
+  notFound = false;
 
   constructor(
     private router: Router,
@@ -139,8 +140,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.monitoringData$.subscribe(data => {
       this.monitoringData = data.results;
       this.isLoading = false;
+      this.notFound = this.monitoringData.length === 0;
     }, () => {
       this.isLoading = false;
+      this.notFound = true;
       this.message.error('Erro ao carregar lista');
     });
 

@@ -153,6 +153,11 @@
 
       <div *ngIf="isTableFullscreen else monitoringDataTable"></div>
     </ng-container>
+
+    <div class="text-center" *ngIf="notFound">
+      <i nz-icon nzType="folder-open" nzTheme="outline" style="font-size: 32px" class="text-muted"></i>
+      <h3 class="text-muted">Nenhum monitoramento encontrado</h3>
+    </div>
   </nz-card>
 </nz-spin>
 
@@ -291,4 +296,7 @@
     </tr>
     </tbody>
   </nz-table>
+</ng-template>
+
+<ng-template #dataNotFound>
 </ng-template>
