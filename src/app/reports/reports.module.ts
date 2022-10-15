@@ -12,6 +12,8 @@ import { TravelRequestsComponent } from './travel-requests/travel-requests.compo
 import { BaseGenericFiltersComponent } from './filters/base-generic-filters/base-generic-filters.component';
 import { AvailableVehiclesComponent } from './available-vehicles/available-vehicles.component';
 import { LogisticsComponent } from './logistics/logistics.component';
+import { TravelStartComponent } from './travel-start/travel-start.component';
+import { BaseVehicleFilterComponent } from './filters/base-vehicle-filter/base-vehicle-filter.component';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { LogisticsComponent } from './logistics/logistics.component';
         BaseGenericFiltersComponent,
         BaseGenericFiltersComponent,
         AvailableVehiclesComponent,
-        LogisticsComponent
+        LogisticsComponent,
+        TravelStartComponent,
+        BaseVehicleFilterComponent
     ],
   imports: [
     SharedModule,

@@ -21,12 +21,18 @@ export class TrucksService extends VehiclesService<Truck> {
     super(http);
   }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<Truck>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(
+    pagination: Pagination,
+    filters?: { customerId?: string },
+  ): Observable<GetAllResponse<Truck>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.customerId) {
+      params.customer = filters.customerId;
     }
 
     return this.http.get<GetAllResponse<Truck>>('vehicles/trucks', { params });
