@@ -235,7 +235,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports9',
+            path: '/reports/travel-end',
             title: 'Fim de viagem',
             iconType: 'nzIcon',
             iconTheme: 'outline',

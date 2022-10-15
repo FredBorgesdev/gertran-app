@@ -14,6 +14,7 @@ import { AvailableVehiclesComponent } from './available-vehicles/available-vehic
 import { LogisticsComponent } from './logistics/logistics.component';
 import { TravelStartComponent } from './travel-start/travel-start.component';
 import { BaseVehicleFilterComponent } from './filters/base-vehicle-filter/base-vehicle-filter.component';
+import { TravelEndComponent } from './travel-end/travel-end.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { BaseVehicleFilterComponent } from './filters/base-vehicle-filter/base-v
         AvailableVehiclesComponent,
         LogisticsComponent,
         TravelStartComponent,
-        BaseVehicleFilterComponent
+        BaseVehicleFilterComponent,
+        TravelEndComponent
     ],
   imports: [
     SharedModule,
