@@ -16,10 +16,6 @@ export class TripsLateComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       customer: [null, [Validators.required]],
-      plate: [null, []],
-      point: [null, []],
-      internalCode: [null, []],
-      invoice: [null, []],
     });
   }
 

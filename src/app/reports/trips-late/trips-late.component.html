@@ -13,8 +13,8 @@
 
     <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
       <div nz-row nzGutter="16">
-        <div nz-col nzSpan="5">
-          <nz-form-item>
+        <div nz-col nzSpan="24">
+          <nz-form-item class="m-b-0">
             <nz-form-label nzRequired>Cliente</nz-form-label>
             <nz-form-control nzErrorTip="Preencha o campo">
               <nz-select formControlName="customer" nzAllowClear nzPlaceHolder="Selecione um cliente">
@@ -23,56 +23,9 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <div nz-col nzSpan="5">
-          <nz-form-item>
-            <nz-form-label>Placa</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <input nz-input formControlName="plate" placeholder="Digite a placa" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="5">
-          <nz-form-item>
-            <nz-form-label>Ponto</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <input nz-input formControlName="point" placeholder="Digite o ponto" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="5">
-          <nz-form-item>
-            <nz-form-label>Cod. Interno</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <input nz-input formControlName="internalCode" placeholder="Digite o código interno" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col nzSpan="4">
-          <nz-form-item>
-            <nz-form-label>Nota/minuta</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <input nz-input formControlName="invoice" placeholder="Digite a nota/minuta" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
       </div>
     </form>
 
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="8">
-        <button
-          nz-button
-          nzType="primary"
-          style="width: 100%"
-          (click)="emitGenerateReport()"
-        >Gerar relatório</button>
-      </div>
-      <div nz-col nzSpan="8">
-        <button nz-button style="width: 100%">Gerar pdf</button>
-      </div>
-      <div nz-col nzSpan="8">
-        <button nz-button style="width: 100%">Gerar planilha</button>
-      </div>
-    </div>
+    <app-base-generic-filters></app-base-generic-filters>
   </nz-card>
 </nz-spin>
