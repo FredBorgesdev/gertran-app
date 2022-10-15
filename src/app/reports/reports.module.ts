@@ -17,6 +17,7 @@ import { BaseVehicleFilterComponent } from './filters/base-vehicle-filter/base-v
 import { TravelEndComponent } from './travel-end/travel-end.component';
 import { ClosingComponent } from './closing/closing.component';
 import { ScheduledTripsComponent } from './scheduled-trips/scheduled-trips.component';
+import { InsuranceCompaniesComponent } from './insurance-companies/insurance-companies.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ScheduledTripsComponent } from './scheduled-trips/scheduled-trips.compo
         BaseVehicleFilterComponent,
         TravelEndComponent,
         ClosingComponent,
-        ScheduledTripsComponent
+        ScheduledTripsComponent,
+        InsuranceCompaniesComponent,
     ],
   imports: [
     SharedModule,
