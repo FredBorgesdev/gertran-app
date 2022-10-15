@@ -16,6 +16,7 @@ import { TravelStartComponent } from './travel-start/travel-start.component';
 import { BaseVehicleFilterComponent } from './filters/base-vehicle-filter/base-vehicle-filter.component';
 import { TravelEndComponent } from './travel-end/travel-end.component';
 import { ClosingComponent } from './closing/closing.component';
+import { ScheduledTripsComponent } from './scheduled-trips/scheduled-trips.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ClosingComponent } from './closing/closing.component';
         TravelStartComponent,
         BaseVehicleFilterComponent,
         TravelEndComponent,
-        ClosingComponent
+        ClosingComponent,
+        ScheduledTripsComponent
     ],
   imports: [
     SharedModule,

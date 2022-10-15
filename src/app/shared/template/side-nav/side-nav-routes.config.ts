@@ -251,7 +251,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports11',
+            path: '/reports/scheduled-trips',
             title: 'Programação de viagens',
             iconType: 'nzIcon',
             iconTheme: 'outline',

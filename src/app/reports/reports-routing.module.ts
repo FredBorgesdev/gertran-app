@@ -10,6 +10,7 @@ import {LogisticsComponent} from './logistics/logistics.component';
 import {TravelStartComponent} from './travel-start/travel-start.component';
 import {TravelEndComponent} from './travel-end/travel-end.component';
 import {ClosingComponent} from './closing/closing.component';
+import {ScheduledTripsComponent} from './scheduled-trips/scheduled-trips.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'closing',
     component: ClosingComponent
+  },
+  {
+    path: 'scheduled-trips',
+    component: ScheduledTripsComponent,
   }
 ];
 
