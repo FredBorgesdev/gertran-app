@@ -77,7 +77,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.terminals = data.results;
     });
 
-    this.monitoringData$ = timer(0, 1500).pipe(
+    this.monitoringData$ = timer(0, 10000).pipe(
       switchMap(() => this.positionsService.getAll(
         { limit: 999 },
         {
@@ -146,6 +146,5 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.notFound = true;
       this.message.error('Erro ao carregar lista');
     });
-
   }
 }
