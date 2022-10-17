@@ -215,21 +215,22 @@
     [nzData]="monitoringData"
     [nzFrontPagination]="false"
     nzTableLayout="fixed"
-    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px', x: '1800px' }"
+    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px' }"
   >
     <thead>
     <tr>
       <th
         *ngFor="let column of monitoringColumns"
         [nzSortFn]="column.compare"
+        [nzLeft]="column.nzLeft"
         nzWidth="110px"
-        style="text-align: center"
+        [style]="'text-align: center; ' + column.style"
       >{{ column.title }}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of table.data; let i=index" [class]="getRowBackgroundColor(item.status)">
-      <td style="text-align: center">
+      <td style="text-align: center" nzLeft>
         <img
           [src]="'assets/images/brand/' + item.technology.toLowerCase() + '.jpg'"
           alt="logo"
@@ -237,9 +238,9 @@
           height="35px"
         />
       </td>
-      <td>{{ item.trackerCode || '-' }}</td>
-      <td>{{ item.trip || 'TODO' }}</td>
-      <td>{{ item.vehicle?.plate || '-' }}</td>
+      <td nzLeft>{{ item.trackerCode || '-' }}</td>
+      <td nzLeft>{{ item.trip || 'TODO' }}</td>
+      <td nzLeft>{{ item.vehicle?.plate || '-' }}</td>
       <td class="text-md-center">
         <nz-badge *ngIf="item.ignition" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>

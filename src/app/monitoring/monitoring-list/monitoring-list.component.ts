@@ -20,10 +20,10 @@ import {GetAllResponse} from '../../shared/services/api.service';
 export class MonitoringListComponent implements OnInit, OnDestroy {
   isLoading = false;
   monitoringColumns = [
-    { title: 'Tec' },
-    { title: 'Rastreador' },
-    { title: 'Viagem' },
-    { title: 'Placa' },
+    { title: 'Tec', nzLeft: true, style: 'z-index: 9999' },
+    { title: 'Rastreador', nzLeft: true, style: 'z-index: 9999' },
+    { title: 'Viagem', nzLeft: true, style: 'z-index: 9999' },
+    { title: 'Placa', nzLeft: true, style: 'z-index: 9999' },
     { title: 'Ignição' },
     { title: 'Alerta' },
     { title: 'Mapa' },
