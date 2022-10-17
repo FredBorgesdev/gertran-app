@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-export const DEFAULT_LIMIT = 2;
+export const DEFAULT_LIMIT = 15;
 
 export interface Pagination {
   url?: string;
