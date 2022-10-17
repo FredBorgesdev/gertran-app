@@ -43,7 +43,10 @@ export interface Position {
   customer: {
     id: string;
     name: string;
-  }
+  };
+  events: {
+    eventDescription: string;
+  }[];
 }
 
 @Injectable({

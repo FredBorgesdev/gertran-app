@@ -261,12 +261,12 @@
         TODO
       </td>
       <td>{{ item.speed }}km</td>
-      <td>{{ item.client?.name }}</td>
-      <td>{{ item.positionDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ item.customer?.name }}</td>
+      <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.street">{{ item.street }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(item)">{{ getOrigin(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getDestiny(item)">{{ getDestiny(item) }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.alerts">{{ item.alerts || 'TODO' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getAlerts(item)">{{ getAlerts(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
       <td>{{ item.observation || 'TODO' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
@@ -286,7 +286,7 @@
         <nz-badge *ngIf="item.monitoringRequest.bait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.bait" nzStatus="error"></nz-badge>
       </td>
-      <td>{{ item.temperature || 'TODO' }}</td>
+      <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
       <td>
         <a
           nz-dropdown

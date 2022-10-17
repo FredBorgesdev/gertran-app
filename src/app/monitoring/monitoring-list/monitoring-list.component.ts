@@ -135,6 +135,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
   }
 
+  getAlerts(item: Position): string {
+    return item.events.map(
+      event => event.eventDescription
+    ).join(', ');
+  }
+
   loadList(): void {
     this.isLoading = true;
     this.monitoringData$.subscribe(data => {
