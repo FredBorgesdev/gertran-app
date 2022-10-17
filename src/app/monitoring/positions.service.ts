@@ -47,6 +47,7 @@ export interface Position {
   events: {
     eventDescription: string;
   }[];
+  wagons: string[];
 }
 
 @Injectable({

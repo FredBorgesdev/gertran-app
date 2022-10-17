@@ -20,10 +20,10 @@ import {GetAllResponse} from '../../shared/services/api.service';
 export class MonitoringListComponent implements OnInit, OnDestroy {
   isLoading = false;
   monitoringColumns = [
-    { title: 'Tec', nzLeft: true, style: 'z-index: 9999' },
-    { title: 'Rastreador', nzLeft: true, style: 'z-index: 9999' },
-    { title: 'Viagem', nzLeft: true, style: 'z-index: 9999' },
-    { title: 'Placa', nzLeft: true, style: 'z-index: 9999' },
+    { title: 'Tec', nzLeft: true, style: 'z-index: 999' },
+    { title: 'Rastreador', nzLeft: true, style: 'z-index: 999' },
+    { title: 'Viagem', nzLeft: true, style: 'z-index: 999' },
+    { title: 'Placa', nzLeft: true, style: 'z-index: 999' },
     { title: 'Ignição' },
     { title: 'Alerta' },
     { title: 'Mapa' },
@@ -139,6 +139,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return item.events.map(
       event => event.eventDescription
     ).join(', ');
+  }
+
+  getWagons(item: Position): string {
+    return item.wagons.join(', ');
   }
 
   loadList(): void {
