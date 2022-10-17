@@ -55,7 +55,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         const points = componentInstance.routes.find((r) => r.id === componentInstance.checkedId)?.points ?? [];
 
         const lngLat = points.map(({ point: { longitude, latitude } }) => ({ latitude, longitude }));
-        const routeCoordinates = await this.directionsService.getDirections(lngLat);
+        const routeCoordinates = route && await this.directionsService.getDirections(lngLat);
 
         (this.service as MonitoringRequestsService).save({
           route,

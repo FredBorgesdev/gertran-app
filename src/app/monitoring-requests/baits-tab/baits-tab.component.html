@@ -74,12 +74,19 @@
       <nz-form-item>
         <nz-form-label nzRequired nzFor="technology">Tecnologia</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <input
-            nz-input
+          <nz-select
             formControlName="technology"
             id="technology"
-            placeholder="Insira a tecnologia"
-          />
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione a tecnologia"
+          >
+            <nz-option
+              *ngFor="let option of technologies"
+              [nzLabel]="option.name"
+              [nzValue]="option.id"
+            ></nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
 

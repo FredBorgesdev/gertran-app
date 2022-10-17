@@ -73,8 +73,8 @@ export class PointsTabComponent implements OnInit {
           date: new Date(`${point.date} ${point.time}`),
         };
         formGroup.patchValue(pointWithDate);
-        this.isLoading = false;
       });
+      this.isLoading = false;
     }, () => {
       this.isLoading = false;
       this.message.error('Erro ao carregar paradas');
@@ -126,6 +126,8 @@ export class PointsTabComponent implements OnInit {
         zipCode: new FormControl(null, []),
       }),
     );
+
+    this.setPointsCorrectTypes();
 
     return this.getPointsControls()[this.getPointsControls().length - 1];
   }

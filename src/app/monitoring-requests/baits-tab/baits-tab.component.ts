@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {Bait, BaitsService} from '../baits.service';
+import {TrackerTechnologies, TrackerTechnologiesService} from '../../tracker-technologies/tracker-technologies.service';
 
 @Component({
   selector: 'app-baits-tab',
@@ -17,6 +18,7 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
   validateForm: FormGroup;
   isCreating = false;
   baitId: string = null;
+  technologies: TrackerTechnologies[] = [];
 
   baitsColumns = [
     { title: 'Id' },
@@ -34,6 +36,7 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
 
   constructor(
     private formBuilder: FormBuilder,
+    private trackerTechnologiesService: TrackerTechnologiesService,
     service: BaitsService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
@@ -56,6 +59,9 @@ export class BaitsTabComponent extends BaseCrudListComponent<Bait> implements On
       installationLocation: [null, [Validators.required]],
       technology: [null, [Validators.required]],
       serialNumber: [null, [Validators.required]],
+    });
+    this.trackerTechnologiesService.getAll({ limit: 1000 }).subscribe(response => {
+      this.technologies = response.results;
     });
   }
 
