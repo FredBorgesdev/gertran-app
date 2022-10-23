@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ArmedGuard, ArmedGuardService} from '../armed-guard.service';
+import {TrackerTechnologies, TrackerTechnologiesService} from '../../tracker-technologies/tracker-technologies.service';
 
 @Component({
   selector: 'app-armed-guard-tab',
@@ -17,6 +18,7 @@ export class ArmedGuardTabComponent extends BaseCrudListComponent<ArmedGuard> im
   validateForm: FormGroup;
   isCreating = false;
   armedGuardId: string = null;
+  technologies: TrackerTechnologies[] = [];
 
   loadingOrdersColumns = [
     { title: 'Id' },
@@ -37,6 +39,7 @@ export class ArmedGuardTabComponent extends BaseCrudListComponent<ArmedGuard> im
 
   constructor(
     private formBuilder: FormBuilder,
+    private trackerTechnologiesService: TrackerTechnologiesService,
     service: ArmedGuardService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
@@ -62,6 +65,9 @@ export class ArmedGuardTabComponent extends BaseCrudListComponent<ArmedGuard> im
       contact: [null, [Validators.required]],
       firstAgent: [null, [Validators.required]],
       secondAgent: [null, []],
+    });
+    this.trackerTechnologiesService.getAll({ limit: 1000 }).subscribe(response => {
+      this.technologies = response.results;
     });
   }
 
