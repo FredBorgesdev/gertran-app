@@ -32,7 +32,7 @@
       <nz-collapse-panel
         *ngFor="let terminalGroup of terminalGroups"
         [nzHeader]="collapsePanelHeader"
-        [nzExtra]="collapsePanelExtra"
+        [nzExtra]="terminalGroup.terminalGroup && collapsePanelExtra"
       >
         <nz-list nzGrid>
           <div nz-row nzGutter="16">
@@ -42,21 +42,29 @@
                   <a class="m-r-10" (click)="edit(terminal)">Editar</a>
                   <a (click)="delete(terminal)">Deletar</a>
                 </ng-template>
-                <p>Descrição: {{terminal.description}}</p>
-                <p>Empresa: {{terminal.customer.tradingName}} - {{terminal.customer.cnpj}}</p>
+                <p>{{terminal.description}}</p>
               </nz-card>
             </div>
           </div>
         </nz-list>
 
         <ng-template #collapsePanelHeader>
-          <span class="m-r-10">{{terminalGroup.terminalGroup.name}}</span>
+          <span class="m-r-10">{{terminalGroup.terminalGroup?.name}}</span>
           <nz-badge [nzCount]="terminalGroup.terminals.length"></nz-badge>
         </ng-template>
 
         <ng-template #collapsePanelExtra>
-          <span class="m-r-10" nz-icon nzType="edit" (click)="openTerminalGroupForm(terminalGroup.terminalGroup)"></span>
-          <span nz-icon nzType="delete" (click)="deleteTerminalGroup(terminalGroup)"></span>
+          <span
+            class="m-r-10"
+            nz-icon
+            nzType="edit"
+            (click)="openTerminalGroupForm(terminalGroup.terminalGroup)"
+          ></span>
+          <span
+            nz-icon
+            nzType="delete"
+            (click)="deleteTerminalGroup(terminalGroup)"
+          ></span>
         </ng-template>
       </nz-collapse-panel>
     </nz-collapse>

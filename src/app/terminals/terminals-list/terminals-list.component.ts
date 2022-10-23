@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {TerminalGroupsCreateComponent} from '../terminal-groups-create/terminal-groups-create.component';
-import {groupBy} from 'ramda';
+import {groupBy, sortBy, prop, lensProp, compose} from 'ramda';
 import {TerminalGroups, TerminalGroupsService} from '../terminal-groups.service';
 import {Pagination} from '../../shared/services/api.service';
 
@@ -66,6 +66,10 @@ export class TerminalsListComponent extends BaseCrudListComponent<Terminals> {
     this.setUnusedTerminalGroups();
   }
 
+  moveUndefinedTerminalGroupToTheEnd(): void {
+    console.log('todo');
+  }
+
   groupTerminalsByTerminalGroup(): void {
     const terminals = this.resources.results;
 
@@ -73,12 +77,16 @@ export class TerminalsListComponent extends BaseCrudListComponent<Terminals> {
       return;
     }
 
-    const groupedByTerminalGroup = groupBy((terminal) => terminal.terminalGroup?.id, terminals);
+    const groupedByTerminalGroup = groupBy(
+      (terminal) => terminal.terminalGroup?.id,
+      terminals
+    );
 
-    this.terminalGroups = Object.keys(groupedByTerminalGroup).map((key) => ({
-      terminalGroup: groupedByTerminalGroup[key][0].terminalGroup,
-      terminals: groupedByTerminalGroup[key],
-    }));
+    this.terminalGroups = Object.keys(groupedByTerminalGroup)
+      .map((key) => ({
+        terminalGroup: groupedByTerminalGroup[key][0].terminalGroup,
+        terminals: groupedByTerminalGroup[key],
+      }));
   }
 
   deleteTerminalGroup(terminalGroup: GroupedTerminals): void {
@@ -103,13 +111,17 @@ export class TerminalsListComponent extends BaseCrudListComponent<Terminals> {
   private setUnusedTerminalGroups(): void {
     this.terminalGroupsService.getAll({ limit: 999 }).subscribe((terminalGroups) => {
       const unusedTerminalGroups = terminalGroups.results.filter((terminalGroup) => {
-        return !this.resources.results.some((terminal) => (terminal.terminalGroup as TerminalGroups).id === terminalGroup.id);
+        return !this.resources.results.some((terminal) => (terminal.terminalGroup as TerminalGroups)?.id === terminalGroup?.id);
       });
 
-      this.terminalGroups = this.terminalGroups.concat(unusedTerminalGroups.map((terminalGroup) => ({
-        terminalGroup,
-        terminals: [],
-      })));
+      this.terminalGroups = this.terminalGroups.concat(
+        unusedTerminalGroups.map((terminalGroup) => ({
+          terminalGroup,
+          terminals: [],
+        }))
+      );
+
+      this.moveUndefinedTerminalGroupToTheEnd();
     });
   }
 }
