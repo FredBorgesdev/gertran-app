@@ -39,9 +39,9 @@
     </div>
     <nz-table
       #driversListTable
-      [nzData]="displayData?.results"
-      [nzTotal]="displayData?.count"
-      [nzPageSize]="displayData?.limit"
+      [nzData]="resources?.results"
+      [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit"
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
