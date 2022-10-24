@@ -38,7 +38,7 @@ export class DriversFormComponent implements OnInit {
 
     this.validateForm = this.formBuilder.group({
       customers: [this.driver?.customers, [Validators.required]],
-      workingSituation: [this.driver?.workingSituation, [Validators.required]],
+      workingSituation: [this.driver?.workingSituation, []],
       name: [this.driver?.name, [Validators.required]],
       rg: [this.driver?.rg, [Validators.required]],
       cpf: [maskedCpf, [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}')]],
@@ -61,9 +61,9 @@ export class DriversFormComponent implements OnInit {
       });
     }
 
-    this.service.getWorkingSituations().subscribe((workingSituations) => {
-      this.workingSituations = workingSituations;
-    });
+    // this.service.getWorkingSituations().subscribe((workingSituations) => {
+    //   this.workingSituations = workingSituations;
+    // });
 
     this.i18n.setLocale(en_US);
   }

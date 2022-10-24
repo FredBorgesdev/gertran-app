@@ -40,14 +40,14 @@
       <input id="rg" type="text" nz-input formControlName="rg" />
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação trabalhista</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a situação trabalhista">
-      <nz-select id="workingSituation" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma situação trabalhista" formControlName="workingSituation">
-        <nz-option *ngFor="let workingSituation of workingSituations" [nzLabel]="workingSituation.label" [nzValue]="workingSituation.value"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+<!--  <nz-form-item>-->
+<!--    <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação trabalhista</nz-form-label>-->
+<!--    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a situação trabalhista">-->
+<!--      <nz-select id="workingSituation" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma situação trabalhista" formControlName="workingSituation">-->
+<!--        <nz-option *ngFor="let workingSituation of workingSituations" [nzLabel]="workingSituation.label" [nzValue]="workingSituation.value"></nz-option>-->
+<!--      </nz-select>-->
+<!--    </nz-form-control>-->
+<!--  </nz-form-item>-->
   <nz-form-item>
     <nz-form-label nzRequired nzFor="admissionDate">Data de admissão</nz-form-label>
     <nz-form-control nzErrorTip="Data inválida!">

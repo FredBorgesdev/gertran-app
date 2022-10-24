@@ -1,8 +1,18 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Clientes associados a este veiculo</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-      <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
+      <nz-select
+        id="customers"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Selecione uma empresa"
+        formControlName="customers"
+        nzMode="multiple"
+        nzDisabled
+        (nzScrollToBottom)="loadMoreCustomers()"
+        [nzDropdownRender]="selectLoading"
+      >
         <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
       </nz-select>
     </nz-form-control>
@@ -77,26 +87,26 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a situação">
-          <nz-select
-            id="workingSituation"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Selecione uma situação"
-            formControlName="workingSituation"
-          >
-            <nz-option
-              *ngFor="let workingSituation of workingSituations"
-              [nzLabel]="workingSituation.label"
-              [nzValue]="workingSituation.value"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+<!--    <div nz-col nzSpan="12">-->
+<!--      <nz-form-item>-->
+<!--        <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>-->
+<!--        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a situação">-->
+<!--          <nz-select-->
+<!--            id="workingSituation"-->
+<!--            nzShowSearch-->
+<!--            nzAllowClear-->
+<!--            nzPlaceHolder="Selecione uma situação"-->
+<!--            formControlName="workingSituation"-->
+<!--          >-->
+<!--            <nz-option-->
+<!--              *ngFor="let workingSituation of workingSituations"-->
+<!--              [nzLabel]="workingSituation.label"-->
+<!--              [nzValue]="workingSituation.value"-->
+<!--            ></nz-option>-->
+<!--          </nz-select>-->
+<!--        </nz-form-control>-->
+<!--      </nz-form-item>-->
+<!--    </div>-->
   </div>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="plate">Placa</nz-form-label>
@@ -135,7 +145,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="modelYear">Ano modelo</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o ano modelo">
-          <input id="year" type="text" nz-input formControlName="year" />
+          <input id="year" type="text" nz-input formControlName="modelYear" />
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -186,20 +196,20 @@
       </nz-form-item>
     </div>
   </div>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="chargingMethod">Modalidade de cobrança</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a modalidade">
-      <nz-select
-        id="chargingMethod"
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Selecione um tipo"
-        formControlName="chargingMethod"
-      >
-        <nz-option *ngFor="let option of chargingMethods" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+<!--  <nz-form-item>-->
+<!--    <nz-form-label [nzSpan]="null" nzRequired nzFor="chargingMethod">Modalidade de cobrança</nz-form-label>-->
+<!--    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a modalidade">-->
+<!--      <nz-select-->
+<!--        id="chargingMethod"-->
+<!--        nzShowSearch-->
+<!--        nzAllowClear-->
+<!--        nzPlaceHolder="Selecione um tipo"-->
+<!--        formControlName="chargingMethod"-->
+<!--      >-->
+<!--        <nz-option *ngFor="let option of chargingMethods" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>-->
+<!--      </nz-select>-->
+<!--    </nz-form-control>-->
+<!--  </nz-form-item>-->
 
   <nz-divider></nz-divider>
 
@@ -214,3 +224,7 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+</ng-template>

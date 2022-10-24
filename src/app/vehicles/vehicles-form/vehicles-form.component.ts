@@ -14,7 +14,7 @@ import {VehiclesService} from '../vehicles.service';
 
 export interface Vehicle {
   id: string;
-  customer: string;
+  customers: Customer[];
   manufacturer: string;
   vehicleModel: string;
   vehicleModelType: string;
@@ -48,6 +48,10 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   peripherals: VehiclePeripherals[] = [];
   workingSituations: Choice[] = [];
   chargingMethods: Choice[] = [];
+  isLoadingMoreData = false;
+
+  customersNextUrl: string;
+  manufacturersNextUrl: string;
 
   constructor(
     @Inject('service') protected service: VehiclesService<T>,
@@ -66,21 +70,17 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   ngOnInit(): void {
     super.ngOnInit();
 
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
-      this.customers = customers.results;
-    });
-    this.vehicleManufacturersService.getAll({ limit: 999 }).subscribe((manufacturers) => {
-      this.manufacturers = manufacturers.results;
-    });
+    this.loadMoreCustomers();
+    this.loadMoreManufacturers();
     this.vehiclePeripheralsService.getAll({ limit: 999 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
     });
-    this.service.getWorkingSituations().subscribe((workingSituations) => {
-      this.workingSituations = workingSituations;
-    });
-    this.service.getChargingMethods().subscribe((chargingMethods) => {
-      this.chargingMethods = chargingMethods;
-    });
+    // this.service.getWorkingSituations().subscribe((workingSituations) => {
+    //   this.workingSituations = workingSituations;
+    // });
+    // this.service.getChargingMethods().subscribe((chargingMethods) => {
+    //   this.chargingMethods = chargingMethods;
+    // });
 
     if (this.resource?.vehicle.manufacturer) {
       this.loadModels();
@@ -92,12 +92,12 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
   loadFormBuilder(customProperties?: string[]): void {
     this.validateForm = this.formBuilder.group({
-      customer: [null, [Validators.required]],
+      customers: [null, [Validators.required]],
       manufacturer: [null, [Validators.required]],
       vehicleModel: [null, [Validators.required]],
       vehicleModelType: [null, [Validators.required]],
       peripherals: [[], []],
-      workingSituation: [null, [Validators.required]],
+      workingSituation: [null, []],
       plate: [null, [Validators.required, Validators.maxLength(7)]],
       state: [null, [Validators.required, Validators.maxLength(2)]],
       city: [null, [Validators.required]],
@@ -122,7 +122,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     }
 
     this.validateForm.patchValue({
-      customer: this.resource.vehicle.customer,
+      customers: this.resource.vehicle.customers.map(customer => customer.id),
       manufacturer: this.resource.vehicle.manufacturer,
       vehicleModel: this.resource.vehicle.vehicleModel,
       vehicleModelType: this.resource.vehicle.vehicleModelType,
@@ -137,6 +137,28 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       renavam: this.resource.vehicle.renavam,
       description: this.resource.vehicle.description,
     });
+
+    if (this.resource.vehicle?.customers) {
+      this.customers = this.customers.concat(this.resource.vehicle.customers);
+      this.validateForm.patchValue({
+        customers: this.resource.vehicle.customers.map((customer) => customer.id)
+      });
+    }
+
+    if (this.resource.vehicle?.manufacturer) {
+      this.vehicleManufacturersService.get(this.resource.vehicle.manufacturer).subscribe((manufacturer) => {
+        this.manufacturers = [manufacturer].concat(this.manufacturers);
+      });
+    }
+
+    if (this.resource.vehicle?.vehicleModel) {
+      this.vehicleModelsService.get(
+        this.resource.vehicle.vehicleModel,
+        this.resource.vehicle.manufacturer
+      ).subscribe((model) => {
+        this.vehicleModels = [model].concat(this.vehicleModels);
+      });
+    }
 
     customProperties?.forEach(property => {
       this.validateForm.patchValue({
@@ -176,5 +198,29 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     }
 
     super.handleError();
+  }
+
+  loadMoreCustomers(): void {
+    this.isLoadingMoreData = true;
+    this.customersService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((customers) => {
+      this.customersNextUrl = customers.next;
+      this.customers = [...this.customers, ...customers.results];
+      this.isLoadingMoreData = false;
+    });
+  }
+
+  loadMoreManufacturers(): void {
+    this.isLoadingMoreData = true;
+    this.vehicleManufacturersService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((manufacturers) => {
+      this.manufacturersNextUrl = manufacturers.next;
+      this.manufacturers = [...this.manufacturers, ...manufacturers.results];
+      this.isLoadingMoreData = false;
+    });
   }
 }

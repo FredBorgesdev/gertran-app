@@ -45,6 +45,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
 
   ngOnInit(): void {
     this.resource = this.wagon;
+    console.log(this.resource)
 
     super.ngOnInit();
   }

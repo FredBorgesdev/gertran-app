@@ -53,10 +53,10 @@
         <td>{{item.id | id}}</td>
         <td>
           <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel | id}}</h6>
+            <h6 class="m-l-10 m-b-0">{{(item.vehicle.vehicleModel || '') | id}}</h6>
           </div>
         </td>
-        <td>{{item.vehicle.vehicleModelType | id}}</td>
+        <td>{{(item.vehicle.vehicleModelType || '') | id}}</td>
         <td>{{item.vehicle.plate}}</td>
         <td>{{getCityState(item)}}</td>
         <td>{{item.vehicle.color}}</td>
