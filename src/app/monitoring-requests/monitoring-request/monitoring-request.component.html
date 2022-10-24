@@ -25,35 +25,45 @@
         ></app-monitoring-requests-form>
       </nz-tab>
       <nz-tab nzTitle="Etapas da viagem" [nzDisabled]="!resource">
-        <app-points-tab
-          *ngIf="!isLoading && resource?.id"
-          [monitoringRequest]="resource"
-          (updateRouteCoordinates)="updateRouteCoordinates($event)"
-        ></app-points-tab>
+        <ng-template nz-tab>
+          <app-points-tab
+            *ngIf="!isLoading && resource?.id"
+            [monitoringRequest]="resource"
+            (updateRouteCoordinates)="updateRouteCoordinates($event)"
+          ></app-points-tab>
+        </ng-template>
       </nz-tab>
       <nz-tab nzTitle="Ordens de carregamento" [nzDisabled]="!resource">
-        <app-loading-order-tab
-          *ngIf="!isLoading && resource?.id"
-          [monitoringRequestId]="resource?.id"
-        ></app-loading-order-tab>
+        <ng-template nz-tab>
+          <app-loading-order-tab
+            *ngIf="!isLoading && resource?.id"
+            [monitoringRequestId]="resource?.id"
+          ></app-loading-order-tab>
+        </ng-template>
       </nz-tab>
       <nz-tab nzTitle="Notas/minutas" [nzDisabled]="!resource">
-        <app-invoices-tab
-          *ngIf="!isLoading && resource?.id"
-          [monitoringRequestId]="resource?.id"
-        ></app-invoices-tab>
+        <ng-template nz-tab>
+          <app-invoices-tab
+            *ngIf="!isLoading && resource?.id"
+            [monitoringRequestId]="resource?.id"
+          ></app-invoices-tab>
+        </ng-template>
       </nz-tab>
       <nz-tab nzTitle="Iscas" [nzDisabled]="!resource">
-        <app-baits-tab
-          *ngIf="!isLoading && resource?.id"
-          [monitoringRequestId]="resource?.id"
-        ></app-baits-tab>
+        <ng-template nz-tab>
+          <app-baits-tab
+            *ngIf="!isLoading && resource?.id"
+            [monitoringRequestId]="resource?.id"
+          ></app-baits-tab>
+        </ng-template>
       </nz-tab>
       <nz-tab nzTitle="Escoltas" [nzDisabled]="!resource">
-        <app-armed-guard-tab
-          *ngIf="!isLoading && resource?.id"
-          [monitoringRequestId]="resource?.id"
-        ></app-armed-guard-tab>
+        <ng-template nz-tab>
+          <app-armed-guard-tab
+            *ngIf="!isLoading && resource?.id"
+            [monitoringRequestId]="resource?.id"
+          ></app-armed-guard-tab>
+        </ng-template>
       </nz-tab>
     </nz-tabset>
 

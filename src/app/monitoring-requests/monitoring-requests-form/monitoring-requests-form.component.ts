@@ -31,6 +31,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   operations: Operations[] = [];
 
+  driversNextUrl: string;
+  trucksNextUrl: string;
+  customersNextUrl: string;
+  operationsNextUrl: string;
+  wagonsNextUrl: string;
+  isLoadingMoreData = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -58,24 +65,16 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     super.ngOnInit();
     this.i18n.setLocale(en_US);
 
+    this.isLoading = true;
+
     this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
       this.stops = stops.results;
     });
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
-      this.customers = customers.results;
-    });
-    this.driversService.getAll({ limit: 999 }).subscribe((drivers) => {
-      this.drivers = drivers.results;
-    });
-    this.trucksService.getAll({ limit: 999 }).subscribe((trucks) => {
-      this.trucks = trucks.results;
-    });
-    this.wagonsService.getAll({ limit: 999 }).subscribe((wagons) => {
-      this.wagons = wagons.results;
-    });
-    this.operationService.getAll({ limit: 999 }).subscribe((operations) => {
-      this.operations = operations.results;
-    });
+    this.loadMoreCustomers();
+    this.loadMoreDrivers();
+    this.loadMoreTrucks();
+    this.loadMoreOperations();
+    this.loadMoreWagons();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
       this.surveyConductors = surveyConductors;
     });
@@ -109,6 +108,36 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   performFormGroupSetValues(): void {
     super.performFormGroupSetValues();
+
+    if (this.resource?.driver) {
+      this.driversService.get(this.resource.driver.id).subscribe((driver) => {
+        this.drivers = [driver, ...this.drivers];
+      });
+    }
+
+    if (this.resource?.auxiliaryDriver) {
+      this.driversService.get(this.resource.auxiliaryDriver.id).subscribe((driver) => {
+        this.drivers = [driver, ...this.drivers];
+      });
+    }
+
+    if (this.resource?.truck) {
+      this.trucksService.get(this.resource.truck.id).subscribe((truck) => {
+        this.trucks = [truck, ...this.trucks];
+      });
+    }
+
+    if (this.resource?.shipper) {
+      this.customersService.get(this.resource.shipper.id).subscribe((customer) => {
+        this.customers = [customer, ...this.customers];
+      });
+    }
+
+    if (this.resource?.transporter) {
+      this.customersService.get(this.resource.transporter.id).subscribe((customer) => {
+        this.customers = [customer, ...this.customers];
+      });
+    }
 
     this.validateForm.patchValue({
       shipper: this.resource.shipper?.id,
@@ -157,6 +186,66 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
             this.message.error('Erro ao enviar a solicitação!');
           });
       },
+    });
+  }
+
+  loadMoreDrivers(): void {
+    this.isLoadingMoreData = true;
+    this.driversService.getAll({
+      limit: 999,
+      url: this.driversNextUrl
+    }).subscribe((drivers) => {
+      this.driversNextUrl = drivers.next;
+      this.drivers = [...this.drivers, ...drivers.results];
+      this.isLoadingMoreData = false;
+    });
+  }
+
+  loadMoreTrucks(): void {
+    this.isLoadingMoreData = true;
+    this.trucksService.getAll({
+      limit: 999,
+      url: this.trucksNextUrl
+    }).subscribe((trucks) => {
+      this.trucksNextUrl = trucks.next;
+      this.trucks = [...this.trucks, ...trucks.results];
+      this.isLoadingMoreData = false;
+    });
+  }
+
+  loadMoreCustomers(): void {
+    this.isLoadingMoreData = true;
+    this.customersService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((customers) => {
+      this.customersNextUrl = customers.next;
+      this.customers = [...this.customers, ...customers.results];
+      this.isLoadingMoreData = false;
+    });
+  }
+
+  loadMoreOperations(): void {
+    this.isLoadingMoreData = true;
+    this.operationService.getAll({
+      limit: 999,
+      url: this.operationsNextUrl
+    }).subscribe((operations) => {
+      this.operationsNextUrl = operations.next;
+      this.operations = [...this.operations, ...operations.results];
+      this.isLoadingMoreData = false;
+    });
+  }
+
+  loadMoreWagons(): void {
+    this.isLoadingMoreData = true;
+    this.wagonsService.getAll({
+      limit: 999,
+      url: this.wagonsNextUrl
+    }).subscribe((wagons) => {
+      this.wagonsNextUrl = wagons.next;
+      this.wagons = [...this.wagons, ...wagons.results];
+      this.isLoadingMoreData = false;
     });
   }
 }

@@ -22,6 +22,9 @@ export interface MonitoringRequests {
   };
   truck: {
     id: string;
+    vehicle: {
+      id: string;
+    }
   };
   wagons: {
     id: string;

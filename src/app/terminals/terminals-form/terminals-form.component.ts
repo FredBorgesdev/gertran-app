@@ -4,7 +4,6 @@ import {Terminals, TerminalsService} from '../terminals.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
-import {Customer, CustomersService} from '../../customers/customers.service';
 import {TerminalGroups, TerminalGroupsService} from '../terminal-groups.service';
 import {TransferItem} from 'ng-zorro-antd/transfer';
 import {WagonsService} from '../../wagons/wagons.service';
@@ -16,14 +15,12 @@ import {Truck, TrucksService} from '../../trucks/trucks.service';
   styleUrls: ['./terminals-form.component.css']
 })
 export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> implements OnInit {
-  customers: Customer[] = [];
   terminalGroups: TerminalGroups[] = [];
 
   vehicleTransferItems: TransferItem[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private customersService: CustomersService,
     private terminalGroupsService: TerminalGroupsService,
     private router: Router,
     private wagonsService: WagonsService,
@@ -43,9 +40,6 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     super.ngOnInit();
 
     this.setVehicles();
-    this.customersService.getAll({ limit: 999 }).subscribe((response) => {
-      this.customers = response.results;
-    });
     this.terminalGroupsService.getAll({ limit: 999 }).subscribe((response) => {
       this.terminalGroups = response.results;
     });
@@ -55,7 +49,6 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       description: [null, [Validators.required]],
-      customer: [null, [Validators.required]],
       terminalGroup: [null, []],
     });
   }
@@ -64,7 +57,6 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     super.performFormGroupSetValues();
 
     this.validateForm.patchValue({
-      customer: (this.resource.customer as Customer).id,
       terminalGroup: (this.resource.terminalGroup as TerminalGroups).id,
       vehicles: (this.resource.vehicles as Truck[]).map(({ id }) => id),
     });

@@ -11,8 +11,10 @@
                 nzAllowClear
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="shipper"
+                (nzScrollToBottom)="loadMoreCustomers()"
                 (ngModelChange)="saveDraft('shipper')"
                 [disabled]="disabled"
+                [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
@@ -27,8 +29,10 @@
                 nzAllowClear
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="transporter"
+                (nzScrollToBottom)="loadMoreCustomers()"
                 (ngModelChange)="saveDraft('transporter')"
                 [disabled]="disabled"
+                [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
@@ -48,8 +52,10 @@
                 nzAllowClear
                 nzPlaceHolder="Selecione um motorista"
                 formControlName="driver"
+                (nzScrollToBottom)="loadMoreDrivers()"
                 (ngModelChange)="saveDraft('driver')"
                 [disabled]="disabled"
+                [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
               </nz-select>
@@ -103,8 +109,10 @@
                 formControlName="wagons"
                 nzMode="multiple"
                 nzMaxMultipleCount="2"
+                (nzScrollToBottom)="loadMoreWagons()"
                 (ngModelChange)="saveDraft('wagons')"
                 [disabled]="disabled"
+                [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
               </nz-select>
@@ -192,3 +200,7 @@
       </nz-form-item>
     </form>
 </nz-spin>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+</ng-template>
