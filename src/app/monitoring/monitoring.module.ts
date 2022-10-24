@@ -9,6 +9,8 @@ import { MonitoringMapComponent } from './monitoring-map/monitoring-map.componen
 import {NzPopoverModule} from 'ng-zorro-antd/popover';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
+import { MonitoringAlertModalComponent } from './monitoring-alert-modal/monitoring-alert-modal.component';
+import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
 
 const antdModules = [
 ];
@@ -16,18 +18,20 @@ const antdModules = [
 @NgModule({
   declarations: [
     MonitoringListComponent,
-    MonitoringMapComponent
+    MonitoringMapComponent,
+    MonitoringAlertModalComponent
   ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    MonitoringRoutingModule,
-    GoogleMapsModule,
-    ...antdModules,
-    NzPopoverModule,
-    NgxMapboxGLModule.withConfig({
-      accessToken: environment.mapboxAccessToken,
-    })
-  ]
+    imports: [
+        SharedModule,
+        CommonModule,
+        MonitoringRoutingModule,
+        GoogleMapsModule,
+        ...antdModules,
+        NzPopoverModule,
+        NgxMapboxGLModule.withConfig({
+            accessToken: environment.mapboxAccessToken,
+        }),
+        NzSkeletonModule
+    ]
 })
 export class MonitoringModule { }

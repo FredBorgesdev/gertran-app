@@ -11,6 +11,7 @@ import {Position, PositionsService} from '../positions.service';
 import {Observable, Subject, timer} from 'rxjs';
 import {share, switchMap, takeUntil} from 'rxjs/operators';
 import {GetAllResponse} from '../../shared/services/api.service';
+import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
 
 @Component({
   selector: 'app-monitoring-list',
@@ -155,6 +156,19 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.notFound = true;
       this.message.error('Erro ao carregar lista');
+    });
+  }
+
+  openAlertModal(urgent = false): void {
+    this.modal.create({
+      nzTitle: 'Alertas',
+      nzContent: MonitoringAlertModalComponent,
+      nzComponentParams: {
+        urgent,
+      },
+      nzOkText: 'Fechar',
+      nzCancelText: null,
+      nzWidth: '70%',
     });
   }
 }

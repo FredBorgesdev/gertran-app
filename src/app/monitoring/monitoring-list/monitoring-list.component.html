@@ -42,15 +42,16 @@
       </div>
     </form>
 
-    <ng-container *ngIf="monitoringData.length > 0">
+<!--    <ng-container *ngIf="monitoringData.length > 0">-->
+    <ng-container>
       <div nzSpan="8">
-        <button nzSize="small" nz-button nzType="secondary" class="m-r-10">
+        <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal()">
           (55) Mensagens
         </button>
-        <button nzSize="small" nz-button nzType="primary" class="m-r-10">
+        <button nzSize="small" nz-button nzType="primary" class="m-r-10" (click)="openAlertModal()">
           (8) Alertas
         </button>
-        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10">
+        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10" (click)="openAlertModal(true)">
           (0) Urgente
         </button>
         <button nzSize="small" nz-button nzType="dashed">
