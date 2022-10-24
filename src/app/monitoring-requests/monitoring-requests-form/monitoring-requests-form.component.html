@@ -135,7 +135,9 @@
                 nzPlaceHolder="Selecione uma operação"
                 formControlName="operation"
                 (ngModelChange)="saveDraft('operation')"
+                (nzScrollToBottom)="loadMoreWagons()"
                 [disabled]="disabled"
+                [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let operation of operations" [nzLabel]="operation.name" [nzValue]="operation.id"></nz-option>
               </nz-select>

@@ -139,6 +139,12 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       });
     }
 
+    if (this.resource?.operation) {
+      this.operationService.get(this.resource.operation.id).subscribe((operation) => {
+        this.operations = [operation, ...this.operations];
+      });
+    }
+
     this.validateForm.patchValue({
       shipper: this.resource.shipper?.id,
       transporter: this.resource.transporter?.id,
