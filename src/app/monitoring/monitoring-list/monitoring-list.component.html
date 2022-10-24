@@ -42,8 +42,8 @@
       </div>
     </form>
 
-    <ng-container *ngIf="monitoringData.length > 0">
-<!--    <ng-container>-->
+<!--    <ng-container *ngIf="monitoringData.length > 0">-->
+    <ng-container>
       <div nzSpan="8">
         <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal()">
           (0) Mensagens
@@ -60,98 +60,18 @@
         </button>
       </div>
 
-      <div nz-row nzGutter="12" nzAlign="middle" class="m-t-10 m-b-50">
-        <nz-col nzSpan="2">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-all"
-          >
-            Todos
-          </button>
-        </nz-col>
-        <nz-col nzSpan="2">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-ag-start"
-          >
-            Ag. Inicio
-          </button>
-        </nz-col>
-        <nz-col nzSpan="3">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-contingency"
-          >
-            Contigência
-          </button>
-        </nz-col>
-        <nz-col nzSpan="3">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-client"
-          >
-            Cliente
-          </button>
-        </nz-col>
-        <nz-col nzSpan="3">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-travelling"
-          >
-            Em viagem
-          </button>
-        </nz-col>
-        <nz-col nzSpan="3">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-standby"
-          >
-            Parado
-          </button>
-        </nz-col>
-        <nz-col nzSpan="3">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-overnight"
-          >
-            Pernoite
-          </button>
-        </nz-col>
-        <nz-col nzSpan="3">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-out-of-point"
-          >
-            Fora do ponto
-          </button>
-        </nz-col>
-        <nz-col nzSpan="2">
-          <button
-            nz-button
-            nzType="primary"
-            nz-dropdown
-            class="status-filter border-none"
-          >
-            Nenhum
-          </button>
-        </nz-col>
-      </div>
+      <nz-radio-group class="m-t-15 m-b-25" nzButtonStyle="outline" [(ngModel)]="filter">
+        <label nz-radio-button nzValue="all" class="border-all">Todos</label>
+        <label nz-radio-button nzValue="start" class="border-ag-start">Ag. Inicio</label>
+        <label nz-radio-button nzValue="contingency" class="border-contingency">Contigência</label>
+        <label nz-radio-button nzValue="client" class="border-client">Cliente</label>
+        <label nz-radio-button nzValue="travel" class="border-travelling">Em viagem</label>
+        <label nz-radio-button nzValue="idle" class="border-standby">Parado</label>
+        <label nz-radio-button nzValue="overnight" class="border-overnight">Pernoite</label>
+        <label nz-radio-button nzValue="out" class="border-out-of-point">Fora do ponto</label>
+      </nz-radio-group>
+
+      <br/>
 
       <button nz-button nzSize="small" class="m-b-5" (click)="isTableFullscreen = true">
         <span nz-icon nzType="fullscreen"></span>
@@ -198,7 +118,7 @@
     [nzData]="monitoringData"
     [nzFrontPagination]="false"
     nzTableLayout="fixed"
-    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px' }"
+    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px', x: '50%' }"
   >
     <thead>
     <tr>

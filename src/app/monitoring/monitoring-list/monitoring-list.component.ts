@@ -47,6 +47,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Temp.' },
     { title: '' },
   ];
+  filter = 'all';
   validateForm: FormGroup;
 
   stopMonitoring = new Subject();
