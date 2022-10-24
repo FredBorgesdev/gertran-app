@@ -99,10 +99,11 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       operation: [null, []],
       loadDescription: [null, []],
       notes: [null, []],
-      isSimulation: [false, []],
       surveyConductedBy: [null, []],
       driver: [null, []],
       auxiliaryDriver: [null, []],
+      hasMacro: [false, []],
+      hasEmbeddedIntelligence: [false, []],
     });
   }
 

@@ -177,14 +177,25 @@
             </nz-form-control>
           </div>
 
-          <div nz-col nzSpan="12">
+          <div nz-col nzSpan="4">
             <nz-form-label></nz-form-label>
             <nz-form-control [nzSpan]="null" [nzOffset]="null">
               <label
                 nz-checkbox
-                formControlName="isSimulation"
-                (nzCheckedChange)="saveDraft('isSimulation')"
-              >Criar como simulação</label>
+                formControlName="hasMacro"
+                (nzCheckedChange)="saveDraft('hasMacro')"
+              >Macro</label>
+            </nz-form-control>
+          </div>
+
+          <div nz-col nzSpan="4">
+            <nz-form-label></nz-form-label>
+            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+              <label
+                nz-checkbox
+                formControlName="hasEmbeddedIntelligence"
+                (nzCheckedChange)="saveDraft('hasEmbeddedIntelligence')"
+              >Inteligência embarcada</label>
             </nz-form-control>
           </div>
         </div>
