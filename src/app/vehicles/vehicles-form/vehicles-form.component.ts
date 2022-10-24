@@ -24,7 +24,7 @@ export interface Vehicle {
   state: string;
   city: string;
   color: string;
-  year: number;
+  modelYear: number;
   chassis: string;
   renavam: string;
   description: string;
@@ -102,7 +102,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       state: [null, [Validators.required, Validators.maxLength(2)]],
       city: [null, [Validators.required]],
       color: [null, [Validators.required]],
-      year: [null, [Validators.required]],
+      modelYear: [null, [Validators.required]],
       chassis: [null, [Validators.required]],
       renavam: [null, [Validators.required]],
       description: [null, [Validators.required]],
@@ -132,7 +132,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       state: this.resource.vehicle.state,
       city: this.resource.vehicle.city,
       color: this.resource.vehicle.color,
-      year: this.resource.vehicle.year,
+      modelYear: this.resource.vehicle.modelYear,
       chassis: this.resource.vehicle.chassis,
       renavam: this.resource.vehicle.renavam,
       description: this.resource.vehicle.description,
