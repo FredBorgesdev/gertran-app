@@ -1,18 +1,5 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label nzFor="customer" nzRequired>Empresa</nz-form-label>
-    <nz-form-control nzFor="customer" nzErrorTip="Preencha o campo">
-      <nz-select id="customer" formControlName="customer" nzPlaceHolder="Selecione a empresa">
-        <nz-option
-          *ngFor="let customer of customers"
-          [nzLabel]="customer.tradingName"
-          [nzValue]="customer.id"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
     <nz-form-label nzRequired nzFor="name">Nome</nz-form-label>
     <nz-form-control nzErrorTip="Preencha o campo">
       <input nz-input formControlName="name" id="name" />
