@@ -45,10 +45,15 @@
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
+      [nzScroll]="{ y: '768px' }"
     >
       <thead>
       <tr>
-        <th *ngFor="let column of truckColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+        <th
+          *ngFor="let column of truckColumns"
+          [nzSortFn]="column.compare"
+          nzWidth="150px"
+        >{{ column.title }}</th>
       </tr>
       </thead>
       <tbody>
@@ -56,10 +61,10 @@
         <td>{{item.id | id}}</td>
         <td>
           <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel}}</h6>
+            <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel | id}}</h6>
           </div>
         </td>
-        <td>{{item.vehicle.vehicleModelType}}</td>
+        <td>{{item.vehicle.vehicleModelType | id}}</td>
         <td>{{item.vehicle.plate}}</td>
         <td>{{getCityState(item)}}</td>
         <td>{{item.vehicle.color}}</td>
