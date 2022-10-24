@@ -22,7 +22,7 @@ export interface Position {
   speed: number;
   state: string;
   street: string;
-  technology: string;
+  technologyName: string;
   timePosition: string;
   trackerCode: string;
   trackerModel: string;
