@@ -13,7 +13,7 @@
 
     <form [formGroup]="validateForm" class="m-b-30">
       <div nz-row nzGutter="12" nzAlign="middle">
-        <div nz-col nzSpan="4">
+        <div nz-col nzSpan="8">
           <nz-select
             nzShowSearch
             nzAllowClear
@@ -30,7 +30,7 @@
 <!--            <nz-option nzLabel="Agrupar por jornadas" nzValue="journey"></nz-option>-->
 <!--          </nz-select>-->
 <!--        </div>-->
-        <div nz-col nzSpan="4">
+        <div nz-col nzSpan="8">
           <nz-select nzPlaceHolder="Terminal" formControlName="terminal" (ngModelChange)="loadList()">
             <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
           </nz-select>
