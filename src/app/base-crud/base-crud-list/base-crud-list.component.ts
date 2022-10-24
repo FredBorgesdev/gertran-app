@@ -74,7 +74,6 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   handleQueryParamsChange(params: NzTableQueryParams): void {
-
     if (params.pageIndex < this.page) {
       const url = this.replaceOffsetWithPage(this.resources.previous, params.pageIndex);
       this.loadResources(url);

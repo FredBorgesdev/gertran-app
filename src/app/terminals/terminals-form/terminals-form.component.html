@@ -65,10 +65,86 @@
           [nzSearchPlaceholder]="'Pesquisar veiculo'"
           [nzNotFoundContent]="'Nenhum veiculo encontrado'"
           [nzOperations]="['Adicionar', 'Remover']"
-          [nzListStyle]="{ 'width': '50%', 'height.px': '700' }"
+          [nzListStyle]="{ 'width': '50%' }"
           [nzItemUnit]="'Veiculo'"
           [nzItemsUnit]="'Veiculos'"
-        ></nz-transfer>
+          [nzRenderList]="[renderListBackPagination, renderListFrontPagination]"
+          (nzChange)="handleChange($event)"
+        >
+          <ng-template
+            #renderListBackPagination
+            let-items
+            let-stat="stat"
+            let-onItemSelectAll="onItemSelectAll"
+            let-onItemSelect="onItemSelect"
+          >
+            <nz-table
+              #table
+              [nzData]="items"
+              nzSize="small"
+              [nzData]="resources?.results"
+              [nzTotal]="resources?.count"
+              [nzPageSize]="resources?.limit"
+              [nzPageIndex]="page"
+              [nzFrontPagination]="false"
+              (nzQueryParams)="handleQueryParamsChange($event)"
+            >
+              <thead>
+              <tr>
+                <th
+                  [nzChecked]="stat.checkAll"
+                  [nzIndeterminate]="stat.checkHalf"
+                  (nzCheckedChange)="onItemSelectAll($event)"
+                ></th>
+                <th>Placa</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                <td
+                  [nzChecked]="!!data.checked"
+                  (nzCheckedChange)="onItemSelect(data)"
+                ></td>
+                <td>{{ data.title }}</td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </ng-template>
+
+          <ng-template
+            #renderListFrontPagination
+            let-items
+            let-stat="stat"
+            let-onItemSelectAll="onItemSelectAll"
+            let-onItemSelect="onItemSelect"
+          >
+            <nz-table
+              #table
+              [nzData]="items"
+              nzSize="small"
+            >
+              <thead>
+              <tr>
+                <th
+                  [nzChecked]="stat.checkAll"
+                  [nzIndeterminate]="stat.checkHalf"
+                  (nzCheckedChange)="onItemSelectAll($event)"
+                ></th>
+                <th>Placa</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of table.data" (click)="onItemSelect(data)">
+                <td
+                  [nzChecked]="!!data.checked"
+                  (nzCheckedChange)="onItemSelect(data)"
+                ></td>
+                <td>{{ data.title }}</td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </ng-template>
+        </nz-transfer>
 
         <nz-form-item class="m-t-20">
           <nz-form-control [nzOffset]="7" [nzSpan]="12">

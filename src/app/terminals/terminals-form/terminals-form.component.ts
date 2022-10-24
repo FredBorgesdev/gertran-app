@@ -5,9 +5,11 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {TerminalGroups, TerminalGroupsService} from '../terminal-groups.service';
-import {TransferItem} from 'ng-zorro-antd/transfer';
+import {TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
 import {WagonsService} from '../../wagons/wagons.service';
 import {Truck, TrucksService} from '../../trucks/trucks.service';
+import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-terminals-form',
@@ -18,6 +20,9 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
   terminalGroups: TerminalGroups[] = [];
 
   vehicleTransferItems: TransferItem[] = [];
+  selectedVehicles = [];
+
+  resources: GetAllResponse<any>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,27 +68,48 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
   }
 
   performResourceChange(): void {
-    this.vehicleTransferItems = this.vehicleTransferItems.map((item) => {
-      const hasVehicle = this.resource.vehicles.some((vehicle) => vehicle.id === item.key);
-      if (!hasVehicle) {
-        return item;
-      }
+    this.selectedVehicles = (this.resource.vehicles as Truck['vehicle'][]).map(vehicle => ({
+      id: vehicle.id,
+      key: vehicle.id,
+      title: vehicle.plate,
+    }));
 
-      return {
-        ...item,
-        direction: 'right',
-      };
-    });
+    // delete if more than one of the same in list
+    console.log(this.selectedVehicles.length)
+    for (let i = 0; i < this.selectedVehicles.length; i++) {
+      for (let j = i + 1; j < this.selectedVehicles.length; j++) {
+        if (this.selectedVehicles[i].id === this.selectedVehicles[j].id) {
+          this.selectedVehicles.splice(j, 1);
+        }
+      }
+    }
+    console.log(this.selectedVehicles.length)
+
+    this.vehicleTransferItems = this.vehicleTransferItems
+      .concat(this.selectedVehicles)
+      .map((item) => {
+        const hasVehicle = this.resource.vehicles.some((vehicle) => vehicle.id === item.key);
+        if (!hasVehicle) {
+          return item;
+        }
+
+        return {
+          ...item,
+          direction: 'right',
+        };
+      });
   }
 
   saveVehicles(): void {
     this.isLoading = true;
 
+    console.log(this.selectedVehicles)
+
     this.service.update(
       this.resource.id,
       {
         ...this.validateForm.value,
-        vehicles: this.vehicleTransferItems.filter((item) => item.direction === 'right').map((item) => item.key),
+        vehicles: this.selectedVehicles.map((item) => item.key),
       }
     ).subscribe(() => {
       this.isLoading = false;
@@ -94,9 +120,22 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     });
   }
 
-  setVehicles(): void {
-    this.trucksService.getAll({ limit: 999 }).subscribe((response) => {
-      this.vehicleTransferItems = response.results.map(this.toTransferItem);
+  setVehicles(url?: string): void {
+    this.trucksService.getAll({ limit: 15, url }).subscribe((response) => {
+      this.vehicleTransferItems = response.results
+        .map(this.toTransferItem)
+        .concat(this.selectedVehicles)
+        .map((item) => {
+          const hasVehicle = this.selectedVehicles.some((vehicle) => vehicle.id === item.key);
+          if (!hasVehicle) {
+            return item;
+          }
+
+          return {
+            ...item,
+            direction: 'right',
+          };
+        });
     });
   }
 
@@ -109,5 +148,34 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
 
   list(): void {
     this.router.navigate(['terminals', 'terminals-list']);
+  }
+
+  get page(): number {
+    return getCurrentPage(this.resources);
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      const url = this.replaceOffsetWithPage(this.resources.previous, params.pageIndex);
+      this.setVehicles(url);
+    } else if (params.pageIndex > this.page) {
+      const url = this.replaceOffsetWithPage(this.resources.next, params.pageIndex);
+      this.setVehicles(url);
+    }
+  }
+
+  private replaceOffsetWithPage(url: string, page: number): string {
+    const limit = +url.match(/limit=\d+/)[0].split('=')[1];
+
+    return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
+  }
+
+  handleChange($event: TransferChange): void {
+    if ($event.to === 'right') {
+      this.selectedVehicles = this.selectedVehicles.concat($event.list);
+    }
+    if ($event.to === 'left') {
+      this.selectedVehicles = this.selectedVehicles.filter((item) => !$event.list.includes(item));
+    }
   }
 }
