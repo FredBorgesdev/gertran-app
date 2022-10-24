@@ -1,8 +1,17 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-      <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
+      <nz-select
+        id="customers"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Selecione uma empresa"
+        formControlName="customers"
+        nzMode="multiple"
+        (nzScrollToBottom)="loadMoreCustomers()"
+        [nzDropdownRender]="selectLoading"
+      >
         <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
       </nz-select>
     </nz-form-control>
@@ -107,3 +116,7 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+</ng-template>

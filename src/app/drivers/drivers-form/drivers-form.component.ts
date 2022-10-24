@@ -22,6 +22,8 @@ export class DriversFormComponent implements OnInit {
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
 
   customers: Customer[] = [];
+  isLoadingMoreData = false;
+  customersNextUrl: string;
 
   constructor(
     private router: Router,
@@ -35,7 +37,7 @@ export class DriversFormComponent implements OnInit {
     const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false });
 
     this.validateForm = this.formBuilder.group({
-      customer: [this.driver?.customer, [Validators.required]],
+      customers: [this.driver?.customers, [Validators.required]],
       workingSituation: [this.driver?.workingSituation, [Validators.required]],
       name: [this.driver?.name, [Validators.required]],
       rg: [this.driver?.rg, [Validators.required]],
@@ -50,9 +52,14 @@ export class DriversFormComponent implements OnInit {
       admissionDate: [this.driver?.admissionDate, [Validators.required]],
     });
 
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
-      this.customers = customers.results;
-    });
+    this.loadMoreCustomers();
+
+    if (this.driver.customers) {
+      this.customers = this.customers.concat(this.driver.customers);
+      this.validateForm.patchValue({
+        customers: this.driver.customers.map((customer) => customer.id)
+      });
+    }
 
     this.service.getWorkingSituations().subscribe((workingSituations) => {
       this.workingSituations = workingSituations;
@@ -74,5 +81,17 @@ export class DriversFormComponent implements OnInit {
 
   listDrivers(): void {
     this.router.navigate(['/drivers/drivers-list']);
+  }
+
+  loadMoreCustomers(): void {
+    this.isLoadingMoreData = true;
+    this.customersService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((customers) => {
+      this.customersNextUrl = customers.next;
+      this.customers = [...this.customers, ...customers.results];
+      this.isLoadingMoreData = false;
+    });
   }
 }
