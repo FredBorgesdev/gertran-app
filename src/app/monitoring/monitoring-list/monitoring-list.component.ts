@@ -12,6 +12,7 @@ import {Observable, Subject, timer} from 'rxjs';
 import {share, switchMap, takeUntil} from 'rxjs/operators';
 import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
+import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitoring-event-modal.component';
 
 @Component({
   selector: 'app-monitoring-list',
@@ -27,6 +28,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Placa', nzLeft: true, style: 'z-index: 999' },
     { title: 'Ignição' },
     { title: 'Alerta' },
+    { title: 'Automação' },
     { title: 'Mapa' },
     { title: 'Progresso' },
     { title: 'Velocidade' },
@@ -59,6 +61,19 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   isTableFullscreen = false;
   notFound = false;
+
+  automations = [
+    { icon: 'check-circle', color: 'orane', text: 'Excesso de velocidade' },
+    { icon: 'eye', color: 'red', text: 'Desvio de rota' },
+    { icon: 'credit-card', color: 'blue', text: 'Parada prolongada' },
+    { icon: 'car', color: 'blue', text: 'Parada abastecimento' },
+  ];
+  alerts = [
+    { icon: 'check-circle', color: 'green', text: 'Em viagem' },
+    { icon: 'close-circle', color: 'red', text: 'Atraso em informar inicio de viagem' },
+    { icon: 'info-circle', color: 'blue', text: 'Porta carona' },
+    { icon: 'mail', color: 'blue', text: 'Parada abastecimento' },
+  ];
 
   constructor(
     private router: Router,
@@ -152,7 +167,11 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.stopMonitoring.next();
 
     this.monitoringData$.subscribe(data => {
-      this.monitoringData = data.results;
+      this.monitoringData = data.results.map(item => ({
+        ...item,
+        alert: this.getRandomAlert(),
+        automation: this.getRandomAutomation(),
+      }));
       this.isLoading = false;
       this.notFound = this.monitoringData.length === 0;
     }, () => {
@@ -172,6 +191,27 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzOkText: 'Fechar',
       nzCancelText: null,
       nzWidth: '70%',
+    });
+  }
+
+  getRandomAlert(): any {
+    return this.alerts[Math.floor(Math.random() * this.alerts.length)];
+  }
+
+  getRandomAutomation(): any {
+    return this.automations[Math.floor(Math.random() * this.automations.length)];
+  }
+
+  openAutomationModal(automation: any): void {
+    this.modal.create({
+      nzTitle: automation.text,
+      // nzContent: 'Automação foi disparada no dia 01/01/2020 às 10:00',
+      nzContent: MonitoringEventModalComponent,
+      nzComponentParams: {
+        name: automation.text,
+      },
+      nzOkText: 'Fechar',
+      nzCancelText: null,
     });
   }
 }

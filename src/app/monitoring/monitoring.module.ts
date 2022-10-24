@@ -11,6 +11,7 @@ import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
 import { MonitoringAlertModalComponent } from './monitoring-alert-modal/monitoring-alert-modal.component';
 import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
+import { MonitoringEventModalComponent } from './monitoring-event-modal/monitoring-event-modal.component';
 
 const antdModules = [
 ];
@@ -19,7 +20,8 @@ const antdModules = [
   declarations: [
     MonitoringListComponent,
     MonitoringMapComponent,
-    MonitoringAlertModalComponent
+    MonitoringAlertModalComponent,
+    MonitoringEventModalComponent
   ],
     imports: [
         SharedModule,

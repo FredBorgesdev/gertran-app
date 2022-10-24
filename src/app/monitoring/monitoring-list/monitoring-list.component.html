@@ -42,8 +42,8 @@
       </div>
     </form>
 
-    <ng-container *ngIf="monitoringData.length > 0">
-<!--    <ng-container>-->
+<!--    <ng-container *ngIf="monitoringData.length > 0">-->
+    <ng-container>
       <div nzSpan="8">
         <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal()">
           (0) Mensagens
@@ -118,7 +118,7 @@
     [nzData]="monitoringData"
     [nzFrontPagination]="false"
     nzTableLayout="fixed"
-    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px', x: '50%' }"
+    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px' }"
   >
     <thead>
     <tr>
@@ -137,8 +137,8 @@
         <img
           [src]="'assets/images/brand/' + item.trackerTechnologyName.toLowerCase() + '.jpg'"
           alt="logo"
-          width="35px"
-          height="35px"
+          width="25px"
+          height="25px"
         />
       </td>
       <td nzLeft>{{ item.trackerCode || '-' }}</td>
@@ -149,8 +149,24 @@
         <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>
       </td>
       <td class="text-md-center">
-        <!--          <nz-badge [nzColor]="getAlertColor(item.alert)"></nz-badge>-->
-        TODO
+        <span
+          nz-tooltip
+          [nzTooltipTitle]="item.alert.text"
+          nz-icon
+          [nzType]="item.alert.icon"
+          nzTheme="fill"
+          [style]="'font-size: 20px;color: ' + item.alert.color"
+        ></span>
+      </td>
+      <td class="text-md-center" style="cursor: pointer" (click)="openAutomationModal(item.automation)">
+        <span
+          nz-tooltip
+          [nzTooltipTitle]="item.automation.text"
+          nz-icon
+          [nzType]="item.automation.icon"
+          nzTheme="fill"
+          [style]="'font-size: 20px;color: ' + item.automation.color"
+        ></span>
       </td>
       <td>
         <button
@@ -177,14 +193,12 @@
       <td>{{ getWagons(item) || '-' }}</td>
       <td>{{ item.communication || 'TODO' }}</td>
       <td class="text-md-center">
-        <!--          <nz-badge *ngIf="item.macro" nzStatus="success"></nz-badge>-->
-        <!--          <nz-badge *ngIf="!item.macro" nzStatus="error"></nz-badge>-->
-        TODO
+        <nz-badge *ngIf="item.monitoringRequest.hasMacro" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.monitoringRequest.hasMacro" nzStatus="error"></nz-badge>
       </td>
       <td class="text-md-center">
-        <!--          <nz-badge *ngIf="item.embeddedIntelligence" nzStatus="success"></nz-badge>-->
-        <!--          <nz-badge *ngIf="!item.embeddedIntelligence" nzStatus="error"></nz-badge>-->
-        TODO
+        <nz-badge *ngIf="item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
       <td class="text-md-center">
         <nz-badge *ngIf="item.monitoringRequest.bait" nzStatus="success"></nz-badge>
