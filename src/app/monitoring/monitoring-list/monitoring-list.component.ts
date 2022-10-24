@@ -148,6 +148,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   loadList(): void {
     this.isLoading = true;
+    this.stopMonitoring.next();
+
     this.monitoringData$.subscribe(data => {
       this.monitoringData = data.results;
       this.isLoading = false;
