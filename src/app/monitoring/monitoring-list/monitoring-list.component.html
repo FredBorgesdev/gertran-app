@@ -87,14 +87,6 @@
   </nz-card>
 </nz-spin>
 
-<nz-dropdown-menu #moreActions="nzDropdownMenu">
-  <ul nz-menu>
-    <li nz-menu-item>Solicitação de monitoramento</li>
-    <li nz-menu-item>Comandos</li>
-    <li nz-menu-item>Mensagens</li>
-  </ul>
-</nz-dropdown-menu>
-
 <nz-modal
   nzTitle="Monitoramento"
   [nzVisible]="isTableFullscreen"
@@ -227,6 +219,14 @@
           <span nz-icon nzType="more" nzTheme="outline"></span>
         </a>
       </td>
+
+      <nz-dropdown-menu #moreActions="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
+          <li nz-menu-item>Comandos</li>
+          <li nz-menu-item>Mensagens</li>
+        </ul>
+      </nz-dropdown-menu>
     </tr>
     </tbody>
   </nz-table>

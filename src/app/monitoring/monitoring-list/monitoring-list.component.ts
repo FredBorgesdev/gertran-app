@@ -245,4 +245,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       [Status.TERMINATED_DISAPPROVED]: 'Finalizada sem aprovação',
     }[status];
   }
+
+  goToMonitoringRequest(id: string): void {
+    this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', id]);
+  }
 }
