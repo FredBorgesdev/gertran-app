@@ -24,7 +24,7 @@ export interface Position {
   street: string;
   trackerTechnologyName: string;
   timePosition: string;
-  trackerCode: string;
+  trackerSerialNumber: string;
   trackerModel: string;
   vehicle: {
     plate: string;
@@ -48,6 +48,7 @@ export interface Position {
     eventDescription: string;
   }[];
   wagons: string[];
+  observations?: string;
 }
 
 @Injectable({

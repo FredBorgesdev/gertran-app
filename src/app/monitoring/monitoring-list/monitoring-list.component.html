@@ -139,13 +139,13 @@
         [class]="getRowBackgroundColor(item.monitoringRequest.status)"
       >
         <img
-          [src]="'assets/images/brand/' + item.trackerTechnologyName.toLowerCase() + '.jpg'"
+          [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
           alt="logo"
           width="25px"
           height="25px"
         />
       </td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.trackerCode || '-' }}</td>
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
@@ -197,7 +197,7 @@
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getDestiny(item)">{{ getDestiny(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getAlerts(item)">{{ getAlerts(item) || '-' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
-      <td>{{ item.observation || 'TODO' }}</td>
+      <td>{{ item.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
       <td>{{ item.communication || 'TODO' }}</td>
