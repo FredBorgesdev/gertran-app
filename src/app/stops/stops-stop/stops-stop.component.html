@@ -22,6 +22,12 @@
         <app-stops-form [stop]="stop" *ngIf="!isLoading"></app-stops-form>
       </nz-tab>
 
+      <nz-tab nzTitle="Mapa">
+        <ng-template nz-tab>
+          <app-stops-map [stop]="stop" *ngIf="!isLoading"></app-stops-map>
+        </ng-template>
+      </nz-tab>
+
       <nz-tab nzTitle="Funcionamento" [nzDisabled]="!stop?.id">
         <app-stops-working-hours></app-stops-working-hours>
       </nz-tab>

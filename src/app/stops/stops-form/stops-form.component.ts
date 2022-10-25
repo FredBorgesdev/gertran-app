@@ -20,6 +20,9 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
 
   categoriesTransferItems: TransferItem[] = [];
 
+  customersNextUrl: string;
+  isLoadingMoreData: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -38,8 +41,18 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
       this.stopTypes = types;
     });
 
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
-      this.customers = customers.results;
+    this.loadMoreCustomers();
+  }
+
+  loadMoreCustomers(): void {
+    this.isLoadingMoreData = true;
+    this.customersService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((customers) => {
+      this.customersNextUrl = customers.next;
+      this.customers = [...this.customers, ...customers.results];
+      this.isLoadingMoreData = false;
     });
   }
 
@@ -64,6 +77,14 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
 
     if (!this.resource) {
       return;
+    }
+
+    if (this.resource.customer) {
+      this.isLoading = true;
+      this.customersService.get(this.resource.customer).subscribe((customer) => {
+        this.customers = [customer, ...this.customers];
+        this.isLoading = false;
+      });
     }
 
     Object.keys(this.resource).forEach(key => {

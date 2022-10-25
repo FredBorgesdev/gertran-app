@@ -1,0 +1,16 @@
+<mgl-map
+  [style]="'mapbox://styles/mapbox/streets-v9'"
+  [center]="[stop.longitude, stop.latitude]"
+  [zoom]="[12]"
+>
+  <ng-container>
+    <mgl-marker [lngLat]="[stop.longitude, stop.latitude]">
+      <span
+        nz-icon
+        nzType="pushpin"
+        nzTheme="fill"
+        style="color: red; font-size: 24px"
+      ></span>
+    </mgl-marker>
+  </ng-container>
+</mgl-map>

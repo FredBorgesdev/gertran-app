@@ -10,6 +10,9 @@ import { NzTransferModule } from 'ng-zorro-antd/transfer';
 import { StopsWorkingHoursComponent } from './stops-working-hours/stops-working-hours.component';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
+import { StopsMapComponent } from './stops-map/stops-map.component';
+import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
+import {environment} from '../../environments/environment';
 
 
 const antdModules = [
@@ -22,14 +25,18 @@ const antdModules = [
     StopsListComponent,
     StopsStopComponent,
     StopsFormComponent,
-    StopsWorkingHoursComponent
+    StopsWorkingHoursComponent,
+    StopsMapComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    StopsRoutingModule,
-    GooglePlaceModule,
-    ...antdModules,
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        StopsRoutingModule,
+        GooglePlaceModule,
+        ...antdModules,
+        NgxMapboxGLModule.withConfig({
+          accessToken: environment.mapboxAccessToken,
+        }),
+    ]
 })
 export class StopsModule { }

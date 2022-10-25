@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export interface Stop {
+  customer: string;
   id: string;
   name: string;
   description: string;
