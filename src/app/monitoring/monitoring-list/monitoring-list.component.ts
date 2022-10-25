@@ -13,6 +13,7 @@ import {share, switchMap, takeUntil} from 'rxjs/operators';
 import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
 import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitoring-event-modal.component';
+import {UpdateObservationsModalComponent} from '../update-observations-modal/update-observations-modal.component';
 
 enum Status {
   DRAFT = 'draft',
@@ -248,5 +249,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   goToMonitoringRequest(id: string): void {
     this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', id]);
+  }
+
+  openUpdateObservationModal(item: Position): void {
+    this.modal.create({
+      nzTitle: item.customer.name,
+      nzContent: UpdateObservationsModalComponent,
+      nzOnOk: (componentInstance) => componentInstance.save(),
+      nzComponentParams: { item },
+      nzOkText: 'Salvar',
+      nzCancelText: 'Cancelar',
+    });
   }
 }

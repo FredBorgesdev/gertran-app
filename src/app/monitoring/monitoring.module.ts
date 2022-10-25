@@ -12,6 +12,7 @@ import {environment} from '../../environments/environment';
 import { MonitoringAlertModalComponent } from './monitoring-alert-modal/monitoring-alert-modal.component';
 import {NzSkeletonModule} from 'ng-zorro-antd/skeleton';
 import { MonitoringEventModalComponent } from './monitoring-event-modal/monitoring-event-modal.component';
+import { UpdateObservationsModalComponent } from './update-observations-modal/update-observations-modal.component';
 
 const antdModules = [
 ];
@@ -21,7 +22,8 @@ const antdModules = [
     MonitoringListComponent,
     MonitoringMapComponent,
     MonitoringAlertModalComponent,
-    MonitoringEventModalComponent
+    MonitoringEventModalComponent,
+    UpdateObservationsModalComponent
   ],
     imports: [
         SharedModule,
