@@ -14,6 +14,23 @@ import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
 import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitoring-event-modal.component';
 
+enum Status {
+  DRAFT = 'draft',
+  UNDER_REVIEW = 'under_review',
+  WAITING_FOR_START = 'waiting_for_start',
+  IN_PROGRESS = 'in_progress',
+  REPROVED = 'reproved',
+  FINISHED = 'finished',
+  SUCCESSFULLY_TERMINATED = 'successfully_terminated',
+  CANCELED = 'canceled',
+  UNSUCCESSFULLY_TERMINATED = 'unsuccessfully_terminated',
+  TERMINATED_DISAPPROVED = 'terminated_disapproved',
+  POTENTIALLY_STOLEN = 'potentially_stolen',
+  STOLEN_CONFIRMED = 'stolen_confirmed',
+  PENDING = 'pending',
+  IMPORTED_UNAVAILABLE = 'imported_unavailable',
+}
+
 @Component({
   selector: 'app-monitoring-list',
   templateUrl: './monitoring-list.component.html',
@@ -94,7 +111,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.terminals = data.results;
     });
 
-    this.monitoringData$ = timer(0, 1000000).pipe(
+    this.monitoringData$ = timer(0, 10000).pipe(
       switchMap(() => this.positionsService.getAll(
         { limit: 999 },
         {
@@ -126,10 +143,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   getRowBackgroundColor(status: string): string {
     return {
-      warning: 'bg-warning',
-      danger: 'bg-danger',
-      success: 'bg-success',
-      info: 'bg-info',
+      [Status.IN_PROGRESS]: 'bg-success',
+      [Status.WAITING_FOR_START]: 'bg-warning',
+      [Status.FINISHED]: 'bg-success',
+      [Status.CANCELED]: 'bg-danger',
+      [Status.UNSUCCESSFULLY_TERMINATED]: 'bg-danger',
+      [Status.TERMINATED_DISAPPROVED]: 'bg-danger',
     }[status];
   }
 
@@ -145,11 +164,19 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getOrigin(item: Position): string {
-    return item.monitoringRequest.originCity + ', ' + item.monitoringRequest.originState;
+    if (item.monitoringRequest.originCity) {
+      return item.monitoringRequest.originCity + ', ' + item.monitoringRequest.originState;
+    }
+
+    return item.origin;
   }
 
   getDestiny(item: Position): string {
-    return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
+    if (item.monitoringRequest.destinyCity) {
+      return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
+    }
+
+    return item.destiny;
   }
 
   getAlerts(item: Position): string {
