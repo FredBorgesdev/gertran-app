@@ -1,0 +1,48 @@
+<nz-table
+  #table
+  [nzData]="monitoringRequests?.results"
+  [nzTotal]="monitoringRequests?.count"
+  [nzPageSize]="monitoringRequests?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange.emit($event)"
+  nzSize="small"
+>
+  <thead>
+  <tr>
+    <th *ngFor="let column of monitoringRequestsColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of table.data; let i=index">
+    <td>{{item.id | id}}</td>
+    <td>{{item.shipper?.tradingName ?? '-'}}</td>
+    <td>{{item.transporter?.tradingName ?? '-'}}</td>
+    <td>{{item.driver?.name ?? '-'}}</td>
+    <td>{{item.operation?.name ?? '-'}}</td>
+    <td class="text-md-center">
+      <a
+        (click)="edit.emit(item)"
+        class="m-r-5"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Editar"
+      >
+        <i nz-icon nzType="edit" theme="outline"></i>
+      </a>
+      <button
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Excluir"
+        (click)="delete.emit(item)"
+      >
+        <i nz-icon nzType="delete" theme="outline"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

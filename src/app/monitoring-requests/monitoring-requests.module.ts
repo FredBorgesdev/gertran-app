@@ -17,6 +17,7 @@ import { LoadingOrderTabComponent } from './loading-order-tab/loading-order-tab.
 import {InvoicesTabComponent} from './invoices-tab/invoices-tab.component';
 import {BaitsTabComponent} from './baits-tab/baits-tab.component';
 import {ArmedGuardTabComponent} from './armed-guard-tab/armed-guard-tab.component';
+import { MonitoringRequestsTableComponent } from './monitoring-requests-table/monitoring-requests-table.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {ArmedGuardTabComponent} from './armed-guard-tab/armed-guard-tab.componen
     LoadingOrderTabComponent,
     InvoicesTabComponent,
     BaitsTabComponent,
-    ArmedGuardTabComponent
+    ArmedGuardTabComponent,
+    MonitoringRequestsTableComponent
   ],
   imports: [
     CommonModule,

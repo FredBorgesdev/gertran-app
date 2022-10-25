@@ -44,12 +44,23 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<MonitoringRequests>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(pagination: Pagination, filters?: {
+    status?: string;
+    createdAt?: string;
+  }): Observable<GetAllResponse<MonitoringRequests>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+
+    if (filters?.createdAt) {
+      params.created_at = filters.createdAt;
+    }
+
+    if (filters?.status) {
+      params.status = filters.status;
     }
 
     return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', { params });

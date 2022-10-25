@@ -10,21 +10,34 @@ import {forkJoin} from 'rxjs';
 import {format} from 'date-fns';
 import {DirectionsService} from '../../shared/services/directions.service';
 import {Route} from '../../routes/routes.service';
+import {GetAllResponse, getCurrentPage, Pagination} from '../../shared/services/api.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
+
+enum Status {
+  DRAFT = 'draft',
+  UNDER_REVIEW = 'under_review',
+  WAITING_FOR_START = 'waiting_for_start',
+  IN_PROGRESS = 'in_progress',
+  REPROVED = 'reproved',
+  FINISHED = 'finished',
+  SUCCESSFULLY_TERMINATED = 'successfully_terminated',
+  CANCELED = 'canceled',
+  UNSUCCESSFULLY_TERMINATED = 'unsuccessfully_terminated',
+  TERMINATED_DISAPPROVED = 'terminated_disapproved',
+  POTENTIALLY_STOLEN = 'potentially_stolen',
+  STOLEN_CONFIRMED = 'stolen_confirmed',
+  PENDING = 'pending',
+  IMPORTED_UNAVAILABLE = 'imported_unavailable',
+}
 
 @Component({
   selector: 'app-monitoring-requests-list',
   templateUrl: './monitoring-requests-list.component.html',
   styleUrls: ['./monitoring-requests-list.component.css'],
 })
-export class MonitoringRequestsListComponent extends BaseCrudListComponent<MonitoringRequests> {
-  monitoringRequestsColumns = [
-    { title: 'Id' },
-    { title: 'Embarcador' },
-    { title: 'Transportador' },
-    { title: 'Motorista' },
-    { title: 'Operação' },
-    { title: 'Simulação' },
-  ];
+export class MonitoringRequestsListComponent extends BaseCrudListComponent<MonitoringRequests> implements OnInit {
+  waitingForStartResponse: GetAllResponse<MonitoringRequests>;
+  inProgressResponse: GetAllResponse<MonitoringRequests>;
 
   constructor(
     private travelStepService: TravelStepService,
@@ -41,6 +54,41 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       message,
       modal,
     );
+  }
+
+  ngOnInit(): void {
+    super.ngOnInit();
+
+    this.loadWaitingForStart();
+    this.loadInProgress();
+  }
+
+  loadWaitingForStart(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.WAITING_FOR_START,
+        createdAt: this.oneDayBefore,
+      }
+    ).subscribe((result) => {
+      this.waitingForStartResponse = result;
+      this.isLoading = false;
+    });
+  }
+
+  loadInProgress(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.IN_PROGRESS,
+        createdAt: this.oneDayBefore,
+      }
+    ).subscribe((result) => {
+      this.inProgressResponse = result;
+      this.isLoading = false;
+    });
   }
 
   create(): void {
@@ -86,5 +134,48 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     });
 
     forkJoin(points$).subscribe();
+  }
+
+  pagination(url?: string): Pagination {
+    return {
+      ...super.pagination(url),
+      limit: 10
+    };
+  }
+
+  additionalParams(): any[] {
+    return [
+      {
+        status: Status.UNDER_REVIEW,
+        createdAt: this.oneDayBefore,
+      }
+    ];
+  }
+
+  handleQueryParamsChangeWaitingForStart(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.waitingForStartResponse)) {
+      const url = this.replaceOffsetWithPage(this.waitingForStartResponse.previous, params.pageIndex);
+      this.loadWaitingForStart(url);
+    } else if (params.pageIndex > getCurrentPage(this.waitingForStartResponse)) {
+      const url = this.replaceOffsetWithPage(this.waitingForStartResponse.next, params.pageIndex);
+      this.loadWaitingForStart(url);
+    }
+  }
+
+  handleQueryParamsChangeInProgress(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.inProgressResponse)) {
+      const url = this.replaceOffsetWithPage(this.inProgressResponse.previous, params.pageIndex);
+      this.loadInProgress(url);
+    } else if (params.pageIndex > getCurrentPage(this.inProgressResponse)) {
+      const url = this.replaceOffsetWithPage(this.inProgressResponse.next, params.pageIndex);
+      this.loadInProgress(url);
+    }
+  }
+
+  get oneDayBefore(): string {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+
+    return date.toISOString();
   }
 }
