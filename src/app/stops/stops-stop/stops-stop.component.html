@@ -22,7 +22,7 @@
         <app-stops-form [stop]="stop" *ngIf="!isLoading"></app-stops-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Mapa">
+      <nz-tab nzTitle="Mapa" [nzDisabled]="!stop?.id">
         <ng-template nz-tab>
           <app-stops-map [stop]="stop" *ngIf="!isLoading"></app-stops-map>
         </ng-template>
