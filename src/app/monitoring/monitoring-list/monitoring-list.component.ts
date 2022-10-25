@@ -134,13 +134,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.stopMonitoring.next();
   }
 
-  getAlertColor(alert: string): string {
-    return {
-      warning: 'yellow',
-      danger: 'red',
-    }[alert];
-  }
-
   getRowBackgroundColor(status: string): string {
     return {
       [Status.IN_PROGRESS]: 'bg-success',
@@ -240,5 +233,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzOkText: 'Fechar',
       nzCancelText: null,
     });
+  }
+
+  getStatusTranslation(status: string): string {
+    return {
+      [Status.IN_PROGRESS]: 'Em viagem',
+      [Status.WAITING_FOR_START]: 'Aguardando início',
+      [Status.FINISHED]: 'Finalizada',
+      [Status.CANCELED]: 'Cancelada',
+      [Status.UNSUCCESSFULLY_TERMINATED]: 'Finalizada sem sucesso',
+      [Status.TERMINATED_DISAPPROVED]: 'Finalizada sem aprovação',
+    }[status];
   }
 }

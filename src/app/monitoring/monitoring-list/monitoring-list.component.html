@@ -196,7 +196,9 @@
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(item)">{{ getOrigin(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getDestiny(item)">{{ getDestiny(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getAlerts(item)">{{ getAlerts(item) || '-' }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.vehicleStatus">{{ item.vehicleStatus }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest.status)">
+        {{getStatusTranslation(item.monitoringRequest.status)}}
+      </td>
       <td>{{ item.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
