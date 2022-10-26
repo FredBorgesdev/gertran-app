@@ -49,6 +49,14 @@ export interface Position {
   }[];
   wagons: string[];
   observations?: string;
+  automations: {
+    status: string;
+    vehicleTracker: any;
+    code: string;
+    sentAt: string;
+    sentByUser: any;
+    observations: string;
+  }[];
 }
 
 @Injectable({

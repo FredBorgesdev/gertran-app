@@ -159,14 +159,12 @@
           [style]="'font-size: 20px;color: ' + item.alert.color"
         ></span>
       </td>
-      <td class="text-md-center" style="cursor: pointer" (click)="openAutomationModal(item.automation)">
+      <td class="text-md-center" style="cursor: pointer" (click)="openAutomationModal(item.automations)">
         <span
-          nz-tooltip
-          [nzTooltipTitle]="item.automation.text"
           nz-icon
-          [nzType]="item.automation.icon"
+          nzType="info-circle"
           nzTheme="fill"
-          [style]="'font-size: 20px;color: ' + item.automation.color"
+          [style]="'font-size: 20px; color: ' + (item.automations.length > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
       <td class="text-center">

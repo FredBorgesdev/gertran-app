@@ -191,7 +191,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.monitoringData = data.results.map(item => ({
         ...item,
         alert: this.getRandomAlert(),
-        automation: this.getRandomAutomation(),
       }));
       this.isLoading = false;
       this.notFound = this.monitoringData.length === 0;
@@ -204,8 +203,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   get priorityStatus() {
     return {
-      [Status.IN_PROGRESS]: 1,
-    }
+      [Status.WAITING_FOR_START]: 1,
+      [Status.PENDING]: 2,
+      [Status.IN_PROGRESS]: 3,
+      [Status.FINISHED]: 4,
+      [Status.FINISHED]: 5,
+    };
   }
 
   openAlertModal(urgent = false): void {
@@ -229,13 +232,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return this.automations[Math.floor(Math.random() * this.automations.length)];
   }
 
-  openAutomationModal(automation: any): void {
+  openAutomationModal(automations: Position['automations']): void {
     this.modal.create({
-      nzTitle: automation.text,
+      nzTitle: 'Automação',
       // nzContent: 'Automação foi disparada no dia 01/01/2020 às 10:00',
       nzContent: MonitoringEventModalComponent,
       nzComponentParams: {
-        name: automation.text,
+        automations,
       },
       nzOkText: 'Fechar',
       nzCancelText: null,

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Position} from '../positions.service';
 
 @Component({
   selector: 'app-monitoring-event-modal',
@@ -6,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./monitoring-event-modal.component.css']
 })
 export class MonitoringEventModalComponent implements OnInit {
-  @Input() name: string;
+  @Input() automations: Position['automations'];
 
   constructor() { }
 
