@@ -33,6 +33,7 @@ export interface MonitoringRequests {
     id: string;
   };
   routeCoordinates: any[];
+  travelSteps: any[];
 }
 
 @Injectable({

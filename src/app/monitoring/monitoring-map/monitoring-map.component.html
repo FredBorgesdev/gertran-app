@@ -157,13 +157,25 @@
       ></mgl-layer>
 
       <mgl-marker
+        *ngFor="let marker of markers"
+        [lngLat]="marker"
+      >
+      <span
+        nz-icon
+        nzType="pushpin"
+        nzTheme="fill"
+        style="color: red; font-size: 24px"
+      ></span>
+      </mgl-marker>
+
+      <mgl-marker
         [lngLat]="driverLocation"
       >
         <span
           nz-icon
           nzType="car"
           nzTheme="fill"
-          style="color: red; font-size: 24px"
+          style="color: grey; font-size: 24px"
         ></span>
       </mgl-marker>
 
