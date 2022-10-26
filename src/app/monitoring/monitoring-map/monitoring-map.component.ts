@@ -33,18 +33,25 @@ export class MonitoringMapComponent implements OnInit {
     this.monitoringRequestService.get(this.item.monitoringRequest.id).subscribe(async ({ routeCoordinates, travelSteps }) => {
       this.markers = travelSteps.map(point => [point.longitude, point.latitude]);
 
-      if (!routeCoordinates) {
+      if (!routeCoordinates && travelSteps?.length > 0) {
         routeCoordinates = await this.getDirections(travelSteps);
         this.monitoringRequestService.update(this.item.monitoringRequest.id, {
           routeCoordinates
         } as any).subscribe();
       }
 
-      this.directionsGeoJson = this.mountGeoJson(routeCoordinates);
-      this.bounds = new mapboxgl.LngLatBounds(
-        this.driverLocation,
-        routeCoordinates[routeCoordinates.length - 1]
-      );
+      if (!routeCoordinates && travelSteps?.length === 0) {
+        this.bounds = new mapboxgl.LngLatBounds(
+          this.driverLocation,
+          this.driverLocation,
+        );
+      } else {
+        this.directionsGeoJson = this.mountGeoJson(routeCoordinates);
+        this.bounds = new mapboxgl.LngLatBounds(
+          this.driverLocation,
+          routeCoordinates[routeCoordinates.length - 1]
+        );
+      }
     });
   }
 

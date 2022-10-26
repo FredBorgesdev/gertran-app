@@ -138,8 +138,10 @@
 <ng-template #map>
   <mgl-map
     [style]="'mapbox://styles/mapbox/streets-v9'"
-    [fitBounds]="bounds"
+    [fitBounds]="directionsGeoJson && driverLocation && bounds"
     [fitBoundsOptions]="{ padding: 50 }"
+    [center]="driverLocation"
+    [zoom]="[10]"
   >
     <ng-container *ngIf="directionsGeoJson">
       <mgl-layer
@@ -167,19 +169,16 @@
         style="color: red; font-size: 24px"
       ></span>
       </mgl-marker>
-
-      <mgl-marker
-        [lngLat]="driverLocation"
-      >
-        <span
-          nz-icon
-          nzType="car"
-          nzTheme="fill"
-          style="color: grey; font-size: 24px"
-        ></span>
-      </mgl-marker>
-
     </ng-container>
+
+    <mgl-marker [lngLat]="driverLocation">
+      <span
+        nz-icon
+        nzType="car"
+        nzTheme="fill"
+        style="color: grey; font-size: 24px"
+      ></span>
+    </mgl-marker>
   </mgl-map>
 
 <!--  <google-map-->

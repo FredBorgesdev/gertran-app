@@ -202,6 +202,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
   }
 
+  get priorityStatus() {
+    return {
+      [Status.IN_PROGRESS]: 1,
+    }
+  }
+
   openAlertModal(urgent = false): void {
     this.modal.create({
       nzTitle: 'Alertas',
