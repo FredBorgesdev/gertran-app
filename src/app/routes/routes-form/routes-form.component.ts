@@ -18,6 +18,9 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
   points: TransferItem[] = [];
   customers: Customer[] = [];
 
+  customersNextUrl: string;
+  isLoadingMoreData = false;
+
   constructor(
     private stopsService: StopsService,
     private router: Router,
@@ -43,9 +46,7 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
       this.message.error('Não foi possível carregar os pontos');
     });
 
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
-      this.customers = customers.results;
-    });
+    this.loadMoreCustomers();
   }
 
   loadFormBuilder(): void {
@@ -64,7 +65,10 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
   performResourceChange(): void {
     if (this.points.length === 0) {
       this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
-        this.points = this.mapStopsToTransferItems(stops.results);
+        this.points = this.mapStopsToTransferItems([
+          ...this.resource.points.map((point) => point.point),
+          ...stops.results
+        ]);
         this.loadCurrentPoints();
       }, () => {
         this.message.error('Não foi possível carregar os pontos');
@@ -108,6 +112,18 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
 
   list(): void {
     this.router.navigate(['/routes/routes-list']);
+  }
+
+  loadMoreCustomers(): void {
+    this.isLoadingMoreData = true;
+    this.customersService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((customers) => {
+      this.customersNextUrl = customers.next;
+      this.customers = [...this.customers, ...customers.results];
+      this.isLoadingMoreData = false;
+    });
   }
 
   private mapStopsToTransferItems(stops: Stop[]): TransferItem[] {
