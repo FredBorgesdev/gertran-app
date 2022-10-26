@@ -19,7 +19,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
     { title: 'Transportador' },
     { title: 'Motorista' },
     { title: 'Operação' },
-    { title: 'Simulação' },
+    { title: 'Ações' },
   ];
 
   constructor() { }

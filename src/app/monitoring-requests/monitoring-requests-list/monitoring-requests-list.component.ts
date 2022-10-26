@@ -146,7 +146,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   additionalParams(): any[] {
     return [
       {
-        status: Status.UNDER_REVIEW,
+        status: Status.CANCELED,
         createdAt: this.oneDayBefore,
       }
     ];
