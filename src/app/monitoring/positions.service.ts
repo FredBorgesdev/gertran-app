@@ -50,6 +50,7 @@ export interface Position {
   wagons: string[];
   observations?: string;
   automations: {
+    createdAt: string;
     status: string;
     vehicleTracker: any;
     code: string;
