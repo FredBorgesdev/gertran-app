@@ -31,6 +31,7 @@
     <h4>Reprovado</h4>
     <app-monitoring-requests-table
       [monitoringRequests]="resources"
+      (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChange($event)"
@@ -40,6 +41,7 @@
   <nz-card nzTitle="Aguardando inicio">
     <app-monitoring-requests-table
       [monitoringRequests]="waitingForStartResponse"
+      (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeWaitingForStart($event)"
@@ -49,6 +51,7 @@
   <nz-card nzTitle="Em viagem">
     <app-monitoring-requests-table
       [monitoringRequests]="inProgressResponse"
+      (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeInProgress($event)"

@@ -10,8 +10,9 @@ import {MonitoringRequests} from '../monitoring-requests.service';
 export class MonitoringRequestsTableComponent implements OnInit {
   @Input() monitoringRequests: GetAllResponse<MonitoringRequests>;
   @Output() handleQueryParamsChange = new EventEmitter<any>();
-  @Output() edit = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<any>();
+  @Output() view = new EventEmitter<MonitoringRequests>();
+  @Output() edit = new EventEmitter<MonitoringRequests>();
+  @Output() delete = new EventEmitter<MonitoringRequests>();
 
   monitoringRequestsColumns = [
     { title: 'Id' },

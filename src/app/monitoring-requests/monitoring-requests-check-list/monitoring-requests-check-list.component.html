@@ -1,0 +1,116 @@
+<nz-spin [nzSpinning]="isLoading" nzTip="Aguarde...">
+  <form nz-form nzLayout="vertical">
+    <div nz-row nzGutter="8">
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Embarcador</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.shipper?.['tradingName']" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Transportador</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.transporter?.['tradingName']" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Motorista</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.driver?.['name']" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Motorista auxiliar</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.auxiliaryDriver?.['name']" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Cavalo</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.truck?.vehicle['plate']" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Carretas</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="getWagonsPlates()" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Operação</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.operation?.['name']" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Ordem de carregamento / OCR</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.loadDescription" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Pesquisa cadastral realizada por</nz-form-label>
+          <nz-form-control nzSpan="24">
+            <input nz-input [disabled]="true" [value]="monitoringRequest?.surveyConductedBy" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="6">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <label
+              nz-checkbox
+              nzDisabled
+              [nzChecked]="monitoringRequest?.hasMacro"
+            >Macro</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="6">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <label
+              nz-checkbox
+              nzDisabled
+              [nzChecked]="monitoringRequest?.hasEmbeddedIntelligence"
+            >Int. Embarcada</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-label>Mover para status</nz-form-label>
+        <nz-form-item>
+          <nz-select [(ngModel)]="newStatus" name="status">
+            <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-label>Justificativa de cancelamento</nz-form-label>
+        <input nz-input />
+      </div>
+    </div>
+  </form>
+</nz-spin>

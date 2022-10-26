@@ -12,6 +12,7 @@ import {DirectionsService} from '../../shared/services/directions.service';
 import {Route} from '../../routes/routes.service';
 import {GetAllResponse, getCurrentPage, Pagination} from '../../shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {MonitoringRequestsCheckListComponent} from '../monitoring-requests-check-list/monitoring-requests-check-list.component';
 
 enum Status {
   DRAFT = 'draft',
@@ -150,6 +151,17 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         createdAt: this.oneDayBefore,
       }
     ];
+  }
+
+  view(item: MonitoringRequests): void {
+    this.modal.create({
+      nzTitle: item.name,
+      nzContent: MonitoringRequestsCheckListComponent,
+      nzComponentParams: {monitoringRequestId: item.id},
+      nzWidth: '90%',
+      nzOkText: 'Salvar',
+      nzOnOk: (componentInstance) => componentInstance.save(),
+    });
   }
 
   handleQueryParamsChangeWaitingForStart(params: NzTableQueryParams): void {

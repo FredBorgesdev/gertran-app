@@ -4,6 +4,10 @@ import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../
 import {Observable} from 'rxjs';
 
 export interface MonitoringRequests {
+  hasEmbeddedIntelligence: boolean;
+  hasMacro: boolean;
+  surveyConductedBy: string;
+  loadDescription: string;
   id: string;
   name: string;
   route: string;

@@ -169,13 +169,21 @@
           [style]="'font-size: 20px;color: ' + item.automation.color"
         ></span>
       </td>
-      <td>
+      <td class="text-center">
         <button
           nz-button
           nzType="link"
           nzSize="small"
           (click)="openMap(item)"
-        ><span nz-icon nzType="pushpin" nzTheme="fill"></span></button>
+        >
+          <img
+            src="assets/images/others/map-icon.svg"
+            alt="logo"
+            width="25px"
+            height="25px"
+            style="filter: invert(56%) sepia(97%) saturate(2141%) hue-rotate(155deg) brightness(87%) contrast(101%);"
+          />
+        </button>
       </td>
       <td class="text-md-center">
         <!--          <nz-progress [nzPercent]="item.progress"></nz-progress>-->
