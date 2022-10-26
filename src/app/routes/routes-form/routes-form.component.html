@@ -31,7 +31,11 @@
             (nzScrollToBottom)="loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
           >
-            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            <nz-option
+              *ngFor="let customer of customers"
+              [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -123,6 +127,15 @@
         </ng-template>
       </nz-transfer>
     </form>
+
+    <nz-collapse>
+      <nz-collapse-panel nzHeader="Ver mapa" *ngIf="selectedPoints.length > 0">
+        <app-stops-map
+          *ngIf="selectedPoints.length > 0"
+          [points]="selectedPoints"
+        ></app-stops-map>
+      </nz-collapse-panel>
+    </nz-collapse>
 
     <nz-form-item class="m-t-50">
       <nz-form-control>

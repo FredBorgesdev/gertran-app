@@ -82,6 +82,9 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
     const pointsCopy = [...this.points];
     this.resource.points.forEach((point) => {
       const index = this.points.findIndex((item) => item.id === point.point.id);
+      if (index === -1) {
+        return;
+      }
       pointsCopy[index].direction = 'right';
       pointsCopy[index].order = point.order;
     });
@@ -132,5 +135,9 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
       title: stop.name,
       ...stop,
     }));
+  }
+
+  get selectedPoints(): TransferItem[] {
+    return this.points.filter(item => item.direction === 'right');
   }
 }
