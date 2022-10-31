@@ -146,8 +146,12 @@
       >{{ item.monitoringRequest.id | id}}</td>
       <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.vehicle?.plate || '-' }}</td>
       <td class="text-md-center">
-        <nz-badge *ngIf="item.ignition" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.ignition" nzStatus="error"></nz-badge>
+        <span
+          nz-icon
+          nzType="key"
+          nzTheme="outline"
+          [style]="'font-size: 20px; color: ' + (item.ignition ? '#ff7118' : '#ccc')"
+        ></span>
       </td>
       <td class="text-md-center">
         <span
