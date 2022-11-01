@@ -74,5 +74,20 @@ nz-select,
 
 .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
   background-color: inherit;
-  opacity: 0.7;
+}
+
+.ant-table-tbody > .bg-success:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #bfffc5 !important;
+}
+
+.ant-table-tbody > .bg-danger:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #ffbdbd !important;
+}
+
+.ant-table-tbody > .bg-warning:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #ffe8b8 !important;
+}
+
+.ant-table-tbody > .bg-info:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #b8ffff !important;
 }

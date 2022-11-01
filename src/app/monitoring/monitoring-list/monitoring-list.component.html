@@ -20,7 +20,7 @@
 <!--          </nz-select>-->
 <!--        </div>-->
         <div nz-col nzSpan="8">
-          <nz-select nzPlaceHolder="Terminal" formControlName="terminal" (ngModelChange)="loadList()">
+          <nz-select nzPlaceHolder="Terminal" formControlName="terminal" (ngModelChange)="loadPositions()">
             <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
           </nz-select>
         </div>

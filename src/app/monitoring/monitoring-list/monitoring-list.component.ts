@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {Monitoring, MonitoringService} from '../monitoring.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MonitoringService} from '../monitoring.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MonitoringMapComponent} from '../monitoring-map/monitoring-map.component';
@@ -14,6 +14,7 @@ import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
 import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitoring-event-modal.component';
 import {UpdateObservationsModalComponent} from '../update-observations-modal/update-observations-modal.component';
+import { prop } from 'ramda'
 
 enum Status {
   DRAFT = 'draft',
@@ -94,6 +95,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private service: MonitoringService,
     private message: NzMessageService,
@@ -105,12 +107,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.customerService.getAll({ limit: 999 }).subscribe(data => {
-      this.customers = data.results;
-    });
-    this.terminalsService.getAll({ limit: 999 }).subscribe(data => {
-      this.terminals = data.results;
-    });
+    this.loadFiltersList();
 
     this.monitoringData$ = timer(0, 100000).pipe(
       switchMap(() => this.positionsService.getAll(
@@ -125,9 +122,25 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     );
 
     this.validateForm = this.formBuilder.group({
-      customer: [null],
-      terminal: [null],
+      customer: [this.activatedRoute.snapshot.queryParams.customer],
+      terminal: [this.activatedRoute.snapshot.queryParams.terminal],
       groupBy: [null],
+    });
+
+    if (
+      this.activatedRoute.snapshot.queryParams.terminal ||
+      this.activatedRoute.snapshot.queryParams.customer
+    ) {
+      this.subscribeToMonitoringData();
+    }
+  }
+
+  loadFiltersList(): void {
+    this.customerService.getAll({ limit: 999 }).subscribe(data => {
+      this.customers = data.results;
+    });
+    this.terminalsService.getAll({ limit: 999 }).subscribe(data => {
+      this.terminals = data.results;
     });
   }
 
@@ -174,16 +187,26 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getAlerts(item: Position): string {
-    return item.events.map(
-      event => event.eventDescription
-    ).join(', ');
+    return item.events.map(prop('eventDescription')).join(', ');
   }
 
   getWagons(item: Position): string {
     return item.wagons.join(', ');
   }
 
-  loadList(): void {
+  loadPositions(): void {
+    this.router.navigate([], {
+      queryParams: {
+        customer: this.validateForm.get('customer').value,
+        terminal: this.validateForm.get('terminal').value,
+        'navbar-closed': true,
+      }
+    });
+
+    this.subscribeToMonitoringData();
+  }
+
+  subscribeToMonitoringData(): void {
     this.isLoading = true;
     this.stopMonitoring.next();
 
@@ -226,10 +249,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   getRandomAlert(): any {
     return this.alerts[Math.floor(Math.random() * this.alerts.length)];
-  }
-
-  getRandomAutomation(): any {
-    return this.automations[Math.floor(Math.random() * this.automations.length)];
   }
 
   openAutomationModal(automations: Position['automations']): void {
