@@ -68,30 +68,7 @@
             <label nz-radio-button [nzValue]="false">Não</label>
           </nz-radio-group>
         </nz-form-control>
-
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Comando</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasCommand">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <nz-select
-            id="eventType"
-            nzPlaceHolder="Selecione o comando"
-            formControlName="command"
-            [nzDisabled]="!validateForm.get('hasCommand').value"
-          >
-            <nz-option
-              *ngFor="let command of commands"
-              [nzLabel]="command.label"
-              [nzValue]="command.value"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
       </nz-form-item>
-
 
       <nz-form-item>
         <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>MSG - Veículo</nz-form-label>
@@ -204,6 +181,54 @@
           >Selecionar Clientes</button>
         </nz-form-control>
       </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Motivo</nz-form-label>
+        <nz-form-control [nzSpan]="19" nzErrorTip="Preencha o campo">
+          <textarea nz-input formControlName="reason"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <p>Lista de comandos</p>
+
+      <nz-transfer
+        [nzDataSource]="commands"
+        [nzListStyle]="{ width: '100%' }"
+        [nzRenderList]="[renderList, renderList]"
+        (nzChange)="onTransferChange($event)"
+        class="m-b-25"
+      >
+        <ng-template
+          #renderList
+          let-items
+          let-direction="direction"
+          let-stat="stat"
+          let-onItemSelectAll="onItemSelectAll"
+          let-onItemSelect="onItemSelect"
+        >
+          <nz-table #table [nzData]="items" nzSize="small" [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th
+                  [nzChecked]="stat.checkAll"
+                  [nzIndeterminate]="stat.checkHalf"
+                  (nzCheckedChange)="onItemSelectAll($event)"
+                ></th>
+                <th>Comando</th>
+              </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+              <tr *ngFor="let item of table.data" (click)="onItemSelect(item)" cdkDrag [cdkDragDisabled]="direction === 'left'">
+                <td
+                  [nzChecked]="!!item.checked"
+                  (nzCheckedChange)="onItemSelect(item)"
+                ></td>
+                <td>{{ item.title }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </ng-template>
+      </nz-transfer>
 
       <nz-form-item>
         <nz-form-control [nzOffset]="7" [nzSpan]="12">

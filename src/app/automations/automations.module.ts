@@ -4,6 +4,8 @@ import { AutomationsRoutingModule } from './automations-routing.module';
 import { SettingsComponent } from './settings/settings.component';
 import { AutomationsFormComponent } from './automations-form/automations-form.component';
 import { AutomationsListComponent } from './automations-list/automations-list.component';
+import {NzTransferModule} from 'ng-zorro-antd/transfer';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 const antdModule = [];
 
@@ -16,7 +18,9 @@ const antdModule = [];
   imports: [
     SharedModule,
     AutomationsRoutingModule,
-    ...antdModule
+    ...antdModule,
+    NzTransferModule,
+    DragDropModule
   ]
 })
 export class AutomationsModule { }

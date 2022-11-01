@@ -8,6 +8,8 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {CustomersTransferComponent} from '../../customers/customers-transfer/customers-transfer.component';
+import {TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-automations-form',
@@ -17,7 +19,7 @@ import {CustomersTransferComponent} from '../../customers/customers-transfer/cus
 export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> implements OnInit {
   events: Choice[] = [];
   actions: Choice[] = [];
-  commands: Choice[] = [];
+  commands: TransferItem[] = [];
 
   customers: Customer[] = [];
 
@@ -42,6 +44,8 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
       event: [null, [Validators.required]],
       action: [null, [Validators.required]],
       command: [null, []],
+      commands: [null, []],
+      reason: [null, []],
       isActive: [null, [Validators.required]],
       isForAllCustomers: [true, [Validators.required]],
       customers: [[], []],
@@ -55,7 +59,7 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
       velocity: [{ value: null, disabled: true }, []],
       hasIgnition: [null, [Validators.required]],
       ignitionMessage: [{ value: null, disabled: true }, []],
-      hasCommand: [null, [Validators.required]],
+      hasCommand: [false, [Validators.required]],
       hasSendMessage: [null, [Validators.required]],
       sendMessage: [{ value: null, disabled: true }, []],
       hasAlertOperator: [null, [Validators.required]],
@@ -116,7 +120,12 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
       this.actions = data;
     });
     (this.service as AutomationsService).getCommands().subscribe(data => {
-      this.commands = data;
+      this.commands = data.map(command => ({
+        ...command,
+        id: command.value,
+        key: command.value,
+        title: command.label,
+      }));
     });
   }
 
@@ -147,5 +156,31 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
         this.validateForm.get('customers').setValue(customersIds);
       }
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    const rightItems = this.commands.filter(item => item.direction === 'right');
+    const leftItems = this.commands.filter(item => item.direction === 'left');
+    moveItemInArray(rightItems, event.previousIndex, event.currentIndex);
+    this.commands = [...leftItems, ...rightItems];
+
+    this.validateForm.get('commands').setValue(this.mapCommands());
+  }
+
+  onTransferChange(event: TransferChange): void {
+    const rightItems = this.commands.filter(item => item.direction === 'right');
+    console.log(rightItems)
+
+    this.validateForm.get('commands').setValue(this.mapCommands());
+    this.validateForm.get('hasCommand').setValue(rightItems.length > 0);
+  }
+
+  mapCommands(): { id: string; order: number }[] {
+    const commands = this.commands.filter(item => item.direction === 'right');
+
+    return commands.map((item, index) => ({
+      id: item.id,
+      order: index + 1,
+    }));
   }
 }
