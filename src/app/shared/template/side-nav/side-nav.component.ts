@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ROUTES } from './side-nav-routes.config';
 import { ThemeConstantService } from '../../services/theme-constant.service';
 import { SideNavInterface } from '../../interfaces/side-nav.type';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -15,7 +16,9 @@ export class SideNavComponent{
   isSideNavDark: boolean;
   isExpand: boolean;
 
-  constructor( private themeService: ThemeConstantService) {}
+  constructor(
+    private themeService: ThemeConstantService
+  ) {}
 
   ngOnInit(): void {
     this.menuItems = ROUTES.filter(menuItem => menuItem);

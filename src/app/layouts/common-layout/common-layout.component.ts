@@ -20,24 +20,28 @@ export class CommonLayoutComponent  {
     selectedHeaderColor: string;
 
     constructor(private router: Router,  private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService) {
-        this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd),
-            map(() => {
-                let child = this.activatedRoute.firstChild;
-                while (child) {
-                    if (child.firstChild) {
-                        child = child.firstChild;
-                    } else if (child.snapshot.data && child.snapshot.data.headerDisplay) {
-                        return child.snapshot.data.headerDisplay;
-                    } else {
-                        return null;
-                    }
-                }
-                return null;
-            })
-        ).subscribe( (data: any) => {
-            this.contentHeaderDisplay = data;
-        });
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.themeService.toggleFold(params['navbar-closed'] === 'true');
+      });
+
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => {
+          let child = this.activatedRoute.firstChild;
+          while (child) {
+            if (child.firstChild) {
+              child = child.firstChild;
+            } else if (child.snapshot.data && child.snapshot.data.headerDisplay) {
+              return child.snapshot.data.headerDisplay;
+            } else {
+              return null;
+            }
+          }
+          return null;
+        })
+      ).subscribe( (data: any) => {
+        this.contentHeaderDisplay = data;
+      });
     }
 
     ngOnInit() {

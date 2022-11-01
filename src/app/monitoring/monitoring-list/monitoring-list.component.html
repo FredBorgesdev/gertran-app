@@ -1,16 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        Monitoramento
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
+  <nz-card [nzBodyStyle]="{ 'padding-bottom': 0 }">
     <form [formGroup]="validateForm" class="m-b-30">
       <div nz-row nzGutter="12" nzAlign="middle">
         <div nz-col nzSpan="8">
@@ -60,7 +49,7 @@
         </button>
       </div>
 
-      <nz-radio-group class="m-t-15 m-b-25" nzButtonStyle="outline" [(ngModel)]="filter">
+      <nz-radio-group class="m-t-15 m-b-15" nzButtonStyle="outline" [(ngModel)]="filter" nzSize="small">
         <label nz-radio-button nzValue="all" class="border-all">Todos</label>
         <label nz-radio-button nzValue="start" class="border-ag-start">Ag. Inicio</label>
         <label nz-radio-button nzValue="contingency" class="border-contingency">Contigência</label>
@@ -70,6 +59,7 @@
         <label nz-radio-button nzValue="overnight" class="border-overnight">Pernoite</label>
         <label nz-radio-button nzValue="out" class="border-out-of-point">Fora do ponto</label>
       </nz-radio-group>
+
 
       <br/>
 
@@ -110,7 +100,8 @@
     [nzData]="monitoringData"
     [nzFrontPagination]="false"
     nzTableLayout="fixed"
-    [nzScroll]="{ y: isTableFullscreen ? '75vh' : '800px' }"
+    nzSize="small"
+    [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'calc(100vh - 400px)' }"
   >
     <thead>
     <tr>
@@ -119,7 +110,8 @@
         [nzSortFn]="column.compare"
         [nzLeft]="column.nzLeft"
         nzWidth="110px"
-        [style]="'text-align: center; ' + column.style"
+        class="text-center"
+        [style]="column.style"
       >{{ column.title }}</th>
     </tr>
     </thead>
@@ -187,7 +179,7 @@
           />
         </button>
       </td>
-      <td class="text-md-center">
+      <td class="text-center">
         <!--          <nz-progress [nzPercent]="item.progress"></nz-progress>-->
         TODO - {{item.travelSteps.length}}
       </td>
@@ -209,15 +201,15 @@
         <nz-badge *ngIf="item.monitoringRequest.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.hasMacro" nzStatus="error"></nz-badge>
       </td>
-      <td class="text-md-center">
+      <td class="text-center">
         <nz-badge *ngIf="item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
-      <td class="text-md-center">
+      <td class="text-center">
         <nz-badge *ngIf="item.monitoringRequest.bait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.bait" nzStatus="error"></nz-badge>
       </td>
-      <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
+      <td class="text-center">{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
       <td>
         <a
           nz-dropdown
