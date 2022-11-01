@@ -112,7 +112,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.terminals = data.results;
     });
 
-    this.monitoringData$ = timer(0, 10000).pipe(
+    this.monitoringData$ = timer(0, 100000).pipe(
       switchMap(() => this.positionsService.getAll(
         { limit: 999 },
         {
@@ -233,6 +233,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   openAutomationModal(automations: Position['automations']): void {
+    if (automations.length === 0) {
+      return;
+    }
+
     this.modal.create({
       nzTitle: 'Automação',
       // nzContent: 'Automação foi disparada no dia 01/01/2020 às 10:00',

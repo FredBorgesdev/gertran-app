@@ -71,3 +71,8 @@ nz-select,
   background-color: #e3e3e3;
   color: #505050;
 }
+
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: inherit;
+  opacity: 0.7;
+}
