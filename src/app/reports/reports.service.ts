@@ -74,4 +74,15 @@ export class ReportsService {
     });
     return this.http.get<ReportsResults>('reports/monitoring/vehiclesreleased?1=1', { params });
   }
+
+  getClosure(filters: BasePeriodFilter): Observable<ReportsResults> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+      }
+    });
+    return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', { params });
+  }
 }

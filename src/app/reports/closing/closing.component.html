@@ -9,6 +9,40 @@
       </nz-breadcrumb-item>
     </nz-breadcrumb>
 
-    <app-base-customer-filter></app-base-customer-filter>
+    <app-base-customer-filter
+      (generateReport)="generateReport($event)"
+    ></app-base-customer-filter>
+
+    <nz-table
+      #table
+      [nzData]="monitoringRequests"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Solicitação de monitoramento</th>
+        <th>Data</th>
+        <th>Veiculo</th>
+        <th>Operação</th>
+        <th>Saída</th>
+        <th>Transportadora</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.id | id }}</td>
+        <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data.truck?.vehicle?.plate }}</td>
+        <td>{{ data.operation?.name ?? '-' }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
+        <td>TODO - Transportadora</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
   </nz-card>
 </nz-spin>
