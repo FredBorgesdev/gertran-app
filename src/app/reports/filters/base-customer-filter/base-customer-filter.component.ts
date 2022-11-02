@@ -2,8 +2,19 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Customer, CustomersService} from '../../../customers/customers.service';
-import {BaseFilter} from '../../reports.service';
+import {BasePeriodFilter} from '../../reports.service';
 import {format, subMonths} from 'date-fns';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+
+export enum ReportFormat {
+  SYNTHETIC = 'synthetic',
+  ANALYTIC = 'analytic',
+}
+
+export type CustomerFilter = BasePeriodFilter & {
+  reportFormat: ReportFormat;
+}
 
 @Component({
   selector: 'app-base-customer-filter',
@@ -11,13 +22,16 @@ import {format, subMonths} from 'date-fns';
   styleUrls: ['./base-customer-filter.component.css']
 })
 export class BaseCustomerFilterComponent implements OnInit {
-  @Output() generateReport = new EventEmitter<BaseFilter>();
+  @Output() generateReport = new EventEmitter<BasePeriodFilter>();
+  @Output() valueChanges = new EventEmitter<BasePeriodFilter>();
   @Input() hideButtons = false;
 
   validateForm: FormGroup;
   customers: Customer[] = [];
+
   private isLoadingMoreData: boolean;
   private customersNextUrl: string;
+  private searchCustomerSubject = new Subject<string>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,7 +47,22 @@ export class BaseCustomerFilterComponent implements OnInit {
       customer: [null, [Validators.required]],
       from: [lastMonth, [Validators.required]],
       to: [today, [Validators.required]],
-      reportFormat: [null, [Validators.required]],
+      reportFormat: [ReportFormat.ANALYTIC, [Validators.required]],
+    });
+
+    this.validateForm.valueChanges.subscribe(() => {
+      if (!this.valueChanges) {
+        return;
+      }
+      this.valueChanges.emit(this.validateForm.value);
+    });
+
+    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
+      this.isLoadingMoreData = true;
+      this.customerService.getAll({ limit: 999 }, { name }).subscribe((customers) => {
+        this.customers = customers.results;
+        this.isLoadingMoreData = false;
+      });
     });
 
     this.i18n.setLocale(en_US);
@@ -63,5 +92,13 @@ export class BaseCustomerFilterComponent implements OnInit {
         to: toDate
       });
     }
+  }
+
+  searchCustomer(name: string): void {
+    if (!name) {
+      return;
+    }
+
+    this.searchCustomerSubject.next(name);
   }
 }

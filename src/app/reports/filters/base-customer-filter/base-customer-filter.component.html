@@ -7,7 +7,10 @@
           <nz-select
             formControlName="customer"
             nzAllowClear
+            nzServerSearch
+            nzShowSearch
             nzPlaceHolder="Selecione um cliente"
+            (nzOnSearch)="searchCustomer($event)"
             (nzScrollToBottom)="loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
           >

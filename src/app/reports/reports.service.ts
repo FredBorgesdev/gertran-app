@@ -52,4 +52,15 @@ export class ReportsService {
     });
     return this.http.get<ReportsResults>('reports/monitoring/delayedtrips?1=1', { params });
   }
+
+  getMonitoringRequests(filters: BasePeriodFilter): Observable<ReportsResults> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+      }
+    });
+    return this.http.get<ReportsResults>('reports/monitoring/requests?1=1', { params });
+  }
 }

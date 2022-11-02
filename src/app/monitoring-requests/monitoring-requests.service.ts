@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Invoice} from './invoices.service';
 
 export interface MonitoringRequests {
+  loadValue: number;
   invoices: Invoice[];
   hasEmbeddedIntelligence: boolean;
   hasMacro: boolean;
