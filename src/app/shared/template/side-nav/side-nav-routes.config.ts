@@ -187,6 +187,9 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
+            queryParams: {
+              'navbar-closed': true
+            },
             submenu: []
           },
           {
