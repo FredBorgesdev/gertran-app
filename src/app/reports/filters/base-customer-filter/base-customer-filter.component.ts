@@ -14,7 +14,7 @@ export enum ReportFormat {
 
 export type CustomerFilter = BasePeriodFilter & {
   reportFormat: ReportFormat;
-}
+};
 
 @Component({
   selector: 'app-base-customer-filter',
@@ -22,8 +22,8 @@ export type CustomerFilter = BasePeriodFilter & {
   styleUrls: ['./base-customer-filter.component.css']
 })
 export class BaseCustomerFilterComponent implements OnInit {
-  @Output() generateReport = new EventEmitter<BasePeriodFilter>();
-  @Output() valueChanges = new EventEmitter<BasePeriodFilter>();
+  @Output() generateReport = new EventEmitter<CustomerFilter>();
+  @Output() valueChanges = new EventEmitter<CustomerFilter>();
   @Input() hideButtons = false;
 
   validateForm: FormGroup;
