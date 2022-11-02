@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
+import {Invoice} from './invoices.service';
 
 export interface MonitoringRequests {
+  invoices: Invoice[];
   hasEmbeddedIntelligence: boolean;
   hasMacro: boolean;
   surveyConductedBy: string;
@@ -32,6 +34,10 @@ export interface MonitoringRequests {
   };
   wagons: {
     id: string;
+    vehicle: {
+      id: string;
+      plate: string;
+    }
   }[];
   operation: {
     id: string;

@@ -4,7 +4,13 @@
       <nz-form-item class="m-b-0">
         <nz-form-label>Cliente</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-select formControlName="customer" nzAllowClear nzPlaceHolder="Selecione um cliente">
+          <nz-select
+            formControlName="customer"
+            nzAllowClear
+            nzPlaceHolder="Selecione um cliente"
+            (nzScrollToBottom)="loadMoreCustomers()"
+            [nzDropdownRender]="selectLoading"
+          >
             <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
           </nz-select>
         </nz-form-control>
@@ -67,3 +73,7 @@
     <button nz-button style="width: 100%">Gerar planilha</button>
   </div>
 </div>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+</ng-template>

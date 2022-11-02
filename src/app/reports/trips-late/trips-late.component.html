@@ -17,7 +17,16 @@
           <nz-form-item class="m-b-0">
             <nz-form-label nzRequired>Cliente</nz-form-label>
             <nz-form-control nzErrorTip="Preencha o campo">
-              <nz-select formControlName="customer" nzAllowClear nzPlaceHolder="Selecione um cliente">
+              <nz-select
+                formControlName="customer"
+                nzAllowClear
+                nzPlaceHolder="Selecione um cliente"
+                nzServerSearch
+                nzShowSearch
+                (nzOnSearch)="searchCustomer($event)"
+                (nzScrollToBottom)="loadMoreCustomers()"
+                [nzDropdownRender]="selectLoading"
+              >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
             </nz-form-control>
@@ -26,6 +35,49 @@
       </div>
     </form>
 
-    <app-base-generic-filters></app-base-generic-filters>
+    <app-base-generic-filters
+      (generateReport)="generateReport($event)"
+    ></app-base-generic-filters>
+
+    <nz-table
+      #table
+      [nzData]="monitoringRequests"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Código</th>
+        <th>Nota</th>
+        <th>Placa</th>
+        <th>Reboques</th>
+        <th>Saída</th>
+        <th>Chegada</th>
+        <th>Operação</th>
+        <th>Status</th>
+        <th>%</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.id | id }}</td>
+        <td>{{ getInvoices(data) }}</td>
+        <td>{{ data.truck?.vehicle?.plate }}</td>
+        <td>{{ getWagons(data) }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getFinalTravelStep(data) }}</td>
+        <td>{{ data.operation.name }}</td>
+        <td>{{ data.status }}</td>
+        <td>0%</td>
+      </tr>
+      </tbody>
+    </nz-table>
   </nz-card>
 </nz-spin>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+</ng-template>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseFilter, ReportsResults, ReportsService} from '../reports.service';
+import {BaseFilter, BasePeriodFilter, ReportsResults, ReportsService} from '../reports.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TravelStep} from '../../monitoring-requests/travel-step.service';
@@ -28,7 +28,7 @@ export class LoadUnloadByPointComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  generateReport(form: BaseFilter): void {
+  generateReport(form: BasePeriodFilter): void {
     this.isLoading = true;
 
     this.reportsService.getLoadUnloadByPoint(form).subscribe(response => {

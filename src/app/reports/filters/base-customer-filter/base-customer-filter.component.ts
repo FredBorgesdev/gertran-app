@@ -16,6 +16,8 @@ export class BaseCustomerFilterComponent implements OnInit {
 
   validateForm: FormGroup;
   customers: Customer[] = [];
+  private isLoadingMoreData: boolean;
+  private customersNextUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,8 +38,18 @@ export class BaseCustomerFilterComponent implements OnInit {
 
     this.i18n.setLocale(en_US);
 
-    this.customerService.getAll({ limit: 999 }).subscribe((response) => {
-      this.customers = response.results;
+    this.loadMoreCustomers();
+  }
+
+  loadMoreCustomers(): void {
+    this.isLoadingMoreData = true;
+    this.customerService.getAll({
+      limit: 999,
+      url: this.customersNextUrl
+    }).subscribe((customers) => {
+      this.customersNextUrl = customers.next;
+      this.customers = [...this.customers, ...customers.results];
+      this.isLoadingMoreData = false;
     });
   }
 
