@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { MonitoringRequestsService, MonitoringRequests } from '../monitoring-requests.service';
@@ -7,22 +7,23 @@ import { BaseCrudFormComponent } from '../../base-crud/base-crud-form/base-crud-
 import {RoutesService} from '../../routes/routes.service';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Stop, StopsService} from '../../stops/stops.service';
-import {Customer, CustomersService} from '../../customers/customers.service';
+import {CustomersService} from '../../customers/customers.service';
 import {Driver, DriversService} from '../../drivers/drivers.service';
 import {Truck, TrucksService} from '../../trucks/trucks.service';
 import {Wagon, WagonsService} from '../../wagons/wagons.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {Choice} from '../../shared/services/api.service';
 import {Operations, OperationsService} from '../../operations/operations.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-monitoring-requests-form',
   templateUrl: './monitoring-requests-form.component.html',
   styleUrls: ['./monitoring-requests-form.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
   stops: Stop[] = [];
-  customers: Customer[] = [];
   drivers: Driver[] = [];
   trucks: Truck[] = [];
   wagons: Wagon[] = [];
@@ -33,7 +34,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   driversNextUrl: string;
   trucksNextUrl: string;
-  customersNextUrl: string;
   operationsNextUrl: string;
   wagonsNextUrl: string;
   isLoadingMoreData = false;
@@ -50,6 +50,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     private trucksService: TrucksService,
     private wagonsService: WagonsService,
     private operationService: OperationsService,
+    public selectableCustomerService: SelectableCustomerServiceService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -70,7 +71,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
       this.stops = stops.results;
     });
-    this.loadMoreCustomers();
+    this.selectableCustomerService.init();
     this.loadMoreDrivers();
     this.loadMoreTrucks();
     this.loadMoreOperations();
@@ -130,13 +131,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     if (this.resource?.shipper) {
       this.customersService.get(this.resource.shipper.id).subscribe((customer) => {
-        this.customers = [customer, ...this.customers];
+        this.selectableCustomerService.appendCustomer(customer);
       });
     }
 
     if (this.resource?.transporter) {
       this.customersService.get(this.resource.transporter.id).subscribe((customer) => {
-        this.customers = [customer, ...this.customers];
+        this.selectableCustomerService.appendCustomer(customer);
       });
     }
 
@@ -216,18 +217,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     }).subscribe((trucks) => {
       this.trucksNextUrl = trucks.next;
       this.trucks = [...this.trucks, ...trucks.results];
-      this.isLoadingMoreData = false;
-    });
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customersService.getAll({
-      limit: 999,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
       this.isLoadingMoreData = false;
     });
   }

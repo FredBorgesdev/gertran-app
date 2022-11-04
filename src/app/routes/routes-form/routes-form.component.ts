@@ -7,25 +7,22 @@ import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-fo
 import {Route, RoutesService} from '../routes.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
-import {Customer, CustomersService} from '../../customers/customers.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-routes-form',
   templateUrl: './routes-form.component.html',
-  styleUrls: ['./routes-form.component.css']
+  styleUrls: ['./routes-form.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements OnInit {
   points: TransferItem[] = [];
-  customers: Customer[] = [];
-
-  customersNextUrl: string;
-  isLoadingMoreData = false;
 
   constructor(
     private stopsService: StopsService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private customersService: CustomersService,
+    public selectableCustomerService: SelectableCustomerServiceService,
     routesService: RoutesService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
@@ -46,7 +43,7 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
       this.message.error('Não foi possível carregar os pontos');
     });
 
-    this.loadMoreCustomers();
+    this.selectableCustomerService.init();
   }
 
   loadFormBuilder(): void {
@@ -115,18 +112,6 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
 
   list(): void {
     this.router.navigate(['/routes/routes-list']);
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customersService.getAll({
-      limit: 999,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
-      this.isLoadingMoreData = false;
-    });
   }
 
   private mapStopsToTransferItems(stops: Stop[]): TransferItem[] {

@@ -11,6 +11,7 @@ import {VehicleManufacturers, VehicleManufacturersService} from '../../vehicle-m
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {VehiclesService} from '../vehicles.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 export interface Vehicle {
   id: string;
@@ -38,7 +39,8 @@ interface VehicleChild {
 @Component({
   selector: 'app-vehicles-form',
   templateUrl: './vehicles-form.component.html',
-  styleUrls: ['./vehicles-form.component.css']
+  styleUrls: ['./vehicles-form.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormComponent<T> implements OnInit {
   customers: Customer[] = [];
@@ -56,21 +58,27 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   constructor(
     @Inject('service') protected service: VehiclesService<T>,
     message: NzMessageService,
-    activatedRoute: ActivatedRoute,
+    protected activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private vehiclePeripheralsService: VehiclePeripheralsService,
     private vehicleModelsService: VehicleModelsService,
     private vehicleModelTypesService: VehicleModelTypesService,
     private vehicleManufacturersService: VehicleManufacturersService,
-    private customersService: CustomersService,
+    public selectableCustomerService: SelectableCustomerServiceService,
   ) {
     super(service, message, activatedRoute);
+  }
+
+  get customersInputDisabled(): boolean {
+    const isCreatingVehicle = this.activatedRoute.snapshot.url[0].path.includes('create');
+
+    return !isCreatingVehicle;
   }
 
   ngOnInit(): void {
     super.ngOnInit();
 
-    this.loadMoreCustomers();
+    this.selectableCustomerService.init();
     this.loadMoreManufacturers();
     this.vehiclePeripheralsService.getAll({ limit: 999 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
@@ -198,18 +206,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     }
 
     super.handleError();
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customersService.getAll({
-      limit: 999,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
-      this.isLoadingMoreData = false;
-    });
   }
 
   loadMoreManufacturers(): void {

@@ -6,11 +6,13 @@ import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 import { Customer, CustomersService } from 'src/app/customers/customers.service';
 import {Driver, DriversService} from '../drivers.service';
 import {Choice} from '../../shared/services/api.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-drivers-form',
   templateUrl: './drivers-form.component.html',
-  styleUrls: ['./drivers-form.component.css']
+  styleUrls: ['./drivers-form.component.css'],
+  providers: [SelectableCustomerServiceService],
 })
 export class DriversFormComponent implements OnInit {
   workingSituations: Choice[] = [];
@@ -21,16 +23,13 @@ export class DriversFormComponent implements OnInit {
   validateForm: FormGroup;
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
 
-  customers: Customer[] = [];
-  isLoadingMoreData = false;
-  customersNextUrl: string;
-
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private customersService: CustomersService,
     private i18n: NzI18nService,
     private service: DriversService,
+    public selectableCustomerService: SelectableCustomerServiceService,
   ) { }
 
   ngOnInit(): void {
@@ -52,10 +51,10 @@ export class DriversFormComponent implements OnInit {
       admissionDate: [this.driver?.admissionDate, [Validators.required]],
     });
 
-    this.loadMoreCustomers();
+    this.selectableCustomerService.init();
 
     if (this.driver.customers) {
-      this.customers = this.customers.concat(this.driver.customers);
+      this.selectableCustomerService.concatCustomers(this.driver.customers);
       this.validateForm.patchValue({
         customers: this.driver.customers.map((customer) => customer.id)
       });
@@ -81,17 +80,5 @@ export class DriversFormComponent implements OnInit {
 
   listDrivers(): void {
     this.router.navigate(['/drivers/drivers-list']);
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customersService.getAll({
-      limit: 999,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
-      this.isLoadingMoreData = false;
-    });
   }
 }

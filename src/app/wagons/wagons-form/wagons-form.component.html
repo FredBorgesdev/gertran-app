@@ -9,11 +9,13 @@
         nzPlaceHolder="Selecione uma empresa"
         formControlName="customers"
         nzMode="multiple"
-        nzDisabled
-        (nzScrollToBottom)="loadMoreCustomers()"
+        nzServerSearch
+        (nzOnSearch)="selectableCustomerService.searchByName($event)"
+        [nzDisabled]="customersInputDisabled"
+        (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
         [nzDropdownRender]="selectLoading"
       >
-        <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>

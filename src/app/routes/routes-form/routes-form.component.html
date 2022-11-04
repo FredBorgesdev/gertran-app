@@ -28,11 +28,13 @@
             nzAllowClear
             nzPlaceHolder="Selecione uma empresa"
             formControlName="customer"
-            (nzScrollToBottom)="loadMoreCustomers()"
+            nzServerSearch
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
           >
             <nz-option
-              *ngFor="let customer of customers"
+              *ngFor="let customer of selectableCustomerService.customers"
               [nzLabel]="customer.tradingName"
               [nzValue]="customer.id"
             ></nz-option>
@@ -152,5 +154,5 @@
 </nz-spin>
 
 <ng-template #selectLoading>
-  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>

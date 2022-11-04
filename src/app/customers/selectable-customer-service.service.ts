@@ -44,6 +44,14 @@ export class SelectableCustomerServiceService {
     }
   }
 
+  appendCustomer(customer: Customer): void {
+    this.customers = [customer, ...this.customers];
+  }
+
+  concatCustomers(customers: Customer[]): void {
+    this.customers = this.customers.concat(customers);
+  }
+
   private setupSearch(): void {
     this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
       this.customersService.getAll({ limit: 999 }, { name }).subscribe((result) => {

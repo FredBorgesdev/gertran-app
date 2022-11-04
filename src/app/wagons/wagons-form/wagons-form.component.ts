@@ -9,6 +9,7 @@ import {FormBuilder} from '@angular/forms';
 import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-wagons-form',
@@ -20,7 +21,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
 
   constructor(
     private router: Router,
-    customersService: CustomersService,
+    selectableCustomerService: SelectableCustomerServiceService,
     vehicleModelsService: VehicleModelsService,
     vehicleModelTypesService: VehicleModelTypesService,
     vehicleManufacturersService: VehicleManufacturersService,
@@ -39,7 +40,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
       vehicleModelsService,
       vehicleModelTypesService,
       vehicleManufacturersService,
-      customersService,
+      selectableCustomerService,
     );
   }
 

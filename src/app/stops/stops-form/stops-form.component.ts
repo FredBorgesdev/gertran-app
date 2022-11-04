@@ -6,11 +6,13 @@ import {Stop, StopsService} from '../stops.service';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Customer, CustomersService} from '../../customers/customers.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-stops-form',
   templateUrl: './stops-form.component.html',
-  styleUrls: ['./stops-form.component.css']
+  styleUrls: ['./stops-form.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements OnInit {
   @Input() stop: Stop;
@@ -18,15 +20,11 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
   stopTypes = [];
   customers: Customer[] = [];
 
-  categoriesTransferItems: TransferItem[] = [];
-
-  customersNextUrl: string;
-  isLoadingMoreData: boolean;
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private customersService: CustomersService,
+    public selectableCustomerService: SelectableCustomerServiceService,
     service: StopsService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute
@@ -41,19 +39,7 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
       this.stopTypes = types;
     });
 
-    this.loadMoreCustomers();
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customersService.getAll({
-      limit: 999,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
-      this.isLoadingMoreData = false;
-    });
+    this.selectableCustomerService.init();
   }
 
   loadFormBuilder(): void {

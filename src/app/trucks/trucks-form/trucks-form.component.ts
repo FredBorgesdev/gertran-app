@@ -16,18 +16,20 @@ import {Truck, TrucksService} from '../trucks.service';
 import {FormBuilder} from '@angular/forms';
 import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-trucks-form',
   templateUrl: './trucks-form.component.html',
-  styleUrls: [ './trucks-form.component.css' ]
+  styleUrls: ['./trucks-form.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements OnInit {
   @Input() truck: Truck;
 
   constructor(
     private router: Router,
-    customersService: CustomersService,
+    selectableCustomersService: SelectableCustomerServiceService,
     vehicleModelsService: VehicleModelsService,
     vehicleModelTypesService: VehicleModelTypesService,
     vehicleManufacturersService: VehicleManufacturersService,
@@ -46,7 +48,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
       vehicleModelsService,
       vehicleModelTypesService,
       vehicleManufacturersService,
-      customersService,
+      selectableCustomersService,
     );
   }
 

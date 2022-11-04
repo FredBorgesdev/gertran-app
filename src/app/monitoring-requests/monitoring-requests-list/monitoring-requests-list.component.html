@@ -28,15 +28,6 @@
       </div>
     </div>
 
-    <h4>Rascunho</h4>
-    <app-monitoring-requests-table
-      [monitoringRequests]="draftResponse"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeDraft($event)"
-    ></app-monitoring-requests-table>
-
     <h4>Reprovado</h4>
     <app-monitoring-requests-table
       [monitoringRequests]="resources"
@@ -44,6 +35,16 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChange($event)"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
+  <nz-card nzTitle="Rascunho">
+    <app-monitoring-requests-table
+      [monitoringRequests]="draftResponse"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChangeDraft($event)"
     ></app-monitoring-requests-table>
   </nz-card>
 

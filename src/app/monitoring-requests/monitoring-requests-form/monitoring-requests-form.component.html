@@ -11,12 +11,14 @@
                 nzAllowClear
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="shipper"
-                (nzScrollToBottom)="loadMoreCustomers()"
+                nzServerSearch
+                (nzOnSearch)="selectableCustomerService.searchByName($event)"
+                (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
                 (ngModelChange)="saveDraft('shipper')"
                 [disabled]="disabled"
                 [nzDropdownRender]="selectLoading"
               >
-                <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+                <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
@@ -29,12 +31,14 @@
                 nzAllowClear
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="transporter"
-                (nzScrollToBottom)="loadMoreCustomers()"
+                nzServerSearch
+                (nzOnSearch)="selectableCustomerService.searchByName($event)"
+                (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
                 (ngModelChange)="saveDraft('transporter')"
                 [disabled]="disabled || !resource.customer?.canSelectShipper"
                 [nzDropdownRender]="selectLoading"
               >
-                <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+                <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>

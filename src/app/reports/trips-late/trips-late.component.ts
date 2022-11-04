@@ -1,60 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CustomersService} from '../../customers/customers.service';
 import {BaseGenericFilter} from '../filters/base-generic-filters/base-generic-filters.component';
 import {ReportsService} from '../reports.service';
-import {Subject} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-trips-late',
   templateUrl: './trips-late.component.html',
-  styleUrls: ['./trips-late.component.css']
+  styleUrls: ['./trips-late.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class TripsLateComponent implements OnInit {
   isLoading = false;
   validateForm: FormGroup;
-  customers = [];
 
   monitoringRequests: MonitoringRequests[] = [];
 
-  private isLoadingMoreData: boolean;
-  private customersNextUrl: string;
-  private searchCustomerSubject = new Subject<string>();
-
   constructor(
     private formBuilder: FormBuilder,
-    private customersService: CustomersService,
     private reportsService: ReportsService,
-  ) {
-  }
+    public selectableCustomerService: SelectableCustomerServiceService,
+  ) {}
 
   ngOnInit(): void {
-    this.loadMoreCustomers();
+    this.selectableCustomerService.init();
 
     this.validateForm = this.formBuilder.group({
       customer: [null, [Validators.required]],
-    });
-
-    this.searchCustomerSubject.pipe(
-      debounceTime(500)
-    ).subscribe((name) => {
-      this.customersService.getAll({ limit: 999 }, { name }).subscribe((customers) => {
-        this.customers = customers.results;
-      });
-    });
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customersService.getAll({
-      limit: 999,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
-      this.isLoadingMoreData = false;
     });
   }
 
@@ -69,14 +42,6 @@ export class TripsLateComponent implements OnInit {
       this.isLoading = false;
       this.monitoringRequests = response;
     });
-  }
-
-  searchCustomer(name: string): void {
-    if (!name) {
-      return;
-    }
-
-    this.searchCustomerSubject.next(name);
   }
 
   getWagons(data: MonitoringRequests): string {
