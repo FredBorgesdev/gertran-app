@@ -4,6 +4,7 @@ import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../
 import {Observable} from 'rxjs';
 import {Invoice} from './invoices.service';
 import {Customer} from '../customers/customers.service';
+import {Truck} from '../trucks/trucks.service';
 
 export interface MonitoringRequests {
   customer: Customer;
@@ -29,12 +30,7 @@ export interface MonitoringRequests {
   auxiliaryDriver: {
     id: string;
   };
-  truck: {
-    id: string;
-    vehicle: {
-      id: string;
-    }
-  };
+  truck: Truck;
   wagons: {
     id: string;
     vehicle: {

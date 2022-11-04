@@ -53,6 +53,10 @@ export class TravelRequestsComponent implements OnInit {
     return data.invoices?.map((invoice) => invoice.invoiceNumber).join(', ');
   }
 
+  getTechnology(data: MonitoringRequests): string {
+    return data.truck?.vehicle.trackers[0]?.trackerModel?.trackerTechnology?.name;
+  }
+
   private calculateSyntheticReport(monitoringRequests: ReportsResults): void {
     const total = monitoringRequests.length;
     const loadPriceTotal = monitoringRequests.reduce((acc, curr) => acc + Number(curr.loadValue), 0);

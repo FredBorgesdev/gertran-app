@@ -12,6 +12,7 @@ import {Customer, CustomersService} from '../../customers/customers.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {VehiclesService} from '../vehicles.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {Tracker} from '../../trackers/trackers.service';
 
 export interface Vehicle {
   id: string;
@@ -29,6 +30,7 @@ export interface Vehicle {
   chassis: string;
   renavam: string;
   description: string;
+  trackers: Tracker[];
 }
 
 interface VehicleChild {

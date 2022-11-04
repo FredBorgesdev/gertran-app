@@ -49,7 +49,7 @@
         <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
         <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getFinalTravelStep(data) }}</td>
         <td>{{ data.operation?.name ?? '-' }}</td>
-        <td>TODO - Tecnologia</td>
+        <td>{{ getTechnology(data) || '-' }}</td>
         <td>{{ data.status }}</td>
         <td>{{ data.loadValue | reais }}</td>
       </tr>
