@@ -31,7 +31,7 @@
                 formControlName="transporter"
                 (nzScrollToBottom)="loadMoreCustomers()"
                 (ngModelChange)="saveDraft('transporter')"
-                [disabled]="disabled"
+                [disabled]="disabled || !resource.customer?.canSelectShipper"
                 [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>

@@ -78,9 +78,9 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
       this.surveyConductors = surveyConductors;
     });
-    (this.service as MonitoringRequestsService).getMonitoringRequests().subscribe((monitoringRequests) => {
-      this.monitoringRequests = monitoringRequests;
-    });
+    // (this.service as MonitoringRequestsService).getMonitoringRequests().subscribe((monitoringRequests) => {
+    //   this.monitoringRequests = monitoringRequests;
+    // });
   }
 
   get disabled(): boolean {

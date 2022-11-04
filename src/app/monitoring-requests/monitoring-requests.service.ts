@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {Invoice} from './invoices.service';
+import {Customer} from '../customers/customers.service';
 
 export interface MonitoringRequests {
+  customer: Customer;
   loadValue: number;
   invoices: Invoice[];
   hasEmbeddedIntelligence: boolean;

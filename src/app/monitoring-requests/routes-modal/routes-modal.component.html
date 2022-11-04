@@ -1,3 +1,21 @@
+<nz-form-item class="m-b-0">
+  <nz-form-label nzRequired>Cliente</nz-form-label>
+  <nz-form-control nzErrorTip="Preencha o campo">
+    <nz-select
+      nzAllowClear
+      nzPlaceHolder="Selecione um cliente"
+      nzServerSearch
+      nzShowSearch
+      (nzOnSearch)="selectableCustomerService.searchByName($event)"
+      (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+      [nzDropdownRender]="selectLoading"
+      [(ngModel)]="customer"
+    >
+      <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+    </nz-select>
+  </nz-form-control>
+</nz-form-item>
+
 <nz-table
   #rowSelectionTable
   nzShowSizeChanger
@@ -15,7 +33,7 @@
   <tbody>
   <tr *ngFor="let data of rowSelectionTable.data">
     <td
-      [nzChecked]="checkedId === data.id"
+      [nzChecked]="routeId === data.id"
       (nzCheckedChange)="onItemChecked(data.id, $event)"
     ></td>
     <td>{{ data.name }}</td>
@@ -24,3 +42,7 @@
   </tr>
   </tbody>
 </nz-table>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
+</ng-template>

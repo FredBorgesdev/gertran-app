@@ -39,6 +39,7 @@ enum Status {
 export class MonitoringRequestsListComponent extends BaseCrudListComponent<MonitoringRequests> implements OnInit {
   waitingForStartResponse: GetAllResponse<MonitoringRequests>;
   inProgressResponse: GetAllResponse<MonitoringRequests>;
+  draftResponse: GetAllResponse<MonitoringRequests>;
 
   constructor(
     private travelStepService: TravelStepService,
@@ -62,6 +63,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
     this.loadWaitingForStart();
     this.loadInProgress();
+    this.loadDraft();
   }
 
   loadWaitingForStart(url?: string): void {
@@ -92,6 +94,20 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     });
   }
 
+  loadDraft(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.DRAFT,
+        createdAt: this.oneDayBefore,
+      }
+    ).subscribe((result) => {
+      this.draftResponse = result;
+      this.isLoading = false;
+    });
+  }
+
   create(): void {
     this.modal.create({
       nzTitle: 'Escolher modelo de rota',
@@ -99,17 +115,18 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzOkText: 'Criar',
       nzCancelText: 'Cancelar',
       nzOnOk: async (componentInstance) => {
-        const route = componentInstance.checkedId !== BLANK_ROUTE.id ?
-          componentInstance.checkedId : null;
-        const points = componentInstance.routes.find((r) => r.id === componentInstance.checkedId)?.points ?? [];
+        const route = componentInstance.routeId !== BLANK_ROUTE.id ?
+          componentInstance.routeId : null;
+        const points = componentInstance.routes.find((r) => r.id === componentInstance.routeId)?.points ?? [];
 
         const lngLat = points.map(({ point: { longitude, latitude } }) => ({ latitude, longitude }));
         const hasPoints = route && points.length > 0;
-        const routeCoordinates = hasPoints && await this.directionsService.getDirections(lngLat);
+        const routeCoordinates = hasPoints && await this.directionsService.getCoordinates(lngLat);
 
         (this.service as MonitoringRequestsService).save({
           route,
-          routeCoordinates
+          routeCoordinates,
+          customer: componentInstance.customer,
         }).subscribe((result) => {
           this.createPoints(result.id, points);
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
@@ -184,16 +201,19 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     }
   }
 
-  get oneDayBefore(): string {
-    const date = new Date();
-    date.setDate(date.getDate() - 1);
-
-    return date.toISOString();
+  handleQueryParamsChangeDraft(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.inProgressResponse)) {
+      const url = this.replaceOffsetWithPage(this.draftResponse.previous, params.pageIndex);
+      this.loadDraft(url);
+    } else if (params.pageIndex > getCurrentPage(this.draftResponse)) {
+      const url = this.replaceOffsetWithPage(this.draftResponse.next, params.pageIndex);
+      this.loadDraft(url);
+    }
   }
 
-  get oneMonthBefore(): string {
+  get oneDayBefore(): string {
     const date = new Date();
-    date.setMonth(date.getMonth() - 1);
+    date.setDate(date.getDate() - 15);
 
     return date.toISOString();
   }

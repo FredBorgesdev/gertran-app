@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Route, RoutesService} from '../../routes/routes.service';
+import {Customer, CustomersService} from '../../customers/customers.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 export const BLANK_ROUTE = {
   id: 'blank',
@@ -11,22 +13,29 @@ export const BLANK_ROUTE = {
 @Component({
   selector: 'app-routes-modal',
   templateUrl: './routes-modal.component.html',
-  styleUrls: ['./routes-modal.component.css']
+  styleUrls: ['./routes-modal.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class RoutesModalComponent implements OnInit {
   routes: Route[] = [];
+  customers: Customer[] = [];
 
-  checkedId = BLANK_ROUTE.id;
+  customer = null;
+  routeId = BLANK_ROUTE.id;
+
   listOfCurrentPageData: readonly Route[] = [];
+  isLoadingMoreData: boolean;
 
   constructor(
     private routesService: RoutesService,
+    public selectableCustomerService: SelectableCustomerServiceService,
   ) { }
 
   ngOnInit(): void {
     this.routesService.getAll({ limit: 999 }).subscribe((response) => {
       this.routes = [BLANK_ROUTE as any, ...response.results];
     });
+    this.selectableCustomerService.init();
   }
 
   onCurrentPageDataChange($event: readonly Route[]): void {
@@ -35,9 +44,9 @@ export class RoutesModalComponent implements OnInit {
 
   onItemChecked(id: string, checked: boolean): void {
     if (checked) {
-      this.checkedId = id;
+      this.routeId = id;
     } else {
-      this.checkedId = BLANK_ROUTE.id;
+      this.routeId = BLANK_ROUTE.id;
     }
   }
 }

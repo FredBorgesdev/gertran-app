@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {environment} from '../../../environments/environment';
+import polyline from '@mapbox/polyline';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,12 @@ export class DirectionsService {
         reject(e);
       });
     });
+  }
+
+  async getCoordinates(points: any[]): Promise<number[][]> {
+    const result = await this.getDirections(points);
+    const routes = polyline.toGeoJSON(result.route[0].geometry);
+
+    return routes.coordinates;
   }
 }
