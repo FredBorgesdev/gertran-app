@@ -4,6 +4,8 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, getCurrentPage, Pagination} from 'src/app/shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-base-crud-list',
@@ -13,6 +15,8 @@ import {NzTableQueryParams} from 'ng-zorro-antd/table';
 export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   isLoading = false;
   resources: GetAllResponse<T> = null;
+
+  private searchCustomerSubject = new Subject<string>();
 
   constructor(
     @Inject(String) private resource: string,
@@ -24,6 +28,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
 
   ngOnInit(): void {
     this.loadResources();
+    this.setupSearch();
   }
 
   performPostLoadActions(): void {}
@@ -97,5 +102,26 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     return {
       url,
     };
+  }
+
+  searchByName(name: string): void {
+    if (name === '') {
+      this.loadResources();
+    } else {
+      this.searchCustomerSubject.next(name);
+    }
+  }
+
+  private setupSearch(): void {
+    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
+      this.isLoading = true;
+      this.service.getAll({ limit: 999 }, { name }).subscribe((result) => {
+        this.resources = result;
+        this.isLoading = false;
+      });
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao carregar os registros. Tente novamente.');
+    });
   }
 }

@@ -53,7 +53,6 @@ export class CustomersListComponent extends BaseCrudListComponent<Customer> {
   }
 
   search(): void {
-    const data = this.resources;
-    this.resources.results = this.tableService.search(this.searchInput, data.results);
+    this.searchByName(this.searchInput);
   }
 }
