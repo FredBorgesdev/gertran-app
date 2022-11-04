@@ -39,7 +39,7 @@
         <td>{{ data.truck?.vehicle?.plate }}</td>
         <td>{{ data.operation?.name ?? '-' }}</td>
         <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
-        <td>TODO - Transportadora</td>
+        <td>{{ data.transporter?.tradingName ?? '-' }}</td>
       </tr>
       </tbody>
     </nz-table>

@@ -33,6 +33,6 @@ export class ClosingComponent implements OnInit {
   }
 
   getInitialTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps[0].address;
+    return data.travelSteps[0]?.address;
   }
 }
