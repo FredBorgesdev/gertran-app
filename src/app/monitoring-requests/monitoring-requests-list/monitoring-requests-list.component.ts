@@ -190,4 +190,11 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
     return date.toISOString();
   }
+
+  get oneMonthBefore(): string {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+
+    return date.toISOString();
+  }
 }
