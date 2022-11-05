@@ -377,7 +377,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports23',
+            path: '/reports/baits',
             title: 'Relatório de isca',
             iconType: 'nzIcon',
             iconTheme: 'outline',

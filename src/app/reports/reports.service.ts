@@ -61,6 +61,12 @@ export type PositionEvent = {
   }
 };
 
+export type MonitoringRequestBait = MonitoringRequests & {
+  installationLocation: string;
+  technology: string;
+  serialNumber: string;
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -177,5 +183,16 @@ export class ReportsService {
       }
     });
     return this.http.get<Position[]>('reports/tracking/positionshistory?1=1', { params });
+  }
+
+  getBaits(filters: BasePeriodFilter): Observable<MonitoringRequestBait[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+      }
+    });
+    return this.http.get<MonitoringRequestBait[]>('reports/events/bait?1=1', { params });
   }
 }

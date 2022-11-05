@@ -20,6 +20,7 @@ import { ScheduledTripsComponent } from './scheduled-trips/scheduled-trips.compo
 import { InsuranceCompaniesComponent } from './insurance-companies/insurance-companies.component';
 import { CommandsHistoryComponent } from './commands-history/commands-history.component';
 import { PositionsHistoryComponent } from './positions-history/positions-history.component';
+import { BaitsComponent } from './baits/baits.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { PositionsHistoryComponent } from './positions-history/positions-history
         InsuranceCompaniesComponent,
         CommandsHistoryComponent,
         PositionsHistoryComponent,
+        BaitsComponent,
     ],
   imports: [
     SharedModule,

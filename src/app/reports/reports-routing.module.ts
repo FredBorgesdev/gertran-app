@@ -14,6 +14,7 @@ import {ScheduledTripsComponent} from './scheduled-trips/scheduled-trips.compone
 import {InsuranceCompaniesComponent} from './insurance-companies/insurance-companies.component';
 import {CommandsHistoryComponent} from './commands-history/commands-history.component';
 import {PositionsHistoryComponent} from './positions-history/positions-history.component';
+import {BaitsComponent} from './baits/baits.component';
 
 const routes: Routes = [
   { path: 'load-unload-by-macro', component: LoadUnloadByMacroComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: 'scheduled-trips', component: ScheduledTripsComponent },
   { path: 'insurance-companies', component: InsuranceCompaniesComponent },
   { path: 'commands-history', component: CommandsHistoryComponent },
-  { path: 'positions-history', component: PositionsHistoryComponent }
+  { path: 'positions-history', component: PositionsHistoryComponent },
+  { path: 'baits', component: BaitsComponent },
 ];
 
 @NgModule({
