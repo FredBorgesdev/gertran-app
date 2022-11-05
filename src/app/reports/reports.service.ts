@@ -139,16 +139,19 @@ export class ReportsService {
     return this.http.get<PositionEvent[]>('reports/monitoring/travelstart?1=1', { params });
   }
 
-  getTravelEnd(filters: BaseVehicleFilter): Observable<ReportsResults> {
+  getTravelEnd(filters: BaseVehicleFilter): Observable<PositionEvent[]> {
+    const filtersParams: any = {
+      from_date: filters.from,
+      to_date: filters.to,
+      customer: filters.customer,
+    };
+    if (filters.plate) {
+      filtersParams.plate = filters.plate;
+    }
     const params = new HttpParams({
-      fromObject: {
-        from_date: filters.from,
-        to_date: filters.to,
-        customer: filters.customer,
-        plate: filters.plate || 'GER1111'
-      }
+      fromObject: filtersParams
     });
-    return this.http.get<ReportsResults>('reports/monitoring/travelend?1=1', { params });
+    return this.http.get<PositionEvent[]>('reports/monitoring/travelend?1=1', { params });
   }
 
   getTrackingCommandsHistory(filters: BaseVehicleFilter): Observable<CommandSentHistory[]> {
