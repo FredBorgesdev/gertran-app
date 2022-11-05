@@ -9,8 +9,15 @@
             nzAllowClear
             nzPlaceHolder="Selecione um cliente"
             (ngModelChange)="loadVehicles($event)"
+            nzServerSearch
+            nzShowSearch
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
           >
-            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            <nz-option
+              *ngFor="let customer of selectableCustomerService.customers"
+              [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -19,8 +26,18 @@
       <nz-form-item class="m-b-0">
         <nz-form-label>Veiculo</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-select formControlName="vehicle" nzAllowClear [nzDisabled]="vehicles.length === 0">
-            <nz-option *ngFor="let vehicle of vehicles" [nzLabel]="vehicle.vehicle.plate" [nzValue]="vehicle.id"></nz-option>
+          <nz-select
+            formControlName="vehicle"
+            nzAllowClear
+            [nzDisabled]="selectableTrucksService.trucks.length === 0"
+            (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
+            [nzDropdownRender]="selectLoading"
+          >
+            <nz-option
+              *ngFor="let vehicle of selectableTrucksService.trucks"
+              [nzLabel]="vehicle.vehicle.plate"
+              [nzValue]="vehicle.id"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -70,3 +87,7 @@
     <button nz-button style="width: 100%">Gerar planilha</button>
   </div>
 </div>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableTrucksService.isLoadingMoreData"></nz-spin>
+</ng-template>

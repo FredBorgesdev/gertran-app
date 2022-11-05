@@ -13,6 +13,10 @@ export interface BasePeriodFilter extends BaseFilter {
   to: string;
 }
 
+export interface BaseVehicleFilter extends BasePeriodFilter {
+  vehicle: string;
+}
+
 export interface DelayedTripFilter extends BaseFilter {
   plate: string;
   point?: string;
@@ -84,5 +88,16 @@ export class ReportsService {
       }
     });
     return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', { params });
+  }
+
+  getTravelStart(filters: BasePeriodFilter): Observable<ReportsResults> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+      }
+    });
+    return this.http.get<ReportsResults>('reports/monitoring/travelstart?1=1', { params });
   }
 }

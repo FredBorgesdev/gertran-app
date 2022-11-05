@@ -9,6 +9,33 @@
       </nz-breadcrumb-item>
     </nz-breadcrumb>
 
-    <app-base-vehicle-filter></app-base-vehicle-filter>
+    <app-base-vehicle-filter
+      (generateReport)="generateReport($event)"
+    ></app-base-vehicle-filter>
+
+    <nz-table
+      #table
+      [nzData]="monitoringRequests"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Placa</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.createdAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ data.createdAt | date: 'HH:mm' }}</td>
+        <td>{{ data.truck?.vehicle.plate ?? '-' }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
   </nz-card>
 </nz-spin>
