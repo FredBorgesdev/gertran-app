@@ -15,6 +15,7 @@ import {InsuranceCompaniesComponent} from './insurance-companies/insurance-compa
 import {CommandsHistoryComponent} from './commands-history/commands-history.component';
 import {PositionsHistoryComponent} from './positions-history/positions-history.component';
 import {BaitsComponent} from './baits/baits.component';
+import {OperationalAuditCommandsComponent} from './operational-audit-commands/operational-audit-commands.component';
 
 const routes: Routes = [
   { path: 'load-unload-by-macro', component: LoadUnloadByMacroComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'commands-history', component: CommandsHistoryComponent },
   { path: 'positions-history', component: PositionsHistoryComponent },
   { path: 'baits', component: BaitsComponent },
+  { path: 'operational-audit-commands', component: OperationalAuditCommandsComponent}
 ];
 
 @NgModule({

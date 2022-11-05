@@ -1,0 +1,41 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Auditoria Operacional Comandos</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-user-filter
+      (generateReport)="generateReport($event)"
+    ></app-base-user-filter>
+
+    <nz-table
+      #table
+      [nzData]="commandsSentHistory"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Data</th>
+        <th>Comando</th>
+        <th>Usuário</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data.code + '-' + data.observations }}</td>
+        <td>{{ data.sentByUser?.name }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>

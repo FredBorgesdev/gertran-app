@@ -401,7 +401,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports26',
+            path: '/reports/operational-audit-commands',
             title: 'Auditoria Operacional Comandos',
             iconType: 'nzIcon',
             iconTheme: 'outline',

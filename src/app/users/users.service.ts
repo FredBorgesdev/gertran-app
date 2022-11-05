@@ -27,12 +27,15 @@ export class UsersService implements ApiService<User> {
     return this.http.get<User>(`users/${id}`);
   }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<User>> {
-    const params = { limit: DEFAULT_LIMIT };
+  getAll(pagination: Pagination, filters?: { name?: string }): Observable<GetAllResponse<User>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.name) {
+      params.name = filters.name;
     }
 
     return this.http.get<GetAllResponse<User>>('users', { params });

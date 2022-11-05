@@ -15,6 +15,10 @@ export interface BasePeriodFilter extends BaseFilter {
   to: string;
 }
 
+export interface BaseUserFilter extends BasePeriodFilter {
+  user: string;
+}
+
 export interface BaseVehicleFilter extends BasePeriodFilter {
   plate: string;
 }
@@ -194,5 +198,17 @@ export class ReportsService {
       }
     });
     return this.http.get<MonitoringRequestBait[]>('reports/events/bait?1=1', { params });
+  }
+
+  getOperationalAuditCommands(filters: BaseUserFilter): Observable<CommandSentHistory[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+        user: filters.user,
+      }
+    });
+    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditcommands?1=1', { params });
   }
 }

@@ -1,0 +1,93 @@
+<form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="6">
+      <nz-form-item class="m-b-0">
+        <nz-form-label>Cliente</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select
+            formControlName="customer"
+            nzAllowClear
+            nzServerSearch
+            nzShowSearch
+            nzPlaceHolder="Selecione um cliente"
+            (nzOnSearch)="searchCustomer($event)"
+            (nzScrollToBottom)="loadMoreCustomers()"
+            [nzDropdownRender]="selectLoading"
+          >
+            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item class="m-b-0">
+        <nz-form-label>Data inicial</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-date-picker
+            style="width: 100%;"
+            nzFormat="dd/MM/yyyy"
+            formControlName="from"
+            nzPlaceHolder="Selecione uma data"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item class="m-b-0">
+        <nz-form-label>Data final</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-date-picker
+            style="width: 100%;"
+            nzFormat="dd/MM/yyyy"
+            formControlName="to"
+            nzPlaceHolder="Selecione uma data"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item class="m-b-0">
+        <nz-form-label>Usuário</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select
+            formControlName="user"
+            nzAllowClear
+            nzServerSearch
+            nzShowSearch
+            nzPlaceHolder="Selecione um usuário"
+            (nzOnSearch)="selectableUserService.searchByName($event)"
+            (nzScrollToBottom)="selectableUserService.loadMoreUsers()"
+            [nzDropdownRender]="selectLoading"
+          >
+            <nz-option
+              *ngFor="let user of selectableUserService.users"
+              [nzLabel]="user.name"
+              [nzValue]="user.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div nz-row nzGutter="16" *ngIf="!hideButtons" class="m-t-25">
+  <div nz-col nzSpan="8">
+    <button
+      nz-button
+      nzType="primary"
+      style="width: 100%"
+      (click)="emitGenerateReport()"
+    >Gerar relatório</button>
+  </div>
+  <div nz-col nzSpan="8">
+    <button nz-button style="width: 100%">Gerar pdf</button>
+  </div>
+  <div nz-col nzSpan="8">
+    <button nz-button style="width: 100%">Gerar planilha</button>
+  </div>
+</div>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+</ng-template>

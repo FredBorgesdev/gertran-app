@@ -21,30 +21,34 @@ import { InsuranceCompaniesComponent } from './insurance-companies/insurance-com
 import { CommandsHistoryComponent } from './commands-history/commands-history.component';
 import { PositionsHistoryComponent } from './positions-history/positions-history.component';
 import { BaitsComponent } from './baits/baits.component';
+import { OperationalAuditCommandsComponent } from './operational-audit-commands/operational-audit-commands.component';
+import {BaseUserFilterComponent} from './filters/base-user-filter/base-user-filter.component';
 
 
 @NgModule({
-    declarations: [
-        LoadUnloadByMacroComponent,
-        BaseCustomerFilterComponent,
-        LoadUnloadByPointComponent,
-        LoadUnloadByRadiusComponent,
-        TripsLateComponent,
-        TravelRequestsComponent,
-        BaseGenericFiltersComponent,
-        BaseGenericFiltersComponent,
-        AvailableVehiclesComponent,
-        LogisticsComponent,
-        TravelStartComponent,
-        BaseVehicleFilterComponent,
-        TravelEndComponent,
-        ClosingComponent,
-        ScheduledTripsComponent,
-        InsuranceCompaniesComponent,
-        CommandsHistoryComponent,
-        PositionsHistoryComponent,
-        BaitsComponent,
-    ],
+  declarations: [
+    LoadUnloadByMacroComponent,
+    BaseCustomerFilterComponent,
+    BaseUserFilterComponent,
+    LoadUnloadByPointComponent,
+    LoadUnloadByRadiusComponent,
+    TripsLateComponent,
+    TravelRequestsComponent,
+    BaseGenericFiltersComponent,
+    BaseGenericFiltersComponent,
+    AvailableVehiclesComponent,
+    LogisticsComponent,
+    TravelStartComponent,
+    BaseVehicleFilterComponent,
+    TravelEndComponent,
+    ClosingComponent,
+    ScheduledTripsComponent,
+    InsuranceCompaniesComponent,
+    CommandsHistoryComponent,
+    PositionsHistoryComponent,
+    BaitsComponent,
+    OperationalAuditCommandsComponent,
+  ],
   imports: [
     SharedModule,
     CommonModule,
