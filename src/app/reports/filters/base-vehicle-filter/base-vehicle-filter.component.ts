@@ -32,7 +32,7 @@ export class BaseVehicleFilterComponent implements OnInit {
       customer: [null, [Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      vehicle: [null, []],
+      plate: [null, []],
     });
 
     this.i18n.setLocale(en_US);

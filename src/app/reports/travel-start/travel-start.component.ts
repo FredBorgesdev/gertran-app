@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseVehicleFilter, ReportsService} from '../reports.service';
-import {CustomerFilter} from '../filters/base-customer-filter/base-customer-filter.component';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
@@ -22,7 +21,6 @@ export class TravelStartComponent implements OnInit {
   }
 
   generateReport(form: BaseVehicleFilter): void {
-    console.log(form)
     this.isLoading = true;
     this.reportsService.getMonitoringRequests(form).subscribe((monitoringRequests) => {
       this.monitoringRequests = monitoringRequests;

@@ -27,7 +27,7 @@
         <nz-form-label>Veiculo</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <nz-select
-            formControlName="vehicle"
+            formControlName="plate"
             nzAllowClear
             [nzDisabled]="selectableTrucksService.trucks.length === 0"
             (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
