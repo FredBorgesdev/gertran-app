@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseVehicleFilter, ReportsService} from '../reports.service';
+import {BaseVehicleFilter, PositionEvent, ReportsService} from '../reports.service';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
@@ -10,7 +10,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 })
 export class TravelStartComponent implements OnInit {
   isLoading = false;
-  monitoringRequests: MonitoringRequests[] = [];
+  positionEvents: PositionEvent[] = [];
 
   constructor(
     private reportsService: ReportsService,
@@ -22,8 +22,8 @@ export class TravelStartComponent implements OnInit {
 
   generateReport(form: BaseVehicleFilter): void {
     this.isLoading = true;
-    this.reportsService.getTravelStart(form).subscribe((monitoringRequests) => {
-      this.monitoringRequests = monitoringRequests;
+    this.reportsService.getTravelStart(form).subscribe((positionEvents) => {
+      this.positionEvents = positionEvents;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

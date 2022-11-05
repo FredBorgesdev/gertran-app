@@ -44,6 +44,22 @@ export type CommandSentHistory = {
   vehicleTracker: string;
 };
 
+export type PositionEvent = {
+  eventCode: string;
+  eventDescription: string;
+  eventName: string;
+  eventProcessed: boolean;
+  eventType: string;
+  id: string;
+  createdAt: string;
+  position: {
+    vehicle: {
+      id: string;
+      plate: string;
+    }
+  }
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -108,16 +124,19 @@ export class ReportsService {
     return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', { params });
   }
 
-  getTravelStart(filters: BaseVehicleFilter): Observable<ReportsResults> {
+  getTravelStart(filters: BaseVehicleFilter): Observable<PositionEvent[]> {
+    const filtersParams: any = {
+      from_date: filters.from,
+      to_date: filters.to,
+      customer: filters.customer,
+    };
+    if (filters.plate) {
+      filtersParams.plate = filters.plate;
+    }
     const params = new HttpParams({
-      fromObject: {
-        from_date: filters.from,
-        to_date: filters.to,
-        customer: filters.customer,
-        plate: filters.plate || 'GER1111'
-      }
+      fromObject: filtersParams
     });
-    return this.http.get<ReportsResults>('reports/monitoring/travelstart?1=1', { params });
+    return this.http.get<PositionEvent[]>('reports/monitoring/travelstart?1=1', { params });
   }
 
   getTravelEnd(filters: BaseVehicleFilter): Observable<ReportsResults> {
