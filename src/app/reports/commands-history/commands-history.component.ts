@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
-import {BaseVehicleFilter, ReportsService} from '../reports.service';
+import {BaseVehicleFilter, CommandSentHistory, ReportsService} from '../reports.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'app-travel-end',
-  templateUrl: './travel-end.component.html',
-  styleUrls: ['./travel-end.component.css']
+  selector: 'app-commands-history',
+  templateUrl: './commands-history.component.html',
+  styleUrls: ['./commands-history.component.css']
 })
-export class TravelEndComponent implements OnInit {
+export class CommandsHistoryComponent implements OnInit {
   isLoading = false;
-  monitoringRequests: MonitoringRequests[] = [];
+  commandSentHistory: CommandSentHistory[] = [];
 
   constructor(
     private reportsService: ReportsService,
@@ -22,8 +21,8 @@ export class TravelEndComponent implements OnInit {
 
   generateReport(form: BaseVehicleFilter): void {
     this.isLoading = true;
-    this.reportsService.getTravelEnd(form).subscribe((monitoringRequests) => {
-      this.monitoringRequests = monitoringRequests;
+    this.reportsService.getTrackingCommandsHistory(form).subscribe((commandsSentHistory) => {
+      this.commandSentHistory = commandsSentHistory;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

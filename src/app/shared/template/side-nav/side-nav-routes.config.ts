@@ -312,7 +312,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports16',
+            path: '/reports/commands-history',
             title: 'Histórico de comandos',
             iconType: 'nzIcon',
             iconTheme: 'outline',

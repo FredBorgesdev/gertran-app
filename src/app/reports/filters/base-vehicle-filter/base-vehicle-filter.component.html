@@ -36,7 +36,7 @@
             <nz-option
               *ngFor="let vehicle of selectableTrucksService.trucks"
               [nzLabel]="vehicle.vehicle.plate"
-              [nzValue]="vehicle.id"
+              [nzValue]="vehicle.vehicle.plate"
             ></nz-option>
           </nz-select>
         </nz-form-control>

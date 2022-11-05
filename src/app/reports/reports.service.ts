@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {GetAllResponse} from '../shared/services/api.service';
 import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
+import {User} from '../users/users.service';
 
 export interface BaseFilter {
   customer: string;
@@ -25,6 +26,23 @@ export interface DelayedTripFilter extends BaseFilter {
 }
 
 export type ReportsResults = MonitoringRequests[];
+
+export type CommandSentHistory = {
+  apiReturn: any;
+  code: string;
+  commandParams: any;
+  createdAt: string;
+  deletedByCascade: boolean;
+  id: string;
+  observations: string;
+  receivedAt: string;
+  sentAt: string;
+  sentByUser: User;
+  solvedAt: string;
+  solvedByUser: User;
+  status: string;
+  vehicleTracker: string;
+};
 
 @Injectable({
   providedIn: 'root'
@@ -112,5 +130,17 @@ export class ReportsService {
       }
     });
     return this.http.get<ReportsResults>('reports/monitoring/travelend?1=1', { params });
+  }
+
+  getTrackingCommandsHistory(filters: BaseVehicleFilter): Observable<CommandSentHistory[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+        plate: filters.plate || 'GER1111'
+      }
+    });
+    return this.http.get<CommandSentHistory[]>('reports/tracking/commandshistory?1=1', { params });
   }
 }

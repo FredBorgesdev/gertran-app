@@ -12,56 +12,22 @@ import {TravelEndComponent} from './travel-end/travel-end.component';
 import {ClosingComponent} from './closing/closing.component';
 import {ScheduledTripsComponent} from './scheduled-trips/scheduled-trips.component';
 import {InsuranceCompaniesComponent} from './insurance-companies/insurance-companies.component';
+import {CommandsHistoryComponent} from './commands-history/commands-history.component';
 
 const routes: Routes = [
-  {
-    path: 'load-unload-by-macro',
-    component: LoadUnloadByMacroComponent,
-  },
-  {
-    path: 'load-unload-by-point',
-    component: LoadUnloadByPointComponent,
-  },
-  {
-    path: 'load-unload-by-radius',
-    component: LoadUnloadByRadiusComponent,
-  },
-  {
-    path: 'trips-late',
-    component: TripsLateComponent,
-  },
-  {
-    path: 'travel-requests',
-    component: TravelRequestsComponent,
-  },
-  {
-    path: 'available-vehicles',
-    component: AvailableVehiclesComponent,
-  },
-  {
-    path: 'logistics',
-    component: LogisticsComponent
-  },
-  {
-    path: 'travel-start',
-    component: TravelStartComponent
-  },
-  {
-    path: 'travel-end',
-    component: TravelEndComponent
-  },
-  {
-    path: 'closing',
-    component: ClosingComponent
-  },
-  {
-    path: 'scheduled-trips',
-    component: ScheduledTripsComponent,
-  },
-  {
-    path: 'insurance-companies',
-    component: InsuranceCompaniesComponent
-  }
+  { path: 'load-unload-by-macro', component: LoadUnloadByMacroComponent },
+  { path: 'load-unload-by-point', component: LoadUnloadByPointComponent },
+  { path: 'load-unload-by-radius', component: LoadUnloadByRadiusComponent },
+  { path: 'trips-late', component: TripsLateComponent },
+  { path: 'travel-requests', component: TravelRequestsComponent },
+  { path: 'available-vehicles', component: AvailableVehiclesComponent },
+  { path: 'logistics', component: LogisticsComponent },
+  { path: 'travel-start', component: TravelStartComponent },
+  { path: 'travel-end', component: TravelEndComponent },
+  { path: 'closing', component: ClosingComponent },
+  { path: 'scheduled-trips', component: ScheduledTripsComponent },
+  { path: 'insurance-companies', component: InsuranceCompaniesComponent },
+  { path: 'commands-history', component: CommandsHistoryComponent }
 ];
 
 @NgModule({
