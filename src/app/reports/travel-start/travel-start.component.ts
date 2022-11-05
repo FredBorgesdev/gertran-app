@@ -22,7 +22,7 @@ export class TravelStartComponent implements OnInit {
 
   generateReport(form: BaseVehicleFilter): void {
     this.isLoading = true;
-    this.reportsService.getMonitoringRequests(form).subscribe((monitoringRequests) => {
+    this.reportsService.getTravelStart(form).subscribe((monitoringRequests) => {
       this.monitoringRequests = monitoringRequests;
       this.isLoading = false;
     }, () => {
