@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {GetAllResponse} from '../shared/services/api.service';
 import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
 import {User} from '../users/users.service';
+import {Position} from '../monitoring/positions.service';
 
 export interface BaseFilter {
   customer: string;
@@ -160,9 +161,21 @@ export class ReportsService {
         from_date: filters.from,
         to_date: filters.to,
         customer: filters.customer,
-        plate: filters.plate || 'GER1111'
+        plate: filters.plate
       }
     });
     return this.http.get<CommandSentHistory[]>('reports/tracking/commandshistory?1=1', { params });
+  }
+
+  getTrackingPositionsHistory(filters: BaseVehicleFilter): Observable<Position[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: filters.from,
+        to_date: filters.to,
+        customer: filters.customer,
+        plate: filters.plate || 'AOU0G63'
+      }
+    });
+    return this.http.get<Position[]>('reports/tracking/positionshistory?1=1', { params });
   }
 }

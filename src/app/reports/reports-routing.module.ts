@@ -13,6 +13,7 @@ import {ClosingComponent} from './closing/closing.component';
 import {ScheduledTripsComponent} from './scheduled-trips/scheduled-trips.component';
 import {InsuranceCompaniesComponent} from './insurance-companies/insurance-companies.component';
 import {CommandsHistoryComponent} from './commands-history/commands-history.component';
+import {PositionsHistoryComponent} from './positions-history/positions-history.component';
 
 const routes: Routes = [
   { path: 'load-unload-by-macro', component: LoadUnloadByMacroComponent },
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'closing', component: ClosingComponent },
   { path: 'scheduled-trips', component: ScheduledTripsComponent },
   { path: 'insurance-companies', component: InsuranceCompaniesComponent },
-  { path: 'commands-history', component: CommandsHistoryComponent }
+  { path: 'commands-history', component: CommandsHistoryComponent },
+  { path: 'positions-history', component: PositionsHistoryComponent }
 ];
 
 @NgModule({

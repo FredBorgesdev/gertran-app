@@ -296,7 +296,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports14',
+            path: '/reports/positions-history',
             title: 'Posições do veiculo',
             iconType: 'nzIcon',
             iconTheme: 'outline',
