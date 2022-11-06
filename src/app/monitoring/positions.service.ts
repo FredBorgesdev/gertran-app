@@ -26,9 +26,12 @@ export interface Position {
   timePosition: string;
   trackerSerialNumber: string;
   trackerModel: string;
-  vehicle: {
-    plate: string;
+  truck: {
     id: string;
+    vehicle: {
+      plate: string;
+      id: string;
+    };
   };
   vehicleStatus: string;
   monitoringRequest: {

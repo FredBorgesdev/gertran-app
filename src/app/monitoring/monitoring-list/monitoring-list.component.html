@@ -140,7 +140,7 @@
         [nzTooltipTitle]="item.monitoringRequest.id"
         [class]="getRowBackgroundColor(item.monitoringRequest.status)"
       >{{ item.monitoringRequest.id | id}}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.vehicle?.plate || '-' }}</td>
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.truck?.vehicle?.plate || '-' }}</td>
       <td class="text-md-center">
         <span
           nz-icon

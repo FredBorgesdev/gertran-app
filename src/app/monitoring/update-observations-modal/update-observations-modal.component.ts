@@ -23,7 +23,7 @@ export class UpdateObservationsModalComponent implements OnInit {
   }
 
   save(): void {
-    this.service.update(this.item.vehicle.id, {
+    this.service.update(this.item.truck.id, {
       observations: this.observation
     } as any).subscribe(() => {
       this.item.observations = this.observation;
