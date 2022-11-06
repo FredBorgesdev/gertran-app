@@ -37,6 +37,8 @@
 
     <app-base-generic-filters
       (generateReport)="generateReport($event)"
+      [rows]="monitoringRequests"
+      [fileName]="'Viagens em atraso'"
     ></app-base-generic-filters>
 
     <nz-table
