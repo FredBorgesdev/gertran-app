@@ -9,6 +9,7 @@ import {MonitoringRequests} from '../monitoring-requests.service';
 })
 export class MonitoringRequestsTableComponent implements OnInit {
   @Input() monitoringRequests: GetAllResponse<MonitoringRequests>;
+  @Input() rowColor = 'inherit';
   @Output() handleQueryParamsChange = new EventEmitter<any>();
   @Output() view = new EventEmitter<MonitoringRequests>();
   @Output() edit = new EventEmitter<MonitoringRequests>();

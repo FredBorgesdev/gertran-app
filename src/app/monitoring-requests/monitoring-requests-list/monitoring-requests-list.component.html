@@ -27,20 +27,12 @@
         </button>
       </div>
     </div>
-
-    <h4>Reprovado</h4>
-    <app-monitoring-requests-table
-      [monitoringRequests]="resources"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChange($event)"
-    ></app-monitoring-requests-table>
   </nz-card>
 
   <nz-card nzTitle="Rascunho">
     <app-monitoring-requests-table
       [monitoringRequests]="draftResponse"
+      [rowColor]="'#f7faff'"
       (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
@@ -51,6 +43,7 @@
   <nz-card nzTitle="Aguardando inicio">
     <app-monitoring-requests-table
       [monitoringRequests]="waitingForStartResponse"
+      [rowColor]="'#EAFDF2FF'"
       (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
@@ -58,9 +51,21 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
+  <nz-card nzTitle="Reprovado">
+    <app-monitoring-requests-table
+      [monitoringRequests]="resources"
+      [rowColor]="'#fff7f9'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChange($event)"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
   <nz-card nzTitle="Em viagem">
     <app-monitoring-requests-table
       [monitoringRequests]="inProgressResponse"
+      [rowColor]="'#EAFDF2FF'"
       (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
