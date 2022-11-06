@@ -35,6 +35,7 @@ export class BaseMacroFilterComponent implements OnInit {
 
     this.i18n.setLocale(en_US);
     this.selectableCustomerService.init();
+    this.selectableTrucksService.setupSearch();
   }
 
   emitGenerateReport(): void {

@@ -23,7 +23,7 @@ export class TrucksService extends VehiclesService<Truck> {
 
   getAll(
     pagination: Pagination,
-    filters?: { customerId?: string },
+    filters?: { customerId?: string, plate?: string },
   ): Observable<GetAllResponse<Truck>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
@@ -33,6 +33,9 @@ export class TrucksService extends VehiclesService<Truck> {
     }
     if (filters?.customerId) {
       params.customer = filters.customerId;
+    }
+    if (filters?.plate) {
+      params.plate = filters.plate;
     }
 
     return this.http.get<GetAllResponse<Truck>>('vehicles/trucks', { params });

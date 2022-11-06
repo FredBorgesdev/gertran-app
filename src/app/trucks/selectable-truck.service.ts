@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import {Truck, TrucksService} from './trucks.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectableTruckService {
   isLoadingMoreData: boolean;
-  private trucksNextUrl: string;
   trucks: Truck[] = [];
+  searchTruckSubject = new Subject<{
+    customerId: string;
+    plate: string;
+  }>();
+
+  private trucksNextUrl: string;
+  private currentFilters: { customerId?: string } = {};
 
   constructor(
     private trucksService: TrucksService,
@@ -17,6 +25,7 @@ export class SelectableTruckService {
 
   init(): void {
     this.loadMoreTrucks();
+    this.setupSearch();
   }
 
   loadMoreTrucks(filters?: { customerId: string }): void {
@@ -30,6 +39,25 @@ export class SelectableTruckService {
       this.isLoadingMoreData = false;
     }, () => {
       this.message.error('Erro ao carregar os caminhões!');
+    });
+  }
+
+  searchByPlate(filter: { customerId: string; plate: string }): void {
+    if (filter.plate === '') {
+      this.trucksNextUrl = null;
+      this.loadMoreTrucks();
+    } else {
+      this.searchTruckSubject.next(filter);
+    }
+  }
+
+  setupSearch(): void {
+    this.searchTruckSubject.pipe(debounceTime(500)).subscribe((filters) => {
+      this.trucksService.getAll({ limit: 999 }, filters).subscribe((result) => {
+        this.trucks = result.results;
+      });
+    }, () => {
+      this.message.error('Erro ao carregar os registros. Tente novamente.');
     });
   }
 }
