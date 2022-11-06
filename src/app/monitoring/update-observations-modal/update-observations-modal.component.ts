@@ -25,8 +25,6 @@ export class UpdateObservationsModalComponent implements OnInit {
   save(): void {
     this.service.update(this.item.truck.id, {
       description: this.observation,
-      cubage: 1,
-      numberOfAxles: 1,
     } as any).subscribe(() => {
       this.item.observations = this.observation;
       this.message.success('Observações atualizadas com sucesso');
