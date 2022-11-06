@@ -7,19 +7,41 @@
   [nzFrontPagination]="false"
   (nzQueryParams)="handleQueryParamsChange.emit($event)"
   nzSize="small"
+  nzTableLayout="fixed"
+  [nzScroll]="{ y: '768px', x: '768px' }"
 >
   <thead>
   <tr>
-    <th *ngFor="let column of monitoringRequestsColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+    <th
+      *ngFor="let column of monitoringRequestsColumns"
+      [nzSortFn]="column.compare"
+      nzWidth="110px"
+    >{{ column.title }}</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let item of table.data; let i=index" [style]="'background-color:' + rowColor">
     <td>{{item.id | id}}</td>
-    <td>{{item.shipper?.tradingName ?? '-'}}</td>
+    <td>{{item.ocrNumber}}</td>
     <td>{{item.transporter?.tradingName ?? '-'}}</td>
+    <td>{{item.shipper?.tradingName ?? '-'}}</td>
     <td>{{item.driver?.name ?? '-'}}</td>
-    <td>{{item.operation?.name ?? '-'}}</td>
+    <td>{{item.truck?.vehicle.plate}}</td>
+    <td>{{getWagons(item)}}</td>
+    <td>{{getUpdateDiff(item)}}</td>
+    <td>{{getDepartureTime(item)}}</td>
+    <td>{{getArrivalTime(item)}}</td>
+    <td>{{item.lastPosition?.pointReference}}</td>
+    <td>{{item.lastPosition?.positionDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+    <td>
+      <img
+        *ngIf="item.lastPosition"
+        [src]="'assets/images/brand/200x200/' + item.lastPosition?.trackerTechnologyName.toLowerCase() + '.png'"
+        alt="logo"
+        width="25px"
+        height="25px"
+      />
+    </td>
     <td class="text-md-center">
       <a
         *ngIf="item.status !== 'draft'"

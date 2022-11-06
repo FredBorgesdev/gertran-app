@@ -5,8 +5,11 @@ import {Observable} from 'rxjs';
 import {Invoice} from './invoices.service';
 import {Customer} from '../customers/customers.service';
 import {Truck} from '../trucks/trucks.service';
+import {Position} from '../monitoring/positions.service';
 
 export interface MonitoringRequests {
+  updatedAt: string;
+  lastPosition: Position;
   customer: Customer;
   loadValue: number;
   invoices: Invoice[];
