@@ -12,6 +12,8 @@
     <app-base-user-filter
       [showCustomer]="false"
       (generateReport)="generateReport($event)"
+      [rows]="commandsSentHistory"
+      [fileName]="'Auditoria Operacional Mensagens'"
     ></app-base-user-filter>
 
     <nz-table

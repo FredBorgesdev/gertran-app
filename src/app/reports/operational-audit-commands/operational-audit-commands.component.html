@@ -11,6 +11,8 @@
 
     <app-base-user-filter
       (generateReport)="generateReport($event)"
+      [rows]="commandsSentHistory"
+      [fileName]="'Auditoria Operacional Comandos'"
     ></app-base-user-filter>
 
     <nz-table
