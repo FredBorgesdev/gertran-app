@@ -116,7 +116,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of table.data; let i=index" [class]="getRowBackgroundColor(item.monitoringRequest.status)">
+    <tr
+      *ngFor="let item of table.data; let i=index"
+      [class]="getRowBackgroundColor(item.monitoringRequest.status)"
+      (contextmenu)="openDropdown($event, moreActions)"
+    >
       <td
         style="text-align: center"
         nzLeft
