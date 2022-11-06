@@ -24,6 +24,8 @@ import { BaitsComponent } from './baits/baits.component';
 import { OperationalAuditCommandsComponent } from './operational-audit-commands/operational-audit-commands.component';
 import {BaseUserFilterComponent} from './filters/base-user-filter/base-user-filter.component';
 import { OperationalAuditMessagesComponent } from './operational-audit-messages/operational-audit-messages.component';
+import { MacrovehicleComponent } from './macrovehicle/macrovehicle.component';
+import { BaseMacroFilterComponent } from './filters/base-macro-filter/base-macro-filter.component';
 
 
 @NgModule({
@@ -50,6 +52,8 @@ import { OperationalAuditMessagesComponent } from './operational-audit-messages/
     BaitsComponent,
     OperationalAuditCommandsComponent,
     OperationalAuditMessagesComponent,
+    MacrovehicleComponent,
+    BaseMacroFilterComponent,
   ],
   imports: [
     SharedModule,

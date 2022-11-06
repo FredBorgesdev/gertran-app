@@ -23,6 +23,10 @@ export interface BaseVehicleFilter extends BasePeriodFilter {
   plate: string;
 }
 
+export interface BaseMacroFilter extends BaseVehicleFilter {
+  type?: string;
+}
+
 export interface DelayedTripFilter extends BaseFilter {
   plate: string;
   point?: string;
@@ -69,6 +73,16 @@ export type MonitoringRequestBait = MonitoringRequests & {
   installationLocation: string;
   technology: string;
   serialNumber: string;
+};
+
+export type MacroVehicleReport = {
+  id: string;
+  direction: string;
+  datetime: string;
+  message: string;
+  sentBy: string;
+  status: string;
+  title: string;
 };
 
 @Injectable({
@@ -224,5 +238,24 @@ export class ReportsService {
       fromObject: filtersParams
     });
     return this.http.get<CommandSentHistory[]>('reports/events/operationalauditmessages?1=1', { params });
+  }
+
+  getMacroVehicleReport(form: BaseMacroFilter): Observable<MacroVehicleReport[]> {
+    const filtersParams: any = {
+      from_date: form.from,
+      to_date: form.to,
+      customer: form.customer,
+    };
+    if (form.plate) {
+      filtersParams.plate = form.plate;
+    }
+    if (form.type) {
+      filtersParams.type = form.type;
+    }
+    const params = new HttpParams({
+      fromObject: filtersParams
+    });
+
+    return this.http.get<MacroVehicleReport[]>('reports/tracking/macrovehicle?1=1', { params });
   }
 }

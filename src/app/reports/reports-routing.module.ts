@@ -17,6 +17,7 @@ import {PositionsHistoryComponent} from './positions-history/positions-history.c
 import {BaitsComponent} from './baits/baits.component';
 import {OperationalAuditCommandsComponent} from './operational-audit-commands/operational-audit-commands.component';
 import {OperationalAuditMessagesComponent} from './operational-audit-messages/operational-audit-messages.component';
+import {MacrovehicleComponent} from './macrovehicle/macrovehicle.component';
 
 const routes: Routes = [
   { path: 'load-unload-by-macro', component: LoadUnloadByMacroComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'baits', component: BaitsComponent },
   { path: 'operational-audit-commands', component: OperationalAuditCommandsComponent },
   { path: 'operational-audit-messages', component: OperationalAuditMessagesComponent },
+  { path: 'macro-vehicle', component: MacrovehicleComponent },
 ];
 
 @NgModule({

@@ -1,0 +1,56 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Histórico de comandos</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-macro-filter
+      (generateReport)="generateReport($event)"
+    ></app-base-macro-filter>
+
+    <nz-table
+      #table
+      [nzData]="macroVehicleHistory"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Código</th>
+        <th>Direção</th>
+        <th>Data</th>
+        <th>Autor</th>
+        <th>Status</th>
+        <th>Título</th>
+        <th>Conteúdo</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.id | id}}</td>
+        <td>
+          <span *ngIf="data.direction === 'received'">
+            Recebido
+          </span>
+          <span *ngIf="data.direction === 'sent'">
+            Enviado
+          </span>
+        </td>
+        <td>{{ data.datetime | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data.sentBy }}</td>
+        <td>{{ data.status }}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.message }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>

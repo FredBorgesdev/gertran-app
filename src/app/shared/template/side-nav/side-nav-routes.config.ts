@@ -288,7 +288,7 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: [
           {
-            path: '/dashboard/reports13',
+            path: '/reports/macro-vehicle',
             title: 'Macros do veiculo',
             iconType: 'nzIcon',
             iconTheme: 'outline',
