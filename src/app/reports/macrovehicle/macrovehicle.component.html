@@ -11,6 +11,8 @@
 
     <app-base-macro-filter
       (generateReport)="generateReport($event)"
+      [rows]="macroVehicleHistory"
+      [fileName]="'Macros do Veiculo'"
     ></app-base-macro-filter>
 
     <nz-table

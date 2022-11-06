@@ -5,6 +5,8 @@ import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {SelectableTruckService} from '../../../trucks/selectable-truck.service';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 import {format} from 'date-fns';
+import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-base-macro-filter',
@@ -14,6 +16,8 @@ import {format} from 'date-fns';
 export class BaseMacroFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<BaseVehicleFilter>();
   @Input() hideButtons = false;
+  @Input() rows: any[];
+  @Input() fileName = 'relatorio';
 
   validateForm: FormGroup;
 
@@ -22,6 +26,8 @@ export class BaseMacroFilterComponent implements OnInit {
     private i18n: NzI18nService,
     public selectableTrucksService: SelectableTruckService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    private xlsxExporterService: XlsxExporterService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +35,7 @@ export class BaseMacroFilterComponent implements OnInit {
       customer: [null, [Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      plate: ['GER1111', []],
+      plate: [null, []],
       type: ['all', []]
     });
 
@@ -65,6 +71,16 @@ export class BaseMacroFilterComponent implements OnInit {
     }
 
     return filters;
+  }
+
+  generateExcel(): void {
+    if (!this.rows || this.rows.length === 0) {
+      this.message.error('Não há dados para exportar');
+      return;
+    }
+    const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
+
+    this.xlsxExporterService.generate(fileNameWithPlate, this.rows);
   }
 
   private get isFilterAll(): boolean {
