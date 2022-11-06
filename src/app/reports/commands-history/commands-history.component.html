@@ -11,6 +11,8 @@
 
     <app-base-vehicle-filter
       (generateReport)="generateReport($event)"
+      [rows]="commandSentHistory"
+      [fileName]="'Histórico de comandos'"
     ></app-base-vehicle-filter>
 
     <nz-table

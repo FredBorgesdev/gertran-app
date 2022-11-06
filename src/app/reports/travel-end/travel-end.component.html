@@ -11,6 +11,8 @@
 
     <app-base-vehicle-filter
       (generateReport)="generateReport($event)"
+      [rows]="positionEvents"
+      [fileName]="'Fim de viagem'"
     ></app-base-vehicle-filter>
 
     <nz-table

@@ -7,6 +7,8 @@ import {BaseVehicleFilter} from '../../reports.service';
 import {SelectableTruckService} from '../../../trucks/selectable-truck.service';
 import {format} from 'date-fns';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
+import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-base-vehicle-filter',
@@ -17,6 +19,8 @@ import {SelectableCustomerServiceService} from '../../../customers/selectable-cu
 export class BaseVehicleFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<BaseVehicleFilter>();
   @Input() hideButtons = false;
+  @Input() rows: any[];
+  @Input() fileName = 'relatorio';
 
   validateForm: FormGroup;
 
@@ -25,6 +29,8 @@ export class BaseVehicleFilterComponent implements OnInit {
     private i18n: NzI18nService,
     public selectableTrucksService: SelectableTruckService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    private xlsxExporterService: XlsxExporterService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -53,5 +59,15 @@ export class BaseVehicleFilterComponent implements OnInit {
 
   loadVehicles(customerId: string): void {
     this.selectableTrucksService.loadMoreTrucks({ customerId });
+  }
+
+  generateExcel(): void {
+    if (!this.rows || this.rows.length === 0) {
+      this.message.error('Não há dados para exportar');
+      return;
+    }
+    const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
+
+    this.xlsxExporterService.generate(fileNameWithPlate, this.rows);
   }
 }
