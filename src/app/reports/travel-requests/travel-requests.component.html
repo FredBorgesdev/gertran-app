@@ -11,6 +11,8 @@
 
     <app-base-customer-filter
       (generateReport)="generateReport($event)"
+      [rows]="monitoringRequests"
+      [fileName]="'Relatório de Solicitações'"
     ></app-base-customer-filter>
 <!--    <app-base-generic-filters-->
 <!--      (generateReport)="generateReport($event)"-->

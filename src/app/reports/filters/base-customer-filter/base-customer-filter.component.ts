@@ -6,6 +6,8 @@ import {BasePeriodFilter} from '../../reports.service';
 import {format, subMonths} from 'date-fns';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 
 export enum ReportFormat {
   SYNTHETIC = 'synthetic',
@@ -25,6 +27,8 @@ export class BaseCustomerFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<CustomerFilter>();
   @Output() valueChanges = new EventEmitter<CustomerFilter>();
   @Input() hideButtons = false;
+  @Input() rows: any[];
+  @Input() fileName = 'Report.xlsx';
 
   validateForm: FormGroup;
   customers: Customer[] = [];
@@ -36,7 +40,9 @@ export class BaseCustomerFilterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private i18n: NzI18nService,
-    private customerService: CustomersService
+    private customerService: CustomersService,
+    private message: NzMessageService,
+    private xlsxExporterService: XlsxExporterService,
   ) { }
 
   ngOnInit(): void {
@@ -100,5 +106,19 @@ export class BaseCustomerFilterComponent implements OnInit {
     }
 
     this.searchCustomerSubject.next(name);
+  }
+
+  generateExcel(): void {
+    if (!this.rows || this.rows.length === 0) {
+      this.message.error('Nenhum dado encontrado para exportar');
+      return;
+    }
+    const fileNameWithCustomer = `${this.fileName} - ${this.selectedCustomerName}`;
+
+    this.xlsxExporterService.generate(fileNameWithCustomer, this.rows);
+  }
+
+  get selectedCustomerName(): string {
+    return this.customers.find((customer) => customer.id === this.validateForm.controls.customer.value)?.tradingName;
   }
 }

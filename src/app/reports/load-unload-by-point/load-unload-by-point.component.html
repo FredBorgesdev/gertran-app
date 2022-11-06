@@ -12,6 +12,8 @@
     <!-- Filters -->
     <app-base-customer-filter
       (generateReport)="generateReport($event)"
+      [rows]="travelSteps"
+      [fileName]="'Carga e descarga por ponto'"
     ></app-base-customer-filter>
 
     <nz-table

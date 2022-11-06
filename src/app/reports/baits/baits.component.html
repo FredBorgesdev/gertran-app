@@ -11,6 +11,8 @@
 
     <app-base-customer-filter
       (generateReport)="generateReport($event)"
+      [rows]="monitoringRequestsBaits"
+      [fileName]="'Relatório de isca'"
     ></app-base-customer-filter>
 
     <nz-table

@@ -11,6 +11,8 @@
 
     <app-base-customer-filter
       (generateReport)="generateReport($event)"
+      [rows]="monitoringRequests"
+      [fileName]="'Relatório de Fechamento'"
     ></app-base-customer-filter>
 
     <nz-table

@@ -73,7 +73,11 @@
     <button nz-button style="width: 100%">Gerar pdf</button>
   </div>
   <div nz-col nzSpan="8">
-    <button nz-button style="width: 100%">Gerar planilha</button>
+    <button
+      nz-button
+      style="width: 100%"
+      (click)="generateExcel()"
+    >Gerar planilha</button>
   </div>
 </div>
 
