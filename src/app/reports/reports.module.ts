@@ -23,6 +23,7 @@ import { PositionsHistoryComponent } from './positions-history/positions-history
 import { BaitsComponent } from './baits/baits.component';
 import { OperationalAuditCommandsComponent } from './operational-audit-commands/operational-audit-commands.component';
 import {BaseUserFilterComponent} from './filters/base-user-filter/base-user-filter.component';
+import { OperationalAuditMessagesComponent } from './operational-audit-messages/operational-audit-messages.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {BaseUserFilterComponent} from './filters/base-user-filter/base-user-filt
     PositionsHistoryComponent,
     BaitsComponent,
     OperationalAuditCommandsComponent,
+    OperationalAuditMessagesComponent,
   ],
   imports: [
     SharedModule,

@@ -18,6 +18,7 @@ export class BaseUserFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<BaseUserFilter>();
   @Output() valueChanges = new EventEmitter<BaseUserFilter>();
   @Input() hideButtons = false;
+  @Input() showCustomer = true;
 
   validateForm: FormGroup;
   customers: Customer[] = [];
@@ -38,10 +39,10 @@ export class BaseUserFilterComponent implements OnInit {
     const lastMonth = subMonths(today, 1);
 
     this.validateForm = this.formBuilder.group({
-      customer: [null, [Validators.required]],
+      customer: [null, this.showCustomer ? [Validators.required] : []],
       from: [lastMonth, [Validators.required]],
       to: [today, [Validators.required]],
-      user: [null, [Validators.required]],
+      user: [null, []],
     });
 
     this.validateForm.valueChanges.subscribe(() => {
@@ -94,5 +95,9 @@ export class BaseUserFilterComponent implements OnInit {
     }
 
     this.searchCustomerSubject.next(name);
+  }
+
+  get columnWidth(): string {
+    return this.showCustomer ? '6' : '8';
   }
 }

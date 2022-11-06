@@ -211,4 +211,18 @@ export class ReportsService {
     });
     return this.http.get<CommandSentHistory[]>('reports/events/operationalauditcommands?1=1', { params });
   }
+
+  getOperationalAuditMessages(filters: BaseUserFilter): Observable<CommandSentHistory[]> {
+    const filtersParams: any = {
+      from_date: filters.from,
+      to_date: filters.to,
+    };
+    if (filters.user) {
+      filtersParams.user = filters.user;
+    }
+    const params = new HttpParams({
+      fromObject: filtersParams
+    });
+    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditmessages?1=1', { params });
+  }
 }

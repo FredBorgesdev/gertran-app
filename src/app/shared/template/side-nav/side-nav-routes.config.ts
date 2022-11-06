@@ -409,7 +409,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports27',
+            path: '/reports/operational-audit-messages',
             title: 'Auditoria Operacional Mensagens',
             iconType: 'nzIcon',
             iconTheme: 'outline',
