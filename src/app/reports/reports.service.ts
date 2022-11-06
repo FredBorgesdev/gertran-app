@@ -258,4 +258,20 @@ export class ReportsService {
 
     return this.http.get<MacroVehicleReport[]>('reports/tracking/macrovehicle?1=1', { params });
   }
+
+  getAnalyticalReport(form: BaseVehicleFilter): Observable<MacroVehicleReport[]> {
+    const filtersParams: any = {
+      from_date: form.from,
+      to_date: form.to,
+      customer: form.customer,
+    };
+    if (form.plate) {
+      filtersParams.plate = form.plate;
+    }
+    const params = new HttpParams({
+      fromObject: filtersParams
+    });
+
+    return this.http.get<MacroVehicleReport[]>('reports/events/analytical?1=1', { params });
+  }
 }

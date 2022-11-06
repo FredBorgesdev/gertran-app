@@ -26,6 +26,7 @@ import {BaseUserFilterComponent} from './filters/base-user-filter/base-user-filt
 import { OperationalAuditMessagesComponent } from './operational-audit-messages/operational-audit-messages.component';
 import { MacrovehicleComponent } from './macrovehicle/macrovehicle.component';
 import { BaseMacroFilterComponent } from './filters/base-macro-filter/base-macro-filter.component';
+import { AnalyticalReportComponent } from './analytical-report/analytical-report.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { BaseMacroFilterComponent } from './filters/base-macro-filter/base-macro
     OperationalAuditMessagesComponent,
     MacrovehicleComponent,
     BaseMacroFilterComponent,
+    AnalyticalReportComponent,
   ],
   imports: [
     SharedModule,

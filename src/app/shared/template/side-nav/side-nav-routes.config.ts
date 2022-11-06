@@ -369,7 +369,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: []
           },
           {
-            path: '/dashboard/reports22',
+            path: '/reports/analytical',
             title: 'Relatório analítico',
             iconType: 'nzIcon',
             iconTheme: 'outline',

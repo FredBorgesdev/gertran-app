@@ -32,6 +32,9 @@
             [nzDisabled]="selectableTrucksService.trucks.length === 0"
             (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
             [nzDropdownRender]="selectLoading"
+            nzShowSearch
+            nzServerSearch
+            (nzOnSearch)="selectableTrucksService.searchByPlate({ plate: $event, customerId: validateForm.get('customer').value })"
           >
             <nz-option
               *ngFor="let vehicle of selectableTrucksService.trucks"
