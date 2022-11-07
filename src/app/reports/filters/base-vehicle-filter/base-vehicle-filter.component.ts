@@ -9,6 +9,8 @@ import {format} from 'date-fns';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-base-vehicle-filter',
@@ -70,5 +72,19 @@ export class BaseVehicleFilterComponent implements OnInit {
     const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
 
     this.xlsxExporterService.generate(fileNameWithPlate, this.rows);
+  }
+
+  generatePdf(): void {
+    const doc = new jsPDF();
+
+    autoTable(doc, {
+      html: 'table',
+      didDrawPage: (data) => {
+        doc.addImage('assets/images/logo/logo.png', 'PNG', data.settings.margin.left, 15, 100, 20);
+      },
+      margin: { top: 50 }
+    });
+
+    doc.save('table.pdf');
   }
 }

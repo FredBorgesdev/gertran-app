@@ -84,7 +84,11 @@
     >Gerar relatório</button>
   </div>
   <div nz-col nzSpan="8">
-    <button nz-button style="width: 100%">Gerar pdf</button>
+    <button
+      nz-button
+      style="width: 100%"
+      (click)="generatePdf()"
+    >Gerar pdf</button>
   </div>
   <div nz-col nzSpan="8">
     <button
