@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
 import {MonitoringRequests} from '../monitoring-requests.service';
 import {differenceInMinutes, format} from 'date-fns';
@@ -6,9 +6,10 @@ import {differenceInMinutes, format} from 'date-fns';
 @Component({
   selector: 'app-monitoring-requests-table',
   templateUrl: './monitoring-requests-table.component.html',
-  styleUrls: ['./monitoring-requests-table.component.css']
+  styleUrls: ['./monitoring-requests-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MonitoringRequestsTableComponent implements OnInit {
+export class MonitoringRequestsTableComponent {
   @Input() monitoringRequests: GetAllResponse<MonitoringRequests>;
   @Input() rowColor = 'inherit';
   @Output() handleQueryParamsChange = new EventEmitter<any>();
@@ -34,9 +35,6 @@ export class MonitoringRequestsTableComponent implements OnInit {
   ];
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   get page(): number {
     return getCurrentPage(this.monitoringRequests);
