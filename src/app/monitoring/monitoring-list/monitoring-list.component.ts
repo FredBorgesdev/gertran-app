@@ -16,6 +16,7 @@ import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitorin
 import {UpdateObservationsModalComponent} from '../update-observations-modal/update-observations-modal.component';
 import { prop } from 'ramda'
 import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd/dropdown';
+import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
 
 enum Status {
   DRAFT = 'draft',
@@ -298,5 +299,19 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   openDropdown(ev: MouseEvent, menu: NzDropdownMenuComponent): void {
     this.nzContextMenuService.create(ev, menu);
+  }
+
+  openCommandsModal(position: Position): void {
+    this.modal.create({
+      nzTitle: 'Comandos',
+      nzContent: CommandsModalComponent,
+      nzComponentParams: {
+        position,
+      },
+      nzOnOk: (componentInstance) => componentInstance.sendCommand(),
+      nzOkText: 'Enviar',
+      nzCancelText: 'Fechar',
+      nzWidth: '70%',
+    });
   }
 }

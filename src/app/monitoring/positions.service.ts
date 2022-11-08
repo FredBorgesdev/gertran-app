@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {TrackerTechnologiesModels} from '../tracker-technologies/tracker-technologies-models.service';
 
 export interface Position {
   amountFuel: string | null;
@@ -25,7 +26,7 @@ export interface Position {
   trackerTechnologyName: string;
   timePosition: string;
   trackerSerialNumber: string;
-  trackerModel: string;
+  trackerModel: TrackerTechnologiesModels;
   truck: {
     id: string;
     vehicle: {

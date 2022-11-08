@@ -229,7 +229,7 @@
       <nz-dropdown-menu #moreActions="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
-          <li nz-menu-item>Comandos</li>
+          <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
           <li nz-menu-item>Mensagens</li>
           <li nz-menu-divider></li>
           <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>
