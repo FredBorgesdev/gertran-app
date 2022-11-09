@@ -32,6 +32,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   isLoading = false;
   monitoringRequest: MonitoringRequests;
   newStatus = Status.DRAFT;
+  observations = '';
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
@@ -57,7 +58,10 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.isLoading = true;
     this.monitoringRequestService.update(
       this.monitoringRequest.id,
-      { status: this.newStatus } as any
+      {
+        status: this.newStatus,
+        observations: this.observations,
+      } as any
     ).subscribe(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
