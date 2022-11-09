@@ -119,7 +119,7 @@
     <tr
       *ngFor="let item of table.data; let i=index"
       [class]="getRowBackgroundColor(item.monitoringRequest.status)"
-      (contextmenu)="openDropdown($event, moreActions)"
+      (contextmenu)="openDropdown($event, moreActionsRight)"
     >
       <td
         style="text-align: center"
@@ -226,10 +226,42 @@
         </a>
       </td>
 
+      <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
+          <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
+          <li nz-submenu nzTitle="Mudar status">
+            <ul style="z-index: 999">
+              <li
+                *ngFor="let status of travelStatus"
+                nz-menu-item
+                (click)="changeStatus(item, status.value)"
+              >
+                {{ status.title }}
+              </li>
+            </ul>
+          </li>
+          <li nz-menu-item>Mensagens</li>
+          <li nz-menu-divider></li>
+          <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>
+        </ul>
+      </nz-dropdown-menu>
+
       <nz-dropdown-menu #moreActions="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
           <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
+          <li nz-submenu nzTitle="Mudar status">
+            <ul style="z-index: 999">
+              <li
+                *ngFor="let travelStep of travelStatus"
+                nz-menu-item
+                (click)="changeStatus(item, travelStep)"
+              >
+                {{ travelStep.title }}
+              </li>
+            </ul>
+          </li>
           <li nz-menu-item>Mensagens</li>
           <li nz-menu-divider></li>
           <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>

@@ -17,6 +17,7 @@ import {UpdateObservationsModalComponent} from '../update-observations-modal/upd
 import { prop } from 'ramda'
 import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd/dropdown';
 import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
+import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -95,6 +96,17 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { icon: 'info-circle', color: 'blue', text: 'Porta carona' },
     { icon: 'mail', color: 'blue', text: 'Parada abastecimento' },
   ];
+  travelStatus = [
+    { title: 'Parado', value: 'stopped' },
+    { title: 'Em viagem', value: 'in_progress' },
+    { title: 'Ag. Início', value: 'waiting_for_start' },
+    { title: 'Cliente', value: 'vehicle_in_customer' },
+    { title: 'Pernoite', value: 'driver_in_overnight' },
+    { title: 'Nenhum', value: 'none' },
+    { title: 'Gerenciamento logistico', value: 'logistic_management' },
+    { title: 'Prioridade', value: 'priority' },
+    { title: 'Contigência', value: 'contigency' },
+  ];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -107,6 +119,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private positionsService: PositionsService,
     private nzContextMenuService: NzContextMenuService,
+    private monitoringRequestService: MonitoringRequestsService,
   ) { }
 
   ngOnInit(): void {
@@ -312,6 +325,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzOkText: 'Enviar',
       nzCancelText: 'Fechar',
       nzWidth: '70%',
+    });
+  }
+
+  changeStatus(item: Position, travelStatus: string): void {
+    this.monitoringRequestService.update(item.monitoringRequest.id, {
+      travelStatus,
+    } as any).subscribe(() => {
+      this.message.success('Status alterado com sucesso');
+    }, () => {
+      this.message.error('Erro ao atualizar status');
     });
   }
 }

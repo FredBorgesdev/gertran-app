@@ -13,6 +13,7 @@ export interface MonitoringRequests {
   customer: Customer;
   loadValue: number;
   invoices: Invoice[];
+  travelStatus: string;
   hasEmbeddedIntelligence: boolean;
   hasMacro: boolean;
   surveyConductedBy: string;
