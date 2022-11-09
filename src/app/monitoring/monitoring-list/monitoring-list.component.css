@@ -2,6 +2,10 @@ tr {
   font-size: 10px;
 }
 
+.bg-alert {
+  background-color: #fafdda !important;
+}
+
 .bg-warning {
   background-color: #fdf2da !important;
 }

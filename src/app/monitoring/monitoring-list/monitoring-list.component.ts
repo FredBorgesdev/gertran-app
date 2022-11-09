@@ -69,20 +69,18 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Int. Emb.' },
     { title: 'Isca' },
     { title: 'Temp.' },
-    { title: '' },
   ];
-  filter = 'all';
   validateForm: FormGroup;
 
   stopMonitoring = new Subject();
   monitoringData$: Observable<GetAllResponse<Position>>;
-  monitoringData: Position[] = [];
+  monitoringData: Position[] = null;
 
   customers: Customer[] = [];
   terminals: Terminals[] = [];
 
   isTableFullscreen = false;
-  notFound = false;
+  selectedTravelStatus: string;
 
   automations = [
     { icon: 'check-circle', color: 'orane', text: 'Excesso de velocidade' },
@@ -97,15 +95,15 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { icon: 'mail', color: 'blue', text: 'Parada abastecimento' },
   ];
   travelStatus = [
-    { title: 'Parado', value: 'stopped' },
-    { title: 'Em viagem', value: 'in_progress' },
-    { title: 'Ag. Início', value: 'waiting_for_start' },
-    { title: 'Cliente', value: 'vehicle_in_customer' },
-    { title: 'Pernoite', value: 'driver_in_overnight' },
-    { title: 'Nenhum', value: 'none' },
-    { title: 'Gerenciamento logistico', value: 'logistic_management' },
-    { title: 'Prioridade', value: 'priority' },
-    { title: 'Contigência', value: 'contigency' },
+    { title: 'Parado', value: 'stopped', backgroundColorClass: 'bg-info' },
+    { title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success' },
+    { title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-alert' },
+    { title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'bg-warning' },
+    { title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-alert' },
+    { title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-gray-lightest' },
+    { title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest' },
+    { title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest' },
+    { title: 'Contigência', value: 'contigency', backgroundColorClass: 'bg-danger' },
   ];
 
   constructor(
@@ -131,6 +129,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         {
           customer: this.validateForm.get('customer').value,
           terminal: this.validateForm.get('terminal').value,
+          travelStatus: this.selectedTravelStatus,
         })
       ),
       share(),
@@ -165,14 +164,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getRowBackgroundColor(status: string): string {
-    return {
-      [Status.IN_PROGRESS]: 'bg-success',
-      [Status.WAITING_FOR_START]: 'bg-warning',
-      [Status.FINISHED]: 'bg-success',
-      [Status.CANCELED]: 'bg-danger',
-      [Status.UNSUCCESSFULLY_TERMINATED]: 'bg-danger',
-      [Status.TERMINATED_DISAPPROVED]: 'bg-danger',
-    }[status];
+    return this.travelStatus.find(item => item.value === status).backgroundColorClass;
   }
 
   openMap(item: Position): void {
@@ -232,22 +224,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         alert: this.getRandomAlert(),
       }));
       this.isLoading = false;
-      this.notFound = this.monitoringData.length === 0;
     }, () => {
       this.isLoading = false;
-      this.notFound = true;
       this.message.error('Erro ao carregar lista');
     });
-  }
-
-  get priorityStatus() {
-    return {
-      [Status.WAITING_FOR_START]: 1,
-      [Status.PENDING]: 2,
-      [Status.IN_PROGRESS]: 3,
-      [Status.FINISHED]: 4,
-      [Status.FINISHED]: 5,
-    };
   }
 
   openAlertModal(urgent = false): void {
@@ -329,12 +309,23 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   changeStatus(item: Position, travelStatus: string): void {
-    this.monitoringRequestService.update(item.monitoringRequest.id, {
-      travelStatus,
-    } as any).subscribe(() => {
-      this.message.success('Status alterado com sucesso');
-    }, () => {
-      this.message.error('Erro ao atualizar status');
+    this.modal.confirm({
+      nzTitle: 'Deseja alterar o status da viagem?',
+      nzOnOk: () => {
+        this.monitoringRequestService.update(item.monitoringRequest.id, {
+          travelStatus,
+        } as any).subscribe(() => {
+          this.message.success('Status alterado com sucesso');
+        }, () => {
+          this.message.error('Erro ao atualizar status');
+        });
+      }
     });
+  }
+
+  applyTravelStatusFilter(travelStatus: string): void {
+    this.selectedTravelStatus = travelStatus;
+    this.stopMonitoring.next();
+    this.subscribeToMonitoringData();
   }
 }

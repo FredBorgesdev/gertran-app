@@ -31,8 +31,7 @@
       </div>
     </form>
 
-    <ng-container *ngIf="monitoringData.length > 0">
-<!--    <ng-container>-->
+    <ng-container *ngIf="monitoringData">
       <div nzSpan="8">
         <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal()">
           (0) Mensagens
@@ -49,17 +48,20 @@
         </button>
       </div>
 
-      <nz-radio-group class="m-t-15 m-b-15" nzButtonStyle="outline" [(ngModel)]="filter" nzSize="small">
-        <label nz-radio-button nzValue="all" class="border-all">Todos</label>
-        <label nz-radio-button nzValue="start" class="border-ag-start">Ag. Inicio</label>
-        <label nz-radio-button nzValue="contingency" class="border-contingency">Contigência</label>
-        <label nz-radio-button nzValue="client" class="border-client">Cliente</label>
-        <label nz-radio-button nzValue="travel" class="border-travelling">Em viagem</label>
-        <label nz-radio-button nzValue="idle" class="border-standby">Parado</label>
-        <label nz-radio-button nzValue="overnight" class="border-overnight">Pernoite</label>
-        <label nz-radio-button nzValue="out" class="border-out-of-point">Fora do ponto</label>
+      <nz-radio-group
+        class="m-t-15 m-b-15"
+        nzButtonStyle="outline"
+        nzSize="small"
+      >
+        <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all">Todos</label>
+        <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')" class="border-ag-start">Ag. Inicio</label>
+        <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')" class="border-contingency">Contigência</label>
+        <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')" class="border-client">Cliente</label>
+        <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')" class="border-travelling">Em viagem</label>
+        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="border-standby">Parado</label>
+        <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')" class="border-overnight">Pernoite</label>
+        <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')" class="border-out-of-point">Fora do ponto</label>
       </nz-radio-group>
-
 
       <br/>
 
@@ -69,11 +71,6 @@
 
       <div *ngIf="isTableFullscreen else monitoringDataTable"></div>
     </ng-container>
-
-    <div class="text-center" *ngIf="notFound">
-      <i nz-icon nzType="folder-open" nzTheme="outline" style="font-size: 32px" class="text-muted"></i>
-      <h3 class="text-muted">Nenhum monitoramento encontrado</h3>
-    </div>
   </nz-card>
 </nz-spin>
 
@@ -91,7 +88,6 @@
   <div *nzModalContent>
     <div *ngIf="!isTableFullscreen else monitoringDataTable"></div>
   </div>
-
 </nz-modal>
 
 <ng-template #monitoringDataTable>
@@ -118,13 +114,13 @@
     <tbody>
     <tr
       *ngFor="let item of table.data; let i=index"
-      [class]="getRowBackgroundColor(item.monitoringRequest.status)"
+      [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight)"
     >
       <td
         style="text-align: center"
         nzLeft
-        [class]="getRowBackgroundColor(item.monitoringRequest.status)"
+        [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       >
         <img
           [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
@@ -133,14 +129,14 @@
           height="25px"
         />
       </td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.trackerSerialNumber || '-' }}</td>
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
         [nzTooltipTitle]="item.monitoringRequest.id"
-        [class]="getRowBackgroundColor(item.monitoringRequest.status)"
+        [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       >{{ item.monitoringRequest.id | id}}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.status)">{{ item.truck?.vehicle?.plate || '-' }}</td>
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.truck?.vehicle?.plate || '-' }}</td>
       <td class="text-md-center">
         <span
           nz-icon
@@ -214,18 +210,6 @@
         <nz-badge *ngIf="!item.monitoringRequest.bait" nzStatus="error"></nz-badge>
       </td>
       <td class="text-center">{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
-      <td>
-        <a
-          nz-dropdown
-          nzTrigger="click"
-          nzPlacement="bottomCenter"
-          [nzDropdownMenu]="moreActions"
-          class="text-dark font-size-20"
-        >
-          <span nz-icon nzType="more" nzTheme="outline"></span>
-        </a>
-      </td>
-
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
@@ -246,31 +230,7 @@
           <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>
         </ul>
       </nz-dropdown-menu>
-
-      <nz-dropdown-menu #moreActions="nzDropdownMenu">
-        <ul nz-menu>
-          <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
-          <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
-          <li nz-submenu nzTitle="Mudar status">
-            <ul style="z-index: 999">
-              <li
-                *ngFor="let travelStep of travelStatus"
-                nz-menu-item
-                (click)="changeStatus(item, travelStep)"
-              >
-                {{ travelStep.title }}
-              </li>
-            </ul>
-          </li>
-          <li nz-menu-item>Mensagens</li>
-          <li nz-menu-divider></li>
-          <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>
-        </ul>
-      </nz-dropdown-menu>
     </tr>
     </tbody>
   </nz-table>
-</ng-template>
-
-<ng-template #dataNotFound>
 </ng-template>

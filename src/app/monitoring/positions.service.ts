@@ -73,7 +73,7 @@ export class PositionsService implements ApiService<Position> {
 
   getAll(
     pagination: Pagination,
-    filters?: { customer?: string; terminal?: string; groupBy?: string }
+    filters?: { customer?: string; terminal?: string; groupBy?: string; travelStatus?: string }
   ): Observable<GetAllResponse<Position>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
@@ -86,6 +86,9 @@ export class PositionsService implements ApiService<Position> {
     }
     if (filters?.terminal) {
       params.terminal = filters.terminal;
+    }
+    if (filters?.travelStatus) {
+      params.travel_status = filters.travelStatus;
     }
 
     return this.http.get<GetAllResponse<Position>>('positions', { params });
