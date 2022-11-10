@@ -265,14 +265,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getStatusTranslation(status: string): string {
-    return {
-      [Status.IN_PROGRESS]: 'Em viagem',
-      [Status.WAITING_FOR_START]: 'Aguardando início',
-      [Status.FINISHED]: 'Finalizada',
-      [Status.CANCELED]: 'Cancelada',
-      [Status.UNSUCCESSFULLY_TERMINATED]: 'Finalizada sem sucesso',
-      [Status.TERMINATED_DISAPPROVED]: 'Finalizada sem aprovação',
-    }[status];
+    return this.travelStatus.find(item => item.value === status).title;
   }
 
   goToMonitoringRequest(id: string): void {
@@ -324,7 +317,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   applyTravelStatusFilter(travelStatus: string): void {
-    this.selectedTravelStatus = travelStatus;
+    if (travelStatus === 'all') {
+      this.selectedTravelStatus = null;
+    } else {
+      this.selectedTravelStatus = travelStatus;
+    }
+
     this.stopMonitoring.next();
     this.subscribeToMonitoringData();
   }

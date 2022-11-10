@@ -48,7 +48,7 @@ export class MonitoringMapComponent implements OnInit {
       } else {
         this.directionsGeoJson = this.mountGeoJson(routeCoordinates);
         this.bounds = new mapboxgl.LngLatBounds(
-          this.driverLocation,
+          routeCoordinates[0],
           routeCoordinates[routeCoordinates.length - 1]
         );
       }

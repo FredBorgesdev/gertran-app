@@ -13,20 +13,7 @@ export class MonitoringAlertModalComponent implements OnInit {
   isLoading = false;
   urgentMessage: string = '';
 
-  list = [
-    {
-      id: 1,
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '2020-01-01 00:00:00',
-    },
-    {
-      id: 2,
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      date: '2020-01-01 00:00:00',
-    }
-  ];
+  list = [];
 
   constructor(
     private modal: NzModalService,
