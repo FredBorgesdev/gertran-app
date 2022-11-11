@@ -57,6 +57,10 @@ export class MonitoringMapComponent implements OnInit {
 
   async getDirections(travelSteps: any[]): Promise<[number, number][]> {
     const result = await this.directionsService.getDirections(travelSteps);
+    if (!result.route?.[0]) {
+      return;
+    }
+
     const routes = polyline.toGeoJSON(result.route[0].geometry);
 
     return routes.coordinates;
