@@ -65,25 +65,25 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
 
     this.i18n.setLocale(en_US);
 
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
+    this.customersService.getAll({ limit: 50 }).subscribe((customers) => {
       this.customers = customers.results;
     });
-    this.trackerTechnologiesService.getAll({ limit: 999 }).subscribe(trackerTechnologiesModels => {
+    this.trackerTechnologiesService.getAll({ limit: 50 }).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologies = trackerTechnologiesModels.results;
 
       this.trackerTechnologies.forEach(trackerTechnology => {
-        this.trackerTechnologiesModelsService.getAll({ limit: 999 }, trackerTechnology.id).subscribe(data => {
+        this.trackerTechnologiesModelsService.getAll({ limit: 50 }, trackerTechnology.id).subscribe(data => {
           trackerTechnology.models = data.results;
         });
       });
     });
-    this.vehicleModelTypesService.getAll({ limit: 999 }).subscribe(vehicleModelTypes => {
+    this.vehicleModelTypesService.getAll({ limit: 50 }).subscribe(vehicleModelTypes => {
       this.vehicleModelTypes = vehicleModelTypes.results;
     });
-    this.vehiclePeripheralsService.getAll({ limit: 999 }).subscribe(vehiclePeripherals => {
+    this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe(vehiclePeripherals => {
       this.vehiclePeripherals = vehiclePeripherals.results;
     });
-    this.insuranceCompaniesService.getAll({ limit: 999 }).subscribe(insuranceCompanies => {
+    this.insuranceCompaniesService.getAll({ limit: 50 }).subscribe(insuranceCompanies => {
       this.insuranceCompanies = insuranceCompanies.results;
     });
     (this.service as OperationsService).getOperationTypes().subscribe(data => {

@@ -45,7 +45,7 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     super.ngOnInit();
 
     this.setVehicles();
-    this.terminalGroupsService.getAll({ limit: 999 }).subscribe((response) => {
+    this.terminalGroupsService.getAll({ limit: 50 }).subscribe((response) => {
       this.terminalGroups = response.results;
     });
   }

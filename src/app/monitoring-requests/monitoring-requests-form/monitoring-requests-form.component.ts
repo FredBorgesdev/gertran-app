@@ -68,7 +68,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     this.isLoading = true;
 
-    this.stopsService.getAll({ limit: 999 }).subscribe((stops) => {
+    this.stopsService.getAll({ limit: 50 }).subscribe((stops) => {
       this.stops = stops.results;
     });
     this.selectableCustomerService.init();
@@ -200,7 +200,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   loadMoreDrivers(): void {
     this.isLoadingMoreData = true;
     this.driversService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.driversNextUrl
     }).subscribe((drivers) => {
       this.driversNextUrl = drivers.next;
@@ -212,7 +212,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   loadMoreTrucks(): void {
     this.isLoadingMoreData = true;
     this.trucksService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.trucksNextUrl
     }).subscribe((trucks) => {
       this.trucksNextUrl = trucks.next;
@@ -224,7 +224,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   loadMoreOperations(): void {
     this.isLoadingMoreData = true;
     this.operationService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.operationsNextUrl
     }).subscribe((operations) => {
       this.operationsNextUrl = operations.next;
@@ -236,7 +236,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   loadMoreWagons(): void {
     this.isLoadingMoreData = true;
     this.wagonsService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.wagonsNextUrl
     }).subscribe((wagons) => {
       this.wagonsNextUrl = wagons.next;

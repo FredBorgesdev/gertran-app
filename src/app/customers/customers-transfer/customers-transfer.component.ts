@@ -18,7 +18,7 @@ export class CustomersTransferComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.customersService.getAll({ limit: 999 }).subscribe((customers) => {
+    this.customersService.getAll({ limit: 50 }).subscribe((customers) => {
       this.customers = customers.results;
       this.transferItems = this.customers.map((customer) => ({
         key: customer.id,

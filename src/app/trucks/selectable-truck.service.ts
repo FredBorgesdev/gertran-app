@@ -31,7 +31,7 @@ export class SelectableTruckService {
   loadMoreTrucks(filters?: { customerId: string }): void {
     this.isLoadingMoreData = true;
     this.trucksService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.trucksNextUrl
     }, filters).subscribe((trucks) => {
       this.trucksNextUrl = trucks.next;
@@ -53,7 +53,7 @@ export class SelectableTruckService {
 
   setupSearch(): void {
     this.searchTruckSubject.pipe(debounceTime(500)).subscribe((filters) => {
-      this.trucksService.getAll({ limit: 999 }, filters).subscribe((result) => {
+      this.trucksService.getAll({ limit: 50 }, filters).subscribe((result) => {
         this.trucks = result.results;
       });
     }, () => {

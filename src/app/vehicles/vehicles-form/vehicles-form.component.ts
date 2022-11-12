@@ -82,7 +82,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
     this.selectableCustomerService.init();
     this.loadMoreManufacturers();
-    this.vehiclePeripheralsService.getAll({ limit: 999 }).subscribe((peripherals) => {
+    this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
     });
     // this.service.getWorkingSituations().subscribe((workingSituations) => {
@@ -179,7 +179,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
   loadModels(): void {
     this.vehicleModelsService
-      .getAll({ limit: 999 }, this.validateForm.controls.manufacturer.value)
+      .getAll({ limit: 50 }, this.validateForm.controls.manufacturer.value)
       .subscribe((vehicleModels) => {
         this.vehicleModels = vehicleModels.results;
       });
@@ -213,7 +213,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   loadMoreManufacturers(): void {
     this.isLoadingMoreData = true;
     this.vehicleManufacturersService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.customersNextUrl
     }).subscribe((manufacturers) => {
       this.manufacturersNextUrl = manufacturers.next;

@@ -37,7 +37,7 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
   ngOnInit(): void {
     super.ngOnInit();
 
-    this.trackerTechnologiesService.getAll({ limit: 999 }).subscribe(trackerTechnologiesModels => {
+    this.trackerTechnologiesService.getAll({ limit: 50 }).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologies = trackerTechnologiesModels.results;
     });
   }
@@ -47,7 +47,7 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
       return;
     }
 
-    this.trackerTechnologiesModelsService.getAll({ limit: 999 }, trackerTechnologyId).subscribe(trackerTechnologiesModels => {
+    this.trackerTechnologiesModelsService.getAll({ limit: 50 }, trackerTechnologyId).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologiesModels = trackerTechnologiesModels.results;
     });
   }

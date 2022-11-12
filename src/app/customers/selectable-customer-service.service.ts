@@ -26,7 +26,7 @@ export class SelectableCustomerServiceService {
   loadMoreCustomers(): void {
     this.isLoadingMoreData = true;
     this.customersService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.customersNextUrl
     }).subscribe((customers) => {
       this.customersNextUrl = customers.next;
@@ -54,7 +54,7 @@ export class SelectableCustomerServiceService {
 
   private setupSearch(): void {
     this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
-      this.customersService.getAll({ limit: 999 }, { name }).subscribe((result) => {
+      this.customersService.getAll({ limit: 50 }, { name }).subscribe((result) => {
         this.customers = result.results;
       });
     }, () => {

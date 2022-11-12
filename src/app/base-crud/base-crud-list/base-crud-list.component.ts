@@ -115,7 +115,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   private setupSearch(): void {
     this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
       this.isLoading = true;
-      this.service.getAll({ limit: 999 }, { name }).subscribe((result) => {
+      this.service.getAll({ limit: 50 }, { name }).subscribe((result) => {
         this.resources = result;
         this.isLoading = false;
       });

@@ -26,7 +26,7 @@ export class SelectableUsersService {
   loadMoreUsers(): void {
     this.isLoadingMoreData = true;
     this.usersService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.customersNextUrl
     }).subscribe((users) => {
       this.customersNextUrl = users.next;
@@ -54,7 +54,7 @@ export class SelectableUsersService {
 
   private setupSearch(): void {
     this.searchUserSubject.pipe(debounceTime(500)).subscribe((name) => {
-      this.usersService.getAll({ limit: 999 }, { name }).subscribe((result) => {
+      this.usersService.getAll({ limit: 50 }, { name }).subscribe((result) => {
         this.users = result.results;
       });
     }, () => {

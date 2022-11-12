@@ -57,7 +57,7 @@ export class TerminalsListComponent extends BaseCrudListComponent<Terminals> {
   pagination(url?: string): Pagination {
     return {
       ...super.pagination(url),
-      limit: 999
+      limit: 50
     };
   }
 
@@ -109,7 +109,7 @@ export class TerminalsListComponent extends BaseCrudListComponent<Terminals> {
   }
 
   private setUnusedTerminalGroups(): void {
-    this.terminalGroupsService.getAll({ limit: 999 }).subscribe((terminalGroups) => {
+    this.terminalGroupsService.getAll({ limit: 50 }).subscribe((terminalGroups) => {
       const unusedTerminalGroups = terminalGroups.results.filter((terminalGroup) => {
         return !this.resources.results.some((terminal) => (terminal.terminalGroup as TerminalGroups)?.id === terminalGroup?.id);
       });

@@ -32,7 +32,7 @@ export class RoutesModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.routesService.getAll({ limit: 999 }).subscribe((response) => {
+    this.routesService.getAll({ limit: 50 }).subscribe((response) => {
       this.routes = [BLANK_ROUTE as any, ...response.results];
     });
     this.selectableCustomerService.init();

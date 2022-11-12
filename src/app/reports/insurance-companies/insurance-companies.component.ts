@@ -32,10 +32,10 @@ export class InsuranceCompaniesComponent implements OnInit {
       incidentType: [null],
     });
 
-    this.customerService.getAll({ limit: 999 }).subscribe((response) => {
+    this.customerService.getAll({ limit: 50 }).subscribe((response) => {
       this.customers = response.results;
     });
-    this.insuranceCompanyService.getAll({ limit: 999 }).subscribe((response) => {
+    this.insuranceCompanyService.getAll({ limit: 50 }).subscribe((response) => {
       this.insuranceCompanies = response.results;
     });
 

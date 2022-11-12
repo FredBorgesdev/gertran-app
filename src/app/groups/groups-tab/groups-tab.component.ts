@@ -19,7 +19,7 @@ export class GroupsTabComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.groupService.getAll({ limit: 999 }).subscribe(data => {
+    this.groupService.getAll({ limit: 50 }).subscribe(data => {
       this.list = data.results.map(item => ({
         id: item.id,
         title: item.name,

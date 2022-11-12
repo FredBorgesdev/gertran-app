@@ -131,7 +131,7 @@ export class AutomationsFormComponent extends BaseCrudFormComponent<Automation> 
 
   onAllCustomersChange(): void {
     if (this.validateForm.get('isForAllCustomers').value) {
-      this.customersService.getAll({ limit: 999 }).subscribe(data => {
+      this.customersService.getAll({ limit: 50 }).subscribe(data => {
         this.customers = data.results;
       });
     }

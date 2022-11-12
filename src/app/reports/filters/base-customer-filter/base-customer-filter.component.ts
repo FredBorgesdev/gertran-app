@@ -65,7 +65,7 @@ export class BaseCustomerFilterComponent implements OnInit {
 
     this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
       this.isLoadingMoreData = true;
-      this.customerService.getAll({ limit: 999 }, { name }).subscribe((customers) => {
+      this.customerService.getAll({ limit: 50 }, { name }).subscribe((customers) => {
         this.customers = customers.results;
         this.isLoadingMoreData = false;
       });
@@ -79,7 +79,7 @@ export class BaseCustomerFilterComponent implements OnInit {
   loadMoreCustomers(): void {
     this.isLoadingMoreData = true;
     this.customerService.getAll({
-      limit: 999,
+      limit: 50,
       url: this.customersNextUrl
     }).subscribe((customers) => {
       this.customersNextUrl = customers.next;

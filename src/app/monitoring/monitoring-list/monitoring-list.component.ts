@@ -151,10 +151,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   loadFiltersList(): void {
-    this.customerService.getAll({ limit: 999 }).subscribe(data => {
+    this.customerService.getAll({ limit: 50 }).subscribe(data => {
       this.customers = data.results;
     });
-    this.terminalsService.getAll({ limit: 999 }).subscribe(data => {
+    this.terminalsService.getAll({ limit: 50 }).subscribe(data => {
       this.terminals = data.results;
     });
   }

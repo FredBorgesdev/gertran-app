@@ -65,7 +65,7 @@ export class PointsTabComponent implements OnInit {
     this._routeCoordinates = this.monitoringRequest.routeCoordinates;
 
     this.isLoading = true;
-    this.service.getAll({ limit: 999 }, this.monitoringRequest.id).subscribe((points) => {
+    this.service.getAll({ limit: 50 }, this.monitoringRequest.id).subscribe((points) => {
       points.results.forEach((point) => {
         const formGroup = this.addPoint();
         const pointWithDate = {
