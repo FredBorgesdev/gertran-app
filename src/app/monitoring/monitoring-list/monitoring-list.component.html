@@ -8,6 +8,7 @@
             nzAllowClear
             nzPlaceHolder="Cliente"
             formControlName="customer"
+            (ngModelChange)="loadPositions()"
           >
             <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
           </nz-select>
