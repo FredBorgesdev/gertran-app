@@ -23,7 +23,7 @@
   <tr *ngFor="let item of table.data; let i=index" [style]="'background-color:' + rowColor">
     <td>{{item.id | id}}</td>
     <td>{{item.ocrNumber}}</td>
-    <td>{{item.transporter?.tradingName ?? '-'}}</td>
+    <td>{{item.customer?.tradingName ?? '-'}}</td>
     <td>{{item.shipper?.tradingName ?? '-'}}</td>
     <td>{{item.driver?.name ?? '-'}}</td>
     <td>{{item.truck?.vehicle.plate}}</td>
