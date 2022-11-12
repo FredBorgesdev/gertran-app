@@ -186,7 +186,7 @@
       <td class="text-center">{{ item.speed }}km</td>
       <td>{{ item.customer?.name }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.pointReference">{{ item.pointReference || '-' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(item)">{{ getOrigin(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getDestiny(item)">{{ getDestiny(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getAlerts(item)">{{ getAlerts(item) || '-' }}</td>
