@@ -41,7 +41,7 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [
       {
         path: '/monitoring/monitoring-list',
-        title: 'Dashboard',
+        title: 'Monitoramento/rastreamento',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'eye',
