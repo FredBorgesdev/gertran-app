@@ -74,7 +74,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.WAITING_FOR_START,
-        createdAt: this.oneDayBefore,
+        createdAt: this.twoDaysBefore,
       }
     ).subscribe((result) => {
       this.waitingForStartResponse = result;
@@ -88,7 +88,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.IN_PROGRESS,
-        createdAt: this.oneDayBefore,
+        createdAt: this.twoDaysBefore,
       }
     ).subscribe((result) => {
       this.inProgressResponse = result;
@@ -102,7 +102,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.DRAFT,
-        createdAt: this.oneDayBefore,
+        createdAt: this.twoDaysBefore,
       }
     ).subscribe((result) => {
       this.draftResponse = result;
@@ -116,7 +116,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.UNDER_REVIEW,
-        createdAt: this.oneDayBefore,
+        createdAt: this.twoDaysBefore,
       }
     ).subscribe((result) => {
       this.underReviewResponse = result;
@@ -181,7 +181,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     return [
       {
         status: Status.CANCELED,
-        createdAt: this.oneDayBefore,
+        createdAt: this.twoDaysBefore,
       }
     ];
   }
@@ -237,9 +237,9 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     }
   }
 
-  get oneDayBefore(): string {
+  get twoDaysBefore(): string {
     const date = new Date();
-    date.setDate(date.getDate() - 15);
+    date.setDate(date.getDate() - 2);
 
     return date.toISOString();
   }
