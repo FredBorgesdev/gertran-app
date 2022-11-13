@@ -19,6 +19,7 @@ import {BaitsTabComponent} from './baits-tab/baits-tab.component';
 import {ArmedGuardTabComponent} from './armed-guard-tab/armed-guard-tab.component';
 import { MonitoringRequestsTableComponent } from './monitoring-requests-table/monitoring-requests-table.component';
 import { MonitoringRequestsCheckListComponent } from './monitoring-requests-check-list/monitoring-requests-check-list.component';
+import { MonitoringRequestsFilterComponent } from './monitoring-requests-filter/monitoring-requests-filter.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { MonitoringRequestsCheckListComponent } from './monitoring-requests-chec
     BaitsTabComponent,
     ArmedGuardTabComponent,
     MonitoringRequestsTableComponent,
-    MonitoringRequestsCheckListComponent
+    MonitoringRequestsCheckListComponent,
+    MonitoringRequestsFilterComponent
   ],
   imports: [
     CommonModule,

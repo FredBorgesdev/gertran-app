@@ -243,4 +243,8 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
     return date.toISOString();
   }
+
+  filterData(form: any): void {
+    console.log(form)
+  }
 }
