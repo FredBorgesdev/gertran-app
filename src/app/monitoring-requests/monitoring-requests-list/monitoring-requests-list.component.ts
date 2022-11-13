@@ -40,6 +40,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   waitingForStartResponse: GetAllResponse<MonitoringRequests>;
   inProgressResponse: GetAllResponse<MonitoringRequests>;
   draftResponse: GetAllResponse<MonitoringRequests>;
+  underReviewResponse: GetAllResponse<MonitoringRequests>;
 
   constructor(
     private travelStepService: TravelStepService,
@@ -64,6 +65,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     this.loadWaitingForStart();
     this.loadInProgress();
     this.loadDraft();
+    this.loadUnderReview();
   }
 
   loadWaitingForStart(url?: string): void {
@@ -104,6 +106,20 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       this.draftResponse = result;
+      this.isLoading = false;
+    });
+  }
+
+  loadUnderReview(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.UNDER_REVIEW,
+        createdAt: this.oneDayBefore,
+      }
+    ).subscribe((result) => {
+      this.underReviewResponse = result;
       this.isLoading = false;
     });
   }
@@ -198,6 +214,16 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     } else if (params.pageIndex > getCurrentPage(this.inProgressResponse)) {
       const url = this.replaceOffsetWithPage(this.inProgressResponse.next, params.pageIndex);
       this.loadInProgress(url);
+    }
+  }
+
+  handleQueryParamsChangeUnderReview(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.underReviewResponse)) {
+      const url = this.replaceOffsetWithPage(this.underReviewResponse.previous, params.pageIndex);
+      this.loadUnderReview(url);
+    } else if (params.pageIndex > getCurrentPage(this.underReviewResponse)) {
+      const url = this.replaceOffsetWithPage(this.underReviewResponse.next, params.pageIndex);
+      this.loadUnderReview(url);
     }
   }
 

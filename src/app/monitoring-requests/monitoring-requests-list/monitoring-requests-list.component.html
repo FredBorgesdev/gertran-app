@@ -40,6 +40,17 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
+  <nz-card nzTitle="Em análise">
+    <app-monitoring-requests-table
+      [monitoringRequests]="underReviewResponse"
+      [rowColor]="'#DFFFEDFF'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChangeUnderReview($event)"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
   <nz-card nzTitle="Aguardando inicio">
     <app-monitoring-requests-table
       [monitoringRequests]="waitingForStartResponse"
