@@ -148,9 +148,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       groupBy: [null],
     });
 
-    // this.alertsService.getAlertsCount(AlertTypes.terminal).subscribe((response) => {
-    //   this.alertsCount = response;
-    // });
+    this.alertsService.getAlertsCount(AlertTypes.terminal).subscribe((response) => {
+      this.alertsCount = response;
+    });
 
     if (
       this.activatedRoute.snapshot.queryParams.terminal ||
