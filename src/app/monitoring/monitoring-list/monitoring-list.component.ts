@@ -14,12 +14,13 @@ import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
 import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitoring-event-modal.component';
 import {UpdateObservationsModalComponent} from '../update-observations-modal/update-observations-modal.component';
-import { prop } from 'ramda'
+import {prop} from 'ramda';
 import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd/dropdown';
 import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
 import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {AlertCount, AlertsService, AlertTypes} from '../alerts.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -77,6 +78,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   stopMonitoring = new Subject();
   monitoringData$: Observable<GetAllResponse<Position>>;
   monitoringData: Position[] = null;
+  alertsCount: AlertCount = null;
 
   customers: Customer[] = [];
   terminals: Terminals[] = [];
@@ -121,6 +123,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     private nzContextMenuService: NzContextMenuService,
     private monitoringRequestService: MonitoringRequestsService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    private alertsService: AlertsService,
   ) { }
 
   ngOnInit(): void {
@@ -143,6 +146,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       customer: [this.activatedRoute.snapshot.queryParams.customer],
       terminal: [this.activatedRoute.snapshot.queryParams.terminal],
       groupBy: [null],
+    });
+
+    this.alertsService.getAlertsCount(AlertTypes.terminal).subscribe((response) => {
+      this.alertsCount = response;
     });
 
     if (
