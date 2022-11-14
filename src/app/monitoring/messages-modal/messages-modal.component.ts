@@ -35,8 +35,16 @@ export class MessagesModalComponent implements OnInit {
     this.messagesService.requestMessage({
       trackerSerialNumber: this.position.trackerSerialNumber,
       trackerModel: this.position.trackerModel.id,
-      code: this.message,
-      freeText: this.freeText,
+      code: this.code,
+      message: this.freeText,
     }).subscribe(() => {});
+  }
+
+  get code(): string {
+    if (this.freeText) {
+      return '0';
+    }
+
+    return this.message;
   }
 }
