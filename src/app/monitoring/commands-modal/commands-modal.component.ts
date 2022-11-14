@@ -31,10 +31,17 @@ export class CommandsModalComponent implements OnInit {
   }
 
   sendCommand(): void {
+    this.isLoading = true;
     this.commandsService.requestCommand({
       trackerSerialNumber: this.position.trackerSerialNumber,
       trackerModel: this.position.trackerModel.id,
       code: this.command,
-    }).subscribe(() => {});
+    }).subscribe(() => {
+      this.message.success('Comando enviado com sucesso');
+      this.isLoading = false;
+    }, () => {
+      this.message.error('Erro ao enviar comando');
+      this.isLoading = false;
+    });
   }
 }

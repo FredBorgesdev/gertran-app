@@ -32,12 +32,19 @@ export class MessagesModalComponent implements OnInit {
   }
 
   sendMessage(): void {
+    this.isLoading = true;
     this.messagesService.requestMessage({
       trackerSerialNumber: this.position.trackerSerialNumber,
       trackerModel: this.position.trackerModel.id,
       code: this.code,
       message: this.freeText,
-    }).subscribe(() => {});
+    }).subscribe(() => {
+      this.isLoading = false;
+      this.messageToast.success('Mensagem enviada com sucesso');
+    }, () => {
+      this.isLoading = false;
+      this.messageToast.error('Erro ao enviar mensagem');
+    });
   }
 
   get code(): string | number {
