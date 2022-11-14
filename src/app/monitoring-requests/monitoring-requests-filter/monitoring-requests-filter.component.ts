@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CustomerFilter} from '../../reports/filters/base-customer-filter/base-customer-filter.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
-import {format, subMonths} from 'date-fns';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({

@@ -18,6 +18,7 @@ import { prop } from 'ramda'
 import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd/dropdown';
 import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
 import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
+import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
 
 enum Status {
   DRAFT = 'draft',
@@ -295,6 +296,20 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         position,
       },
       nzOnOk: (componentInstance) => componentInstance.sendCommand(),
+      nzOkText: 'Enviar',
+      nzCancelText: 'Fechar',
+      nzWidth: '70%',
+    });
+  }
+
+  openMessagesModal(position: Position): void {
+    this.modal.create({
+      nzTitle: 'Mensagens',
+      nzContent: MessagesModalComponent,
+      nzComponentParams: {
+        position,
+      },
+      nzOnOk: (componentInstance) => componentInstance.sendMessage(),
       nzOkText: 'Enviar',
       nzCancelText: 'Fechar',
       nzWidth: '70%',

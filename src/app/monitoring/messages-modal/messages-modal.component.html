@@ -1,0 +1,17 @@
+<nz-spin [nzSpinning]="isLoading" nzTip="Aguarde...">
+  <nz-radio-group [(ngModel)]="message" nzName="radiogroup">
+    <label
+      style="width: 40%"
+      *ngFor="let message of messages"
+      nz-radio
+      [nzValue]="message.code"
+    >{{ message.description }}</label>
+  </nz-radio-group>
+
+  <textarea
+    nz-input
+    [(ngModel)]="freeText"
+    class="m-t-30"
+    placeholder="Texto livre"
+  ></textarea>
+</nz-spin>
