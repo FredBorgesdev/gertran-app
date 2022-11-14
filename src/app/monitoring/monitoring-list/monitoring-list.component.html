@@ -42,14 +42,14 @@
 
     <ng-container *ngIf="monitoringData">
       <div nzSpan="8">
-        <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal()">
-          ({{ alertsCount.info }}) Mensagens
+        <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal('info')">
+          ({{ alertsCount?.info }}) Mensagens
         </button>
-        <button nzSize="small" nz-button nzType="primary" class="m-r-10" (click)="openAlertModal()">
-          ({{ alertsCount.warning }}) Alertas
+        <button nzSize="small" nz-button nzType="primary" class="m-r-10" (click)="openAlertModal('warning')">
+          ({{ alertsCount?.warning }}) Alertas
         </button>
-        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10" (click)="openAlertModal(true)">
-          ({{ alertsCount.danger }}) Urgentes
+        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10" (click)="openAlertModal('danger')">
+          ({{ alertsCount?.danger }}) Urgentes
         </button>
         <button nzSize="small" nz-button nzType="dashed">
           <span nz-icon nzType="car"></span>

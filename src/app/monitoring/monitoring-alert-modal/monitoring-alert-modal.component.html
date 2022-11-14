@@ -1,36 +1,50 @@
-<nz-list class="demo-loadmore-list" [nzLoading]="isLoading">
-  <nz-list-item *ngFor="let item of list">
-    <ng-container *ngIf="!item.loading">
-      <nz-list-item-meta [nzDescription]="item.date | date: 'dd/MM/yyyy HH:mm'">
-        <nz-list-item-meta-title>
-          {{ item.content }}
-        </nz-list-item-meta-title>
-      </nz-list-item-meta>
-
-      <ul nz-list-item-actions>
-        <nz-list-item-action>
-          <a (click)="markAsRead(item)">
-            {{ urgent ? 'Resolver' : 'Marcar como lido' }}
-          </a>
-        </nz-list-item-action>
-      </ul>
-    </ng-container>
-
-    <nz-skeleton
-      *ngIf="item.loading"
-      [nzActive]="true"
-      [nzTitle]="false"
-      [nzLoading]="true"
-    ></nz-skeleton>
-  </nz-list-item>
-</nz-list>
+<nz-table
+  #automationsListTable
+  [nzData]="alerts?.results"
+  [nzTotal]="alerts?.count"
+  [nzPageSize]="alerts?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+  [nzLoading]="isLoading"
+>
+  <thead>
+  <tr>
+    <th class="text-center">Código</th>
+    <th class="text-center">Mensagem</th>
+    <th class="text-center">Ação</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of automationsListTable.data;  let i=index">
+    <td class="text-center">{{item.id | id}}</td>
+    <td>
+      <div class="d-flex align-items-center">
+        <h6 class="m-b-0">{{item.message}}</h6>
+      </div>
+    </td>
+    <td class="text-center">
+      <a
+        (click)="markAsRead(item)"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        [nzTooltipTitle]="isUrgent ? 'Resolver' : 'Marcar como lida'"
+      >
+        <i nz-icon [nzType]="isUrgent ? 'check' : 'check-circle'"></i>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
 
 <nz-modal
   [(nzVisible)]="isUrgentModalOpen"
   nzOkText="Salvar"
   nzCancelDisabled
   nzTitle="Atenção"
-  (nzOnOk)="resolveUrgency()"
+  (nzOnOk)="resolveAlert()"
 >
   <ng-container *nzModalContent>
     <input placeholder="Considerações" nz-input [(ngModel)]="urgentMessage" />

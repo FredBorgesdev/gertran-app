@@ -20,7 +20,7 @@ import {CommandsModalComponent} from '../commands-modal/commands-modal.component
 import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
-import {AlertCount, AlertsService, AlertTypes} from '../alerts.service';
+import {AlertCount, AlertsService, AlertTypes, Severity} from '../alerts.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -148,9 +148,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       groupBy: [null],
     });
 
-    this.alertsService.getAlertsCount(AlertTypes.terminal).subscribe((response) => {
-      this.alertsCount = response;
-    });
+    // this.alertsService.getAlertsCount(AlertTypes.terminal).subscribe((response) => {
+    //   this.alertsCount = response;
+    // });
 
     if (
       this.activatedRoute.snapshot.queryParams.terminal ||
@@ -238,12 +238,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openAlertModal(urgent = false): void {
+  openAlertModal(severity: Severity): void {
     this.modal.create({
       nzTitle: 'Alertas',
       nzContent: MonitoringAlertModalComponent,
       nzComponentParams: {
-        urgent,
+        severity,
       },
       nzOkText: 'Fechar',
       nzCancelText: null,
