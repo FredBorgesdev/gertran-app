@@ -19,6 +19,7 @@ import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd/dropd
 import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
 import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -119,6 +120,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     private positionsService: PositionsService,
     private nzContextMenuService: NzContextMenuService,
     private monitoringRequestService: MonitoringRequestsService,
+    public selectableCustomerService: SelectableCustomerServiceService,
   ) { }
 
   ngOnInit(): void {
@@ -152,9 +154,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   loadFiltersList(): void {
-    this.customerService.getAll({ limit: 50 }).subscribe(data => {
-      this.customers = data.results;
-    });
+    this.selectableCustomerService.init();
     this.terminalsService.getAll({ limit: 50 }).subscribe(data => {
       this.terminals = data.results;
     });

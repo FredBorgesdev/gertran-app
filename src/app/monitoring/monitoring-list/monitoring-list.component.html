@@ -9,8 +9,16 @@
             nzPlaceHolder="Cliente"
             formControlName="customer"
             (ngModelChange)="loadPositions()"
+            nzServerSearch
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            [nzDropdownRender]="selectLoading"
           >
-            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            <nz-option
+              *ngFor="let customer of selectableCustomerService.customers"
+              [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"
+            ></nz-option>
           </nz-select>
         </div>
 <!--        <div nz-col nzSpan="4">-->
@@ -233,4 +241,8 @@
     </tr>
     </tbody>
   </nz-table>
+</ng-template>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>
