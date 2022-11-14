@@ -324,6 +324,20 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
           travelStatus,
         } as any).subscribe(() => {
           this.message.success('Status alterado com sucesso');
+
+          this.monitoringData = this.monitoringData.map(data => {
+            if (data.id === item.id) {
+              return {
+                ...data,
+                monitoringRequest: {
+                  ...data.monitoringRequest,
+                  travelStatus,
+                },
+              };
+            }
+
+            return data;
+          });
         }, () => {
           this.message.error('Erro ao atualizar status');
         });
