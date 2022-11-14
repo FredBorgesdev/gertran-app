@@ -26,7 +26,7 @@ export class MessagesService {
   requestMessage(body: {
     trackerSerialNumber: string;
     trackerModel: string;
-    code: string;
+    code: string | number;
     message: string;
   }): Observable<any> {
     return this.http.post('trackers/macros/request', body);

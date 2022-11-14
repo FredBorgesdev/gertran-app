@@ -40,9 +40,9 @@ export class MessagesModalComponent implements OnInit {
     }).subscribe(() => {});
   }
 
-  get code(): string {
+  get code(): string | number {
     if (this.freeText) {
-      return '0';
+      return 0;
     }
 
     return this.message;
