@@ -20,8 +20,13 @@ export class CommandsModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.commandsService.getCommands(this.position.trackerModel.id).subscribe(commands => {
       this.commands = commands;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao carregar comandos');
     });
   }
 
@@ -30,8 +35,6 @@ export class CommandsModalComponent implements OnInit {
       trackerSerialNumber: this.position.trackerSerialNumber,
       trackerModel: this.position.trackerModel.id,
       code: this.command,
-    }).subscribe(() => {
-
-    });
+    }).subscribe(() => {});
   }
 }
