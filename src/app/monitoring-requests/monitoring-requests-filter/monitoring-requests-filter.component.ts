@@ -4,6 +4,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
+export type MonitoringRequestsFilter = {
+  customer: string;
+  from: Date;
+  to: Date;
+};
+
 @Component({
   selector: 'app-monitoring-requests-filter',
   templateUrl: './monitoring-requests-filter.component.html',

@@ -60,7 +60,9 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
 
   getAll(pagination: Pagination, filters?: {
     status?: string;
-    createdAt?: string;
+    fromDate?: string;
+    toDate?: string;
+    customer?: string;
   }): Observable<GetAllResponse<MonitoringRequests>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
@@ -69,8 +71,16 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
       });
     }
 
-    if (filters?.createdAt) {
-      params.created_at = filters.createdAt;
+    if (filters?.fromDate) {
+      params.from_date = filters.fromDate;
+    }
+
+    if (filters?.toDate) {
+      params.to_date = filters.toDate;
+    }
+
+    if (filters?.customer) {
+      params.customer = filters.customer;
     }
 
     if (filters?.status) {

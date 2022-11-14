@@ -13,6 +13,7 @@ import {Route} from '../../routes/routes.service';
 import {GetAllResponse, getCurrentPage, Pagination} from '../../shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {MonitoringRequestsCheckListComponent} from '../monitoring-requests-check-list/monitoring-requests-check-list.component';
+import {MonitoringRequestsFilter} from '../monitoring-requests-filter/monitoring-requests-filter.component';
 
 enum Status {
   DRAFT = 'draft',
@@ -42,6 +43,15 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   draftResponse: GetAllResponse<MonitoringRequests>;
   underReviewResponse: GetAllResponse<MonitoringRequests>;
 
+  monitoringRequestFilters: {
+    fromDate: string;
+    toDate: string;
+    customer?: string;
+  } = {
+    fromDate: this.twoDaysBefore,
+    toDate: this.now,
+  };
+
   constructor(
     private travelStepService: TravelStepService,
     private directionsService: DirectionsService,
@@ -62,6 +72,13 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   ngOnInit(): void {
     super.ngOnInit();
 
+    this.loadAllResources();
+  }
+
+  loadAllResources(loadBaseResource = false): void {
+    if (loadBaseResource) {
+      this.loadResources();
+    }
     this.loadWaitingForStart();
     this.loadInProgress();
     this.loadDraft();
@@ -74,7 +91,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.WAITING_FOR_START,
-        createdAt: this.twoDaysBefore,
+        ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
       this.waitingForStartResponse = result;
@@ -88,7 +105,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.IN_PROGRESS,
-        createdAt: this.twoDaysBefore,
+        ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
       this.inProgressResponse = result;
@@ -102,7 +119,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.DRAFT,
-        createdAt: this.twoDaysBefore,
+        ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
       this.draftResponse = result;
@@ -116,7 +133,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.UNDER_REVIEW,
-        createdAt: this.twoDaysBefore,
+        ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
       this.underReviewResponse = result;
@@ -181,7 +198,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     return [
       {
         status: Status.CANCELED,
-        createdAt: this.twoDaysBefore,
+        ...this.monitoringRequestFilters,
       }
     ];
   }
@@ -244,7 +261,17 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     return date.toISOString();
   }
 
-  filterData(form: any): void {
-    console.log(form)
+  get now(): string {
+    return new Date().toISOString();
+  }
+
+  filterData(form: MonitoringRequestsFilter): void {
+    this.monitoringRequestFilters = {
+      fromDate: form.from.toISOString(),
+      toDate: form.to.toISOString(),
+      customer: form.customer,
+    };
+
+    this.loadAllResources(true);
   }
 }
