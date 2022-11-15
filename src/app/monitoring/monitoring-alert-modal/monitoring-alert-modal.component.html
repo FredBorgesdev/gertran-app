@@ -30,6 +30,7 @@
         nzType="default"
         nzShape="circle"
         nz-tooltip
+        [disabled]="item.readAt"
         [nzTooltipTitle]="isUrgent ? 'Resolver' : 'Marcar como lida'"
       >
         <i nz-icon [nzType]="isUrgent ? 'check' : 'check-circle'"></i>

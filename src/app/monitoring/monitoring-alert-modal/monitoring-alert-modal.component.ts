@@ -3,6 +3,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {Alert, AlertsService, AlertTypes, Severity} from '../alerts.service';
 import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-monitoring-alert-modal',
@@ -12,6 +13,7 @@ import {NzTableQueryParams} from 'ng-zorro-antd/table';
 export class MonitoringAlertModalComponent implements OnInit {
   @Input() severity: Severity;
 
+  currentAlert: Alert;
   isUrgentModalOpen = false;
   isLoading = false;
   urgentMessage = '';
@@ -21,6 +23,7 @@ export class MonitoringAlertModalComponent implements OnInit {
   constructor(
     private modal: NzModalService,
     private alertsService: AlertsService,
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -40,11 +43,27 @@ export class MonitoringAlertModalComponent implements OnInit {
     });
   }
 
-  markAsRead(item: any): void {
-    if (this.severity === Severity.danger) {
+  markAsRead(item: Alert): void {
+    if (this.severity === Severity.danger && !this.urgentMessage) {
       this.isUrgentModalOpen = true;
+      this.currentAlert = item;
       return;
     }
+
+    this.isLoading = true;
+    this.alertsService.markAsRead(item.id, {
+      solvedDescription: this.urgentMessage,
+    }).subscribe(() => {
+      this.message.success('Alerta marcado como lido com sucesso!');
+      this.isLoading = false;
+      this.isUrgentModalOpen = false;
+      this.urgentMessage = '';
+      this.currentAlert = null;
+      this.loadAlerts();
+    }, () => {
+      this.message.error('Erro ao marcar alerta como lido!');
+      this.isLoading = false;
+    });
   }
 
   resolveAlert(): void {
@@ -54,11 +73,7 @@ export class MonitoringAlertModalComponent implements OnInit {
       nzOkText: 'Sim',
       nzOkType: 'primary',
       nzOnOk: () => {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-          this.isUrgentModalOpen = false;
-        }, 1000);
+        this.markAsRead(this.currentAlert);
       },
       nzCancelText: 'Não',
     });

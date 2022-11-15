@@ -71,4 +71,10 @@ export class AlertsService {
 
     return this.http.get<AlertCount>('alerts/count?1=1', { params });
   }
+
+  markAsRead(id: string, body?: {
+    solvedDescription: string,
+  }): Observable<void> {
+    return this.http.patch<void>(`alerts/${id}/mark-as-read`, body);
+  }
 }
