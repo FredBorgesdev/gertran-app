@@ -8,9 +8,10 @@ export interface User {
   name: string;
   email: string;
   password?: string;
-  isActive: string;
-  isAdmin: string;
-  isSuperuser: string;
+  isActive: boolean;
+  isAdmin: boolean;
+  isSuperuser: boolean;
+  isGertranStaff: boolean;
   lastLogin: string;
   permissions: number[];
   groups: number[];

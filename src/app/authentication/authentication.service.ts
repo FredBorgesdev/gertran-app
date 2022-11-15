@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Cookies from 'js-cookie';
 import {from, Observable} from 'rxjs';
+import decode from 'jwt-decode';
+import {User, UsersService} from '../users/users.service';
 
 export const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
 const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
@@ -11,7 +13,10 @@ const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private usersService: UsersService,
+  ) { }
 
   async login(
     email: string,
@@ -66,5 +71,16 @@ export class AuthenticationService {
     });
 
     return !!isTokenValid;
+  }
+
+  async getUser(): Promise<User | null> {
+    const jwt = Cookies.get(GERTRAN_WEB_TOKEN);
+    if (!jwt) {
+      return null;
+    }
+
+    const decoded: any = decode(jwt);
+
+    return this.usersService.get(decoded.user_id).toPromise();
   }
 }
