@@ -107,7 +107,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-gray-lightest' },
     { title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest' },
     { title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest' },
-    { title: 'Contigência', value: 'contigency', backgroundColorClass: 'bg-danger' },
+    { title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-danger' },
   ];
 
   constructor(
