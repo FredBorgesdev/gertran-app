@@ -33,7 +33,7 @@
     ></app-monitoring-requests-filter>
   </nz-card>
 
-  <nz-card nzTitle="Rascunho" *ngIf="isGertranStaff">
+  <nz-card nzTitle="Rascunho" *ngIf="!isGertranStaff">
     <app-monitoring-requests-table
       [monitoringRequests]="draftResponse"
       [rowColor]="'#f7faff'"
