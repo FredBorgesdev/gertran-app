@@ -45,16 +45,22 @@ export class AlertsService {
     pagination: Pagination,
     filters: {
       alertType: AlertTypes,
-      terminal: string,
+      terminal?: string,
+      customer?: string,
       severity?: Severity
     }
   ): Observable<GetAllResponse<Alert>> {
-    const params = {
+    const params: any = {
       limit: pagination.limit || DEFAULT_LIMIT,
       alert_type: filters.alertType,
       severity: filters.severity,
-      terminal: filters.terminal,
     };
+    if (filters.terminal) {
+      params.terminal = filters.terminal;
+    }
+    if (filters.customer) {
+      params.customer = filters.customer;
+    }
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -64,13 +70,25 @@ export class AlertsService {
     return this.http.get<GetAllResponse<Alert>>('alerts', { params });
   }
 
-  getAlertsCount(terminal: string, alertType: AlertTypes, severity?: Severity): Observable<AlertCount> {
-    const params = new HttpParams({
-      fromObject: {
-        terminal,
-        alert_type: alertType,
-      }
-    });
+  getAlertsCount(
+    filters: {
+      terminal?: string
+      customer?: string
+    },
+    alertType: AlertTypes,
+    severity?: Severity
+  ): Observable<AlertCount> {
+    const fromObject: any = {
+      alert_type: alertType
+    };
+    if (filters.terminal) {
+      fromObject.terminal = filters.terminal;
+    }
+    if (filters.customer) {
+      fromObject.customer = filters.customer;
+    }
+
+    const params = new HttpParams({ fromObject });
 
     return this.http.get<AlertCount>('alerts/count?1=1', { params });
   }

@@ -223,7 +223,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.stopMonitoring.next();
 
     this.alertsService.getAlertsCount(
-      this.validateForm.get('terminal').value,
+      this.validateForm.value,
       AlertTypes.terminal
     ).subscribe((response) => {
       this.alertsCount = response;
@@ -248,6 +248,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzComponentParams: {
         severity,
         terminal: this.validateForm.get('terminal').value,
+        customer: this.validateForm.get('customer').value,
       },
       nzOkText: 'Fechar',
       nzCancelText: null,
