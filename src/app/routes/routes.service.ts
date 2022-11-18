@@ -26,12 +26,24 @@ export class RoutesService implements ApiService<Route> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<Route>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      hasPoints?: boolean;
+      description?: string;
+    }
+  ): Observable<GetAllResponse<Route>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.hasPoints) {
+      params.has_points = filters.hasPoints;
+    }
+    if (filters?.description) {
+      params.description = filters.description;
     }
 
     return this.http.get<GetAllResponse<Route>>('settings/routes', { params });

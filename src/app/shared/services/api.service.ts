@@ -26,6 +26,12 @@ export const getCurrentPage = (response: GetAllResponse<any>) => {
   return response.offset / response.limit + 1;
 };
 
+export const replaceOffsetWithPage = (url: string, page: number): string => {
+  const limit = +url.match(/limit=\d+/)[0].split('=')[1];
+
+  return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
+};
+
 interface ApiService<T> {
   get(id: string, ...params: any): Observable<T>;
   getAll(pagination: Pagination, ...params: any): Observable<GetAllResponse<T>>;

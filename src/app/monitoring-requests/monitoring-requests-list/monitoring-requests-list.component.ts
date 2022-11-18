@@ -150,11 +150,12 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzTitle: 'Escolher modelo de rota',
       nzContent: RoutesModalComponent,
       nzOkText: 'Criar',
+      nzWidth: '80%',
       nzCancelText: 'Cancelar',
       nzOnOk: async (componentInstance) => {
         const route = componentInstance.routeId !== BLANK_ROUTE.id ?
           componentInstance.routeId : null;
-        const points = componentInstance.routes.find((r) => r.id === componentInstance.routeId)?.points ?? [];
+        const points = componentInstance.route?.points ?? [];
 
         const lngLat = points.map(({ point: { longitude, latitude } }) => ({ latitude, longitude }));
         const hasPoints = route && points.length > 0;

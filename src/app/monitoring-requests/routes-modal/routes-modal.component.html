@@ -1,4 +1,4 @@
-<nz-form-item class="m-b-0">
+<nz-form-item class="m-b-15">
   <nz-form-label nzRequired>Cliente</nz-form-label>
   <nz-form-control nzErrorTip="Preencha o campo">
     <nz-select
@@ -16,17 +16,31 @@
   </nz-form-control>
 </nz-form-item>
 
+<button nz-button nzSize="small" (click)="descriptionFilterVisible = true">Filtrar descrição</button>
+
 <nz-table
   #rowSelectionTable
   nzShowSizeChanger
-  [nzData]="routes"
   (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+  [nzData]="routes?.results"
+  [nzTotal]="routes?.count"
+  [nzPageSize]="routes?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleRoutesQueryParamsChange($event)"
+  [nzLoading]="isLoading"
 >
   <thead>
   <tr>
     <th></th>
     <th>Nome</th>
-    <th>Descrição</th>
+    <th nzCustomFilter>
+      Descrição
+
+      <nz-filter-trigger [(nzVisible)]="descriptionFilterVisible" [nzActive]="searchDescriptionValue.length > 0" [nzDropdownMenu]="menu">
+        <span nz-icon nzType="search" style="color: #5E99F6"></span>
+      </nz-filter-trigger>
+    </th>
     <th>Pontos</th>
   </tr>
   </thead>
@@ -46,3 +60,13 @@
 <ng-template #selectLoading>
   <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box p-15">
+      <input type="text" nz-input placeholder="Descrição" class="m-b-5" [(ngModel)]="searchDescriptionValue" />
+      <button nz-button nzSize="small" nzType="primary" class="m-r-10" (click)="search()" class="search-button">Buscar</button>
+      <button nz-button nzSize="small" (click)="reset()">Resetar</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
