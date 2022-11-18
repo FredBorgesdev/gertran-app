@@ -47,6 +47,25 @@ export interface MonitoringRequests {
   };
   routeCoordinates: any[];
   travelSteps: any[];
+  checklist: {
+    id: string;
+    driverDoorChecked: boolean;
+    passengerDoorChecked: boolean;
+    wagonEngagedChecked: boolean;
+    panelChecked: boolean;
+    trunkChecked: boolean;
+    sirenChecked: boolean;
+    blockChecked: boolean;
+    trunkLockChecked: boolean;
+    hasMacro: boolean;
+    hasEmbeddedIntelligence: boolean;
+    approved: boolean;
+    allowedTravel: boolean;
+    justification: string;
+    embeddedIntelligenceJustification: string;
+    lastStatusUpdate: Date | null;
+    hasPendencies: string;
+  };
 }
 
 @Injectable({

@@ -3,6 +3,7 @@ import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-reque
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Wagon} from '../../wagons/wagons.service';
 import {subscribeOn} from 'rxjs/operators';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 enum Status {
   DRAFT = 'draft',
@@ -29,17 +30,69 @@ enum Status {
 export class MonitoringRequestsCheckListComponent implements OnInit {
   @Input() monitoringRequestId: string;
 
+  validateForm: FormGroup;
+
   isLoading = false;
   monitoringRequest: MonitoringRequests;
   newStatus = Status.DRAFT;
   observations = '';
 
+  checklistItems = [
+    {
+      label: 'Sensor Porta Motorista',
+      value: 'driverDoorChecked',
+    },
+    {
+      label: 'Sensor Porta Passageiro',
+      value: 'passengerDoorChecked',
+    },
+    {
+      label: 'Sensor de engate de carreta',
+      value: 'wagonEngagedChecked',
+    },
+    {
+      label: 'Sensor de Painel',
+      value: 'panelChecked',
+    },
+    {
+      label: 'Sensor de Bau',
+      value: 'trunkChecked',
+    },
+    {
+      label: 'Sirene',
+      value: 'sirenChecked',
+    },
+    {
+      label: 'Bloqueio',
+      value: 'blockChecked',
+    },
+    {
+      label: 'Trava de Bau',
+      value: 'trunkLockChecked',
+    }
+  ];
+
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
     private message: NzMessageService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.validateForm = this.formBuilder.group({
+      hasMacro: [null],
+      hasEmbeddedIntelligence: [null],
+      approved: [null],
+      allowedTravel: [null],
+      justification: [''],
+      embeddedIntelligenceJustification: [''],
+      status: [null],
+      observations: ['']
+    });
+    this.checklistItems.forEach(item => {
+      this.validateForm.addControl(item.value, this.formBuilder.control(false));
+    });
+
     this.isLoading = true;
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
       this.monitoringRequest = result;
@@ -55,14 +108,20 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   save(): void {
+    if (this.validateForm.invalid) {
+      this.message.error('Preencha os dados corretamente.');
+      return;
+    }
+
+    const {
+      status,
+      observations,
+      ...checklist
+    } = this.validateForm.value;
+    const body: any = { checklist, status, observations };
+
     this.isLoading = true;
-    this.monitoringRequestService.update(
-      this.monitoringRequest.id,
-      {
-        status: this.newStatus,
-        observations: this.observations,
-      } as any
-    ).subscribe(() => {
+    this.monitoringRequestService.update(this.monitoringRequest.id, body).subscribe(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
     }, () => {

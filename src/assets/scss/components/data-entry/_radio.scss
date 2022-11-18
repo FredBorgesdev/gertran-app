@@ -18,8 +18,8 @@
 
 .ant-radio-wrapper {
     line-height: $line-height-base;
-    margin-right: $radio-gutter; 
-    
+    margin-right: $radio-gutter;
+
     &:hover {
         .ant-radio {
             .ant-radio-inner {
@@ -35,7 +35,7 @@
     border-width: 2px;
     border-style: solid;
     border-color: $border-color;
-    background-color: transparent;
+    background-color: #fff;
 
     &:after {
         background-color: $radio-theme-color;
@@ -43,7 +43,7 @@
 }
 
 .ant-radio-checked {
-    
+
     .ant-radio-inner {
         border-color: $radio-theme-color;
     }
@@ -54,7 +54,7 @@
     .ant-radio-inner {
         border-color: $radio-theme-color;
     }
-}    
+}
 
 
 .ant-radio-disabled {
@@ -69,7 +69,7 @@
 }
 
 .ant-radio-group {
-    
+
     .ant-radio-button-wrapper-checked {
 
         &:not(.ant-radio-button-wrapper-disabled) {
@@ -117,7 +117,7 @@
         &:not(.ant-radio-button-wrapper-disabled) {
             color: $white;
             background: $radio-theme-color;
-            border-color: $radio-theme-color; 
+            border-color: $radio-theme-color;
 
             &:hover {
                 color: $white;
@@ -165,7 +165,7 @@
         }
 
         &.ant-radio-button-wrapper {
-            &:first-child { 
+            &:first-child {
                 border-right-color: $radio-theme-color;
             }
         }
@@ -233,27 +233,27 @@
         }
 
         &.bg-white {
-            
+
             .ant-radio-inner {
                 border-color: $border-color;
 
-                &:after { 
+                &:after {
                     border-color: $gray;
-                }    
+                }
             }
 
             &:hover {
                 .ant-radio {
-    
+
                     .ant-radio-inner {
                         border-color: $border-color;
                     }
                 }
             }
         }
-    }    
+    }
 
-    span.ant-radio+* {       
+    span.ant-radio+* {
         padding-left: 0px;
         padding-right: 0px;
     }
@@ -264,6 +264,6 @@
             transform: rotate(45deg);
             border-color: transparent;
         }
-    } 
+    }
 }
 
