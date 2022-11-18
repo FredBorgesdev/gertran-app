@@ -8,6 +8,7 @@ import {Truck} from '../trucks/trucks.service';
 import {Position} from '../monitoring/positions.service';
 
 export interface MonitoringRequests {
+  loadType: string;
   observations: string;
   updatedAt: string;
   lastPosition: Position;
@@ -67,6 +68,7 @@ export interface MonitoringRequests {
     lastStatusUpdate: Date | null;
     hasPendencies: string;
   };
+  ocrNumber: string;
 }
 
 @Injectable({

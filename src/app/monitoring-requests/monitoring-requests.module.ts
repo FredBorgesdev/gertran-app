@@ -20,6 +20,7 @@ import {ArmedGuardTabComponent} from './armed-guard-tab/armed-guard-tab.componen
 import { MonitoringRequestsTableComponent } from './monitoring-requests-table/monitoring-requests-table.component';
 import { MonitoringRequestsCheckListComponent } from './monitoring-requests-check-list/monitoring-requests-check-list.component';
 import { MonitoringRequestsFilterComponent } from './monitoring-requests-filter/monitoring-requests-filter.component';
+import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
 
 
 @NgModule({
@@ -38,16 +39,17 @@ import { MonitoringRequestsFilterComponent } from './monitoring-requests-filter/
     MonitoringRequestsCheckListComponent,
     MonitoringRequestsFilterComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MonitoringRequestsRoutingModule,
-    GooglePlaceModule,
-    DragDropModule,
-    NgxMapboxGLModule.withConfig({
-      accessToken: environment.mapboxAccessToken,
-    }),
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        MonitoringRequestsRoutingModule,
+        GooglePlaceModule,
+        DragDropModule,
+        NgxMapboxGLModule.withConfig({
+            accessToken: environment.mapboxAccessToken,
+        }),
+        NzDescriptionsModule,
+    ]
 })
 export class MonitoringRequestsModule { }
 

@@ -198,4 +198,20 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       }
     ];
   }
+
+  getWorkingSituation(workingSituation: string): string {
+    return {
+      fleet: 'Frota',
+      aggregate: 'Agregado',
+      thirdParty: 'Terceirizado',
+    }[workingSituation] || 'N/a';
+  }
+
+  getLoadType(): string {
+    return {
+      refrigerated: 'Refrigerada',
+      unrefrigerated: 'Não refrigerada',
+      frozen: 'Congelada',
+    }[this.monitoringRequest?.loadType] || 'N/a';
+  }
 }

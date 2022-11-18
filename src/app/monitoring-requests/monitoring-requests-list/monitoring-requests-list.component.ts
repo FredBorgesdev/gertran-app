@@ -72,20 +72,22 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     );
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    this.loadAllResources();
-    this.setIsGertranStaff();
+    await this.setIsGertranStaff();
+    await this.loadAllResources();
   }
 
   loadAllResources(loadBaseResource = false): void {
     if (loadBaseResource) {
       this.loadResources();
     }
+    if (!this.isGertranStaff) {
+      this.loadDraft();
+    }
     this.loadWaitingForStart();
     this.loadInProgress();
-    this.loadDraft();
     this.loadUnderReview();
   }
 

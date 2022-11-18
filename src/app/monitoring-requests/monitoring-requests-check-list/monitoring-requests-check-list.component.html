@@ -1,191 +1,161 @@
 <nz-spin [nzSpinning]="isLoading" nzTip="Aguarde...">
+  <nz-descriptions nzTitle="Cliente" nzBordered>
+    <nz-descriptions-item nzTitle="Embarcador">
+      {{monitoringRequest?.customer?.['tradingName']}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Transportador">
+      {{monitoringRequest?.transporter?.['tradingName']}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
+  <nz-descriptions nzTitle="Motoristas" nzBordered class="m-t-15">
+    <nz-descriptions-item nzTitle="Nome">
+      {{monitoringRequest?.driver?.['name']}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="CPF">
+      {{monitoringRequest?.driver?.['cpf']}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="CNH">
+      {{monitoringRequest?.driver?.['cnhNumber']}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Telefone">
+      {{monitoringRequest?.driver?.['cellphone'] || 'N/a'}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Tipo Motorista" nzSpan="3">
+      {{getWorkingSituation(monitoringRequest?.driver?.['workingSituation'] ?? '')}}
+    </nz-descriptions-item>
+
+    <div *ngIf="monitoringRequest?.auxiliaryDriver">
+      <nz-descriptions-item nzTitle="Nome motorista auxiliar">
+        {{monitoringRequest?.auxiliaryDriver?.['name']}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="CPF motorista auxiliar">
+        {{monitoringRequest?.auxiliaryDriver?.['cpf']}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="CNH motorista auxiliar">
+        {{monitoringRequest?.auxiliaryDriver?.['cnhNumber']}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Telefone motorista auxiliar">
+        {{monitoringRequest?.auxiliaryDriver?.['cellphone'] || 'N/a'}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Tipo Motorista auxiliar" nzSpan="3">
+        {{getWorkingSituation(monitoringRequest?.auxiliaryDriver?.['workingSituation'] ?? '')}}
+      </nz-descriptions-item>
+    </div>
+  </nz-descriptions>
+
+  <nz-descriptions nzTitle="Veiculo" nzBordered class="m-t-15">
+    <nz-descriptions-item nzTitle="Placa">
+      {{monitoringRequest?.truck?.vehicle?.['plate']}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Carretas">
+      {{getWagonsPlates()}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
+  <nz-descriptions nzTitle="Viagem" nzBordered class="m-t-15">
+    <nz-descriptions-item nzTitle="Operação">
+      {{monitoringRequest?.operation?.['name']}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Ordem de carregamento / OCR">
+      {{monitoringRequest?.ocrNumber}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Pesquisa Cadastral Realizada por">
+      {{monitoringRequest?.surveyConductedBy}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Produto">
+      {{monitoringRequest?.loadDescription}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Tipo de Carga">
+      {{getLoadType()}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Preço da Carga">
+      {{monitoringRequest?.loadValue | currency: 'R$ '}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Observações" nzSpan="24">
+      {{monitoringRequest?.observations}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
   <form nz-form nzLayout="vertical">
-    <div nz-row nzGutter="8">
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Embarcador</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.shipper?.['tradingName']" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Transportador</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.transporter?.['tradingName']" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Motorista</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.driver?.['name']" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Motorista auxiliar</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.auxiliaryDriver?.['name']" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Cavalo</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.truck?.vehicle['plate']" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Carretas</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="getWagonsPlates()" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Operação</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.operation?.['name']" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Ordem de carregamento / OCR</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.loadDescription" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label>Pesquisa cadastral realizada por</nz-form-label>
-          <nz-form-control nzSpan="24">
-            <input nz-input [disabled]="true" [value]="monitoringRequest?.surveyConductedBy" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="6">
-        <nz-form-item>
-          <nz-form-label></nz-form-label>
-          <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label
-              nz-checkbox
-              nzDisabled
-              [nzChecked]="monitoringRequest?.hasMacro"
-            >Macro</label>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-      <div nz-col nzSpan="6">
-        <nz-form-item>
-          <nz-form-label></nz-form-label>
-          <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label
-              nz-checkbox
-              nzDisabled
-              [nzChecked]="monitoringRequest?.hasEmbeddedIntelligence"
-            >Int. Embarcada</label>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
+    <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15">
+      Checklist
+    </div>
 
-      <div nz-col nzSpan="24">
-        <p>Checklist</p>
-      </div>
-
-      <form nz-form [formGroup]="validateForm">
-        <div nz-row>
-          <div nz-col nzSpan="18">
-            <div nz-row>
-              <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
-                <nz-form-item>
-                  <nz-form-label></nz-form-label>
-                  <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                    <label
-                      nz-checkbox
-                      [formControlName]="item.value"
-                    >{{ item.label }}</label>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
+    <form nz-form [formGroup]="validateForm">
+      <div nz-row>
+        <div nz-col nzSpan="18">
+          <div nz-row>
+            <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
+              <nz-form-item>
+                <nz-form-label></nz-form-label>
+                <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                  <label
+                    nz-checkbox
+                    [formControlName]="item.value"
+                  >{{ item.label }}</label>
+                </nz-form-control>
+              </nz-form-item>
             </div>
           </div>
-
-          <div nz-col nzSpan="6" class="approval-container">
-            <nz-form-item>
-              <nz-form-label></nz-form-label>
-              <nz-radio-group formControlName="approved">
-                <label nz-radio [nzValue]="true">Aprovado</label>
-                <label nz-radio [nzValue]="false">Reprovado</label>
-              </nz-radio-group>
-            </nz-form-item>
-
-            <nz-form-item>
-              <nz-form-label>Justificativa</nz-form-label>
-              <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <input nz-input formControlName="justification" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
         </div>
 
-        <div nz-row class="m-t-15 m-b-15">
-          <div nz-col [nzSpan]="6">
-            <nz-form-item>
-              <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="hasMacro"
-                >Macro</label>
-              </nz-form-control>
-            </nz-form-item>
-
-            <nz-form-item>
-              <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="hasEmbeddedIntelligence"
-                >Inteligência Embarcada</label>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-
-          <div nz-col [nzSpan]="6">
-            <nz-form-item>
-              <nz-form-label>Justificativa Inteligência Embarcada</nz-form-label>
-              <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <input nz-input formControlName="embeddedIntelligenceJustification" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-
-        <nz-form-item>
-          <nz-form-label></nz-form-label>
-          <nz-radio-group formControlName="allowedTravel">
-            <label nz-radio [nzValue]="true">Viagem Autorizada</label>
-            <label nz-radio [nzValue]="false">Viagem não autorizada</label>
-          </nz-radio-group>
-        </nz-form-item>
-
-        <div nz-col nzSpan="12">
-          <nz-form-label>Mover para status</nz-form-label>
+        <div nz-col nzSpan="6" class="approval-container">
           <nz-form-item>
-            <nz-select formControlName="status">
-              <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
-            </nz-select>
+            <nz-form-label></nz-form-label>
+            <nz-radio-group formControlName="approved">
+              <label nz-radio [nzValue]="true">Aprovado</label>
+              <label nz-radio [nzValue]="false">Reprovado</label>
+            </nz-radio-group>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Justificativa</nz-form-label>
+            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+              <input nz-input formControlName="justification" />
+            </nz-form-control>
           </nz-form-item>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div nz-row class="m-t-15 m-b-15">
+        <div nz-col [nzSpan]="6">
+          <nz-form-item>
+            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+              <label
+                nz-checkbox
+                formControlName="hasMacro"
+              >Macro</label>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+              <label
+                nz-checkbox
+                formControlName="hasEmbeddedIntelligence"
+              >Inteligência Embarcada</label>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <nz-form-item>
+        <nz-form-label></nz-form-label>
+        <nz-radio-group formControlName="allowedTravel">
+          <label nz-radio [nzValue]="true">Viagem Autorizada</label>
+          <label nz-radio [nzValue]="false">Viagem não autorizada</label>
+        </nz-radio-group>
+      </nz-form-item>
+
+      <div nz-col nzSpan="12">
+        <nz-form-label>Mover para status</nz-form-label>
+        <nz-form-item>
+          <nz-select formControlName="status">
+            <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+    </form>
   </form>
 </nz-spin>
