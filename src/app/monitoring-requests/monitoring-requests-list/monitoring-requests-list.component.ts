@@ -261,7 +261,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
   get twoDaysBefore(): string {
     const date = new Date();
-    date.setDate(date.getDate() - 2);
+    date.setDate(date.getDate() - 15);
 
     return date.toISOString();
   }
