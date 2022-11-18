@@ -2,11 +2,12 @@ body {
     font-family: $font-family-base;
     background-color: $body-bg;
     color: $body-color;
+    text-transform: uppercase !important;
 }
 
 a {
     color: $link-color;
-  
+
     &:active,
     &:hover {
         color: $link-hover-color;

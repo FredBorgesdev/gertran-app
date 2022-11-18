@@ -6,6 +6,8 @@
     color: $body-color;
     height: $btn-size;
     border-radius: $border-radius;
+    text-transform: uppercase !important;
+
 
     &:hover,
     &:focus {
