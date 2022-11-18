@@ -12,6 +12,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 })
 export class MonitoringAlertModalComponent implements OnInit {
   @Input() severity: Severity;
+  @Input() terminal: string;
 
   currentAlert: Alert;
   isUrgentModalOpen = false;
@@ -35,6 +36,7 @@ export class MonitoringAlertModalComponent implements OnInit {
     this.alertsService.getAlerts({ url }, {
       alertType: AlertTypes.terminal,
       severity: this.severity,
+      terminal: this.terminal,
     }).subscribe((data: any) => {
       this.alerts = data;
       this.isLoading = false;

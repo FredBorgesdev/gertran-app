@@ -45,6 +45,7 @@ export class AlertsService {
     pagination: Pagination,
     filters: {
       alertType: AlertTypes,
+      terminal: string,
       severity?: Severity
     }
   ): Observable<GetAllResponse<Alert>> {
@@ -52,6 +53,7 @@ export class AlertsService {
       limit: pagination.limit || DEFAULT_LIMIT,
       alert_type: filters.alertType,
       severity: filters.severity,
+      terminal: filters.terminal,
     };
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -62,9 +64,10 @@ export class AlertsService {
     return this.http.get<GetAllResponse<Alert>>('alerts', { params });
   }
 
-  getAlertsCount(alertType: AlertTypes, severity?: Severity): Observable<AlertCount> {
+  getAlertsCount(terminal: string, alertType: AlertTypes, severity?: Severity): Observable<AlertCount> {
     const params = new HttpParams({
       fromObject: {
+        terminal,
         alert_type: alertType,
       }
     });

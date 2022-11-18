@@ -148,10 +148,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       groupBy: [null],
     });
 
-    this.alertsService.getAlertsCount(AlertTypes.terminal).subscribe((response) => {
-      this.alertsCount = response;
-    });
-
     if (
       this.activatedRoute.snapshot.queryParams.terminal ||
       this.activatedRoute.snapshot.queryParams.customer
@@ -226,6 +222,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.stopMonitoring.next();
 
+    this.alertsService.getAlertsCount(
+      this.validateForm.get('terminal').value,
+      AlertTypes.terminal
+    ).subscribe((response) => {
+      this.alertsCount = response;
+    });
+
     this.monitoringData$.subscribe(data => {
       this.monitoringData = data.results.map(item => ({
         ...item,
@@ -244,6 +247,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzContent: MonitoringAlertModalComponent,
       nzComponentParams: {
         severity,
+        terminal: this.validateForm.get('terminal').value,
       },
       nzOkText: 'Fechar',
       nzCancelText: null,
