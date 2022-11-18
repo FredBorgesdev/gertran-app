@@ -8,6 +8,7 @@ import {Truck} from '../trucks/trucks.service';
 import {Position} from '../monitoring/positions.service';
 
 export interface MonitoringRequests {
+  observations: string;
   updatedAt: string;
   lastPosition: Position;
   customer: Customer;

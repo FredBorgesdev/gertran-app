@@ -52,7 +52,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     },
     {
       label: 'Sensor de Painel',
-      value: 'panelChecked',
+      value: 'panelSensorChecked',
     },
     {
       label: 'Sensor de Bau',
@@ -97,6 +97,14 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
       this.monitoringRequest = result;
       this.isLoading = false;
+
+      if (result.checklist) {
+        this.validateForm.patchValue(result.checklist);
+      }
+      this.validateForm.patchValue({
+        status: result.status,
+        observations: result.observations,
+      });
     }, () => {
       this.isLoading = false;
       this.message.error('Não foi possível carregar o pedido de monitoramento.');
