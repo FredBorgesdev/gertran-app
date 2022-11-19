@@ -1,5 +1,6 @@
 <nz-table
   #automationsListTable
+  nzSize="small"
   [nzData]="alerts?.results"
   [nzTotal]="alerts?.count"
   [nzPageSize]="alerts?.limit"
@@ -25,12 +26,12 @@
     </td>
     <td class="text-center">
       <a
-        (click)="markAsRead(item)"
+        (click)="markAsSolved(item)"
         nz-button
         nzType="default"
         nzShape="circle"
         nz-tooltip
-        [disabled]="item.readAt"
+        [disabled]="item.solvedAt"
         [nzTooltipTitle]="isUrgent ? 'Resolver' : 'Marcar como lida'"
       >
         <i nz-icon [nzType]="isUrgent ? 'check' : 'check-circle'"></i>

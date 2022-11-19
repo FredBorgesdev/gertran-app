@@ -42,12 +42,26 @@ export class MonitoringAlertModalComponent implements OnInit {
     }).subscribe((data: any) => {
       this.alerts = data;
       this.isLoading = false;
+
+      this.markAsRead();
     }, () => {
       this.isLoading = false;
     });
   }
 
-  markAsRead(item: Alert): void {
+  markAsRead(): void {
+    const ids = this.alerts.results
+      .filter((alert) => !alert.readAt)
+      .map((alert: Alert) => alert.id);
+
+    if (!ids.length) {
+      return;
+    }
+
+    this.alertsService.markAsRead(ids).subscribe(() => {});
+  }
+
+  markAsSolved(item: Alert): void {
     if (this.severity === Severity.danger && !this.urgentMessage) {
       this.isUrgentModalOpen = true;
       this.currentAlert = item;
@@ -55,7 +69,7 @@ export class MonitoringAlertModalComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.alertsService.markAsRead(item.id, {
+    this.alertsService.markAsSolved(item.id, {
       solvedDescription: this.urgentMessage,
     }).subscribe(() => {
       this.message.success('Alerta marcado como lido com sucesso!');
@@ -77,7 +91,7 @@ export class MonitoringAlertModalComponent implements OnInit {
       nzOkText: 'Sim',
       nzOkType: 'primary',
       nzOnOk: () => {
-        this.markAsRead(this.currentAlert);
+        this.markAsSolved(this.currentAlert);
       },
       nzCancelText: 'Não',
     });

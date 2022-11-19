@@ -93,9 +93,13 @@ export class AlertsService {
     return this.http.get<AlertCount>('alerts/count?1=1', { params });
   }
 
-  markAsRead(id: string, body?: {
+  markAsRead(ids: string[]): Observable<void> {
+    return this.http.patch<void>('alerts/mark-as-read', { alerts: ids });
+  }
+
+  markAsSolved(id: string, body?: {
     solvedDescription: string,
   }): Observable<void> {
-    return this.http.patch<void>(`alerts/${id}/mark-as-read`, body);
+    return this.http.patch<void>(`alerts/${id}/mark-as-solved`, body);
   }
 }
