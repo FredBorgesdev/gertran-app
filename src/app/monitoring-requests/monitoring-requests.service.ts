@@ -8,8 +8,10 @@ import {Truck} from '../trucks/trucks.service';
 import {Position} from '../monitoring/positions.service';
 import {ArmedGuard} from './armed-guard.service';
 import {Bait} from './baits.service';
+import {Terminals} from '../terminals/terminals.service';
 
 export interface MonitoringRequests {
+  terminal: Terminals | null;
   baits: Bait[];
   armedGuards: ArmedGuard[];
   loadType: string;

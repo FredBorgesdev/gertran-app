@@ -137,6 +137,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.validateForm.patchValue({
         status: result.status,
         observations: result.observations,
+        terminal: result.terminal?.id
       });
     }, () => {
       this.isLoading = false;
