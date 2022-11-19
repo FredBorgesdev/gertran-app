@@ -358,4 +358,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.stopMonitoring.next();
     this.subscribeToMonitoringData();
   }
+
+  getCommunicationChannel(currentCommunicationChannel: string): string {
+    return {
+      undefined: 'Indefinido',
+      gprs: 'Rádio',
+      gps: 'Satelital',
+      gsm: 'Celular',
+    }[currentCommunicationChannel] || 'Indefinido';
+  }
 }

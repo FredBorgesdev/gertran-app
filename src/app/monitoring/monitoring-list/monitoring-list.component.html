@@ -205,7 +205,7 @@
       <td>{{ item.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
-      <td>{{ item.communication || 'TODO' }}</td>
+      <td>{{ getCommunicationChannel(item.currentCommunicationChannel) }}</td>
       <td class="text-md-center">
         <nz-badge *ngIf="item.monitoringRequest.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.hasMacro" nzStatus="error"></nz-badge>
