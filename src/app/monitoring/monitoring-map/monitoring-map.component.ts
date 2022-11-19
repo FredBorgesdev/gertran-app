@@ -76,4 +76,32 @@ export class MonitoringMapComponent implements OnInit {
       }
     };
   }
+
+  getIcon(i: number): {
+    theme: any;
+    color: string;
+    type: string;
+  } {
+    if (i === 0) {
+      return {
+        type: 'pushpin',
+        color: 'salmon',
+        theme: 'twotone'
+      };
+    }
+
+    if (i === this.markers.length - 1) {
+      return {
+        type: 'flag',
+        color: 'green',
+        theme: 'twotone'
+      };
+    }
+
+    return {
+      type: 'pushpin',
+      color: 'lightred',
+      theme: 'fill'
+    };
+  }
 }
