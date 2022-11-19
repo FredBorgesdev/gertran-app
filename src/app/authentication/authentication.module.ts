@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { Error1Component } from './error-1/error-1.component';
 import { Error2Component } from './error-2/error-2.component';
+import {TextMaskModule} from 'angular2-text-mask';
 
 const antdModule = [
   NzFormModule,
@@ -24,13 +25,14 @@ const antdModule = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    AuthenticationRoutingModule,
-    ...antdModule
-  ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        AuthenticationRoutingModule,
+        ...antdModule,
+        TextMaskModule
+    ],
   declarations: [
     LoginComponent,
     SignUpComponent,

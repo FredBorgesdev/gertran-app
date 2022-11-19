@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   loginForm: FormGroup;
 
+  cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
@@ -30,12 +32,12 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     try {
       await this.authService.login(
-        this.loginForm.value.email,
+        this.loginForm.value.cpf.replace(/\D/g, ''),
         this.loginForm.value.password
       );
       this.router.navigate(['/dashboard/home']);
     } catch (error) {
-      this.message.error('Email ou senha inválidos.');
+      this.message.error('Cpf ou senha inválidos.');
     } finally {
       this.isLoading = false;
     }
@@ -43,7 +45,7 @@ export class LoginComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required]],
+      cpf: [null, [Validators.required]],
       password: [null, [Validators.required]]
     });
 

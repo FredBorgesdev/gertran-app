@@ -1,4 +1,4 @@
-  <div 
+  <div
     class="container-fluid p-h-0 p-v-20 h-100 bg"
     style="background-image: url('assets/images/others/login-3.png')"
   >
@@ -16,10 +16,16 @@
 
               <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form" (ngSubmit)="submitForm()">
                 <nz-form-item>
-                  <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
-                  <nz-form-control nzErrorTip="Informe o seu email">
+                  <nz-form-label nzRequired nzFor="cpf">CPF</nz-form-label>
+                  <nz-form-control nzErrorTip="Informe o seu cpf">
                     <nz-input-group [nzPrefix]="prefixEmail">
-                      <input type="text" nz-input formControlName="email" placeholder="joao@gertran.com.br">
+                      <input
+                        type="text"
+                        nz-input
+                        formControlName="cpf"
+                        placeholder="123456789"
+                        [textMask]="{ mask: cpfMask, guide: false }"
+                      >
                     </nz-input-group>
                   </nz-form-control>
                 </nz-form-item>
@@ -39,7 +45,7 @@
                   </nz-form-control>
                 </nz-form-item>
               </form>
-              <ng-template #prefixEmail><i nz-icon nzType="mail"></i></ng-template>
+              <ng-template #prefixEmail><i nz-icon nzType="idcard"></i></ng-template>
               <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>
             </nz-card>
           </div>

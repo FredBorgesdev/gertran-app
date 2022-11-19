@@ -19,11 +19,11 @@ export class AuthenticationService {
   ) { }
 
   async login(
-    email: string,
+    cpf: string,
     password: string
   ): Promise<void> {
     return this.http.post('auth/jwt/create', {
-      email,
+      cpf,
       password
     }).toPromise().then((response: any) => {
       Cookies.set(GERTRAN_WEB_TOKEN, response.access);
