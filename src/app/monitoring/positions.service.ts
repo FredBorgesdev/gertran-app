@@ -50,6 +50,7 @@ export interface Position {
   };
   events: {
     eventDescription: string;
+    eventName: string;
   }[];
   wagons: string[];
   observations?: string;

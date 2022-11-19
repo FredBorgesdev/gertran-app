@@ -92,12 +92,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { icon: 'credit-card', color: 'blue', text: 'Parada prolongada' },
     { icon: 'car', color: 'blue', text: 'Parada abastecimento' },
   ];
-  alerts = [
-    { icon: 'check-circle', color: 'green', text: 'Em viagem' },
-    { icon: 'close-circle', color: 'red', text: 'Atraso em informar inicio de viagem' },
-    { icon: 'info-circle', color: 'blue', text: 'Porta carona' },
-    { icon: 'mail', color: 'blue', text: 'Parada abastecimento' },
-  ];
   travelStatus = [
     { title: 'Parado', value: 'stopped', backgroundColorClass: 'bg-info' },
     { title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success' },
@@ -230,10 +224,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
 
     this.monitoringData$.subscribe(data => {
-      this.monitoringData = data.results.map(item => ({
-        ...item,
-        alert: this.getRandomAlert(),
-      }));
+      this.monitoringData = data.results;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
@@ -256,8 +247,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
   }
 
-  getRandomAlert(): any {
-    return this.alerts[Math.floor(Math.random() * this.alerts.length)];
+  getLastEvent(item: Position): any {
+    return item.events[item.events.length - 1];
   }
 
   openAutomationModal(automations: Position['automations']): void {

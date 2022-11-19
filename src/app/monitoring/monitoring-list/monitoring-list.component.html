@@ -156,12 +156,13 @@
       </td>
       <td class="text-md-center">
         <span
+          *ngIf="getLastEvent(item)"
           nz-tooltip
-          [nzTooltipTitle]="item.alert.text"
+          [nzTooltipTitle]="getLastEvent(item)?.eventName"
           nz-icon
-          [nzType]="item.alert.icon"
+          [nzType]="'info-circle'"
           nzTheme="fill"
-          [style]="'font-size: 20px;color: ' + item.alert.color"
+          [style]="'font-size: 20px;color: blue'"
         ></span>
       </td>
       <td class="text-md-center" style="cursor: pointer" (click)="openAutomationModal(item.automations)">
