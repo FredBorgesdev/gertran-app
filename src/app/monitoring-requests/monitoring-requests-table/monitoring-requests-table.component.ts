@@ -45,7 +45,13 @@ export class MonitoringRequestsTableComponent {
   }
 
   getUpdateDiff(item: MonitoringRequests): string {
-    return differenceInMinutes(new Date(), new Date(item.updatedAt)) + ' minutos';
+    const diffInMinutes = differenceInMinutes(new Date(), new Date(item.updatedAt));
+
+    if (diffInMinutes > 60) {
+      return `Atualizado há ${Math.floor(diffInMinutes / 60)}h`;
+    }
+
+    return `Atualizado há ${diffInMinutes}m`;
   }
 
   getArrivalTime(item: MonitoringRequests): string {
