@@ -30,8 +30,8 @@ export class MonitoringRequestsFilterComponent implements OnInit {
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       customer: [null, [Validators.required]],
-      from: [null, [Validators.required]],
-      to: [null, [Validators.required]],
+      from: [this.twoDaysBefore, [Validators.required]],
+      to: [new Date(), [Validators.required]],
     });
 
     this.validateForm.valueChanges.subscribe(() => {
@@ -48,6 +48,13 @@ export class MonitoringRequestsFilterComponent implements OnInit {
 
   search(): void {
     this.filterData.emit(this.validateForm.value);
+  }
+
+  get twoDaysBefore(): string {
+    const date = new Date();
+    date.setDate(date.getDate() - 2);
+
+    return date.toISOString();
   }
 }
 
