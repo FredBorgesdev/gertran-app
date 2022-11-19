@@ -80,7 +80,6 @@
           >
             <nz-table
               #table
-              [nzData]="items"
               nzSize="small"
               [nzData]="resources?.results"
               [nzTotal]="resources?.count"
@@ -96,7 +95,13 @@
                   [nzIndeterminate]="stat.checkHalf"
                   (nzCheckedChange)="onItemSelectAll($event)"
                 ></th>
-                <th>Placa</th>
+                <th nzCustomFilter>
+                  Placa
+
+                  <nz-filter-trigger [(nzVisible)]="plateFilterVisible" [nzActive]="searchPlateValue.length > 0" [nzDropdownMenu]="menu">
+                    <span nz-icon nzType="search" style="color: #5E99F6"></span>
+                  </nz-filter-trigger>
+                </th>
               </tr>
               </thead>
               <tbody>
@@ -157,3 +162,13 @@
     </nz-tabset>
   </nz-card>
 </nz-spin>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box p-15">
+      <input type="text" nz-input placeholder="Placa" class="m-b-5" [(ngModel)]="searchPlateValue" />
+      <button nz-button nzSize="small" nzType="primary" class="m-r-10" (click)="search()" class="search-button">Buscar</button>
+      <button nz-button nzSize="small" (click)="reset()">Resetar</button>
+    </div>
+  </div>
+</nz-dropdown-menu>

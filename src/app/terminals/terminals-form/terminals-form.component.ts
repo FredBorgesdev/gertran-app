@@ -23,6 +23,8 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
   selectedVehicles = [];
 
   resources: GetAllResponse<any>;
+  searchPlateValue = '';
+  plateFilterVisible = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -75,7 +77,6 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     }));
 
     // delete if more than one of the same in list
-    console.log(this.selectedVehicles.length)
     for (let i = 0; i < this.selectedVehicles.length; i++) {
       for (let j = i + 1; j < this.selectedVehicles.length; j++) {
         if (this.selectedVehicles[i].id === this.selectedVehicles[j].id) {
@@ -83,7 +84,6 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
         }
       }
     }
-    console.log(this.selectedVehicles.length)
 
     this.vehicleTransferItems = this.vehicleTransferItems
       .concat(this.selectedVehicles)
@@ -121,7 +121,7 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
   }
 
   setVehicles(url?: string): void {
-    this.trucksService.getAll({ limit: 15, url }).subscribe((response) => {
+    this.trucksService.getAll({ limit: 15, url }, { plate: this.searchPlateValue }).subscribe((response) => {
       this.vehicleTransferItems = response.results
         .map(this.toTransferItem)
         .concat(this.selectedVehicles)
@@ -177,5 +177,16 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     if ($event.to === 'left') {
       this.selectedVehicles = this.selectedVehicles.filter((item) => !$event.list.includes(item));
     }
+  }
+
+  search(): void {
+    this.setVehicles();
+    this.plateFilterVisible = false;
+  }
+
+  reset(): void {
+    this.searchPlateValue = '';
+    this.plateFilterVisible = false;
+    this.setVehicles();
   }
 }
