@@ -31,6 +31,8 @@ enum Status {
 export class MonitoringRequestsCheckListComponent implements OnInit {
   @Input() monitoringRequestId: string;
 
+  checklistForm: FormGroup;
+  checklistBaitForm: FormGroup;
   validateForm: FormGroup;
 
   isLoading = false;
@@ -80,18 +82,35 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.validateForm = this.formBuilder.group({
+    this.checklistForm = this.formBuilder.group({
       hasMacro: [null],
       hasEmbeddedIntelligence: [null],
       approved: [null],
       allowedTravel: [null],
       justification: [''],
       embeddedIntelligenceJustification: [''],
+    });
+    this.checklistItems.forEach(item => {
+      this.checklistForm.addControl(item.value, this.formBuilder.control(false));
+    });
+
+    this.validateForm = this.formBuilder.group({
       status: [null],
       observations: ['']
     });
-    this.checklistItems.forEach(item => {
-      this.validateForm.addControl(item.value, this.formBuilder.control(false));
+
+    this.checklistBaitForm = this.formBuilder.group({
+      positionChecked: [null],
+      batteriesChecked: [null],
+      relationChecked: [null],
+      jammingChecked: [null],
+      decouplingChecked: [null],
+      timerChecked: [null],
+      positionFrequencyChecked: [null],
+      batteryLevel: [null],
+      timerIntervalInMinutes: [null],
+      approved: [null],
+      justification: ['']
     });
 
     this.isLoading = true;
@@ -117,17 +136,17 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   save(): void {
-    if (this.validateForm.invalid) {
+    const hasInvalidForm = this.checklistForm.invalid || this.checklistBaitForm.invalid || this.validateForm.invalid;
+    if (hasInvalidForm) {
       this.message.error('Preencha os dados corretamente.');
       return;
     }
 
-    const {
-      status,
-      observations,
-      ...checklist
-    } = this.validateForm.value;
-    const body: any = { checklist, status, observations };
+    const body = {
+      checklist: this.checklistForm.value,
+      checklistBait: this.checklistBaitForm.value,
+      ...this.validateForm.value,
+    };
 
     this.isLoading = true;
     this.monitoringRequestService.update(this.monitoringRequest.id, body).subscribe(() => {

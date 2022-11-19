@@ -121,85 +121,181 @@
     </nz-descriptions-item>
   </nz-descriptions>
 
-  <form nz-form nzLayout="vertical">
+  <form nz-form [formGroup]="checklistForm" nzLayout="vertical">
     <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15">
       Checklist
     </div>
 
-    <form nz-form [formGroup]="validateForm">
-      <div nz-row>
-        <div nz-col nzSpan="18">
-          <div nz-row>
-            <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
-              <nz-form-item>
-                <nz-form-label></nz-form-label>
-                <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                  <label
-                    nz-checkbox
-                    [formControlName]="item.value"
-                  >{{ item.label }}</label>
-                </nz-form-control>
-              </nz-form-item>
-            </div>
+    <div nz-row>
+      <div nz-col nzSpan="18">
+        <div nz-row>
+          <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
+            <nz-form-item>
+              <nz-form-label></nz-form-label>
+              <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  [formControlName]="item.value"
+                >{{ item.label }}</label>
+              </nz-form-control>
+            </nz-form-item>
           </div>
         </div>
-
-        <div nz-col nzSpan="6" class="approval-container">
-          <nz-form-item>
-            <nz-form-label></nz-form-label>
-            <nz-radio-group formControlName="approved">
-              <label nz-radio [nzValue]="true">Aprovado</label>
-              <label nz-radio [nzValue]="false">Reprovado</label>
-            </nz-radio-group>
-          </nz-form-item>
-
-          <nz-form-item>
-            <nz-form-label>Justificativa</nz-form-label>
-            <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <input nz-input formControlName="justification" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
       </div>
 
-      <div nz-row class="m-t-15 m-b-15">
-        <div nz-col [nzSpan]="6">
-          <nz-form-item>
-            <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <label
-                nz-checkbox
-                formControlName="hasMacro"
-              >Macro</label>
-            </nz-form-control>
-          </nz-form-item>
-
-          <nz-form-item>
-            <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <label
-                nz-checkbox
-                formControlName="hasEmbeddedIntelligence"
-              >Inteligência Embarcada</label>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-
-      <nz-form-item>
-        <nz-form-label></nz-form-label>
-        <nz-radio-group formControlName="allowedTravel">
-          <label nz-radio [nzValue]="true">Viagem Autorizada</label>
-          <label nz-radio [nzValue]="false">Viagem não autorizada</label>
-        </nz-radio-group>
-      </nz-form-item>
-
-      <div nz-col nzSpan="12">
-        <nz-form-label>Mover para status</nz-form-label>
+      <div nz-col nzSpan="6" class="approval-container">
         <nz-form-item>
-          <nz-select formControlName="status">
-            <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
-          </nz-select>
+          <nz-form-label></nz-form-label>
+          <nz-radio-group formControlName="approved">
+            <label nz-radio [nzValue]="true">Aprovado</label>
+            <label nz-radio [nzValue]="false">Reprovado</label>
+          </nz-radio-group>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Justificativa</nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <input nz-input formControlName="justification" />
+          </nz-form-control>
         </nz-form-item>
       </div>
-    </form>
+    </div>
+
+    <div nz-row class="m-t-15 m-b-15">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <label
+              nz-checkbox
+              formControlName="hasMacro"
+            >Macro</label>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <label
+              nz-checkbox
+              formControlName="hasEmbeddedIntelligence"
+            >Inteligência Embarcada</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <nz-form-item>
+      <nz-form-label></nz-form-label>
+      <nz-radio-group formControlName="allowedTravel">
+        <label nz-radio [nzValue]="true">Viagem Autorizada</label>
+        <label nz-radio [nzValue]="false">Viagem não autorizada</label>
+      </nz-radio-group>
+    </nz-form-item>
+  </form>
+
+  <form nz-form [formGroup]="checklistBaitForm" nzLayout="vertical">
+    <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-30">
+      Checklist Iscas
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="18">
+        <div nz-row>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  formControlName="positionChecked"
+                >Posição</label>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  formControlName="decouplingChecked"
+                >Desacoplamento</label>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  formControlName="positionFrequencyChecked"
+                >Freq. de posição</label>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="6" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  formControlName="batteriesChecked"
+                >Bateria</label>
+              </nz-form-control>
+              <nz-form-control [nzSpan]="6" [nzOffset]="null">
+                <input nz-input formControlName="batteryLevel" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="6" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  formControlName="timerChecked"
+                >Temporizador</label>
+              </nz-form-control>
+              <nz-form-control [nzSpan]="6" [nzOffset]="null">
+                <input nz-input formControlName="timerIntervalInMinutes" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8">
+            <nz-form-item>
+              <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                <label
+                  nz-checkbox
+                  formControlName="jammingChecked"
+                >Operação Jamming</label>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="6" class="approval-container">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-radio-group formControlName="approved">
+            <label nz-radio [nzValue]="true">Aprovado</label>
+            <label nz-radio [nzValue]="false">Reprovado</label>
+          </nz-radio-group>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>Justificativa</nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <input nz-input formControlName="justification" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <form nz-form [formGroup]="validateForm" nzLayout="vertical">
+    <div nz-col nzSpan="12">
+      <nz-form-label>Mover para status</nz-form-label>
+      <nz-form-item>
+        <nz-select formControlName="status">
+          <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
+        </nz-select>
+      </nz-form-item>
+    </div>
   </form>
 </nz-spin>
