@@ -72,8 +72,52 @@
     <nz-descriptions-item nzTitle="Preço da Carga">
       {{monitoringRequest?.loadValue | currency: 'R$ '}}
     </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Origem">
+      {{firstTravelStep?.address || 'N/a' }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Data previsão inicio" [nzSpan]="6">
+      {{firstTravelStepDate | date: 'dd/MM/yyyy HH:mm'}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Destino">
+      {{lastTravelStep?.address || 'N/a' }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Data previsão chegada" [nzSpan]="6">
+      {{lastTravelStepDate | date: 'dd/MM/yyyy HH:mm'}}
+    </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Observações" nzSpan="24">
       {{monitoringRequest?.observations}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
+  <small style="color: #a3a3a3">* Escolta e isca irão aparecer caso a SM tenha configurado</small>
+
+  <nz-descriptions nzTitle="Escolta" *ngFor="let armedGuard of monitoringRequest?.armedGuards ?? []" class="m-t-15">
+    <nz-descriptions-item nzTitle="Tecnologia">
+      {{armedGuard.technology}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="N Serie">
+      {{armedGuard.serialNumber}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Placa">
+      {{armedGuard.plate}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Contato">
+      {{armedGuard.contact}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Agente 1">
+      {{armedGuard.firstAgent}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Agente 2">
+      {{armedGuard.secondAgent}}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
+  <nz-descriptions nzTitle="Iscas" *ngFor="let bait of monitoringRequest?.baits ?? []" class="m-t-15">
+    <nz-descriptions-item nzTitle="N Serie">
+      {{bait.serialNumber}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Local de instalação">
+      {{bait.installationLocation}}
     </nz-descriptions-item>
   </nz-descriptions>
 

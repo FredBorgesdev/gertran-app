@@ -4,6 +4,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {Wagon} from '../../wagons/wagons.service';
 import {subscribeOn} from 'rxjs/operators';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {TravelStep} from '../travel-step.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -213,5 +214,27 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       unrefrigerated: 'Não refrigerada',
       frozen: 'Congelada',
     }[this.monitoringRequest?.loadType] || 'N/a';
+  }
+
+  get firstTravelStep(): TravelStep {
+    return this.monitoringRequest?.travelSteps?.[0];
+  }
+
+  get firstTravelStepDate(): Date {
+    if (!this.firstTravelStep) {
+      return new Date();
+    }
+    return new Date(this.firstTravelStep?.date + ' ' + this.firstTravelStep?.time);
+  }
+
+  get lastTravelStep(): TravelStep {
+    return this.monitoringRequest?.travelSteps?.[this.monitoringRequest.travelSteps.length - 1];
+  }
+
+  get lastTravelStepDate(): Date {
+    if (!this.lastTravelStep) {
+      return new Date();
+    }
+    return new Date(this.lastTravelStep?.date + ' ' + this.lastTravelStep?.time);
   }
 }

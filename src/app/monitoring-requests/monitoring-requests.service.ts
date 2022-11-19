@@ -6,8 +6,12 @@ import {Invoice} from './invoices.service';
 import {Customer} from '../customers/customers.service';
 import {Truck} from '../trucks/trucks.service';
 import {Position} from '../monitoring/positions.service';
+import {ArmedGuard} from './armed-guard.service';
+import {Bait} from './baits.service';
 
 export interface MonitoringRequests {
+  baits: Bait[];
+  armedGuards: ArmedGuard[];
   loadType: string;
   observations: string;
   updatedAt: string;
