@@ -72,6 +72,19 @@ export interface MonitoringRequests {
     lastStatusUpdate: Date | null;
     hasPendencies: string;
   };
+  checklistBait: {
+    positionChecked: boolean;
+    batteriesChecked: boolean;
+    relationChecked: boolean;
+    jammingChecked: boolean;
+    decouplingChecked: boolean;
+    timerChecked: boolean;
+    positionFrequencyChecked: boolean;
+    batteryLevel: string;
+    timerIntervalInMinutes: string;
+    approved: boolean;
+    justification: string;
+  };
   ocrNumber: string;
 }
 
@@ -137,6 +150,13 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
 
   send(id: string): Observable<void> {
     return this.http.post<void>(`monitoring/monitoring-requests/${id}/send`, {});
+  }
+
+  release(
+    id: string,
+    monitoringRequests: Omit<MonitoringRequests, 'id'>
+  ): Observable<MonitoringRequests> {
+    return this.http.patch<MonitoringRequests>(`monitoring/monitoring-requests/${id}/release`, monitoringRequests);
   }
 
   getSurveyConductors(): Observable<Choice[]> {

@@ -5,6 +5,7 @@ import {Wagon} from '../../wagons/wagons.service';
 import {subscribeOn} from 'rxjs/operators';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TravelStep} from '../travel-step.service';
+import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -39,6 +40,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   monitoringRequest: MonitoringRequests;
   newStatus = Status.DRAFT;
   observations = '';
+  terminals: Terminals[] = [];
 
   checklistItems = [
     {
@@ -79,6 +81,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private monitoringRequestService: MonitoringRequestsService,
     private message: NzMessageService,
     private formBuilder: FormBuilder,
+    private terminalsService: TerminalsService,
   ) { }
 
   ngOnInit(): void {
@@ -95,32 +98,42 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     });
 
     this.validateForm = this.formBuilder.group({
+      terminal: [null],
       status: [null],
       observations: ['']
     });
 
     this.checklistBaitForm = this.formBuilder.group({
-      positionChecked: [null],
-      batteriesChecked: [null],
-      relationChecked: [null],
-      jammingChecked: [null],
-      decouplingChecked: [null],
-      timerChecked: [null],
-      positionFrequencyChecked: [null],
+      positionChecked: [false],
+      batteriesChecked: [false],
+      relationChecked: [false],
+      jammingChecked: [false],
+      decouplingChecked: [false],
+      timerChecked: [false],
+      positionFrequencyChecked: [false],
       batteryLevel: [null],
       timerIntervalInMinutes: [null],
       approved: [null],
       justification: ['']
     });
 
+    this.loadMonitoringRequest();
+    this.loadTerminals();
+  }
+
+  loadMonitoringRequest(): void {
     this.isLoading = true;
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
       this.monitoringRequest = result;
       this.isLoading = false;
 
       if (result.checklist) {
-        this.validateForm.patchValue(result.checklist);
+        this.checklistForm.patchValue(result.checklist);
       }
+      if (result.checklistBait) {
+        this.checklistBaitForm.patchValue(result.checklistBait);
+      }
+
       this.validateForm.patchValue({
         status: result.status,
         observations: result.observations,
@@ -128,6 +141,12 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     }, () => {
       this.isLoading = false;
       this.message.error('Não foi possível carregar o pedido de monitoramento.');
+    });
+  }
+
+  loadTerminals(): void {
+    this.terminalsService.getAll({ limit: 999 }).subscribe(result => {
+      this.terminals = result.results;
     });
   }
 
@@ -149,7 +168,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     };
 
     this.isLoading = true;
-    this.monitoringRequestService.update(this.monitoringRequest.id, body).subscribe(() => {
+    this.monitoringRequestService.release(this.monitoringRequest.id, body).subscribe(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
     }, () => {

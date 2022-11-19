@@ -289,13 +289,24 @@
   </form>
 
   <form nz-form [formGroup]="validateForm" nzLayout="vertical">
-    <div nz-col nzSpan="12">
-      <nz-form-label>Mover para status</nz-form-label>
-      <nz-form-item>
-        <nz-select formControlName="status">
-          <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
-        </nz-select>
-      </nz-form-item>
+    <div nz-row nzGutter="12">
+      <div nz-col nzSpan="12">
+        <nz-form-label>Terminal</nz-form-label>
+        <nz-form-item>
+          <nz-select formControlName="terminal">
+            <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-form-label>Mover para status</nz-form-label>
+        <nz-form-item>
+          <nz-select formControlName="status">
+            <nz-option *ngFor="let status of statusList" [nzLabel]="status.label" [nzValue]="status.value"></nz-option>
+          </nz-select>
+        </nz-form-item>
+      </div>
     </div>
   </form>
 </nz-spin>
