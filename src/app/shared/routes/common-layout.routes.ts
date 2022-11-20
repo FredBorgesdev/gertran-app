@@ -84,5 +84,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'reports',
     loadChildren: () => import('../../reports/reports.module').then(m => m.ReportsModule)
+  },
+  {
+    path: 'checklists',
+    loadChildren: () => import('../../checklists/checklists.module').then(m => m.ChecklistsModule)
   }
 ];

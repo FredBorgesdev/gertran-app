@@ -61,6 +61,14 @@ export const ROUTES: SideNavInterface[] = [
     ]
   },
   {
+    path: '/checklists/checklist-list',
+    title: 'Check-lists',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'check-square',
+    submenu: []
+  },
+  {
     path: '',
     title: 'Veículos',
     iconType: 'nzIcon',
