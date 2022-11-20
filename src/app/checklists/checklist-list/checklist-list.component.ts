@@ -30,4 +30,8 @@ export class ChecklistListComponent extends BaseCrudListComponent<Checklist> {
       modal
     );
   }
+
+  edit(resource: Checklist): void {
+    this.router.navigate(['checklists', 'checklists-review', resource.id]);
+  }
 }

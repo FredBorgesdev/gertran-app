@@ -1,0 +1,72 @@
+<nz-spin [nzSpinning]="isLoading" nzTip="Aguarde...">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Seguradoras</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Revisar checklist
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <form nz-form [formGroup]="checklistForm" nzLayout="vertical">
+      <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15">
+        Checklist
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="18">
+          <div nz-row>
+            <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
+              <nz-form-item>
+                <nz-form-label></nz-form-label>
+                <nz-form-control [nzSpan]="null" [nzOffset]="null">
+                  <label
+                    nz-checkbox
+                    [formControlName]="item.value"
+                  >{{ item.label }}</label>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="6" class="approval-container">
+          <nz-form-item>
+            <nz-form-label></nz-form-label>
+            <nz-radio-group formControlName="approved">
+              <label nz-radio [nzValue]="true">Aprovado</label>
+              <label nz-radio [nzValue]="false">Reprovado</label>
+            </nz-radio-group>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Justificativa</nz-form-label>
+            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+              <input nz-input formControlName="justification" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+
+    <nz-divider></nz-divider>
+
+    <nz-form-item>
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button type="button" (click)="save()" nz-button nzType="primary">
+          <i nz-icon nzType="save"></i>Enviar solicitação
+        </button>
+        <button type="button" (click)="list()" nz-button>
+          <i nz-icon nzType="unordered-list"></i>Listar Checklists
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-card>
+</nz-spin>
