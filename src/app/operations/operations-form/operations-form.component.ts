@@ -120,11 +120,11 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     super.performFormGroupSetValues();
 
     this.validateForm.patchValue({
-      allowedTrackerModels: this.resource.allowedTrackerModels.map(({ id }) => id),
-      allowedTruckTypes: this.resource.allowedTruckTypes.map(({ id }) => id),
-      allowedWagonTypes: this.resource.allowedWagonTypes.map(({ id }) => id),
-      requiredPeripherals: this.resource.requiredPeripherals.map(({ id }) => id),
-      insuranceCompany: this.resource.insuranceCompany.id,
+      allowedTrackerModels: this.resource.allowedTrackerModels?.map(({ id }) => id),
+      allowedTruckTypes: this.resource.allowedTruckTypes?.map(({ id }) => id),
+      allowedWagonTypes: this.resource.allowedWagonTypes?.map(({ id }) => id),
+      requiredPeripherals: this.resource.requiredPeripherals?.map(({ id }) => id),
+      insuranceCompany: this.resource.insuranceCompany?.id,
     });
   }
 
