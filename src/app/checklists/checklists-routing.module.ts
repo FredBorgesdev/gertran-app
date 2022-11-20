@@ -1,9 +1,11 @@
 import {RouterModule, Routes} from '@angular/router';
 import {ChecklistListComponent} from './checklist-list/checklist-list.component';
 import {NgModule} from '@angular/core';
+import {ChecklistsCreateComponent} from './checklists-create/checklists-create.component';
 
 const routes: Routes = [
-  { path: 'checklist-list', component: ChecklistListComponent }
+  { path: 'checklists-list', component: ChecklistListComponent },
+  { path: 'checklists-create', component: ChecklistsCreateComponent }
 ];
 
 @NgModule({

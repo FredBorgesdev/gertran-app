@@ -1,0 +1,64 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>
+
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="idcard"></i><span>Checklist</span></a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Solicitar checklist
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <nz-divider></nz-divider>
+
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="plate1">Placa 1</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira a placa!">
+          <input id="plate1" type="text" nz-input formControlName="plate1" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="plate2">Placa 2</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input id="plate2" type="text" nz-input formControlName="plate2" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="plate3">Placa 3</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input id="plate3" type="text" nz-input formControlName="plate3" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="plate4">Placa 4</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input id="plate4" type="text" nz-input formControlName="plate4" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="plate5">Placa 5</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input id="plate5" type="text" nz-input formControlName="plate5" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-divider></nz-divider>
+
+      <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Enviar solicitação
+          </button>
+          <button type="button" (click)="list()" nz-button>
+            <i nz-icon nzType="unordered-list"></i>Listar Checklists
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card>
+</nz-spin>
