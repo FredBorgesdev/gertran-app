@@ -15,6 +15,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {Choice} from '../../shared/services/api.service';
 import {Operations, OperationsService} from '../../operations/operations.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -37,6 +38,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   operationsNextUrl: string;
   wagonsNextUrl: string;
   isLoadingMoreData = false;
+  isGertranStaff = false;
 
   constructor(
     private router: Router,
@@ -51,6 +53,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     private wagonsService: WagonsService,
     private operationService: OperationsService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    private authService: AuthenticationService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -76,12 +79,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.loadMoreTrucks();
     this.loadMoreOperations();
     this.loadMoreWagons();
+    this.setIsGertranStaff();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
       this.surveyConductors = surveyConductors;
     });
-    // (this.service as MonitoringRequestsService).getMonitoringRequests().subscribe((monitoringRequests) => {
-    //   this.monitoringRequests = monitoringRequests;
-    // });
   }
 
   get disabled(): boolean {
@@ -243,5 +244,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       this.wagons = [...this.wagons, ...wagons.results];
       this.isLoadingMoreData = false;
     });
+  }
+
+  async setIsGertranStaff(): Promise<void> {
+    const user = await this.authService.getUser();
+    this.isGertranStaff = user.isGertranStaff;
   }
 }

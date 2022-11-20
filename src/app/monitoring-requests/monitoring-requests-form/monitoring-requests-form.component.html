@@ -23,7 +23,7 @@
             </nz-form-control>
           </div>
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter">Transportador</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter" *ngIf="!isGertranStaff">Transportador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
                 id="transporter"
