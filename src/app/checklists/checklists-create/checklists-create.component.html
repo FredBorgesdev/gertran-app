@@ -16,28 +16,30 @@
     <nz-divider></nz-divider>
 
     <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-      <nz-form-item *ngFor="let form of formVehiclesCount">
-        <nz-form-label>Veiculo {{ form }}</nz-form-label>
-        <nz-form-control nzErrorTip="Preencha o campo">
-          <nz-select
-            [formControlName]="'plate' + form"
-            nzAllowClear
-            [nzDisabled]="selectableTrucksService.trucks.length === 0"
-            (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
-            [nzDropdownRender]="selectLoading"
-            nzShowSearch
-            nzServerSearch
-            (nzOnSearch)="selectableTrucksService.searchByPlate({ plate: $event, customerId: '' })"
-            (ngModelChange)="handleModelChange()"
-          >
-            <nz-option
-              *ngFor="let vehicle of selectableTrucksService.trucks"
-              [nzLabel]="vehicle.vehicle.plate"
-              [nzValue]="vehicle.vehicle.id"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
+      <div formArrayName="vehicles">
+        <nz-form-item *ngFor="let form of vehicles.controls; let i = index">
+          <nz-form-label>Veiculo {{ i + 1 }}</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-select
+              [formControlName]="i"
+              nzAllowClear
+              [nzDisabled]="selectableTrucksService.trucks.length === 0"
+              (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
+              [nzDropdownRender]="selectLoading"
+              nzShowSearch
+              nzServerSearch
+              (nzOnSearch)="selectableTrucksService.searchByPlate({ plate: $event, customerId: '' })"
+              (ngModelChange)="handleModelChange()"
+            >
+              <nz-option
+                *ngFor="let vehicle of selectableTrucksService.trucks"
+                [nzLabel]="vehicle.vehicle.plate"
+                [nzValue]="vehicle.vehicle.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
       <nz-divider></nz-divider>
 

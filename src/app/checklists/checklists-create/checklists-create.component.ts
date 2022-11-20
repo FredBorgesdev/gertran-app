@@ -3,9 +3,10 @@ import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-fo
 import {Checklist, ChecklistsService} from '../checklists.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder} from '@angular/forms';
 import {Truck, TrucksService} from '../../trucks/trucks.service';
 import {SelectableTruckService} from '../../trucks/selectable-truck.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-checklists-create',
@@ -14,7 +15,7 @@ import {SelectableTruckService} from '../../trucks/selectable-truck.service';
 })
 export class ChecklistsCreateComponent extends BaseCrudFormComponent<Checklist> implements OnInit {
   trucks: Truck[] = [];
-  formVehiclesCount = [1, 2, 3, 4, 5]
+  formVehiclesCount = [1, 2, 3, 4, 5];
 
   constructor(
     service: ChecklistsService,
@@ -22,7 +23,6 @@ export class ChecklistsCreateComponent extends BaseCrudFormComponent<Checklist> 
     activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
-    private trucksService: TrucksService,
     public selectableTrucksService: SelectableTruckService,
   ) {
     super(
@@ -40,12 +40,24 @@ export class ChecklistsCreateComponent extends BaseCrudFormComponent<Checklist> 
 
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
-      plate1: [null],
-      plate2: [null],
-      plate3: [null],
-      plate4: [null],
-      plate5: [null],
+      vehicles: this.formBuilder.array([
+        this.formBuilder.control(null),
+        this.formBuilder.control(null),
+        this.formBuilder.control(null),
+        this.formBuilder.control(null),
+        this.formBuilder.control(null),
+      ]),
     });
+  }
+
+  get vehicles(): FormArray {
+    return this.validateForm.get('vehicles') as FormArray;
+  }
+
+  getValues(): any {
+    return {
+      vehicles: this.validateForm.get('vehicles').value.filter(Boolean)
+    };
   }
 
   list(): void {

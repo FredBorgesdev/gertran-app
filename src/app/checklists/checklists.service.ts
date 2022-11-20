@@ -31,22 +31,22 @@ export class ChecklistsService implements ApiService<Checklist> {
   constructor(private http: HttpClient) { }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Checklist>> {
-    return this.http.get<GetAllResponse<Checklist>>('checklists');
+    return this.http.get<GetAllResponse<Checklist>>('monitoring/checklist');
   }
 
   get(id: string): Observable<Checklist> {
-    return this.http.get<Checklist>(`checklists/${id}`);
+    return this.http.get<Checklist>(`monitoring/checklist/${id}`);
   }
 
   save(checklist: Omit<Checklist, 'id'>): Observable<Checklist> {
-    return this.http.post<Checklist>('checklists/create', checklist);
+    return this.http.post<Checklist>('monitoring/checklist/create', checklist);
   }
 
   update(id: string, checklist: Omit<Checklist, 'id'>): Observable<Checklist> {
-    return this.http.patch<Checklist>(`checklists/${id}/update`, checklist);
+    return this.http.patch<Checklist>(`monitoring/checklist/${id}/update`, checklist);
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`checklists/${id}/delete`);
+    return this.http.delete<void>(`monitoring/checklist/${id}/delete`);
   }
 }

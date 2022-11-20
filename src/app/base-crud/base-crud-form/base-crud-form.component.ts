@@ -70,7 +70,6 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
       error = this.handleError.bind(this)
     } = customHandlers || {};
     if (!this.validateForm.valid) {
-      console.log(this.validateForm)
       return Object.values(this.validateForm.controls).forEach(control => {
         control.markAsDirty();
         control.updateValueAndValidity({ onlySelf: true });
