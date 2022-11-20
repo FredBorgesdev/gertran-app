@@ -22,6 +22,8 @@ import {MessagesModalComponent} from '../messages-modal/messages-modal.component
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AlertCount, AlertsService, AlertTypes, Severity} from '../alerts.service';
 
+const PLATE_KEY = 'GERTRAN_LAST_PLATE';
+
 enum Status {
   DRAFT = 'draft',
   UNDER_REVIEW = 'under_review',
@@ -287,7 +289,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDropdown(ev: MouseEvent, menu: NzDropdownMenuComponent): void {
+  openDropdown(
+    ev: MouseEvent,
+    menu: NzDropdownMenuComponent,
+    item: Position
+  ): void {
+    this.setPlate(item.truck.vehicle.plate);
     this.nzContextMenuService.create(ev, menu);
   }
 
@@ -396,5 +403,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         color: '#626262',
       }
     }[lastEvent.eventType] || null;
+  }
+
+  get plate(): string {
+    return localStorage.getItem(PLATE_KEY) || '';
+  }
+
+  setPlate(plate: string): void {
+    localStorage.setItem(PLATE_KEY, plate);
   }
 }
