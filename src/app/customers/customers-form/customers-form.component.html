@@ -29,6 +29,29 @@
       <input id="domain" type="text" nz-input formControlName="domain" />
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="domain">Tempo de validade checklist</nz-form-label>
+    <nz-radio-group formControlName="checklistValidity">
+      <label nz-radio nzValue="24hours">24h</label>
+      <label nz-radio nzValue="72hours">72h</label>
+      <label nz-radio nzValue="30days">30 dias</label>
+    </nz-radio-group>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Embarcadores</nz-form-label>
+    <nz-form-control [nzSpan]="null" [nzOffset]="null">
+      <label
+        nz-checkbox
+        formControlName="itambeShipper"
+      >Itambé</label>
+    </nz-form-control>
+    <nz-form-control [nzSpan]="null" [nzOffset]="null">
+      <label
+        nz-checkbox
+        formControlName="lactalisShipper"
+      >Lactalis</label>
+    </nz-form-control>
+  </nz-form-item>
 
   <nz-divider></nz-divider>
 

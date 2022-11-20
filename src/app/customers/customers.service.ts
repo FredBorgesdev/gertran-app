@@ -4,6 +4,7 @@ import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared
 import {Observable} from 'rxjs';
 
 export interface Customer {
+  checklistValidity: string;
   canSelectShipper: boolean;
   id: string;
   corporateName: string;
