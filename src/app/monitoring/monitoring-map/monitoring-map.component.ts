@@ -84,8 +84,8 @@ export class MonitoringMapComponent implements OnInit {
   } {
     if (i === 0) {
       return {
-        type: 'pushpin',
-        color: 'salmon',
+        type: 'flag',
+        color: 'green',
         theme: 'twotone'
       };
     }
@@ -93,7 +93,7 @@ export class MonitoringMapComponent implements OnInit {
     if (i === this.markers.length - 1) {
       return {
         type: 'flag',
-        color: 'green',
+        color: 'salmon',
         theme: 'twotone'
       };
     }
