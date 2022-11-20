@@ -40,16 +40,13 @@
     >
       <thead>
       <tr>
-        <th *ngFor="let column of checklistColumns">{{ column.title }}</th>
+        <th class="text-center" *ngFor="let column of checklistColumns">{{ column.title }}</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of checklistTable.data;  let i=index">
-        <td>{{item.id | id}}</td>
         <td>
-          <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.plate}}</h6>
-          </div>
+          <h6 class="text-center">{{item.vehicle.plate}}</h6>
         </td>
         <td class="text-md-center">
           <a
@@ -63,16 +60,6 @@
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
-          <button
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
-            (click)="delete(item)"
-          >
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </button>
         </td>
       </tr>
       </tbody>
