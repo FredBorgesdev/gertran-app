@@ -1,5 +1,5 @@
 <nz-spin [nzSpinning]="isLoading" nzTip="Aguarde...">
-  <nz-descriptions nzTitle="Cliente" nzBordered>
+  <nz-descriptions nzTitle="Cliente" nzBordered nzSize="small">
     <nz-descriptions-item nzTitle="Embarcador">
       {{monitoringRequest?.customer?.['tradingName']}}
     </nz-descriptions-item>
@@ -8,7 +8,7 @@
     </nz-descriptions-item>
   </nz-descriptions>
 
-  <nz-descriptions nzTitle="Motoristas" nzBordered class="m-t-15">
+  <nz-descriptions nzTitle="Motoristas" nzBordered nzSize="small" class="m-t-15">
     <nz-descriptions-item nzTitle="Nome">
       {{monitoringRequest?.driver?.['name']}}
     </nz-descriptions-item>
@@ -44,7 +44,7 @@
     </div>
   </nz-descriptions>
 
-  <nz-descriptions nzTitle="Veiculo" nzBordered class="m-t-15">
+  <nz-descriptions nzTitle="Veiculo" nzBordered nzSize="small" class="m-t-15">
     <nz-descriptions-item nzTitle="Placa">
       {{monitoringRequest?.truck?.vehicle?.['plate']}}
     </nz-descriptions-item>
@@ -53,7 +53,7 @@
     </nz-descriptions-item>
   </nz-descriptions>
 
-  <nz-descriptions nzTitle="Viagem" nzBordered class="m-t-15">
+  <nz-descriptions nzTitle="Viagem" nzBordered nzSize="small" class="m-t-15">
     <nz-descriptions-item nzTitle="Operação">
       {{monitoringRequest?.operation?.['name']}}
     </nz-descriptions-item>
