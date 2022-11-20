@@ -8,6 +8,8 @@ import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export enum ReportFormat {
   SYNTHETIC = 'synthetic',
@@ -120,5 +122,19 @@ export class BaseCustomerFilterComponent implements OnInit {
 
   get selectedCustomerName(): string {
     return this.customers.find((customer) => customer.id === this.validateForm.controls.customer.value)?.tradingName;
+  }
+
+  generatePdf(): void {
+    const doc = new jsPDF();
+
+    autoTable(doc, {
+      html: 'table',
+      didDrawPage: (data) => {
+        doc.addImage('assets/images/logo/logo.png', 'PNG', data.settings.margin.left, 15, 100, 20);
+      },
+      margin: { top: 50 }
+    });
+
+    doc.save('table.pdf');
   }
 }

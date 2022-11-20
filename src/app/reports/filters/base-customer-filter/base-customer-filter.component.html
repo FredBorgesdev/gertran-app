@@ -69,7 +69,11 @@
       (click)="emitGenerateReport()"
     >Gerar relatório</button>
   </div>
-  <div nz-col nzSpan="8">
+  <div
+    nz-col
+    nzSpan="8"
+    (click)="generatePdf()"
+  >
     <button nz-button style="width: 100%">Gerar pdf</button>
   </div>
   <div nz-col nzSpan="8">
