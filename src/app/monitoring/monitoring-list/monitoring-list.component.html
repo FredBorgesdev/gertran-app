@@ -114,7 +114,7 @@
         *ngFor="let column of monitoringColumns"
         [nzSortFn]="column.compare"
         [nzLeft]="column.nzLeft"
-        nzWidth="110px"
+        [nzWidth]="column.width"
         class="text-center"
         [style]="column.style"
       >{{ column.title }}</th>
@@ -126,11 +126,7 @@
       [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight)"
     >
-      <td
-        style="text-align: center"
-        nzLeft
-        [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
-      >
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">
         <img
           [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
           alt="logo"
@@ -146,7 +142,7 @@
         [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       >{{ item.monitoringRequest.id | id}}</td>
       <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.truck?.vehicle?.plate || '-' }}</td>
-      <td class="text-md-center">
+      <td>
         <span
           nz-icon
           nzType="key"
@@ -154,18 +150,19 @@
           [style]="'font-size: 20px; color: ' + (item.ignition ? '#ff7118' : '#ccc')"
         ></span>
       </td>
-      <td class="text-md-center">
+      <td>
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
           [nzTooltipTitle]="getLastEvent(item)?.eventName"
           nz-icon
-          [nzType]="'info-circle'"
-          nzTheme="fill"
-          [style]="'font-size: 20px;color: blue'"
+          [nzType]="getAlertIcon(item).icon"
+          nzTheme="twotone"
+          [nzTwotoneColor]="getAlertIcon(item).color"
+          style="font-size: 20px"
         ></span>
       </td>
-      <td class="text-md-center" style="cursor: pointer" (click)="openAutomationModal(item.automations)">
+      <td style="cursor: pointer" (click)="openAutomationModal(item.automations)">
         <span
           nz-icon
           nzType="info-circle"
@@ -173,7 +170,7 @@
           [style]="'font-size: 20px; color: ' + (item.automations.length > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
-      <td class="text-center">
+      <td>
         <button
           nz-button
           nzType="link"
@@ -189,36 +186,36 @@
           />
         </button>
       </td>
-      <td class="text-center">
+      <td>
         <nz-progress nzStrokeWidth="2" nzSize="small" [nzPercent]="item.travelProgress"></nz-progress>
       </td>
-      <td class="text-center">{{ item.speed }}km</td>
+      <td>{{ item.speed }}km</td>
       <td>{{ item.customer?.name }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(item)">{{ getOrigin(item) }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getDestiny(item)">{{ getDestiny(item) }}</td>
+      <td>{{ getOrigin(item) }}</td>
+      <td>{{ getDestiny(item) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getAlerts(item)">{{ getAlerts(item) || '-' }}</td>
-      <td  nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest.travelStatus)">
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest.travelStatus)">
         {{getStatusTranslation(item.monitoringRequest.travelStatus)}}
       </td>
       <td>{{ item.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
       <td>{{ getCommunicationChannel(item.currentCommunicationChannel) }}</td>
-      <td class="text-md-center">
+      <td>
         <nz-badge *ngIf="item.monitoringRequest.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.hasMacro" nzStatus="error"></nz-badge>
       </td>
-      <td class="text-center">
+      <td>
         <nz-badge *ngIf="item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
-      <td class="text-center">
+      <td>
         <nz-badge *ngIf="item.monitoringRequest.bait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest.bait" nzStatus="error"></nz-badge>
       </td>
-      <td class="text-center">{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
+      <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
