@@ -48,12 +48,25 @@
 
           <nz-form-item>
             <nz-form-label>Justificativa</nz-form-label>
-            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <nz-form-control [nzSpan]="null" [nzOffset]="null" nzErrorTip="Preencha o campo!">
               <input nz-input formControlName="justification" />
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
+
+      <div nz-row class="m-t-15 m-b-15">
+        <div nz-col [nzSpan]="16">
+          <nz-form-item>
+            <nz-form-label></nz-form-label>
+            <nz-radio-group formControlName="allowedTravel">
+              <label nz-radio [nzValue]="true">Viagem Autorizada</label>
+              <label nz-radio [nzValue]="false">Viagem não autorizada</label>
+            </nz-radio-group>
+          </nz-form-item>
+        </div>
+      </div>
+
     </form>
 
     <nz-divider></nz-divider>

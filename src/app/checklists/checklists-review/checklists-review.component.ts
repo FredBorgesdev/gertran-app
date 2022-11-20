@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ChecklistsService} from '../checklists.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
@@ -15,38 +15,16 @@ export class ChecklistsReviewComponent implements OnInit {
   checklistForm: FormGroup;
 
   checklistItems = [
-    {
-      label: 'Sensor Porta Motorista',
-      value: 'driverDoorChecked',
-    },
-    {
-      label: 'Sensor Porta Passageiro',
-      value: 'passengerDoorChecked',
-    },
-    {
-      label: 'Sensor de engate de carreta',
-      value: 'wagonEngagedChecked',
-    },
-    {
-      label: 'Sensor de Painel',
-      value: 'panelSensorChecked',
-    },
-    {
-      label: 'Sensor de Bau',
-      value: 'trunkChecked',
-    },
-    {
-      label: 'Sirene',
-      value: 'sirenChecked',
-    },
-    {
-      label: 'Bloqueio',
-      value: 'blockChecked',
-    },
-    {
-      label: 'Trava de Bau',
-      value: 'trunkLockChecked',
-    }
+    { label: 'Sensor Porta Motorista', value: 'driverDoorChecked' },
+    { label: 'Sensor Porta Passageiro', value: 'passengerDoorChecked' },
+    { label: 'Sensor de engate de carreta', value: 'wagonEngagedChecked' },
+    { label: 'Sensor de Painel', value: 'panelSensorChecked' },
+    { label: 'Sensor de Bau', value: 'trunkChecked' },
+    { label: 'Sirene', value: 'sirenChecked' },
+    { label: 'Bloqueio', value: 'blockChecked' },
+    { label: 'Trava de Bau', value: 'trunkLockChecked' },
+    { label: 'Macro', value: 'hasMacro' },
+    { label: 'Inteligência Embarcada', value: 'hasEmbeddedIntelligence' },
   ];
 
   constructor(
@@ -54,6 +32,7 @@ export class ChecklistsReviewComponent implements OnInit {
     private router: Router,
     private service: ChecklistsService,
     private message: NzMessageService,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -62,8 +41,16 @@ export class ChecklistsReviewComponent implements OnInit {
       hasEmbeddedIntelligence: [null],
       approved: [null],
       allowedTravel: [null],
-      justification: [''],
+      justification: [null],
     });
+
+    this.checklistForm.get('approved').valueChanges.subscribe(value => {
+      if (value === false) {
+        this.checklistForm.get('justification').setValidators([Validators.required]);
+        this.checklistForm.get('justification').updateValueAndValidity();
+      }
+    });
+
     this.checklistItems.forEach(item => {
       this.checklistForm.addControl(item.value, this.formBuilder.control(false));
     });
@@ -72,15 +59,21 @@ export class ChecklistsReviewComponent implements OnInit {
   save(): void {
     if (this.checklistForm.invalid) {
       this.message.error('Formulário inválido');
+      Object.keys(this.checklistForm.controls).forEach(key => {
+        this.checklistForm.controls[key].markAsDirty();
+        this.checklistForm.controls[key].updateValueAndValidity();
+      });
       return;
     }
 
     this.isLoading = true;
-    setTimeout(() => {
-      this.isLoading = false;
-      this.message.success('Checklist salvo com sucesso');
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.service.update(id, this.checklistForm.value).subscribe(() => {
+      this.message.success('Checklist atualizado com sucesso');
       this.list();
-    }, 1500);
+    }, () => {
+      this.isLoading = false;
+    });
   }
 
   list(): void {
