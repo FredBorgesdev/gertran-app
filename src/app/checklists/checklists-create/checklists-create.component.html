@@ -16,34 +16,26 @@
     <nz-divider></nz-divider>
 
     <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="plate1">Placa 1</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Insira a placa!">
-          <input id="plate1" type="text" nz-input formControlName="plate1" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="plate2">Placa 2</nz-form-label>
-        <nz-form-control [nzSpan]="null">
-          <input id="plate2" type="text" nz-input formControlName="plate2" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="plate3">Placa 3</nz-form-label>
-        <nz-form-control [nzSpan]="null">
-          <input id="plate3" type="text" nz-input formControlName="plate3" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="plate4">Placa 4</nz-form-label>
-        <nz-form-control [nzSpan]="null">
-          <input id="plate4" type="text" nz-input formControlName="plate4" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="plate5">Placa 5</nz-form-label>
-        <nz-form-control [nzSpan]="null">
-          <input id="plate5" type="text" nz-input formControlName="plate5" />
+      <nz-form-item *ngFor="let form of formVehiclesCount">
+        <nz-form-label>Veiculo {{ form }}</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select
+            [formControlName]="'plate' + form"
+            nzAllowClear
+            [nzDisabled]="selectableTrucksService.trucks.length === 0"
+            (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
+            [nzDropdownRender]="selectLoading"
+            nzShowSearch
+            nzServerSearch
+            (nzOnSearch)="selectableTrucksService.searchByPlate({ plate: $event, customerId: '' })"
+            (ngModelChange)="handleModelChange()"
+          >
+            <nz-option
+              *ngFor="let vehicle of selectableTrucksService.trucks"
+              [nzLabel]="vehicle.vehicle.plate"
+              [nzValue]="vehicle.vehicle.id"
+            ></nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
 
@@ -62,3 +54,7 @@
     </form>
   </nz-card>
 </nz-spin>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableTrucksService.isLoadingMoreData"></nz-spin>
+</ng-template>

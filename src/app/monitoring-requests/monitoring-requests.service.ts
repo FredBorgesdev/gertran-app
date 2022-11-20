@@ -9,6 +9,7 @@ import {Position} from '../monitoring/positions.service';
 import {ArmedGuard} from './armed-guard.service';
 import {Bait} from './baits.service';
 import {Terminals} from '../terminals/terminals.service';
+import {Checklist} from '../checklists/checklists.service';
 
 export interface MonitoringRequests {
   terminal: Terminals | null;
@@ -55,25 +56,7 @@ export interface MonitoringRequests {
   };
   routeCoordinates: any[];
   travelSteps: any[];
-  checklist: {
-    id: string;
-    driverDoorChecked: boolean;
-    passengerDoorChecked: boolean;
-    wagonEngagedChecked: boolean;
-    panelChecked: boolean;
-    trunkChecked: boolean;
-    sirenChecked: boolean;
-    blockChecked: boolean;
-    trunkLockChecked: boolean;
-    hasMacro: boolean;
-    hasEmbeddedIntelligence: boolean;
-    approved: boolean;
-    allowedTravel: boolean;
-    justification: string;
-    embeddedIntelligenceJustification: string;
-    lastStatusUpdate: Date | null;
-    hasPendencies: string;
-  };
+  checklist: Checklist;
   checklistBait: {
     positionChecked: boolean;
     batteriesChecked: boolean;

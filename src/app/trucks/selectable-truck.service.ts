@@ -60,4 +60,10 @@ export class SelectableTruckService {
       this.message.error('Erro ao carregar os registros. Tente novamente.');
     });
   }
+
+  resetFilters(): void {
+    this.trucks = [];
+    this.trucksNextUrl = null;
+    this.loadMoreTrucks();
+  }
 }
