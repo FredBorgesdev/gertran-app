@@ -6,6 +6,8 @@ import {subscribeOn} from 'rxjs/operators';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TravelStep} from '../travel-step.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
+import {ChecklistsService} from '../../checklists/checklists.service';
+import {forkJoin} from 'rxjs';
 
 enum Status {
   DRAFT = 'draft',
