@@ -188,7 +188,12 @@
         </button>
       </td>
       <td>
-        <nz-progress nzStrokeWidth="2" nzSize="small" [nzPercent]="item.travelProgress"></nz-progress>
+        <nz-progress
+          nzStrokeWidth="2"
+          nzSize="small"
+          [nzPercent]="item.travelProgress"
+          [nzFormat]="formatPercent"
+        ></nz-progress>
       </td>
       <td>{{ item.speed }}km</td>
       <td>{{ item.customer?.name }}</td>

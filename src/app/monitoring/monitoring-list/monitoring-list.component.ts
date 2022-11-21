@@ -434,4 +434,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  formatPercent(percent: number): string {
+    return `${percent.toFixed(1)}%`;
+  }
 }
