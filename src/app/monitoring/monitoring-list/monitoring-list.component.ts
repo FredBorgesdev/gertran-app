@@ -129,7 +129,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadFiltersList();
 
-    this.monitoringData$ = timer(0, 100000).pipe(
+    this.monitoringData$ = timer(0, 10000).pipe(
       switchMap(() => this.positionsService.getAll(
         { limit: 999 },
         {
