@@ -31,6 +31,7 @@ enum Status {
 })
 export class MonitoringRequestsCheckListComponent implements OnInit {
   @Input() monitoringRequestId: string;
+  @Input() readOnly = false;
 
   checklistForm: FormGroup;
   checklistBaitForm: FormGroup;
@@ -82,12 +83,13 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private message: NzMessageService,
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService,
+    private checklistService: ChecklistsService,
   ) { }
 
   ngOnInit(): void {
     this.checklistForm = this.formBuilder.group({
-      hasMacro: [null],
-      hasEmbeddedIntelligence: [null],
+      hasMacro: [false],
+      hasEmbeddedIntelligence: [false],
       approved: [null],
       allowedTravel: [null],
       justification: [''],
