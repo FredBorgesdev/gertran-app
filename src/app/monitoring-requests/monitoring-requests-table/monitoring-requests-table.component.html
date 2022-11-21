@@ -35,8 +35,8 @@
     <td>{{item.lastPosition?.positionDate | date: 'dd/MM/yyyy HH:mm'}}</td>
     <td>
       <img
-        *ngIf="item.lastPosition"
-        [src]="'assets/images/brand/200x200/' + item.lastPosition?.trackerTechnologyName.toLowerCase() + '.png'"
+        *ngIf="item.lastPosition?.trackerTechnologyName"
+        [src]="'assets/images/brand/200x200/' + item.lastPosition?.trackerTechnologyName?.toLowerCase() + '.png'"
         alt="logo"
         width="25px"
         height="25px"
