@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Position} from '../positions.service';
-import {IncidentsService} from '../incidents.service';
+import {Incident, IncidentsService} from '../incidents.service';
+import {GetAllResponse, getCurrentPage, replaceOffsetWithPage} from '../../shared/services/api.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-incidents-modal',
@@ -19,12 +21,41 @@ export class IncidentsModalComponent implements OnInit {
     { title: 'Descrição' },
     { title: 'Resolução' },
     { title: 'Status' },
-    { title: 'Ações' }
+    // { title: 'Ações' }
   ];
+
+  incidents: GetAllResponse<Incident>;
 
   constructor(private service: IncidentsService) { }
 
   ngOnInit(): void {
+    this.loadIncidents();
+  }
+
+  loadIncidents(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll({ url }, { monitoringRequest: this.position.monitoringRequest.id }).subscribe(response => {
+      this.incidents = response;
+      this.isLoading = false;
+    });
+  }
+
+  get page(): number {
+    return getCurrentPage(this.incidents);
+  }
+
+  replaceOffsetWithPage(url: string, page: number): string {
+    return replaceOffsetWithPage(url, page);
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      const url = this.replaceOffsetWithPage(this.incidents.previous, params.pageIndex);
+      this.loadIncidents(url);
+    } else if (params.pageIndex > this.page) {
+      const url = this.replaceOffsetWithPage(this.incidents.next, params.pageIndex);
+      this.loadIncidents(url);
+    }
   }
 
 }

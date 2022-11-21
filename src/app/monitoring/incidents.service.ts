@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import ApiService, {GetAllResponse} from '../shared/services/api.service';
+import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 
 export interface IncidentType {
@@ -30,7 +30,7 @@ export interface Incident {
   driverPhone?: any;
   driverContactedAt?: any;
   shipperName: string;
-  shipperContacted_at?: any;
+  shipperContactedAt?: any;
   wasImmediateActionApproved?: any;
   immediateActionResponsibleName?: any;
   immediateActionTakenAt?: any;
@@ -49,7 +49,20 @@ export class IncidentsService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<GetAllResponse<Incident>> {
-    return this.http.get<GetAllResponse<Incident>>('incidents');
+  getAll(
+    pagination: Pagination,
+    filters?: { monitoringRequest: string }
+  ): Observable<GetAllResponse<Incident>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+    if (filters?.monitoringRequest) {
+      params.monitoring_request = filters.monitoringRequest;
+    }
+
+    return this.http.get<GetAllResponse<Incident>>('incidents', { params });
   }
 }

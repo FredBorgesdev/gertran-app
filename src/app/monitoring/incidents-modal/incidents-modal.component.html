@@ -1,5 +1,11 @@
 <nz-table
   #incidentsTable
+  [nzData]="incidents?.results"
+  [nzTotal]="incidents?.count"
+  [nzPageSize]="incidents?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
   nzSize="small"
   [nzLoading]="isLoading"
 >
@@ -10,5 +16,18 @@
       </th>
     </tr>
   </thead>
+
+  <tbody>
+    <tr *ngFor="let incident of incidentsTable.data">
+      <td>{{ incident.id | id }}</td>
+      <td>{{ position.monitoringRequest.id | id }}</td>
+      <td>{{ incident.datetime | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ incident.wasAddedByAutomation ? 'Automação' : 'Operador' }}</td>
+      <td>{{ incident.incidentType.type }}</td>
+      <td>{{ incident.incidentLocation + ' ' + incident.additionalInformation }}</td>
+      <td>{{ incident.wasSolved ? 'Sim' : 'Não' }}</td>
+      <td></td>
+    </tr>
+  </tbody>
 
 </nz-table>
