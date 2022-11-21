@@ -45,6 +45,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let item of checklistTable.data;  let i=index">
+        <td class="text-center">{{ item.createdAt }}</td>
         <td>
           <h6 class="text-center">{{item.vehicle.plate}}</h6>
         </td>

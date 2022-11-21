@@ -12,6 +12,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 })
 export class ChecklistListComponent extends BaseCrudListComponent<Checklist> {
   checklistColumns = [
+    { title: 'Data criação' },
     { title: 'Placa' },
     { title: 'Ações' }
   ];
