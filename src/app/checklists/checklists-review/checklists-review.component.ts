@@ -44,8 +44,8 @@ export class ChecklistsReviewComponent implements OnInit {
       justification: [null],
     });
 
-    this.checklistForm.get('approved').valueChanges.subscribe(value => {
-      if (value === false) {
+    this.checklistForm.get('status').valueChanges.subscribe(value => {
+      if (value === 'reproved') {
         this.checklistForm.get('justification').setValidators([Validators.required]);
         this.checklistForm.get('justification').updateValueAndValidity();
       }
