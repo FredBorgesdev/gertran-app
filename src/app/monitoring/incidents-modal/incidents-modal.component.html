@@ -1,0 +1,14 @@
+<nz-table
+  #incidentsTable
+  nzSize="small"
+  [nzLoading]="isLoading"
+>
+  <thead>
+    <tr>
+      <th *ngFor="let column of incidentsColumns">
+        {{ column.title }}
+      </th>
+    </tr>
+  </thead>
+
+</nz-table>

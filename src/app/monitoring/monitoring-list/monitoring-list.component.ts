@@ -24,6 +24,7 @@ import {AlertCount, AlertsService, AlertTypes, Severity} from '../alerts.service
 import {
   MonitoringRequestsCheckListComponent
 } from '../../monitoring-requests/monitoring-requests-check-list/monitoring-requests-check-list.component';
+import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.component';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -263,11 +264,11 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
     this.modal.create({
       nzTitle: 'Automação',
-      // nzContent: 'Automação foi disparada no dia 01/01/2020 às 10:00',
       nzContent: MonitoringEventModalComponent,
       nzComponentParams: {
         automations,
       },
+      nzWidth: '90%',
       nzOkText: 'Fechar',
       nzCancelText: null,
     });
@@ -421,5 +422,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   setPlate(plate: string): void {
     localStorage.setItem(PLATE_KEY, plate);
+  }
+
+  openIncidentsModal(item: Position): void {
+    this.modal.create({
+      nzTitle: 'Ocorrências',
+      nzContent: IncidentsModalComponent,
+      nzWidth: '80%',
+      nzComponentParams: {
+        position: item,
+      },
+    });
   }
 }
