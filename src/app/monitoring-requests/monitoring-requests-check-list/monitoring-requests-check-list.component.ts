@@ -38,7 +38,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
   isLoading = false;
   monitoringRequest: MonitoringRequests;
-  newStatus = Status.DRAFT;
   observations = '';
   terminals: Terminals[] = [];
 
@@ -88,7 +87,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.checklistForm = this.formBuilder.group({
       hasMacro: [false],
       hasEmbeddedIntelligence: [false],
-      approved: [null],
+      status: ['requested'],
       allowedTravel: [null],
       justification: [''],
       embeddedIntelligenceJustification: [''],

@@ -147,9 +147,9 @@
       <div nz-col nzSpan="6" class="approval-container">
         <nz-form-item>
           <nz-form-label></nz-form-label>
-          <nz-radio-group formControlName="approved" [nzDisabled]="readOnly">
-            <label nz-radio [nzValue]="true">Aprovado</label>
-            <label nz-radio [nzValue]="false">Reprovado</label>
+          <nz-radio-group formControlName="status" [nzDisabled]="readOnly">
+            <label nz-radio nzValue="approved">Aprovado</label>
+            <label nz-radio nzValue="reproved">Reprovado</label>
           </nz-radio-group>
         </nz-form-item>
 

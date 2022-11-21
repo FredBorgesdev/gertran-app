@@ -39,7 +39,7 @@ export class ChecklistsReviewComponent implements OnInit {
     this.checklistForm = this.formBuilder.group({
       hasMacro: [null],
       hasEmbeddedIntelligence: [null],
-      approved: [null],
+      status: ['requested'],
       allowedTravel: [null],
       justification: [null],
     });
@@ -79,5 +79,4 @@ export class ChecklistsReviewComponent implements OnInit {
   list(): void {
     this.router.navigate(['checklists', 'checklists-list']);
   }
-
 }
