@@ -21,6 +21,9 @@ import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-re
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AlertCount, AlertsService, AlertTypes, Severity} from '../alerts.service';
+import {
+  MonitoringRequestsCheckListComponent
+} from '../../monitoring-requests/monitoring-requests-check-list/monitoring-requests-check-list.component';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -275,7 +278,14 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   goToMonitoringRequest(id: string): void {
-    this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', id]);
+    this.modal.create({
+      nzTitle: 'Solicitação de monitoramento',
+      nzContent: MonitoringRequestsCheckListComponent,
+      nzComponentParams: { monitoringRequestId: id, readOnly: true },
+      nzWidth: '90%',
+      nzOkText: null,
+      nzOnOk: null,
+    });
   }
 
   openUpdateObservationModal(item: Position): void {

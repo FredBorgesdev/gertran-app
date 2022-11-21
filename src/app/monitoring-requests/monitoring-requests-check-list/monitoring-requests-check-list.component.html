@@ -135,6 +135,7 @@
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
                 <label
                   nz-checkbox
+                  [nzDisabled]="readOnly"
                   [formControlName]="item.value"
                 >{{ item.label }}</label>
               </nz-form-control>
@@ -146,7 +147,7 @@
       <div nz-col nzSpan="6" class="approval-container">
         <nz-form-item>
           <nz-form-label></nz-form-label>
-          <nz-radio-group formControlName="approved">
+          <nz-radio-group formControlName="approved" [nzDisabled]="readOnly">
             <label nz-radio [nzValue]="true">Aprovado</label>
             <label nz-radio [nzValue]="false">Reprovado</label>
           </nz-radio-group>
@@ -154,8 +155,8 @@
 
         <nz-form-item>
           <nz-form-label>Justificativa</nz-form-label>
-          <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <input nz-input formControlName="justification" />
+          <nz-form-control [nzSpan]="null" [nzOffset]="null" >
+            <input nz-input formControlName="justification" [disabled]="readOnly" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -168,6 +169,7 @@
             <label
               nz-checkbox
               formControlName="hasMacro"
+              [nzDisabled]="readOnly"
             >Macro</label>
           </nz-form-control>
         </nz-form-item>
@@ -177,6 +179,7 @@
             <label
               nz-checkbox
               formControlName="hasEmbeddedIntelligence"
+              [nzDisabled]="readOnly"
             >Inteligência Embarcada</label>
           </nz-form-control>
         </nz-form-item>
@@ -185,7 +188,7 @@
 
     <nz-form-item>
       <nz-form-label></nz-form-label>
-      <nz-radio-group formControlName="allowedTravel">
+      <nz-radio-group formControlName="allowedTravel" [nzDisabled]="readOnly">
         <label nz-radio [nzValue]="true">Viagem Autorizada</label>
         <label nz-radio [nzValue]="false">Viagem não autorizada</label>
       </nz-radio-group>
@@ -206,6 +209,7 @@
                 <label
                   nz-checkbox
                   formControlName="positionChecked"
+                  [nzDisabled]="readOnly"
                 >Posição</label>
               </nz-form-control>
             </nz-form-item>
@@ -216,6 +220,7 @@
                 <label
                   nz-checkbox
                   formControlName="decouplingChecked"
+                  [nzDisabled]="readOnly"
                 >Desacoplamento</label>
               </nz-form-control>
             </nz-form-item>
@@ -226,6 +231,7 @@
                 <label
                   nz-checkbox
                   formControlName="positionFrequencyChecked"
+                  [nzDisabled]="readOnly"
                 >Freq. de posição</label>
               </nz-form-control>
             </nz-form-item>
@@ -236,6 +242,7 @@
                 <label
                   nz-checkbox
                   formControlName="batteriesChecked"
+                  [nzDisabled]="readOnly"
                 >Bateria</label>
               </nz-form-control>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
@@ -249,10 +256,11 @@
                 <label
                   nz-checkbox
                   formControlName="timerChecked"
+                  [nzDisabled]="readOnly"
                 >Temporizador</label>
               </nz-form-control>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <input nz-input formControlName="timerIntervalInMinutes" />
+                <input nz-input formControlName="timerIntervalInMinutes" [disabled]="readOnly" />
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -262,6 +270,7 @@
                 <label
                   nz-checkbox
                   formControlName="jammingChecked"
+                  [nzDisabled]="readOnly"
                 >Operação Jamming</label>
               </nz-form-control>
             </nz-form-item>
@@ -272,7 +281,7 @@
       <div nz-col nzSpan="6" class="approval-container">
         <nz-form-item>
           <nz-form-label></nz-form-label>
-          <nz-radio-group formControlName="approved">
+          <nz-radio-group formControlName="approved" [nzDisabled]="readOnly">
             <label nz-radio [nzValue]="true">Aprovado</label>
             <label nz-radio [nzValue]="false">Reprovado</label>
           </nz-radio-group>
@@ -280,15 +289,15 @@
 
         <nz-form-item>
           <nz-form-label>Justificativa</nz-form-label>
-          <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <input nz-input formControlName="justification" />
+          <nz-form-control [nzSpan]="null" [nzOffset]="null" >
+            <input nz-input formControlName="justification" [disabled]="readOnly" />
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
   </form>
 
-  <form nz-form [formGroup]="validateForm" nzLayout="vertical">
+  <form nz-form [formGroup]="validateForm" nzLayout="vertical" *ngIf="!readOnly">
     <div nz-row nzGutter="12">
       <div nz-col nzSpan="12">
         <nz-form-label>Terminal</nz-form-label>
