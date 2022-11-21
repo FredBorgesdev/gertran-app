@@ -205,16 +205,16 @@
       <td>{{ getWagons(item) || '-' }}</td>
       <td>{{ getCommunicationChannel(item.communicationChannel) }}</td>
       <td>
-        <nz-badge *ngIf="item.monitoringRequest.hasMacro" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.monitoringRequest.hasMacro" nzStatus="error"></nz-badge>
+        <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasMacro" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasMacro" nzStatus="error"></nz-badge>
       </td>
       <td>
-        <nz-badge *ngIf="item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.monitoringRequest.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
+        <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
       <td>
-        <nz-badge *ngIf="item.monitoringRequest.bait" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.monitoringRequest.bait" nzStatus="error"></nz-badge>
+        <nz-badge *ngIf="item.monitoringRequest?.checklist?.bait" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.monitoringRequest?.checklist?.bait" nzStatus="error"></nz-badge>
       </td>
       <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
