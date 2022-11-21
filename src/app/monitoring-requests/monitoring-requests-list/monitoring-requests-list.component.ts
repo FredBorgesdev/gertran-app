@@ -274,8 +274,8 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
   filterData(form: MonitoringRequestsFilter): void {
     this.monitoringRequestFilters = {
-      fromDate: form.from.toISOString(),
-      toDate: form.to.toISOString(),
+      fromDate: new Date(form.from).toISOString(),
+      toDate: new Date(form.to).toISOString(),
       customer: form.customer,
     };
 
