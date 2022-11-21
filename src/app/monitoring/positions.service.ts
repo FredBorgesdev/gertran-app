@@ -3,6 +3,7 @@ import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/s
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TrackerTechnologiesModels} from '../tracker-technologies/tracker-technologies-models.service';
+import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
 
 export interface Position {
   amountFuel: string | null;
@@ -35,14 +36,11 @@ export interface Position {
     };
   };
   vehicleStatus: string;
-  monitoringRequest: {
-    id: string;
-    driverName: string;
-    originCity: string;
-    originState: string;
+  monitoringRequest: MonitoringRequests & {
     destinyCity: string;
     destinyState: string;
-    bait: boolean;
+    originCity: string;
+    originState: string;
   };
   customer: {
     id: string;

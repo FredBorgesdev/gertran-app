@@ -202,7 +202,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getWagons(item: Position): string {
-    return item.wagons.join(', ');
+    return item.monitoringRequest.wagons.join(', ');
   }
 
   loadPositions(): void {
@@ -304,7 +304,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     menu: NzDropdownMenuComponent,
     item: Position
   ): void {
-    this.setPlate(item.truck.vehicle.plate);
+    this.setPlate(item.monitoringRequest.truck.vehicle.plate);
     this.nzContextMenuService.create(ev, menu);
   }
 

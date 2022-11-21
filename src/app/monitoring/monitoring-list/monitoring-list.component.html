@@ -125,7 +125,7 @@
       *ngFor="let item of table.data; let i=index"
       [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight, item)"
-      (click)="setPlate(item.truck.vehicle.plate)"
+      (click)="setPlate(item.monitoringRequest?.truck.vehicle.plate)"
     >
       <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">
         <img
@@ -142,7 +142,7 @@
         [nzTooltipTitle]="item.monitoringRequest.id"
         [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
       >{{ item.monitoringRequest.id | id}}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.truck?.vehicle?.plate || '-' }}</td>
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.monitoringRequest?.truck?.vehicle?.plate || '-' }}</td>
       <td>
         <span
           nz-icon
@@ -200,7 +200,7 @@
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest.travelStatus)">
         {{getStatusTranslation(item.monitoringRequest.travelStatus)}}
       </td>
-      <td>{{ item.observations || '-' }}</td>
+      <td>{{ item.monitoringRequest.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
       <td>{{ getCommunicationChannel(item.communicationChannel) }}</td>

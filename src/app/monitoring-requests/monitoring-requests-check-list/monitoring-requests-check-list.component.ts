@@ -2,12 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Wagon} from '../../wagons/wagons.service';
-import {subscribeOn} from 'rxjs/operators';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TravelStep} from '../travel-step.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
-import {ChecklistsService} from '../../checklists/checklists.service';
-import {forkJoin} from 'rxjs';
 
 enum Status {
   DRAFT = 'draft',
@@ -85,7 +82,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private message: NzMessageService,
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService,
-    private checklistService: ChecklistsService,
   ) { }
 
   ngOnInit(): void {
