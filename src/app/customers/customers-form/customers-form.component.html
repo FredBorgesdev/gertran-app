@@ -26,15 +26,15 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="domain">Website</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Website inválido!">
-      <input id="domain" type="text" nz-input formControlName="domain" />
+      <input id="domain" type="url" nz-input formControlName="domain" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="domain">Tempo de validade checklist</nz-form-label>
-    <nz-radio-group formControlName="checklistValidity">
-      <label nz-radio nzValue="24hours">24h</label>
-      <label nz-radio nzValue="72hours">72h</label>
-      <label nz-radio nzValue="30days">30 dias</label>
+    <nz-radio-group formControlName="checklistExpirationPeriod">
+      <label nz-radio nzValue="twenty_four_hours">24h</label>
+      <label nz-radio nzValue="seventy_two_hours">72h</label>
+      <label nz-radio nzValue="thirty_days">30 dias</label>
     </nz-radio-group>
   </nz-form-item>
   <nz-form-item>

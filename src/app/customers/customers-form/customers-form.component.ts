@@ -44,8 +44,8 @@ export class CustomersFormComponent implements OnInit {
       corporateName: [this.customer?.corporateName, Validators.required],
       tradingName: [this.customer?.tradingName, Validators.required],
       cnpj: [this.customer?.cnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
-      domain: [this.customer?.domain, [Validators.required, Validators.pattern('^(http(s)?:\/\/)?((w){3}.)?([^\.]+).([a-z]+)(.[a-z]+)?$')]],
-      checklistValidity: [this.customer?.checklistValidity, Validators.required],
+      domain: [this.customer?.domain, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
+      checklistExpirationPeriod: [this.customer?.checklistExpirationPeriod, Validators.required],
       itambeShipper: [false],
       lactalisShipper: [false]
     });
