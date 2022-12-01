@@ -151,7 +151,7 @@
           [style]="'font-size: 20px; color: ' + (item.ignition ? '#ff7118' : '#ccc')"
         ></span>
       </td>
-      <td>
+      <td *ngIf="isGertranStaff">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
@@ -201,23 +201,28 @@
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
       <td>{{ getOrigin(item) }}</td>
       <td>{{ getDestiny(item) }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getAlerts(item)">{{ getAlerts(item) || '-' }}</td>
+      <td
+        *ngIf="isGertranStaff"
+        nzEllipsis
+        nz-tooltip
+        [nzTooltipTitle]="getAlerts(item)"
+      >{{ getAlerts(item) || '-' }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest.travelStatus)">
         {{getStatusTranslation(item.monitoringRequest.travelStatus)}}
       </td>
       <td>{{ item.monitoringRequest.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
-      <td>{{ getCommunicationChannel(item.communicationChannel) }}</td>
-      <td>
+      <td *ngIf="isGertranStaff">{{ getCommunicationChannel(item.communicationChannel) }}</td>
+      <td *ngIf="isGertranStaff">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasMacro" nzStatus="error"></nz-badge>
       </td>
-      <td>
+      <td *ngIf="isGertranStaff">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
-      <td>
+      <td *ngIf="isGertranStaff">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.bait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.bait" nzStatus="error"></nz-badge>
       </td>

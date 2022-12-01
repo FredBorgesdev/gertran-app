@@ -25,25 +25,9 @@ import {
   MonitoringRequestsCheckListComponent
 } from '../../monitoring-requests/monitoring-requests-check-list/monitoring-requests-check-list.component';
 import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.component';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
-
-enum Status {
-  DRAFT = 'draft',
-  UNDER_REVIEW = 'under_review',
-  WAITING_FOR_START = 'waiting_for_start',
-  IN_PROGRESS = 'in_progress',
-  REPROVED = 'reproved',
-  FINISHED = 'finished',
-  SUCCESSFULLY_TERMINATED = 'successfully_terminated',
-  CANCELED = 'canceled',
-  UNSUCCESSFULLY_TERMINATED = 'unsuccessfully_terminated',
-  TERMINATED_DISAPPROVED = 'terminated_disapproved',
-  POTENTIALLY_STOLEN = 'potentially_stolen',
-  STOLEN_CONFIRMED = 'stolen_confirmed',
-  PENDING = 'pending',
-  IMPORTED_UNAVAILABLE = 'imported_unavailable',
-}
 
 @Component({
   selector: 'app-monitoring-list',
@@ -51,6 +35,7 @@ enum Status {
   styleUrls: ['./monitoring-list.component.css']
 })
 export class MonitoringListComponent implements OnInit, OnDestroy {
+  isGertranStaff: boolean;
   isLoading = false;
   monitoringColumns = [
     { title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px' },
@@ -58,7 +43,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '90px' },
     { title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px' },
     { title: 'Ign', width: '40px' },
-    { title: 'Ale', width: '40px' },
+    { title: 'Ale', width: '40px', gertranStaffOnly: true },
     { title: 'Automação', width: '90px' },
     { title: 'Mapa', width: '50px' },
     { title: '%', width: '100px' },
@@ -68,15 +53,15 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Posição', width: '110px' },
     { title: 'Origem', width: '110px' },
     { title: 'Destino', width: '110px' },
-    { title: 'Alertas', width: '80px' },
+    { title: 'Alertas', width: '80px', gertranStaffOnly: true },
     { title: 'Status V.', width: '80px' },
     { title: 'Obs.', width: '110px' },
     { title: 'Motorista', width: '110px' },
     { title: 'Carreta', width: '80px' },
-    { title: 'Comunicação', width: '100px' },
-    { title: 'Macro', width: '55px' },
-    { title: 'Int. Emb.', width: '50px' },
-    { title: 'Isca', width: '50px' },
+    { title: 'Comunicação', width: '100px', gertranStaffOnly: true },
+    { title: 'Macro', width: '55px', gertranStaffOnly: true },
+    { title: 'Int. Emb.', width: '50px', gertranStaffOnly: true },
+    { title: 'Isca', width: '50px', gertranStaffOnly: true },
     { title: 'Temp.', width: '50px' },
   ];
   validateForm: FormGroup;
@@ -124,10 +109,19 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     private monitoringRequestService: MonitoringRequestsService,
     public selectableCustomerService: SelectableCustomerServiceService,
     private alertsService: AlertsService,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
     this.loadFiltersList();
+    this.setIsGertranStaff().then(() => {
+      this.monitoringColumns = this.monitoringColumns.filter(column => {
+        if (column.gertranStaffOnly) {
+          return this.isGertranStaff;
+        }
+        return true;
+      });
+    });
 
     this.monitoringData$ = timer(0, 10000).pipe(
       switchMap(() => this.positionsService.getAll(
@@ -168,6 +162,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getRowBackgroundColor(status: string): string {
+    if (!this.isGertranStaff) {
+      return '';
+    }
     return this.travelStatus.find(item => item.value === status).backgroundColorClass;
   }
 
@@ -305,6 +302,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     menu: NzDropdownMenuComponent,
     item: Position
   ): void {
+    if (!this.isGertranStaff) {
+      return;
+    }
     this.setPlate(item.monitoringRequest.truck.vehicle.plate);
     this.nzContextMenuService.create(ev, menu);
   }
@@ -437,5 +437,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   formatPercent(percent: number): string {
     return `${percent.toFixed(1)}%`;
+  }
+
+  async setIsGertranStaff(): Promise<void> {
+    const user = await this.authService.getUser();
+    this.isGertranStaff = user.isGertranStaff;
   }
 }
