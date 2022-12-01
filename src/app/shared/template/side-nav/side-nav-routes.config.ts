@@ -14,16 +14,9 @@ export const ROUTES: SideNavInterface[] = [
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'star',
-    submenu: []
+    submenu: [],
+    gertranStaffOnly: true
   },
-  // {
-  //   path: '',
-  //   title: 'Filiais',
-  //   iconType: 'nzIcon',
-  //   iconTheme: 'outline',
-  //   icon: 'tags',
-  //   submenu: []
-  // },
   {
     path: '/drivers/drivers-list',
     title: 'Motoristas',
@@ -147,7 +140,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'robot',
-        submenu: []
+        submenu: [],
+        gertranStaffOnly: true
       },
       {
         path: '/operations/operations-list',
@@ -155,7 +149,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'control',
-        submenu: []
+        submenu: [],
+        gertranStaffOnly: true
       },
       {
         path: '/terminals/terminals-list',
@@ -163,7 +158,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'car',
-        submenu: []
+        submenu: [],
+        gertranStaffOnly: true
       }
     ]
   },
@@ -582,6 +578,7 @@ export const ROUTES: SideNavInterface[] = [
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'book',
+    gertranStaffOnly: true,
     submenu: [
       {
         path: '/insurance-companies/insurance-companies-list',
