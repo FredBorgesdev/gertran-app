@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../users.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-users-form',
@@ -25,10 +26,12 @@ export class UsersFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    public selectableCustomerService: SelectableCustomerServiceService
   ) {
     this.validatePasswordForm = formBuilder.group({
       password: [null, [Validators.required, Validators.minLength(6)]],
     });
+    selectableCustomerService.init();
   }
 
   submitPassword(): void {

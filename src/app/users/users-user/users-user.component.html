@@ -28,7 +28,7 @@
         ></app-users-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Permissões de Acesso">
+      <nz-tab nzTitle="Permissões de Acesso" [nzDisabled]="!resource">
         <app-permissions-tab
           *ngIf="resource"
           [targetKeys]="numbersToStrings(resource.permissions)"
@@ -36,7 +36,7 @@
         ></app-permissions-tab>
       </nz-tab>
 
-      <nz-tab nzTitle="Grupos">
+      <nz-tab nzTitle="Grupos" [nzDisabled]="!resource">
         <app-groups-tab
           *ngIf="resource"
           [targetKeys]="numbersToStrings(resource.groups)"

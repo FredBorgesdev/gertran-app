@@ -27,7 +27,9 @@ export class UsersUserComponent extends BaseCrudFormComponent<User> {
 
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
+      customer: [null, Validators.required],
+      email: [null, [Validators.email]],
+      cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
       password: [null, []],
       isActive: [false, [Validators.required]],
