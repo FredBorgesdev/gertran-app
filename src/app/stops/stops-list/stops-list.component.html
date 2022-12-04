@@ -27,7 +27,10 @@
         </div>
       </div>
 
-      <div class="col-lg-4 text-right">
+      <div
+        class="col-lg-4 text-right"
+        *ngIf="authService.user.hasPermission('point.add_point')"
+      >
         <button
           (click)="create()"
           nz-button

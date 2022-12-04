@@ -9,7 +9,8 @@ const routes: Routes = [
     component: StopsListComponent,
     data: {
       title: 'Pontos ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'point.view_point',
     }
   },
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     component: StopsStopComponent,
     data: {
       title: 'Adicionar Ponto ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'point.add_point',
     }
   },
   {
@@ -25,7 +27,8 @@ const routes: Routes = [
     component: StopsStopComponent,
     data: {
       title: 'Editar Ponto ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'point.change_point',
     }
   }
 ];

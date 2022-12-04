@@ -5,6 +5,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {TableService} from '../../shared/services/table.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-stops-list',
@@ -42,6 +43,7 @@ export class StopsListComponent extends BaseCrudListComponent<Stop> {
   ];
 
   constructor(
+    public authService: AuthenticationService,
     private tableService: TableService,
     router: Router,
     message: NzMessageService,
