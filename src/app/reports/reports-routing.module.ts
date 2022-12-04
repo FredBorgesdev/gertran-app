@@ -19,20 +19,21 @@ import {OperationalAuditCommandsComponent} from './operational-audit-commands/op
 import {OperationalAuditMessagesComponent} from './operational-audit-messages/operational-audit-messages.component';
 import {MacrovehicleComponent} from './macrovehicle/macrovehicle.component';
 import {AnalyticalReportComponent} from './analytical-report/analytical-report.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
     path: 'load-unload-by-macro',
     component: LoadUnloadByMacroComponent,
     data: {
-      permission: 'reports.view_load_and_unload_report'
+      permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_REPORT
     }
   },
   {
     path: 'load-unload-by-point',
     component: LoadUnloadByPointComponent,
     data: {
-      permission: 'reports.view_load_and_unload_by_point_report'
+      permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_BY_POINT_REPORT
     }
   },
   {
@@ -43,42 +44,42 @@ const routes: Routes = [
     path: 'trips-late',
     component: TripsLateComponent,
     data: {
-      permission: 'reports.view_delayed_trips_report'
+      permission: Permissions.REPORTS_VIEW_DELAYED_TRIPS_REPORT
     }
   },
   {
     path: 'travel-requests',
     component: TravelRequestsComponent,
     data: {
-      permission: 'reports.view_monitoring_request_report'
+      permission: Permissions.REPORTS_VIEW_MONITORING_REQUEST_REPORT
     }
   },
   {
     path: 'available-vehicles',
     component: AvailableVehiclesComponent,
     data: {
-      permission: 'reports.view_vehicles_relesed_report'
+      permission: Permissions.REPORTS_VIEW_VEHICLES_RELESED_REPORT
     }
   },
   {
     path: 'logistics',
     component: LogisticsComponent,
     data: {
-      permission: 'reports.view_logistic_report'
+      permission: Permissions.REPORTS_VIEW_LOGISTIC_REPORT
     }
   },
   {
     path: 'travel-start',
     component: TravelStartComponent,
     data: {
-      permission: 'reports.view_travel_start_report'
+      permission: Permissions.REPORTS_VIEW_TRAVEL_START_REPORT
     }
   },
   {
     path: 'travel-end',
     component: TravelEndComponent,
     data: {
-      permission: 'reports.view_travel_end_report'
+      permission: Permissions.REPORTS_VIEW_TRAVEL_END_REPORT
     }
   },
   {
@@ -97,7 +98,7 @@ const routes: Routes = [
     path: 'commands-history',
     component: CommandsHistoryComponent,
     data: {
-      permission: 'reports.view_command_history_report'
+      permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
     }
   },
   {
@@ -112,28 +113,28 @@ const routes: Routes = [
     path: 'operational-audit-commands',
     component: OperationalAuditCommandsComponent,
     data: {
-      permission: 'reports.view_commands_operational_audit_history_report'
+      permission: Permissions.REPORTS_VIEW_MESSAGES_OPERATIONAL_AUDIT_HISTORY_REPORT
     }
   },
   {
     path: 'operational-audit-messages',
     component: OperationalAuditMessagesComponent,
     data: {
-      permission: 'reports.view_messages_operational_audit_history_report'
+      permission: Permissions.REPORTS_VIEW_MESSAGES_OPERATIONAL_AUDIT_HISTORY_REPORT
     }
   },
   {
     path: 'macro-vehicle',
     component: MacrovehicleComponent,
     data: {
-      permission: 'reports.view_macro_vehicle_report'
+      permission: Permissions.REPORTS_VIEW_MACRO_VEHICLE_REPORT
     }
   },
   {
     path: 'analytical',
     component: AnalyticalReportComponent,
     data: {
-      permission: 'reports.view_analytical_report'
+      permission: Permissions.REPORTS_VIEW_ANALYTICAL_REPORT
     }
   }
 ];

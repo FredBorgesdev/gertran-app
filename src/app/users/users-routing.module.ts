@@ -6,6 +6,7 @@ import {
 
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersUserComponent } from './users-user/users-user.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     data: {
       title: 'Usuários ',
       headerDisplay: 'none',
-      permission: 'baseuser.view_baseuser',
+      permission: Permissions.USERS_VIEW_BASEUSER,
     }
   },
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Adicionar Usuário ',
       headerDisplay: 'none',
-      permission: 'baseuser.add_baseuser',
+      permission: Permissions.USERS_ADD_BASEUSER,
     }
   },
   {
@@ -32,7 +33,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Usuário ',
       headerDisplay: 'none',
-      permission: 'baseuser.change_baseuser',
+      permission: Permissions.USERS_CHANGE_BASEUSER,
     }
   }
 ];

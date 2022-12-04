@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StopsListComponent } from './stops-list/stops-list.component';
 import { StopsStopComponent } from './stops-stop/stops-stop.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
     data: {
       title: 'Pontos ',
       headerDisplay: 'none',
-      permission: 'point.view_point',
+      permission: Permissions.SETTINGS_VIEW_POINT,
     }
   },
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     data: {
       title: 'Adicionar Ponto ',
       headerDisplay: 'none',
-      permission: 'point.add_point',
+      permission: Permissions.SETTINGS_ADD_POINT,
     }
   },
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Ponto ',
       headerDisplay: 'none',
-      permission: 'point.change_point',
+      permission: Permissions.SETTINGS_CHANGE_POINT,
     }
   }
 ];

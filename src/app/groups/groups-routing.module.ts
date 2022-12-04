@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GroupsListComponent } from './groups-list/groups-list.component';
 import {GroupsFormComponent} from './groups-form/groups-form.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
     data: {
       title: 'Grupos',
       headerDisplay: 'none',
-      permission: 'group.view_group',
+      permission: Permissions.AUTH_VIEW_GROUP,
     }
   },
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     data: {
       title: 'Criar Grupo',
       headerDisplay: 'none',
-      permission: 'group.add_group',
+      permission: Permissions.AUTH_ADD_GROUP,
     }
   },
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Grupo',
       headerDisplay: 'none',
-      permission: 'group.change_group',
+      permission: Permissions.AUTH_CHANGE_GROUP,
     }
   }
 ];

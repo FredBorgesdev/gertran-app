@@ -1,4 +1,6 @@
-import { SideNavInterface } from '../../interfaces/side-nav.type';
+import {SideNavInterface} from '../../interfaces/side-nav.type';
+import {Permissions} from '../../../authentication/permissions';
+
 export const ROUTES: SideNavInterface[] = [
   {
     path: '/dashboard/home',
@@ -74,7 +76,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'car',
-        submenu: []
+        submenu: [],
+        permission: Permissions.VEHICLES_VIEW_TRUCK
       },
       {
         path: '/wagons/wagons-list',
@@ -82,7 +85,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'group',
-        submenu: []
+        submenu: [],
+        permission: Permissions.VEHICLES_VIEW_WAGON
       }
     ]
   },
@@ -184,7 +188,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_load_and_unload_report'
+            permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_REPORT
           },
           {
             path: '/reports/load-unload-by-point',
@@ -196,7 +200,7 @@ export const ROUTES: SideNavInterface[] = [
               'navbar-closed': true
             },
             submenu: [],
-            permission: 'reports.view_load_and_unload_by_point_report'
+            permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_BY_POINT_REPORT
           },
           {
             path: '/reports/load-unload-by-radius',
@@ -216,7 +220,7 @@ export const ROUTES: SideNavInterface[] = [
               'navbar-closed': true
             },
             submenu: [],
-            permission: 'reports.view_delayed_trips_report'
+            permission: Permissions.REPORTS_VIEW_DELAYED_TRIPS_REPORT
           },
           {
             path: '/reports/travel-requests',
@@ -225,7 +229,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_monitoring_request_report'
+            permission: Permissions.REPORTS_VIEW_MONITORING_REQUEST_REPORT
           },
           {
             path: '/reports/available-vehicles',
@@ -237,7 +241,7 @@ export const ROUTES: SideNavInterface[] = [
               'navbar-closed': true
             },
             submenu: [],
-            permission: 'reports.view_vehicles_relesed_report'
+            permission: Permissions.REPORTS_VIEW_VEHICLES_RELESED_REPORT
           },
           {
             path: '/reports/logistics',
@@ -246,7 +250,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_logistic_report'
+            permission: Permissions.REPORTS_VIEW_LOGISTIC_REPORT
           },
           {
             path: '/reports/travel-start',
@@ -255,7 +259,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_travel_start_report'
+            permission: Permissions.REPORTS_VIEW_TRAVEL_START_REPORT
           },
           {
             path: '/reports/travel-end',
@@ -264,7 +268,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_travel_end_report'
+            permission: Permissions.REPORTS_VIEW_TRAVEL_END_REPORT
           },
           {
             path: '/reports/closing',
@@ -306,7 +310,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_macro_vehicle_report'
+            permission: Permissions.REPORTS_VIEW_MACRO_VEHICLE_REPORT
           },
           {
             path: '/reports/positions-history',
@@ -331,7 +335,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_commands_history_report'
+            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
           {
             path: '/dashboard/reports17',
@@ -340,7 +344,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_checklist_history_report'
+            permission: Permissions.REPORTS_VIEW_CHECKLIST_HISTORY_REPORT
           },
           {
             path: '/dashboard/reports18',
@@ -382,7 +386,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_incident_report'
+            permission: Permissions.REPORTS_VIEW_INCIDENT_REPORT
           },
           {
             path: '/reports/analytical',
@@ -391,7 +395,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_analytical_report'
+            permission: Permissions.REPORTS_VIEW_ANALYTICAL_REPORT
           },
           {
             path: '/reports/baits',
@@ -408,7 +412,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_panic_history_report'
+            permission: Permissions.REPORTS_VIEW_PANIC_HISTORY_REPORT
           },
           {
             path: '/dashboard/reports25',
@@ -425,7 +429,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_commands_operational_audit_history_report'
+            permission: Permissions.REPORTS_VIEW_MESSAGES_OPERATIONAL_AUDIT_HISTORY_REPORT
           },
           {
             path: '/reports/operational-audit-messages',
@@ -434,7 +438,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: 'reports.view_messages_operational_audit_history_report'
+            permission: Permissions.REPORTS_VIEW_MESSAGES_OPERATIONAL_AUDIT_HISTORY_REPORT
           },
         ]
       },

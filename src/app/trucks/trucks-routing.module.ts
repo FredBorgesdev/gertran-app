@@ -6,6 +6,7 @@ import {
 
 import { TrucksListComponent } from './trucks-list/trucks-list.component';
 import { TrucksTruckComponent } from './trucks-truck/trucks-truck.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     data: {
       title: 'Usuários ',
       headerDisplay: 'none',
-      permission: 'truck.view_truck',
+      permission: Permissions.VEHICLES_VIEW_TRUCK,
     }
   },
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Adicionar Carreta ',
       headerDisplay: 'none',
-      permission: 'truck.add_truck',
+      permission: Permissions.VEHICLES_ADD_TRUCK,
     }
   },
   {
@@ -32,7 +33,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Carreta ',
       headerDisplay: 'none',
-      permission: 'truck.change_truck',
+      permission: Permissions.VEHICLES_CHANGE_TRUCK,
     }
   }
 ];

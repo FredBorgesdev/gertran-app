@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoutesFormComponent } from './routes-form/routes-form.component';
 import { RoutesListComponent } from './routes-list/routes-list.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
     data: {
       title: 'Rotas ',
       headerDisplay: 'none',
-      permission: 'route.view_route',
+      permission: Permissions.SETTINGS_VIEW_ROUTE,
     }
   },
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Rota ',
       headerDisplay: 'none',
-      permission: 'route.change_route',
+      permission: Permissions.SETTINGS_CHANGE_ROUTE,
     }
   },
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     data: {
       title: 'Adicionar Rota ',
       headerDisplay: 'none',
-      permission: 'route.add_route',
+      permission: Permissions.SETTINGS_ADD_ROUTE,
     }
   }
 ];

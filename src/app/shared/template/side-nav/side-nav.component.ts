@@ -43,8 +43,14 @@ export class SideNavComponent implements OnInit {
     return this.authService.user;
   }
 
-  filteredItems(submenu: SideNavInterface[]): SideNavInterface[] {
-    return submenu.filter(menuItem => {
+  filteredItems(menu: SideNavInterface[]): SideNavInterface[] {
+    return menu.filter(menuItem => {
+      const isFolder = menuItem.submenu.length > 0;
+      const filteredFolder = this.filteredItems(menuItem.submenu);
+      if (isFolder && filteredFolder.length === 0) {
+        return false;
+      }
+
       if (menuItem.permission && !this.user.hasPermission(menuItem.permission)) {
         return false;
       }

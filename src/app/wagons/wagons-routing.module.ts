@@ -6,6 +6,7 @@ import {
 
 import { WagonsListComponent } from './wagons-list/wagons-list.component';
 import { WagonsWagonComponent } from './wagons-wagon/wagons-wagon.component';
+import {Permissions} from '../authentication/permissions';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     data: {
       title: 'Carretas ',
       headerDisplay: 'none',
-      permission: 'wagon.view_wagon',
+      permission: Permissions.VEHICLES_VIEW_WAGON,
     }
   },
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Adicionar Carreta ',
       headerDisplay: 'none',
-      permission: 'wagon.add_wagon',
+      permission: Permissions.VEHICLES_ADD_WAGON,
     }
   },
   {
@@ -32,7 +33,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Carreta ',
       headerDisplay: 'none',
-      permission: 'wagon.change_wagon',
+      permission: Permissions.VEHICLES_CHANGE_WAGON,
     }
   }
 ];
