@@ -18,7 +18,9 @@ export class QuickViewComponent {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(['/authentication/login']);
+    this.router.navigate(['/authentication/login']).then(() => {
+      window.location.reload();
+    });
   }
 }
 
