@@ -9,7 +9,8 @@ const routes: Routes = [
     component: RoutesListComponent,
     data: {
       title: 'Rotas ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'route.view_route',
     }
   },
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     component: RoutesFormComponent,
     data: {
       title: 'Editar Rota ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'route.change_route',
     }
   },
   {
@@ -25,7 +27,8 @@ const routes: Routes = [
     component: RoutesFormComponent,
     data: {
       title: 'Adicionar Rota ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'route.add_route',
     }
   }
 ];
