@@ -158,16 +158,16 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         const route = componentInstance.routeId !== BLANK_ROUTE.id ?
           componentInstance.routeId : null;
         const points = this.getPoints(componentInstance.route?.points ?? []);
-
-        const lngLat = points.map(({ point: { longitude, latitude } }) => ({ latitude, longitude }));
         const hasPoints = route && points.length > 0;
-        const routeCoordinates = hasPoints && await this.directionsService.getCoordinates(lngLat);
+        const routeCoordinates = hasPoints && await this.directionsService.getCoordinates(points);
+        const shipperId = this.authService.customerId;
 
         (this.service as MonitoringRequestsService).save({
           route,
           routeCoordinates,
           customer: componentInstance.customer,
-          travelSteps: points
+          travelSteps: points,
+          shipper: shipperId as any,
         }).subscribe((result) => {
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
         });

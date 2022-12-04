@@ -1,6 +1,6 @@
 <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
   <div nz-row nzGutter="16">
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="6"  *ngIf="!authService.customerId">
       <nz-form-item class="m-b-0">
         <nz-form-label>Cliente</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">

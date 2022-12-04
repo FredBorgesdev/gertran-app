@@ -31,12 +31,8 @@ export interface MonitoringRequests {
   name: string;
   route: string;
   status: string;
-  shipper: {
-    id: string;
-  };
-  transporter: {
-    id: string;
-  };
+  shipper: Customer;
+  transporter: Customer;
   driver: {
     id: string;
   };

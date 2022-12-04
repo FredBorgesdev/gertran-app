@@ -53,7 +53,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     private wagonsService: WagonsService,
     private operationService: OperationsService,
     public selectableCustomerService: SelectableCustomerServiceService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -74,7 +74,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.stopsService.getAll({ limit: 50 }).subscribe((stops) => {
       this.stops = stops.results;
     });
-    this.selectableCustomerService.init();
+
+    this.loadCustomers();
     this.loadMoreDrivers();
     this.loadMoreTrucks();
     this.loadMoreOperations();
@@ -82,6 +83,15 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
       this.surveyConductors = surveyConductors;
     });
+  }
+
+  loadCustomers(): void {
+    if (
+      !this.authService.customerId ||
+      this.resource?.customer?.canSelectShipper
+    ) {
+      return this.selectableCustomerService.init();
+    }
   }
 
   get disabled(): boolean {
@@ -130,15 +140,11 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     }
 
     if (this.resource?.shipper) {
-      this.customersService.get(this.resource.shipper.id).subscribe((customer) => {
-        this.selectableCustomerService.appendCustomer(customer);
-      });
+      this.selectableCustomerService.appendCustomer(this.resource.shipper);
     }
 
     if (this.resource?.transporter) {
-      this.customersService.get(this.resource.transporter.id).subscribe((customer) => {
-        this.selectableCustomerService.appendCustomer(customer);
-      });
+      this.selectableCustomerService.appendCustomer(this.resource.transporter);
     }
 
     if (this.resource?.operation) {

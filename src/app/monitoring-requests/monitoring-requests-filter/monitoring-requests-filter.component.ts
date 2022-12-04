@@ -3,6 +3,7 @@ import {CustomerFilter} from '../../reports/filters/base-customer-filter/base-cu
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 export type MonitoringRequestsFilter = {
   customer: string;
@@ -25,6 +26,7 @@ export class MonitoringRequestsFilterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private i18n: NzI18nService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    public authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +45,9 @@ export class MonitoringRequestsFilterComponent implements OnInit {
 
     this.i18n.setLocale(en_US);
 
-    this.selectableCustomerService.init();
+    if (!this.authService.customerId) {
+      this.selectableCustomerService.init();
+    }
   }
 
   search(): void {
