@@ -9,7 +9,8 @@ const routes: Routes = [
     component: GroupsListComponent,
     data: {
       title: 'Grupos',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'group.view_group',
     }
   },
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     component: GroupsFormComponent,
     data: {
       title: 'Criar Grupo',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'group.add_group',
     }
   },
   {
@@ -25,7 +27,8 @@ const routes: Routes = [
     component: GroupsFormComponent,
     data: {
       title: 'Editar Grupo',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'group.change_group',
     }
   }
 ];
