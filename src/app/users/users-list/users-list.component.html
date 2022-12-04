@@ -24,7 +24,11 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 text-right">
+
+      <div
+        class="col-lg-4 text-right"
+        *ngIf="authService.user.hasPermission('baseuser.add_baseuser')"
+      >
         <button
           (click)="create()"
           nz-button
@@ -76,6 +80,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Editar"
+            *ngIf="authService.user.hasPermission('baseuser.change_baseuser')"
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
@@ -86,6 +91,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Excluir"
+            *ngIf="authService.user.hasPermission('baseuser.delete_baseuser')"
           >
             <i nz-icon nzType="delete" theme="outline"></i>
           </a>
