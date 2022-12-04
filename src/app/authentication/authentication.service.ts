@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import Cookies from 'js-cookie';
 import {from, Observable} from 'rxjs';
 import decode from 'jwt-decode';
-import {User, UsersService} from '../users/users.service';
+import { AbstractUser, UsersService } from '../users/users.service';
 
 export const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
 const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
@@ -73,7 +73,7 @@ export class AuthenticationService {
     return !!isTokenValid;
   }
 
-  async getUser(): Promise<User | null> {
+  async getUser(): Promise<AbstractUser | null> {
     const jwt = Cookies.get(GERTRAN_WEB_TOKEN);
     if (!jwt) {
       return null;
@@ -82,5 +82,9 @@ export class AuthenticationService {
     const decoded: any = decode(jwt);
 
     return this.usersService.get(decoded.user_id).toPromise();
+  }
+
+  get user() {
+    return new AbstractUser
   }
 }

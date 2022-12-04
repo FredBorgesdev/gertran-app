@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
-import {User, UsersService} from '../users.service';
+import {AbstractUser, UsersService} from '../users.service';
 import {FormBuilder, Validator, Validators} from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import {FormBuilder, Validator, Validators} from '@angular/forms';
   templateUrl: './users-user.component.html',
   styleUrls: ['./users-user.component.css']
 })
-export class UsersUserComponent extends BaseCrudFormComponent<User> {
+export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,

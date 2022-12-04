@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {GetAllResponse} from '../shared/services/api.service';
 import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
-import {User} from '../users/users.service';
+import {AbstractUser} from '../users/users.service';
 import {Position} from '../monitoring/positions.service';
 
 export interface BaseFilter {
@@ -46,9 +46,9 @@ export type CommandSentHistory = {
   observations: string;
   receivedAt: string;
   sentAt: string;
-  sentByUser: User;
+  sentByUser: AbstractUser;
   solvedAt: string;
-  solvedByUser: User;
+  solvedByUser: AbstractUser;
   status: string;
   vehicleTracker: string;
 };

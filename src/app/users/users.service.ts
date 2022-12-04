@@ -3,7 +3,7 @@ import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/s
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-export interface User {
+export abstract class AbstractUser {
   id: string;
   name: string;
   email: string;
@@ -20,15 +20,15 @@ export interface User {
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService implements ApiService<User> {
+export class UsersService implements ApiService<AbstractUser> {
 
   constructor(private http: HttpClient) { }
 
-  get(id: string): Observable<User> {
-    return this.http.get<User>(`users/${id}`);
+  get(id: string): Observable<AbstractUser> {
+    return this.http.get<AbstractUser>(`users/${id}`);
   }
 
-  getAll(pagination: Pagination, filters?: { name?: string }): Observable<GetAllResponse<User>> {
+  getAll(pagination: Pagination, filters?: { name?: string }): Observable<GetAllResponse<AbstractUser>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -39,17 +39,17 @@ export class UsersService implements ApiService<User> {
       params.name = filters.name;
     }
 
-    return this.http.get<GetAllResponse<User>>('users', { params });
+    return this.http.get<GetAllResponse<AbstractUser>>('users', { params });
   }
 
-  save(data: User): Observable<User> {
-    return this.http.post<User>('users/create', data);
+  save(data: AbstractUser): Observable<AbstractUser> {
+    return this.http.post<AbstractUser>('users/create', data);
   }
 
-  update(id: string, data: User): Observable<User> {
+  update(id: string, data: AbstractUser): Observable<AbstractUser> {
     delete data.password;
 
-    return this.http.patch<User>(`users/${id}/update`, data);
+    return this.http.patch<AbstractUser>(`users/${id}/update`, data);
   }
 
   delete(id: string): Observable<void> {

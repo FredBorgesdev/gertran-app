@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { TableService } from '../../shared/services/table.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import {User, UsersService} from '../users.service';
+import {AbstractUser, UsersService} from '../users.service';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 
 @Component({
@@ -12,7 +12,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
   templateUrl: './users-list.component.html',
   styleUrls: [ './users-list.component.css' ]
 })
-export class UsersListComponent extends BaseCrudListComponent<User> {
+export class UsersListComponent extends BaseCrudListComponent<AbstractUser> {
   searchInput: string;
 
   userColumn = [
@@ -20,15 +20,15 @@ export class UsersListComponent extends BaseCrudListComponent<User> {
     {
       title: 'Nome',
       compare: (
-        a: User,
-        b: User
+        a: AbstractUser,
+        b: AbstractUser
       ) => a.name.localeCompare(b.name)
     },
     {
       title: 'Email',
       compare: (
-        a: User,
-        b: User
+        a: AbstractUser,
+        b: AbstractUser
       ) => a.email.localeCompare(b.email)
     },
     { title: 'Último Login' },

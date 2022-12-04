@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {User, UsersService} from './users.service';
+import {AbstractUser, UsersService} from './users.service';
 import {Subject} from 'rxjs';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {debounceTime} from 'rxjs/operators';
@@ -8,7 +8,7 @@ import {debounceTime} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SelectableUsersService {
-  users: User[] = [];
+  users: AbstractUser[] = [];
   isLoadingMoreData: boolean;
   customersNextUrl: string;
   searchUserSubject = new Subject<string>();
@@ -44,11 +44,11 @@ export class SelectableUsersService {
     }
   }
 
-  appendCustomer(user: User): void {
+  appendCustomer(user: AbstractUser): void {
     this.users = [user, ...this.users];
   }
 
-  concatCustomers(users: User[]): void {
+  concatCustomers(users: AbstractUser[]): void {
     this.users = this.users.concat(users);
   }
 
