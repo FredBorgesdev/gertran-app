@@ -13,7 +13,8 @@ const routes: Routes = [
     component: UsersListComponent,
     data: {
       title: 'Usuários ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'baseuser.view_baseuser',
     }
   },
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     component: UsersUserComponent,
     data: {
       title: 'Adicionar Usuário ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'baseuser.add_baseuser',
     }
   },
   {
@@ -29,7 +31,8 @@ const routes: Routes = [
     component: UsersUserComponent,
     data: {
       title: 'Editar Usuário ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'baseuser.change_baseuser',
     }
   }
 ];
