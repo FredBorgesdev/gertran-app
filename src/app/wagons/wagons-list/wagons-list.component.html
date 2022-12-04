@@ -18,7 +18,11 @@
         <div class="d-md-flex">
         </div>
       </div>
-      <div class="col-lg-4 text-right">
+
+      <div
+        class="col-lg-4 text-right"
+        *ngIf="authService.user.hasPermission('wagon.add_wagon')"
+      >
         <button
           (click)="create()"
           nz-button
@@ -72,6 +76,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Editar"
+            *ngIf="authService.user.hasPermission('wagon.change_wagon')"
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
@@ -82,6 +87,7 @@
             nz-tooltip
             nzTooltipTitle="Excluir"
             (click)="delete(item)"
+            *ngIf="authService.user.hasPermission('wagon.delete_wagon')"
           >
             <i nz-icon nzType="delete" theme="outline"></i>
           </a>

@@ -6,6 +6,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
 import {Wagon, WagonsService} from '../wagons.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-wagons-list',
@@ -29,6 +30,7 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
 
   constructor(
     private tableService: TableService,
+    public authService: AuthenticationService,
     router: Router,
     service: WagonsService,
     message: NzMessageService,

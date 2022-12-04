@@ -6,6 +6,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
 import {Truck, TrucksService} from '../trucks.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-trucks-list',
@@ -31,6 +32,7 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
 
   constructor(
     private tableService: TableService,
+    public authService: AuthenticationService,
     router: Router,
     service: TrucksService,
     message: NzMessageService,

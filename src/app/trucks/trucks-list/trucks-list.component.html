@@ -26,7 +26,11 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 text-right">
+
+      <div
+        class="col-lg-4 text-right"
+        *ngIf="authService.user.hasPermission('truck.add_truck')">
+      >
         <button
           (click)="create()"
           nz-button
@@ -82,6 +86,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Editar"
+            *ngIf="authService.user.hasPermission('truck.change_truck')"
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
@@ -92,6 +97,7 @@
             nz-tooltip
             nzTooltipTitle="Excluir"
             (click)="delete(item)"
+            *ngIf="authService.user.hasPermission('truck.delete_truck')"
           >
             <i nz-icon nzType="delete" theme="outline"></i>
           </a>
