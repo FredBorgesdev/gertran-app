@@ -1,4 +1,4 @@
-<nz-form-item class="m-b-15">
+<nz-form-item class="m-b-15" *ngIf="!authService.customerId">
   <nz-form-label nzRequired>Cliente</nz-form-label>
   <nz-form-control nzErrorTip="Preencha o campo">
     <nz-select

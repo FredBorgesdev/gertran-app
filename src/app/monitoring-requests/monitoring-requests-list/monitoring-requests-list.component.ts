@@ -16,6 +16,7 @@ import {MonitoringRequestsCheckListComponent} from '../monitoring-requests-check
 import {MonitoringRequestsFilter} from '../monitoring-requests-filter/monitoring-requests-filter.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
+import {state} from '@angular/animations';
 
 enum Status {
   DRAFT = 'draft',
@@ -156,7 +157,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzOnOk: async (componentInstance) => {
         const route = componentInstance.routeId !== BLANK_ROUTE.id ?
           componentInstance.routeId : null;
-        const points = componentInstance.route?.points ?? [];
+        const points = this.getPoints(componentInstance.route?.points ?? []);
 
         const lngLat = points.map(({ point: { longitude, latitude } }) => ({ latitude, longitude }));
         const hasPoints = route && points.length > 0;
@@ -166,31 +167,27 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
           route,
           routeCoordinates,
           customer: componentInstance.customer,
+          travelSteps: points
         }).subscribe((result) => {
-          this.createPoints(result.id, points);
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
         });
       }
     });
   }
 
-  createPoints(monitoringRequestId: string, points: Route['points']): void {
-    const points$ = points.map(({ point }, index) => {
-      return this.travelStepService.save({
-        pointId: point.id,
-        pointType: point.pointType,
-        order: index + 1,
-        address: point.address,
-        latitude: point.latitude.toFixed(6),
-        longitude: point.longitude.toFixed(6),
-        city: point.city,
-        state: point.state,
-        date: format(new Date(), 'yyyy-MM-dd'),
-        time: format(new Date(), 'HH:mm:ss'),
-      }, monitoringRequestId);
-    });
-
-    forkJoin(points$).subscribe();
+  getPoints(points: Route['points']): any {
+    return points.map(({ point }, index) => ({
+      point: point.id,
+      pointType: point.pointType,
+      order: index + 1,
+      address: point.address,
+      latitude: point.latitude.toFixed(6),
+      longitude: point.longitude.toFixed(6),
+      city: point.city,
+      state: point.state,
+      date: format(new Date(), 'yyyy-MM-dd'),
+      time: format(new Date(), 'HH:mm:ss'),
+    }));
   }
 
   pagination(url?: string): Pagination {

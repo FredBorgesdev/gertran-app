@@ -5,6 +5,8 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {GetAllResponse, getCurrentPage, replaceOffsetWithPage} from '../../shared/services/api.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {id} from 'date-fns/locale';
 
 export const BLANK_ROUTE = {
   id: 'blank',
@@ -38,11 +40,17 @@ export class RoutesModalComponent implements OnInit {
     private routesService: RoutesService,
     public selectableCustomerService: SelectableCustomerServiceService,
     private message: NzMessageService,
+    public authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
     this.loadRoutes();
-    this.selectableCustomerService.init();
+
+    if (!this.authService.customerId) {
+      this.selectableCustomerService.init();
+    } else {
+      this.customer = this.authService.customerId;
+    }
   }
 
   onCurrentPageDataChange($event: readonly Route[]): void {
