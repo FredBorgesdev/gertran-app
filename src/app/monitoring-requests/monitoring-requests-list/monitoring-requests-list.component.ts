@@ -15,6 +15,7 @@ import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {MonitoringRequestsCheckListComponent} from '../monitoring-requests-check-list/monitoring-requests-check-list.component';
 import {MonitoringRequestsFilter} from '../monitoring-requests-filter/monitoring-requests-filter.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import User from '../../users/user';
 
 enum Status {
   DRAFT = 'draft',
@@ -52,7 +53,6 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     fromDate: this.twoDaysBefore,
     toDate: this.now,
   };
-  isGertranStaff: boolean;
 
   constructor(
     private travelStepService: TravelStepService,
@@ -75,7 +75,6 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    await this.setIsGertranStaff();
     await this.loadAllResources();
   }
 
@@ -83,7 +82,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     if (loadBaseResource) {
       this.loadResources();
     }
-    if (!this.isGertranStaff) {
+    if (!this.user.isGertranStaff) {
       this.loadDraft();
     }
     this.loadWaitingForStart();
@@ -282,9 +281,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     this.loadAllResources(true);
   }
 
-  private async setIsGertranStaff(): Promise<void> {
-    const user = await this.authService.getUser();
-
-    this.isGertranStaff = user.isGertranStaff;
+  get user(): User {
+    return this.authService.user;
   }
 }

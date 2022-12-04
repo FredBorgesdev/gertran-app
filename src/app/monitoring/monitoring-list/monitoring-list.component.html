@@ -151,7 +151,7 @@
           [style]="'font-size: 20px; color: ' + (item.ignition ? '#ff7118' : '#ccc')"
         ></span>
       </td>
-      <td *ngIf="isGertranStaff">
+      <td *ngIf="user.isGertranStaff">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
@@ -202,7 +202,7 @@
       <td>{{ getOrigin(item) }}</td>
       <td>{{ getDestiny(item) }}</td>
       <td
-        *ngIf="isGertranStaff"
+        *ngIf="user.isGertranStaff"
         nzEllipsis
         nz-tooltip
         [nzTooltipTitle]="getAlerts(item)"
@@ -213,16 +213,16 @@
       <td>{{ item.monitoringRequest.observations || '-' }}</td>
       <td>{{ item.monitoringRequest.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
-      <td *ngIf="isGertranStaff">{{ getCommunicationChannel(item.communicationChannel) }}</td>
-      <td *ngIf="isGertranStaff">
+      <td *ngIf="user.isGertranStaff">{{ getCommunicationChannel(item.communicationChannel) }}</td>
+      <td *ngIf="user.isGertranStaff">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasMacro" nzStatus="error"></nz-badge>
       </td>
-      <td *ngIf="isGertranStaff">
+      <td *ngIf="user.isGertranStaff">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
-      <td *ngIf="isGertranStaff">
+      <td *ngIf="user.isGertranStaff">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.bait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.bait" nzStatus="error"></nz-badge>
       </td>

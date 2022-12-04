@@ -22,6 +22,7 @@ import { lineChartPlugin } from './dashboard/line-chart-plugin';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './shared/interceptor/api.interceptor';
 import { Router } from '@angular/router';
+import {AuthenticationService} from './authentication/authentication.service';
 
 registerLocaleData(ptbr);
 
@@ -43,6 +44,12 @@ registerLocaleData(ptbr);
     HttpClientModule,
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (authService: AuthenticationService) => () => authService.init(),
+      deps: [AuthenticationService],
+      multi: true
+    },
     {
       provide: NZ_I18N,
       useValue: pt_BR,

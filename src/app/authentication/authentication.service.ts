@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import {from, Observable} from 'rxjs';
 import decode from 'jwt-decode';
 import { AbstractUser, UsersService } from '../users/users.service';
+import User from '../users/user';
 
 export const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
 const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
@@ -12,6 +13,7 @@ const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
   providedIn: 'root'
 })
 export class AuthenticationService {
+  user: User;
 
   constructor(
     private http: HttpClient,
@@ -73,18 +75,15 @@ export class AuthenticationService {
     return !!isTokenValid;
   }
 
-  async getUser(): Promise<AbstractUser | null> {
+  async init(): Promise<User | null> {
     const jwt = Cookies.get(GERTRAN_WEB_TOKEN);
     if (!jwt) {
       return null;
     }
 
     const decoded: any = decode(jwt);
+    const user = await this.usersService.get(decoded.user_id).toPromise();
 
-    return this.usersService.get(decoded.user_id).toPromise();
-  }
-
-  get user() {
-    return new AbstractUser
+    this.user = new User(user);
   }
 }

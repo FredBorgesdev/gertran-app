@@ -26,6 +26,7 @@ import {
 } from '../../monitoring-requests/monitoring-requests-check-list/monitoring-requests-check-list.component';
 import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import User from '../../users/user';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -35,7 +36,6 @@ const PLATE_KEY = 'GERTRAN_LAST_PLATE';
   styleUrls: ['./monitoring-list.component.css']
 })
 export class MonitoringListComponent implements OnInit, OnDestroy {
-  isGertranStaff: boolean;
   isLoading = false;
   monitoringColumns = [
     { title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px' },
@@ -114,13 +114,11 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadFiltersList();
-    this.setIsGertranStaff().then(() => {
-      this.monitoringColumns = this.monitoringColumns.filter(column => {
-        if (column.gertranStaffOnly) {
-          return this.isGertranStaff;
-        }
-        return true;
-      });
+    this.monitoringColumns = this.monitoringColumns.filter(column => {
+      if (column.gertranStaffOnly) {
+        return this.user.isGertranStaff;
+      }
+      return true;
     });
 
     this.monitoringData$ = timer(0, 10000).pipe(
@@ -162,7 +160,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getRowBackgroundColor(status: string): string {
-    if (!this.isGertranStaff) {
+    if (!this.user.isGertranStaff) {
       return '';
     }
     return this.travelStatus.find(item => item.value === status).backgroundColorClass;
@@ -302,7 +300,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     menu: NzDropdownMenuComponent,
     item: Position
   ): void {
-    if (!this.isGertranStaff) {
+    if (!this.user.isGertranStaff) {
       return;
     }
     this.setPlate(item.monitoringRequest.truck.vehicle.plate);
@@ -439,8 +437,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return `${percent.toFixed(1)}%`;
   }
 
-  async setIsGertranStaff(): Promise<void> {
-    const user = await this.authService.getUser();
-    this.isGertranStaff = user.isGertranStaff;
+  get user(): User {
+    return this.authService.user;
   }
 }

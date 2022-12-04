@@ -4,6 +4,7 @@ import { ThemeConstantService } from '../../services/theme-constant.service';
 import { SideNavInterface } from '../../interfaces/side-nav.type';
 import {ActivatedRoute} from '@angular/router';
 import {AuthenticationService} from '../../../authentication/authentication.service';
+import User from '../../../users/user';
 
 @Component({
   selector: 'app-sidenav',
@@ -16,7 +17,6 @@ export class SideNavComponent implements OnInit {
   isFolded: boolean;
   isSideNavDark: boolean;
   isExpand: boolean;
-  isGertranStaff: boolean;
 
   constructor(
     private themeService: ThemeConstantService,
@@ -24,8 +24,6 @@ export class SideNavComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.setIsGertranStaff();
-
     this.menuItems = this.filteredItems(ROUTES);
     this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
     this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
@@ -41,15 +39,14 @@ export class SideNavComponent implements OnInit {
     }
   }
 
-  async setIsGertranStaff(): Promise<void> {
-    const user = await this.authService.getUser();
-    this.isGertranStaff = user.isGertranStaff;
+  get user(): User {
+    return this.authService.user;
   }
 
   filteredItems(submenu: SideNavInterface[]): SideNavInterface[] {
     return submenu.filter(menuItem => {
       if (menuItem.gertranStaffOnly) {
-        return this.isGertranStaff;
+        return this.user.isGertranStaff;
       }
       return menuItem;
     });
