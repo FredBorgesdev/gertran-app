@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
         this.loginForm.value.cpf.replace(/\D/g, ''),
         this.loginForm.value.password
       );
-      this.router.navigate(['/dashboard/home']);
+      this.router.navigate(['/dashboard/home']).then(() => {
+        location.reload();
+      });
     } catch (error) {
       this.message.error('Cpf ou senha inválidos.');
     } finally {
