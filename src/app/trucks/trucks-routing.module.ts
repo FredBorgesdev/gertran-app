@@ -13,7 +13,8 @@ const routes: Routes = [
     component: TrucksListComponent,
     data: {
       title: 'Usuários ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'truck.view_truck',
     }
   },
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     component: TrucksTruckComponent,
     data: {
       title: 'Adicionar Carreta ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'truck.add_truck',
     }
   },
   {
@@ -29,7 +31,8 @@ const routes: Routes = [
     component: TrucksTruckComponent,
     data: {
       title: 'Editar Carreta ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'truck.change_truck',
     }
   }
 ];

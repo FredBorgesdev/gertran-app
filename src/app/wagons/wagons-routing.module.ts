@@ -13,7 +13,8 @@ const routes: Routes = [
     component: WagonsListComponent,
     data: {
       title: 'Carretas ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'wagon.view_wagon',
     }
   },
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     component: WagonsWagonComponent,
     data: {
       title: 'Adicionar Carreta ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'wagon.add_wagon',
     }
   },
   {
@@ -29,7 +31,8 @@ const routes: Routes = [
     component: WagonsWagonComponent,
     data: {
       title: 'Editar Carreta ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: 'wagon.change_wagon',
     }
   }
 ];
