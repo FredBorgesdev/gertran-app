@@ -72,6 +72,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Editar"
+            *ngIf="authService.user.hasPermission('point.change_point')"
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
@@ -82,6 +83,7 @@
             nz-tooltip
             nzTooltipTitle="Excluir"
             (click)="delete(item)"
+            *ngIf="authService.user.hasPermission('point.delete_point')"
           >
             <i nz-icon nzType="delete" theme="outline"></i>
           </a>

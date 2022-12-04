@@ -4,6 +4,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
 import {Route, RoutesService} from '../routes.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-routes-list',
@@ -40,7 +41,8 @@ export class RoutesListComponent extends BaseCrudListComponent<Route> {
     router: Router,
     service: RoutesService,
     message: NzMessageService,
-    modal: NzModalService
+    modal: NzModalService,
+    public authService: AuthenticationService
   ) {
     super(
       'routes',
