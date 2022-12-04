@@ -29,7 +29,6 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
-
 @Component({
   selector: 'app-monitoring-list',
   templateUrl: './monitoring-list.component.html',
@@ -109,11 +108,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     private monitoringRequestService: MonitoringRequestsService,
     public selectableCustomerService: SelectableCustomerServiceService,
     private alertsService: AlertsService,
-    private authService: AuthenticationService
+    public authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
-    this.loadFiltersList();
     this.monitoringColumns = this.monitoringColumns.filter(column => {
       if (column.gertranStaffOnly) {
         return this.user.isGertranStaff;
@@ -140,15 +138,25 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       groupBy: [null],
     });
 
+    this.loadFiltersList();
+
     if (
       this.activatedRoute.snapshot.queryParams.terminal ||
-      this.activatedRoute.snapshot.queryParams.customer
+      this.activatedRoute.snapshot.queryParams.customer ||
+      this.authService.customerId
     ) {
       this.subscribeToMonitoringData();
     }
   }
 
   loadFiltersList(): void {
+    if (this.authService.customerId) {
+      const customer = this.authService.user.customer.find(c => c.id === this.authService.customerId);
+      this.customers = [customer];
+      this.validateForm.patchValue({ customer: this.authService.customerId });
+      return;
+    }
+
     this.selectableCustomerService.init();
     this.terminalsService.getAll({ limit: 50 }).subscribe(data => {
       this.terminals = data.results;

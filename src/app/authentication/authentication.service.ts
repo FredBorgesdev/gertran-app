@@ -92,4 +92,8 @@ export class AuthenticationService {
 
     this.user = new User(user);
   }
+
+  get customerId(): string {
+    return Cookies.get(GERTRAN_CUSTOMER_ID);
+  }
 }

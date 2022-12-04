@@ -43,7 +43,8 @@ export const ROUTES: SideNavInterface[] = [
         queryParams: {
           'navbar-closed': true
         },
-        submenu: []
+        submenu: [],
+        permission: Permissions.POSITIONS_VIEW_POSITION
       },
       {
         path: '/monitoring-requests/monitoring-requests-list',

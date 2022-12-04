@@ -1,8 +1,21 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
   <nz-card [nzBodyStyle]="{ 'padding-bottom': 0 }">
     <form [formGroup]="validateForm" class="m-b-30">
+
       <div nz-row nzGutter="12" nzAlign="middle">
-        <div nz-col nzSpan="8">
+        <div nz-col nzSpan="8"  *ngIf="authService.customerId">
+          <nz-select
+            nzPlaceHolder="Cliente"
+            formControlName="customer"
+          >
+            <nz-option
+              *ngFor="let customer of authService.user.customer"
+              [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"
+            ></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col nzSpan="8"  *ngIf="!authService.customerId">
           <nz-select
             nzShowSearch
             nzAllowClear
@@ -21,18 +34,13 @@
             ></nz-option>
           </nz-select>
         </div>
-<!--        <div nz-col nzSpan="4">-->
-<!--          <nz-select nzPlaceHolder="Agrupamento" formControlName="groupBy">-->
-<!--            <nz-option nzLabel="Não agrupar" nzValue="not-group"></nz-option>-->
-<!--            <nz-option nzLabel="Agrupar por alertas" nzValue="alert"></nz-option>-->
-<!--            <nz-option nzLabel="Agrupar por jornadas" nzValue="journey"></nz-option>-->
-<!--          </nz-select>-->
-<!--        </div>-->
-        <div nz-col nzSpan="8">
+
+        <div nz-col nzSpan="8" *ngIf="!authService.customerId">
           <nz-select nzPlaceHolder="Terminal" formControlName="terminal" (ngModelChange)="loadPositions()">
             <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
           </nz-select>
         </div>
+
         <div nz-col nzSpan="4">
           <label nz-checkbox nzChecked>Ocultar antigos</label>
           <label nz-checkbox nzChecked>Em viagem</label>
