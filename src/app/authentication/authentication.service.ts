@@ -37,6 +37,7 @@ export class AuthenticationService {
   logout(): void {
     Cookies.remove(GERTRAN_WEB_TOKEN);
     Cookies.remove(GERTRAN_REFRESH_TOKEN);
+    Cookies.remove(GERTRAN_CUSTOMER_ID);
   }
 
   setCustomer(customerId: string): void {

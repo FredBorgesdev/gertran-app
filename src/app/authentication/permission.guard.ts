@@ -18,7 +18,7 @@ export class PermissionGuard implements CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const hasPermission = this.authService.user.hasPermission(childRoute.data.permission);
+    const hasPermission = this.authService.user?.hasPermission(childRoute.data.permission);
     if (hasPermission || !childRoute.data.permission) {
       return true;
     }
