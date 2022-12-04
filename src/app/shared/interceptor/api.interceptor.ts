@@ -12,7 +12,7 @@ import {catchError, map, mergeMap, retryWhen} from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
-import {AuthenticationService, GERTRAN_WEB_TOKEN} from '../../authentication/authentication.service';
+import {AuthenticationService, GERTRAN_CUSTOMER_ID, GERTRAN_WEB_TOKEN} from '../../authentication/authentication.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
@@ -61,9 +61,13 @@ export class ApiInterceptor implements HttpInterceptor {
   }
 
   private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
+    const headers: any = {
       authorization: `Bearer ${Cookie.get(GERTRAN_WEB_TOKEN)}`,
-    });
+    };
+    if (Cookie.get(GERTRAN_CUSTOMER_ID)) {
+      headers['X-Customer-Key'] = Cookie.get(GERTRAN_CUSTOMER_ID);
+    }
+    return new HttpHeaders(headers);
   }
 
   private getBody(request: HttpRequest<any>): any {

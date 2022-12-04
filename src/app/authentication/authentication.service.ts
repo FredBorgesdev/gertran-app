@@ -6,6 +6,7 @@ import decode from 'jwt-decode';
 import { AbstractUser, UsersService } from '../users/users.service';
 import User from '../users/user';
 
+export const GERTRAN_CUSTOMER_ID = 'GERTRAN_CUSTOMER_ID';
 export const GERTRAN_WEB_TOKEN = 'GERTRAN_WEB_TOKEN';
 const GERTRAN_REFRESH_TOKEN = 'GERTRAN_REFRESH_TOKEN';
 
@@ -36,6 +37,10 @@ export class AuthenticationService {
   logout(): void {
     Cookies.remove(GERTRAN_WEB_TOKEN);
     Cookies.remove(GERTRAN_REFRESH_TOKEN);
+  }
+
+  setCustomer(customerId: string): void {
+    Cookies.set(GERTRAN_CUSTOMER_ID, customerId);
   }
 
   async refresh(): Promise<boolean> {

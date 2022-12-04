@@ -23,6 +23,23 @@
           <i nz-icon [nzType]="isExpand? 'menu-fold': 'menu-unfold'" theme="outline"></i>
         </a>
       </li>
+
+      <li>
+        <nz-select
+          style="width: 200px;"
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Selecione um cliente"
+          [(ngModel)]="selectedCustomer"
+          (ngModelChange)="onCustomerChange($event)"
+        >
+          <nz-option
+            *ngFor="let customer of customers"
+            [nzLabel]="customer.tradingName"
+            [nzValue]="customer.id"
+          ></nz-option>
+        </nz-select>
+      </li>
     </ul>
     <ul class="nav-right">
       <li>

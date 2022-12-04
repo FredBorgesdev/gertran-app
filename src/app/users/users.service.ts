@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Customer} from '../customers/customers.service';
 
 export abstract class AbstractUser {
   id: string;
@@ -15,6 +16,7 @@ export abstract class AbstractUser {
   lastLogin: string;
   permissions: string[];
   groups: number[];
+  customer: Customer[];
 }
 
 @Injectable({
