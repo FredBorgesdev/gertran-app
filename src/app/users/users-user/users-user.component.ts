@@ -32,7 +32,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
       cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
       password: [null, []],
-      isActive: [false, [Validators.required]],
+      isActive: [true, []],
       isAdmin: [false, [Validators.required]],
       isSuperuser: [false, [Validators.required]],
     });
