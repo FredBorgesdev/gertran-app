@@ -24,7 +24,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 text-right">
+      <div
+        class="col-lg-4 text-right"
+        *ngIf="authService.user.hasPermission('group.add_group')"
+      >
         <button
           (click)="create()"
           nz-button
@@ -66,6 +69,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Editar"
+            *ngIf="authService.user.hasPermission('group.change_group')"
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
@@ -76,6 +80,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Excluir"
+            *ngIf="authService.user.hasPermission('group.delete_group')"
           >
             <i nz-icon nzType="delete" theme="outline"></i>
           </a>

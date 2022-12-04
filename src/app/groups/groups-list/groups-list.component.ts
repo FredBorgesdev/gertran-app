@@ -5,6 +5,7 @@ import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {TableService} from '../../shared/services/table.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-groups-list',
@@ -25,6 +26,7 @@ export class GroupsListComponent extends BaseCrudListComponent<Group> {
 
   constructor(
     private tableService: TableService,
+    public authService: AuthenticationService,
     router: Router,
     service: GroupsService,
     message: NzMessageService,
