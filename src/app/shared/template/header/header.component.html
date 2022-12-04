@@ -34,7 +34,7 @@
           (ngModelChange)="onCustomerChange($event)"
         >
           <nz-option
-            *ngFor="let customer of customers"
+            *ngFor="let customer of user?.customer"
             [nzLabel]="customer.tradingName"
             [nzValue]="customer.id"
           ></nz-option>
@@ -42,6 +42,8 @@
       </li>
     </ul>
     <ul class="nav-right">
+      <li>{{ user.name }}</li>
+
       <li>
         <a (click)="quickViewToggle()">
           <i nz-icon nzType="appstore" theme="outline"></i>

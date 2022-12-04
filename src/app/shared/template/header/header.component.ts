@@ -3,6 +3,7 @@ import { ThemeConstantService } from '../../services/theme-constant.service';
 import {ActivatedRoute} from '@angular/router';
 import {Customer} from '../../../customers/customers.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
+import User from '../../../users/user';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
   isFolded: boolean;
   isExpand: boolean;
   selectedCustomer: string;
-  customers: Customer[] = [];
+  user: User;
 
   ngOnInit(): void {
     this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
@@ -55,9 +56,9 @@ export class HeaderComponent implements OnInit {
   }
 
   private setCustomers(): void {
-    this.customers = this.authService.user.customer;
-    if (this.customers.length > 0) {
-      this.selectedCustomer = this.customers[0].id;
+    this.user = this.authService.user;
+    if (this.user.customer.length > 0) {
+      this.selectedCustomer = this.user.customer[0].id;
       this.authService.setCustomer(this.selectedCustomer);
     }
   }
