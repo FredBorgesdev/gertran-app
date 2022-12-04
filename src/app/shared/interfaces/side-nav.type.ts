@@ -8,4 +8,5 @@ export interface SideNavInterface {
     icon: string;
     submenu: SideNavInterface[];
     gertranStaffOnly?: boolean;
+    permission?: string;
 }

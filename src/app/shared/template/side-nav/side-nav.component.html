@@ -48,7 +48,7 @@
                       *ngIf="subItem.submenu.length > 0"
                     >
                         <li [ngClass]="subItem.submenu.length > 0?'ant-menu-submenu ant-menu-submenu-inline':'ant-menu-item'"
-                            *ngFor="let subItem of subItem.submenu" routerLinkActive="ant-menu-item-selected"
+                            *ngFor="let subItem of filteredItems(subItem.submenu)" routerLinkActive="ant-menu-item-selected"
                             [routerLinkActiveOptions]="{exact: true}">
                             <a href="javascript:void(0);" class="ant-menu-submenu-title p-l-50" *ngIf="subItem.submenu.length > 0">
                                 <i *ngIf="subItem.iconType == 'nzIcon'" nz-icon [nzType]="subItem.icon" [theme]="subItem.iconTheme"></i>

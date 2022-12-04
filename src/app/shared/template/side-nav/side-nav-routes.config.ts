@@ -183,7 +183,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_load_and_unload_report'
           },
           {
             path: '/reports/load-unload-by-point',
@@ -194,7 +195,8 @@ export const ROUTES: SideNavInterface[] = [
             queryParams: {
               'navbar-closed': true
             },
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_load_and_unload_by_point_report'
           },
           {
             path: '/reports/load-unload-by-radius',
@@ -202,7 +204,7 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
           },
           {
             path: '/reports/trips-late',
@@ -213,7 +215,8 @@ export const ROUTES: SideNavInterface[] = [
             queryParams: {
               'navbar-closed': true
             },
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_delayed_trips_report'
           },
           {
             path: '/reports/travel-requests',
@@ -221,7 +224,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_monitoring_request_report'
           },
           {
             path: '/reports/available-vehicles',
@@ -232,7 +236,8 @@ export const ROUTES: SideNavInterface[] = [
             queryParams: {
               'navbar-closed': true
             },
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_vehicles_relesed_report'
           },
           {
             path: '/reports/logistics',
@@ -240,7 +245,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_logistic_report'
           },
           {
             path: '/reports/travel-start',
@@ -248,7 +254,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_travel_start_report'
           },
           {
             path: '/reports/travel-end',
@@ -256,7 +263,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_travel_end_report'
           },
           {
             path: '/reports/closing',
@@ -297,7 +305,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_macro_vehicle_report'
           },
           {
             path: '/reports/positions-history',
@@ -305,7 +314,7 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
           },
           {
             path: '/dashboard/reports15',
@@ -313,7 +322,7 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
           },
           {
             path: '/reports/commands-history',
@@ -321,7 +330,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_commands_history_report'
           },
           {
             path: '/dashboard/reports17',
@@ -329,7 +339,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_checklist_history_report'
           },
           {
             path: '/dashboard/reports18',
@@ -353,7 +364,7 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
           },
         ],
       },
@@ -370,7 +381,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_incident_report'
           },
           {
             path: '/reports/analytical',
@@ -378,7 +390,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_analytical_report'
           },
           {
             path: '/reports/baits',
@@ -394,7 +407,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_panic_history_report'
           },
           {
             path: '/dashboard/reports25',
@@ -410,7 +424,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_commands_operational_audit_history_report'
           },
           {
             path: '/reports/operational-audit-messages',
@@ -418,38 +433,35 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: 'reports.view_messages_operational_audit_history_report'
           },
         ]
       },
-      {
-        path: '/dashboard/reports28',
-        title: 'Relatório de jornada',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'line-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports29',
-        title: 'Relatório de eventos',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'line-chart',
-        submenu: []
-      },
-      {
-        path: '/dashboard/reports30',
-        title: 'Relatório Gráficos',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'line-chart',
-        submenu: []
-      }
-
-
-
-
+      // {
+      //   path: '/dashboard/reports28',
+      //   title: 'Relatório de jornada',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports29',
+      //   title: 'Relatório de eventos',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/dashboard/reports30',
+      //   title: 'Relatório Gráficos',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // }
       // {
       //   path: '/dashboard/reports1',
       //   title: 'Violações',

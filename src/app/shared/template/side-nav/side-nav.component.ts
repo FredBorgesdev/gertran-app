@@ -45,6 +45,9 @@ export class SideNavComponent implements OnInit {
 
   filteredItems(submenu: SideNavInterface[]): SideNavInterface[] {
     return submenu.filter(menuItem => {
+      if (menuItem.permission && !this.user.hasPermission(menuItem.permission)) {
+        return false;
+      }
       if (menuItem.gertranStaffOnly) {
         return this.user.isGertranStaff;
       }
