@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ApiService, {GetAllResponse, Pagination} from '../shared/services/api.service';
+import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -31,7 +31,13 @@ export class ChecklistsService implements ApiService<Checklist> {
   constructor(private http: HttpClient) { }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Checklist>> {
-    return this.http.get<GetAllResponse<Checklist>>('monitoring/checklists');
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+    return this.http.get<GetAllResponse<Checklist>>('monitoring/checklists', { params });
   }
 
   get(id: string): Observable<Checklist> {
