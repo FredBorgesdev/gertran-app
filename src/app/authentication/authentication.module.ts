@@ -12,7 +12,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { Error1Component } from './error-1/error-1.component';
+import { ForbiddenErrorComponent } from './forbidden/forbidden-error.component';
 import { Error2Component } from './error-2/error-2.component';
 import {TextMaskModule} from 'angular2-text-mask';
 
@@ -36,7 +36,7 @@ const antdModule = [
   declarations: [
     LoginComponent,
     SignUpComponent,
-    Error1Component,
+    ForbiddenErrorComponent,
     Error2Component
   ]
 })

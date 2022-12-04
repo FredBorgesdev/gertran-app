@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { Error1Component } from './error-1/error-1.component';
+import { ForbiddenErrorComponent } from './forbidden/forbidden-error.component';
 import { Error2Component } from './error-2/error-2.component';
 
 const routes: Routes = [
@@ -22,10 +22,10 @@ const routes: Routes = [
     }
   },
   {
-    path: 'error-1',
-    component: Error1Component,
+    path: 'forbidden',
+    component: ForbiddenErrorComponent,
     data: {
-      title: 'Error 1'
+      title: 'Forbidden'
     }
   },
   {
