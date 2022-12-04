@@ -13,7 +13,7 @@ export abstract class AbstractUser {
   isSuperuser: boolean;
   isGertranStaff: boolean;
   lastLogin: string;
-  permissions: number[];
+  permissions: string[];
   groups: number[];
 }
 

@@ -6,7 +6,7 @@ export default class User extends AbstractUser {
     Object.assign(this, data);
   }
 
-  hasPermission(permission: number): boolean {
+  hasPermission(permission: string): boolean {
     return this.permissions.includes(permission);
   }
 }
