@@ -29,7 +29,7 @@
 
       <div
         class="col-lg-4 text-right"
-        *ngIf="authService.user.hasPermission('truck.add_truck')">
+        *ngIf="authService.user.hasPermission('truck.add_truck')"
       >
         <button
           (click)="create()"
