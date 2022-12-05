@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Checklist, ChecklistsService} from '../checklists.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-checklists-list',
@@ -23,6 +24,7 @@ export class ChecklistListComponent extends BaseCrudListComponent<Checklist> {
     service: ChecklistsService,
     message: NzMessageService,
     modal: NzModalService,
+    public authService: AuthenticationService
   ) {
     super(
       'checklists',

@@ -50,7 +50,10 @@
           <h6 class="text-center">{{item.vehicle.plate}}</h6>
         </td>
         <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
-        <td class="text-md-center">
+        <td
+          class="text-md-center"
+          *ngIf="authService.user.isGertranStaff"
+        >
           <a
             (click)="edit(item)"
             class="m-r-5"
