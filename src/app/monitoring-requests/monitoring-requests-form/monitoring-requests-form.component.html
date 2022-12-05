@@ -15,15 +15,15 @@
                 (nzOnSearch)="selectableCustomerService.searchByName($event)"
                 (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
                 (ngModelChange)="saveDraft('shipper')"
-                [disabled]="disabled"
+                [disabled]="disabled || !resource.customer?.canSelectShipper"
                 [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
               </nz-select>
             </nz-form-control>
           </div>
-          <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter" *ngIf="!user.isGertranStaff">Transportador</nz-form-label>
+          <div nz-col nzSpan="12" *ngIf="user.isGertranStaff">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter">Transportador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
                 id="transporter"
@@ -35,7 +35,7 @@
                 (nzOnSearch)="selectableCustomerService.searchByName($event)"
                 (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
                 (ngModelChange)="saveDraft('transporter')"
-                [disabled]="disabled || !resource.customer?.canSelectShipper"
+                [disabled]="disabled"
                 [nzDropdownRender]="selectLoading"
               >
                 <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>

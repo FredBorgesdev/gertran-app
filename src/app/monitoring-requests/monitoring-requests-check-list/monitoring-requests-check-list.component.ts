@@ -85,15 +85,15 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
   ngOnInit(): void {
     this.checklistForm = this.formBuilder.group({
-      hasMacro: [false],
-      hasEmbeddedIntelligence: [false],
-      status: ['requested'],
-      allowedTravel: [null],
-      justification: [''],
-      embeddedIntelligenceJustification: [''],
+      hasMacro: [false, []],
+      hasEmbeddedIntelligence: [false, []],
+      status: ['requested', []],
+      allowedTravel: [null, []],
+      justification: ['', []],
+      embeddedIntelligenceJustification: ['', []],
     });
     this.checklistItems.forEach(item => {
-      this.checklistForm.addControl(item.value, this.formBuilder.control(false));
+      this.checklistForm.addControl(item.value, this.formBuilder.control(false, []));
     });
     this.checklistForm.get('status').valueChanges.subscribe(value => {
       if (value === 'reproved') {
@@ -103,23 +103,23 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     });
 
     this.validateForm = this.formBuilder.group({
-      terminal: [null],
-      status: [null],
-      observations: ['']
+      terminal: [null, []],
+      status: [null, []],
+      observations: ['', []]
     });
 
     this.checklistBaitForm = this.formBuilder.group({
-      positionChecked: [false],
-      batteriesChecked: [false],
-      relationChecked: [false],
-      jammingChecked: [false],
-      decouplingChecked: [false],
-      timerChecked: [false],
-      positionFrequencyChecked: [false],
-      batteryLevel: [null],
-      timerIntervalInMinutes: [null],
-      approved: [null],
-      justification: ['']
+      positionChecked: [false, []],
+      batteriesChecked: [false, []],
+      relationChecked: [false, []],
+      jammingChecked: [false, []],
+      decouplingChecked: [false, []],
+      timerChecked: [false, []],
+      positionFrequencyChecked: [false, []],
+      batteryLevel: [null, []],
+      timerIntervalInMinutes: [null, []],
+      approved: [null, []],
+      justification: ['', []]
     });
 
     this.loadMonitoringRequest();
@@ -160,7 +160,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     return this.monitoringRequest?.wagons.map(wagon => (wagon as Wagon).vehicle.plate).join(', ') ?? '';
   }
 
-  save(): void {
+  save(): Promise<void> {
     const hasInvalidForm = this.checklistForm.invalid || this.checklistBaitForm.invalid || this.validateForm.invalid;
     if (hasInvalidForm) {
       this.message.error('Preencha os dados corretamente.');
@@ -174,10 +174,10 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     };
 
     this.isLoading = true;
-    this.monitoringRequestService.release(this.monitoringRequest.id, body).subscribe(() => {
+    return this.monitoringRequestService.release(this.monitoringRequest.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
-    }, () => {
+    }).catch(() => {
       this.message.error('Não foi possível atualizar o status.');
       this.isLoading = false;
     });

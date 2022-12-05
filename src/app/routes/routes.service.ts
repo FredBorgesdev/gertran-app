@@ -31,6 +31,7 @@ export class RoutesService implements ApiService<Route> {
     filters?: {
       hasPoints?: boolean;
       description?: string;
+      customer?: string;
     }
   ): Observable<GetAllResponse<Route>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
@@ -44,6 +45,9 @@ export class RoutesService implements ApiService<Route> {
     }
     if (filters?.description) {
       params.description = filters.description;
+    }
+    if (filters?.customer) {
+      params.customer = filters.customer;
     }
 
     return this.http.get<GetAllResponse<Route>>('settings/routes', { params });

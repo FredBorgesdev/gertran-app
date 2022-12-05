@@ -160,14 +160,14 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         const points = this.getPoints(componentInstance.route?.points ?? []);
         const hasPoints = route && points.length > 0;
         const routeCoordinates = hasPoints && await this.directionsService.getCoordinates(points);
-        const shipperId = this.authService.customerId;
+        const transporterId = this.authService.customerId || componentInstance.customer;
 
         (this.service as MonitoringRequestsService).save({
           route,
           routeCoordinates,
           customer: componentInstance.customer,
           travelSteps: points,
-          shipper: shipperId as any,
+          transporter: transporterId as any,
         }).subscribe((result) => {
           this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
         });
@@ -213,7 +213,10 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzComponentParams: {monitoringRequestId: item.id},
       nzWidth: '90%',
       nzOkText: 'Salvar',
-      nzOnOk: (componentInstance) => componentInstance.save(),
+      nzOnOk: async (componentInstance) => {
+        await componentInstance.save();
+        this.loadAllResources();
+      },
     });
   }
 

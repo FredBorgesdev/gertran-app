@@ -44,12 +44,11 @@ export class RoutesModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadRoutes();
-
     if (!this.authService.customerId) {
       this.selectableCustomerService.init();
     } else {
       this.customer = this.authService.customerId;
+      this.loadRoutes();
     }
   }
 
@@ -71,7 +70,7 @@ export class RoutesModalComponent implements OnInit {
     this.isLoading = true;
     this.routesService.getAll(
       { url },
-      { hasPoints: true, description: this.searchDescriptionValue }
+      { hasPoints: true, description: this.searchDescriptionValue, customer: this.customer }
     ).subscribe(data => {
       this.routes = data;
       this.isLoading = false;

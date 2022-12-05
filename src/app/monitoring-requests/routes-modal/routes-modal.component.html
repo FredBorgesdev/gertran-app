@@ -10,6 +10,7 @@
       (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
       [nzDropdownRender]="selectLoading"
       [(ngModel)]="customer"
+      (ngModelChange)="loadRoutes()"
     >
       <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
     </nz-select>
