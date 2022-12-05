@@ -181,6 +181,40 @@
             </nz-form-control>
           </div>
 
+          <div nz-col nzSpan="12">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadType">Tipo de carga</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <nz-select
+                id="loadType"
+                nzPlaceHolder="Selecione uma opção"
+                formControlName="loadType"
+                (ngModelChange)="saveDraft('loadType')"
+                [disabled]="disabled"
+              >
+                <nz-option nzLabel="Refrigerada" nzValue="refrigerated"></nz-option>
+                <nz-option nzLabel="Não refrigerada" nzValue="unrefrigerated"></nz-option>
+                <nz-option nzLabel="Congelada" nzValue="frozen"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </div>
+        </div>
+      </nz-form-item>
+
+      <nz-form-item>
+        <div nz-row nzGutter="12">
+          <div nz-col nzSpan="12">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="mainStepName">Nome etapa principal</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <input
+                id="mainStepName"
+                nz-input
+                formControlName="mainStepName"
+                (blur)="saveDraft('mainStepName')"
+                [disabled]="disabled"
+              />
+            </nz-form-control>
+          </div>
+
           <div nz-col nzSpan="4">
             <nz-form-label></nz-form-label>
             <nz-form-control [nzSpan]="null" [nzOffset]="null">

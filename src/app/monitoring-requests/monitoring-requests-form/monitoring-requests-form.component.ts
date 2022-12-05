@@ -104,11 +104,11 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       shipper: [null, []],
       address: [null, []],
       truck: [null, []],
-
       wagons: [[], []],
-
       operation: [null, []],
       loadDescription: [null, []],
+      loadType: [null, []],
+      mainStepName: [null, []],
       notes: [null, []],
       surveyConductedBy: [null, []],
       driver: [null, []],

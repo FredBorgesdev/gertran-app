@@ -104,7 +104,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'lock',
-        submenu: []
+        submenu: [],
+        permission: Permissions.AUTH_VIEW_GROUP
       },
       {
         path: '/users/users-list',
@@ -129,7 +130,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'pushpin',
-        submenu: []
+        submenu: [],
+        permission: Permissions.SETTINGS_VIEW_POINT
       },
       {
         path: '/routes/routes-list',
@@ -137,7 +139,8 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'node-collapse',
-        submenu: []
+        submenu: [],
+        permission: Permissions.SETTINGS_VIEW_ROUTE
       },
       {
         path: '/automations/automations-list',
