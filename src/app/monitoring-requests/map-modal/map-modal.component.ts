@@ -23,7 +23,7 @@ export class MapModalComponent implements OnInit {
   ngOnInit(): void {
     this.markers = this.points.map(point => ([point.longitude, point.latitude]));
 
-    if (this.routeCoordinates.length > 0) {
+    if (this.routeCoordinates?.length > 0) {
       this.directionsGeoJson = {
         type: 'LineString',
         coordinates: this.routeCoordinates,

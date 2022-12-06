@@ -247,6 +247,7 @@ export class PointsTabComponent implements OnInit {
   showMap(): void {
     this.modal.create({
       nzTitle: 'Mapa',
+      nzWidth: '80%',
       nzContent: MapModalComponent,
       nzComponentParams: {
         points: this.getPointsControls().map((point) => point.value),
