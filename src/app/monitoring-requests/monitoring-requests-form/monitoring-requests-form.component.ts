@@ -17,6 +17,7 @@ import {Operations, OperationsService} from '../../operations/operations.service
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
+import {createNumberMask} from 'text-mask-addons';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -39,6 +40,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   operationsNextUrl: string;
   wagonsNextUrl: string;
   isLoadingMoreData = false;
+
+  reaisMask = createNumberMask({
+    prefix: 'R$ ',
+    allowDecimal: true,
+    thousandsSeparatorSymbol: '.',
+    decimalSymbol: ',',
+  });
 
   constructor(
     private router: Router,
@@ -107,6 +115,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       wagons: [[], []],
       operation: [null, []],
       loadDescription: [null, []],
+      loadValue: [null, []],
       loadType: [null, []],
       mainStepName: [null, []],
       notes: [null, []],
@@ -161,6 +170,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       truck: this.resource.truck?.id,
       operation: this.resource.operation?.id,
       wagons: this.resource.wagons?.map((wagon) => wagon.id),
+      loadValue: this.resource.loadValue ? Number(this.resource.loadValue) : null,
     });
   }
 
@@ -168,13 +178,20 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.router.navigate(['/monitoring-requests/monitoring-requests-list']);
   }
 
-  saveDraft(field: string): void {
+  sanitizeInputAndSaveDraft(field: string): void {
+    const formControl = this.validateForm.get(field);
+    const newValue = formControl.value.replace('R$ ', '').replace('.', '').replace(',', '.');
+
+    this.saveDraft(field, newValue);
+  }
+
+  saveDraft(field: string, newValue?: string): void {
     const formControl = this.validateForm.get(field);
 
     if (formControl.dirty) {
       this.service.update(
         this.resource.id,
-        { [field]: formControl.value } as any
+        { [field]: newValue || formControl.value } as any
       ).subscribe(() => {
         this.message.success('Rascunho salvo com sucesso!');
       });

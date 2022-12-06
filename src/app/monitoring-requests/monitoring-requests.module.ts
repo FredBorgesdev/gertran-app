@@ -21,6 +21,7 @@ import { MonitoringRequestsTableComponent } from './monitoring-requests-table/mo
 import { MonitoringRequestsCheckListComponent } from './monitoring-requests-check-list/monitoring-requests-check-list.component';
 import { MonitoringRequestsFilterComponent } from './monitoring-requests-filter/monitoring-requests-filter.component';
 import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
+import {TextMaskModule} from 'angular2-text-mask';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
             accessToken: environment.mapboxAccessToken,
         }),
         NzDescriptionsModule,
+        TextMaskModule,
     ]
 })
 export class MonitoringRequestsModule { }

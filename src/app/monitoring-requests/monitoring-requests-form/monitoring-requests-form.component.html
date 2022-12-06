@@ -148,23 +148,6 @@
             </nz-form-control>
           </div>
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadDescription">Ordem de carregamento / OCR</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input
-                id="loadDescription"
-                nz-input
-                formControlName="loadDescription"
-                (blur)="saveDraft('loadDescription')"
-                [disabled]="disabled"
-              />
-            </nz-form-control>
-          </div>
-        </div>
-      </nz-form-item>
-
-      <nz-form-item>
-        <div nz-row nzGutter="12">
-          <div nz-col nzSpan="12">
             <nz-form-label nzFor="surveyConductedBy">Pesquisa cadastral realizada por</nz-form-label>
             <nz-form-control [nzSpan]="null" [nzOffset]="null">
               <nz-select
@@ -180,8 +163,25 @@
               </nz-select>
             </nz-form-control>
           </div>
+        </div>
+      </nz-form-item>
 
-          <div nz-col nzSpan="12">
+      <nz-form-item>
+        <div nz-row nzGutter="12">
+          <div nz-col nzSpan="8">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadDescription">Descrição da carga</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <input
+                id="loadDescription"
+                nz-input
+                formControlName="loadDescription"
+                (blur)="saveDraft('loadDescription')"
+                [disabled]="disabled"
+              />
+            </nz-form-control>
+          </div>
+
+          <div nz-col nzSpan="8">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="loadType">Tipo de carga</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
@@ -195,6 +195,22 @@
                 <nz-option nzLabel="Não refrigerada" nzValue="unrefrigerated"></nz-option>
                 <nz-option nzLabel="Congelada" nzValue="frozen"></nz-option>
               </nz-select>
+            </nz-form-control>
+          </div>
+
+          <div nz-col nzSpan="8">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadValue">Valor da carga</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <input
+                id="loadValue"
+                type="text"
+                nz-input
+                name="loadValue"
+                formControlName="loadValue"
+                [textMask]="{ mask: reaisMask }"
+                (blur)="sanitizeInputAndSaveDraft('loadValue')"
+                [disabled]="disabled"
+              />
             </nz-form-control>
           </div>
         </div>
