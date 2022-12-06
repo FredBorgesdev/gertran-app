@@ -6,20 +6,20 @@
         <i nz-icon nzType="dashboard"></i>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Requisições de monitoramento</span></a>
+        <a><i nz-icon nzType="idcard"></i><span>Solicitações de monitoramento</span></a>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="resource?.id">
-        Editar Requisições de monitoramento ({{resource.name}})
+        Editar Solicitações de monitoramento
       </nz-breadcrumb-item>
       <nz-breadcrumb-item *ngIf="!resource?.id">
-        Adicionar Requisições de monitoramento
+        Adicionar Solicitações de monitoramento
       </nz-breadcrumb-item>
     </nz-breadcrumb>
 
     <nz-divider></nz-divider>
 
     <nz-tabset>
-      <nz-tab nzTitle="Requisição de monitoramento">
+      <nz-tab nzTitle="Solicitação de monitoramento">
         <app-monitoring-requests-form
           *ngIf="!isLoading"
         ></app-monitoring-requests-form>

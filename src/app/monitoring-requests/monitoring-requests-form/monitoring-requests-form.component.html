@@ -1,6 +1,14 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
     <form nz-form nzLayout="vertical" [formGroup]="validateForm">
       <nz-form-item>
+        <nz-form-control [nzOffset]="0" [nzSpan]="12">
+          <button type="button" (click)="save()" nz-button nzDanger nzType="primary">
+            <i nz-icon nzType="send"></i>Enviar solicitação de monitoramento
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Embarcador</nz-form-label>
@@ -258,10 +266,7 @@
       <nz-divider></nz-divider>
 
       <nz-form-item>
-        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-          <button type="button" (click)="save()" nz-button nzDanger nzType="primary">
-            <i nz-icon nzType="send"></i>Enviar solicitação de monitoramento
-          </button>
+        <nz-form-control [nzOffset]="0" [nzSpan]="12">
           <button type="button" (click)="list()" nz-button>
             <i nz-icon nzType="unordered-list"></i>Listar Requisições de monitoramento
           </button>
