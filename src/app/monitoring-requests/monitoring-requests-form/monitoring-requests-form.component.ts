@@ -18,6 +18,7 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -212,9 +213,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
             this.isLoading = false;
             this.list();
           },
-          () => {
+          (error) => {
+            let message = '';
+            Object.values(error?.error?.extra?.fields)?.forEach(field => {
+              message += `<p>${field}</p>`;
+            });
             this.isLoading = false;
-            this.message.error('Erro ao enviar a solicitação!');
+            this.message.error(message);
           });
       },
     });
