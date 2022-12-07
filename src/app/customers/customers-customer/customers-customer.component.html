@@ -23,8 +23,8 @@
         <app-customers-form
           *ngIf="customer"
           [customer]="customer"
-          (onSave)="onSubmit()"
-          (onChange)="onChangeCustomer($event)"
+          (save)="onSubmit()"
+          (update)="onChangeCustomer($event)"
         ></app-customers-form>
       </nz-tab>
 

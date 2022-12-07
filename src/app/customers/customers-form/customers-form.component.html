@@ -37,19 +37,24 @@
       <label nz-radio nzValue="thirty_days">30 dias</label>
     </nz-radio-group>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label>Embarcadores</nz-form-label>
-    <nz-form-control [nzSpan]="null" [nzOffset]="null">
-      <label
-        nz-checkbox
-        formControlName="itambeShipper"
-      >Itambé</label>
-    </nz-form-control>
-    <nz-form-control [nzSpan]="null" [nzOffset]="null">
-      <label
-        nz-checkbox
-        formControlName="lactalisShipper"
-      >Lactalis</label>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="shippers">Embarcadores</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o embarcador">
+      <nz-select
+        id="shippers"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Selecione um embarcador"
+        formControlName="shippers"
+        nzMode="multiple"
+      >
+        <nz-option
+          *ngFor="let customer of shippers"
+          [nzLabel]="customer.tradingName"
+          [nzValue]="customer.id"
+        ></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
@@ -57,7 +62,7 @@
 
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="save()" nz-button nzType="primary">
+      <button type="button" (click)="saveCustomer()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Cliente
       </button>
       <button type="button" (click)="listCustomers()" nz-button>

@@ -23,7 +23,7 @@ export interface Customer {
   neighborhood: string;
   city: string;
   state: string;
-  customerShippers: {
+  shippers: {
     id: string;
     corporateName: string;
     tradingName: string;
@@ -43,7 +43,12 @@ export class CustomersService implements ApiService<Customer> {
     return this.http.post<Customer>('customers/create', customer);
   }
 
-  getAll(pagination: Pagination, filters?: { name?: string }): Observable<GetAllResponse<Customer>> {
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      name?: string;
+      isShipper?: boolean;
+    }): Observable<GetAllResponse<Customer>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -52,6 +57,9 @@ export class CustomersService implements ApiService<Customer> {
     }
     if (filters?.name) {
       params.name = filters.name;
+    }
+    if (filters?.isShipper) {
+      params.is_shipper = filters.isShipper;
     }
 
     return this.http.get<GetAllResponse<Customer>>('customers', { params });
