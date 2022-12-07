@@ -197,32 +197,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     }
   }
 
-  save(): void {
-    this.modal.confirm({
-      nzTitle: 'Deseja enviar a solicitação?',
-      nzContent: 'Ao enviar a solicitação, não será mais possível editá-la.',
-      nzOnOk: () => {
-        this.isLoading = true;
-        (this.service as MonitoringRequestsService).send(
-          this.resource.id,
-        ).subscribe(
-          () => {
-            this.message.success('Solicitação enviada com sucesso!');
-            this.isLoading = false;
-            this.list();
-          },
-          (error) => {
-            let message = '';
-            Object.values(error?.error?.extra?.fields)?.forEach(field => {
-              message += `<p>${field}</p>`;
-            });
-            this.isLoading = false;
-            this.message.error(message);
-          });
-      },
-    });
-  }
-
   loadMoreDrivers(): void {
     this.isLoadingMoreData = true;
     this.driversService.getAll({

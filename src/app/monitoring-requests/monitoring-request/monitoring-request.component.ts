@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-monitoring-request',
@@ -15,7 +16,8 @@ export class MonitoringRequestComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private service: MonitoringRequestsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private modal: NzModalService,
   ) { }
 
   ngOnInit(): void {
@@ -54,4 +56,30 @@ export class MonitoringRequestComponent implements OnInit {
       this.loadMonitoringRequest();
     });
   }
+
+  send(): void {
+    this.modal.confirm({
+      nzTitle: 'Deseja enviar a solicitação?',
+      nzContent: 'Ao enviar a solicitação, não será mais possível editá-la.',
+      nzOnOk: () => {
+        this.isLoading = true;
+        (this.service as MonitoringRequestsService).send(
+          this.resource.id,
+        ).subscribe(
+          () => {
+            this.message.success('Solicitação enviada com sucesso!');
+            this.isLoading = false;
+          },
+          (error) => {
+            let message = '';
+            Object.values(error?.error?.extra?.fields)?.forEach(field => {
+              message += `<p>${field}</p>`;
+            });
+            this.isLoading = false;
+            this.message.error(message);
+          });
+      },
+    });
+  }
+
 }

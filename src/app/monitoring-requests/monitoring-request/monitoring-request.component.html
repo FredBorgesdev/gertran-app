@@ -18,7 +18,7 @@
 
     <nz-divider></nz-divider>
 
-    <nz-tabset>
+    <nz-tabset [nzTabBarExtraContent]="sendButton">
       <nz-tab nzTitle="Solicitação de monitoramento">
         <app-monitoring-requests-form
           *ngIf="!isLoading"
@@ -66,6 +66,11 @@
         </ng-template>
       </nz-tab>
     </nz-tabset>
-
   </nz-card>
 </nz-spin>
+
+<ng-template #sendButton>
+  <button type="button" (click)="send()" nz-button nzDanger nzType="primary">
+    <i nz-icon nzType="send"></i>Enviar solicitação de monitoramento
+  </button>
+</ng-template>
