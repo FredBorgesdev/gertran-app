@@ -18,12 +18,20 @@ export class WagonsService extends VehiclesService<Wagon> {
     super(http);
   }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<Wagon>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      customer?: string;
+    }
+  ): Observable<GetAllResponse<Wagon>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.customer) {
+      params.customer = filters.customer;
     }
 
     return this.http.get<GetAllResponse<Wagon>>('vehicles/wagons', { params });

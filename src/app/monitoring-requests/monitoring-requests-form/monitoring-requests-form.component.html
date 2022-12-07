@@ -10,7 +10,7 @@
 
       <nz-form-item>
         <div nz-row nzGutter="6">
-          <div nz-col nzSpan="12">
+          <div nz-col nzSpan="12" *ngIf="resource.customer.canSelectShipper">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Embarcador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
@@ -30,7 +30,7 @@
               </nz-select>
             </nz-form-control>
           </div>
-          <div nz-col nzSpan="12" *ngIf="user.isGertranStaff">
+          <div nz-col nzSpan="12">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter">Transportador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
@@ -42,7 +42,7 @@
                 nzServerSearch
                 (nzOnSearch)="selectableCustomerService.searchByName($event)"
                 (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-                (ngModelChange)="saveDraft('transporter')"
+                (ngModelChange)="loadTransporterData()"
                 [disabled]="disabled"
                 [nzDropdownRender]="selectLoading"
               >
@@ -137,7 +137,7 @@
 
       <nz-form-item>
         <div nz-row nzGutter="6">
-          <div nz-col nzSpan="12">
+          <div nz-col [nzSpan]="surveyConductedRowSpan">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="operation">Operação</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
@@ -155,7 +155,7 @@
               </nz-select>
             </nz-form-control>
           </div>
-          <div nz-col nzSpan="12">
+          <div nz-col [nzSpan]="surveyConductedRowSpan">
             <nz-form-label nzFor="surveyConductedBy">Pesquisa cadastral realizada por</nz-form-label>
             <nz-form-control [nzSpan]="null" [nzOffset]="null">
               <nz-select
@@ -169,6 +169,18 @@
               >
                 <nz-option *ngFor="let surveyConductor of surveyConductors" [nzLabel]="surveyConductor.label" [nzValue]="surveyConductor.value"></nz-option>
               </nz-select>
+            </nz-form-control>
+          </div>
+          <div nz-col [nzSpan]="surveyConductedRowSpan">
+            <nz-form-label nzFor="surveyConductedByOthers">Prestador de serviço</nz-form-label>
+            <nz-form-control [nzSpan]="null" [nzOffset]="null">
+              <input
+                nz-input
+                id="surveyConductedByOthers"
+                formControlName="surveyConductedByOthers"
+                (blur)="saveDraft('surveyConductedByOthers')"
+                [disabled]="disabled"
+              />
             </nz-form-control>
           </div>
         </div>

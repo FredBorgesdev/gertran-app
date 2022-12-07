@@ -85,10 +85,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.loadCustomers();
-    this.loadMoreDrivers();
-    this.loadMoreTrucks();
     this.loadMoreOperations();
-    this.loadMoreWagons();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
       this.surveyConductors = surveyConductors;
     });
@@ -121,6 +118,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       mainStepName: [null, []],
       notes: [null, []],
       surveyConductedBy: [null, []],
+      surveyConductedByOthers: [null, []],
       driver: [null, []],
       auxiliaryDriver: [null, []],
     });
@@ -171,6 +169,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       wagons: this.resource.wagons?.map((wagon) => wagon.id),
       loadValue: this.resource.loadValue ? Number(this.resource.loadValue) : null,
     });
+
+    this.loadTransporterData();
   }
 
   list(): void {
@@ -227,7 +227,9 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.isLoadingMoreData = true;
     this.driversService.getAll({
       limit: 50,
-      url: this.driversNextUrl
+      url: this.driversNextUrl,
+    }, {
+      customer: this.validateForm.get('transporter').value,
     }).subscribe((drivers) => {
       this.driversNextUrl = drivers.next;
       this.drivers = [...this.drivers, ...drivers.results];
@@ -240,6 +242,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.trucksService.getAll({
       limit: 50,
       url: this.trucksNextUrl
+    }, {
+      customerId: this.validateForm.get('transporter').value,
     }).subscribe((trucks) => {
       this.trucksNextUrl = trucks.next;
       this.trucks = [...this.trucks, ...trucks.results];
@@ -264,6 +268,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.wagonsService.getAll({
       limit: 50,
       url: this.wagonsNextUrl
+    }, {
+      customer: this.validateForm.get('transporter').value,
     }).subscribe((wagons) => {
       this.wagonsNextUrl = wagons.next;
       this.wagons = [...this.wagons, ...wagons.results];
@@ -271,7 +277,22 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
   }
 
+  get surveyConductedRowSpan(): number {
+    return this.validateForm.controls.surveyConductedBy.value === 'others' ? 8 : 12;
+  }
+
   get user(): User {
     return this.authService.user;
+  }
+
+  loadTransporterData(): void {
+    this.drivers = [];
+    this.trucks = [];
+    this.wagons = [];
+
+    this.loadMoreDrivers();
+    this.loadMoreTrucks();
+    this.loadMoreWagons();
+    this.saveDraft('transporter');
   }
 }
