@@ -11,7 +11,7 @@
       <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col nzSpan="12" *ngIf="showShipperSelect">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Embarcador</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="shipper">Embarcador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
                 id="shipper"
@@ -23,7 +23,7 @@
                 [nzDropdownRender]="selectLoading"
               >
                 <nz-option
-                  *ngFor="let customer of resource.customer.customerShippers"
+                  *ngFor="let customer of resource.customer.shippers"
                   [nzLabel]="customer.tradingName"
                   [nzValue]="customer.id"
                 ></nz-option>
@@ -31,7 +31,7 @@
             </nz-form-control>
           </div>
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="transporter">Transportador</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="transporter">Transportador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
                 id="transporter"
@@ -56,7 +56,7 @@
       <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="driver">Motorista</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="driver">Motorista</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
                 id="driver"
@@ -74,7 +74,7 @@
             </nz-form-control>
           </div>
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="auxiliaryDriver">Motorista Auxiliar</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="auxiliaryDriver">Motorista Auxiliar</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
                 id="auxiliaryDriver"
@@ -95,7 +95,7 @@
       <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="truck">Cavalo</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="truck">Cavalo</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
                 id="truck"
@@ -113,7 +113,7 @@
             </nz-form-control>
           </div>
           <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="wagons">Carretas</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="wagons">Carretas</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
                 id="wagons"
@@ -138,7 +138,7 @@
       <nz-form-item>
         <div nz-row nzGutter="6">
           <div nz-col [nzSpan]="surveyConductedRowSpan">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="operation">Operação</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="operation">Operação</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
                 id="operation"
@@ -189,7 +189,7 @@
       <nz-form-item>
         <div nz-row nzGutter="12">
           <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadDescription">Descrição da carga</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="loadDescription">Descrição da carga</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <input
                 id="loadDescription"
@@ -202,7 +202,7 @@
           </div>
 
           <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadType">Tipo de carga</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="loadType">Tipo de carga</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <nz-select
                 id="loadType"
@@ -219,7 +219,7 @@
           </div>
 
           <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="loadValue">Valor da carga</nz-form-label>
+            <nz-form-label [nzSpan]="null" nzFor="loadValue">Valor da carga</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
               <input
                 id="loadValue"
