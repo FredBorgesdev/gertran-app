@@ -23,6 +23,11 @@ export interface Customer {
   neighborhood: string;
   city: string;
   state: string;
+  customerShippers: {
+    id: string;
+    corporateName: string;
+    tradingName: string;
+  }[];
 }
 
 @Injectable({

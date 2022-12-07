@@ -10,23 +10,23 @@
 
       <nz-form-item>
         <div nz-row nzGutter="6">
-          <div nz-col nzSpan="12" *ngIf="resource.customer.canSelectShipper">
+          <div nz-col nzSpan="12" *ngIf="showShipperSelect">
             <nz-form-label [nzSpan]="null" nzRequired nzFor="shipper">Embarcador</nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
               <nz-select
                 id="shipper"
-                nzShowSearch
                 nzAllowClear
                 nzPlaceHolder="Selecione uma empresa"
                 formControlName="shipper"
-                nzServerSearch
-                (nzOnSearch)="selectableCustomerService.searchByName($event)"
-                (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
                 (ngModelChange)="saveDraft('shipper')"
                 [disabled]="disabled || !resource.customer?.canSelectShipper"
                 [nzDropdownRender]="selectLoading"
               >
-                <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+                <nz-option
+                  *ngFor="let customer of resource.customer.customerShippers"
+                  [nzLabel]="customer.tradingName"
+                  [nzValue]="customer.id"
+                ></nz-option>
               </nz-select>
             </nz-form-control>
           </div>

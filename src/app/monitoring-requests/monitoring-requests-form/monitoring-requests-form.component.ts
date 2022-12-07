@@ -285,6 +285,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     return this.authService.user;
   }
 
+  get showShipperSelect(): boolean {
+    return this.resource?.customer?.customerShippers.length > 0;
+  }
+
   loadTransporterData(): void {
     this.drivers = [];
     this.trucks = [];
