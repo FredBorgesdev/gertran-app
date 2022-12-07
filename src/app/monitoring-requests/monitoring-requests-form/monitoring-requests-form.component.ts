@@ -123,8 +123,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       surveyConductedBy: [null, []],
       driver: [null, []],
       auxiliaryDriver: [null, []],
-      hasMacro: [false, []],
-      hasEmbeddedIntelligence: [false, []],
     });
   }
 
