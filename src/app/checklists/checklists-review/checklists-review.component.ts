@@ -37,8 +37,8 @@ export class ChecklistsReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.checklistForm = this.formBuilder.group({
-      hasMacro: [null],
-      hasEmbeddedIntelligence: [null],
+      hasMacro: [false],
+      hasEmbeddedIntelligence: [false],
       status: ['requested'],
       allowedTravel: [null],
       justification: [null],
