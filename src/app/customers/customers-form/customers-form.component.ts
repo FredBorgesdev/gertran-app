@@ -8,6 +8,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Customer, CustomersService} from '../customers.service';
+import {conformToMask} from 'angular2-text-mask';
 
 @Component({
   selector: 'app-customers-form',
@@ -42,13 +43,19 @@ export class CustomersFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const { conformedValue: maskedCnpj } = conformToMask(
+      this.customer?.cnpj,
+      this.cnpjMask,
+      { guide: false }
+    );
+
     this.validateForm = this.formBuilder.group({
       corporateName: [this.customer?.corporateName, Validators.required],
       tradingName: [this.customer?.tradingName, Validators.required],
-      cnpj: [this.customer?.cnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
+      cnpj: [maskedCnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
       domain: [this.customer?.domain, []],
       checklistExpirationPeriod: [this.customer?.checklistExpirationPeriod, Validators.required],
-      shippers: [this.customer.shippers?.map(({ id }) => id)],
+      shippers: [this.customer.shippers],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);

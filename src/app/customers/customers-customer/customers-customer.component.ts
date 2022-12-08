@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Customer, CustomersService } from '../customers.service';
+import {UtilsService} from '../../shared/services/utils.service';
 
 @Component({
   selector: 'app-customers-customer',
@@ -18,7 +19,8 @@ export class CustomersCustomerComponent implements OnInit {
     private route: ActivatedRoute,
     private message: NzMessageService,
     private customersService: CustomersService,
-    private router: Router
+    private router: Router,
+    private utilsService: UtilsService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -32,6 +34,7 @@ export class CustomersCustomerComponent implements OnInit {
       const id = this.route.snapshot.paramMap.get('id');
       return this.customersService.get(id).subscribe((customer: Customer) => {
         this.customer = customer;
+        this.customer.shippers = this.customer.shippers.map(s => s.id);
       });
     }
 
@@ -52,13 +55,15 @@ export class CustomersCustomerComponent implements OnInit {
 
   onSubmit(): void {
     this.isLoading = true;
+    const payload = this.utilsService.removeNullValues(this.customer);
+
     if (this.customer.id) {
-      this.customersService.update(this.customer.id, this.customer).subscribe(
+      this.customersService.update(this.customer.id, payload).subscribe(
         () => this.handleSuccess(),
         () => this.handleError()
       );
     } else {
-      this.customersService.save(this.customer).subscribe(
+      this.customersService.save(payload).subscribe(
         ({ id }) => this.handleSuccess(id),
         () => this.handleError()
       );
