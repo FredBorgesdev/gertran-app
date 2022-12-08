@@ -29,7 +29,7 @@ export class CustomersListComponent extends BaseCrudListComponent<Customer> {
       title: 'CNPJ'
     },
     {
-      title: 'Site'
+      title: 'Email'
     },
     {
       title: 'Ações'

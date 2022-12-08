@@ -11,7 +11,7 @@ export interface Customer {
   tradingName: string;
   cnpj: string;
   seller: string | null;
-  domain: string | null;
+  email: string | null;
   permissions?: number[];
 
   // address

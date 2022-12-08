@@ -53,7 +53,7 @@ export class CustomersFormComponent implements OnInit {
       corporateName: [this.customer?.corporateName, Validators.required],
       tradingName: [this.customer?.tradingName, Validators.required],
       cnpj: [maskedCnpj, [Validators.required, Validators.pattern(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)]],
-      domain: [this.customer?.domain, []],
+      email: [this.customer?.email, [Validators.email]],
       checklistExpirationPeriod: [this.customer?.checklistExpirationPeriod, Validators.required],
       shippers: [this.customer.shippers],
     });
