@@ -14,6 +14,7 @@ import {VehiclesService} from '../vehicles.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {Tracker} from '../../trackers/trackers.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
+import {UtilsService} from '../../shared/services/utils.service';
 
 export interface Vehicle {
   id: string;
@@ -61,6 +62,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     private vehicleModelsService: VehicleModelsService,
     private vehicleModelTypesService: VehicleModelTypesService,
     private vehicleManufacturersService: VehicleManufacturersService,
+    private utilsService: UtilsService,
     public selectableCustomerService: SelectableCustomerServiceService,
     public selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
   ) {
@@ -96,7 +98,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       manufacturer: [null, [Validators.required]],
       vehicleModel: [null, [Validators.required]],
       vehicleModelType: [null, [Validators.required]],
-      workingSituation: [null, []],
       plate: [null, [Validators.required, Validators.maxLength(7)]],
       state: [null, [Validators.required, Validators.maxLength(2)]],
       city: [null, [Validators.required]],
@@ -189,6 +190,10 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     super.save({
       error: this.handleSaveError.bind(this),
     });
+  }
+
+  getValues(): T {
+    return this.utilsService.removeNullValues(super.getValues());
   }
 
   private handleSaveError(error: HttpErrorResponse): void {

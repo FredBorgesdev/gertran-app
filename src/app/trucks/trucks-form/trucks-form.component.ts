@@ -18,6 +18,7 @@ import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-perip
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
+import {UtilsService} from '../../shared/services/utils.service';
 
 @Component({
   selector: 'app-trucks-form',
@@ -39,7 +40,8 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     vehiclePeripheralsService: VehiclePeripheralsService,
     service: TrucksService,
     activatedRoute: ActivatedRoute,
-    message: NzMessageService
+    message: NzMessageService,
+    utilsService: UtilsService,
   ) {
     super(
       service,
@@ -50,6 +52,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
       vehicleModelsService,
       vehicleModelTypesService,
       vehicleManufacturersService,
+      utilsService,
       selectableCustomersService,
       selectableVehicleManufacturersService
     );
@@ -59,7 +62,6 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     super.loadFormBuilder([
       'numberOfAxles',
       'cubage',
-      'chargingMethod',
     ]);
   }
 
@@ -67,7 +69,6 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     super.loadResource([
       'numberOfAxles',
       'cubage',
-      'chargingMethod',
     ]);
   }
 

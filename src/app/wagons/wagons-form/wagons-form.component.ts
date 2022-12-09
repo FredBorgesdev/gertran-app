@@ -11,6 +11,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
+import {UtilsService} from '../../shared/services/utils.service';
 
 @Component({
   selector: 'app-wagons-form',
@@ -31,7 +32,8 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
     vehiclePeripheralsService: VehiclePeripheralsService,
     service: WagonsService,
     activatedRoute: ActivatedRoute,
-    message: NzMessageService
+    message: NzMessageService,
+    utilsService: UtilsService,
   ) {
     super(
       service,
@@ -42,6 +44,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
       vehicleModelsService,
       vehicleModelTypesService,
       vehicleManufacturersService,
+      utilsService,
       selectableCustomerService,
       selectableVehicleManufacturersService
     );
@@ -49,7 +52,6 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
 
   ngOnInit(): void {
     this.resource = this.wagon;
-    console.log(this.resource)
 
     super.ngOnInit();
   }
