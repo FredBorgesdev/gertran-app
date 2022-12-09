@@ -17,6 +17,7 @@ import {FormBuilder} from '@angular/forms';
 import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 
 @Component({
   selector: 'app-trucks-form',
@@ -29,6 +30,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
 
   constructor(
     private router: Router,
+    selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
     selectableCustomersService: SelectableCustomerServiceService,
     vehicleModelsService: VehicleModelsService,
     vehicleModelTypesService: VehicleModelTypesService,
@@ -49,6 +51,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
       vehicleModelTypesService,
       vehicleManufacturersService,
       selectableCustomersService,
+      selectableVehicleManufacturersService
     );
   }
 

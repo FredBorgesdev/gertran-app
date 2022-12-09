@@ -13,6 +13,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {VehiclesService} from '../vehicles.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {Tracker} from '../../trackers/trackers.service';
+import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 
 export interface Vehicle {
   id: string;
@@ -48,14 +49,8 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   customers: Customer[] = [];
   vehicleModels: VehicleModels[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
-  manufacturers: VehicleManufacturers[] = [];
   peripherals: VehiclePeripherals[] = [];
-  workingSituations: Choice[] = [];
-  chargingMethods: Choice[] = [];
   isLoadingMoreData = false;
-
-  customersNextUrl: string;
-  manufacturersNextUrl: string;
 
   constructor(
     @Inject('service') protected service: VehiclesService<T>,
@@ -67,6 +62,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     private vehicleModelTypesService: VehicleModelTypesService,
     private vehicleManufacturersService: VehicleManufacturersService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    public selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
   ) {
     super(service, message, activatedRoute);
   }
@@ -81,16 +77,10 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     super.ngOnInit();
 
     this.selectableCustomerService.init();
-    this.loadMoreManufacturers();
+    this.selectableVehicleManufacturersService.init();
     this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
     });
-    // this.service.getWorkingSituations().subscribe((workingSituations) => {
-    //   this.workingSituations = workingSituations;
-    // });
-    // this.service.getChargingMethods().subscribe((chargingMethods) => {
-    //   this.chargingMethods = chargingMethods;
-    // });
 
     if (this.resource?.vehicle.manufacturer) {
       this.loadModels();
@@ -106,7 +96,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       manufacturer: [null, [Validators.required]],
       vehicleModel: [null, [Validators.required]],
       vehicleModelType: [null, [Validators.required]],
-      peripherals: [[], []],
       workingSituation: [null, []],
       plate: [null, [Validators.required, Validators.maxLength(7)]],
       state: [null, [Validators.required, Validators.maxLength(2)]],
@@ -157,7 +146,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
     if (this.resource.vehicle?.manufacturer) {
       this.vehicleManufacturersService.get(this.resource.vehicle.manufacturer).subscribe((manufacturer) => {
-        this.manufacturers = [manufacturer].concat(this.manufacturers);
+        this.selectableVehicleManufacturersService.concatManufacturers([manufacturer]);
       });
     }
 
@@ -208,17 +197,5 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     }
 
     super.handleError();
-  }
-
-  loadMoreManufacturers(): void {
-    this.isLoadingMoreData = true;
-    this.vehicleManufacturersService.getAll({
-      limit: 50,
-      url: this.customersNextUrl
-    }).subscribe((manufacturers) => {
-      this.manufacturersNextUrl = manufacturers.next;
-      this.manufacturers = [...this.manufacturers, ...manufacturers.results];
-      this.isLoadingMoreData = false;
-    });
   }
 }

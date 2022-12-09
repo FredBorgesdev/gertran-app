@@ -10,6 +10,7 @@ import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-perip
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 
 @Component({
   selector: 'app-wagons-form',
@@ -21,6 +22,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
 
   constructor(
     private router: Router,
+    selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
     selectableCustomerService: SelectableCustomerServiceService,
     vehicleModelsService: VehicleModelsService,
     vehicleModelTypesService: VehicleModelTypesService,
@@ -41,6 +43,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
       vehicleModelTypesService,
       vehicleManufacturersService,
       selectableCustomerService,
+      selectableVehicleManufacturersService
     );
   }
 

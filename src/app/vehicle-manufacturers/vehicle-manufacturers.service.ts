@@ -19,12 +19,20 @@ export class VehicleManufacturersService implements ApiService<VehicleManufactur
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<VehicleManufacturers>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      name?: string;
+    }
+  ): Observable<GetAllResponse<VehicleManufacturers>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.name) {
+      params.name = filters.name;
     }
 
     return this.http.get<GetAllResponse<VehicleManufacturers>>('vehicles/manufacturers', { params });

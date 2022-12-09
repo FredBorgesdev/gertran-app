@@ -25,12 +25,13 @@
       <nz-select
         (ngModelChange)="loadModels()"
         id="manufacturer"
-        nzShowSearch
         nzAllowClear
         nzPlaceHolder="Selecione uma montadora"
         formControlName="manufacturer"
+        (nzScrollToBottom)="selectableVehicleManufacturersService.loadMoreManufacturers()"
+        [nzDropdownRender]="selectLoading"
       >
-        <nz-option *ngFor="let manufacturer of manufacturers" [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
+        <nz-option *ngFor="let manufacturer of selectableVehicleManufacturersService.manufacturers" [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -70,45 +71,6 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzFor="peripherals">Periféricos</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Selecione um periférico">
-          <nz-select
-            id="peripherals"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Selecione periféricos"
-            formControlName="peripherals"
-            nzMode="multiple"
-          >
-            <nz-option *ngFor="let peripheral of peripherals" [nzLabel]="peripheral.name" [nzValue]="peripheral.id"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-<!--    <div nz-col nzSpan="12">-->
-<!--      <nz-form-item>-->
-<!--        <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>-->
-<!--        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a situação">-->
-<!--          <nz-select-->
-<!--            id="workingSituation"-->
-<!--            nzShowSearch-->
-<!--            nzAllowClear-->
-<!--            nzPlaceHolder="Selecione uma situação"-->
-<!--            formControlName="workingSituation"-->
-<!--          >-->
-<!--            <nz-option-->
-<!--              *ngFor="let workingSituation of workingSituations"-->
-<!--              [nzLabel]="workingSituation.label"-->
-<!--              [nzValue]="workingSituation.value"-->
-<!--            ></nz-option>-->
-<!--          </nz-select>-->
-<!--        </nz-form-control>-->
-<!--      </nz-form-item>-->
-<!--    </div>-->
   </div>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="plate">Placa</nz-form-label>
@@ -198,20 +160,6 @@
       </nz-form-item>
     </div>
   </div>
-<!--  <nz-form-item>-->
-<!--    <nz-form-label [nzSpan]="null" nzRequired nzFor="chargingMethod">Modalidade de cobrança</nz-form-label>-->
-<!--    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a modalidade">-->
-<!--      <nz-select-->
-<!--        id="chargingMethod"-->
-<!--        nzShowSearch-->
-<!--        nzAllowClear-->
-<!--        nzPlaceHolder="Selecione um tipo"-->
-<!--        formControlName="chargingMethod"-->
-<!--      >-->
-<!--        <nz-option *ngFor="let option of chargingMethods" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>-->
-<!--      </nz-select>-->
-<!--    </nz-form-control>-->
-<!--  </nz-form-item>-->
 
   <nz-divider></nz-divider>
 
@@ -228,5 +176,5 @@
 </form>
 
 <ng-template #selectLoading>
-  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+  <nz-spin *ngIf="selectableVehicleManufacturersService.isLoadingMoreData || selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>
