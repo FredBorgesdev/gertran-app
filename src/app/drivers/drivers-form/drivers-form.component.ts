@@ -46,7 +46,6 @@ export class DriversFormComponent implements OnInit {
       cnhNumber: [this.driver?.cnhNumber, [Validators.required]],
       cnhCategory: [this.driver?.cnhCategory, [Validators.required]],
       cnhValidity: [this.driver?.cnhValidity, [Validators.required]],
-      cnhIssuer: [this.driver?.cnhIssuer, [Validators.required]],
       cnhIssuerUf: [this.driver?.cnhIssuerUf, [Validators.required]],
       cnhFirstIssue: [this.driver?.cnhFirstIssue, [Validators.required]],
       cnhEmission: [this.driver?.cnhEmission, [Validators.required]],
