@@ -20,9 +20,11 @@
 
     <nz-tabset [nzTabBarExtraContent]="sendButton">
       <nz-tab nzTitle="Solicitação de monitoramento">
-        <app-monitoring-requests-form
-          *ngIf="!isLoading"
-        ></app-monitoring-requests-form>
+        <ng-template nz-tab>
+          <app-monitoring-requests-form
+            *ngIf="!isLoading"
+          ></app-monitoring-requests-form>
+        </ng-template>
       </nz-tab>
       <nz-tab nzTitle="Etapas da viagem" [nzDisabled]="!resource">
         <ng-template nz-tab>

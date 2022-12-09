@@ -19,6 +19,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
 import {of} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -94,7 +95,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   loadCustomers(): void {
     if (
       !this.authService.customerId ||
-      this.resource?.customer?.canSelectShipper
+      this.resource?.customer?.shippers?.length > 0
     ) {
       return this.selectableCustomerService.init();
     }

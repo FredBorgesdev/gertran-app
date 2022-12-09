@@ -76,7 +76,7 @@ export class MonitoringRequestComponent implements OnInit {
               message += `<p>${field}</p>`;
             });
             this.isLoading = false;
-            this.message.error(message);
+            this.message.error(message, { nzDuration: 7000 });
           });
       },
     });

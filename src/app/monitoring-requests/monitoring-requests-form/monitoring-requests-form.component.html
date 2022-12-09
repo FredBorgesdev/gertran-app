@@ -34,7 +34,7 @@
                 nzServerSearch
                 (nzOnSearch)="selectableCustomerService.searchByName($event)"
                 (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-                (ngModelChange)="loadTransporterData()"
+                (nzBlur)="loadTransporterData()"
                 [disabled]="disabled"
                 [nzDropdownRender]="selectLoading"
               >
