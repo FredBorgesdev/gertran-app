@@ -7,6 +7,7 @@ import { Customer, CustomersService } from 'src/app/customers/customers.service'
 import {Driver, DriversService} from '../drivers.service';
 import {Choice} from '../../shared/services/api.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import brazilianStates from '../../shared/data/brazilian-states';
 
 @Component({
   selector: 'app-drivers-form',
@@ -22,6 +23,7 @@ export class DriversFormComponent implements OnInit {
 
   validateForm: FormGroup;
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
+  states = brazilianStates;
 
   constructor(
     private router: Router,

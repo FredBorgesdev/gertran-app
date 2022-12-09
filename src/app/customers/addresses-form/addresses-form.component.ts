@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from '../customers.service';
-import brazilianStates from './states';
+import brazilianStates from '../../shared/data/brazilian-states';
 
 @Component({
   selector: 'app-addresses-form',
