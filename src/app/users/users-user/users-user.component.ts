@@ -28,6 +28,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
       customer: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
       cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
       password: [null, []],
@@ -39,6 +40,14 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   list(): void {
     this.router.navigate(['users', 'users-list']);
+  }
+
+  performFormGroupSetValues(): void {
+    super.performFormGroupSetValues();
+
+    this.validateForm.patchValue({
+      customer: this.resource.customer[0].id
+    });
   }
 
   changePassword(password: string): void {
@@ -60,5 +69,12 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   numbersToStrings(numbers?: number[]): string[] {
     return numbers?.map(String) ?? [];
+  }
+
+  getValues(): AbstractUser {
+    return {
+      ...super.getValues(),
+      cpf: this.validateForm.controls.cpf.value.replace(/\D/g, ''),
+    };
   }
 }

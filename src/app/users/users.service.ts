@@ -8,6 +8,7 @@ export abstract class AbstractUser {
   id: string;
   name: string;
   email: string;
+  cpf: string;
   password?: string;
   isActive: boolean;
   isAdmin: boolean;

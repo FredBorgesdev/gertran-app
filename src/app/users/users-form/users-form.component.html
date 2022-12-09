@@ -26,6 +26,13 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="email">Email</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o email corretamente">
+      <input id="email" type="email" nz-input formControlName="email" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">Cpf</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o cpf corretamente">
       <input id="cpf" type="text" nz-input formControlName="cpf" />
