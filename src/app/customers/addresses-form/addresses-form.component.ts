@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer } from '../customers.service';
+import brazilianStates from './states';
 
 @Component({
   selector: 'app-addresses-form',
@@ -12,6 +13,8 @@ export class AddressesFormComponent implements OnInit {
   @Input() customer: Customer;
   @Output() onSave: EventEmitter<Customer> = new EventEmitter<Customer>();
   @Output() onChange: EventEmitter<Customer> = new EventEmitter<Customer>();
+
+  states = brazilianStates;
 
   validateForm: FormGroup;
 

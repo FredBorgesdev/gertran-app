@@ -38,7 +38,18 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="state">Estado</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
-      <input id="state" type="text" nz-input formControlName="state" />
+      <nz-select
+        nzAllowClear
+        nzPlaceHolder="Selecione um estado"
+        nzShowSearch
+        formControlName="state"
+      >
+        <nz-option
+          *ngFor="let state of states"
+          [nzLabel]="state.name"
+          [nzValue]="state.abbreviation"
+        ></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
