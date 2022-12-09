@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NZ_I18N, pt_BR } from 'ng-zorro-antd/i18n';
+import {NZ_DATE_LOCALE, NZ_I18N, pt_BR} from 'ng-zorro-antd/i18n';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import * as Sentry from '@sentry/angular';
 
@@ -23,6 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './shared/interceptor/api.interceptor';
 import { Router } from '@angular/router';
 import {AuthenticationService} from './authentication/authentication.service';
+import {ptBR} from 'date-fns/locale';
 
 registerLocaleData(ptbr);
 
@@ -53,6 +54,10 @@ registerLocaleData(ptbr);
     {
       provide: NZ_I18N,
       useValue: pt_BR,
+    },
+    {
+      provide: NZ_DATE_LOCALE,
+      useValue: ptBR,
     },
     {
       provide: LocationStrategy,
