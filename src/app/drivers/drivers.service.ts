@@ -31,7 +31,8 @@ export class DriversService implements ApiService<Driver> {
   getAll(
     pagination: Pagination,
     filters?: {
-      customer?: string
+      customer?: string;
+      name?: string;
     }
   ): Observable<GetAllResponse<Driver>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
@@ -42,6 +43,9 @@ export class DriversService implements ApiService<Driver> {
     }
     if (filters?.customer) {
       params.customer = filters.customer;
+    }
+    if (filters?.name) {
+      params.name = filters.name;
     }
 
     return this.http.get<GetAllResponse<Driver>>('drivers', { params });

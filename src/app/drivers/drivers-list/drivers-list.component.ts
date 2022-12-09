@@ -43,7 +43,9 @@ export class DriversListComponent extends BaseCrudListComponent<Driver> {
     super('drivers', router, driversService, message, modal);
   }
 
-  search(): void {}
+  search(): void {
+    this.searchByName(this.searchInput);
+  }
 
   create(): void {
     this.router.navigate(['/drivers/driver-create']);
