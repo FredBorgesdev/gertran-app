@@ -104,7 +104,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       modelYear: [null, [Validators.required]],
       chassis: [null, [Validators.required]],
       renavam: [null, [Validators.required]],
-      description: [null, [Validators.required]],
+      description: [null, []],
     });
 
     customProperties?.forEach(property => {
