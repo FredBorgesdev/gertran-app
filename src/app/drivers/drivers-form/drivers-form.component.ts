@@ -8,6 +8,7 @@ import {Driver, DriversService} from '../drivers.service';
 import {Choice} from '../../shared/services/api.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import brazilianStates from '../../shared/data/brazilian-states';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-drivers-form',
@@ -32,13 +33,14 @@ export class DriversFormComponent implements OnInit {
     private i18n: NzI18nService,
     private service: DriversService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    public authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
     const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false });
 
     this.validateForm = this.formBuilder.group({
-      customers: [this.driver?.customers, [Validators.required]],
+      customers: [this.driver?.customers || [this.authService.customerId], [Validators.required]],
       workingSituation: [this.driver?.workingSituation, []],
       name: [this.driver?.name, [Validators.required]],
       rg: [this.driver?.rg, [Validators.required]],
@@ -49,7 +51,13 @@ export class DriversFormComponent implements OnInit {
       cnhIssuerUf: [this.driver?.cnhIssuerUf, [Validators.required]],
       cnhFirstIssue: [this.driver?.cnhFirstIssue, [Validators.required]],
       cnhEmission: [this.driver?.cnhEmission, [Validators.required]],
-      admissionDate: [this.driver?.admissionDate, [Validators.required]],
+      admissionDate: [this.driver?.admissionDate, []],
+    });
+
+    this.validateForm.get('workingSituation').valueChanges.subscribe(value => {
+      if (value === 'working') {
+        this.validateForm.get('admissionDate').setValidators([Validators.required]);
+      }
     });
 
     this.selectableCustomerService.init();
@@ -61,9 +69,9 @@ export class DriversFormComponent implements OnInit {
       });
     }
 
-    // this.service.getWorkingSituations().subscribe((workingSituations) => {
-    //   this.workingSituations = workingSituations;
-    // });
+    this.service.getWorkingSituations().subscribe((workingSituations) => {
+      this.workingSituations = workingSituations;
+    });
 
     this.i18n.setLocale(en_US);
   }

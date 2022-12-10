@@ -1,5 +1,5 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <nz-form-item>
+  <nz-form-item *ngIf="!authService.customerId">
     <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
       <nz-select
@@ -15,6 +15,22 @@
         [nzDropdownRender]="selectLoading"
       >
         <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Opção inválida!">
+      <nz-select
+        id="workingSituation"
+        nzPlaceHolder="Selecione uma opção"
+        formControlName="workingSituation"
+      >
+        <nz-option
+          *ngFor="let workingSituation of workingSituations"
+          [nzLabel]="workingSituation.label"
+          [nzValue]="workingSituation.value"
+        ></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -43,7 +59,7 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label nzRequired nzFor="admissionDate">Data de admissão</nz-form-label>
+    <nz-form-label [nzRequired]="validateForm.value.workingSituation === 'working'" nzFor="admissionDate">Data de admissão</nz-form-label>
     <nz-form-control nzErrorTip="Data inválida!">
       <nz-date-picker style="width: 100%;" id="admissionDate" nzFormat="dd/MM/yyyy" formControlName="admissionDate"></nz-date-picker>
     </nz-form-control>
