@@ -64,7 +64,9 @@ export class DriversFormComponent implements OnInit {
       }
     });
 
-    this.selectableCustomerService.init();
+    if (!this.authService.customerId) {
+      this.selectableCustomerService.init();
+    }
 
     if (this.driver.customers) {
       this.selectableCustomerService.concatCustomers(this.driver.customers);
