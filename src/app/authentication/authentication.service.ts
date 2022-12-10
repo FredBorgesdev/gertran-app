@@ -91,6 +91,12 @@ export class AuthenticationService {
     const user = await this.usersService.get(decoded.user_id).toPromise();
 
     this.user = new User(user);
+
+    if (user.customer.length > 0 && !this.customerId) {
+      const selectedCustomer = user.customer[0].id;
+      this.setCustomer(selectedCustomer);
+      window.location.reload();
+    }
   }
 
   get customerId(): string {
