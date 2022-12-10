@@ -16,7 +16,7 @@ export class PermissionsService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<GetAllResponse<Permission>> {
-    const params = { limit: 50 };
+    const params = { limit: 999 };
     return this.http.get<GetAllResponse<Permission>>('permissions', { params });
   }
 }
