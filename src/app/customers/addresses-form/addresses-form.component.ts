@@ -18,6 +18,8 @@ export class AddressesFormComponent implements OnInit {
 
   validateForm: FormGroup;
 
+  cepMask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
