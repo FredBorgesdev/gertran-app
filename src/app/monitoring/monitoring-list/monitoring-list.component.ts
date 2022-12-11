@@ -119,7 +119,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       return true;
     });
 
-    this.monitoringData$ = timer(0, 10000).pipe(
+    this.monitoringData$ = timer(0, 30000).pipe(
       switchMap(() => this.positionsService.getAll(
         { limit: 999 },
         {
