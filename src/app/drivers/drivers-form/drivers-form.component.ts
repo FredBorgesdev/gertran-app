@@ -38,9 +38,13 @@ export class DriversFormComponent implements OnInit {
 
   ngOnInit(): void {
     const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false });
+    const defaultCustomers = [this.authService.customerId].filter(Boolean);
 
     this.validateForm = this.formBuilder.group({
-      customers: [this.driver?.customers || [this.authService.customerId], [Validators.required]],
+      customers: [
+        this.driver?.customers || defaultCustomers,
+        [Validators.required]
+      ],
       workingSituation: [this.driver?.workingSituation, []],
       name: [this.driver?.name, [Validators.required]],
       rg: [this.driver?.rg, [Validators.required]],
@@ -60,7 +64,9 @@ export class DriversFormComponent implements OnInit {
       }
     });
 
-    this.selectableCustomerService.init();
+    if (!this.authService.customerId) {
+      this.selectableCustomerService.init();
+    }
 
     if (this.driver.customers) {
       this.selectableCustomerService.concatCustomers(this.driver.customers);

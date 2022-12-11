@@ -2,7 +2,13 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="zipCode">CEP</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CEP no formato 99999-999">
-      <input id="zipCode" type="text" nz-input formControlName="zipCode" />
+      <input
+        id="zipCode"
+        type="text"
+        nz-input
+        formControlName="zipCode"
+        [textMask]="{ mask: cepMask, guide: false }"
+      />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
