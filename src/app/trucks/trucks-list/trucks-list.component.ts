@@ -48,10 +48,7 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
   }
 
   search(): void {
-    this.resources.results = this.tableService.search(
-      this.searchInput,
-      this.resources.results
-    );
+    this.searchByField('plate', this.searchInput);
   }
 
   getCityState(truck: Truck): string {

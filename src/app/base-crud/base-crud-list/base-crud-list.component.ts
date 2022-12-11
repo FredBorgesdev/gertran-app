@@ -16,7 +16,8 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   isLoading = false;
   resources: GetAllResponse<T> = null;
 
-  private searchCustomerSubject = new Subject<string>();
+  private field = 'name';
+  private searchSubject = new Subject<string>();
 
   constructor(
     @Inject(String) private resource: string,
@@ -105,17 +106,29 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   searchByName(name: string): void {
+    this.field = 'name';
+
     if (name === '') {
       this.loadResources();
     } else {
-      this.searchCustomerSubject.next(name);
+      this.searchSubject.next(name);
+    }
+  }
+
+  searchByField(field: string, value: string): void {
+    this.field = field;
+
+    if (value === '') {
+      this.loadResources();
+    } else {
+      this.searchSubject.next(value);
     }
   }
 
   private setupSearch(): void {
-    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
+    this.searchSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.isLoading = true;
-      this.service.getAll({ limit: 50 }, { name }).subscribe((result) => {
+      this.service.getAll({ limit: 50 }, { [this.field]: value }).subscribe((result) => {
         this.resources = result;
         this.isLoading = false;
       });

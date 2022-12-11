@@ -46,10 +46,7 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
   }
 
   search(): void {
-    this.resources.results = this.tableService.search(
-      this.searchInput,
-      this.resources.results
-    );
+    this.searchByField('plate', this.searchInput);
   }
 
   getCityState(wagon: Wagon): string {

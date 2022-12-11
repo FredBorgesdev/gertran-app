@@ -22,6 +22,7 @@ export class WagonsService extends VehiclesService<Wagon> {
     pagination: Pagination,
     filters?: {
       customer?: string;
+      plate?: string;
     }
   ): Observable<GetAllResponse<Wagon>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
@@ -32,6 +33,9 @@ export class WagonsService extends VehiclesService<Wagon> {
     }
     if (filters?.customer) {
       params.customer = filters.customer;
+    }
+    if (filters?.plate) {
+      params.plate = filters.plate;
     }
 
     return this.http.get<GetAllResponse<Wagon>>('vehicles/wagons', { params });
