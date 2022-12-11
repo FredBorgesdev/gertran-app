@@ -56,9 +56,6 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> {
   }
 
   search(): void {
-    this.resources.results = this.tableService.search(
-      this.searchInput,
-      this.resources.results
-    );
+    this.searchByName(this.searchInput);
   }
 }
