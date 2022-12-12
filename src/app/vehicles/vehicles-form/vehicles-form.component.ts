@@ -15,6 +15,11 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 import {Tracker} from '../../trackers/trackers.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 import {UtilsService} from '../../shared/services/utils.service';
+import {Observable} from 'rxjs';
+import {state} from '@angular/animations';
+import {Truck} from '../../trucks/trucks.service';
+import {Wagon} from '../../wagons/wagons.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 export interface Vehicle {
   id: string;
@@ -65,6 +70,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     private utilsService: UtilsService,
     public selectableCustomerService: SelectableCustomerServiceService,
     public selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
+    public authService: AuthenticationService,
   ) {
     super(service, message, activatedRoute);
   }
@@ -72,18 +78,44 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   ngOnInit(): void {
     super.ngOnInit();
 
-    this.selectableCustomerService.init();
     this.selectableVehicleManufacturersService.init();
     this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe((peripherals) => {
       this.peripherals = peripherals.results;
     });
 
+    if (!this.authService.customerId) {
+      this.selectableCustomerService.init();
+    }
     if (this.resource?.vehicle.manufacturer) {
       this.loadModels();
     }
     if (this.resource?.vehicle.vehicleModel) {
       this.selectType();
     }
+  }
+
+  async filterVehicleByPlate(): Promise<void> {
+    const plate = this.validateForm.controls.plate.value;
+    if (!plate) {
+      return;
+    }
+
+    this.isLoading = true;
+    const vehicle = await this.getByPlate(plate);
+    if (!vehicle) {
+      return;
+    }
+
+    this.resource = vehicle;
+    this.loadResource();
+    this.validateForm.patchValue({
+      customers: this.validateForm.controls.customers.value.concat(this.authService.customerId),
+    });
+    this.isLoading = false;
+  }
+
+  async getByPlate(plate: string): Promise<T | null> {
+    return this.service.getByPlate(plate).toPromise().catch(() => null);
   }
 
   loadFormBuilder(customProperties?: string[]): void {
@@ -133,7 +165,10 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     });
 
     if (this.resource.vehicle?.customers) {
-      this.customers = this.customers.concat(this.resource.vehicle.customers);
+      if (!this.authService.customerId) {
+        this.selectableCustomerService.concatCustomers(this.resource.vehicle.customers);
+      }
+
       this.validateForm.patchValue({
         customers: this.resource.vehicle.customers.map((customer) => customer.id)
       });

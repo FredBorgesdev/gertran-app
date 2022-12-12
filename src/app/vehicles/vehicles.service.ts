@@ -14,6 +14,10 @@ export class VehiclesService<T> implements ApiService<T> {
     throw new Error('Method not implemented.');
   }
 
+  getByPlate(plate: string): Observable<T> {
+    throw new Error('Method not implemented.');
+  }
+
   update(id: string, data: T, ...params): Observable<T> {
     throw new Error('Method not implemented.');
   }

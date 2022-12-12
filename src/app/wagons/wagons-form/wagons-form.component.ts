@@ -12,6 +12,7 @@ import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 import {UtilsService} from '../../shared/services/utils.service';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-wagons-form',
@@ -34,6 +35,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
     activatedRoute: ActivatedRoute,
     message: NzMessageService,
     utilsService: UtilsService,
+    authService: AuthenticationService,
   ) {
     super(
       service,
@@ -46,7 +48,8 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
       vehicleManufacturersService,
       utilsService,
       selectableCustomerService,
-      selectableVehicleManufacturersService
+      selectableVehicleManufacturersService,
+      authService,
     );
   }
 

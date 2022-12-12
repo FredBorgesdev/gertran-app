@@ -41,6 +41,10 @@ export class WagonsService extends VehiclesService<Wagon> {
     return this.http.get<GetAllResponse<Wagon>>('vehicles/wagons', { params });
   }
 
+  getByPlate(plate: string): Observable<Wagon> {
+    return this.http.get<Wagon>(`vehicles/wagons/${plate}/info`);
+  }
+
   get(id: string): Observable<Wagon> {
     return this.http.get<Wagon>(`vehicles/wagons/${id}`);
   }

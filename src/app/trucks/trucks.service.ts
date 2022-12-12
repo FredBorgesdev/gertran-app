@@ -41,6 +41,10 @@ export class TrucksService extends VehiclesService<Truck> {
     return this.http.get<GetAllResponse<Truck>>('vehicles/trucks', { params });
   }
 
+  getByPlate(plate: string): Observable<Truck> {
+    return this.http.get<Truck>(`vehicles/trucks/${plate}/info`);
+  }
+
   get(id: string): Observable<Truck> {
     return this.http.get<Truck>(`vehicles/trucks/${id}`);
   }
