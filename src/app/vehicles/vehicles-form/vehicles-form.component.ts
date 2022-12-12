@@ -69,12 +69,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     super(service, message, activatedRoute);
   }
 
-  get customersInputDisabled(): boolean {
-    const isCreatingVehicle = this.activatedRoute.snapshot.url[0].path.includes('create');
-
-    return !isCreatingVehicle;
-  }
-
   ngOnInit(): void {
     super.ngOnInit();
 
