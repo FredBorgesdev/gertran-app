@@ -125,6 +125,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         {
           customer: this.validateForm.get('customer').value,
           terminal: this.validateForm.get('terminal').value,
+          travelling: this.validateForm.get('travelling').value,
           travelStatus: this.selectedTravelStatus,
         })
       ),
@@ -135,6 +136,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
       terminal: [this.activatedRoute.snapshot.queryParams.terminal],
+      travelling: [true],
+      hideOld: [true],
       groupBy: [null],
     });
 
@@ -171,7 +174,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     if (!this.user.isGertranStaff) {
       return '';
     }
-    return this.travelStatus.find(item => item.value === status).backgroundColorClass;
+    return this.travelStatus.find(item => item.value === status)?.backgroundColorClass;
   }
 
   openMap(item: Position): void {
@@ -186,7 +189,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getOrigin(item: Position): string {
-    if (item.monitoringRequest.originCity) {
+    if (item.monitoringRequest?.originCity) {
       return item.monitoringRequest.originCity + ', ' + item.monitoringRequest.originState;
     }
 
@@ -194,7 +197,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getDestiny(item: Position): string {
-    if (item.monitoringRequest.destinyCity) {
+    if (item.monitoringRequest?.destinyCity) {
       return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
     }
 
@@ -206,7 +209,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getWagons(item: Position): string {
-    return item.monitoringRequest.wagons.join(', ');
+    return item.monitoringRequest?.wagons.join(', ');
   }
 
   loadPositions(): void {
@@ -278,7 +281,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getStatusTranslation(status: string): string {
-    return this.travelStatus.find(item => item.value === status).title;
+    return this.travelStatus.find(item => item.value === status)?.title;
   }
 
   goToMonitoringRequest(id: string): void {

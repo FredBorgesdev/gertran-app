@@ -42,8 +42,15 @@
         </div>
 
         <div nz-col nzSpan="4">
-          <label nz-checkbox nzChecked>Ocultar antigos</label>
-          <label nz-checkbox nzChecked>Em viagem</label>
+          <label
+            nz-checkbox
+            formControlName="hideOld"
+          >Ocultar antigos</label>
+          <label
+            nz-checkbox
+            formControlName="travelling"
+            (ngModelChange)="loadPositions()"
+          >Em viagem</label>
         </div>
       </div>
     </form>
@@ -131,11 +138,11 @@
     <tbody>
     <tr
       *ngFor="let item of table.data; let i=index"
-      [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
+      [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight, item)"
       (click)="setPlate(item.monitoringRequest?.truck.vehicle.plate)"
     >
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
         <img
           [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
           alt="logo"
@@ -143,14 +150,17 @@
           height="25px"
         />
       </td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.trackerSerialNumber || '-' }}</td>
+      <td
+        nzLeft
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
+      >{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
-        [nzTooltipTitle]="item.monitoringRequest.id"
-        [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)"
-      >{{ item.monitoringRequest.id | id}}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest.travelStatus)">{{ item.monitoringRequest?.truck?.vehicle?.plate || '-' }}</td>
+        [nzTooltipTitle]="item.monitoringRequest?.id"
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
+      >{{ item.monitoringRequest?.id || '' | id}}</td>
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">{{ item.monitoringRequest?.truck?.vehicle?.plate || '-' }}</td>
       <td>
         <span
           nz-icon
@@ -215,11 +225,11 @@
         nz-tooltip
         [nzTooltipTitle]="getAlerts(item)"
       >{{ getAlerts(item) || '-' }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest.travelStatus)">
-        {{getStatusTranslation(item.monitoringRequest.travelStatus)}}
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)">
+        {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
-      <td>{{ item.monitoringRequest.observations || '-' }}</td>
-      <td>{{ item.monitoringRequest.driverName || '-' }}</td>
+      <td>{{ item.monitoringRequest?.observations || '-' }}</td>
+      <td>{{ item.monitoringRequest?.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
       <td *ngIf="user.isGertranStaff">{{ getCommunicationChannel(item.communicationChannel) }}</td>
       <td *ngIf="user.isGertranStaff">
