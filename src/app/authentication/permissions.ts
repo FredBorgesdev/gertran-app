@@ -308,4 +308,6 @@ export enum Permissions {
   ADDRESSES_DELETE_ADDRESS = 'addresses.delete_address',
   ADDRESSES_CHANGE_ADDRESS = 'addresses.change_address',
   ADDRESSES_ADD_ADDRESS = 'addresses.add_address',
+  VIEW_TEMPERATURE_HISTORY_REPORT = 'view_temperature_history_report',
+  VIEW_ANALYTICAL_PER_SM_REPORT = 'view_analytical_per_sm_report',
 }

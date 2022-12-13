@@ -280,7 +280,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            gertranStaffOnly: true
           },
           {
             path: '/reports/scheduled-trips',
@@ -288,7 +289,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            gertranStaffOnly: true,
           },
           {
             path: '/reports/insurance-companies',
@@ -296,7 +298,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            gertranStaffOnly: true,
           },
         ]
       },
@@ -331,6 +334,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
+            gertranStaffOnly: true
           },
           {
             path: '/reports/commands-history',
@@ -356,7 +360,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
           },
           {
             path: '/dashboard/reports19',
@@ -364,7 +369,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
           },
           {
             path: '/dashboard/reports20',
@@ -373,6 +379,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
+            permission: Permissions.VIEW_ANALYTICAL_PER_SM_REPORT
           },
         ],
       },
@@ -407,7 +414,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            gertranStaffOnly: true
           },
           {
             path: '/dashboard/reports24',
@@ -424,7 +432,8 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            submenu: []
+            submenu: [],
+            gertranStaffOnly: true
           },
           {
             path: '/reports/operational-audit-commands',
