@@ -1,12 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Wagon, WagonsService} from '../wagons.service';
-import {CustomersService} from '../../customers/customers.service';
 import {VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
 import {VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
 import {VehicleManufacturersService} from '../../vehicle-manufacturers/vehicle-manufacturers.service';
 import {FormBuilder} from '@angular/forms';
-import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
@@ -30,7 +28,6 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
     vehicleModelTypesService: VehicleModelTypesService,
     vehicleManufacturersService: VehicleManufacturersService,
     formBuilder: FormBuilder,
-    vehiclePeripheralsService: VehiclePeripheralsService,
     service: WagonsService,
     activatedRoute: ActivatedRoute,
     message: NzMessageService,
@@ -42,7 +39,6 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
       message,
       activatedRoute,
       formBuilder,
-      vehiclePeripheralsService,
       vehicleModelsService,
       vehicleModelTypesService,
       vehicleManufacturersService,

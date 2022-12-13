@@ -8,13 +8,11 @@ import {
   Router
 } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import {CustomersService} from '../../customers/customers.service';
 import {VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
 import {VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
 import {VehicleManufacturersService} from '../../vehicle-manufacturers/vehicle-manufacturers.service';
 import {Truck, TrucksService} from '../trucks.service';
 import {FormBuilder} from '@angular/forms';
-import {VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
@@ -38,7 +36,6 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     vehicleModelTypesService: VehicleModelTypesService,
     vehicleManufacturersService: VehicleManufacturersService,
     formBuilder: FormBuilder,
-    vehiclePeripheralsService: VehiclePeripheralsService,
     service: TrucksService,
     activatedRoute: ActivatedRoute,
     message: NzMessageService,
@@ -50,7 +47,6 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
       message,
       activatedRoute,
       formBuilder,
-      vehiclePeripheralsService,
       vehicleModelsService,
       vehicleModelTypesService,
       vehicleManufacturersService,

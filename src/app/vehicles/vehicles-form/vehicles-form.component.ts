@@ -2,23 +2,17 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {ActivatedRoute} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {Choice} from '../../shared/services/api.service';
 import {FormBuilder, Validators} from '@angular/forms';
-import {VehiclePeripherals, VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {VehicleModels, VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
 import {VehicleModelTypes, VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
-import {VehicleManufacturers, VehicleManufacturersService} from '../../vehicle-manufacturers/vehicle-manufacturers.service';
-import {Customer, CustomersService} from '../../customers/customers.service';
+import { VehicleManufacturersService } from '../../vehicle-manufacturers/vehicle-manufacturers.service';
+import {Customer} from '../../customers/customers.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {VehiclesService} from '../vehicles.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {Tracker} from '../../trackers/trackers.service';
 import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 import {UtilsService} from '../../shared/services/utils.service';
-import {Observable} from 'rxjs';
-import {state} from '@angular/animations';
-import {Truck} from '../../trucks/trucks.service';
-import {Wagon} from '../../wagons/wagons.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 
 export interface Vehicle {
@@ -55,7 +49,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   customers: Customer[] = [];
   vehicleModels: VehicleModels[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
-  peripherals: VehiclePeripherals[] = [];
   isLoadingMoreData = false;
 
   constructor(
@@ -63,7 +56,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     message: NzMessageService,
     protected activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private vehiclePeripheralsService: VehiclePeripheralsService,
     private vehicleModelsService: VehicleModelsService,
     private vehicleModelTypesService: VehicleModelTypesService,
     private vehicleManufacturersService: VehicleManufacturersService,
@@ -79,9 +71,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     super.ngOnInit();
 
     this.selectableVehicleManufacturersService.init();
-    this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe((peripherals) => {
-      this.peripherals = peripherals.results;
-    });
 
     if (!this.authService.customerId) {
       this.selectableCustomerService.init();
