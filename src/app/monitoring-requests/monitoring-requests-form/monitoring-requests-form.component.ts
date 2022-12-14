@@ -87,7 +87,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.loadCustomers();
-    this.loadMoreOperations();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
       this.surveyConductors = surveyConductors;
     });
@@ -123,6 +122,11 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       surveyConductedByOthers: [null, []],
       driver: [null, []],
       auxiliaryDriver: [null, []],
+    });
+
+    this.validateForm.get('transporter').valueChanges.subscribe((value) => {
+      this.operations = [];
+      this.loadMoreOperations();
     });
   }
 
@@ -231,7 +235,9 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.isLoadingMoreData = true;
     this.operationService.getAll({
       limit: 50,
-      url: this.operationsNextUrl
+      url: this.operationsNextUrl,
+    }, {
+      customer: this.authService.customerId || this.validateForm.get('transporter').value,
     }).subscribe((operations) => {
       this.operationsNextUrl = operations.next;
       this.operations = [...this.operations, ...operations.results];
