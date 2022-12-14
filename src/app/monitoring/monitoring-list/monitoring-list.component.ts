@@ -136,7 +136,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
       terminal: [this.activatedRoute.snapshot.queryParams.terminal],
-      travelling: [true],
+      travelling: [this.activatedRoute.snapshot.queryParams.travelling || true],
       hideOld: [true],
       groupBy: [null],
     });
@@ -217,6 +217,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       queryParams: {
         customer: this.validateForm.get('customer').value,
         terminal: this.validateForm.get('terminal').value,
+        travelling: this.validateForm.get('travelling').value,
         'navbar-closed': true,
       }
     });
