@@ -20,6 +20,7 @@ import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
 import {of} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
+import {conformToMask} from 'angular2-text-mask';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -168,7 +169,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       truck: this.resource.truck?.id,
       operation: this.resource.operation?.id,
       wagons: this.resource.wagons?.map((wagon) => wagon.id),
-      loadValue: this.resource.loadValue ? Number(this.resource.loadValue) : null,
+      loadValue: this.resource.loadValue ? this.resource.loadValue.toString().replace('.', ',') : null,
     });
 
     this.loadTransporterData();
