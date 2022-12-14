@@ -14,13 +14,37 @@
     <div class="row m-b-30">
       <div class="col-lg-8">
         <div class="d-md-flex">
-          <div class="m-b-10 m-r-20">
-            <nz-input-group [nzPrefix]="prefixTemplate">
-              <input type="text" nz-input placeholder="Buscar Usuário" [(ngModel)]="searchInput" (ngModelChange)="search()">
+          <div class="m-b-10 m-r-20 w-100">
+            <nz-input-group [nzPrefix]="prefixTemplate" class="w-100">
+              <input
+                type="text"
+                nz-input
+                placeholder="Buscar Usuário"
+                [(ngModel)]="searchInput"
+                (ngModelChange)="search()"
+                class="w-100"
+              >
             </nz-input-group>
             <ng-template #prefixTemplate>
               <i nz-icon nzType="search" class="opacity-05"></i>
             </ng-template>
+          </div>
+
+          <div class="m-b-10 m-r-20 w-100">
+            <nz-select
+              class="w-100"
+              nzAllowClear
+              nzPlaceHolder="Selecione um cliente"
+              nzServerSearch
+              nzShowSearch
+              (nzOnSearch)="selectableCustomersService.searchByName($event)"
+              (nzScrollToBottom)="selectableCustomersService.loadMoreCustomers()"
+              [nzDropdownRender]="selectLoading"
+              [(ngModel)]="customer"
+              (ngModelChange)="searchByCustomer()"
+            >
+              <nz-option *ngFor="let customer of selectableCustomersService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            </nz-select>
           </div>
         </div>
       </div>
@@ -101,3 +125,7 @@
     </nz-table>
   </nz-card>
 </nz-spin>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableCustomersService.isLoadingMoreData"></nz-spin>
+</ng-template>

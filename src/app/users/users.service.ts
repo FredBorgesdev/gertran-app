@@ -31,7 +31,13 @@ export class UsersService implements ApiService<AbstractUser> {
     return this.http.get<AbstractUser>(`users/${id}`);
   }
 
-  getAll(pagination: Pagination, filters?: { name?: string }): Observable<GetAllResponse<AbstractUser>> {
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      name?: string;
+      customer?: string;
+    }
+  ): Observable<GetAllResponse<AbstractUser>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
@@ -40,6 +46,9 @@ export class UsersService implements ApiService<AbstractUser> {
     }
     if (filters?.name) {
       params.name = filters.name;
+    }
+    if (filters?.customer) {
+      params.customer = filters.customer;
     }
 
     return this.http.get<GetAllResponse<AbstractUser>>('users', { params });

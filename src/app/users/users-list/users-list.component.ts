@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TableService } from '../../shared/services/table.service';
@@ -7,14 +7,16 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import {AbstractUser, UsersService} from '../users.service';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: [ './users-list.component.css' ]
 })
-export class UsersListComponent extends BaseCrudListComponent<AbstractUser> {
+export class UsersListComponent extends BaseCrudListComponent<AbstractUser> implements OnInit {
   searchInput: string;
+  customer: string;
 
   userColumn = [
     { title: 'ID' },
@@ -41,6 +43,7 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> {
   constructor(
     private tableService: TableService,
     public authService: AuthenticationService,
+    public selectableCustomersService: SelectableCustomerServiceService,
     router: Router,
     message: NzMessageService,
     modal: NzModalService,
@@ -55,7 +58,17 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> {
     );
   }
 
+  ngOnInit(): void {
+    super.ngOnInit();
+
+    this.selectableCustomersService.init();
+  }
+
   search(): void {
     this.searchByName(this.searchInput);
+  }
+
+  searchByCustomer(): void {
+    this.searchByField('customer', this.customer);
   }
 }
