@@ -74,6 +74,8 @@ export class PointsTabComponent implements OnInit {
         };
         formGroup.patchValue(pointWithDate);
       });
+
+      this.setPointsCorrectTypes();
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
