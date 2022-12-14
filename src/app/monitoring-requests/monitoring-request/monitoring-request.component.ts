@@ -41,6 +41,7 @@ export class MonitoringRequestComponent implements OnInit {
   updateRouteCoordinates(routeCoordinates: any[]): void {
     const payload = {
       ...this.resource,
+      customer: this.resource.customer?.id,
       shipper: this.resource.shipper?.id,
       transporter: this.resource.transporter?.id,
       driver: this.resource.driver?.id,
@@ -49,6 +50,10 @@ export class MonitoringRequestComponent implements OnInit {
       operation: this.resource.operation?.id,
       route: this.resource.route?.id,
       wagons: this.resource.wagons?.map((wagon) => wagon.id),
+      travelSteps: this.resource.travelSteps?.map(travelStep => ({
+        ...travelStep,
+        point: travelStep.point?.id ?? null,
+      })),
       routeCoordinates,
     };
 
