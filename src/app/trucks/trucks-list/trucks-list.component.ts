@@ -19,6 +19,7 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
   truckColumns = [
     { title: 'ID' },
     { title: 'Modelo' },
+    { title: 'Clientes' },
     { title: 'Tipo de modelo' },
     { title: 'Placa' },
     { title: 'Cidade/Estado' },
@@ -53,5 +54,9 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
 
   getCityState(truck: Truck): string {
     return `${truck.vehicle.city} - ${truck.vehicle.state}`;
+  }
+
+  getCustomerNames(truck: Truck): string {
+    return truck.vehicle.customers.map(c => c.tradingName).join(', ');
   }
 }

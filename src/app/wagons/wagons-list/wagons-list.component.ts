@@ -7,6 +7,7 @@ import {Wagon, WagonsService} from '../wagons.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {Truck} from '../../trucks/trucks.service';
 
 @Component({
   selector: 'app-wagons-list',
@@ -19,6 +20,7 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
   wagonColumn = [
     { title: 'ID' },
     { title: 'Modelo' },
+    { title: 'Clientes' },
     { title: 'Tipo de modelo' },
     { title: 'Placa' },
     { title: 'Cidade/Estado' },
@@ -51,5 +53,9 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
 
   getCityState(wagon: Wagon): string {
     return `${wagon.vehicle.city} - ${wagon.vehicle.state}`;
+  }
+
+  getCustomerNames(wagon: Wagon): string {
+    return wagon.vehicle.customers.map(c => c.tradingName).join(', ');
   }
 }
