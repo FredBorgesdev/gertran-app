@@ -3,8 +3,22 @@
     <nz-form-item>
       <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
       <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-        <nz-select id="customer" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa" formControlName="customer">
-          <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+        <nz-select
+          id="customer"
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Selecione uma empresa"
+          formControlName="customer"
+          nzServerSearch
+          (nzOnSearch)="selectableCustomerService.searchByName($event)"
+          (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+          [nzDropdownRender]="selectLoading"
+        >
+          <nz-option
+            *ngFor="let customer of selectableCustomerService.customers"
+            [nzLabel]="customer.tradingName"
+            [nzValue]="customer.id"
+          ></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -216,3 +230,7 @@
     </nz-form-item>
   </form>
 </nz-spin>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
+</ng-template>

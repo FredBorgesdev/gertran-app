@@ -4,25 +4,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { OperationsService, Operations } from '../operations.service';
 import { BaseCrudFormComponent } from '../../base-crud/base-crud-form/base-crud-form.component';
-import {Customer, CustomersService} from '../../customers/customers.service';
+import {CustomersService} from '../../customers/customers.service';
 import {TrackerTechnologiesModels, TrackerTechnologiesModelsService} from '../../tracker-technologies/tracker-technologies-models.service';
 import {TrackerTechnologies, TrackerTechnologiesService} from '../../tracker-technologies/tracker-technologies.service';
 import {VehicleModelTypes, VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
 import {VehiclePeripherals, VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {InsuranceCompaniesService, InsuranceCompany} from '../../insurance-companies/insurance-companies.service';
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import {Choice} from '../../shared/services/api.service';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-operations-form',
   templateUrl: './operations-form.component.html',
   styleUrls: ['./operations-form.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class OperationsFormComponent extends BaseCrudFormComponent<Operations> implements OnInit {
   @Input() operation: Operations = null;
 
-  customers: Customer[] = [];
   trackerTechnologies: (TrackerTechnologies & { models?: TrackerTechnologiesModels[] })[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
@@ -39,6 +39,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     private vehicleModelTypesService: VehicleModelTypesService,
     private vehiclePeripheralsService: VehiclePeripheralsService,
     private insuranceCompaniesService: InsuranceCompaniesService,
+    public selectableCustomerService: SelectableCustomerServiceService,
     activatedRoute: ActivatedRoute,
     service: OperationsService,
     message: NzMessageService,
@@ -65,9 +66,8 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
 
     this.i18n.setLocale(en_US);
 
-    this.customersService.getAll({ limit: 50 }).subscribe((customers) => {
-      this.customers = customers.results;
-    });
+    this.selectableCustomerService.init();
+
     this.trackerTechnologiesService.getAll({ limit: 50 }).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologies = trackerTechnologiesModels.results;
 
