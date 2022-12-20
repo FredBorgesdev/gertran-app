@@ -32,6 +32,7 @@
             (nzOnSearch)="selectableCustomerService.searchByName($event)"
             (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
+            (ngModelChange)="loadPointsFromCustomer()"
           >
             <nz-option
               *ngFor="let customer of selectableCustomerService.customers"
@@ -90,6 +91,7 @@
         [nzShowSelectAll]="false"
         [nzRenderList]="[renderList, renderList]"
         [nzListStyle]="{ width: '100%' }"
+        (nzSearchChange)="searchPointsByName($event)"
       >
         <ng-template
           #renderList
@@ -99,7 +101,17 @@
           let-onItemSelectAll="onItemSelectAll"
           let-onItemSelect="onItemSelect"
         >
-          <nz-table #table [nzData]="items" nzSize="small" [nzShowPagination]="false">
+          <nz-table
+            #table
+            [nzData]="items"
+            nzSize="small"
+            [nzTotal]="pointsResponse?.count"
+            [nzPageSize]="pointsResponse?.limit"
+            [nzPageIndex]="pointsPage"
+            [nzFrontPagination]="false"
+            (nzQueryParams)="handlePointsQueryParamsChange($event)"
+            [nzLoading]="pointsLoading"
+          >
             <thead>
             <tr>
               <th

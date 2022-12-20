@@ -42,12 +42,24 @@ export class StopsService implements ApiService<Stop> {
 
   constructor(private http: HttpClient) { }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<Stop>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      customer?: string;
+      name?: string;
+    }
+  ): Observable<GetAllResponse<Stop>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.customer) {
+      params.customer = filters.customer;
+    }
+    if (filters?.name) {
+      params.name = filters.name;
     }
 
     return this.http.get<GetAllResponse<Stop>>('settings/points', { params });

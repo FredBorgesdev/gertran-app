@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { TransferItem } from 'ng-zorro-antd/transfer';
+import {TransferItem, TransferSearchChange} from 'ng-zorro-antd/transfer';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {Stop, StopsService} from '../../stops/stops.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -8,6 +8,10 @@ import {Route, RoutesService} from '../routes.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {debounceTime} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-routes-form',
@@ -17,6 +21,9 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 })
 export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements OnInit {
   points: TransferItem[] = [];
+  pointsResponse: GetAllResponse<Stop>;
+  pointsLoading = false;
+  searchPointsSubject = new Subject();
 
   constructor(
     private stopsService: StopsService,
@@ -37,13 +44,11 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
   async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    this.stopsService.getAll({ limit: 50 }).subscribe((stops) => {
-      this.points = this.mapStopsToTransferItems(stops.results);
-    }, () => {
-      this.message.error('Não foi possível carregar os pontos');
-    });
-
     this.selectableCustomerService.init();
+
+    this.searchPointsSubject.pipe(debounceTime(1000)).subscribe((params: TransferSearchChange) => {
+      this.loadPointsFromCustomer(undefined, { name: params.value });
+    });
   }
 
   loadFormBuilder(): void {
@@ -124,5 +129,53 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
 
   get selectedPoints(): TransferItem[] {
     return this.points.filter(item => item.direction === 'right');
+  }
+
+  loadPointsFromCustomer(url?: string, filters?: {
+    name?: string;
+  }): void {
+    this.pointsLoading = true;
+    this.stopsService.getAll({
+      url,
+      limit: 15
+    }, {
+      customer: this.validateForm.get('customer').value,
+      name: filters?.name,
+    }).subscribe((stops) => {
+      this.points = this.mapStopsToTransferItems(stops.results);
+      this.pointsResponse = stops;
+      this.pointsLoading = false;
+    }, () => {
+      this.message.error('Não foi possível carregar os pontos');
+      this.pointsLoading = false;
+    });
+  }
+
+  handlePointsQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.pointsPage) {
+      const url = this.replaceOffsetWithPage(this.pointsResponse.previous, params.pageIndex);
+      this.loadPointsFromCustomer(url);
+    } else if (params.pageIndex > this.pointsPage) {
+      const url = this.replaceOffsetWithPage(this.pointsResponse.next, params.pageIndex);
+      this.loadPointsFromCustomer(url);
+    }
+  }
+
+  get pointsPage(): number {
+    return getCurrentPage(this.pointsResponse);
+  }
+
+  replaceOffsetWithPage(url: string, page: number): string {
+    const limit = +url.match(/limit=\d+/)[0].split('=')[1];
+
+    return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
+  }
+
+  searchPointsByName(params: TransferSearchChange): void {
+    if (params.direction !== 'left' && !this.pointsResponse) {
+      return;
+    }
+
+    this.searchPointsSubject.next(params);
   }
 }
