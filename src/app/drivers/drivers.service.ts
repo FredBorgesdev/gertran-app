@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Customer} from '../customers/customers.service';
 
 export interface Driver {
+  phoneNumber?: string;
   id: string;
 	customers: Customer[];
 	workingSituation: string;

@@ -25,6 +25,7 @@ export class DriversFormComponent implements OnInit {
   validateForm: FormGroup;
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   states = brazilianStates;
+  phoneNumberMask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   constructor(
     private router: Router,
@@ -56,6 +57,7 @@ export class DriversFormComponent implements OnInit {
       cnhFirstIssue: [this.driver?.cnhFirstIssue, [Validators.required]],
       cnhEmission: [this.driver?.cnhEmission, [Validators.required]],
       admissionDate: [this.driver?.admissionDate, []],
+      phoneNumber: [this.driver?.phoneNumber, [Validators.required]],
     });
 
     this.validateForm.get('workingSituation').valueChanges.subscribe(value => {
