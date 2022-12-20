@@ -53,6 +53,7 @@ export class OperationsService implements ApiService<Operations> {
     pagination: Pagination,
     filters?: {
       customer?: string;
+      name?: string;
     }
   ): Observable<GetAllResponse<Operations>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
@@ -63,6 +64,9 @@ export class OperationsService implements ApiService<Operations> {
     }
     if (filters?.customer) {
       params.customer = filters.customer;
+    }
+    if (filters?.name) {
+      params.name = filters.name;
     }
 
     return this.http.get<GetAllResponse<Operations>>('settings/operations', { params });
