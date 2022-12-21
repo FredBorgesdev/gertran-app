@@ -24,17 +24,21 @@
         </a>
       </li>
 
-      <li>
+      <li *ngIf="showSelect">
         <nz-select
           style="width: 200px;"
           nzShowSearch
           nzAllowClear
           nzPlaceHolder="Selecione um cliente"
+          nzServerSearch
           [(ngModel)]="selectedCustomer"
           (ngModelChange)="onCustomerChange($event)"
+          (nzOnSearch)="selectableCustomerService.searchByName($event)"
+          (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+          [nzDropdownRender]="selectLoading"
         >
           <nz-option
-            *ngFor="let customer of user?.customer"
+            *ngFor="let customer of customers"
             [nzLabel]="customer.tradingName"
             [nzValue]="customer.id"
           ></nz-option>
@@ -57,3 +61,7 @@
     </ul>
   </div>
 </div>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
+</ng-template>
