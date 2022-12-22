@@ -185,7 +185,9 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   sanitizeInputAndSaveDraft(field: string): void {
     const formControl = this.validateForm.get(field);
-    const newValue = formControl.value.replace('R$ ', '').replace('.', '').replace(',', '.');
+    const newValue = formControl.value.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+
+    console.log(newValue)
 
     this.saveDraft(field, newValue);
   }
