@@ -55,7 +55,10 @@ export class CustomersCustomerComponent implements OnInit {
 
   onSubmit(): void {
     this.isLoading = true;
-    const payload = this.utilsService.removeNullValues(this.customer);
+    const payload = {
+      ...this.utilsService.removeNullValues(this.customer),
+      complement: this.customer.complement || undefined,
+    };
 
     if (this.customer.id) {
       this.customersService.update(this.customer.id, payload).subscribe(

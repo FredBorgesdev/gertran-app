@@ -23,7 +23,6 @@ export class AddressesFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log(this.customer);
     this.validateForm = this.formBuilder.group({
       zipCode: [this.customer?.zipCode, [Validators.pattern('[0-9]{5}-[0-9]{3}')]],
       street: [this.customer?.street, []],
@@ -38,9 +37,13 @@ export class AddressesFormComponent implements OnInit {
     });
   }
 
-  save() {
+  save(): void {
     if (this.validateForm.valid) {
-      this.onSave.emit(this.validateForm.value);
+      const form = {
+        ...this.validateForm.value,
+        complement: this.validateForm.value.complement || undefined,
+      };
+      this.onSave.emit(form);
     } else {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty();
