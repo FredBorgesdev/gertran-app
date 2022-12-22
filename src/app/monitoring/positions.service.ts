@@ -117,4 +117,13 @@ export class PositionsService implements ApiService<Position> {
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`positions/${id}/delete`);
   }
+
+  updatePointReferences(ids: string[]): Observable<{
+    id: string;
+    latitude: number;
+    longitude: number;
+    pointReference: string;
+  }[]> {
+    return this.http.patch<any[]>('positions/update_points_reference', { position_ids: ids });
+  }
 }

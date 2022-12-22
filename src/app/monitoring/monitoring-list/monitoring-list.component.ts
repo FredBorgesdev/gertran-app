@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MonitoringService} from '../monitoring.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MonitoringMapComponent} from '../monitoring-map/monitoring-map.component';
@@ -97,7 +96,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private service: MonitoringService,
     private message: NzMessageService,
     private modal: NzModalService,
     private customerService: CustomersService,
@@ -119,7 +117,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       return true;
     });
 
-    this.monitoringData$ = timer(0, 30000).pipe(
+    this.monitoringData$ = timer(0, 100000).pipe(
       switchMap(() => this.positionsService.getAll(
         { limit: 999 },
         {
@@ -239,6 +237,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.monitoringData$.subscribe(data => {
       this.monitoringData = data.results;
       this.isLoading = false;
+
+      this.updatePositionsPointReferences();
     }, () => {
       this.isLoading = false;
       this.message.error('Erro ao carregar lista');
@@ -451,5 +451,23 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   get user(): User {
     return this.authService.user;
+  }
+
+  private updatePositionsPointReferences(): void {
+    const positionsIds = this.monitoringData.map(item => item.id);
+    this.positionsService.updatePointReferences(positionsIds).subscribe((updatedPositions) => {
+      this.monitoringData = this.monitoringData.map((position) => {
+        const updatedPosition = updatedPositions.find(item => item.id === position.id);
+
+        if (updatedPosition) {
+          return {
+            ...position,
+            pointReference: updatedPosition.pointReference,
+          };
+        }
+
+        return position;
+      });
+    });
   }
 }
