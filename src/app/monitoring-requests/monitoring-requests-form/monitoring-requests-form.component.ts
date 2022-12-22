@@ -122,8 +122,16 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {
-      this.operations = [];
-      this.loadMoreOperations();
+      if (!this.showShipperSelect) {
+        this.operations = [];
+        this.loadMoreOperations();
+      }
+    });
+    this.validateForm.get('shipper').valueChanges.subscribe((value) => {
+      if (this.showShipperSelect) {
+        this.operations = [];
+        this.loadMoreOperations();
+      }
     });
   }
 
@@ -184,8 +192,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     const formControl = this.validateForm.get(field);
     const newValue = formControl.value.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
 
-    console.log(newValue)
-
     this.saveDraft(field, newValue);
   }
 
@@ -233,12 +239,16 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   loadMoreOperations(): void {
     const transporterId = this.validateForm.get('transporter').value?.id ||
       this.validateForm.get('transporter').value;
+    const shipperId = this.validateForm.get('shipper').value?.id ||
+      this.validateForm.get('shipper').value;
+    const customerId = this.showShipperSelect ? shipperId : transporterId;
+
     this.isLoadingMoreData = true;
     this.operationService.getAll({
       limit: 50,
       url: this.operationsNextUrl,
     }, {
-      customer: this.authService.customerId || transporterId,
+      customer: this.authService.customerId || customerId,
     }).subscribe((operations) => {
       this.operationsNextUrl = operations.next;
       this.operations = [...this.operations, ...operations.results];
