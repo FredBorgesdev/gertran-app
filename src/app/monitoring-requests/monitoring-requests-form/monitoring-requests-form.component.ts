@@ -232,12 +232,14 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   loadMoreOperations(): void {
+    const transporterId = this.validateForm.get('transporter').value?.id ||
+      this.validateForm.get('transporter').value;
     this.isLoadingMoreData = true;
     this.operationService.getAll({
       limit: 50,
       url: this.operationsNextUrl,
     }, {
-      customer: this.authService.customerId || this.validateForm.get('transporter').value,
+      customer: this.authService.customerId || transporterId,
     }).subscribe((operations) => {
       this.operationsNextUrl = operations.next;
       this.operations = [...this.operations, ...operations.results];
