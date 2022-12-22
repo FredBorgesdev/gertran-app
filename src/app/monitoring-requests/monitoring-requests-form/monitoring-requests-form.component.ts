@@ -18,9 +18,6 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
-import {of} from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
-import {conformToMask} from 'angular2-text-mask';
 
 @Component({
   selector: 'app-monitoring-requests-form',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -18,6 +18,7 @@ export class MonitoringRequestComponent implements OnInit {
     private service: MonitoringRequestsService,
     private message: NzMessageService,
     private modal: NzModalService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -73,6 +74,7 @@ export class MonitoringRequestComponent implements OnInit {
         ).subscribe(
           () => {
             this.message.success('Solicitação enviada com sucesso!');
+            this.router.navigate(['/monitoring-requests/monitoring-requests-list']);
             this.isLoading = false;
           },
           (error) => {
