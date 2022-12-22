@@ -27,7 +27,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
-      customer: [null, Validators.required],
+      customer: [[], Validators.required],
       email: [null, [Validators.required, Validators.email]],
       cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
@@ -46,7 +46,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
     super.performFormGroupSetValues();
 
     this.validateForm.patchValue({
-      customer: this.resource.customer[0]?.id
+      customer: this.resource.customer?.map(c => c.id),
     });
   }
 
@@ -76,5 +76,9 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
       ...super.getValues(),
       cpf: this.validateForm.controls.cpf.value.replace(/\D/g, ''),
     };
+  }
+
+  updateResource(user: AbstractUser): void {
+    this.resource = user;
   }
 }

@@ -13,7 +13,8 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-users-form',
   templateUrl: './users-form.component.html',
-  styleUrls: [ './users-form.component.css' ]
+  styleUrls: ['./users-form.component.css'],
+  providers: [SelectableCustomerServiceService],
 })
 export class UsersFormComponent implements OnInit {
   isChangePasswordModalVisible = false;
@@ -25,6 +26,7 @@ export class UsersFormComponent implements OnInit {
   @Output() save: EventEmitter<void> = new EventEmitter<void>();
   @Output() list: EventEmitter<void> = new EventEmitter<void>();
   @Output() changePassword: EventEmitter<string> = new EventEmitter<string>();
+  @Output() updateResource = new EventEmitter<AbstractUser>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +43,7 @@ export class UsersFormComponent implements OnInit {
   ngOnInit(): void {
     this.selectableCustomerService.init();
     if (this.user?.customer) {
-      this.selectableCustomerService.appendCustomer(this.user.customer[0]);
+      this.selectableCustomerService.concatCustomers(this.user.customer);
     }
   }
 
@@ -59,6 +61,7 @@ export class UsersFormComponent implements OnInit {
     }
 
     this.service.getByCpf(cpf).subscribe((user) => {
+      this.updateResource.emit(user);
       const customerIds = user.customer.map((customer) => customer.id);
       this.selectableCustomerService.concatCustomers(user.customer);
       this.formGroup.patchValue({

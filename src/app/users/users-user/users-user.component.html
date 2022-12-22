@@ -20,11 +20,13 @@
     <nz-tabset>
       <nz-tab nzTitle="Dados Principais">
         <app-users-form
+          *ngIf="resource"
           [user]="resource"
           [formGroup]="validateForm"
           (save)="save()"
           (list)="list()"
           (changePassword)="changePassword($event)"
+          (updateResource)="updateResource($event)"
         ></app-users-form>
       </nz-tab>
 

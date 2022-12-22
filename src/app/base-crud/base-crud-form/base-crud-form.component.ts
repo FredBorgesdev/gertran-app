@@ -43,6 +43,8 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
         this.performFormGroupSetValues();
         this.isLoading = false;
       });
+    } else {
+      this.resource = {} as T;
     }
   }
 
@@ -75,6 +77,8 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
         control.updateValueAndValidity({ onlySelf: true });
       });
     }
+
+    console.log(this.resource)
 
     this.isLoading = true;
     if (this.resource?.id) {
