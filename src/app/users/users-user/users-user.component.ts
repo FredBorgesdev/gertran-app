@@ -46,7 +46,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
     super.performFormGroupSetValues();
 
     this.validateForm.patchValue({
-      customer: this.resource.customer[0].id
+      customer: this.resource.customer[0]?.id
     });
   }
 

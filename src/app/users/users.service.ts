@@ -71,4 +71,8 @@ export class UsersService implements ApiService<AbstractUser> {
   changePassword(id: string, password: string): Observable<void> {
     return this.http.patch<void>(`users/${id}/change-password`, { password });
   }
+
+  getByCpf(cpf: string): Observable<AbstractUser> {
+    return this.http.get<AbstractUser>(`users/${cpf}/info`);
+  }
 }

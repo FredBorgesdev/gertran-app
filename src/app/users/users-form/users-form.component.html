@@ -1,14 +1,15 @@
 <form nz-form nzLayout="vertical" [formGroup]="formGroup" *ngIf="formGroup">
-  <nz-form-item>
+  <nz-form-item *ngIf="!authService.customerId">
     <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
       <nz-select
         id="customer"
         nzShowSearch
         nzAllowClear
-        nzPlaceHolder="Selecione uma empresa"
+        nzPlaceHolder="Selecione as empresas deste usuário"
         formControlName="customer"
         nzServerSearch
+        nzMode="multiple"
         (nzOnSearch)="selectableCustomerService.searchByName($event)"
         (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
         [nzDropdownRender]="selectLoading"
@@ -17,6 +18,26 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+
+  <div nz-row nzGutter="16" nzAlign="middle">
+    <div nz-col nzSpan="16">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">Cpf</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o cpf corretamente">
+          <input id="cpf" type="text" nz-input formControlName="cpf" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="8">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="getUserByCpf()"
+      >Buscar</button>
+    </div>
+
+  </div>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
@@ -29,13 +50,6 @@
     <nz-form-label [nzSpan]="null" nzRequired nzFor="email">Email</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o email corretamente">
       <input id="email" type="email" nz-input formControlName="email" />
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">Cpf</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o cpf corretamente">
-      <input id="cpf" type="text" nz-input formControlName="cpf" />
     </nz-form-control>
   </nz-form-item>
 

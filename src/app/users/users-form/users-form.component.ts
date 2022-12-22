@@ -5,9 +5,10 @@ import {
   EventEmitter, OnInit,
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AbstractUser} from '../users.service';
+import {AbstractUser, UsersService} from '../users.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-users-form',
@@ -29,6 +30,8 @@ export class UsersFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     public selectableCustomerService: SelectableCustomerServiceService,
     public authService: AuthenticationService,
+    private service: UsersService,
+    private message: NzMessageService,
   ) {
     this.validatePasswordForm = formBuilder.group({
       password: [null, [Validators.required, Validators.minLength(6)]],
@@ -47,5 +50,23 @@ export class UsersFormComponent implements OnInit {
       this.changePassword.emit(this.validatePasswordForm.controls.password.value);
       this.isChangePasswordModalVisible = false;
     }
+  }
+
+  getUserByCpf(): void {
+    const cpf = this.formGroup.controls.cpf.value;
+    if (!cpf) {
+      return;
+    }
+
+    this.service.getByCpf(cpf).subscribe((user) => {
+      const customerIds = user.customer.map((customer) => customer.id);
+      this.selectableCustomerService.concatCustomers(user.customer);
+      this.formGroup.patchValue({
+        ...user,
+        customer: (this.formGroup.controls.customer.value || []).concat(customerIds),
+      });
+    }, () => {
+      this.message.error('Não foi possível encontrar o usuário.');
+    });
   }
 }
