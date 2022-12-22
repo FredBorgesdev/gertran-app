@@ -60,7 +60,6 @@ export class StopsListComponent extends BaseCrudListComponent<Stop> {
   }
 
   search(): void {
-    const data = this.resources;
-    this.resources.results = this.tableService.search(this.searchInput, data.results);
+    this.searchByName(this.searchInput);
   }
 }
