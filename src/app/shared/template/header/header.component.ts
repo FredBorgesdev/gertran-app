@@ -61,13 +61,13 @@ export class HeaderComponent implements OnInit {
 
   onCustomerChange(value: string): void {
     if (!value) {
-      return this.authService.removeCustomer();
+      this.authService.removeCustomer();
+    } else {
+      this.authService.setCustomer(value);
     }
 
-    this.authService.setCustomer(value);
-
     this.router.navigate([], {
-      queryParams: {
+      queryParams: value && {
         customer: value,
       },
     }).then(() => window.location.reload());
