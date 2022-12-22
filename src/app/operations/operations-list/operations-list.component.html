@@ -16,7 +16,7 @@
     <div class="row m-b-30">
       <div class="col-lg-8">
         <div class="d-md-flex">
-          <div class="m-b-10 m-r-20 w-100">
+          <div class="m-b-10 m-r-20">
             <nz-input-group [nzPrefix]="prefixTemplate">
               <input
                 type="text"
@@ -29,24 +29,6 @@
             <ng-template #prefixTemplate>
               <i nz-icon nzType="search" class="opacity-05"></i>
             </ng-template>
-          </div>
-
-          <div class="m-b-10 m-r-20 w-100" *ngIf="!authService.customerId">
-            <nz-select
-              class="w-100"
-              id="transporter"
-              nzShowSearch
-              nzAllowClear
-              nzPlaceHolder="Selecione uma empresa"
-              nzServerSearch
-              (nzOnSearch)="selectableCustomerService.searchByName($event)"
-              (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-              [nzDropdownRender]="selectLoading"
-              (ngModelChange)="searchByField('customer', selectedCustomer)"
-              [(ngModel)]="selectedCustomer"
-            >
-              <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
-            </nz-select>
           </div>
         </div>
       </div>

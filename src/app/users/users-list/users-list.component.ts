@@ -7,7 +7,6 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import {AbstractUser, UsersService} from '../users.service';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
-import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 
 @Component({
   selector: 'app-users-list',
@@ -43,7 +42,6 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
   constructor(
     private tableService: TableService,
     public authService: AuthenticationService,
-    public selectableCustomersService: SelectableCustomerServiceService,
     router: Router,
     message: NzMessageService,
     modal: NzModalService,
@@ -60,15 +58,9 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
 
   ngOnInit(): void {
     super.ngOnInit();
-
-    this.selectableCustomersService.init();
   }
 
   search(): void {
     this.searchByName(this.searchInput);
-  }
-
-  searchByCustomer(): void {
-    this.searchByField('customer', this.customer);
   }
 }

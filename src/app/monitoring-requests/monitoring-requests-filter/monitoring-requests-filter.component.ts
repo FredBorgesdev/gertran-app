@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CustomerFilter} from '../../reports/filters/base-customer-filter/base-customer-filter.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
-import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 
 export type MonitoringRequestsFilter = {
@@ -25,7 +24,6 @@ export class MonitoringRequestsFilterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private i18n: NzI18nService,
-    public selectableCustomerService: SelectableCustomerServiceService,
     public authService: AuthenticationService,
   ) { }
 
@@ -44,10 +42,6 @@ export class MonitoringRequestsFilterComponent implements OnInit {
     });
 
     this.i18n.setLocale(en_US);
-
-    if (!this.authService.customerId) {
-      this.selectableCustomerService.init();
-    }
   }
 
   search(): void {
