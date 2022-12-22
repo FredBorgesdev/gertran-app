@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { ThemeConstantService } from '../../services/theme-constant.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Customer} from '../../../customers/customers.service';
+import {Customer, CustomersService} from '../../../customers/customers.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import User from '../../../users/user';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
     private themeService: ThemeConstantService,
     private authService: AuthenticationService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    private customerService: CustomersService,
     private router: Router,
   ) {}
 
@@ -75,14 +76,25 @@ export class HeaderComponent implements OnInit {
   private setCustomers(): void {
     this.user = this.authService.user;
     const customerQueryParam = this.router.parseUrl(this.router.url).queryParams.customer;
+    const loggedUserHasCustomer = this.user.customer.length > 0;
 
-    if (this.user.customer.length > 0) {
+    if (loggedUserHasCustomer) {
       this.selectedCustomer = this.user.customer[0].id;
       this.authService.setCustomer(this.selectedCustomer);
-    } else if (!customerQueryParam) {
+      return;
+    }
+
+    if (!customerQueryParam) {
       this.selectedCustomer = '';
       this.authService.removeCustomer();
+      return;
     }
+
+    this.customerService.get(customerQueryParam).subscribe(customer => {
+      this.selectedCustomer = customer.id;
+      this.authService.setCustomer(this.selectedCustomer);
+      this.selectableCustomerService.appendCustomer(customer);
+    });
   }
 
   get showSelect(): boolean {
