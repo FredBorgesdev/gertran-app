@@ -57,15 +57,19 @@ export class HeaderComponent implements OnInit {
     this.quickViewVisible = !this.quickViewVisible;
   }
 
-  onCustomerChange($event: any): void {
-    this.authService.setCustomer($event.target.value);
+  onCustomerChange(value: string): void {
+    this.authService.setCustomer(value);
   }
 
   private setCustomers(): void {
     this.user = this.authService.user;
+
     if (this.user.customer.length > 0) {
       this.selectedCustomer = this.user.customer[0].id;
       this.authService.setCustomer(this.selectedCustomer);
+    } else {
+      this.selectedCustomer = '';
+      this.authService.removeCustomer();
     }
   }
 

@@ -44,6 +44,10 @@ export class AuthenticationService {
     Cookies.set(GERTRAN_CUSTOMER_ID, customerId);
   }
 
+  removeCustomer(): void {
+    Cookies.remove(GERTRAN_CUSTOMER_ID);
+  }
+
   async refresh(): Promise<boolean> {
     const refreshToken = Cookies.get(GERTRAN_REFRESH_TOKEN);
     if (!refreshToken) {
