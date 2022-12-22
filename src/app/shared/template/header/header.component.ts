@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { ThemeConstantService } from '../../services/theme-constant.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Customer} from '../../../customers/customers.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import User from '../../../users/user';
@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
     private themeService: ThemeConstantService,
     private authService: AuthenticationService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    private router: Router,
   ) {}
 
   searchVisible = false;
@@ -58,16 +59,27 @@ export class HeaderComponent implements OnInit {
   }
 
   onCustomerChange(value: string): void {
+    if (!value) {
+      return this.authService.removeCustomer();
+    }
+
     this.authService.setCustomer(value);
+
+    this.router.navigate([], {
+      queryParams: {
+        customer: value,
+      },
+    }).then(() => window.location.reload());
   }
 
   private setCustomers(): void {
     this.user = this.authService.user;
+    const customerQueryParam = this.router.parseUrl(this.router.url).queryParams.customer;
 
     if (this.user.customer.length > 0) {
       this.selectedCustomer = this.user.customer[0].id;
       this.authService.setCustomer(this.selectedCustomer);
-    } else {
+    } else if (!customerQueryParam) {
       this.selectedCustomer = '';
       this.authService.removeCustomer();
     }
