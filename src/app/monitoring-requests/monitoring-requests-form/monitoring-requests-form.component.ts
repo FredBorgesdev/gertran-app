@@ -243,6 +243,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       this.validateForm.get('shipper').value;
     const customerId = this.showShipperSelect ? shipperId : transporterId;
 
+    if (this.showShipperSelect && !shipperId) {
+      return;
+    }
+
     this.isLoadingMoreData = true;
     this.operationService.getAll({
       limit: 50,
