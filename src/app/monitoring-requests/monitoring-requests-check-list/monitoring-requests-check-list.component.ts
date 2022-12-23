@@ -5,6 +5,7 @@ import {Wagon} from '../../wagons/wagons.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TravelStep} from '../travel-step.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
+import {UtilsService} from '../../shared/services/utils.service';
 
 enum Status {
   DRAFT = 'draft',
@@ -76,11 +77,14 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     }
   ];
 
+  possibleStatus = [];
+
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
     private message: NzMessageService,
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService,
+    private utils: UtilsService,
   ) { }
 
   ngOnInit(): void {
@@ -130,6 +134,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.isLoading = true;
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
       this.monitoringRequest = result;
+      this.setPossibleStatus();
       this.isLoading = false;
 
       if (result.checklist) {
@@ -160,7 +165,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     return this.monitoringRequest?.wagons.map(wagon => (wagon as Wagon).vehicle.plate).join(', ') ?? '';
   }
 
-  save(): Promise<void> {
+  save(status: string): Promise<void> {
     const hasInvalidForm = this.checklistForm.invalid || this.checklistBaitForm.invalid || this.validateForm.invalid;
     if (hasInvalidForm) {
       this.message.error('Preencha os dados corretamente.');
@@ -168,9 +173,10 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     }
 
     const body = {
-      checklist: this.checklistForm.value,
-      checklistBait: this.checklistBaitForm.value,
       ...this.validateForm.value,
+      checklist: this.utils.removeNullValues(this.checklistForm.value),
+      checklistBait: this.utils.removeNullValues(this.checklistBaitForm.value),
+      status,
     };
 
     this.isLoading = true;
@@ -181,67 +187,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.message.error('Não foi possível atualizar o status.');
       this.isLoading = false;
     });
-  }
-
-  get statusList(): { label: string, value: string }[] {
-    return [
-      {
-        label: 'Rascunho',
-        value: Status.DRAFT,
-      },
-      {
-        label: 'Em análise',
-        value: Status.UNDER_REVIEW,
-      },
-      {
-        label: 'Aguardando início',
-        value: Status.WAITING_FOR_START,
-      },
-      {
-        label: 'Em andamento',
-        value: Status.IN_PROGRESS,
-      },
-      {
-        label: 'Reprovado',
-        value: Status.REPROVED,
-      },
-      {
-        label: 'Finalizado',
-        value: Status.FINISHED,
-      },
-      {
-        label: 'Finalizado com sucesso',
-        value: Status.SUCCESSFULLY_TERMINATED,
-      },
-      {
-        label: 'Cancelado',
-        value: Status.CANCELED,
-      },
-      {
-        label: 'Finalizado sem sucesso',
-        value: Status.UNSUCCESSFULLY_TERMINATED,
-      },
-      {
-        label: 'Finalizado com desaprovação',
-        value: Status.TERMINATED_DISAPPROVED,
-      },
-      {
-        label: 'Potencialmente roubado',
-        value: Status.POTENTIALLY_STOLEN,
-      },
-      {
-        label: 'Roubado confirmado',
-        value: Status.STOLEN_CONFIRMED,
-      },
-      {
-        label: 'Pendente',
-        value: Status.PENDING,
-      },
-      {
-        label: 'Importado indisponível',
-        value: Status.IMPORTED_UNAVAILABLE,
-      }
-    ];
   }
 
   getWorkingSituation(workingSituation: string): string {
@@ -280,5 +225,25 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       return new Date();
     }
     return new Date(this.lastTravelStep?.date + ' ' + this.lastTravelStep?.time);
+  }
+
+  private setPossibleStatus(): void {
+    this.possibleStatus = {
+      [Status.DRAFT]: [
+        { label: 'Em análise', value: Status.UNDER_REVIEW },
+      ],
+      [Status.UNDER_REVIEW]: [
+        { label: 'Salvar', value: Status.WAITING_FOR_START },
+        { label: 'Reprovado', value: Status.REPROVED },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
+      ],
+      [Status.WAITING_FOR_START]: [
+        { label: 'Iniciar viagem', value: Status.IN_PROGRESS },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
+      ],
+      [Status.IN_PROGRESS]: [
+        { label: 'Finalizar viagem', value: Status.FINISHED },
+      ],
+    }[this.monitoringRequest?.status] || [];
   }
 }

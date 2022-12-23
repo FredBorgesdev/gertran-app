@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -55,6 +55,8 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     toDate: this.now,
   };
 
+  refreshAfterClose = new EventEmitter();
+
   constructor(
     private travelStepService: TravelStepService,
     private directionsService: DirectionsService,
@@ -77,6 +79,10 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     super.ngOnInit();
 
     await this.loadAllResources();
+
+    this.refreshAfterClose.subscribe(() => {
+      this.loadAllResources();
+    });
   }
 
   loadAllResources(loadBaseResource = false): void {
@@ -212,11 +218,13 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzContent: MonitoringRequestsCheckListComponent,
       nzComponentParams: {monitoringRequestId: item.id},
       nzWidth: '90%',
-      nzOkText: 'Salvar',
-      nzOnOk: async (componentInstance) => {
-        await componentInstance.save();
-        this.loadAllResources();
-      },
+      nzOkText: null,
+      nzCancelText: null,
+      // nzOnOk: async (componentInstance) => {
+      //   await componentInstance.save();
+      //   this.loadAllResources();
+      // },
+      nzAfterClose: this.refreshAfterClose
     });
   }
 
