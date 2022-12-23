@@ -40,25 +40,9 @@ export class MonitoringRequestComponent implements OnInit {
   }
 
   updateRouteCoordinates(routeCoordinates: any[]): void {
-    const payload = {
-      ...this.resource,
-      customer: this.resource.customer?.id,
-      shipper: this.resource.shipper?.id,
-      transporter: this.resource.transporter?.id,
-      driver: this.resource.driver?.id,
-      auxiliaryDriver: this.resource.auxiliaryDriver?.id,
-      truck: this.resource.truck?.id,
-      operation: this.resource.operation?.id,
-      route: this.resource.route?.id,
-      wagons: this.resource.wagons?.map((wagon) => wagon.id),
-      travelSteps: this.resource.travelSteps?.map(travelStep => ({
-        ...travelStep,
-        point: travelStep.point?.id ?? null,
-      })),
-      routeCoordinates,
-    };
-
-    this.service.update(this.resource.id, payload).subscribe(() => {
+    this.service.update(this.resource.id, {
+      routeCoordinates
+    } as any).subscribe(() => {
       this.loadMonitoringRequest();
     });
   }
