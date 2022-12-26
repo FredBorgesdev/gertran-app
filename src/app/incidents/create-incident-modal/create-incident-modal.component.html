@@ -1,9 +1,9 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="incidentType">Tipo de incidente</nz-form-label>
+    <nz-form-label [nzSpan]="null" nzFor="incidentType">Tipo de evento</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
       <nz-select
-        nzPlaceHolder="Tipo de incidente"
+        nzPlaceHolder="Tipo de evento"
         formControlName="incidentType"
       >
         <nz-option
@@ -25,7 +25,7 @@
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
-        <nz-form-label nzRequired nzFor="incidentDate">Data e hora do incidente</nz-form-label>
+        <nz-form-label nzRequired nzFor="incidentDate">Data e hora do evento</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <nz-date-picker
             nzFormat="dd/MM/yyyy HH:mm:ss"
@@ -162,7 +162,7 @@
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="8">
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="wasFederalPoliceActionNeeded">Contato policia federal</nz-form-label>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="wasFederalPoliceActionNeeded">Contato órgãos públicos</nz-form-label>
 
         <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
           <nz-radio-group formControlName="wasFederalPoliceActionNeeded">

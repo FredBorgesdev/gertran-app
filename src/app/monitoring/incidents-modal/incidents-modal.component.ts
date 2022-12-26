@@ -69,7 +69,7 @@ export class IncidentsModalComponent implements OnInit {
 
   openCreateIncidentModal(): void {
     this.modal.create({
-      nzTitle: 'Criar incidente',
+      nzTitle: 'Criar evento',
       nzContent: CreateIncidentModalComponent,
       nzWidth: '80%',
       nzOkText: 'Salvar',
