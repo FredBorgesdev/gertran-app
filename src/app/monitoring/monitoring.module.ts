@@ -16,6 +16,7 @@ import { UpdateObservationsModalComponent } from './update-observations-modal/up
 import { CommandsModalComponent } from './commands-modal/commands-modal.component';
 import { MessagesModalComponent } from './messages-modal/messages-modal.component';
 import { IncidentsModalComponent } from './incidents-modal/incidents-modal.component';
+import {CreateIncidentModalComponent} from '../incidents/create-incident-modal/create-incident-modal.component';
 
 const antdModules = [
 ];
@@ -29,7 +30,8 @@ const antdModules = [
     UpdateObservationsModalComponent,
     CommandsModalComponent,
     MessagesModalComponent,
-    IncidentsModalComponent
+    IncidentsModalComponent,
+    CreateIncidentModalComponent,
   ],
     imports: [
         SharedModule,

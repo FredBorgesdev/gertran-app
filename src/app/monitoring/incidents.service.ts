@@ -45,7 +45,7 @@ export interface Incident {
 @Injectable({
   providedIn: 'root'
 })
-export class IncidentsService {
+export class IncidentsService implements ApiService<Incident> {
 
   constructor(private http: HttpClient) { }
 
@@ -64,5 +64,21 @@ export class IncidentsService {
     }
 
     return this.http.get<GetAllResponse<Incident>>('incidents', { params });
+  }
+
+  get(id: string, ...params): Observable<Incident> {
+    throw new Error('Method not implemented.');
+  }
+
+  save(data: Incident, ...params): Observable<Incident> {
+    return this.http.post<Incident>('incidents/create', data);
+  }
+
+  update(id: string, data: Incident, ...params): Observable<Incident> {
+    throw new Error('Method not implemented.');
+  }
+
+  delete(id: string, ...params): Observable<void> {
+    throw new Error('Method not implemented.');
   }
 }

@@ -1,3 +1,13 @@
+<button
+  nz-button
+  class="m-b-25"
+  nzType="primary"
+  (click)="openCreateIncidentModal()"
+>
+  <i nz-icon nzType="plus"></i>
+  <span>Criar ocorrência</span>
+</button>
+
 <nz-table
   #incidentsTable
   [nzData]="incidents?.results"

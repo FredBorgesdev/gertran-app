@@ -3,6 +3,8 @@ import {Position} from '../positions.service';
 import {Incident, IncidentsService} from '../incidents.service';
 import {GetAllResponse, getCurrentPage, replaceOffsetWithPage} from '../../shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {CreateIncidentModalComponent} from '../../incidents/create-incident-modal/create-incident-modal.component';
 
 @Component({
   selector: 'app-incidents-modal',
@@ -26,7 +28,10 @@ export class IncidentsModalComponent implements OnInit {
 
   incidents: GetAllResponse<Incident>;
 
-  constructor(private service: IncidentsService) { }
+  constructor(
+    private service: IncidentsService,
+    private modal: NzModalService,
+  ) { }
 
   ngOnInit(): void {
     this.loadIncidents();
@@ -34,7 +39,11 @@ export class IncidentsModalComponent implements OnInit {
 
   loadIncidents(url?: string): void {
     this.isLoading = true;
-    this.service.getAll({ url }, { monitoringRequest: this.position.monitoringRequest.id }).subscribe(response => {
+    this.service.getAll({
+      url
+    }, {
+      monitoringRequest: this.position.monitoringRequest.id
+    }).subscribe(response => {
       this.incidents = response;
       this.isLoading = false;
     });
@@ -58,4 +67,14 @@ export class IncidentsModalComponent implements OnInit {
     }
   }
 
+  openCreateIncidentModal(): void {
+    this.modal.create({
+      nzTitle: 'Criar incidente',
+      nzContent: CreateIncidentModalComponent,
+      nzWidth: '80%',
+      nzOkText: 'Salvar',
+      nzCancelText: 'Cancelar',
+      nzOnOk: (componentInstance) => componentInstance.save(),
+    });
+  }
 }
