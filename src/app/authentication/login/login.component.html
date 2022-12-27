@@ -44,6 +44,20 @@
                     </div>
                   </nz-form-control>
                 </nz-form-item>
+                <nz-form-item>
+                  <nz-form-control>
+                    <div class="d-flex align-items-center justify-content-end">
+                      <button
+                        nz-button
+                        nzDanger
+                        class="login-form-button"
+                        [nzType]="'primary'"
+                        type="button"
+                        (click)="goToFirstAccessForm()"
+                      >Primeiro acesso GERTRAN 3.0</button>
+                    </div>
+                  </nz-form-control>
+                </nz-form-item>
               </form>
               <ng-template #prefixEmail><i nz-icon nzType="idcard"></i></ng-template>
               <ng-template #prefixLock><i nz-icon nzType="lock"></i></ng-template>

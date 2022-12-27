@@ -55,4 +55,8 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard/home']);
     }
   }
+
+  goToFirstAccessForm(): void {
+    this.router.navigate(['/authentication/first-access']);
+  }
 }
