@@ -25,11 +25,12 @@
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
-        <nz-form-label nzRequired nzFor="incidentDate">Data e hora do evento</nz-form-label>
+        <nz-form-label nzRequired nzFor="incidentDatetime">Data e hora do evento</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <nz-date-picker
             nzFormat="dd/MM/yyyy HH:mm:ss"
-            formControlName="incidentDate"
+            formControlName="incidentDatetime"
+            nzShowTime
             nzPlaceHolder="Selecione a data e hora"
             style="width: 100%"
           ></nz-date-picker>
@@ -83,6 +84,7 @@
         <nz-form-label [nzSpan]="null" nzFor="driverContactedAt">Contato feito em</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
           <nz-date-picker
+            nzShowTime
             nzFormat="dd/MM/yyyy HH:mm:ss"
             formControlName="driverContactedAt"
             nzPlaceHolder="Selecione a data e hora"
@@ -110,6 +112,7 @@
         <nz-form-label [nzSpan]="null" nzFor="shipperContactedAt">Contato feito em</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
           <nz-date-picker
+            nzShowTime
             style="width: 100%"
             nzFormat="dd/MM/yyyy HH:mm:ss"
             formControlName="shipperContactedAt"
@@ -149,6 +152,7 @@
         <nz-form-label [nzSpan]="null" nzFor="immediateActionTakenAt">Data/hora da ação</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
           <nz-date-picker
+            nzShowTime
             style="width: 100%"
             nzFormat="dd/MM/yyyy HH:mm:ss"
             formControlName="immediateActionTakenAt"
@@ -190,6 +194,7 @@
           <nz-date-picker
             style="width: 100%"
             nzFormat="dd/MM/yyyy HH:mm:ss"
+            nzShowTime
             formControlName="federalPoliceActionTakenAt"
             nzPlaceHolder="Selecione a data e hora"
           ></nz-date-picker>

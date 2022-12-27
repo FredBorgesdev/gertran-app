@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Choice} from '../../shared/services/api.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
@@ -12,6 +12,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./create-incident-modal.component.css']
 })
 export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident> implements OnInit {
+  @Input() monitoringRequestId: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,6 +64,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   validateForm: FormGroup;
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
+      monitoringRequest: [this.monitoringRequestId],
       incidentType: [null],
       incidentDate: [null],
       incidentLocation: [null],
@@ -81,6 +83,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
       optionalEmail: [null],
       incidentLatitude: [null],
       incidentLongitude: [null],
+      incidentDatetime: [null],
     });
   }
 

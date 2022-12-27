@@ -17,6 +17,7 @@ import { CommandsModalComponent } from './commands-modal/commands-modal.componen
 import { MessagesModalComponent } from './messages-modal/messages-modal.component';
 import { IncidentsModalComponent } from './incidents-modal/incidents-modal.component';
 import {CreateIncidentModalComponent} from '../incidents/create-incident-modal/create-incident-modal.component';
+import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
 
 const antdModules = [
 ];
@@ -34,16 +35,17 @@ const antdModules = [
     CreateIncidentModalComponent,
   ],
     imports: [
-        SharedModule,
-        CommonModule,
-        MonitoringRoutingModule,
-        GoogleMapsModule,
-        ...antdModules,
-        NzPopoverModule,
-        NgxMapboxGLModule.withConfig({
-            accessToken: environment.mapboxAccessToken,
-        }),
-        NzSkeletonModule
+      SharedModule,
+      CommonModule,
+      MonitoringRoutingModule,
+      GoogleMapsModule,
+      GooglePlaceModule,
+      ...antdModules,
+      NzPopoverModule,
+      NgxMapboxGLModule.withConfig({
+        accessToken: environment.mapboxAccessToken,
+      }),
+      NzSkeletonModule
     ]
 })
 export class MonitoringModule { }

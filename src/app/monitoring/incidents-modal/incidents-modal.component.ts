@@ -71,6 +71,9 @@ export class IncidentsModalComponent implements OnInit {
     this.modal.create({
       nzTitle: 'Criar evento',
       nzContent: CreateIncidentModalComponent,
+      nzComponentParams: {
+        monitoringRequestId: this.position.monitoringRequest.id
+      },
       nzWidth: '80%',
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',

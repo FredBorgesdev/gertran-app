@@ -78,8 +78,6 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
       });
     }
 
-    console.log(this.resource)
-
     this.isLoading = true;
     if (this.resource?.id) {
       this.service.update(this.resource.id, this.getValues(), ...this.additionalParams())
