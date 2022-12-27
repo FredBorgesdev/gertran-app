@@ -15,6 +15,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForbiddenErrorComponent } from './forbidden/forbidden-error.component';
 import { Error2Component } from './error-2/error-2.component';
 import {TextMaskModule} from 'angular2-text-mask';
+import { FirstAccessComponent } from './first-access/first-access.component';
+import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
 
 const antdModule = [
   NzFormModule,
@@ -25,19 +27,21 @@ const antdModule = [
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        ReactiveFormsModule,
-        AuthenticationRoutingModule,
-        ...antdModule,
-        TextMaskModule
-    ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ReactiveFormsModule,
+    AuthenticationRoutingModule,
+    ...antdModule,
+    TextMaskModule,
+    PasswordStrengthMeterModule
+  ],
   declarations: [
     LoginComponent,
     SignUpComponent,
     ForbiddenErrorComponent,
-    Error2Component
+    Error2Component,
+    FirstAccessComponent
   ]
 })
 

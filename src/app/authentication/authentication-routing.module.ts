@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForbiddenErrorComponent } from './forbidden/forbidden-error.component';
 import { Error2Component } from './error-2/error-2.component';
+import {FirstAccessComponent} from './first-access/first-access.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,13 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login'
+    }
+  },
+  {
+    path: 'first-access',
+    component: FirstAccessComponent,
+    data: {
+      title: 'First access'
     }
   },
   {

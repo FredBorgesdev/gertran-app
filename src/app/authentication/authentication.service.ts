@@ -66,6 +66,9 @@ export class AuthenticationService {
     return from(this.refresh());
   }
 
+  createFirstAccess(): void {
+  }
+
   async isAuthenticated(): Promise<boolean> {
     const token = Cookies.get(GERTRAN_WEB_TOKEN);
     if (!token) { return false; }
