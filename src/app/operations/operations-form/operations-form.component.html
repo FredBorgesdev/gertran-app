@@ -33,8 +33,16 @@
           nzPlaceHolder="Selecione uma tecnologia"
           formControlName="allowedTrackerModels"
           nzMode="multiple"
+          (ngModelChange)="selectAllTrackerModels($event)"
         >
-          <nz-option-group *ngFor="let group of trackerTechnologies" [nzLabel]="group.name">
+          <nz-option-group
+            *ngFor="let group of trackerTechnologiesWithModels"
+            [nzLabel]="group.name"
+          >
+            <nz-option
+              [nzLabel]="group.name + '(TODOS)'"
+              [nzValue]="'group_'+group.id"
+            ></nz-option>
             <nz-option *ngFor="let option of group.models" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-option-group>
         </nz-select>

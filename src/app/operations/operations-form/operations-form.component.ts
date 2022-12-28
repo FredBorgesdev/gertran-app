@@ -13,6 +13,9 @@ import {InsuranceCompaniesService, InsuranceCompany} from '../../insurance-compa
 import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
 import {Choice} from '../../shared/services/api.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import { find, propEq, pluck } from 'ramda';
+
+type TrackerTechnologiesWithModels = TrackerTechnologies & { models?: TrackerTechnologiesModels[] }
 
 @Component({
   selector: 'app-operations-form',
@@ -23,7 +26,7 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 export class OperationsFormComponent extends BaseCrudFormComponent<Operations> implements OnInit {
   @Input() operation: Operations = null;
 
-  trackerTechnologies: (TrackerTechnologies & { models?: TrackerTechnologiesModels[] })[] = [];
+  trackerTechnologies: TrackerTechnologiesWithModels[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
@@ -110,9 +113,6 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       brokerName: [null, [Validators.required]],
       brokerPhone: [null, [Validators.required]],
       brokerPersonInCharge: [null, [Validators.required]],
-      //
-      rules: this.formBuilder.array([]),
-      positions: this.formBuilder.array([])
     });
   }
 
@@ -128,43 +128,52 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     });
   }
 
-  getRulesControls(): FormGroup[] {
-    return (this.validateForm.controls.rules as any).controls;
-  }
-
-  addRule(): void {
-    (this.validateForm.controls.rules as any).push(this.formBuilder.group({
-      minValue: [null, [Validators.required]],
-      maxValue: [null, [Validators.required]],
-      minRedundancy: [null, [Validators.required]],
-      armedGuard: [null, [Validators.required]],
-      bait: [null, [Validators.required]],
-    }));
-  }
-
-  removeRule(index: number): void {
-    (this.validateForm.controls.rules as any).removeAt(index);
-  }
-
-  getPositionsControls(): FormGroup[] {
-    return (this.validateForm.controls.positions as any).controls;
-  }
-
-  addPosition(): void {
-    (this.validateForm.controls.positions as any).push(this.formBuilder.group({
-      positionTime: [null, [Validators.required]],
-      area: [null, [Validators.required]],
-      startAt: [null, [Validators.required]],
-      endAt: [null, [Validators.required]],
-      tolerance: [null, [Validators.required]],
-    }));
-  }
-
-  removePosition(index: number): void {
-    (this.validateForm.controls.positions as any).removeAt(index);
-  }
-
   list(): void {
     this.router.navigate(['/operations/operations-list']);
+  }
+
+  selectAllTrackerModels(ids: string[]): void {
+    const id = ids[ids.length - 1];
+    if (!id || this.isNotGroup(id)) {
+      return;
+    }
+
+    const trackerTechnology = this.getTrackerTechnologyByGroupId(id);
+    if (!trackerTechnology) {
+      return;
+    }
+
+    const newAllowedTrackerModels = this.getTrackerTechnologiesIds(trackerTechnology);
+
+    this.validateForm.patchValue({
+      allowedTrackerModels: newAllowedTrackerModels
+    });
+  }
+
+  private getTrackerTechnologiesIds(
+    trackerTechnology: TrackerTechnologiesWithModels
+  ): string[] {
+    const trackerTechnologyModelsIds = pluck('id', trackerTechnology.models);
+    const previousAllowedTrackerModels = this.validateForm.get(
+      'allowedTrackerModels'
+    ).value.filter(this.isNotGroup);
+
+    return Array.from(
+      new Set([...previousAllowedTrackerModels, ...trackerTechnologyModelsIds])
+    );
+  }
+
+  private getTrackerTechnologyByGroupId(id: string): TrackerTechnologiesWithModels {
+    const groupId = id.replace('group_', '');
+
+    return find(propEq('id', groupId), this.trackerTechnologies);
+  }
+
+  private isNotGroup(id: string): boolean {
+    return !id.startsWith('group_');
+  }
+
+  get trackerTechnologiesWithModels(): TrackerTechnologiesWithModels[] {
+    return this.trackerTechnologies.filter(trackerTechnology => trackerTechnology.models?.length);
   }
 }
