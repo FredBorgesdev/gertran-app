@@ -27,7 +27,8 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   @Input() operation: Operations = null;
 
   trackerTechnologies: TrackerTechnologiesWithModels[] = [];
-  vehicleModelTypes: VehicleModelTypes[] = [];
+  truckTypes: VehicleModelTypes[] = [];
+  wagonTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
   operationTypes: Choice[] = [];
@@ -81,7 +82,8 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       });
     });
     this.vehicleModelTypesService.getAll({ limit: 50 }).subscribe(vehicleModelTypes => {
-      this.vehicleModelTypes = vehicleModelTypes.results;
+      this.truckTypes = vehicleModelTypes.results.filter(({ type }) => type === 'truck');
+      this.wagonTypes = vehicleModelTypes.results.filter(({ type }) => type === 'wagon');
     });
     this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe(vehiclePeripherals => {
       this.vehiclePeripherals = vehiclePeripherals.results;
@@ -175,5 +177,20 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
 
   get trackerTechnologiesWithModels(): TrackerTechnologiesWithModels[] {
     return this.trackerTechnologies.filter(trackerTechnology => trackerTechnology.models?.length);
+  }
+
+  selectAll(
+    ids: string[],
+    field: string,
+    list: (any & { id: string })[],
+  ): void {
+    const id = ids[ids.length - 1];
+    if (!id || id !== 'all') {
+      return;
+    }
+
+    this.validateForm.patchValue({
+      [field]: pluck('id', list)
+    });
   }
 }

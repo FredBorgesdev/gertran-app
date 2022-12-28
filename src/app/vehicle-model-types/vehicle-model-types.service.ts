@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 export interface VehicleModelTypes {
   id: string;
   name: string;
+  type: 'wagon' | 'truck';
 }
 
 @Injectable({
@@ -17,12 +18,20 @@ export class VehicleModelTypesService implements ApiService<VehicleModelTypes> {
     private http: HttpClient,
   ) { }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<VehicleModelTypes>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+  getAll(
+    pagination: Pagination,
+    filters?: {
+      vehicleType?: 'wagon' | 'truck';
+    }
+  ): Observable<GetAllResponse<VehicleModelTypes>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+    if (filters?.vehicleType) {
+      params.vehicle_type = filters.vehicleType;
     }
 
     return this.http.get<GetAllResponse<VehicleModelTypes>>('vehicles/vehicle-model-types', { params });

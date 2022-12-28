@@ -59,8 +59,17 @@
           nzPlaceHolder="Selecione uma tecnologia"
           formControlName="allowedTruckTypes"
           nzMode="multiple"
+          (ngModelChange)="selectAll($event, 'allowedTruckTypes', truckTypes)"
         >
-          <nz-option *ngFor="let truckType of vehicleModelTypes" [nzLabel]="truckType.name" [nzValue]="truckType.id"></nz-option>
+          <nz-option
+            nzLabel="TODOS"
+            nzValue="all"
+          ></nz-option>
+          <nz-option
+            *ngFor="let truckType of truckTypes"
+            [nzLabel]="truckType.name"
+            [nzValue]="truckType.id"
+          ></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -75,8 +84,17 @@
           nzPlaceHolder="Selecione uma tecnologia"
           formControlName="allowedWagonTypes"
           nzMode="multiple"
+          (ngModelChange)="selectAll($event, 'allowedWagonTypes', wagonTypes)"
         >
-          <nz-option *ngFor="let wagonType of vehicleModelTypes" [nzLabel]="wagonType.name" [nzValue]="wagonType.id"></nz-option>
+          <nz-option
+            nzLabel="TODOS"
+            nzValue="all"
+          ></nz-option>
+          <nz-option
+            *ngFor="let wagonType of wagonTypes"
+            [nzLabel]="wagonType.name"
+            [nzValue]="wagonType.id"
+          ></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -91,8 +109,17 @@
           nzPlaceHolder="Selecione uma tecnologia"
           formControlName="requiredPeripherals"
           nzMode="multiple"
+          (ngModelChange)="selectAll($event, 'requiredPeripherals', vehiclePeripherals)"
         >
-          <nz-option *ngFor="let peripheral of vehiclePeripherals" [nzLabel]="peripheral.name" [nzValue]="peripheral.id"></nz-option>
+          <nz-option
+            nzLabel="TODOS"
+            nzValue="all"
+          ></nz-option>
+          <nz-option
+            *ngFor="let peripheral of vehiclePeripherals"
+            [nzLabel]="peripheral.name"
+            [nzValue]="peripheral.id"
+          ></nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
