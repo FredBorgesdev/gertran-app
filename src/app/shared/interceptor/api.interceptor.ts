@@ -27,7 +27,7 @@ export class ApiInterceptor implements HttpInterceptor {
     const apiReq = request.clone({
       url: `${environment.apiUrl}/${request.url}/`,
       body: this.getBody(request),
-      headers: this.getHeaders(),
+      headers: this.getHeaders(request.url),
     });
 
     return next.handle(apiReq).pipe(
@@ -40,7 +40,7 @@ export class ApiInterceptor implements HttpInterceptor {
             mergeMap(
               () => {
                 return next.handle(apiReq.clone({
-                  headers: this.getHeaders(),
+                  headers: this.getHeaders(apiReq.url),
                 }));
               }
             ));
@@ -60,11 +60,14 @@ export class ApiInterceptor implements HttpInterceptor {
     );
   }
 
-  private getHeaders(): HttpHeaders {
+  private getHeaders(url?: string): HttpHeaders {
     const headers: any = {
       authorization: `Bearer ${Cookie.get(GERTRAN_WEB_TOKEN)}`,
     };
-    if (Cookie.get(GERTRAN_CUSTOMER_ID)) {
+    if (
+      Cookie.get(GERTRAN_CUSTOMER_ID) &&
+      this.modulesWithoutCustomerKey.some(module => !url.includes(module))
+    ) {
       headers['X-Customer-Key'] = Cookie.get(GERTRAN_CUSTOMER_ID);
     }
     return new HttpHeaders(headers);
@@ -72,5 +75,11 @@ export class ApiInterceptor implements HttpInterceptor {
 
   private getBody(request: HttpRequest<any>): any {
     return this.isFormData(request) ? request.body : decamelizeKeys(request.body);
+  }
+
+  private get modulesWithoutCustomerKey() {
+    return [
+      'customers'
+    ]
   }
 }
