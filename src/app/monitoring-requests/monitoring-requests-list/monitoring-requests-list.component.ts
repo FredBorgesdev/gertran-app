@@ -60,7 +60,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   constructor(
     private travelStepService: TravelStepService,
     private directionsService: DirectionsService,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     router: Router,
     service: MonitoringRequestsService,
     message: NzMessageService,
