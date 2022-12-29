@@ -140,7 +140,7 @@
       *ngFor="let item of table.data; let i=index"
       [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight, item)"
-      (click)="setPlate(item.monitoringRequest?.truck.vehicle.plate)"
+      (click)="setPlate(item?.vehiclePlate)"
     >
       <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
         <img
@@ -160,7 +160,10 @@
         [nzTooltipTitle]="item.monitoringRequest?.id"
         [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.monitoringRequest?.id || '' | id}}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">{{ item.monitoringRequest?.truck?.vehicle?.plate || '-' }}</td>
+      <td
+        nzLeft
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
+      >{{ item.vehiclePlate || '-' }}</td>
       <td>
         <span
           nz-icon
