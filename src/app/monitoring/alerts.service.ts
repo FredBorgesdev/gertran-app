@@ -32,6 +32,7 @@ export type Alert = {
   solvedDescription: string | null;
   type: AlertTypes;
   vehicle: number | null;
+  receivedAt: string | null;
 };
 
 @Injectable({

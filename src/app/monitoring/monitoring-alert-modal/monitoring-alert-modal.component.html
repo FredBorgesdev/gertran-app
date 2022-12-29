@@ -11,6 +11,7 @@
 >
   <thead>
   <tr>
+    <th class="text-center">Data/hora</th>
     <th class="text-center">Placa</th>
     <th class="text-center">Cliente</th>
     <th class="text-center">Mensagem</th>
@@ -19,6 +20,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let item of automationsListTable.data;  let i=index">
+    <td class="text-center">{{(item.receivedAt || item.createdAt) | date: 'dd/MM/yyyy HH:mm'}}</td>
     <td class="text-center">{{item.vehicle.plate}}</td>
     <td class="text-center">
       {{item.customer?.tradingName}}
