@@ -89,7 +89,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     if (loadBaseResource) {
       this.loadResources();
     }
-    if (!this.user.isGertranStaff) {
+    if (this.authService.customerId) {
       this.loadDraft();
     }
     this.loadWaitingForStart();
