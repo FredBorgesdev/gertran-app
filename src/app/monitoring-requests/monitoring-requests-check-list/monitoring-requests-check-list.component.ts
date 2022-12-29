@@ -234,7 +234,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       ],
       [Status.UNDER_REVIEW]: [
         { label: 'Salvar', value: Status.WAITING_FOR_START },
-        { label: 'Reprovado', value: Status.REPROVED },
+        { label: 'Reprovado', value: Status.CANCELED },
         { label: 'Finalizar viagem', value: Status.FINISHED },
       ],
       [Status.WAITING_FOR_START]: [
