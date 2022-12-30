@@ -33,6 +33,22 @@ export class FirstAccessComponent implements OnInit {
     if (passwordStrength.score < 3) {
       this.message.error('Senha fraca. Tente outra.');
     }
+
+    if (!this.validateForm.valid) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.authService.createFirstAccess({
+      ...this.validateForm.value,
+      cpf: this.validateForm.value.cpf.replace(/\D/g, ''),
+    }).subscribe(() => {
+      this.isLoading = false;
+      this.router.navigate(['/']);
+    }, (e) => {
+      this.isLoading = false;
+      this.message.error(e.error.detail || e.error.message);
+    });
   }
 
   async ngOnInit(): Promise<void> {

@@ -66,7 +66,12 @@ export class AuthenticationService {
     return from(this.refresh());
   }
 
-  createFirstAccess(): void {
+  createFirstAccess(body: {
+    legacyLogin: string,
+    password: string,
+    cpf: string,
+  }): Observable<any> {
+    return this.http.patch('users/first-access', body);
   }
 
   async isAuthenticated(): Promise<boolean> {
