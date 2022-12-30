@@ -46,6 +46,7 @@ export class DriversFormComponent implements OnInit {
         this.driver?.customers || defaultCustomers,
         [Validators.required]
       ],
+      workingSituation: [this.driver?.workingSituation, []],
       name: [this.driver?.name, [Validators.required]],
       rg: [this.driver?.rg, [Validators.required]],
       cpf: [maskedCpf, [Validators.required, Validators.pattern('[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}')]],
