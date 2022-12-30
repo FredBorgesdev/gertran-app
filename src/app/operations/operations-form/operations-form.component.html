@@ -64,6 +64,7 @@
           <nz-option
             nzLabel="TODOS"
             nzValue="all"
+            *ngIf="truckTypes.length > 0"
           ></nz-option>
           <nz-option
             *ngFor="let truckType of truckTypes"
@@ -89,6 +90,7 @@
           <nz-option
             nzLabel="TODOS"
             nzValue="all"
+            *ngIf="wagonTypes.length > 0"
           ></nz-option>
           <nz-option
             *ngFor="let wagonType of wagonTypes"
@@ -114,6 +116,7 @@
           <nz-option
             nzLabel="TODOS"
             nzValue="all"
+            *ngIf="vehiclePeripherals.length > 0"
           ></nz-option>
           <nz-option
             *ngFor="let peripheral of vehiclePeripherals"
