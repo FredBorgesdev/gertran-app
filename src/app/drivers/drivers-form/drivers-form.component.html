@@ -19,22 +19,6 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Opção inválida!">
-      <nz-select
-        id="workingSituation"
-        nzPlaceHolder="Selecione uma opção"
-        formControlName="workingSituation"
-      >
-        <nz-option
-          *ngFor="let workingSituation of workingSituations"
-          [nzLabel]="workingSituation.label"
-          [nzValue]="workingSituation.value"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
       <input id="name" type="text" nz-input formControlName="name" />
