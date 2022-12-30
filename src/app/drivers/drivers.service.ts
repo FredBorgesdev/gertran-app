@@ -1,25 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Customer} from '../customers/customers.service';
 
 export interface Driver {
   phoneNumber?: string;
   id: string;
-	customers: Customer[];
-	workingSituation: string;
-	name: string;
-	rg: string;
-	cpf: string;
-	cnhNumber: string;
-	cnhCategory: string;
-	cnhValidity: string;
-	cnhIssuer: string;
-	cnhIssuerUf: string;
-	cnhFirstIssue: string;
-	cnhEmission: string;
-	admissionDate: string | null;
+  customers: Customer[];
+  workingSituation: string;
+  name: string;
+  rg: string;
+  cpf: string;
+  cnhNumber: string;
+  cnhCategory: string;
+  cnhValidity: string;
+  cnhIssuer: string;
+  cnhIssuerUf: string;
+  cnhFirstIssue: string;
+  cnhEmission: string;
+  admissionDate: string | null;
 }
 
 @Injectable({
@@ -69,7 +69,11 @@ export class DriversService implements ApiService<Driver> {
   }
 
   getWorkingSituations(): Observable<Choice[]> {
-    return this.http.get<Choice[]>('drivers/working-situations');
+    return of([
+      { value: 'fleet', label: 'Frota' },
+      { value: 'aggregate', label: 'Agregado' },
+      { value: 'third_party', label: 'Terceirizado' },
+    ]);
   }
 
   private getBody(body: Omit<Driver, 'id'>): Omit<Driver, 'id'> {
