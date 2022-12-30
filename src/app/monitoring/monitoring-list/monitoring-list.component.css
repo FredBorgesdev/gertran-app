@@ -7,11 +7,11 @@ td {
 }
 
 .bg-alert {
-  background-color: #fafdda !important;
+  background-color: #fcffab !important;
 }
 
 .bg-warning {
-  background-color: #fdf2da !important;
+  background-color: #ffd371 !important;
 }
 
 .bg-danger {
@@ -19,11 +19,11 @@ td {
 }
 
 .bg-success {
-  background-color: #deffe2 !important;
+  background-color: #95ffa1 !important;
 }
 
 .bg-info {
-  background-color: #ddffff !important;
+  background-color: #86ffff !important;
 }
 
 nz-select,
