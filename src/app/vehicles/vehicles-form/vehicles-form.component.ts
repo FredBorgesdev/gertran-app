@@ -109,7 +109,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
   loadFormBuilder(customProperties?: string[]): void {
     this.validateForm = this.formBuilder.group({
-      customers: [null, [Validators.required]],
+      customers: [[this.authService.customerId], [Validators.required]],
       manufacturer: [null, [Validators.required]],
       vehicleModel: [null, [Validators.required]],
       vehicleModelType: [null, [Validators.required]],

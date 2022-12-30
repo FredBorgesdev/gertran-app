@@ -4,6 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {AbstractUser, UsersService} from '../users.service';
 import {FormBuilder, Validator, Validators} from '@angular/forms';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-users-user',
@@ -14,6 +15,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private authService: AuthenticationService,
     service: UsersService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
@@ -27,7 +29,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
-      customer: [[], Validators.required],
+      customer: [[this.authService.customerId], [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
