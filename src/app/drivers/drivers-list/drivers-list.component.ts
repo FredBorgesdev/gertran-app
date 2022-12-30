@@ -44,7 +44,7 @@ export class DriversListComponent extends BaseCrudListComponent<Driver> {
   }
 
   search(): void {
-    this.searchByName(this.searchInput);
+    this.searchByField('search', this.searchInput);
   }
 
   create(): void {
