@@ -46,8 +46,8 @@ export class CustomersService implements ApiService<Customer> {
   getAll(
     pagination: Pagination,
     filters?: {
-      name?: string;
       isShipper?: boolean;
+      search?: string;
     }): Observable<GetAllResponse<Customer>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
@@ -55,8 +55,8 @@ export class CustomersService implements ApiService<Customer> {
         params[key] = value;
       });
     }
-    if (filters?.name) {
-      params.name = filters.name;
+    if (filters?.search) {
+      params.search = filters.search;
     }
     if (filters?.isShipper) {
       params.is_shipper = filters.isShipper;

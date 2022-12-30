@@ -58,9 +58,9 @@ export class BaseUserFilterComponent implements OnInit {
       this.valueChanges.emit(this.validateForm.value);
     });
 
-    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((name) => {
+    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((search) => {
       this.isLoadingMoreData = true;
-      this.customerService.getAll({ limit: 50 }, { name }).subscribe((customers) => {
+      this.customerService.getAll({ limit: 50 }, { search }).subscribe((customers) => {
         this.customers = customers.results;
         this.isLoadingMoreData = false;
       });

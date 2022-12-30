@@ -33,7 +33,6 @@ export class DriversService implements ApiService<Driver> {
     pagination: Pagination,
     filters?: {
       customer?: string;
-      name?: string;
       search?: string;
     }
   ): Observable<GetAllResponse<Driver>> {
@@ -45,9 +44,6 @@ export class DriversService implements ApiService<Driver> {
     }
     if (filters?.customer) {
       params.customer = filters.customer;
-    }
-    if (filters?.name) {
-      params.name = filters.name;
     }
     if (filters?.search) {
       params.search = filters.search;
