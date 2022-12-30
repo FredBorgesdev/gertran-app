@@ -68,6 +68,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
       incidentType: [null],
       incidentDate: [null],
       incidentLocation: [null],
+      driverContactedAt: [null],
       shipperName: [null],
       shipperContactedAt: [null],
       wasImmediateActionApproved: [null],
