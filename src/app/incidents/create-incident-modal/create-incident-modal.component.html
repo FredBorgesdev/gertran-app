@@ -15,13 +15,6 @@
     </nz-form-control>
   </nz-form-item>
 
-  <!--  <nz-form-item>-->
-  <!--    <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">-->
-  <!--      <label nz-checkbox >-->
-  <!--      </label>-->
-  <!--    </nz-form-control>-->
-  <!--  </nz-form-item>-->
-
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
@@ -38,7 +31,7 @@
       </div>
 
       <div nz-col nzSpan="12">
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="incidentLocation">Localização</nz-form-label>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="incidentLocation">Local do fato</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
           <input
             ngx-google-places-autocomplete
@@ -56,48 +49,8 @@
 
   <nz-form-item>
     <div nz-row nzGutter="16">
-      <div nz-col nzSpan="8">
-        <nz-form-label [nzSpan]="null" nzFor="driverName">Nome do motorista</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <input
-            id="driverName"
-            type="text"
-            nz-input
-            formControlName="driverName"
-          />
-        </nz-form-control>
-      </div>
-
-      <div nz-col nzSpan="8">
-        <nz-form-label [nzSpan]="null" nzFor="driverPhone">Telefone de contato</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <input
-            id="driverPhone"
-            type="text"
-            nz-input
-            formControlName="driverPhone"
-          />
-        </nz-form-control>
-      </div>
-
-      <div nz-col nzSpan="8">
-        <nz-form-label [nzSpan]="null" nzFor="driverContactedAt">Contato feito em</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <nz-date-picker
-            nzShowTime
-            nzFormat="dd/MM/yyyy HH:mm:ss"
-            formControlName="driverContactedAt"
-            nzPlaceHolder="Selecione a data e hora"
-          ></nz-date-picker>
-        </nz-form-control>
-      </div>
-    </div>
-  </nz-form-item>
-
-  <nz-form-item>
-    <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
-        <nz-form-label [nzSpan]="null" nzFor="shipperName">Nome transportador</nz-form-label>
+        <nz-form-label [nzSpan]="null" nzFor="shipperName">Contato transportador</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
           <input
             id="shipperName"
