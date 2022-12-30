@@ -7,7 +7,7 @@ import {Customer, CustomersService} from '../../customers/customers.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Position, PositionsService} from '../positions.service';
-import {Observable, Subject, timer} from 'rxjs';
+import {EMPTY, Observable, Subject, timer} from 'rxjs';
 import {share, switchMap, takeUntil} from 'rxjs/operators';
 import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
@@ -118,15 +118,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
 
     this.monitoringData$ = timer(0, 100000).pipe(
-      switchMap(() => this.positionsService.getAll(
-        { limit: 999 },
-        {
-          customer: this.validateForm.get('customer').value,
-          terminal: this.validateForm.get('terminal').value,
-          travelling: this.validateForm.get('travelling').value,
-          travelStatus: this.selectedTravelStatus,
-        })
-      ),
+      switchMap(() => this.getPositionsWithFilters()),
       share(),
       takeUntil(this.stopMonitoring)
     );
@@ -224,6 +216,14 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   subscribeToMonitoringData(): void {
+    if (
+      !this.validateForm.get('customer').value &&
+      !this.validateForm.get('terminal').value
+    ) {
+      this.monitoringData = null;
+      return;
+    }
+
     this.isLoading = true;
     this.stopMonitoring.next();
 
@@ -469,5 +469,17 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         return position;
       });
     });
+  }
+
+  private getPositionsWithFilters(): Observable<GetAllResponse<Position>> {
+    return this.positionsService.getAll(
+      { limit: 999 },
+      {
+        customer: this.validateForm.get('customer').value,
+        terminal: this.validateForm.get('terminal').value,
+        travelling: this.validateForm.get('travelling').value,
+        travelStatus: this.selectedTravelStatus,
+      }
+    );
   }
 }
