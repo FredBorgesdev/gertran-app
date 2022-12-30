@@ -49,7 +49,7 @@
         </nz-list>
 
         <ng-template #collapsePanelHeader>
-          <span class="m-r-10">{{terminalGroup.terminalGroup?.name}}</span>
+          <span class="m-r-10">{{terminalGroup.terminalGroup?.name || 'Sem grupo'}}</span>
           <nz-badge [nzCount]="terminalGroup.terminals.length"></nz-badge>
         </ng-template>
 
