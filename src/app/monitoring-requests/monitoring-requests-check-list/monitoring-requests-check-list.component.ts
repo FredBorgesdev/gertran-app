@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
 import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Wagon} from '../../wagons/wagons.service';
@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TravelStep} from '../travel-step.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {UtilsService} from '../../shared/services/utils.service';
+import {NzModalRef} from 'ng-zorro-antd/modal';
 
 enum Status {
   DRAFT = 'draft',
@@ -23,6 +24,10 @@ enum Status {
   PENDING = 'pending',
   IMPORTED_UNAVAILABLE = 'imported_unavailable',
 }
+
+export type ModalDestroyResult = {
+  updateList: boolean;
+};
 
 @Component({
   selector: 'app-monitoring-requests-check-list',
@@ -86,6 +91,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private terminalsService: TerminalsService,
     private utils: UtilsService,
+    private modal: NzModalRef,
   ) { }
 
   ngOnInit(): void {
@@ -184,6 +190,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     return this.monitoringRequestService.release(this.monitoringRequest.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
+      this.modal.destroy({ updateList: true });
     }).catch(() => {
       this.message.error('Não foi possível atualizar o status.');
       this.isLoading = false;

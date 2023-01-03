@@ -12,7 +12,10 @@ import {DirectionsService} from '../../shared/services/directions.service';
 import {Route} from '../../routes/routes.service';
 import {GetAllResponse, getCurrentPage, Pagination} from '../../shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
-import {MonitoringRequestsCheckListComponent} from '../monitoring-requests-check-list/monitoring-requests-check-list.component';
+import {
+  ModalDestroyResult,
+  MonitoringRequestsCheckListComponent
+} from '../monitoring-requests-check-list/monitoring-requests-check-list.component';
 import {MonitoringRequestsFilter} from '../monitoring-requests-filter/monitoring-requests-filter.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
@@ -55,7 +58,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     toDate: this.now,
   };
 
-  refreshAfterClose = new EventEmitter();
+  refreshAfterClose = new EventEmitter<ModalDestroyResult>();
 
   constructor(
     private travelStepService: TravelStepService,
@@ -80,8 +83,10 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
     await this.loadAllResources();
 
-    this.refreshAfterClose.subscribe(() => {
-      this.loadAllResources();
+    this.refreshAfterClose.subscribe((result) => {
+      if (result?.updateList) {
+        this.loadAllResources();
+      }
     });
   }
 
