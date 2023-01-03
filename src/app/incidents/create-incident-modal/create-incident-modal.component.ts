@@ -5,6 +5,7 @@ import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-fo
 import {Incident, IncidentsService} from '../../monitoring/incidents.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from '@angular/router';
+import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
 
 @Component({
   selector: 'app-create-incident-modal',
@@ -12,7 +13,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./create-incident-modal.component.css']
 })
 export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident> implements OnInit {
-  @Input() monitoringRequestId: string;
+  @Input() monitoringRequest: MonitoringRequests;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,8 +64,10 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   ];
   validateForm: FormGroup;
   ngOnInit(): void {
+    console.log(this.monitoringRequest)
+
     this.validateForm = this.formBuilder.group({
-      monitoringRequest: [this.monitoringRequestId],
+      monitoringRequest: [this.monitoringRequest.id],
       incidentType: [null],
       incidentDate: [null],
       incidentLocation: [null],

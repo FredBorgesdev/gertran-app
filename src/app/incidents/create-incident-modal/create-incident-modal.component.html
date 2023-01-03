@@ -1,3 +1,17 @@
+<nz-descriptions
+  nzTitle="Motorista"
+  nzBordered
+  nzSize="small"
+  class="m-b-50"
+>
+  <nz-descriptions-item nzTitle="Nome">
+    {{monitoringRequest?.['driverName']}}
+  </nz-descriptions-item>
+  <nz-descriptions-item nzTitle="Telefone">
+    {{monitoringRequest?.['driverPhone']}}
+  </nz-descriptions-item>
+</nz-descriptions>
+
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
     <div nz-row nzGutter="16">

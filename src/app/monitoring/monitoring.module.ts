@@ -18,6 +18,7 @@ import { MessagesModalComponent } from './messages-modal/messages-modal.componen
 import { IncidentsModalComponent } from './incidents-modal/incidents-modal.component';
 import {CreateIncidentModalComponent} from '../incidents/create-incident-modal/create-incident-modal.component';
 import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
+import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
 
 const antdModules = [
 ];
@@ -35,17 +36,18 @@ const antdModules = [
     CreateIncidentModalComponent,
   ],
     imports: [
-      SharedModule,
-      CommonModule,
-      MonitoringRoutingModule,
-      GoogleMapsModule,
-      GooglePlaceModule,
-      ...antdModules,
-      NzPopoverModule,
-      NgxMapboxGLModule.withConfig({
-        accessToken: environment.mapboxAccessToken,
-      }),
-      NzSkeletonModule
+        SharedModule,
+        CommonModule,
+        MonitoringRoutingModule,
+        GoogleMapsModule,
+        GooglePlaceModule,
+        ...antdModules,
+        NzPopoverModule,
+        NgxMapboxGLModule.withConfig({
+            accessToken: environment.mapboxAccessToken,
+        }),
+        NzSkeletonModule,
+        NzDescriptionsModule
     ]
 })
 export class MonitoringModule { }

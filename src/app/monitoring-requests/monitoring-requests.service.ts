@@ -52,6 +52,8 @@ export interface MonitoringRequests {
   transporter: Customer;
   driver: {
     id: string;
+    name: string;
+    phoneNumber: string;
   };
   auxiliaryDriver: {
     id: string;
