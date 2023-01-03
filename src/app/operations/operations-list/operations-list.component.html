@@ -21,7 +21,7 @@
               <input
                 type="text"
                 nz-input
-                placeholder="Placa"
+                placeholder="Nome da operação"
                 [(ngModel)]="searchInput"
                 (ngModelChange)="searchByName(searchInput)"
               >
@@ -44,6 +44,7 @@
         </button>
       </div>
     </div>
+
     <nz-table
       #table
       [nzData]="resources?.results"
@@ -52,6 +53,7 @@
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
+      nzSize="small"
     >
       <thead>
       <tr>

@@ -24,6 +24,13 @@
     </nz-form-item>
 
     <nz-form-item>
+      <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome da operação</nz-form-label>
+      <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+        <input id="name" type="text" nz-input formControlName="name" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
       <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTrackerModels">Modelo de rastreadores permitidos</nz-form-label>
       <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
         <nz-select
@@ -162,13 +169,6 @@
     </div>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
-        <input id="name" type="text" nz-input formControlName="name" />
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
       <div nz-row>
         <div nz-col nzSpan="12">
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
@@ -208,46 +208,28 @@
       </div>
     </nz-form-item>
 
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="operationType">Tipo de operação</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-        <nz-select
-          id="operationType"
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Selecione o tipo de operação"
-          formControlName="operationType"
-        >
-          <nz-option
-            *ngFor="let option of operationTypes"
-            [nzLabel]="option.label"
-            [nzValue]="option.value"
-          ></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerName">Nome da corretora</nz-form-label>
-          <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
-            <input id="brokerName" type="text" nz-input formControlName="brokerName" />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-
-      <div nz-col nzSpan="12">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerPhone">Telefone da corretora</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="operationType">Tipo de operação</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <input id="brokerPhone" type="text" nz-input formControlName="brokerPhone" />
+            <nz-select
+              id="operationType"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione o tipo de operação"
+              formControlName="operationType"
+            >
+              <nz-option
+                *ngFor="let option of operationTypes"
+                [nzLabel]="option.label"
+                [nzValue]="option.value"
+              ></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
-    </div>
 
-    <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="radiusToActivateRouteDeviation">Raio de ativação</nz-form-label>
@@ -261,8 +243,28 @@
           </nz-form-control>
         </nz-form-item>
       </div>
+    </div>
 
-      <div nz-col nzSpan="12">
+    <div nz-row nzGutter="16">
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerName">Nome da corretora</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+            <input id="brokerName" type="text" nz-input formControlName="brokerName" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerPhone">Telefone da corretora</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input id="brokerPhone" type="text" nz-input formControlName="brokerPhone" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="8">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="brokerPersonInCharge">Responsável</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
