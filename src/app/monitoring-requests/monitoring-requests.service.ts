@@ -11,6 +11,23 @@ import {Bait} from './baits.service';
 import {Terminals} from '../terminals/terminals.service';
 import {Checklist} from '../checklists/checklists.service';
 
+export enum Status {
+  DRAFT = 'draft',
+  UNDER_REVIEW = 'under_review',
+  WAITING_FOR_START = 'waiting_for_start',
+  IN_PROGRESS = 'in_progress',
+  REPROVED = 'reproved',
+  FINISHED = 'finished',
+  SUCCESSFULLY_TERMINATED = 'successfully_terminated',
+  CANCELED = 'canceled',
+  UNSUCCESSFULLY_TERMINATED = 'unsuccessfully_terminated',
+  TERMINATED_DISAPPROVED = 'terminated_disapproved',
+  POTENTIALLY_STOLEN = 'potentially_stolen',
+  STOLEN_CONFIRMED = 'stolen_confirmed',
+  PENDING = 'pending',
+  IMPORTED_UNAVAILABLE = 'imported_unavailable',
+}
+
 export interface MonitoringRequests {
   terminal: Terminals | null;
   baits: Bait[];
@@ -30,7 +47,7 @@ export interface MonitoringRequests {
   id: string;
   name: string;
   route: string;
-  status: string;
+  status: Status;
   shipper: Customer;
   transporter: Customer;
   driver: {
@@ -68,6 +85,12 @@ export interface MonitoringRequests {
   };
   ocrNumber: string;
 }
+
+export type PossibleStatus = {
+  [key: string]: {
+    label: string; value: Status
+  }[]
+};
 
 @Injectable({
   providedIn: 'root'
@@ -144,8 +167,24 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     return this.http.get<Choice[]>('monitoring/survey-conductors');
   }
 
-  getMonitoringRequests(): Observable<Choice[]> {
-    return this.http.get<Choice[]>('monitoring/monitoring-requests');
+  get possibleStatus(): PossibleStatus {
+    return {
+      [Status.DRAFT]: [
+        { label: 'Em análise', value: Status.UNDER_REVIEW },
+      ],
+      [Status.UNDER_REVIEW]: [
+        { label: 'Salvar', value: Status.WAITING_FOR_START },
+        { label: 'Reprovado', value: Status.CANCELED },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
+      ],
+      [Status.WAITING_FOR_START]: [
+        { label: 'Iniciar viagem', value: Status.IN_PROGRESS },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
+      ],
+      [Status.IN_PROGRESS]: [
+        { label: 'Finalizar viagem', value: Status.FINISHED },
+      ],
+    };
   }
 }
 

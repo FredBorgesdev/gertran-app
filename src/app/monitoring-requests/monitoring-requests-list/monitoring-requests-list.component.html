@@ -41,6 +41,7 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeDraft($event)"
+      (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
 
@@ -52,6 +53,7 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeUnderReview($event)"
+      (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
 
@@ -63,6 +65,7 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeWaitingForStart($event)"
+      (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
 
@@ -74,6 +77,7 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeInProgress($event)"
+      (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
 
@@ -85,6 +89,7 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChange($event)"
+      (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
 </nz-spin>

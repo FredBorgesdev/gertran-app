@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
-import {MonitoringRequests} from '../monitoring-requests.service';
+import {MonitoringRequests, MonitoringRequestsService, PossibleStatus, Status} from '../monitoring-requests.service';
 import {differenceInMinutes, format} from 'date-fns';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-monitoring-requests-table',
@@ -9,13 +10,17 @@ import {differenceInMinutes, format} from 'date-fns';
   styleUrls: ['./monitoring-requests-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MonitoringRequestsTableComponent {
+export class MonitoringRequestsTableComponent implements OnInit {
   @Input() monitoringRequests: GetAllResponse<MonitoringRequests>;
   @Input() rowColor = 'inherit';
   @Output() handleQueryParamsChange = new EventEmitter<any>();
   @Output() view = new EventEmitter<MonitoringRequests>();
   @Output() edit = new EventEmitter<MonitoringRequests>();
   @Output() delete = new EventEmitter<MonitoringRequests>();
+  @Output() refreshAll = new EventEmitter<void>();
+
+  isLoading = false;
+  possibleStatus: PossibleStatus;
 
   monitoringRequestsColumns = [
     { title: 'Código' },
@@ -34,7 +39,14 @@ export class MonitoringRequestsTableComponent {
     { title: 'Ações' },
   ];
 
-  constructor() { }
+  constructor(
+    private monitoringRequestService: MonitoringRequestsService,
+    private message: NzMessageService
+  ) { }
+
+  ngOnInit(): void {
+    this.possibleStatus = this.monitoringRequestService.possibleStatus;
+  }
 
   get page(): number {
     return getCurrentPage(this.monitoringRequests);
@@ -76,5 +88,33 @@ export class MonitoringRequestsTableComponent {
     const time = firstStep.time;
 
     return `${date} ${time}`;
+  }
+
+  get statusIcons(): { [key: string]: string } {
+    return {
+      [Status.UNDER_REVIEW]: 'clock-circle',
+      [Status.WAITING_FOR_START]: 'clock-circle',
+      [Status.FINISHED]: 'check-circle',
+      [Status.CANCELED]: 'close-circle',
+      [Status.IN_PROGRESS]: 'car',
+    };
+  }
+
+  moveMonitoringRequestToStatus(
+    item: MonitoringRequests,
+    status: PossibleStatus[string][0]
+  ): void {
+    this.isLoading = true;
+
+    this.monitoringRequestService.update(item.id, {
+      status: status.value
+    } as MonitoringRequests).subscribe(() => {
+      this.isLoading = false;
+      this.message.success('Status atualizado com sucesso!');
+      this.refreshAll.emit();
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Erro ao atualizar status');
+    });
   }
 }

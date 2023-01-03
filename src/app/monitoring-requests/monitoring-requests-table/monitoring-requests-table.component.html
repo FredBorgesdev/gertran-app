@@ -9,6 +9,7 @@
   nzSize="small"
   nzTableLayout="fixed"
   [nzScroll]="{ y: '768px', x: '768px' }"
+  [nzLoading]="isLoading"
 >
   <thead>
   <tr>
@@ -66,6 +67,19 @@
         nzTooltipTitle="Editar"
       >
         <i nz-icon nzType="edit" theme="outline"></i>
+      </a>
+
+      <a
+        *ngFor="let status of possibleStatus[item.status]; let i=index"
+        (click)="moveMonitoringRequestToStatus(item, status)"
+        class="m-r-5"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        [nzTooltipTitle]="status.label"
+      >
+        <i nz-icon [nzType]="statusIcons[status.value]" theme="outline"></i>
       </a>
     </td>
   </tr>

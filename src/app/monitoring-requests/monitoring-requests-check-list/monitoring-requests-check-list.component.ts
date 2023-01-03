@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Wagon} from '../../wagons/wagons.service';
@@ -7,23 +7,6 @@ import {TravelStep} from '../travel-step.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {UtilsService} from '../../shared/services/utils.service';
 import {NzModalRef} from 'ng-zorro-antd/modal';
-
-enum Status {
-  DRAFT = 'draft',
-  UNDER_REVIEW = 'under_review',
-  WAITING_FOR_START = 'waiting_for_start',
-  IN_PROGRESS = 'in_progress',
-  REPROVED = 'reproved',
-  FINISHED = 'finished',
-  SUCCESSFULLY_TERMINATED = 'successfully_terminated',
-  CANCELED = 'canceled',
-  UNSUCCESSFULLY_TERMINATED = 'unsuccessfully_terminated',
-  TERMINATED_DISAPPROVED = 'terminated_disapproved',
-  POTENTIALLY_STOLEN = 'potentially_stolen',
-  STOLEN_CONFIRMED = 'stolen_confirmed',
-  PENDING = 'pending',
-  IMPORTED_UNAVAILABLE = 'imported_unavailable',
-}
 
 export type ModalDestroyResult = {
   updateList: boolean;
@@ -236,22 +219,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   private setPossibleStatus(): void {
-    this.possibleStatus = {
-      [Status.DRAFT]: [
-        { label: 'Em análise', value: Status.UNDER_REVIEW },
-      ],
-      [Status.UNDER_REVIEW]: [
-        { label: 'Salvar', value: Status.WAITING_FOR_START },
-        { label: 'Reprovado', value: Status.CANCELED },
-        { label: 'Finalizar viagem', value: Status.FINISHED },
-      ],
-      [Status.WAITING_FOR_START]: [
-        { label: 'Iniciar viagem', value: Status.IN_PROGRESS },
-        { label: 'Finalizar viagem', value: Status.FINISHED },
-      ],
-      [Status.IN_PROGRESS]: [
-        { label: 'Finalizar viagem', value: Status.FINISHED },
-      ],
-    }[this.monitoringRequest?.status] || [];
+    this.possibleStatus = this.monitoringRequestService.possibleStatus[
+      this.monitoringRequest?.status
+    ] || [];
   }
 }
