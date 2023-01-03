@@ -3,6 +3,7 @@ import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service'
 import {MonitoringRequests, MonitoringRequestsService, PossibleStatus, Status} from '../monitoring-requests.service';
 import {differenceInMinutes, format} from 'date-fns';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-monitoring-requests-table',
@@ -41,7 +42,8 @@ export class MonitoringRequestsTableComponent implements OnInit {
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    public authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
