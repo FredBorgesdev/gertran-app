@@ -32,6 +32,7 @@ enum Status {
 export class MonitoringRequestsCheckListComponent implements OnInit {
   @Input() monitoringRequestId: string;
   @Input() readOnly = false;
+  @Input() showFooter = false;
 
   checklistForm: FormGroup;
   checklistBaitForm: FormGroup;
@@ -93,7 +94,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       hasEmbeddedIntelligence: [false, []],
       status: ['requested', []],
       allowedTravel: [null, []],
-      justification: ['', []],
+      justification: [{ value: '', disabled: this.readOnly }, []],
       embeddedIntelligenceJustification: ['', []],
     });
     this.checklistItems.forEach(item => {
@@ -123,7 +124,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       batteryLevel: [null, []],
       timerIntervalInMinutes: [null, []],
       approved: [null, []],
-      justification: ['', []]
+      justification: [{ value: '', disabled: this.readOnly }, []]
     });
 
     this.loadMonitoringRequest();

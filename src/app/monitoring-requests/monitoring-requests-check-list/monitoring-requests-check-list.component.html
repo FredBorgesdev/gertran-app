@@ -297,7 +297,7 @@
     </div>
   </form>
 
-  <form nz-form [formGroup]="validateForm" nzLayout="vertical" *ngIf="!readOnly">
+  <form nz-form [formGroup]="validateForm" nzLayout="vertical" *ngIf="showFooter">
     <div nz-row nzGutter="12" nzAlign="middle">
       <div nz-col nzSpan="4">
         <nz-form-label>Terminal</nz-form-label>

@@ -216,7 +216,11 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     this.modal.create({
       nzTitle: item.name,
       nzContent: MonitoringRequestsCheckListComponent,
-      nzComponentParams: {monitoringRequestId: item.id},
+      nzComponentParams: {
+        monitoringRequestId: item.id,
+        readOnly: item.status !== Status.UNDER_REVIEW,
+        showFooter: true,
+      },
       nzWidth: '90%',
       nzOkText: null,
       nzCancelText: null,
