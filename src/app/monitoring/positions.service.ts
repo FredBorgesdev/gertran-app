@@ -41,6 +41,8 @@ export interface Position {
     destinyState: string;
     originCity: string;
     originState: string;
+    driverName: string;
+    driverPhone: string;
   };
   customer: {
     id: string;

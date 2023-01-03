@@ -13,7 +13,10 @@ import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.
   styleUrls: ['./create-incident-modal.component.css']
 })
 export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident> implements OnInit {
-  @Input() monitoringRequest: MonitoringRequests;
+  @Input() monitoringRequest: MonitoringRequests & {
+    driverName: string;
+    driverPhone: string;
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,14 +67,14 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   ];
   validateForm: FormGroup;
   ngOnInit(): void {
-    console.log(this.monitoringRequest)
-
     this.validateForm = this.formBuilder.group({
       monitoringRequest: [this.monitoringRequest.id],
       incidentType: [null],
       incidentDate: [null],
       incidentLocation: [null],
       driverContactedAt: [null],
+      driverName: [this.monitoringRequest.driverName],
+      driverPhone: [this.monitoringRequest.driverPhone],
       shipperName: [null],
       shipperContactedAt: [null],
       wasImmediateActionApproved: [null],
