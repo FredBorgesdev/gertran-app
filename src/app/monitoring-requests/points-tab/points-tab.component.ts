@@ -7,12 +7,12 @@ import polyline from '@mapbox/polyline';
 
 import {MapModalComponent} from '../map-modal/map-modal.component';
 import {environment} from '../../../environments/environment';
-import {addSeconds, format, setHours} from 'date-fns';
+import {addSeconds, differenceInDays, format, isBefore, setHours} from 'date-fns';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {Choice} from '../../shared/services/api.service';
-import {PointTypes, StopsService} from '../../stops/stops.service';
+import {PointTypes, Stop, StopsService} from '../../stops/stops.service';
 import {TravelStepService} from '../travel-step.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {forkJoin} from 'rxjs';
@@ -103,14 +103,14 @@ export class PointsTabComponent implements OnInit {
     });
   }
 
-  getPointsControls(): FormControl[] {
+  getPointsControls(): FormGroup[] {
     if (!this.validateForm) {
       return [];
     }
-    return (this.validateForm.get('points') as FormArray).controls as FormControl[];
+    return (this.validateForm.get('points') as FormArray).controls as FormGroup[];
   }
 
-  addPoint(): FormControl {
+  addPoint(): FormGroup {
     const chosenPoint = this.validateForm.get('chosenPoint').value;
     const address = chosenPoint?.address || null;
 
@@ -129,7 +129,7 @@ export class PointsTabComponent implements OnInit {
       }),
     );
 
-    this.setPointsCorrectTypes();
+    this.setPointsCorrectTypes().then();
 
     return this.getPointsControls()[this.getPointsControls().length - 1];
   }
@@ -175,12 +175,13 @@ export class PointsTabComponent implements OnInit {
     });
 
     this._routeCoordinates = await this.getRouteCoordinates();
+    this.calculateEtaForAllPoints().then();
   }
 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.getPointsControls(), event.previousIndex, event.currentIndex);
-    this.calculateEtaForAllPoints();
-    this.setPointsCorrectTypes();
+    this.calculateEtaForAllPoints().then();
+    this.setPointsCorrectTypes().then();
   }
 
   async setPointsCorrectTypes(): Promise<void> {
@@ -188,16 +189,16 @@ export class PointsTabComponent implements OnInit {
     const lastPoint = this.getPointsControls()[this.getPointsControls().length - 1];
     const waypoints = this.getPointsControls().slice(1, this.getPointsControls().length - 1);
 
-    firstPoint.patchValue({ pointType: PointTypes.START });
-    waypoints.forEach((point) => {
+    firstPoint?.patchValue({ pointType: PointTypes.START });
+    waypoints?.forEach((point) => {
       point.patchValue({ pointType: PointTypes.WAYPOINT });
     });
-    lastPoint.patchValue({ pointType: PointTypes.END });
+    lastPoint?.patchValue({ pointType: PointTypes.END });
   }
 
   async calculateEtaForAllPoints(): Promise<void> {
     const points = this.getPointsControls();
-    points[0]?.patchValue({ date: new Date() });
+    points[0]?.patchValue({ date: points[0]?.value.date || new Date() });
 
     for (let index = 1; index < points.length; index++) {
       const previousPoint = points[index - 1];
@@ -291,7 +292,7 @@ export class PointsTabComponent implements OnInit {
     const routeCoordinates = await this.directionsService.getDirections(
       this.getPointsControls().map((point) => point.value),
     );
-    const directionsGeoJson = polyline.toGeoJSON(routeCoordinates.route[0].geometry);
+    const directionsGeoJson = polyline.toGeoJSON(routeCoordinates.route[0]?.geometry);
 
     return directionsGeoJson.coordinates;
   }
@@ -309,6 +310,18 @@ export class PointsTabComponent implements OnInit {
 
       return [...acc, pointWithOrder];
     }, []);
+  }
+
+  disabledDate(pointIndex: number): (current: Date) => boolean {
+    return (current: Date) => {
+      const previousPoint = this.getPointsControls()[pointIndex - 1];
+
+      if (previousPoint && isBefore(current, previousPoint.value.date)) {
+        return true;
+      }
+
+      return differenceInDays(current, new Date()) < 0;
+    };
   }
 
   private handleSuccess(): void {

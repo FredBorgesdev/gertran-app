@@ -66,17 +66,6 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Reprovado">
-    <app-monitoring-requests-table
-      [monitoringRequests]="resources"
-      [rowColor]="'#fff7f9'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChange($event)"
-    ></app-monitoring-requests-table>
-  </nz-card>
-
   <nz-card nzTitle="Em viagem">
     <app-monitoring-requests-table
       [monitoringRequests]="inProgressResponse"
@@ -85,6 +74,17 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeInProgress($event)"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
+  <nz-card nzTitle="Reprovado">
+    <app-monitoring-requests-table
+      [monitoringRequests]="resources"
+      [rowColor]="'#fff7f9'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChange($event)"
     ></app-monitoring-requests-table>
   </nz-card>
 </nz-spin>

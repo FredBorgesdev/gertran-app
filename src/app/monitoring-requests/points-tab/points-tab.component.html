@@ -39,6 +39,7 @@
               <nz-form-control nzErrorTip="Preencha o campo">
                 <nz-date-picker
                   style="width: 100%"
+                  [nzDisabledDate]="disabledDate(i)"
                   [nzShowTime]="{ nzDefaultOpenValue: dateDefaultValue }"
                   nzFormat="dd/MM/yyyy HH:mm:ss"
                   formControlName="date"
