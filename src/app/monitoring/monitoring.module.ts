@@ -35,19 +35,19 @@ const antdModules = [
     IncidentsModalComponent,
     CreateIncidentModalComponent,
   ],
-    imports: [
-        SharedModule,
-        CommonModule,
-        MonitoringRoutingModule,
-        GoogleMapsModule,
-        GooglePlaceModule,
-        ...antdModules,
-        NzPopoverModule,
-        NgxMapboxGLModule.withConfig({
-            accessToken: environment.mapboxAccessToken,
-        }),
-        NzSkeletonModule,
-        NzDescriptionsModule
-    ]
+  imports: [
+    SharedModule,
+    CommonModule,
+    MonitoringRoutingModule,
+    GoogleMapsModule,
+    GooglePlaceModule,
+    ...antdModules,
+    NzPopoverModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapboxAccessToken,
+    }),
+    NzSkeletonModule,
+    NzDescriptionsModule
+  ]
 })
 export class MonitoringModule { }
