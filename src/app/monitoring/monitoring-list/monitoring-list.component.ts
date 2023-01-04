@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -93,6 +93,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-danger' },
   ];
 
+  refreshAlertCount = new EventEmitter();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -122,6 +124,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       share(),
       takeUntil(this.stopMonitoring)
     );
+
+    this.refreshAlertCount.subscribe(() => this.setAlertsCount());
 
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
@@ -227,12 +231,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.stopMonitoring.next();
 
-    this.alertsService.getAlertsCount(
-      this.validateForm.value,
-      AlertTypes.terminal
-    ).subscribe((response) => {
-      this.alertsCount = response;
-    });
+    this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
       this.monitoringData = data.results;
@@ -257,6 +256,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzOkText: 'Fechar',
       nzCancelText: null,
       nzWidth: '70%',
+      nzAfterClose: this.refreshAlertCount,
     });
   }
 
@@ -481,5 +481,14 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         travelStatus: this.selectedTravelStatus,
       }
     );
+  }
+
+  private setAlertsCount(): void {
+    this.alertsService.getAlertsCount(
+      this.validateForm.value,
+      AlertTypes.terminal
+    ).subscribe((response) => {
+      this.alertsCount = response;
+    });
   }
 }
