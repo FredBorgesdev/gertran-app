@@ -327,15 +327,15 @@ export const ROUTES: SideNavInterface[] = [
             icon: 'bar-chart',
             submenu: [],
           },
-          {
-            path: '/dashboard/reports15',
-            title: 'Histórico de alertas',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            gertranStaffOnly: true
-          },
+          // {
+          //   path: '/dashboard/reports15',
+          //   title: 'Histórico de alertas',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   gertranStaffOnly: true
+          // },
           {
             path: '/reports/commands-history',
             title: 'Histórico de comandos',
@@ -345,42 +345,42 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
-          {
-            path: '/dashboard/reports17',
-            title: 'Histórico de check list',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.REPORTS_VIEW_CHECKLIST_HISTORY_REPORT
-          },
-          {
-            path: '/dashboard/reports18',
-            title: 'Histórico temperatura (analítico)',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
-          },
-          {
-            path: '/dashboard/reports19',
-            title: 'Histórico temperatura (gráfico)',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
-          },
-          {
-            path: '/dashboard/reports20',
-            title: 'Relatório analítico por S.M.',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.VIEW_ANALYTICAL_PER_SM_REPORT
-          },
+          // {
+          //   path: '/dashboard/reports17',
+          //   title: 'Histórico de check list',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.REPORTS_VIEW_CHECKLIST_HISTORY_REPORT
+          // },
+          // {
+          //   path: '/dashboard/reports18',
+          //   title: 'Histórico temperatura (analítico)',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
+          // },
+          // {
+          //   path: '/dashboard/reports19',
+          //   title: 'Histórico temperatura (gráfico)',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
+          // },
+          // {
+          //   path: '/dashboard/reports20',
+          //   title: 'Relatório analítico por S.M.',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.VIEW_ANALYTICAL_PER_SM_REPORT
+          // },
         ],
       },
       {
@@ -390,15 +390,15 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'line-chart',
         submenu: [
-          {
-            path: '/dashboard/reports21',
-            title: 'Histórico de ocorrências',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.REPORTS_VIEW_INCIDENT_REPORT
-          },
+          // {
+          //   path: '/dashboard/reports21',
+          //   title: 'Histórico de ocorrências',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.REPORTS_VIEW_INCIDENT_REPORT
+          // },
           {
             path: '/reports/analytical',
             title: 'Relatório analítico',
@@ -417,24 +417,24 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             gertranStaffOnly: true
           },
-          {
-            path: '/dashboard/reports24',
-            title: 'Relatório de pânico',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.REPORTS_VIEW_PANIC_HISTORY_REPORT
-          },
-          {
-            path: '/dashboard/reports25',
-            title: 'Ocorrências por turno',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            gertranStaffOnly: true
-          },
+          // {
+          //   path: '/dashboard/reports24',
+          //   title: 'Relatório de pânico',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.REPORTS_VIEW_PANIC_HISTORY_REPORT
+          // },
+          // {
+          //   path: '/dashboard/reports25',
+          //   title: 'Ocorrências por turno',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   gertranStaffOnly: true
+          // },
           {
             path: '/reports/operational-audit-commands',
             title: 'Auditoria Operacional Comandos',
