@@ -18,9 +18,18 @@ import {AuthenticationService} from '../../authentication/authentication.service
 export interface Vehicle {
   id: string;
   customers: Customer[];
-  manufacturer: string;
-  vehicleModel: string;
-  vehicleModelType: string;
+  manufacturer: {
+    id: string;
+    name: string;
+  };
+  vehicleModel: {
+    id: string;
+    name: string;
+  };
+  vehicleModelType: {
+    id: string;
+    name: string;
+  };
   peripherals: string[];
   workingSituation: string;
   plate: string;
@@ -138,9 +147,9 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
     this.validateForm.patchValue({
       customers: this.resource.vehicle.customers.map(customer => customer.id),
-      manufacturer: this.resource.vehicle.manufacturer,
-      vehicleModel: this.resource.vehicle.vehicleModel,
-      vehicleModelType: this.resource.vehicle.vehicleModelType,
+      manufacturer: this.resource.vehicle.manufacturer.id,
+      vehicleModel: this.resource.vehicle.vehicleModel.id,
+      vehicleModelType: this.resource.vehicle.vehicleModelType.id,
       peripherals: this.resource.vehicle.peripherals,
       workingSituation: this.resource.vehicle.workingSituation,
       plate: this.resource.vehicle.plate,
@@ -164,15 +173,17 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     }
 
     if (this.resource.vehicle?.manufacturer) {
-      this.vehicleManufacturersService.get(this.resource.vehicle.manufacturer).subscribe((manufacturer) => {
+      this.vehicleManufacturersService.get(
+        this.resource.vehicle.manufacturer.id
+      ).subscribe((manufacturer) => {
         this.selectableVehicleManufacturersService.concatManufacturers([manufacturer]);
       });
     }
 
     if (this.resource.vehicle?.vehicleModel) {
       this.vehicleModelsService.get(
-        this.resource.vehicle.vehicleModel,
-        this.resource.vehicle.manufacturer
+        this.resource.vehicle.vehicleModel.id,
+        this.resource.vehicle.manufacturer.id
       ).subscribe((model) => {
         this.vehicleModels = [model].concat(this.vehicleModels);
       });
