@@ -211,7 +211,10 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   }
 
   getValues(): T {
-    return this.utilsService.removeNullValues(super.getValues());
+    return {
+      ...this.utilsService.removeNullValues(super.getValues()),
+      customers: this.validateForm.controls.customers.value.filter(Boolean),
+    };
   }
 
   private handleSaveError(error: HttpErrorResponse): void {
