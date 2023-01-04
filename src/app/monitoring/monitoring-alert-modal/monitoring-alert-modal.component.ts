@@ -4,6 +4,9 @@ import {Alert, AlertsService, AlertTypes, Severity} from '../alerts.service';
 import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
+import {Position} from '../positions.service';
+import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
 
 @Component({
   selector: 'app-monitoring-alert-modal',
@@ -119,5 +122,33 @@ export class MonitoringAlertModalComponent implements OnInit {
     const limit = +url.match(/limit=\d+/)[0].split('=')[1];
 
     return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
+  }
+
+  openCommandsModal(position: Position): void {
+    this.modal.create({
+      nzTitle: 'Comandos',
+      nzContent: CommandsModalComponent,
+      nzComponentParams: {
+        position,
+      },
+      nzOnOk: (componentInstance) => componentInstance.sendCommand(),
+      nzOkText: 'Enviar',
+      nzCancelText: 'Fechar',
+      nzWidth: '70%',
+    });
+  }
+
+  openMessagesModal(position: Position): void {
+    this.modal.create({
+      nzTitle: 'Mensagens',
+      nzContent: MessagesModalComponent,
+      nzComponentParams: {
+        position,
+      },
+      nzOnOk: (componentInstance) => componentInstance.sendMessage(),
+      nzOkText: 'Enviar',
+      nzCancelText: 'Fechar',
+      nzWidth: '70%',
+    });
   }
 }

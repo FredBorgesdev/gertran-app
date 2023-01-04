@@ -31,10 +31,34 @@
       </div>
     </td>
     <td class="text-center">
+      <button
+        (click)="openCommandsModal(item.position)"
+        nz-button
+        nzType="default"
+        nzSize="small"
+        nzShape="round"
+        class="m-r-10"
+      >
+        <span nz-icon nzType="send"></span>
+        Enviar comando
+      </button>
+
+      <button
+        (click)="openMessagesModal(item.position)"
+        nz-button
+        nzType="default"
+        nzSize="small"
+        nzShape="round"
+        class="m-r-10"
+      >
+        <span nz-icon nzType="send"></span>
+        Enviar mensagem
+      </button>
+
       <a
         (click)="markAsSolved(item)"
         nz-button
-        nzType="default"
+        nzType="primary"
         nzShape="circle"
         nz-tooltip
         [disabled]="item.solvedAt"
