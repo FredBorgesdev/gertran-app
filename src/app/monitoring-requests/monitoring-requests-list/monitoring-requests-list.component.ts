@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { MonitoringRequestsService, MonitoringRequests } from '../monitoring-requests.service';
+import {MonitoringRequestsService, MonitoringRequests, Status} from '../monitoring-requests.service';
 import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
 import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.component';
 import {TravelStepService} from '../travel-step.service';
@@ -21,23 +21,6 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 import {state} from '@angular/animations';
 
-enum Status {
-  DRAFT = 'draft',
-  UNDER_REVIEW = 'under_review',
-  WAITING_FOR_START = 'waiting_for_start',
-  IN_PROGRESS = 'in_progress',
-  REPROVED = 'reproved',
-  FINISHED = 'finished',
-  SUCCESSFULLY_TERMINATED = 'successfully_terminated',
-  CANCELED = 'canceled',
-  UNSUCCESSFULLY_TERMINATED = 'unsuccessfully_terminated',
-  TERMINATED_DISAPPROVED = 'terminated_disapproved',
-  POTENTIALLY_STOLEN = 'potentially_stolen',
-  STOLEN_CONFIRMED = 'stolen_confirmed',
-  PENDING = 'pending',
-  IMPORTED_UNAVAILABLE = 'imported_unavailable',
-}
-
 @Component({
   selector: 'app-monitoring-requests-list',
   templateUrl: './monitoring-requests-list.component.html',
@@ -48,6 +31,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   inProgressResponse: GetAllResponse<MonitoringRequests>;
   draftResponse: GetAllResponse<MonitoringRequests>;
   underReviewResponse: GetAllResponse<MonitoringRequests>;
+  reprovedResponse: GetAllResponse<MonitoringRequests>;
 
   monitoringRequestFilters: {
     fromDate: string;
@@ -100,6 +84,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     this.loadWaitingForStart();
     this.loadInProgress();
     this.loadUnderReview();
+    this.loadReproved();
   }
 
   loadWaitingForStart(url?: string): void {
@@ -140,6 +125,20 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       this.draftResponse = result;
+      this.isLoading = false;
+    });
+  }
+
+  loadReproved(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.REPROVED,
+        ...this.monitoringRequestFilters,
+      }
+    ).subscribe((result) => {
+      this.reprovedResponse = result;
       this.isLoading = false;
     });
   }
@@ -274,6 +273,16 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     } else if (params.pageIndex > getCurrentPage(this.draftResponse)) {
       const url = this.replaceOffsetWithPage(this.draftResponse.next, params.pageIndex);
       this.loadDraft(url);
+    }
+  }
+
+  handleQueryParamsChangeReproved(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.reprovedResponse)) {
+      const url = this.replaceOffsetWithPage(this.reprovedResponse.previous, params.pageIndex);
+      this.loadReproved(url);
+    } else if (params.pageIndex > getCurrentPage(this.reprovedResponse)) {
+      const url = this.replaceOffsetWithPage(this.reprovedResponse.next, params.pageIndex);
+      this.loadReproved(url);
     }
   }
 

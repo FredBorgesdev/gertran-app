@@ -81,7 +81,7 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Reprovado">
+  <nz-card nzTitle="Cancelado">
     <app-monitoring-requests-table
       [monitoringRequests]="resources"
       [rowColor]="'#fff7f9'"
@@ -89,6 +89,18 @@
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChange($event)"
+      (refreshAll)="loadAllResources()"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
+  <nz-card nzTitle="Reprovado">
+    <app-monitoring-requests-table
+      [monitoringRequests]="reprovedResponse"
+      [rowColor]="'#fff7f9'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChangeReproved($event)"
       (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
