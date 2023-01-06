@@ -28,6 +28,8 @@ export class UsersFormComponent implements OnInit {
   @Output() changePassword: EventEmitter<string> = new EventEmitter<string>();
   @Output() updateResource = new EventEmitter<AbstractUser>();
 
+  cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
+
   constructor(
     private formBuilder: FormBuilder,
     public selectableCustomerService: SelectableCustomerServiceService,

@@ -24,7 +24,13 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">Cpf</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o cpf corretamente">
-          <input id="cpf" type="text" nz-input formControlName="cpf" />
+          <input
+            id="cpf"
+            type="text"
+            nz-input
+            formControlName="cpf"
+            [textMask]="{ mask: cpfMask, guide: false }"
+          />
         </nz-form-control>
       </nz-form-item>
     </div>

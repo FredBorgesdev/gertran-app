@@ -9,6 +9,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { UsersUserComponent } from './users-user/users-user.component';
 import {GroupsModule} from '../groups/groups.module';
 import {PermissionsModule} from '../permissions/permissions.module';
+import {TextMaskModule} from 'angular2-text-mask';
 
 const antdModule = [
   NzTransferModule
@@ -20,12 +21,13 @@ const antdModule = [
     UsersListComponent,
     UsersUserComponent,
   ],
-  imports: [
-    SharedModule,
-    UsersRoutingModule,
-    GroupsModule,
-    PermissionsModule,
-    ...antdModule
-  ]
+    imports: [
+        SharedModule,
+        UsersRoutingModule,
+        GroupsModule,
+        PermissionsModule,
+        ...antdModule,
+        TextMaskModule
+    ]
 })
 export class UsersModule {}
