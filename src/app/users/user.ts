@@ -7,7 +7,7 @@ export default class User extends AbstractUser {
   }
 
   hasPermission(permission: string): boolean {
-    if (this.isSuperuser) {
+    if (this.isGertranStaff) {
       return true;
     }
 

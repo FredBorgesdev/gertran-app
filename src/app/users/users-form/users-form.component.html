@@ -69,16 +69,6 @@
   <nz-form-item *ngIf="authService.user.isGertranStaff">
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
       <div nz-col [nzSpan]="12">
-        <label nz-checkbox formControlName="isSuperuser">
-          <span>É super usuário?</span>
-        </label>
-      </div>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngIf="authService.user.isGertranStaff">
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-      <div nz-col [nzSpan]="12">
         <label nz-checkbox formControlName="isGertranStaff">
           <span>Usuário Gertran</span>
         </label>

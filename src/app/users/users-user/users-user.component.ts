@@ -36,7 +36,6 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
       password: [null, []],
       isActive: [true, []],
       isGertranStaff: [false, []],
-      isSuperuser: [false, []],
     });
   }
 

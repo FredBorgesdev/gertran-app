@@ -45,7 +45,7 @@ export class SideNavComponent implements OnInit {
 
   filteredItems(menu: SideNavInterface[]): SideNavInterface[] {
     return menu.filter(menuItem => {
-      if (this.user.isSuperuser) {
+      if (this.user.isGertranStaff) {
         return true;
       }
       const isFolder = menuItem.submenu.length > 0;
