@@ -69,7 +69,9 @@
         <i nz-icon nzType="edit" theme="outline"></i>
       </a>
 
-      <div *ngIf="authService.user.isGertranStaff && item.status !== 'draft'">
+      <div
+        *ngIf="authService.user.isGertranStaff && !['draft', 'under_review'].includes(item.status)"
+      >
         <a
           *ngFor="let status of possibleStatus[item.status]; let i=index"
           (click)="moveMonitoringRequestToStatus(item, status)"
