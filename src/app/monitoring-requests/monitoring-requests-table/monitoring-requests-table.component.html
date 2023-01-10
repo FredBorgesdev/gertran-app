@@ -23,7 +23,7 @@
   <tbody>
   <tr *ngFor="let item of table.data; let i=index" [style]="'background-color:' + rowColor">
     <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
-    <td>{{item.ocrNumber}}</td>
+    <td>{{getOcrNumber(item)}}</td>
     <td>{{item.customer?.tradingName ?? '-'}}</td>
     <td>{{item.shipper?.tradingName || item.transporter?.tradingName || '-'}}</td>
     <td>{{item.driver?.name ?? '-'}}</td>

@@ -29,6 +29,10 @@ export enum Status {
 }
 
 export interface MonitoringRequests {
+  loadingOrders: {
+    id: string;
+    ocrNumber: string;
+  }[];
   terminal: Terminals | null;
   baits: Bait[];
   armedGuards: ArmedGuard[];

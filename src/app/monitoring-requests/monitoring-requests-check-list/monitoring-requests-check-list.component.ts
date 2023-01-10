@@ -188,12 +188,16 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     }[workingSituation] || 'N/a';
   }
 
-  getLoadType(): string {
+  get loadType(): string {
     return {
       refrigerated: 'Refrigerada',
       unrefrigerated: 'Não refrigerada',
       frozen: 'Congelada',
     }[this.monitoringRequest?.loadType] || 'N/a';
+  }
+
+  get ocrNumber(): string {
+    return this.monitoringRequest?.loadingOrders?.map(loadingOrder => loadingOrder.ocrNumber).join(', ') || 'N/a';
   }
 
   get firstTravelStep(): TravelStep {

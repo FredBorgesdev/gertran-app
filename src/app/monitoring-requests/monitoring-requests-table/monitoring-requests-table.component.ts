@@ -58,6 +58,10 @@ export class MonitoringRequestsTableComponent implements OnInit {
     return item.wagons.map(wagon => wagon.vehicle.plate).join(', ');
   }
 
+  getOcrNumber(item: MonitoringRequests): string {
+    return item.loadingOrders?.map(loadingOrder => loadingOrder.ocrNumber).join(', ') || 'N/a';
+  }
+
   getUpdateDiff(item: MonitoringRequests): string {
     const diffInMinutes = differenceInMinutes(new Date(), new Date(item.updatedAt));
 

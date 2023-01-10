@@ -58,7 +58,7 @@
       {{monitoringRequest?.operation?.['name']}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Ordem de carregamento / OCR">
-      {{monitoringRequest?.ocrNumber}}
+      {{ocrNumber}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Pesquisa Cadastral Realizada por">
       {{monitoringRequest?.surveyConductedBy}}
@@ -67,7 +67,7 @@
       {{monitoringRequest?.loadDescription}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Tipo de Carga">
-      {{getLoadType()}}
+      {{loadType}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Preço da Carga">
       {{monitoringRequest?.loadValue | currency: 'R$ '}}
