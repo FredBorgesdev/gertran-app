@@ -69,6 +69,7 @@
           </div>
         </td>
         <td>{{item.email}}</td>
+        <td>{{item.legacyLogin}}</td>
         <td>{{(item.lastLogin | date: 'dd/MM/yyyy') || '-'}}</td>
         <td>
           <nz-badge *ngIf="item.isAdmin" nzStatus="success"></nz-badge>

@@ -19,20 +19,9 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
 
   userColumn = [
     { title: 'ID' },
-    {
-      title: 'Nome',
-      compare: (
-        a: AbstractUser,
-        b: AbstractUser
-      ) => a.name.localeCompare(b.name)
-    },
-    {
-      title: 'Email',
-      compare: (
-        a: AbstractUser,
-        b: AbstractUser
-      ) => a.email.localeCompare(b.email)
-    },
+    { title: 'Nome' },
+    { title: 'Email' },
+    { title: 'Usuário GERTRAN 2.0' },
     { title: 'Último Login' },
     { title: 'Admnistrador?' },
     { title: 'Usuário Ativo?' },
