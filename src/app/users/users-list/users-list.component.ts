@@ -61,6 +61,6 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
   }
 
   search(): void {
-    this.searchByName(this.searchInput);
+    this.searchByField('search', this.searchInput);
   }
 }

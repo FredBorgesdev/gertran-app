@@ -36,6 +36,7 @@ export class UsersService implements ApiService<AbstractUser> {
     filters?: {
       name?: string;
       customer?: string;
+      search?: string;
     }
   ): Observable<GetAllResponse<AbstractUser>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
@@ -49,6 +50,9 @@ export class UsersService implements ApiService<AbstractUser> {
     }
     if (filters?.customer) {
       params.customer = filters.customer;
+    }
+    if (filters?.search) {
+      params.search = filters.search;
     }
 
     return this.http.get<GetAllResponse<AbstractUser>>('users', { params });
