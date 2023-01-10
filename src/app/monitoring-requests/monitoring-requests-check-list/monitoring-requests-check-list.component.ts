@@ -184,7 +184,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     return {
       fleet: 'Frota',
       aggregate: 'Agregado',
-      thirdParty: 'Terceirizado',
+      third_party: 'Terceiro',
     }[workingSituation] || 'N/a';
   }
 
