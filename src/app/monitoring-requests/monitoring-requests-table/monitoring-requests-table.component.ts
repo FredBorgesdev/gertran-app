@@ -25,7 +25,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
 
   monitoringRequestsColumns = [
     { title: 'Código' },
-    { title: 'Nº' },
+    { title: 'Nº de ordem' },
     { title: 'Empresa' },
     { title: 'Embarcador' },
     { title: 'Motorista' },
