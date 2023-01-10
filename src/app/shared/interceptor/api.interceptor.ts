@@ -43,7 +43,12 @@ export class ApiInterceptor implements HttpInterceptor {
                   headers: this.getHeaders(apiReq.url),
                 }));
               }
-            ));
+            ),
+            catchError(() => {
+              this.authService.logout();
+              return throwError(error);
+            })
+          );
         } else {
           return throwError(error);
         }
