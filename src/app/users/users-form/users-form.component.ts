@@ -62,7 +62,8 @@ export class UsersFormComponent implements OnInit {
       return;
     }
 
-    this.service.getByCpf(cpf).subscribe((user) => {
+    const rawCpf = cpf.replace(/\D/g, '');
+    this.service.getByCpf(rawCpf).subscribe((user) => {
       this.updateResource.emit(user);
       const customerIds = user.customer.map((customer) => customer.id);
       this.selectableCustomerService.concatCustomers(user.customer);
