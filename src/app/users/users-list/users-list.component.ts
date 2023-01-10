@@ -23,8 +23,7 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
     { title: 'Email' },
     { title: 'Usuário GERTRAN 2.0' },
     { title: 'Último Login' },
-    { title: 'Admnistrador?' },
-    { title: 'Usuário Ativo?' },
+    { title: 'Usuário Ativo' },
     { title: 'Ações' }
   ];
 

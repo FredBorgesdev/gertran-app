@@ -72,10 +72,6 @@
         <td>{{item.legacyLogin}}</td>
         <td>{{(item.lastLogin | date: 'dd/MM/yyyy') || '-'}}</td>
         <td>
-          <nz-badge *ngIf="item.isAdmin" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.isAdmin" nzStatus="error"></nz-badge>
-        </td>
-        <td>
           <nz-badge *ngIf="item.isActive" nzStatus="success"></nz-badge>
           <nz-badge *ngIf="!item.isActive" nzStatus="error"></nz-badge>
         </td>
