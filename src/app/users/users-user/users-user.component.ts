@@ -76,6 +76,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
     return {
       ...super.getValues(),
       cpf: this.validateForm.controls.cpf.value.replace(/\D/g, ''),
+      customer: this.validateForm.controls.customer.value?.filter(Boolean)
     };
   }
 
