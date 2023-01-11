@@ -179,9 +179,9 @@
           nz-tooltip
           [nzTooltipTitle]="getLastEvent(item)?.eventName"
           nz-icon
-          [nzType]="getAlertIcon(item).icon"
+          [nzType]="getAlertIcon(item)?.icon"
           nzTheme="twotone"
-          [nzTwotoneColor]="getAlertIcon(item).color"
+          [nzTwotoneColor]="getAlertIcon(item)?.color"
           style="font-size: 20px"
         ></span>
       </td>
