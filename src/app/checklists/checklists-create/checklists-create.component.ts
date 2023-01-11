@@ -15,7 +15,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ChecklistsCreateComponent extends BaseCrudFormComponent<Checklist> implements OnInit {
   trucks: Truck[] = [];
-  formVehiclesCount = [1, 2, 3, 4, 5];
+  vehicleMessages = {};
 
   constructor(
     service: ChecklistsService,
@@ -58,6 +58,17 @@ export class ChecklistsCreateComponent extends BaseCrudFormComponent<Checklist> 
     return {
       vehicles: this.validateForm.get('vehicles').value.filter(Boolean)
     };
+  }
+
+  protected handleSuccess(response: {
+    message: string;
+    vehicleId: string;
+  }[]): void {
+    response.forEach(({ message, vehicleId }) => {
+      this.vehicleMessages[vehicleId] = message;
+    });
+
+    this.isLoading = false;
   }
 
   list(): void {

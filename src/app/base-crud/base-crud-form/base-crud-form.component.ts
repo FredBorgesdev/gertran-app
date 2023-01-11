@@ -81,14 +81,14 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     this.isLoading = true;
     if (this.resource?.id) {
       this.service.update(this.resource.id, this.getValues(), ...this.additionalParams())
-        .subscribe(() => success(), (err) => error(err));
+        .subscribe((res) => success(res), (err) => error(err));
     } else {
       this.service.save(this.getValues(), ...this.additionalParams())
-        .subscribe(() => success(), (err) => error(err));
+        .subscribe((res) => success(res), (err) => error(err));
     }
   }
 
-  protected handleSuccess(): void {
+  protected handleSuccess(response?: any): void {
     this.message.success('Registro salvo com sucesso');
     this.list();
     this.isLoading = false;

@@ -19,7 +19,7 @@
       <div formArrayName="vehicles">
         <nz-form-item *ngFor="let form of vehicles.controls; let i = index">
           <nz-form-label>Veiculo {{ i + 1 }}</nz-form-label>
-          <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-form-control>
             <nz-select
               [formControlName]="i"
               nzAllowClear
@@ -38,6 +38,8 @@
               ></nz-option>
             </nz-select>
           </nz-form-control>
+
+          <span>{{ vehicleMessages[form.value] }}</span>
         </nz-form-item>
       </div>
 
