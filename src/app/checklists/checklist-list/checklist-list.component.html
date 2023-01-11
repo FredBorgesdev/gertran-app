@@ -49,6 +49,9 @@
         <td>
           <h6 class="text-center">{{item.vehicle.plate}}</h6>
         </td>
+        <td class="text-center">
+          {{item.vehicle?.trackers?.[0].trackerModel.name}}
+        </td>
         <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
         <td
           class="text-md-center"

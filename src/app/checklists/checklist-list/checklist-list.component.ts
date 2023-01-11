@@ -15,6 +15,7 @@ export class ChecklistListComponent extends BaseCrudListComponent<Checklist> {
   checklistColumns = [
     { title: 'Data criação' },
     { title: 'Placa' },
+    { title: 'Tecnologia' },
     { title: 'Cliente' },
     { title: 'Ações' }
   ];
