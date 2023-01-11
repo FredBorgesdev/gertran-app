@@ -78,7 +78,8 @@ export class MonitoringRequestsTableComponent implements OnInit {
       return '';
     }
 
-    const date = format(new Date(lastStep.date), 'dd/MM/yyyy');
+    const [year, month, day] = lastStep.date.split('-');
+    const date = `${day}/${month}/${year}`;
     const time = lastStep.time;
 
     return `${date} ${time}`;
@@ -90,7 +91,8 @@ export class MonitoringRequestsTableComponent implements OnInit {
       return '';
     }
 
-    const date = format(new Date(firstStep.date), 'dd/MM/yyyy');
+    const [year, month, day] = firstStep.date.split('-');
+    const date = `${day}/${month}/${year}`;
     const time = firstStep.time;
 
     return `${date} ${time}`;
