@@ -19,7 +19,7 @@
       {{monitoringRequest?.driver?.['cnhNumber']}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Telefone">
-      {{monitoringRequest?.driver?.['cellphone'] || 'N/a'}}
+      {{monitoringRequest?.driver?.['phoneNumber'] || 'N/a'}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Tipo Motorista" nzSpan="3">
       {{getWorkingSituation(monitoringRequest?.driver?.['workingSituation'] ?? '')}}
