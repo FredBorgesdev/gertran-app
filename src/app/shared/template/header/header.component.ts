@@ -78,7 +78,7 @@ export class HeaderComponent implements OnInit {
     const customerQueryParam = this.router.parseUrl(this.router.url).queryParams.customer;
     const loggedUserHasCustomer = this.user.customer.length > 0;
 
-    if (loggedUserHasCustomer) {
+    if (loggedUserHasCustomer && !this.user.isGertranStaff) {
       this.selectedCustomer = this.user.customer[0].id;
       this.authService.setCustomer(this.selectedCustomer);
       return;
