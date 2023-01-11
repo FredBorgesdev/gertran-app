@@ -122,13 +122,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {
-      if (!this.showShipperSelect) {
-        this.operations = [];
-        this.loadMoreOperations();
-      }
+      console.log('here 1', value)
+      this.operations = [];
+      this.loadMoreOperations();
     });
     this.validateForm.get('shipper').valueChanges.subscribe((value) => {
       if (this.showShipperSelect) {
+        console.log('here 2', value)
         this.operations = [];
         this.loadMoreOperations();
       }
@@ -136,7 +136,18 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   performFormGroupSetValues(): void {
-    super.performFormGroupSetValues();
+    super.performFormGroupSetValues({
+      ignoreKeys: [
+        'shipper',
+        'transporter',
+        'driver',
+        'auxiliaryDriver',
+        'truck',
+        'operation',
+        'wagons',
+        'loadValue',
+      ]
+    });
 
     if (this.resource?.driver) {
       this.driversService.get(this.resource.driver.id).subscribe((driver) => {
@@ -241,9 +252,9 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       this.validateForm.get('transporter').value;
     const shipperId = this.validateForm.get('shipper').value?.id ||
       this.validateForm.get('shipper').value;
-    const customerId = this.showShipperSelect ? shipperId : transporterId;
+    const customerId = shipperId || transporterId;
 
-    if (this.showShipperSelect && !shipperId) {
+    if (!customerId) {
       return;
     }
 
@@ -252,7 +263,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       limit: 50,
       url: this.operationsNextUrl,
     }, {
-      customer: this.authService.customerId || customerId,
+      customer: customerId,
     }).subscribe((operations) => {
       this.operationsNextUrl = operations.next;
       this.operations = [...this.operations, ...operations.results];

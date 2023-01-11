@@ -48,9 +48,13 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     }
   }
 
-  performFormGroupSetValues(): void {
+  performFormGroupSetValues(params?: {
+    ignoreKeys?: string[]
+  }): void {
+    const { ignoreKeys = [] } = params || {};
+
     Object.keys(this.resource).forEach(key => {
-      if (this.validateForm.controls[key]) {
+      if (this.validateForm.controls[key] && (!ignoreKeys || !ignoreKeys.includes(key))) {
         this.validateForm.controls[key].setValue(this.resource[key]);
       }
     });
