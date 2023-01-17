@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import {Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
 import {MonitoringRequestsService, MonitoringRequests, Status} from '../monitoring-requests.service';
-import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
+import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.component';
 import {TravelStepService} from '../travel-step.service';
 import {forkJoin} from 'rxjs';
@@ -45,11 +45,10 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   refreshAfterClose = new EventEmitter<ModalDestroyResult>();
 
   constructor(
-    private travelStepService: TravelStepService,
     private directionsService: DirectionsService,
     public authService: AuthenticationService,
-    router: Router,
     service: MonitoringRequestsService,
+    router: Router,
     message: NzMessageService,
     modal: NzModalService,
   ) {
@@ -186,7 +185,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   }
 
   getPoints(points: Route['points']): any {
-    return points.map(({ point }, index) => ({
+    return points.map(({point}, index) => ({
       point: point.id,
       pointType: point.pointType,
       order: index + 1,

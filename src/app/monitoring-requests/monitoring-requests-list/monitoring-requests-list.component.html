@@ -33,7 +33,11 @@
     ></app-monitoring-requests-filter>
   </nz-card>
 
-  <nz-card nzTitle="Rascunho" *ngIf="authService.customerId">
+  <nz-card
+    nzTitle="Rascunho"
+    *ngIf="authService.customerId"
+    data-testid="table-draft"
+  >
     <app-monitoring-requests-table
       [monitoringRequests]="draftResponse"
       [rowColor]="'#f7faff'"
