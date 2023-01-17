@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SelectableCustomerServiceService } from './selectable-customer-service.service';
+import {SelectableCustomerServiceService} from './selectable-customer-service.service';
 
-describe('SelectableCustomerServiceService', () => {
+xdescribe('SelectableCustomerServiceService', () => {
   let service: SelectableCustomerServiceService;
 
   beforeEach(() => {

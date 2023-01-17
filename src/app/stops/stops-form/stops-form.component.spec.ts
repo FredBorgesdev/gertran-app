@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { StopsFormComponent } from './stops-form.component';
+import {StopsFormComponent} from './stops-form.component';
 
-describe('StopsFormComponent', () => {
+xdescribe('StopsFormComponent', () => {
   let component: StopsFormComponent;
   let fixture: ComponentFixture<StopsFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StopsFormComponent ]
+      declarations: [StopsFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

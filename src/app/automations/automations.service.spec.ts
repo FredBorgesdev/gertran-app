@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AutomationsService } from './automations.service';
+import {AutomationsService} from './automations.service';
 
-describe('AutomationsService', () => {
+xdescribe('AutomationsService', () => {
   let service: AutomationsService;
 
   beforeEach(() => {

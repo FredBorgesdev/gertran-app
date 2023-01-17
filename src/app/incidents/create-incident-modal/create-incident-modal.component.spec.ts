@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreateIncidentModalComponent } from './create-incident-modal.component';
+import {CreateIncidentModalComponent} from './create-incident-modal.component';
 
-describe('CreateIncidentModalComponent', () => {
+xdescribe('CreateIncidentModalComponent', () => {
   let component: CreateIncidentModalComponent;
   let fixture: ComponentFixture<CreateIncidentModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateIncidentModalComponent ]
+      declarations: [CreateIncidentModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

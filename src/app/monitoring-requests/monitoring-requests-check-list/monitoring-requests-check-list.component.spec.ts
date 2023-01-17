@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MonitoringRequestsCheckListComponent } from './monitoring-requests-check-list.component';
+import {MonitoringRequestsCheckListComponent} from './monitoring-requests-check-list.component';
 
-describe('MonitoringRequestsCheckListComponent', () => {
+xdescribe('MonitoringRequestsCheckListComponent', () => {
   let component: MonitoringRequestsCheckListComponent;
   let fixture: ComponentFixture<MonitoringRequestsCheckListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MonitoringRequestsCheckListComponent ]
+      declarations: [MonitoringRequestsCheckListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

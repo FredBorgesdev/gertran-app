@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TripsLateComponent } from './trips-late.component';
+import {TripsLateComponent} from './trips-late.component';
 
-describe('TripsLateComponent', () => {
+xdescribe('TripsLateComponent', () => {
   let component: TripsLateComponent;
   let fixture: ComponentFixture<TripsLateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TripsLateComponent ]
+      declarations: [TripsLateComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

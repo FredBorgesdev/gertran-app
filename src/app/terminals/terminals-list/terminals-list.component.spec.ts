@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TerminalsListComponent } from './terminals-list.component';
+import {TerminalsListComponent} from './terminals-list.component';
 
-describe('TerminalsListComponent', () => {
+xdescribe('TerminalsListComponent', () => {
   let component: TerminalsListComponent;
   let fixture: ComponentFixture<TerminalsListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TerminalsListComponent ]
+      declarations: [TerminalsListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

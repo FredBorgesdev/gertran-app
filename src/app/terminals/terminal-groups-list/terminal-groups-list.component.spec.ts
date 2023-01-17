@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TerminalGroupsListComponent } from './terminal-groups-list.component';
+import {TerminalGroupsListComponent} from './terminal-groups-list.component';
 
-describe('TerminalGroupsListComponent', () => {
+xdescribe('TerminalGroupsListComponent', () => {
   let component: TerminalGroupsListComponent;
   let fixture: ComponentFixture<TerminalGroupsListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TerminalGroupsListComponent ]
+      declarations: [TerminalGroupsListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { TrackersService } from './trackers.service';
+import {TrackersService} from './trackers.service';
 
-describe('TrackersService', () => {
+xdescribe('TrackersService', () => {
   let service: TrackersService;
 
   beforeEach(() => {

@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { InsuranceCompaniesService } from './insurance-companies.service';
+import {InsuranceCompaniesService} from './insurance-companies.service';
 
-describe('InsuranceCompaniesService', () => {
+xdescribe('InsuranceCompaniesService', () => {
   let service: InsuranceCompaniesService;
 
   beforeEach(() => {

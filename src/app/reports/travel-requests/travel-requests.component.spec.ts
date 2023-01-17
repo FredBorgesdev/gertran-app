@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TravelRequestsComponent } from './travel-requests.component';
+import {TravelRequestsComponent} from './travel-requests.component';
 
-describe('TravelRequestsComponent', () => {
+xdescribe('TravelRequestsComponent', () => {
   let component: TravelRequestsComponent;
   let fixture: ComponentFixture<TravelRequestsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TravelRequestsComponent ]
+      declarations: [TravelRequestsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

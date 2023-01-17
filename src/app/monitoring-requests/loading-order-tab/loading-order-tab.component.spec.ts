@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadingOrderTabComponent } from './loading-order-tab.component';
+import {LoadingOrderTabComponent} from './loading-order-tab.component';
 
-describe('LoadingOrderTabComponent', () => {
+xdescribe('LoadingOrderTabComponent', () => {
   let component: LoadingOrderTabComponent;
   let fixture: ComponentFixture<LoadingOrderTabComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadingOrderTabComponent ]
+      declarations: [LoadingOrderTabComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

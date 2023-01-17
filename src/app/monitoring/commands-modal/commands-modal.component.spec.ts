@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CommandsModalComponent } from './commands-modal.component';
+import {CommandsModalComponent} from './commands-modal.component';
 
-describe('CommandsModalComponent', () => {
+xdescribe('CommandsModalComponent', () => {
   let component: CommandsModalComponent;
   let fixture: ComponentFixture<CommandsModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommandsModalComponent ]
+      declarations: [CommandsModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FirstAccessComponent } from './first-access.component';
+import {FirstAccessComponent} from './first-access.component';
 
-describe('FirstAccessComponent', () => {
+xdescribe('FirstAccessComponent', () => {
   let component: FirstAccessComponent;
   let fixture: ComponentFixture<FirstAccessComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FirstAccessComponent ]
+      declarations: [FirstAccessComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

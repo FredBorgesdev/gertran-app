@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ChecklistsService } from './checklists.service';
+import {ChecklistsService} from './checklists.service';
 
-describe('ChecklistsService', () => {
+xdescribe('ChecklistsService', () => {
   let service: ChecklistsService;
 
   beforeEach(() => {

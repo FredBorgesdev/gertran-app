@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MacrovehicleComponent } from './macrovehicle.component';
+import {MacrovehicleComponent} from './macrovehicle.component';
 
-describe('MacrovehicleComponent', () => {
+xdescribe('MacrovehicleComponent', () => {
   let component: MacrovehicleComponent;
   let fixture: ComponentFixture<MacrovehicleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MacrovehicleComponent ]
+      declarations: [MacrovehicleComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

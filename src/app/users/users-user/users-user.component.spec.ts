@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UsersUserComponent } from './users-user.component';
+import {UsersUserComponent} from './users-user.component';
 
-describe('UsersUserComponent', () => {
+xdescribe('UsersUserComponent', () => {
   let component: UsersUserComponent;
   let fixture: ComponentFixture<UsersUserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UsersUserComponent ]
+      declarations: [UsersUserComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

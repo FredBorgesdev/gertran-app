@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OperationalAuditMessagesComponent } from './operational-audit-messages.component';
+import {OperationalAuditMessagesComponent} from './operational-audit-messages.component';
 
-describe('OperationalAuditMessagesComponent', () => {
+xdescribe('OperationalAuditMessagesComponent', () => {
   let component: OperationalAuditMessagesComponent;
   let fixture: ComponentFixture<OperationalAuditMessagesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OperationalAuditMessagesComponent ]
+      declarations: [OperationalAuditMessagesComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

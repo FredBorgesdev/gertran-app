@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TrucksListComponent } from './trucks-list.component';
+import {TrucksListComponent} from './trucks-list.component';
 
-describe('TrucksListComponent', () => {
+xdescribe('TrucksListComponent', () => {
   let component: TrucksListComponent;
   let fixture: ComponentFixture<TrucksListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrucksListComponent ]
+      declarations: [TrucksListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

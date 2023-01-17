@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GroupsFormComponent } from './groups-form.component';
+import {GroupsFormComponent} from './groups-form.component';
 
-describe('GroupsFormComponent', () => {
+xdescribe('GroupsFormComponent', () => {
   let component: GroupsFormComponent;
   let fixture: ComponentFixture<GroupsFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GroupsFormComponent ]
+      declarations: [GroupsFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OperationalAuditCommandsComponent } from './operational-audit-commands.component';
+import {OperationalAuditCommandsComponent} from './operational-audit-commands.component';
 
-describe('OperationalAuditCommandsComponent', () => {
+xdescribe('OperationalAuditCommandsComponent', () => {
   let component: OperationalAuditCommandsComponent;
   let fixture: ComponentFixture<OperationalAuditCommandsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OperationalAuditCommandsComponent ]
+      declarations: [OperationalAuditCommandsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

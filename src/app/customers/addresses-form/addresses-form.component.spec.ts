@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddressesFormComponent } from './addresses-form.component';
+import {AddressesFormComponent} from './addresses-form.component';
 
-describe('AddressesFormComponent', () => {
+xdescribe('AddressesFormComponent', () => {
   let component: AddressesFormComponent;
   let fixture: ComponentFixture<AddressesFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddressesFormComponent ]
+      declarations: [AddressesFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

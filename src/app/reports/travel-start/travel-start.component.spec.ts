@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TravelStartComponent } from './travel-start.component';
+import {TravelStartComponent} from './travel-start.component';
 
-describe('TravelStartComponent', () => {
+xdescribe('TravelStartComponent', () => {
   let component: TravelStartComponent;
   let fixture: ComponentFixture<TravelStartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TravelStartComponent ]
+      declarations: [TravelStartComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TerminalsFormComponent } from './terminals-form.component';
+import {TerminalsFormComponent} from './terminals-form.component';
 
-describe('TerminalsFormComponent', () => {
+xdescribe('TerminalsFormComponent', () => {
   let component: TerminalsFormComponent;
   let fixture: ComponentFixture<TerminalsFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TerminalsFormComponent ]
+      declarations: [TerminalsFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

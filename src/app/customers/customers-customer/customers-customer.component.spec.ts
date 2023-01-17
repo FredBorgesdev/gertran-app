@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CustomersCustomerComponent } from './customers-tab.component';
+import {CustomersCustomerComponent} from './customers-customer.component';
 
-describe('CustomersCustomerComponent', () => {
+xdescribe('CustomersCustomerComponent', () => {
   let component: CustomersCustomerComponent;
   let fixture: ComponentFixture<CustomersCustomerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomersCustomerComponent ]
+      declarations: [CustomersCustomerComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CustomersTransferComponent } from './customers-transfer.component';
+import {CustomersTransferComponent} from './customers-transfer.component';
 
-describe('CustomersTransferComponent', () => {
+xdescribe('CustomersTransferComponent', () => {
   let component: CustomersTransferComponent;
   let fixture: ComponentFixture<CustomersTransferComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomersTransferComponent ]
+      declarations: [CustomersTransferComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

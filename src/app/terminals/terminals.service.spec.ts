@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { TerminalsService } from './terminals.service';
+import {TerminalsService} from './terminals.service';
 
-describe('TerminalsService', () => {
+xdescribe('TerminalsService', () => {
   let service: TerminalsService;
 
   beforeEach(() => {

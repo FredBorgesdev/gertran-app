@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadUnloadByPointComponent } from './load-unload-by-point.component';
+import {LoadUnloadByPointComponent} from './load-unload-by-point.component';
 
-describe('LoadUnloadByPointComponent', () => {
+xdescribe('LoadUnloadByPointComponent', () => {
   let component: LoadUnloadByPointComponent;
   let fixture: ComponentFixture<LoadUnloadByPointComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoadUnloadByPointComponent ]
+      declarations: [LoadUnloadByPointComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

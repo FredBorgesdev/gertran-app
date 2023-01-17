@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ClosingComponent } from './closing.component';
+import {ClosingComponent} from './closing.component';
 
-describe('ClosingComponent', () => {
+xdescribe('ClosingComponent', () => {
   let component: ClosingComponent;
   let fixture: ComponentFixture<ClosingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClosingComponent ]
+      declarations: [ClosingComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

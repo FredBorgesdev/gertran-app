@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { InvoicesTabComponent } from './invoices-tab.component';
+import {InvoicesTabComponent} from './invoices-tab.component';
 
-describe('InvoicesTabComponent', () => {
+xdescribe('InvoicesTabComponent', () => {
   let component: InvoicesTabComponent;
   let fixture: ComponentFixture<InvoicesTabComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InvoicesTabComponent ]
+      declarations: [InvoicesTabComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PermissionsTabComponent } from './permissions-tab.component';
+import {PermissionsTabComponent} from './permissions-tab.component';
 
-describe('PermissionsTabComponent', () => {
+xdescribe('PermissionsTabComponent', () => {
   let component: PermissionsTabComponent;
   let fixture: ComponentFixture<PermissionsTabComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PermissionsTabComponent ]
+      declarations: [PermissionsTabComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

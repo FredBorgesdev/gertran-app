@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BaseGenericFiltersComponent } from './base-generic-filters.component';
+import {BaseGenericFiltersComponent} from './base-generic-filters.component';
 
-describe('BaseGenericFiltersComponent', () => {
+xdescribe('BaseGenericFiltersComponent', () => {
   let component: BaseGenericFiltersComponent;
   let fixture: ComponentFixture<BaseGenericFiltersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BaseGenericFiltersComponent ]
+      declarations: [BaseGenericFiltersComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

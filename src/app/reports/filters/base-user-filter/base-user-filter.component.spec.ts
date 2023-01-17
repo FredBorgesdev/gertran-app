@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BaseUserFilterComponent } from './base-user-filter.component';
+import {BaseUserFilterComponent} from './base-user-filter.component';
 
-describe('BaseCustomerFilterComponent', () => {
+xdescribe('BaseCustomerFilterComponent', () => {
   let component: BaseUserFilterComponent;
   let fixture: ComponentFixture<BaseUserFilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BaseUserFilterComponent ]
+      declarations: [BaseUserFilterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

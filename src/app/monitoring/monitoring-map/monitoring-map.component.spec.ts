@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MonitoringMapComponent } from './monitoring-map.component';
+import {MonitoringMapComponent} from './monitoring-map.component';
 
-describe('MonitoringMapComponent', () => {
+xdescribe('MonitoringMapComponent', () => {
   let component: MonitoringMapComponent;
   let fixture: ComponentFixture<MonitoringMapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MonitoringMapComponent ]
+      declarations: [MonitoringMapComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

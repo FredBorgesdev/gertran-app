@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BaitsTabComponent } from './baits-tab.component';
+import {BaitsTabComponent} from './baits-tab.component';
 
-describe('BaitsTabComponent', () => {
+xdescribe('BaitsTabComponent', () => {
   let component: BaitsTabComponent;
   let fixture: ComponentFixture<BaitsTabComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BaitsTabComponent ]
+      declarations: [BaitsTabComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

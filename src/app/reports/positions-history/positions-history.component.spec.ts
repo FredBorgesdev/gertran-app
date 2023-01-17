@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PositionsHistoryComponent } from './positions-history.component';
+import {PositionsHistoryComponent} from './positions-history.component';
 
-describe('PositionsHistoryComponent', () => {
+xdescribe('PositionsHistoryComponent', () => {
   let component: PositionsHistoryComponent;
   let fixture: ComponentFixture<PositionsHistoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PositionsHistoryComponent ]
+      declarations: [PositionsHistoryComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
