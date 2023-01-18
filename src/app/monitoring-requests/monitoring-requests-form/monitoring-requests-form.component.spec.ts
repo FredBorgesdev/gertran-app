@@ -78,7 +78,7 @@ describe('MonitoringRequestsFormComponent', () => {
         FormBuilder,
         NzI18nService,
       ],
-    });
+    }).compileComponents();
   });
 
   it('should create', () => {

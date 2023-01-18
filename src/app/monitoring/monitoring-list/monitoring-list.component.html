@@ -2,7 +2,7 @@
   <nz-card [nzBodyStyle]="{ 'padding-bottom': 0 }">
     <form [formGroup]="validateForm" class="m-b-30">
       <div nz-row nzGutter="12" nzAlign="middle">
-        <div nz-col nzSpan="8"  *ngIf="authService.customerId">
+        <div nz-col nzSpan="8" *ngIf="authService.customerId">
           <nz-select
             nzPlaceHolder="Cliente"
             formControlName="customer"
@@ -14,7 +14,7 @@
             ></nz-option>
           </nz-select>
         </div>
-        <div nz-col nzSpan="8"  *ngIf="!authService.customerId">
+        <div nz-col nzSpan="8" *ngIf="!authService.customerId">
           <nz-select
             nzShowSearch
             nzAllowClear
@@ -56,7 +56,7 @@
 
     <ng-container *ngIf="monitoringData">
       <div *ngIf="user.isGertranStaff">
-        <div nzSpan="8">
+        <div nzSpan="8" data-testid="alerts">
           <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal('info')">
             ({{ alertsCount?.info }}) Mensagens
           </button>
@@ -78,13 +78,19 @@
           nzSize="small"
         >
           <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all">Todos</label>
-          <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')" class="border-ag-start">Ag. Inicio</label>
-          <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')" class="border-contingency">Contigência</label>
-          <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')" class="border-client">Cliente</label>
-          <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')" class="border-travelling">Em viagem</label>
+          <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')"
+                 class="border-ag-start">Ag. Inicio</label>
+          <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')"
+                 class="border-contingency">Contigência</label>
+          <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')"
+                 class="border-client">Cliente</label>
+          <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')"
+                 class="border-travelling">Em viagem</label>
           <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="border-standby">Parado</label>
-          <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')" class="border-overnight">Pernoite</label>
-          <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')" class="border-out-of-point">Fora do ponto</label>
+          <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')"
+                 class="border-overnight">Pernoite</label>
+          <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
+                 class="border-out-of-point">Fora do ponto</label>
         </nz-radio-group>
       </div>
 
@@ -173,7 +179,7 @@
           [style]="'font-size: 20px; color: ' + (item.ignition ? '#ff7118' : '#ccc')"
         ></span>
       </td>
-      <td *ngIf="user.isGertranStaff">
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
@@ -220,11 +226,13 @@
       <td>{{ item.speed }}km</td>
       <td>{{ item.customer?.name }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td nzEllipsis nz-tooltip [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
+      <td nzEllipsis nz-tooltip
+          [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
       <td>{{ getOrigin(item) }}</td>
       <td>{{ getDestiny(item) }}</td>
       <td
         *ngIf="user.isGertranStaff"
+        data-testid="td-gertran-only"
         nzEllipsis
         nz-tooltip
         [nzTooltipTitle]="getAlerts(item)"
@@ -234,22 +242,25 @@
         nz-tooltip
         [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)"
         *ngIf="user.isGertranStaff"
+        data-testid="td-gertran-only"
       >
         {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
-      <td *ngIf="user.isGertranStaff">{{ item.monitoringRequest?.observations || '-' }}</td>
+      <td *ngIf="user.isGertranStaff"
+          data-testid="td-gertran-only">{{ item.monitoringRequest?.observations || '-' }}</td>
       <td>{{ item.monitoringRequest?.driverName || '-' }}</td>
       <td>{{ getWagons(item) || '-' }}</td>
-      <td *ngIf="user.isGertranStaff">{{ getCommunicationChannel(item.communicationChannel) }}</td>
-      <td *ngIf="user.isGertranStaff">
+      <td *ngIf="user.isGertranStaff"
+          data-testid="td-gertran-only">{{ getCommunicationChannel(item.communicationChannel) }}</td>
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasMacro" nzStatus="error"></nz-badge>
       </td>
-      <td *ngIf="user.isGertranStaff">
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
-      <td *ngIf="user.isGertranStaff">
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <nz-badge *ngIf="item.monitoringRequest?.checklist?.bait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.monitoringRequest?.checklist?.bait" nzStatus="error"></nz-badge>
       </td>

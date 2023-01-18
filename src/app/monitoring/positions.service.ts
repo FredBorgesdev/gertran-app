@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -27,6 +27,10 @@ export interface Position {
   trackerTechnologyName: string;
   timePosition: string;
   trackerSerialNumber: string;
+  pointReference: string;
+  travelProgress: number;
+  communicationChannel: string;
+  vehiclePlate: string;
   trackerModel: TrackerTechnologiesModels;
   truck: {
     id: string;
@@ -35,6 +39,7 @@ export interface Position {
       id: string;
     };
   };
+  temperature: number;
   vehicleStatus: string;
   monitoringRequest: MonitoringRequests & {
     destinyCity: string;
@@ -70,7 +75,8 @@ export interface Position {
 })
 export class PositionsService implements ApiService<Position> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(
     pagination: Pagination,
@@ -82,7 +88,7 @@ export class PositionsService implements ApiService<Position> {
       travelling?: boolean
     }
   ): Observable<GetAllResponse<Position>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -101,7 +107,7 @@ export class PositionsService implements ApiService<Position> {
       params.travelling = filters.travelling;
     }
 
-    return this.http.get<GetAllResponse<Position>>('positions', { params });
+    return this.http.get<GetAllResponse<Position>>('positions', {params});
   }
 
   get(id: string): Observable<Position> {
@@ -126,6 +132,6 @@ export class PositionsService implements ApiService<Position> {
     longitude: number;
     pointReference: string;
   }[]> {
-    return this.http.patch<any[]>('positions/update_points_reference', { position_ids: ids });
+    return this.http.patch<any[]>('positions/update_points_reference', {position_ids: ids});
   }
 }

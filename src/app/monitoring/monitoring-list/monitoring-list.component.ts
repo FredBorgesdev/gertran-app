@@ -28,6 +28,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
+
 @Component({
   selector: 'app-monitoring-list',
   templateUrl: './monitoring-list.component.html',
@@ -36,31 +37,31 @@ const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 export class MonitoringListComponent implements OnInit, OnDestroy {
   isLoading = false;
   monitoringColumns = [
-    { title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px' },
-    { title: 'Rastreador', nzLeft: true, style: 'z-index: 999', width: '90px' },
-    { title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '90px' },
-    { title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px' },
-    { title: 'Ign', width: '40px' },
-    { title: 'Ale', width: '40px', gertranStaffOnly: true },
-    { title: 'Automação', width: '90px' },
-    { title: 'Mapa', width: '50px' },
-    { title: '%', width: '100px' },
-    { title: 'Vel', width: '50px' },
-    { title: 'Cliente', width: '110px' },
-    { title: 'Data/Hora', width: '90px' },
-    { title: 'Posição', width: '110px' },
-    { title: 'Origem', width: '110px' },
-    { title: 'Destino', width: '110px' },
-    { title: 'Alertas', width: '80px', gertranStaffOnly: true },
-    { title: 'Status V.', width: '80px', gertranStaffOnly: true },
-    { title: 'Obs.', width: '110px', gertranStaffOnly: true },
-    { title: 'Motorista', width: '110px' },
-    { title: 'Carreta', width: '80px' },
-    { title: 'Comunicação', width: '100px', gertranStaffOnly: true },
-    { title: 'Macro', width: '55px', gertranStaffOnly: true },
-    { title: 'Int. Emb.', width: '50px', gertranStaffOnly: true },
-    { title: 'Isca', width: '50px', gertranStaffOnly: true },
-    { title: 'Temp.', width: '50px' },
+    {title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px'},
+    {title: 'Rastreador', nzLeft: true, style: 'z-index: 999', width: '90px'},
+    {title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '90px'},
+    {title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px'},
+    {title: 'Ign', width: '40px'},
+    {title: 'Ale', width: '40px', gertranStaffOnly: true},
+    {title: 'Automação', width: '90px'},
+    {title: 'Mapa', width: '50px'},
+    {title: '%', width: '100px'},
+    {title: 'Vel', width: '50px'},
+    {title: 'Cliente', width: '110px'},
+    {title: 'Data/Hora', width: '90px'},
+    {title: 'Posição', width: '110px'},
+    {title: 'Origem', width: '110px'},
+    {title: 'Destino', width: '110px'},
+    {title: 'Alertas', width: '80px', gertranStaffOnly: true},
+    {title: 'Status V.', width: '80px', gertranStaffOnly: true},
+    {title: 'Obs.', width: '110px', gertranStaffOnly: true},
+    {title: 'Motorista', width: '110px'},
+    {title: 'Carreta', width: '80px'},
+    {title: 'Comunicação', width: '100px', gertranStaffOnly: true},
+    {title: 'Macro', width: '55px', gertranStaffOnly: true},
+    {title: 'Int. Emb.', width: '50px', gertranStaffOnly: true},
+    {title: 'Isca', width: '50px', gertranStaffOnly: true},
+    {title: 'Temp.', width: '50px'},
   ];
   validateForm: FormGroup;
 
@@ -76,21 +77,21 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   selectedTravelStatus: string;
 
   automations = [
-    { icon: 'check-circle', color: 'orane', text: 'Excesso de velocidade' },
-    { icon: 'eye', color: 'red', text: 'Desvio de rota' },
-    { icon: 'credit-card', color: 'blue', text: 'Parada prolongada' },
-    { icon: 'car', color: 'blue', text: 'Parada abastecimento' },
+    {icon: 'check-circle', color: 'orane', text: 'Excesso de velocidade'},
+    {icon: 'eye', color: 'red', text: 'Desvio de rota'},
+    {icon: 'credit-card', color: 'blue', text: 'Parada prolongada'},
+    {icon: 'car', color: 'blue', text: 'Parada abastecimento'},
   ];
   travelStatus = [
-    { title: 'Parado', value: 'stopped', backgroundColorClass: 'bg-info' },
-    { title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success' },
-    { title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-alert' },
-    { title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'bg-warning' },
-    { title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-alert' },
-    { title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-gray-lightest' },
-    { title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest' },
-    { title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest' },
-    { title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-danger' },
+    {title: 'Parado', value: 'stopped', backgroundColorClass: 'bg-info'},
+    {title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success'},
+    {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-alert'},
+    {title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'bg-warning'},
+    {title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-alert'},
+    {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-gray-lightest'},
+    {title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest'},
+    {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
+    {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-danger'},
   ];
 
   refreshAlertCount = new EventEmitter();
@@ -109,7 +110,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     public selectableCustomerService: SelectableCustomerServiceService,
     private alertsService: AlertsService,
     public authService: AuthenticationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.monitoringColumns = this.monitoringColumns.filter(column => {
@@ -150,12 +152,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     if (this.authService.customerId) {
       const customer = this.authService.user.customer.find(c => c.id === this.authService.customerId);
       this.customers = [customer];
-      this.validateForm.patchValue({ customer: this.authService.customerId });
+      this.validateForm.patchValue({customer: this.authService.customerId});
       return;
     }
 
     this.selectableCustomerService.init();
-    this.terminalsService.getAll({ limit: 50 }).subscribe(data => {
+    this.terminalsService.getAll({limit: 50}).subscribe(data => {
       this.terminals = data.results;
     });
   }
@@ -289,7 +291,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.modal.create({
       nzTitle: 'Solicitação de monitoramento',
       nzContent: MonitoringRequestsCheckListComponent,
-      nzComponentParams: { monitoringRequestId: id, readOnly: true },
+      nzComponentParams: {monitoringRequestId: id, readOnly: true},
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
@@ -301,7 +303,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzTitle: item.customer.name,
       nzContent: UpdateObservationsModalComponent,
       nzOnOk: (componentInstance) => componentInstance.save(),
-      nzComponentParams: { item },
+      nzComponentParams: {item},
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',
     });
@@ -473,7 +475,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   private getPositionsWithFilters(): Observable<GetAllResponse<Position>> {
     return this.positionsService.getAll(
-      { limit: 999 },
+      {limit: 999},
       {
         customer: this.validateForm.get('customer').value,
         terminal: this.validateForm.get('terminal').value,
