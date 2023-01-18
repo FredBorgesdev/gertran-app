@@ -6,6 +6,7 @@ import {DirectionsService} from '../../shared/services/directions.service';
 import {MonitoringRequestsService} from '../monitoring-requests.service';
 import {DEFAULT_CRUD_FORM_PROVIDERS} from '../../base-crud/base-crud-form/base-crud-form.component.spec';
 import {RouterTestingModule} from '@angular/router/testing';
+import EmptyGetAllResponseFactory from '../../shared/factories/empty-get-all-response';
 
 describe('MonitoringRequestsListComponent', () => {
   let component: MonitoringRequestsListComponent;
@@ -18,6 +19,7 @@ describe('MonitoringRequestsListComponent', () => {
     authService = jasmine.createSpyObj(['user', 'customerId']);
     authService.customerId = null;
     monitoringRequestsService = jasmine.createSpyObj(['getAll']);
+    monitoringRequestsService.getAll.and.returnValue(EmptyGetAllResponseFactory.create());
     directionsService = jasmine.createSpyObj(['getCoordinates']);
 
     await TestBed.configureTestingModule({

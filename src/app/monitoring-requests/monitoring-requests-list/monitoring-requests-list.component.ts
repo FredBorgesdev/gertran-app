@@ -5,8 +5,6 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {MonitoringRequestsService, MonitoringRequests, Status} from '../monitoring-requests.service';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {BLANK_ROUTE, RoutesModalComponent} from '../routes-modal/routes-modal.component';
-import {TravelStepService} from '../travel-step.service';
-import {forkJoin} from 'rxjs';
 import {format} from 'date-fns';
 import {DirectionsService} from '../../shared/services/directions.service';
 import {Route} from '../../routes/routes.service';
@@ -19,7 +17,6 @@ import {
 import {MonitoringRequestsFilter} from '../monitoring-requests-filter/monitoring-requests-filter.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
-import {state} from '@angular/animations';
 
 @Component({
   selector: 'app-monitoring-requests-list',
