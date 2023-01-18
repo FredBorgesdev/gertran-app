@@ -1,247 +1,249 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-      <nz-form-item>
-        <div nz-row nzGutter="6">
-          <div nz-col nzSpan="12" *ngIf="showShipperSelect">
-            <nz-form-label [nzSpan]="null" nzFor="shipper">Embarcador</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-              <nz-select
-                id="shipper"
-                nzAllowClear
-                nzPlaceHolder="Selecione uma empresa"
-                formControlName="shipper"
-                (ngModelChange)="saveDraft('shipper')"
-                [disabled]="disabled || !resource.customer?.canSelectShipper"
-                [nzDropdownRender]="selectLoading"
-              >
-                <nz-option
-                  *ngFor="let customer of resource.customer.shippers"
-                  [nzLabel]="customer.tradingName"
-                  [nzValue]="customer.id"
-                ></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-          <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzFor="transporter">Transportador</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-              <nz-select
-                id="transporter"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione uma empresa"
-                formControlName="transporter"
-                nzServerSearch
-                (nzOnSearch)="selectableCustomerService.searchByName($event)"
-                (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-                (nzBlur)="loadTransporterData()"
-                [disabled]="disabled"
-                [nzDropdownRender]="selectLoading"
-              >
-                <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
+  <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+    <nz-form-item>
+      <div nz-row nzGutter="6">
+        <div nz-col nzSpan="12" *ngIf="showShipperSelect" data-testid="shipper-select">
+          <nz-form-label [nzSpan]="null" nzFor="shipper">Embarcador</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+            <nz-select
+              id="shipper"
+              nzAllowClear
+              nzPlaceHolder="Selecione uma empresa"
+              formControlName="shipper"
+              (ngModelChange)="saveDraft('shipper')"
+              [disabled]="disabled || !resource.customer?.canSelectShipper"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option
+                *ngFor="let customer of resource.customer.shippers"
+                [nzLabel]="customer.tradingName"
+                [nzValue]="customer.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
         </div>
-      </nz-form-item>
-
-      <nz-form-item>
-        <div nz-row nzGutter="6">
-          <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzFor="driver">Motorista</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select
-                id="driver"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione um motorista"
-                formControlName="driver"
-                (nzScrollToBottom)="loadMoreDrivers()"
-                (ngModelChange)="saveDraft('driver')"
-                [disabled]="disabled"
-                [nzDropdownRender]="selectLoading"
-              >
-                <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-          <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzFor="auxiliaryDriver">Motorista Auxiliar</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select
-                id="auxiliaryDriver"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione um motorista"
-                formControlName="auxiliaryDriver"
-                (ngModelChange)="saveDraft('auxiliaryDriver')"
-                [disabled]="disabled"
-              >
-                <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="transporter">Transportador</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+            <nz-select
+              id="transporter"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma empresa"
+              formControlName="transporter"
+              nzServerSearch
+              (nzOnSearch)="selectableCustomerService.searchByName($event)"
+              (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+              (nzBlur)="loadTransporterData()"
+              [disabled]="disabled"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                         [nzValue]="customer.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </div>
-      </nz-form-item>
+      </div>
+    </nz-form-item>
 
-      <nz-form-item>
-        <div nz-row nzGutter="6">
-          <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzFor="truck">Cavalo</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select
-                id="truck"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione um cavalo"
-                formControlName="truck"
-                (nzScrollToBottom)="loadMoreTrucks()"
-                (ngModelChange)="saveDraft('truck')"
-                [disabled]="disabled"
-                [nzDropdownRender]="selectLoading"
-              >
-                <nz-option *ngFor="let truck of trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-          <div nz-col nzSpan="12">
-            <nz-form-label [nzSpan]="null" nzFor="wagons">Carretas</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select
-                id="wagons"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione uma carreta"
-                formControlName="wagons"
-                nzMode="multiple"
-                nzMaxMultipleCount="2"
-                (nzScrollToBottom)="loadMoreWagons()"
-                (ngModelChange)="saveDraft('wagons')"
-                [disabled]="disabled"
-                [nzDropdownRender]="selectLoading"
-              >
-                <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
+    <nz-form-item>
+      <div nz-row nzGutter="6">
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="driver">Motorista</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="driver"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione um motorista"
+              formControlName="driver"
+              (nzScrollToBottom)="loadMoreDrivers()"
+              (ngModelChange)="saveDraft('driver')"
+              [disabled]="disabled"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </div>
-      </nz-form-item>
-
-      <nz-form-item>
-        <div nz-row nzGutter="6">
-          <div nz-col [nzSpan]="surveyConductedRowSpan">
-            <nz-form-label [nzSpan]="null" nzFor="operation">Operação</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select
-                id="operation"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione uma operação"
-                formControlName="operation"
-                (ngModelChange)="saveDraft('operation')"
-                (nzScrollToBottom)="loadMoreWagons()"
-                [disabled]="disabled"
-                [nzDropdownRender]="selectLoading"
-              >
-                <nz-option *ngFor="let operation of operations" [nzLabel]="operation.name" [nzValue]="operation.id"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-          <div nz-col [nzSpan]="surveyConductedRowSpan">
-            <nz-form-label nzFor="surveyConductedBy">Pesquisa cadastral realizada por</nz-form-label>
-            <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <nz-select
-                id="surveyConductedBy"
-                nzShowSearch
-                nzAllowClear
-                nzPlaceHolder="Selecione uma operação"
-                formControlName="surveyConductedBy"
-                (ngModelChange)="saveDraft('surveyConductedBy')"
-                [disabled]="disabled"
-              >
-                <nz-option
-                  *ngFor="let surveyConductor of surveyConductors"
-                  [nzLabel]="surveyConductor.label"
-                  [nzValue]="surveyConductor.value"
-                ></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-          <div nz-col [nzSpan]="surveyConductedRowSpan">
-            <nz-form-label nzFor="surveyConductedByOthers">Prestador de serviço</nz-form-label>
-            <nz-form-control [nzSpan]="null" [nzOffset]="null">
-              <input
-                nz-input
-                id="surveyConductedByOthers"
-                formControlName="surveyConductedByOthers"
-                (blur)="saveDraft('surveyConductedByOthers')"
-                [disabled]="disabled"
-              />
-            </nz-form-control>
-          </div>
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="auxiliaryDriver">Motorista Auxiliar</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="auxiliaryDriver"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione um motorista"
+              formControlName="auxiliaryDriver"
+              (ngModelChange)="saveDraft('auxiliaryDriver')"
+              [disabled]="disabled"
+            >
+              <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </div>
-      </nz-form-item>
+      </div>
+    </nz-form-item>
 
-      <nz-form-item>
-        <div nz-row nzGutter="12">
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzFor="loadDescription">Descrição da carga</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input
-                id="loadDescription"
-                nz-input
-                formControlName="loadDescription"
-                (blur)="saveDraft('loadDescription')"
-                [disabled]="disabled"
-              />
-            </nz-form-control>
-          </div>
-
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzFor="loadType">Tipo de carga</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <nz-select
-                id="loadType"
-                nzPlaceHolder="Selecione uma opção"
-                formControlName="loadType"
-                (ngModelChange)="saveDraft('loadType')"
-                [disabled]="disabled"
-              >
-                <nz-option nzLabel="Refrigerada" nzValue="refrigerated"></nz-option>
-                <nz-option nzLabel="Não refrigerada" nzValue="unrefrigerated"></nz-option>
-                <nz-option nzLabel="Congelada" nzValue="frozen"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </div>
-
-          <div nz-col nzSpan="8">
-            <nz-form-label [nzSpan]="null" nzFor="loadValue">Valor da carga</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input
-                id="loadValue"
-                type="text"
-                nz-input
-                name="loadValue"
-                formControlName="loadValue"
-                [textMask]="{ mask: reaisMask }"
-                (blur)="sanitizeInputAndSaveDraft('loadValue')"
-                [disabled]="disabled"
-              />
-            </nz-form-control>
-          </div>
+    <nz-form-item>
+      <div nz-row nzGutter="6">
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="truck">Cavalo</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="truck"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione um cavalo"
+              formControlName="truck"
+              (nzScrollToBottom)="loadMoreTrucks()"
+              (ngModelChange)="saveDraft('truck')"
+              [disabled]="disabled"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option *ngFor="let truck of trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </div>
-      </nz-form-item>
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="wagons">Carretas</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="wagons"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma carreta"
+              formControlName="wagons"
+              nzMode="multiple"
+              nzMaxMultipleCount="2"
+              (nzScrollToBottom)="loadMoreWagons()"
+              (ngModelChange)="saveDraft('wagons')"
+              [disabled]="disabled"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
 
-      <nz-divider></nz-divider>
+    <nz-form-item>
+      <div nz-row nzGutter="6">
+        <div nz-col [nzSpan]="surveyConductedRowSpan">
+          <nz-form-label [nzSpan]="null" nzFor="operation">Operação</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="operation"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma operação"
+              formControlName="operation"
+              (ngModelChange)="saveDraft('operation')"
+              (nzScrollToBottom)="loadMoreWagons()"
+              [disabled]="disabled"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option *ngFor="let operation of operations" [nzLabel]="operation.name"
+                         [nzValue]="operation.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+        <div nz-col [nzSpan]="surveyConductedRowSpan">
+          <nz-form-label nzFor="surveyConductedBy">Pesquisa cadastral realizada por</nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <nz-select
+              id="surveyConductedBy"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma operação"
+              formControlName="surveyConductedBy"
+              (ngModelChange)="saveDraft('surveyConductedBy')"
+              [disabled]="disabled"
+            >
+              <nz-option
+                *ngFor="let surveyConductor of surveyConductors"
+                [nzLabel]="surveyConductor.label"
+                [nzValue]="surveyConductor.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+        <div nz-col [nzSpan]="surveyConductedRowSpan">
+          <nz-form-label nzFor="surveyConductedByOthers">Prestador de serviço</nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <input
+              nz-input
+              id="surveyConductedByOthers"
+              formControlName="surveyConductedByOthers"
+              (blur)="saveDraft('surveyConductedByOthers')"
+              [disabled]="disabled"
+            />
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
 
-      <nz-form-item>
-        <nz-form-control [nzOffset]="0" [nzSpan]="12">
-          <button type="button" (click)="list()" nz-button>
-            <i nz-icon nzType="unordered-list"></i>Listar Requisições de monitoramento
-          </button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
+    <nz-form-item>
+      <div nz-row nzGutter="12">
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="loadDescription">Descrição da carga</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input
+              id="loadDescription"
+              nz-input
+              formControlName="loadDescription"
+              (blur)="saveDraft('loadDescription')"
+              [disabled]="disabled"
+            />
+          </nz-form-control>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="loadType">Tipo de carga</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="loadType"
+              nzPlaceHolder="Selecione uma opção"
+              formControlName="loadType"
+              (ngModelChange)="saveDraft('loadType')"
+              [disabled]="disabled"
+            >
+              <nz-option nzLabel="Refrigerada" nzValue="refrigerated"></nz-option>
+              <nz-option nzLabel="Não refrigerada" nzValue="unrefrigerated"></nz-option>
+              <nz-option nzLabel="Congelada" nzValue="frozen"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="loadValue">Valor da carga</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input
+              id="loadValue"
+              type="text"
+              nz-input
+              name="loadValue"
+              formControlName="loadValue"
+              [textMask]="{ mask: reaisMask }"
+              (blur)="sanitizeInputAndSaveDraft('loadValue')"
+              [disabled]="disabled"
+            />
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+
+    <nz-divider></nz-divider>
+
+    <nz-form-item>
+      <nz-form-control [nzOffset]="0" [nzSpan]="12">
+        <button type="button" (click)="list()" nz-button>
+          <i nz-icon nzType="unordered-list"></i>Listar Requisições de monitoramento
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
 </nz-spin>
 
 <ng-template #selectLoading>

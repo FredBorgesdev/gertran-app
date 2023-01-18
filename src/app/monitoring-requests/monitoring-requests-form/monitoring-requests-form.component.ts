@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { MonitoringRequestsService, MonitoringRequests } from '../monitoring-requests.service';
-import { BaseCrudFormComponent } from '../../base-crud/base-crud-form/base-crud-form.component';
-import {RoutesService} from '../../routes/routes.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {MonitoringRequestsService, MonitoringRequests} from '../monitoring-requests.service';
+import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Stop, StopsService} from '../../stops/stops.service';
-import {CustomersService} from '../../customers/customers.service';
 import {Driver, DriversService} from '../../drivers/drivers.service';
 import {Truck, TrucksService} from '../../trucks/trucks.service';
 import {Wagon, WagonsService} from '../../wagons/wagons.service';
-import {NzModalService} from 'ng-zorro-antd/modal';
 import {Choice} from '../../shared/services/api.service';
 import {Operations, OperationsService} from '../../operations/operations.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
@@ -23,7 +20,6 @@ import {createNumberMask} from 'text-mask-addons';
   selector: 'app-monitoring-requests-form',
   templateUrl: './monitoring-requests-form.component.html',
   styleUrls: ['./monitoring-requests-form.component.css'],
-  providers: [SelectableCustomerServiceService]
 })
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
   stops: Stop[] = [];
@@ -51,11 +47,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private modal: NzModalService,
-    private routesService: RoutesService,
     private i18n: NzI18nService,
     private stopsService: StopsService,
-    private customersService: CustomersService,
     private driversService: DriversService,
     private trucksService: TrucksService,
     private wagonsService: WagonsService,
@@ -79,7 +72,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     this.isLoading = true;
 
-    this.stopsService.getAll({ limit: 50 }).subscribe((stops) => {
+    this.stopsService.getAll({limit: 50}).subscribe((stops) => {
       this.stops = stops.results;
     });
 
@@ -122,13 +115,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {
-      console.log('here 1', value)
+      console.log('here 1', value);
       this.operations = [];
       this.loadMoreOperations();
     });
     this.validateForm.get('shipper').valueChanges.subscribe((value) => {
       if (this.showShipperSelect) {
-        console.log('here 2', value)
+        console.log('here 2', value);
         this.operations = [];
         this.loadMoreOperations();
       }
@@ -212,7 +205,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     if (formControl.dirty) {
       this.service.update(
         this.resource.id,
-        { [field]: newValue || formControl.value } as any
+        {[field]: newValue || formControl.value} as any
       ).subscribe(() => {
         this.message.success('Rascunho salvo com sucesso!');
       });

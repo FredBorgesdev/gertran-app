@@ -19,7 +19,8 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     @Inject('service') protected service: ApiService<T>,
     protected message: NzMessageService,
     protected activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadFormBuilder();
@@ -31,7 +32,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
   }
 
   getId(): string {
-    return this.activatedRoute.snapshot.paramMap.get('id');
+    return this.activatedRoute.snapshot.params?.id;
   }
 
   loadResource(): void {
@@ -51,7 +52,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
   performFormGroupSetValues(params?: {
     ignoreKeys?: string[]
   }): void {
-    const { ignoreKeys = [] } = params || {};
+    const {ignoreKeys = []} = params || {};
 
     Object.keys(this.resource).forEach(key => {
       if (this.validateForm.controls[key] && (!ignoreKeys || !ignoreKeys.includes(key))) {
@@ -78,7 +79,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
     if (!this.validateForm.valid) {
       return Object.values(this.validateForm.controls).forEach(control => {
         control.markAsDirty();
-        control.updateValueAndValidity({ onlySelf: true });
+        control.updateValueAndValidity({onlySelf: true});
       });
     }
 
