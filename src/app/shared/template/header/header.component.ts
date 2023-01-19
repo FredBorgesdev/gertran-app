@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { ThemeConstantService } from '../../services/theme-constant.service';
+import {ThemeConstantService} from '../../services/theme-constant.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Customer, CustomersService} from '../../../customers/customers.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
@@ -10,7 +10,6 @@ import {SelectableCustomerServiceService} from '../../../customers/selectable-cu
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  providers: [SelectableCustomerServiceService]
 })
 
 export class HeaderComponent implements OnInit {
@@ -21,7 +20,9 @@ export class HeaderComponent implements OnInit {
     public selectableCustomerService: SelectableCustomerServiceService,
     private customerService: CustomersService,
     private router: Router,
-  ) {}
+    private activatedRoute: ActivatedRoute,
+  ) {
+  }
 
   searchVisible = false;
   quickViewVisible = false;
@@ -75,7 +76,7 @@ export class HeaderComponent implements OnInit {
 
   private setCustomers(): void {
     this.user = this.authService.user;
-    const customerQueryParam = this.router.parseUrl(this.router.url).queryParams.customer;
+    const customerQueryParam = this.activatedRoute.snapshot.queryParams?.customer;
     const loggedUserHasCustomer = this.user.customer.length > 0;
 
     if (loggedUserHasCustomer && !this.user.isGertranStaff) {

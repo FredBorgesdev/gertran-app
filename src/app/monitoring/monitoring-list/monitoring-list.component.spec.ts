@@ -9,13 +9,12 @@ import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-re
 import {AlertsService} from '../alerts.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import EmptyGetAllResponseFactory from '../../shared/factories/empty-get-all-response';
-import {BehaviorSubject, Observable, timer} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {DEFAULT_CRUD_FORM_PROVIDERS} from '../../base-crud/base-crud-form/base-crud-form.component.spec';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FormBuilder} from '@angular/forms';
 import {NzContextMenuService} from 'ng-zorro-antd/dropdown';
-import {TestScheduler} from 'rxjs/testing';
 import {By} from '@angular/platform-browser';
 
 const mockPosition: Position = {
