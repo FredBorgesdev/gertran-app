@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import { ROUTES } from './side-nav-routes.config';
-import { ThemeConstantService } from '../../services/theme-constant.service';
-import { SideNavInterface } from '../../interfaces/side-nav.type';
-import {ActivatedRoute} from '@angular/router';
+import {ROUTES} from './side-nav-routes.config';
+import {ThemeConstantService} from '../../services/theme-constant.service';
+import {SideNavInterface} from '../../interfaces/side-nav.type';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import User from '../../../users/user';
 
@@ -21,7 +20,8 @@ export class SideNavComponent implements OnInit {
   constructor(
     private themeService: ThemeConstantService,
     private authService: AuthenticationService
-  ) {}
+  ) {
+  }
 
   async ngOnInit(): Promise<void> {
     this.menuItems = this.filteredItems(ROUTES);
