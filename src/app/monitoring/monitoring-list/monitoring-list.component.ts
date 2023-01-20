@@ -7,7 +7,7 @@ import {Customer, CustomersService} from '../../customers/customers.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Position, PositionsService} from '../positions.service';
-import {EMPTY, Observable, Subject, timer} from 'rxjs';
+import {Observable, Subject, timer} from 'rxjs';
 import {share, switchMap, takeUntil} from 'rxjs/operators';
 import {GetAllResponse} from '../../shared/services/api.service';
 import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
@@ -185,16 +185,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getOrigin(item: Position): string {
-    if (item.monitoringRequest?.originCity) {
-      return item.monitoringRequest.originCity + ', ' + item.monitoringRequest.originState;
+    if (item.info?.originCity) {
+      return item.info.originCity + ', ' + item.info.originState;
     }
 
     return item.origin;
   }
 
   getDestiny(item: Position): string {
-    if (item.monitoringRequest?.destinyCity) {
-      return item.monitoringRequest.destinyCity + ', ' + item.monitoringRequest.destinyState;
+    if (item.info?.destinyCity) {
+      return item.info.destinyCity + ', ' + item.info.destinyState;
     }
 
     return item.destiny;
@@ -202,10 +202,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   getAlerts(item: Position): string {
     return item.events.map(prop('eventDescription')).join(', ');
-  }
-
-  getWagons(item: Position): string {
-    return item.monitoringRequest?.wagons.join(', ');
   }
 
   loadPositions(): void {
@@ -266,21 +262,21 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return item.events[item.events.length - 1];
   }
 
-  openAutomationModal(automations: Position['automations']): void {
-    if (automations.length === 0) {
-      return;
-    }
-
-    this.modal.create({
-      nzTitle: 'Automação',
-      nzContent: MonitoringEventModalComponent,
-      nzComponentParams: {
-        automations,
-      },
-      nzWidth: '90%',
-      nzOkText: 'Fechar',
-      nzCancelText: null,
-    });
+  openAutomationModal(automations: Position): void {
+    // if (automations.length === 0) {
+    //   return;
+    // }
+    //
+    // this.modal.create({
+    //   nzTitle: 'Automação',
+    //   nzContent: MonitoringEventModalComponent,
+    //   nzComponentParams: {
+    //     automations,
+    //   },
+    //   nzWidth: '90%',
+    //   nzOkText: 'Fechar',
+    //   nzCancelText: null,
+    // });
   }
 
   getStatusTranslation(status: string): string {
@@ -317,7 +313,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     if (!this.user.isGertranStaff) {
       return;
     }
-    this.setPlate(item.monitoringRequest.truck.vehicle.plate);
+    this.setPlate(item.vehiclePlate);
     this.nzContextMenuService.create(ev, menu);
   }
 

@@ -2,72 +2,72 @@ import {Injectable} from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TrackerTechnologiesModels} from '../tracker-technologies/tracker-technologies-models.service';
-import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
+
+interface PositionInfo {
+  id: string;
+  originState: string;
+  originCity: string;
+  destinyState: string;
+  destinyCity: string;
+  driverName: string;
+  driverPhone: string;
+  status: string;
+  travelStatus: string;
+  travelProgress: number;
+  wagonsPlates: string;
+  hasMacro: boolean;
+  hasBaits: boolean;
+  hasEmbeddedIntelligence: boolean;
+  hasAutomations: boolean;
+  observations: string;
+}
+
+interface PositionEvent {
+  eventName: string;
+  eventDescription: string;
+}
+
+interface TrackerModel {
+  id: string;
+  name: string;
+}
+
+interface Customer {
+  id: string;
+  name: string;
+}
+
+interface Truck {
+  id: string;
+}
+
+interface MonitoringRequest {
+  id: string;
+}
 
 export interface Position {
-  amountFuel: string | null;
-  angleReference: string;
-  city: string;
-  destiny: string | null;
-  driverName: string | null;
-  id: string | null;
+  id: string;
   ignition: boolean;
-  isBlocked: boolean;
+  origin: string;
+  destiny: string;
+  speed: string;
+  trackerSerialNumber: string;
   latitude: number;
   longitude: number;
-  odometer: string | null;
-  operator: string | null;
-  origin: string | null;
-  positionDate: string | null;
-  rpm: number;
-  speed: number;
-  state: string;
   street: string;
-  trackerTechnologyName: string;
-  timePosition: string;
-  trackerSerialNumber: string;
+  vehicleStatus: string;
   pointReference: string;
-  travelProgress: number;
+  positionDate: string;
+  temperature: number;
+  trackerTechnologyName: string;
+  customer: Customer;
   communicationChannel: string;
   vehiclePlate: string;
-  trackerModel: TrackerTechnologiesModels;
-  truck: {
-    id: string;
-    vehicle: {
-      plate: string;
-      id: string;
-    };
-  };
-  temperature: number;
-  vehicleStatus: string;
-  monitoringRequest: MonitoringRequests & {
-    destinyCity: string;
-    destinyState: string;
-    originCity: string;
-    originState: string;
-    driverName: string;
-    driverPhone: string;
-  };
-  customer: {
-    id: string;
-    name: string;
-  };
-  events: {
-    eventDescription: string;
-    eventName: string;
-  }[];
-  wagons: string[];
-  observations?: string;
-  automations: {
-    createdAt: string;
-    status: string;
-    vehicleTracker: any;
-    code: string;
-    sentAt: string;
-    sentByUser: any;
-    observations: string;
-  }[];
+  truck: Truck;
+  events: PositionEvent[];
+  trackerModel: TrackerModel;
+  info: PositionInfo;
+  monitoringRequest: MonitoringRequest;
 }
 
 @Injectable({
