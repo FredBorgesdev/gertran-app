@@ -31,6 +31,12 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   observations = '';
   terminals: Terminals[] = [];
 
+  printConfig = {
+    printMode: 'template-popup',
+    popupProperties: 'toolbar=yes,scrollbars=yes,resizable=yes,top=0,left=0,fullscreen=yes',
+    pageTitle: 'Hello World',
+  };
+
   checklistItems = [
     {
       label: 'Sensor Porta Motorista',
@@ -75,7 +81,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private terminalsService: TerminalsService,
     private utils: UtilsService,
     private modal: NzModalRef,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.checklistForm = this.formBuilder.group({
@@ -83,7 +90,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       hasEmbeddedIntelligence: [false, []],
       status: ['requested', []],
       allowedTravel: [null, []],
-      justification: [{ value: '', disabled: this.readOnly }, []],
+      justification: [{value: '', disabled: this.readOnly}, []],
       embeddedIntelligenceJustification: ['', []],
     });
     this.checklistItems.forEach(item => {
@@ -113,7 +120,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       batteryLevel: [null, []],
       timerIntervalInMinutes: [null, []],
       approved: [null, []],
-      justification: [{ value: '', disabled: this.readOnly }, []]
+      justification: [{value: '', disabled: this.readOnly}, []]
     });
 
     this.loadMonitoringRequest();
@@ -146,7 +153,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   loadTerminals(): void {
-    this.terminalsService.getAll({ limit: 999 }).subscribe(result => {
+    this.terminalsService.getAll({limit: 999}).subscribe(result => {
       this.terminals = result.results;
     });
   }
@@ -173,7 +180,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     return this.monitoringRequestService.release(this.monitoringRequest.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
-      this.modal.destroy({ updateList: true });
+      this.modal.destroy({updateList: true});
     }).catch(() => {
       this.message.error('Não foi possível atualizar o status.');
       this.isLoading = false;
@@ -225,6 +232,10 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   private setPossibleStatus(): void {
     this.possibleStatus = this.monitoringRequestService.possibleStatus[
       this.monitoringRequest?.status
-    ] || [];
+      ] || [];
+  }
+
+  print(): void {
+    print();
   }
 }

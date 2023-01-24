@@ -16,17 +16,18 @@ export class UpdateObservationsModalComponent implements OnInit {
   constructor(
     private service: TrucksService,
     private message: NzMessageService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.observation = this.item.observations;
+    this.observation = this.item.info.observations;
   }
 
   save(): void {
     this.service.update(this.item.truck.id, {
       description: this.observation,
     } as any).subscribe(() => {
-      this.item.observations = this.observation;
+      this.item.info.observations = this.observation;
       this.message.success('Observações atualizadas com sucesso');
     }, () => {
       this.message.error('Erro ao atualizar observações');

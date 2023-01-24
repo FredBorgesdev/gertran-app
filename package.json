@@ -52,6 +52,7 @@
     "ngx-infinite-scroll": "^10.0.1",
     "ngx-mapbox-gl": "^8.0.0",
     "ngx-perfect-scrollbar": "^10.0.1",
+    "ngx-print-element": "^2.0.18",
     "ngx-quicklink": "^0.2.6",
     "ngx-quill": "^16.2.0",
     "quill": "^1.3.7",
