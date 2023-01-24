@@ -262,21 +262,17 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return item.events[item.events.length - 1];
   }
 
-  openAutomationModal(automations: Position): void {
-    // if (automations.length === 0) {
-    //   return;
-    // }
-    //
-    // this.modal.create({
-    //   nzTitle: 'Automação',
-    //   nzContent: MonitoringEventModalComponent,
-    //   nzComponentParams: {
-    //     automations,
-    //   },
-    //   nzWidth: '90%',
-    //   nzOkText: 'Fechar',
-    //   nzCancelText: null,
-    // });
+  openAutomationModal(position: Position): void {
+    this.modal.create({
+      nzTitle: 'Automação',
+      nzContent: MonitoringEventModalComponent,
+      nzComponentParams: {
+        plate: position.vehiclePlate,
+      },
+      nzWidth: '90%',
+      nzOkText: 'Fechar',
+      nzCancelText: null,
+    });
   }
 
   getStatusTranslation(status: string): string {
@@ -466,6 +462,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
         return position;
       });
+    }, () => {
     });
   }
 

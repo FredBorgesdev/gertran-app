@@ -1,13 +1,27 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Position} from '../positions.service';
+import {Automation, AutomationsService} from '../../automations/automations.service';
 
 @Component({
   selector: 'app-monitoring-event-modal',
   templateUrl: './monitoring-event-modal.component.html',
   styleUrls: ['./monitoring-event-modal.component.css']
 })
-export class MonitoringEventModalComponent {
-  @Input() automations: any;
+export class MonitoringEventModalComponent implements OnInit {
+  @Input() plate: Position['vehiclePlate'];
+
+  automations: Automation[] = [];
+
+  constructor(
+    private automationsService: AutomationsService,
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.automationsService.getAutomationsByPlate(this.plate).subscribe(automations => {
+      this.automations = automations.results;
+    });
+  }
 
   getAutomationType(automation: string): string {
     return {

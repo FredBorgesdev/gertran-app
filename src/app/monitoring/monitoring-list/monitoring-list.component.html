@@ -196,7 +196,7 @@
           nz-icon
           nzType="info-circle"
           nzTheme="fill"
-          [style]="'font-size: 20px; color: ' + (item.info.hasAutomations > 0 ? '#1890ff' : '#ccc')"
+          [style]="'font-size: 20px; color: ' + (item.info?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
       <td>
@@ -219,7 +219,7 @@
         <nz-progress
           nzStrokeWidth="2"
           nzSize="small"
-          [nzPercent]="item.info.travelProgress"
+          [nzPercent]="item.info?.travelProgress"
           [nzFormat]="formatPercent"
         ></nz-progress>
       </td>
@@ -249,7 +249,7 @@
       <td *ngIf="user.isGertranStaff"
           data-testid="td-gertran-only">{{ item.info?.observations || '-' }}</td>
       <td>{{ item.info?.driverName || '-' }}</td>
-      <td>{{ item.info.wagonsPlates || '-' }}</td>
+      <td>{{ item.info?.wagonsPlates || '-' }}</td>
       <td *ngIf="user.isGertranStaff"
           data-testid="td-gertran-only">{{ getCommunicationChannel(item.communicationChannel) }}</td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
