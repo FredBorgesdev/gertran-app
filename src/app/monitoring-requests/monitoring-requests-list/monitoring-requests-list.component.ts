@@ -224,10 +224,6 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       nzWidth: '90%',
       nzOkText: null,
       nzCancelText: null,
-      // nzOnOk: async (componentInstance) => {
-      //   await componentInstance.save();
-      //   this.loadAllResources();
-      // },
       nzAfterClose: this.refreshAfterClose
     });
   }
