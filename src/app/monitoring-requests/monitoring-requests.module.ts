@@ -23,6 +23,7 @@ import {MonitoringRequestsFilterComponent} from './monitoring-requests-filter/mo
 import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
 import {TextMaskModule} from 'angular2-text-mask';
 import {NgxPrintElementModule} from 'ngx-print-element';
+import { MonitoringRequestsCheckListPrintableComponent } from './monitoring-requests-check-list-printable/monitoring-requests-check-list-printable.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {NgxPrintElementModule} from 'ngx-print-element';
     ArmedGuardTabComponent,
     MonitoringRequestsTableComponent,
     MonitoringRequestsCheckListComponent,
-    MonitoringRequestsFilterComponent
+    MonitoringRequestsFilterComponent,
+    MonitoringRequestsCheckListPrintableComponent
   ],
   imports: [
     CommonModule,
