@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {Invoice} from './invoices.service';
@@ -55,12 +55,20 @@ export interface MonitoringRequests {
   shipper: Customer;
   transporter: Customer;
   driver: {
+    workingSituation: string;
     id: string;
     name: string;
     phoneNumber: string;
+    cpf: string;
+    cnhNumber: string;
   };
   auxiliaryDriver: {
+    workingSituation: string;
     id: string;
+    name: string;
+    phoneNumber: string;
+    cpf: string;
+    cnhNumber: string;
   };
   truck: Truck;
   wagons: {
@@ -105,7 +113,8 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   getAll(pagination: Pagination, filters?: {
     status?: string;
@@ -113,7 +122,7 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     toDate?: string;
     customer?: string;
   }): Observable<GetAllResponse<MonitoringRequests>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -136,7 +145,7 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
       params.status = filters.status;
     }
 
-    return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', { params });
+    return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', {params});
   }
 
   get(id: string): Observable<MonitoringRequests> {
@@ -176,20 +185,20 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
   get possibleStatus(): PossibleStatus {
     return {
       [Status.DRAFT]: [
-        { label: 'Em análise', value: Status.UNDER_REVIEW },
+        {label: 'Em análise', value: Status.UNDER_REVIEW},
       ],
       [Status.UNDER_REVIEW]: [
-        { label: 'Salvar', value: Status.WAITING_FOR_START },
-        { label: 'Cancelar', value: Status.CANCELED },
-        { label: 'Reprovar', value: Status.REPROVED },
-        { label: 'Finalizar viagem', value: Status.FINISHED },
+        {label: 'Salvar', value: Status.WAITING_FOR_START},
+        {label: 'Cancelar', value: Status.CANCELED},
+        {label: 'Reprovar', value: Status.REPROVED},
+        {label: 'Finalizar viagem', value: Status.FINISHED},
       ],
       [Status.WAITING_FOR_START]: [
-        { label: 'Iniciar viagem', value: Status.IN_PROGRESS },
-        { label: 'Finalizar viagem', value: Status.FINISHED },
+        {label: 'Iniciar viagem', value: Status.IN_PROGRESS},
+        {label: 'Finalizar viagem', value: Status.FINISHED},
       ],
       [Status.IN_PROGRESS]: [
-        { label: 'Finalizar viagem', value: Status.FINISHED },
+        {label: 'Finalizar viagem', value: Status.FINISHED},
       ],
     };
   }

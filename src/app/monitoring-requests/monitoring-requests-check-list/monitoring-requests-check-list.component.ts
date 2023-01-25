@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-requests.service';
+import {MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {Wagon} from '../../wagons/wagons.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TravelStep} from '../travel-step.service';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {UtilsService} from '../../shared/services/utils.service';
 import {NzModalRef} from 'ng-zorro-antd/modal';
+import MonitoringRequest from '../monitoring-request';
+import {ChecklistsService} from '../../checklists/checklists.service';
 
 export type ModalDestroyResult = {
   updateList: boolean;
@@ -27,50 +27,22 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   validateForm: FormGroup;
 
   isLoading = false;
-  monitoringRequest: MonitoringRequests;
   observations = '';
   terminals: Terminals[] = [];
+
+  monitoringRequest: MonitoringRequest;
 
   printConfig = {
     printMode: 'template-popup',
     popupProperties: 'toolbar=yes,scrollbars=yes,resizable=yes,top=0,left=0,fullscreen=yes',
-    pageTitle: 'Hello World',
+    pageTitle: '',
+    styles: [
+      'td { padding: 5px !important; }',
+      // Styles copied from antd implementation
+      '.ant-checkbox-inner::after { position: absolute !important; display: table !important; border: 2px solid #3f87f5 !important; border-top: 0 !important; border-left: 0 !important; transform: rotate(45deg) scale(1) translate(-50%,-50%) !important; opacity: 1 !important; transition: all .2s cubic-bezier(.12,.4,.29,1.46) .1s !important; content: \' \' !important; }',
+      '* { font-size: 10px; }',
+    ],
   };
-
-  checklistItems = [
-    {
-      label: 'Sensor Porta Motorista',
-      value: 'driverDoorChecked',
-    },
-    {
-      label: 'Sensor Porta Passageiro',
-      value: 'passengerDoorChecked',
-    },
-    {
-      label: 'Sensor de engate de carreta',
-      value: 'wagonEngagedChecked',
-    },
-    {
-      label: 'Sensor de Painel',
-      value: 'panelSensorChecked',
-    },
-    {
-      label: 'Sensor de Bau',
-      value: 'trunkChecked',
-    },
-    {
-      label: 'Sirene',
-      value: 'sirenChecked',
-    },
-    {
-      label: 'Bloqueio',
-      value: 'blockChecked',
-    },
-    {
-      label: 'Trava de Bau',
-      value: 'trunkLockChecked',
-    }
-  ];
 
   possibleStatus = [];
 
@@ -81,6 +53,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private terminalsService: TerminalsService,
     private utils: UtilsService,
     private modal: NzModalRef,
+    public checklistService: ChecklistsService,
   ) {
   }
 
@@ -93,7 +66,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       justification: [{value: '', disabled: this.readOnly}, []],
       embeddedIntelligenceJustification: ['', []],
     });
-    this.checklistItems.forEach(item => {
+    this.checklistService.localizedValues.forEach(item => {
       this.checklistForm.addControl(item.value, this.formBuilder.control(false, []));
     });
     this.checklistForm.get('status').valueChanges.subscribe(value => {
@@ -130,7 +103,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   loadMonitoringRequest(): void {
     this.isLoading = true;
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
-      this.monitoringRequest = result;
+      this.monitoringRequest = new MonitoringRequest(result);
       this.setPossibleStatus();
       this.isLoading = false;
 
@@ -146,6 +119,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         observations: result.observations,
         terminal: result.terminal?.id
       });
+
+      this.printConfig.pageTitle = `Checklist de Monitoramento - ${this.monitoringRequest?.data.customer?.tradingName}`;
     }, () => {
       this.isLoading = false;
       this.message.error('Não foi possível carregar o pedido de monitoramento.');
@@ -156,10 +131,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.terminalsService.getAll({limit: 999}).subscribe(result => {
       this.terminals = result.results;
     });
-  }
-
-  getWagonsPlates(): string {
-    return this.monitoringRequest?.wagons.map(wagon => (wagon as Wagon).vehicle.plate).join(', ') ?? '';
   }
 
   save(status: string): Promise<void> {
@@ -177,7 +148,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     };
 
     this.isLoading = true;
-    return this.monitoringRequestService.release(this.monitoringRequest.id, body).toPromise().then(() => {
+    return this.monitoringRequestService.release(this.monitoringRequest.data.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
       this.modal.destroy({updateList: true});
@@ -187,55 +158,9 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     });
   }
 
-  getWorkingSituation(workingSituation: string): string {
-    return {
-      fleet: 'Frota',
-      aggregate: 'Agregado',
-      third_party: 'Terceiro',
-    }[workingSituation] || 'N/a';
-  }
-
-  get loadType(): string {
-    return {
-      refrigerated: 'Refrigerada',
-      unrefrigerated: 'Não refrigerada',
-      frozen: 'Congelada',
-    }[this.monitoringRequest?.loadType] || 'N/a';
-  }
-
-  get ocrNumber(): string {
-    return this.monitoringRequest?.loadingOrders?.map(loadingOrder => loadingOrder.ocrNumber).join(', ') || 'N/a';
-  }
-
-  get firstTravelStep(): TravelStep {
-    return this.monitoringRequest?.travelSteps?.[0];
-  }
-
-  get firstTravelStepDate(): Date {
-    if (!this.firstTravelStep) {
-      return new Date();
-    }
-    return new Date(this.firstTravelStep?.date + ' ' + this.firstTravelStep?.time);
-  }
-
-  get lastTravelStep(): TravelStep {
-    return this.monitoringRequest?.travelSteps?.[this.monitoringRequest.travelSteps.length - 1];
-  }
-
-  get lastTravelStepDate(): Date {
-    if (!this.lastTravelStep) {
-      return new Date();
-    }
-    return new Date(this.lastTravelStep?.date + ' ' + this.lastTravelStep?.time);
-  }
-
   private setPossibleStatus(): void {
     this.possibleStatus = this.monitoringRequestService.possibleStatus[
-      this.monitoringRequest?.status
+      this.monitoringRequest?.data?.status
       ] || [];
-  }
-
-  print(): void {
-    print();
   }
 }
