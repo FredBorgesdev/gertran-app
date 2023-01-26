@@ -58,6 +58,14 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadChecklistForm();
+    this.loadMonitoringRequestForm();
+    this.loadChecklistBaitForm();
+    this.loadMonitoringRequest();
+    this.loadTerminals();
+  }
+
+  loadChecklistForm(): void {
     this.checklistForm = this.formBuilder.group({
       hasMacro: [false, []],
       hasEmbeddedIntelligence: [false, []],
@@ -65,9 +73,14 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       allowedTravel: [null, []],
       justification: [{value: '', disabled: this.readOnly}, []],
       embeddedIntelligenceJustification: ['', []],
-    });
-    this.checklistService.localizedValues.forEach(item => {
-      this.checklistForm.addControl(item.value, this.formBuilder.control(false, []));
+      driverDoorChecked: [false, []],
+      passengerDoorChecked: [false, []],
+      wagonEngagedChecked: [false, []],
+      panelSensorChecked: [false, []],
+      trunkChecked: [false, []],
+      sirenChecked: [false, []],
+      blockChecked: [false, []],
+      trunkLockChecked: [false, []],
     });
     this.checklistForm.get('status').valueChanges.subscribe(value => {
       if (value === 'reproved') {
@@ -75,13 +88,17 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         this.checklistForm.get('justification').updateValueAndValidity();
       }
     });
+  }
 
+  loadMonitoringRequestForm(): void {
     this.validateForm = this.formBuilder.group({
       terminal: [null, []],
       status: [null, []],
       observations: ['', []]
     });
+  }
 
+  loadChecklistBaitForm(): void {
     this.checklistBaitForm = this.formBuilder.group({
       positionChecked: [false, []],
       batteriesChecked: [false, []],
@@ -95,9 +112,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       approved: [null, []],
       justification: [{value: '', disabled: this.readOnly}, []]
     });
-
-    this.loadMonitoringRequest();
-    this.loadTerminals();
   }
 
   loadMonitoringRequest(): void {
@@ -106,25 +120,27 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.monitoringRequest = new MonitoringRequest(result);
       this.setPossibleStatus();
       this.isLoading = false;
-
-      if (result.checklist) {
-        this.checklistForm.patchValue(result.checklist);
-      }
-      if (result.checklistBait) {
-        this.checklistBaitForm.patchValue(result.checklistBait);
-      }
-
-      this.validateForm.patchValue({
-        status: result.status,
-        observations: result.observations,
-        terminal: result.terminal?.id
-      });
-
+      this.patchFormsValues();
       this.printConfig.pageTitle = `Checklist de Monitoramento - ${this.monitoringRequest?.data.customer?.tradingName}`;
     }, () => {
       this.isLoading = false;
       this.message.error('Não foi possível carregar o pedido de monitoramento.');
     });
+  }
+
+  patchFormsValues(): void {
+    // if (this.monitoringRequest.data.checklist) {
+    //   this.checklistForm.patchValue(this.monitoringRequest.data.checklist);
+    // }
+    // if (this.monitoringRequest.data.checklistBait) {
+    //   this.checklistBaitForm.patchValue(this.monitoringRequest.data.checklistBait);
+    // }
+    //
+    // this.validateForm.patchValue({
+    //   status: this.monitoringRequest.data.status,
+    //   observations: this.monitoringRequest.data.observations,
+    //   terminal: this.monitoringRequest.data.terminal?.id
+    // });
   }
 
   loadTerminals(): void {

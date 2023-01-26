@@ -36,7 +36,7 @@
         {{monitoringRequest?.data?.auxiliaryDriver?.cnhNumber}}
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Telefone motorista auxiliar">
-        {{monitoringRequest?.data?.auxiliaryDriver?.cellphone || 'N/a'}}
+        {{monitoringRequest?.data?.auxiliaryDriver?.phoneNumber || 'N/a'}}
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Tipo Motorista auxiliar" nzSpan="3">
         {{monitoringRequest?.auxiliaryDriverWorkingSituation}}
@@ -49,7 +49,7 @@
       {{monitoringRequest?.data?.truck?.vehicle?.plate}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Carretas">
-      {{monitoringRequest.wagonPlates}}
+      {{monitoringRequest?.wagonPlates}}
     </nz-descriptions-item>
   </nz-descriptions>
 
@@ -58,7 +58,7 @@
       {{monitoringRequest?.data?.operation?.name}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Ordem de carregamento / OCR">
-      {{monitoringRequest.ocrNumber}}
+      {{monitoringRequest?.ocrNumber}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Pesquisa Cadastral Realizada por">
       {{monitoringRequest?.data?.surveyConductedBy}}
@@ -73,16 +73,16 @@
       {{monitoringRequest?.data?.loadValue | currency: 'R$ '}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Origem">
-      {{monitoringRequest.firstTravelStep?.address || 'N/a' }}
+      {{monitoringRequest?.firstTravelStep?.address || 'N/a' }}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Data previsão inicio" [nzSpan]="6">
-      {{monitoringRequest.firstTravelStepDate | date: 'dd/MM/yyyy HH:mm'}}
+      {{monitoringRequest?.firstTravelStepDate | date: 'dd/MM/yyyy HH:mm'}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Destino">
-      {{monitoringRequest.lastTravelStep?.address || 'N/a' }}
+      {{monitoringRequest?.lastTravelStep?.address || 'N/a' }}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Data previsão chegada" [nzSpan]="6">
-      {{monitoringRequest.lastTravelStepDate | date: 'dd/MM/yyyy HH:mm'}}
+      {{monitoringRequest?.lastTravelStepDate | date: 'dd/MM/yyyy HH:mm'}}
     </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Observações" nzSpan="24">
       {{monitoringRequest?.data?.observations}}
@@ -130,18 +130,18 @@
     <div nz-row>
       <div nz-col nzSpan="18">
         <div nz-row>
-          <div nz-col [nzSpan]="6" *ngFor="let item of checklistService.localizedValues">
-            <nz-form-item>
-              <nz-form-label></nz-form-label>
-              <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  [nzDisabled]="readOnly"
-                  [formControlName]="item.value"
-                >{{ item.label }}</label>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
+          <!--          <div nz-col [nzSpan]="6" *ngFor="let item of checklistService.localizedValues">-->
+          <!--            <nz-form-item>-->
+          <!--              <nz-form-label></nz-form-label>-->
+          <!--              <nz-form-control [nzSpan]="null" [nzOffset]="null">-->
+          <!--                <label-->
+          <!--                  nz-checkbox-->
+          <!--                  [nzDisabled]="readOnly"-->
+          <!--                  [formControlName]="item.value"-->
+          <!--                >{{ item.label }}</label>-->
+          <!--              </nz-form-control>-->
+          <!--            </nz-form-item>-->
+          <!--          </div>-->
         </div>
       </div>
 

@@ -80,6 +80,7 @@ export interface MonitoringRequests {
   }[];
   operation: {
     id: string;
+    name: string;
   };
   routeCoordinates: any[];
   travelSteps: any[];
