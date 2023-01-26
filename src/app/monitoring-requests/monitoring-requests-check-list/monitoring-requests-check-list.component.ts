@@ -46,6 +46,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
   possibleStatus = [];
 
+  checklistItems = [];
+
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
     private message: NzMessageService,
@@ -58,6 +60,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checklistItems = this.checklistService.localizedValues;
+
     this.loadChecklistForm();
     this.loadMonitoringRequestForm();
     this.loadChecklistBaitForm();
@@ -129,18 +133,18 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   patchFormsValues(): void {
-    // if (this.monitoringRequest.data.checklist) {
-    //   this.checklistForm.patchValue(this.monitoringRequest.data.checklist);
-    // }
-    // if (this.monitoringRequest.data.checklistBait) {
-    //   this.checklistBaitForm.patchValue(this.monitoringRequest.data.checklistBait);
-    // }
-    //
-    // this.validateForm.patchValue({
-    //   status: this.monitoringRequest.data.status,
-    //   observations: this.monitoringRequest.data.observations,
-    //   terminal: this.monitoringRequest.data.terminal?.id
-    // });
+    if (this.monitoringRequest.data.checklist) {
+      this.checklistForm.patchValue(this.monitoringRequest.data.checklist);
+    }
+    if (this.monitoringRequest.data.checklistBait) {
+      this.checklistBaitForm.patchValue(this.monitoringRequest.data.checklistBait);
+    }
+
+    this.validateForm.patchValue({
+      status: this.monitoringRequest.data.status,
+      observations: this.monitoringRequest.data.observations,
+      terminal: this.monitoringRequest.data.terminal?.id
+    });
   }
 
   loadTerminals(): void {

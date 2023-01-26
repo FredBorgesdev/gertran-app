@@ -24,27 +24,28 @@ export class MonitoringRequestsTableComponent implements OnInit {
   possibleStatus: PossibleStatus;
 
   monitoringRequestsColumns = [
-    { title: 'Código' },
-    { title: 'Nº de ordem' },
-    { title: 'Empresa' },
-    { title: 'Embarcador' },
-    { title: 'Motorista' },
-    { title: 'Placa' },
-    { title: 'Carretas' },
-    { title: 'Modificação' },
-    { title: 'Saída' },
-    { title: 'Chegada' },
-    { title: 'Ult. Posição' },
-    { title: 'Horário' },
-    { title: 'Tecnologia' },
-    { title: 'Ações' },
+    {title: 'Código'},
+    {title: 'Nº de ordem'},
+    {title: 'Empresa'},
+    {title: 'Embarcador'},
+    {title: 'Motorista'},
+    {title: 'Placa'},
+    {title: 'Carretas'},
+    {title: 'Modificação'},
+    {title: 'Saída'},
+    {title: 'Chegada'},
+    {title: 'Ult. Posição'},
+    {title: 'Horário'},
+    {title: 'Tecnologia'},
+    {title: 'Ações'},
   ];
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
     private message: NzMessageService,
     public authService: AuthenticationService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.possibleStatus = this.monitoringRequestService.possibleStatus;
@@ -55,7 +56,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
   }
 
   getWagons(item: MonitoringRequests): string {
-    return item.wagons.map(wagon => wagon.vehicle.plate).join(', ');
+    return item.wagons?.map(wagon => wagon.vehicle.plate).join(', ');
   }
 
   getOcrNumber(item: MonitoringRequests): string {

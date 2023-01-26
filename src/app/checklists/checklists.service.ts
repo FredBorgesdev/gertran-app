@@ -57,7 +57,10 @@ export class ChecklistsService implements ApiService<Checklist> {
     return this.http.delete<void>(`monitoring/checklists/${id}/delete`);
   }
 
-  get localizedValues(): { [key: string]: string }[] {
+  get localizedValues(): {
+    label: string;
+    value: string;
+  }[] {
     return [
       {
         label: 'Sensor Porta Motorista',
