@@ -201,6 +201,9 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
       [Status.IN_PROGRESS]: [
         {label: 'Finalizar viagem', value: Status.FINISHED},
       ],
+      [Status.REPROVED]: [
+        {label: 'Solicitar Reavaliação', value: Status.UNDER_REVIEW},
+      ]
     };
   }
 }
