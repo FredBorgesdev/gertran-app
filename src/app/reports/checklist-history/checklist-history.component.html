@@ -1,0 +1,55 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Histórico de Checklist</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-customer-filter
+      (generateReport)="generateReport($event)"
+      [rows]="checklistHistory"
+      fileName="Histórico de Checklist"
+    ></app-base-customer-filter>
+
+    <nz-table
+      #table
+      [nzData]="checklistHistory"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Empresa</th>
+        <th>Placa</th>
+        <th>Tipo</th>
+        <th>Tecnologia</th>
+        <th>Solicitante</th>
+        <th>Status checklist</th>
+        <th>Data liberação</th>
+        <th>Operador</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>
+          {{ data.customer.tradingName }}
+        </td>
+        <td>{{ data.vehicle.plate }}</td>
+        <td>TODO</td>
+        <td>{{ data.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</td>
+        <td>{{ data.requestedBy?.name }}</td>
+        <td>{{ data.status }}</td>
+        <td>{{ data.reviewedAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ data.reviewedBy?.name }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>

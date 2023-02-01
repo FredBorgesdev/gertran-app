@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {GetAllResponse} from '../shared/services/api.service';
@@ -85,12 +85,92 @@ export type MacroVehicleReport = {
   title: string;
 };
 
+export type TrackerTechnology = {
+  id: string;
+  name: string;
+};
+
+export type TrackerModel = {
+  id: string;
+  trackerTechnology: TrackerTechnology;
+  name: string;
+};
+
+export type Tracker = {
+  id: string;
+  trackerModel: TrackerModel;
+  trackerId: string;
+  isMain: boolean;
+};
+
+export type Vehicle = {
+  id: string;
+  plate: string;
+  trackers: Tracker[];
+};
+
+export type Customer = {
+  shippers: any[];
+  id: string;
+  checklistExpirationPeriod: string;
+  isActive: boolean;
+  cnpj: string;
+  tradingName: string;
+  corporateName: string;
+  domain: string;
+  email?: any;
+  zipCode: string;
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  latitude: string;
+  longitude: string;
+  maximumSpeedAllowed: number;
+  canSelectShipper: boolean;
+  isShipper: boolean;
+  isSpecialOperation: boolean;
+  isPamcary: boolean;
+  branchOfficeOf?: any;
+  permissions: any[];
+};
+
+export type ChecklistHistory = {
+  vehicle: Vehicle;
+  customer: Customer;
+  id: string;
+  createdAt: Date;
+  expirationDate: Date;
+  driverDoorChecked: boolean;
+  passengerDoorChecked: boolean;
+  wagonEngagedChecked: boolean;
+  panelSensorChecked: boolean;
+  trunkChecked: boolean;
+  sirenChecked: boolean;
+  blockChecked: boolean;
+  trunkLockChecked: boolean;
+  justification: string;
+  allowedTravel: boolean;
+  generalJustification?: any;
+  hasMacro: boolean;
+  hasEmbeddedIntelligence: boolean;
+  hasPendencies: boolean;
+  embeddedIntelligenceJustification: string;
+  reviewedAt: Date;
+  status: string;
+  requestedBy: number;
+  reviewedBy?: any;
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class ReportsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getLoadUnloadByPoint(filters: BasePeriodFilter): Observable<ReportsResults> {
     const params = new HttpParams({
@@ -100,7 +180,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/loadunloadbypoint?1=1', { params });
+    return this.http.get<ReportsResults>('reports/monitoring/loadunloadbypoint?1=1', {params});
   }
 
   getDelayedTripes(filters: DelayedTripFilter): Observable<ReportsResults> {
@@ -113,7 +193,7 @@ export class ReportsService {
         invoice: filters.invoice,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/delayedtrips?1=1', { params });
+    return this.http.get<ReportsResults>('reports/monitoring/delayedtrips?1=1', {params});
   }
 
   getMonitoringRequests(filters: BasePeriodFilter): Observable<ReportsResults> {
@@ -124,7 +204,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/requests?1=1', { params });
+    return this.http.get<ReportsResults>('reports/monitoring/requests?1=1', {params});
   }
 
   getVehiclesReleased(filters: BasePeriodFilter): Observable<ReportsResults> {
@@ -135,7 +215,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/vehiclesreleased?1=1', { params });
+    return this.http.get<ReportsResults>('reports/monitoring/vehiclesreleased?1=1', {params});
   }
 
   getClosure(filters: BasePeriodFilter): Observable<ReportsResults> {
@@ -146,7 +226,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', { params });
+    return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', {params});
   }
 
   getTravelStart(filters: BaseVehicleFilter): Observable<PositionEvent[]> {
@@ -161,7 +241,7 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<PositionEvent[]>('reports/monitoring/travelstart?1=1', { params });
+    return this.http.get<PositionEvent[]>('reports/monitoring/travelstart?1=1', {params});
   }
 
   getTravelEnd(filters: BaseVehicleFilter): Observable<PositionEvent[]> {
@@ -176,7 +256,7 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<PositionEvent[]>('reports/monitoring/travelend?1=1', { params });
+    return this.http.get<PositionEvent[]>('reports/monitoring/travelend?1=1', {params});
   }
 
   getTrackingCommandsHistory(filters: BaseVehicleFilter): Observable<CommandSentHistory[]> {
@@ -188,7 +268,7 @@ export class ReportsService {
         plate: filters.plate
       }
     });
-    return this.http.get<CommandSentHistory[]>('reports/tracking/commandshistory?1=1', { params });
+    return this.http.get<CommandSentHistory[]>('reports/tracking/commandshistory?1=1', {params});
   }
 
   getTrackingPositionsHistory(filters: BaseVehicleFilter): Observable<Position[]> {
@@ -200,7 +280,7 @@ export class ReportsService {
         plate: filters.plate || 'AOU0G63'
       }
     });
-    return this.http.get<Position[]>('reports/tracking/positionshistory?1=1', { params });
+    return this.http.get<Position[]>('reports/tracking/positionshistory?1=1', {params});
   }
 
   getBaits(filters: BasePeriodFilter): Observable<MonitoringRequestBait[]> {
@@ -211,7 +291,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<MonitoringRequestBait[]>('reports/events/bait?1=1', { params });
+    return this.http.get<MonitoringRequestBait[]>('reports/events/bait?1=1', {params});
   }
 
   getOperationalAuditCommands(filters: BaseUserFilter): Observable<CommandSentHistory[]> {
@@ -223,7 +303,7 @@ export class ReportsService {
         user: filters.user,
       }
     });
-    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditcommands?1=1', { params });
+    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditcommands?1=1', {params});
   }
 
   getOperationalAuditMessages(filters: BaseUserFilter): Observable<CommandSentHistory[]> {
@@ -237,7 +317,7 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditmessages?1=1', { params });
+    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditmessages?1=1', {params});
   }
 
   getMacroVehicleReport(form: BaseMacroFilter): Observable<MacroVehicleReport[]> {
@@ -256,7 +336,7 @@ export class ReportsService {
       fromObject: filtersParams
     });
 
-    return this.http.get<MacroVehicleReport[]>('reports/tracking/macrovehicle?1=1', { params });
+    return this.http.get<MacroVehicleReport[]>('reports/tracking/macrovehicle?1=1', {params});
   }
 
   getAnalyticalReport(form: BaseVehicleFilter): Observable<MacroVehicleReport[]> {
@@ -272,6 +352,19 @@ export class ReportsService {
       fromObject: filtersParams
     });
 
-    return this.http.get<MacroVehicleReport[]>('reports/events/analytical?1=1', { params });
+    return this.http.get<MacroVehicleReport[]>('reports/events/analytical?1=1', {params});
+  }
+
+  getChecklistHistory(form: BasePeriodFilter): Observable<ChecklistHistory[]> {
+    const filtersParams: any = {
+      from_date: form.from,
+      to_date: form.to,
+      customer: form.customer,
+    };
+    const params = new HttpParams({
+      fromObject: filtersParams
+    });
+
+    return this.http.get<ChecklistHistory[]>('reports/tracking/checklisthistory?1=1', {params});
   }
 }

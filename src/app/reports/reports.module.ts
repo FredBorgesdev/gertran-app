@@ -27,6 +27,7 @@ import { OperationalAuditMessagesComponent } from './operational-audit-messages/
 import { MacrovehicleComponent } from './macrovehicle/macrovehicle.component';
 import { BaseMacroFilterComponent } from './filters/base-macro-filter/base-macro-filter.component';
 import { AnalyticalReportComponent } from './analytical-report/analytical-report.component';
+import { ChecklistHistoryComponent } from './checklist-history/checklist-history.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { AnalyticalReportComponent } from './analytical-report/analytical-report
     MacrovehicleComponent,
     BaseMacroFilterComponent,
     AnalyticalReportComponent,
+    ChecklistHistoryComponent,
   ],
   imports: [
     SharedModule,
