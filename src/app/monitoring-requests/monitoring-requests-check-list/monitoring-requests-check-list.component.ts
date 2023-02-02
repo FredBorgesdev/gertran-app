@@ -75,7 +75,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       hasEmbeddedIntelligence: [false, []],
       status: ['requested', []],
       allowedTravel: [null, []],
-      justification: [{value: '', disabled: this.readOnly}, []],
+      justification: ['', []],
       embeddedIntelligenceJustification: ['', []],
       driverDoorChecked: [false, []],
       passengerDoorChecked: [false, []],
@@ -92,6 +92,9 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         this.checklistForm.get('justification').updateValueAndValidity();
       }
     });
+    if (this.readOnly) {
+      this.checklistForm.disable();
+    }
   }
 
   loadMonitoringRequestForm(): void {
@@ -114,8 +117,11 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       batteryLevel: [null, []],
       timerIntervalInMinutes: [null, []],
       approved: [null, []],
-      justification: [{value: '', disabled: this.readOnly}, []]
+      justification: ['', []]
     });
+    if (this.readOnly) {
+      this.checklistForm.disable();
+    }
   }
 
   loadMonitoringRequest(): void {
