@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {LoadUnloadByMacroComponent} from './load-unload-by-macro/load-unload-by-macro.component';
 import {LoadUnloadByPointComponent} from './load-unload-by-point/load-unload-by-point.component';
 import {LoadUnloadByRadiusComponent} from './load-unload-by-radius/load-unload-by-radius.component';
@@ -20,6 +20,7 @@ import {OperationalAuditMessagesComponent} from './operational-audit-messages/op
 import {MacrovehicleComponent} from './macrovehicle/macrovehicle.component';
 import {AnalyticalReportComponent} from './analytical-report/analytical-report.component';
 import {Permissions} from '../authentication/permissions';
+import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
 
 const routes: Routes = [
   {
@@ -136,6 +137,10 @@ const routes: Routes = [
     data: {
       permission: Permissions.REPORTS_VIEW_ANALYTICAL_REPORT
     }
+  },
+  {
+    path: 'checklist-history',
+    component: ChecklistHistoryComponent,
   }
 ];
 
@@ -143,4 +148,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ReportsRoutingModule { }
+export class ReportsRoutingModule {
+}

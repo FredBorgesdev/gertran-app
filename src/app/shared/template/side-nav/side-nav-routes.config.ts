@@ -345,15 +345,14 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
-          // {
-          //   path: '/dashboard/reports17',
-          //   title: 'Histórico de check list',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   permission: Permissions.REPORTS_VIEW_CHECKLIST_HISTORY_REPORT
-          // },
+          {
+            path: '/reports/checklist-history',
+            title: 'Histórico de check list',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: [],
+          },
           // {
           //   path: '/dashboard/reports18',
           //   title: 'Histórico temperatura (analítico)',
