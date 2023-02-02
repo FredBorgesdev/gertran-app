@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Customer, CustomersService} from './customers.service';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
@@ -16,7 +16,8 @@ export class SelectableCustomerServiceService {
   constructor(
     private customersService: CustomersService,
     private message: NzMessageService,
-  ) {}
+  ) {
+  }
 
   init(): void {
     this.loadMoreCustomers();
@@ -25,7 +26,7 @@ export class SelectableCustomerServiceService {
 
   loadMoreCustomers(): void {
     this.isLoadingMoreData = true;
-    this.customersService.getAll({
+    this.customersService.search({
       limit: 50,
       url: this.customersNextUrl
     }).subscribe((customers) => {
@@ -54,7 +55,7 @@ export class SelectableCustomerServiceService {
 
   private setupSearch(): void {
     this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((search) => {
-      this.customersService.getAll({ limit: 50 }, { search }).subscribe((result) => {
+      this.customersService.search({limit: 50}, search).subscribe((result) => {
         this.customers = result.results;
       });
     }, () => {

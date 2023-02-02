@@ -10,11 +10,15 @@
             nzServerSearch
             nzShowSearch
             nzPlaceHolder="Selecione um cliente"
-            (nzOnSearch)="searchCustomer($event)"
-            (nzScrollToBottom)="loadMoreCustomers()"
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
           >
-            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            <nz-option
+              *ngFor="let customer of selectableCustomerService.customers"
+              [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"
+            ></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -67,7 +71,8 @@
       nzType="primary"
       style="width: 100%"
       (click)="emitGenerateReport()"
-    >Gerar relatório</button>
+    >Gerar relatório
+    </button>
   </div>
   <div
     nz-col
@@ -81,10 +86,11 @@
       nz-button
       style="width: 100%"
       (click)="generateExcel()"
-    >Gerar planilha</button>
+    >Gerar planilha
+    </button>
   </div>
 </div>
 
 <ng-template #selectLoading>
-  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>

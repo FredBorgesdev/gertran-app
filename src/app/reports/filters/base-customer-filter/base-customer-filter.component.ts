@@ -10,6 +10,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 
 export enum ReportFormat {
   SYNTHETIC = 'synthetic',
@@ -23,7 +24,8 @@ export type CustomerFilter = BasePeriodFilter & {
 @Component({
   selector: 'app-base-customer-filter',
   templateUrl: './base-customer-filter.component.html',
-  styleUrls: ['./base-customer-filter.component.css']
+  styleUrls: ['./base-customer-filter.component.css'],
+  providers: [SelectableCustomerServiceService]
 })
 export class BaseCustomerFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<CustomerFilter>();
@@ -35,17 +37,14 @@ export class BaseCustomerFilterComponent implements OnInit {
   validateForm: FormGroup;
   customers: Customer[] = [];
 
-  private isLoadingMoreData: boolean;
-  private customersNextUrl: string;
-  private searchCustomerSubject = new Subject<string>();
-
   constructor(
     private formBuilder: FormBuilder,
     private i18n: NzI18nService,
-    private customerService: CustomersService,
+    public selectableCustomerService: SelectableCustomerServiceService,
     private message: NzMessageService,
     private xlsxExporterService: XlsxExporterService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     const today = new Date();
@@ -65,33 +64,9 @@ export class BaseCustomerFilterComponent implements OnInit {
       this.valueChanges.emit(this.validateForm.value);
     });
 
-    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((search) => {
-      this.isLoadingMoreData = true;
-      this.customerService.getAll({
-        limit: 50
-      }, {
-        search
-      }).subscribe((customers) => {
-        this.customers = customers.results;
-        this.isLoadingMoreData = false;
-      });
-    });
+    this.selectableCustomerService.init();
 
     this.i18n.setLocale(en_US);
-
-    this.loadMoreCustomers();
-  }
-
-  loadMoreCustomers(): void {
-    this.isLoadingMoreData = true;
-    this.customerService.getAll({
-      limit: 50,
-      url: this.customersNextUrl
-    }).subscribe((customers) => {
-      this.customersNextUrl = customers.next;
-      this.customers = [...this.customers, ...customers.results];
-      this.isLoadingMoreData = false;
-    });
   }
 
   emitGenerateReport(): void {
@@ -104,14 +79,6 @@ export class BaseCustomerFilterComponent implements OnInit {
         to: toDate
       });
     }
-  }
-
-  searchCustomer(name: string): void {
-    if (!name) {
-      return;
-    }
-
-    this.searchCustomerSubject.next(name);
   }
 
   generateExcel(): void {
@@ -136,7 +103,7 @@ export class BaseCustomerFilterComponent implements OnInit {
       didDrawPage: (data) => {
         doc.addImage('assets/images/logo/logo.png', 'PNG', data.settings.margin.left, 15, 100, 20);
       },
-      margin: { top: 50 }
+      margin: {top: 50}
     });
 
     doc.save('table.pdf');
