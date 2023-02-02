@@ -45,7 +45,7 @@
         <td>TODO</td>
         <td>{{ data.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</td>
         <td>{{ data.requestedBy?.name }}</td>
-        <td>{{ data.status }}</td>
+        <td>{{ getStatusChecklistLocalized(data.status) }}</td>
         <td>{{ data.reviewedAt | date: 'dd/MM/yyyy' }}</td>
         <td>{{ data.reviewedBy?.name }}</td>
       </tr>

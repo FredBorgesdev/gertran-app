@@ -31,4 +31,12 @@ export class ChecklistHistoryComponent implements OnInit {
       this.message.error('Erro ao gerar relatório');
     });
   }
+
+  getStatusChecklistLocalized(status: string): string {
+    return {
+      requested: 'Solicitado',
+      approved: 'Aprovado',
+      reproved: 'Reprovado',
+    }[status?.toLowerCase()] || status;
+  }
 }
