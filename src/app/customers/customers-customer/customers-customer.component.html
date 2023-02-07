@@ -60,6 +60,13 @@
           (save)="savePermission($event)"
         ></app-permissions-tab>
       </nz-tab>
+
+      <nz-tab nzTitle="Jornada de trabalho" [nzDisabled]="!customer?.id">
+        <app-workday-tab
+          *ngIf="customer?.id"
+          [customer]="customer"
+        ></app-workday-tab>
+      </nz-tab>
     </nz-tabset>
   </nz-card>
 </nz-spin>

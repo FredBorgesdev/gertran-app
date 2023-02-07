@@ -16,6 +16,7 @@ import {TextMaskModule} from 'angular2-text-mask';
 import {PermissionsModule} from '../permissions/permissions.module';
 import { CustomersTransferComponent } from './customers-transfer/customers-transfer.component';
 import {NzTransferModule} from 'ng-zorro-antd/transfer';
+import { WorkdayTabComponent } from './workday-tab/workday-tab.component';
 
 const antdModule = [];
 
@@ -32,6 +33,7 @@ const antdModule = [];
     CustomersCustomerComponent,
     AddressesFormComponent,
     CustomersTransferComponent,
+    WorkdayTabComponent,
   ],
   imports: [
     SharedModule,
