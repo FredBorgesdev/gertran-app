@@ -29,7 +29,7 @@ export interface Customer {
     corporateName: string;
     tradingName: string;
   }[];
-  workdaySetting: Workday;
+  workdaySettings: Workday;
 }
 
 @Injectable({
