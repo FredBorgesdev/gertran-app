@@ -14,5 +14,23 @@
       [rows]="workdayRows"
       [fileName]="'Jornada de trabalho'"
     ></app-base-workday-filter>
+
+    <nz-table class="m-t-50" #table [nzData]="workdayRows">
+      <thead>
+      <tr>
+        <th>Horário</th>
+        <th>Status</th>
+        <th>Origem</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.startedAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ data.status }}</td>
+        <td>{{ data.positionEvent?.eventDescription }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
   </nz-card>
 </nz-spin>

@@ -30,6 +30,7 @@ import { AnalyticalReportComponent } from './analytical-report/analytical-report
 import { ChecklistHistoryComponent } from './checklist-history/checklist-history.component';
 import { WorkdayComponent } from './workday/workday.component';
 import { BaseWorkdayFilterComponent } from './filters/base-workday-filter/base-workday-filter.component';
+import {TextMaskModule} from 'angular2-text-mask';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { BaseWorkdayFilterComponent } from './filters/base-workday-filter/base-w
     SharedModule,
     CommonModule,
     ReportsRoutingModule,
+    TextMaskModule,
   ]
 })
 export class ReportsModule { }

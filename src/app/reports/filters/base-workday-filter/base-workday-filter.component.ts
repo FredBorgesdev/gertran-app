@@ -23,12 +23,12 @@ import {SelectableDriversService} from '../../../drivers/selectable-drivers.serv
 export class BaseWorkdayFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<BaseWorkdayFilter>();
   @Output() valueChanges = new EventEmitter<BaseWorkdayFilter>();
-  @Input() hideButtons = false;
-  @Input() showCustomer = true;
   @Input() rows: any[];
   @Input() fileName = 'relatorio';
 
   validateForm: FormGroup;
+
+  hoursMask = [/[0-2]/, /[0-9]/, ':', /[0-5]/, /[0-9]/];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,10 +83,6 @@ export class BaseWorkdayFilterComponent implements OnInit {
     const fileNameWithCustomer = `${this.fileName} - ${this.customerName}`;
 
     this.xlsxExporterService.generate(fileNameWithCustomer, this.rows);
-  }
-
-  get columnWidth(): string {
-    return this.showCustomer ? '6' : '8';
   }
 
   get customerName(): string {
