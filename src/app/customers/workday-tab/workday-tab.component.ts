@@ -5,6 +5,7 @@ import {Workday, WorkdayService} from '../workday.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from '@angular/router';
 import {Customer} from '../customers.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-workday-tab',
@@ -20,6 +21,7 @@ export class WorkdayTabComponent extends BaseCrudFormComponent<Workday> {
 
   constructor(
     private formBuilder: FormBuilder,
+    private modal: NzModalService,
     workdayService: WorkdayService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute
@@ -77,6 +79,31 @@ export class WorkdayTabComponent extends BaseCrudFormComponent<Workday> {
     return values;
   }
 
-  list() {
+  list(): void {
+  }
+
+  delete(): void {
+    this.modal.confirm({
+      nzTitle: 'Tem certeza que deseja excluir?',
+      nzContent: 'Esta ação não poderá ser desfeita.',
+      nzOkText: 'Sim',
+      nzOnOk: () => {
+        this.isLoading = true;
+        this.service.delete(
+          this.getId(),
+          this.customer.id
+        ).subscribe(
+          () => {
+            this.isLoading = false;
+            this.message.success('Configurações excluídas com sucesso.');
+            this.customer.workdaySettings = null;
+            this.validateForm.reset();
+          },
+          () => {
+            this.isLoading = false;
+          }
+        );
+      }
+    });
   }
 }

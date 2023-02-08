@@ -143,8 +143,24 @@
 
     <nz-form-item>
       <nz-form-control>
-        <button type="button" (click)="save()" nz-button nzType="primary">
+        <button
+          type="button"
+          (click)="save()"
+          nz-button
+          nzType="primary"
+          class="m-r-10"
+        >
           <i nz-icon nzType="save"></i>Salvar
+        </button>
+
+        <button
+          type="button"
+          (click)="delete()"
+          nz-button
+          nzType="primary"
+          nzDanger
+        >
+          <i nz-icon nzType="delete"></i>Remover
         </button>
       </nz-form-control>
     </nz-form-item>
