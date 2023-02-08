@@ -19,6 +19,11 @@ export interface BaseUserFilter extends BasePeriodFilter {
   user: string;
 }
 
+
+export interface BaseWorkdayFilter extends BasePeriodFilter {
+  driver: string;
+}
+
 export interface BaseVehicleFilter extends BasePeriodFilter {
   plate: string;
 }

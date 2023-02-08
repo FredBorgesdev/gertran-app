@@ -10,7 +10,7 @@ import {debounceTime} from 'rxjs/operators';
 export class SelectableUsersService {
   users: AbstractUser[] = [];
   isLoadingMoreData: boolean;
-  customersNextUrl: string;
+  usersNextUrl: string;
   searchUserSubject = new Subject<string>();
 
   constructor(
@@ -27,9 +27,9 @@ export class SelectableUsersService {
     this.isLoadingMoreData = true;
     this.usersService.getAll({
       limit: 50,
-      url: this.customersNextUrl
+      url: this.usersNextUrl
     }).subscribe((users) => {
-      this.customersNextUrl = users.next;
+      this.usersNextUrl = users.next;
       this.users = [...this.users, ...users.results];
       this.isLoadingMoreData = false;
     });
@@ -37,7 +37,7 @@ export class SelectableUsersService {
 
   searchByName(name: string): void {
     if (name === '') {
-      this.customersNextUrl = null;
+      this.usersNextUrl = null;
       this.loadMoreUsers();
     } else {
       this.searchUserSubject.next(name);

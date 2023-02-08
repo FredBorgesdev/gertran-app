@@ -1,0 +1,18 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Jornada de trabalho</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-workday-filter
+      (generateReport)="generateReport($event)"
+      [rows]="workdayRows"
+      [fileName]="'Jornada de trabalho'"
+    ></app-base-workday-filter>
+  </nz-card>
+</nz-spin>

@@ -21,6 +21,7 @@ import {MacrovehicleComponent} from './macrovehicle/macrovehicle.component';
 import {AnalyticalReportComponent} from './analytical-report/analytical-report.component';
 import {Permissions} from '../authentication/permissions';
 import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
+import {WorkdayComponent} from './workday/workday.component';
 
 const routes: Routes = [
   {
@@ -141,6 +142,10 @@ const routes: Routes = [
   {
     path: 'checklist-history',
     component: ChecklistHistoryComponent,
+  },
+  {
+    path: 'workday',
+    component: WorkdayComponent,
   }
 ];
 

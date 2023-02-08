@@ -454,14 +454,14 @@ export const ROUTES: SideNavInterface[] = [
           },
         ]
       },
-      // {
-      //   path: '/dashboard/reports28',
-      //   title: 'Relatório de jornada',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'line-chart',
-      //   submenu: []
-      // },
+      {
+        path: '/reports/workday',
+        title: 'Relatório de jornada',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
       // {
       //   path: '/dashboard/reports29',
       //   title: 'Relatório de eventos',

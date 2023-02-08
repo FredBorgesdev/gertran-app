@@ -28,6 +28,8 @@ import { MacrovehicleComponent } from './macrovehicle/macrovehicle.component';
 import { BaseMacroFilterComponent } from './filters/base-macro-filter/base-macro-filter.component';
 import { AnalyticalReportComponent } from './analytical-report/analytical-report.component';
 import { ChecklistHistoryComponent } from './checklist-history/checklist-history.component';
+import { WorkdayComponent } from './workday/workday.component';
+import { BaseWorkdayFilterComponent } from './filters/base-workday-filter/base-workday-filter.component';
 
 
 @NgModule({
@@ -58,6 +60,8 @@ import { ChecklistHistoryComponent } from './checklist-history/checklist-history
     BaseMacroFilterComponent,
     AnalyticalReportComponent,
     ChecklistHistoryComponent,
+    WorkdayComponent,
+    BaseWorkdayFilterComponent,
   ],
   imports: [
     SharedModule,
