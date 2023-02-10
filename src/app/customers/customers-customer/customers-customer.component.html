@@ -20,59 +20,75 @@
 
     <nz-tabset>
       <nz-tab nzTitle="Dados da Matriz">
-        <app-customers-form
-          *ngIf="customer"
-          [customer]="customer"
-          (save)="onSubmit()"
-          (update)="onChangeCustomer($event)"
-        ></app-customers-form>
+        <ng-template nz-tab>
+          <app-customers-form
+            *ngIf="customer"
+            [customer]="customer"
+            (save)="onSubmit()"
+            (update)="onChangeCustomer($event)"
+          ></app-customers-form>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Endereço">
-        <app-addresses-form
-          *ngIf="customer"
-          [customer]="customer"
-          (onSave)="onSubmit()"
-          (onChange)="onChangeCustomer($event)"
-        ></app-addresses-form>
+        <ng-template nz-tab>
+          <app-addresses-form
+            *ngIf="customer"
+            [customer]="customer"
+            (onSave)="onSubmit()"
+            (onChange)="onChangeCustomer($event)"
+          ></app-addresses-form>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
-        <app-branch-office-tab *ngIf="customer?.id" [customer]="customer"></app-branch-office-tab>
+        <ng-template nz-tab>
+          <app-branch-office-tab *ngIf="customer?.id" [customer]="customer"></app-branch-office-tab>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">
-        <app-contacts-tab *ngIf="customer?.id" [customer]="customer"></app-contacts-tab>
+        <ng-template nz-tab>
+          <app-contacts-tab *ngIf="customer?.id" [customer]="customer"></app-contacts-tab>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
-        <app-documents-tab
-          *ngIf="customer?.id"
-          resource="customers"
-          [resourceId]="customer?.id"
-        ></app-documents-tab>
+        <ng-template nz-tab>
+          <app-documents-tab
+            *ngIf="customer?.id"
+            resource="customers"
+            [resourceId]="customer?.id"
+          ></app-documents-tab>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Permissões" [nzDisabled]="!customer?.id">
-        <app-permissions-tab
-          *ngIf="customer?.id"
-          [targetKeys]="numbersToStrings(customer?.permissions)"
-          (save)="savePermission($event)"
-        ></app-permissions-tab>
+        <ng-template nz-tab>
+          <app-permissions-tab
+            *ngIf="customer?.id"
+            [targetKeys]="numbersToStrings(customer?.permissions)"
+            (save)="savePermission($event)"
+          ></app-permissions-tab>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Jornada de trabalho" [nzDisabled]="!customer?.id">
-        <app-workday-tab
-          *ngIf="customer?.id"
-          [customer]="customer"
-        ></app-workday-tab>
+        <ng-template nz-tab>
+          <app-workday-tab
+            *ngIf="customer?.id"
+            [customer]="customer"
+          ></app-workday-tab>
+        </ng-template>
       </nz-tab>
 
       <nz-tab nzTitle="Ações por macro" [nzDisabled]="!customer?.id">
-        <app-workday-automations-tab
-          *ngIf="customer?.id"
-          [customer]="customer"
-        ></app-workday-automations-tab>
+        <ng-template nz-tab>
+          <app-workday-automations-tab
+            *ngIf="customer?.id"
+            [customer]="customer"
+          ></app-workday-automations-tab>
+        </ng-template>
       </nz-tab>
     </nz-tabset>
   </nz-card>
