@@ -4,7 +4,7 @@ import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-fo
 import {Workday, WorkdayService} from '../workday.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from '@angular/router';
-import {Customer} from '../customers.service';
+import {Customer} from '../../customers/customers.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({

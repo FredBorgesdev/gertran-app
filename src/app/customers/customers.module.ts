@@ -16,12 +16,11 @@ import {TextMaskModule} from 'angular2-text-mask';
 import {PermissionsModule} from '../permissions/permissions.module';
 import { CustomersTransferComponent } from './customers-transfer/customers-transfer.component';
 import {NzTransferModule} from 'ng-zorro-antd/transfer';
-import { WorkdayTabComponent } from './workday-tab/workday-tab.component';
-import { WorkdayAutomationsTabComponent } from './workday-automations-tab/workday-automations-tab.component';
-import { WorkdayAutomationsTableComponent } from './workday-automations-table/workday-automations-table.component';
-import { WorkdayAutomationsFormComponent } from './workday-automations-form/workday-automations-form.component';
+import {WorkdaysModule} from '../workdays/workdays.module';
 
-const antdModule = [];
+const antdModule = [
+  NzTransferModule,
+];
 
 @NgModule({
   declarations: [
@@ -36,19 +35,15 @@ const antdModule = [];
     CustomersCustomerComponent,
     AddressesFormComponent,
     CustomersTransferComponent,
-    WorkdayTabComponent,
-    WorkdayAutomationsTabComponent,
-    WorkdayAutomationsTableComponent,
-    WorkdayAutomationsFormComponent,
   ],
   imports: [
     SharedModule,
     CustomersRoutingModule,
     DocumentsModule,
+    WorkdaysModule,
     TextMaskModule,
     PermissionsModule,
     ...antdModule,
-    NzTransferModule,
   ],
   exports: [
     CustomersTransferComponent,

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Customer} from '../customers.service';
+import {Customer} from '../../customers/customers.service';
 
 @Component({
   selector: 'app-workday-automations-tab',
