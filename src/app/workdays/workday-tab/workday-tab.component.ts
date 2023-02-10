@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {Workday, WorkdayService} from '../workday.service';
@@ -33,8 +33,19 @@ export class WorkdayTabComponent extends BaseCrudFormComponent<Workday> {
     );
   }
 
+  loadResource(): void {
+    this.isLoading = true;
+    this.service.getAll({ limit: 1 }, this.additionalParams()).subscribe((response) => {
+      if (response.results.length) {
+        this.resource = response.results[0];
+        this.performFormGroupSetValues();
+        this.isLoading = false;
+      }
+    });
+  }
+
   getId(): string {
-    return this.customer.workdaySettings?.id;
+    return this.resource?.id;
   }
 
   additionalParams(): any[] {
