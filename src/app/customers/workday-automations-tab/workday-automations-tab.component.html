@@ -1,0 +1,25 @@
+<div class="row m-b-30">
+  <div class="col-lg-12 text-right">
+    <button
+      (click)="this.isCreatingAutomation = true"
+      nz-button
+      nzType="primary"
+    >
+      <i nz-icon nzType="plus" theme="outline"></i>
+      <span> Ações por macro</span>
+    </button>
+  </div>
+</div>
+
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <app-workday-automations-table
+    [customerId]="customer.id"
+  ></app-workday-automations-table>
+
+  <app-workday-automations-form
+    *ngIf="isCreatingAutomation"
+    [isVisible]="isCreatingAutomation"
+    [customerId]="customer.id"
+    (closeModal)="this.isCreatingAutomation = false"
+  ></app-workday-automations-form>
+</nz-spin>

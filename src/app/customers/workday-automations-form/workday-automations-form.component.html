@@ -1,0 +1,45 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="Nova ação"
+  nzWidth="600px"
+  (nzOnCancel)="closeModal.emit(true)"
+  (nzOnOk)="save()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label>Conteúdo da macro</nz-form-label>
+        <nz-form-control>
+          <input
+            type="text"
+            nz-input
+            placeholder="Informe o nome do contato"
+            formControlName="eventDescription"
+          >
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Mudar jornada para</nz-form-label>
+        <nz-form-control>
+          <input
+            type="text"
+            nz-input
+            formControlName="workdayStatus"
+          >
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Mudar viagem para</nz-form-label>
+        <nz-form-control>
+          <input
+            type="text"
+            nz-input
+            formControlName="monitoringRequestStatus"
+          >
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

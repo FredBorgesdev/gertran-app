@@ -19,7 +19,6 @@ export class ContactsFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    console.log(this.contact);
     this.validateForm = this.formBuilder.group({
       name: [this.contact?.name, [Validators.required]],
       email: [this.contact?.email, [Validators.required]],

@@ -64,6 +64,9 @@ import {TextMaskModule} from 'angular2-text-mask';
     WorkdayComponent,
     BaseWorkdayFilterComponent,
   ],
+  exports: [
+    WorkdayComponent
+  ],
   imports: [
     SharedModule,
     CommonModule,

@@ -1,0 +1,23 @@
+<nz-table
+  #workdayAutomationsListTable
+  [nzData]="resources?.results"
+  [nzTotal]="resources?.count"
+  [nzPageSize]="resources?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+>
+  <thead>
+  <tr>
+    <th *ngFor="let column of workflowAutomationColumns">{{ column.title }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of workdayAutomationsListTable.data;  let i=index">
+    <td>{{item.id | id}}</td>
+    <td class="text-md-center">{{item.eventDescription}}</td>
+    <td class="text-md-center">{{item.workdayStatus}}</td>
+    <td class="text-md-center">{{item.monitoringRequestStatus}}</td>
+  </tr>
+  </tbody>
+</nz-table>

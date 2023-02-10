@@ -17,6 +17,9 @@ import {PermissionsModule} from '../permissions/permissions.module';
 import { CustomersTransferComponent } from './customers-transfer/customers-transfer.component';
 import {NzTransferModule} from 'ng-zorro-antd/transfer';
 import { WorkdayTabComponent } from './workday-tab/workday-tab.component';
+import { WorkdayAutomationsTabComponent } from './workday-automations-tab/workday-automations-tab.component';
+import { WorkdayAutomationsTableComponent } from './workday-automations-table/workday-automations-table.component';
+import { WorkdayAutomationsFormComponent } from './workday-automations-form/workday-automations-form.component';
 
 const antdModule = [];
 
@@ -34,6 +37,9 @@ const antdModule = [];
     AddressesFormComponent,
     CustomersTransferComponent,
     WorkdayTabComponent,
+    WorkdayAutomationsTabComponent,
+    WorkdayAutomationsTableComponent,
+    WorkdayAutomationsFormComponent,
   ],
   imports: [
     SharedModule,

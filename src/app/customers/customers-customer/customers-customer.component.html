@@ -67,6 +67,13 @@
           [customer]="customer"
         ></app-workday-tab>
       </nz-tab>
+
+      <nz-tab nzTitle="Ações por macro" [nzDisabled]="!customer?.id">
+        <app-workday-automations-tab
+          *ngIf="customer?.id"
+          [customer]="customer"
+        ></app-workday-automations-tab>
+      </nz-tab>
     </nz-tabset>
   </nz-card>
 </nz-spin>
