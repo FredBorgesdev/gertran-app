@@ -14,12 +14,17 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
   <app-workday-automations-table
     [customerId]="customer.id"
+    [refreshWorkdayAutomations]="refreshWorkdayAutomations"
+    (editWorkdayAutomation)="edit($event)"
   ></app-workday-automations-table>
 
   <app-workday-automations-form
     *ngIf="isCreatingAutomation"
     [isVisible]="isCreatingAutomation"
     [customerId]="customer.id"
+    [workdayAutomation]="resource"
+    [refreshWorkdayAutomations]="refreshWorkdayAutomations"
     (closeModal)="this.isCreatingAutomation = false"
+    (success)="success()"
   ></app-workday-automations-form>
 </nz-spin>

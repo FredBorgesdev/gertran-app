@@ -18,6 +18,30 @@
     <td class="text-md-center">{{item.eventDescription}}</td>
     <td class="text-md-center">{{item.workdayStatus}}</td>
     <td class="text-md-center">{{item.monitoringRequestStatus}}</td>
+    <td>
+      <a
+        (click)="delete(item)"
+        class="m-r-5"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Deletar"
+      >
+        <i nz-icon nzType="delete" theme="outline"></i>
+      </a>
+
+      <a
+        (click)="edit(item)"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Editar"
+      >
+        <i nz-icon nzType="edit" theme="outline"></i>
+      </a>
+    </td>
   </tr>
   </tbody>
 </nz-table>

@@ -22,22 +22,28 @@
       <nz-form-item>
         <nz-form-label>Mudar jornada para</nz-form-label>
         <nz-form-control>
-          <input
-            type="text"
-            nz-input
-            formControlName="workdayStatus"
-          >
+          <nz-select formControlName="workdayStatus">
+            <nz-option
+              *ngFor="let option of workdayStatus"
+              [nzLabel]="option.label"
+              [nzValue]="option.value"
+            >
+            </nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
         <nz-form-label>Mudar viagem para</nz-form-label>
         <nz-form-control>
-          <input
-            type="text"
-            nz-input
-            formControlName="monitoringRequestStatus"
-          >
+          <nz-select formControlName="monitoringRequestStatus">
+            <nz-option
+              *ngFor="let option of travelStatus"
+              [nzLabel]="option.label"
+              [nzValue]="option.value"
+            >
+            </nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
     </form>

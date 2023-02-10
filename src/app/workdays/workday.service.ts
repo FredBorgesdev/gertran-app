@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
+import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -48,5 +48,13 @@ export class WorkdayService implements ApiService<Workday> {
 
   delete(id: string, customerId: string): Observable<void> {
     return this.http.delete<void>(`customers/${customerId}/workday_settings/${id}/delete`);
+  }
+
+  getWorkdayStatus(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('workdays/status');
+  }
+
+  getTravelStatus(): Observable<Choice[]> {
+    return this.http.get<Choice[]>('workdays/travel_status');
   }
 }
