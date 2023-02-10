@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BaseWorkdayFilter} from '../reports.service';
 
 @Component({
   selector: 'app-workday',
@@ -27,6 +28,7 @@ export class WorkdayComponent implements OnInit {
       }
     }
   ];
+  reportFormat = 'synthetic';
 
   constructor() { }
 
@@ -34,4 +36,8 @@ export class WorkdayComponent implements OnInit {
   }
 
   generateReport(...args): void {}
+
+  valueChanges(params: BaseWorkdayFilter): void {
+    this.reportFormat = params.reportFormat;
+  }
 }

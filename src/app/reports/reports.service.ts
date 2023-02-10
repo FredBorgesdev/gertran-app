@@ -22,6 +22,7 @@ export interface BaseUserFilter extends BasePeriodFilter {
 
 export interface BaseWorkdayFilter extends BasePeriodFilter {
   driver: string;
+  reportFormat: string;
 }
 
 export interface BaseVehicleFilter extends BasePeriodFilter {

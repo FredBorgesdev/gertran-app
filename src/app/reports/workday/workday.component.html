@@ -11,26 +11,108 @@
 
     <app-base-workday-filter
       (generateReport)="generateReport($event)"
+      (valueChanges)="valueChanges($event)"
       [rows]="workdayRows"
       [fileName]="'Jornada de trabalho'"
     ></app-base-workday-filter>
 
-    <nz-table class="m-t-50" #table [nzData]="workdayRows">
-      <thead>
-      <tr>
-        <th>Horário</th>
-        <th>Status</th>
-        <th>Origem</th>
-      </tr>
-      </thead>
+    <div *ngIf="reportFormat === 'analytic'">
+      <nz-table class="m-t-50" #table [nzData]="workdayRows">
+        <thead>
+        <tr>
+          <th>Horário</th>
+          <th>Status</th>
+          <th>Origem</th>
+        </tr>
+        </thead>
 
-      <tbody>
-      <tr *ngFor="let data of table.data; index as i">
-        <td>{{ data.startedAt | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ data.status }}</td>
-        <td>{{ data.positionEvent?.eventDescription }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
+        <tbody>
+        <tr *ngFor="let data of table.data; index as i">
+          <td>{{ data.startedAt | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ data.status }}</td>
+          <td>{{ data.positionEvent?.eventDescription }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+
+    <div *ngIf="reportFormat === 'synthetic'">
+      <nz-table
+        class="m-t-50"
+        #table
+        [nzData]="workdayRows"
+        nzTableLayout="fixed"
+        nzSize="small"
+        [nzScroll]="{ x: '1024px' }"
+      >
+        <thead>
+        <tr>
+          <th nzWidth="200px">Semana</th>
+          <th>Dias não trabalhados</th>
+          <th>Data</th>
+          <th>Dia</th>
+          <th>Jornada</th>
+          <th>Direção</th>
+          <th>Refeição</th>
+          <th>Espera</th>
+          <th>Descanso</th>
+          <th>Hora extra</th>
+          <th>Ad. noturno</th>
+        </tr>
+        </thead>
+
+        <tbody>
+<!--        <tr *ngFor="let data of table.data; index as i">-->
+        <tr>
+          <td rowspan="2">
+            Semana: 1<br>
+            Dias apurados: 7<br>
+            Dias trabalhados: 3<br>
+            Horas semanais (trabalhadas): 20:44<br>
+            Horas semanais: 40:00
+          </td>
+          <td>0</td>
+          <td>01/01/2020</td>
+          <td>Segunda</td>
+          <td>8:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>0</td>
+          <td>01/01/2020</td>
+          <td>Segunda</td>
+          <td>8:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>0</td>
+          <td>01/01/2020</td>
+          <td>Segunda</td>
+          <td>8:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+          <td>0:00</td>
+        </tr>
+        </tbody>
+      </nz-table>
+
+    </div>
+
   </nz-card>
 </nz-spin>

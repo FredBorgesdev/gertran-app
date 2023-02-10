@@ -51,6 +51,9 @@ export class BaseWorkdayFilterComponent implements OnInit {
       from: [lastMonth, [Validators.required]],
       to: [today, [Validators.required]],
       driver: [null, []],
+      nightShiftStart: [null, []],
+      nightShiftEnd: [null, []],
+      reportFormat: ['analytic', [Validators.required]],
     });
 
     this.validateForm.valueChanges.subscribe(() => {
