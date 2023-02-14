@@ -63,51 +63,25 @@
         </thead>
 
         <tbody>
-<!--        <tr *ngFor="let data of table.data; index as i">-->
-        <tr>
-          <td rowspan="2">
-            Semana: 1<br>
-            Dias apurados: 7<br>
-            Dias trabalhados: 3<br>
-            Horas semanais (trabalhadas): 20:44<br>
-            Horas semanais: 40:00
+        <tr *ngFor="let data of table.data; index as i">
+          <td [rowSpan]="getHistoricalTableRowSpan(data)" *ngIf="isFirstDayOfWeek(data)">
+            Semana: {{data.week}}<br>
+            Dias apurados: {{data.evaluatedDays}}<br>
+            Dias trabalhados: {{data.workingDays}}<br>
+            Horas semanais (trabalhadas): {{data.weeklyWorkingHours}}<br>
+            Horas semanais: {{data.weeklyExtraHours}}
           </td>
-          <td>0</td>
-          <td>01/01/2020</td>
-          <td>Segunda</td>
-          <td>8:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>0</td>
-          <td>01/01/2020</td>
-          <td>Segunda</td>
-          <td>8:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>0</td>
-          <td>01/01/2020</td>
-          <td>Segunda</td>
-          <td>8:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
-          <td>0:00</td>
+
+          <td>{{data.nonWorkingDays}}</td>
+          <td>{{data.date | date: 'dd/MM/yyyy'}}</td>
+          <td>{{data.day}}</td>
+          <td>{{data.workdayHours}}</td>
+          <td>{{data.drivingHours}}</td>
+          <td>{{data.lunchHours}}</td>
+          <td>{{data.waitingHours}}</td>
+          <td>{{data.restHours}}</td>
+          <td>{{data.extraHours}}</td>
+          <td>{{data.nightShiftHours}}</td>
         </tr>
         </tbody>
       </nz-table>
