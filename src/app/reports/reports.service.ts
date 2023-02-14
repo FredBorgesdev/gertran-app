@@ -5,6 +5,7 @@ import {GetAllResponse} from '../shared/services/api.service';
 import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
 import {AbstractUser} from '../users/users.service';
 import {Position} from '../monitoring/positions.service';
+import {Workday} from '../workdays/workday.service';
 
 export interface BaseFilter {
   customer: string;
@@ -372,5 +373,31 @@ export class ReportsService {
     });
 
     return this.http.get<ChecklistHistory[]>('reports/tracking/checklisthistory?1=1', {params});
+  }
+
+  getWorkdayHistoryAnalytical(form: BaseWorkdayFilter): Observable<Workday[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: form.from,
+        to_date: form.to,
+        customer: form.customer,
+        driver: form.driver,
+      }
+    });
+
+    return this.http.get<Workday[]>('reports/workdays/analytical?1=1', {params});
+  }
+
+  getWorkdayHistorySynthetic(form: BaseWorkdayFilter): Observable<Workday[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: form.from,
+        to_date: form.to,
+        customer: form.customer,
+        driver: form.driver,
+      }
+    });
+
+    return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', {params});
   }
 }

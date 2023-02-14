@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseWorkdayFilter} from '../reports.service';
+import {BaseWorkdayFilter, ReportsService} from '../reports.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-workday',
@@ -8,34 +9,27 @@ import {BaseWorkdayFilter} from '../reports.service';
 })
 export class WorkdayComponent implements OnInit {
   isLoading = false;
-  workdayRows = [
-    {
-      id: '1',
-      startedAt: '2021-01-01 00:00:00',
-      status: 'IN_PROGRESS',
-      driver: {
-        name: 'John Doe',
-      },
-      vehicle: {
-        id: '1',
-      },
-      customer: {
-        tradingName: 'John Doe',
-      },
-      positionEvent: {
-        eventName: 'START',
-        eventDescription: 'Start of the workday',
-      }
-    }
-  ];
-  reportFormat = 'synthetic';
+  workdayRows = [];
+  reportFormat = 'analytic';
 
-  constructor() { }
+  constructor(
+    private reportsService: ReportsService,
+    private message: NzMessageService,
+  ) { }
 
   ngOnInit(): void {
   }
 
-  generateReport(...args): void {}
+  generateReport(form: BaseWorkdayFilter): void {
+    this.isLoading = true;
+    this.reportsService.getWorkdayHistoryAnalytical(form).subscribe((workdays) => {
+      this.workdayRows = workdays;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.message.error('Ocorreu um erro ao gerar o relatório');
+    });
+  }
 
   valueChanges(params: BaseWorkdayFilter): void {
     this.reportFormat = params.reportFormat;
