@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -21,21 +21,22 @@ export interface Workday {
 })
 export class WorkdayService implements ApiService<Workday> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   get(id: string, customerId: string): Observable<Workday> {
     return this.http.get<Workday>(`customers/${customerId}/workday_settings/${id}`);
   }
 
   getAll(pagination: Pagination, customerId: string): Observable<GetAllResponse<Workday>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
     }
 
-    return this.http.get<GetAllResponse<Workday>>(`customers/${customerId}/workday_settings`, { params });
+    return this.http.get<GetAllResponse<Workday>>(`customers/${customerId}/workday_settings`, {params});
   }
 
   save(data: Workday, customerId: string): Observable<Workday> {
@@ -50,11 +51,23 @@ export class WorkdayService implements ApiService<Workday> {
     return this.http.delete<void>(`customers/${customerId}/workday_settings/${id}/delete`);
   }
 
-  getWorkdayStatus(): Observable<Choice[]> {
-    return this.http.get<Choice[]>('workdays/status');
+  getWorkdayStatus(justificationOnly = false): Observable<Choice[]> {
+    const params = {justification_only: justificationOnly};
+
+    return this.http.get<Choice[]>('workdays/status', {params});
   }
 
   getTravelStatus(): Observable<Choice[]> {
     return this.http.get<Choice[]>('workdays/travel_status');
+  }
+
+  justify(body: {
+    driver: string;
+    customer: string;
+    startedAt: string;
+    status: string;
+    observations: string;
+  }): Observable<void> {
+    return this.http.post<void>('workdays/justification', body);
   }
 }

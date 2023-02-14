@@ -31,6 +31,7 @@ import { ChecklistHistoryComponent } from './checklist-history/checklist-history
 import { WorkdayComponent } from './workday/workday.component';
 import { BaseWorkdayFilterComponent } from './filters/base-workday-filter/base-workday-filter.component';
 import {TextMaskModule} from 'angular2-text-mask';
+import { WorkdayJustificationComponent } from './extra/workday-justification/workday-justification.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import {TextMaskModule} from 'angular2-text-mask';
     ChecklistHistoryComponent,
     WorkdayComponent,
     BaseWorkdayFilterComponent,
+    WorkdayJustificationComponent,
   ],
   exports: [
     WorkdayComponent

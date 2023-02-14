@@ -1,0 +1,49 @@
+<form
+  nz-form
+  nzLayout="vertical"
+  *ngFor="let day of daysWithoutEvents; let i = index"
+  [formGroup]="validateForms[i]"
+>
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null">Dia</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input nz-input formControlName="startedAt">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null">Status</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <nz-select
+            nzPlaceHolder="Selecione o status"
+            formControlName="status"
+          >
+            <nz-option *ngFor="let item of status" [nzLabel]="item.label" [nzValue]="item.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null">Observações</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input nz-input formControlName="observations">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null"></nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <button nz-button nzType="primary" (click)="save(i)">Enviar</button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
