@@ -35,12 +35,12 @@ export class WorkdayTabComponent extends BaseCrudFormComponent<Workday> {
 
   loadResource(): void {
     this.isLoading = true;
-    this.service.getAll({ limit: 1 }, this.additionalParams()).subscribe((response) => {
+    this.service.getAll({limit: 1}, this.additionalParams()).subscribe((response) => {
       if (response.results.length) {
         this.resource = response.results[0];
         this.performFormGroupSetValues();
-        this.isLoading = false;
       }
+      this.isLoading = false;
     });
   }
 
@@ -71,7 +71,7 @@ export class WorkdayTabComponent extends BaseCrudFormComponent<Workday> {
       if (this.validateForm.controls[key]) {
         const minutes = this.resource[key];
         const hours = Math.floor(minutes / 60).toString().padStart(2, '0');
-        const hoursAndMinutes = `${hours}:${minutes % 60}`;
+        const hoursAndMinutes = `${hours}:${(minutes % 60).toString().padStart(2, '0')}`;
 
         this.validateForm.controls[key].setValue(hoursAndMinutes);
       }

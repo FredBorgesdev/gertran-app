@@ -13,6 +13,8 @@ import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.servic
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {format, subMonths} from 'date-fns';
 import {SelectableDriversService} from '../../../drivers/selectable-drivers.service';
+import autoTable from 'jspdf-autotable';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-base-workday-filter',
@@ -37,7 +39,8 @@ export class BaseWorkdayFilterComponent implements OnInit {
     public selectableDriverService: SelectableDriversService,
     private xlsxExporterService: XlsxExporterService,
     private message: NzMessageService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.selectableDriverService.init();
@@ -86,6 +89,26 @@ export class BaseWorkdayFilterComponent implements OnInit {
     const fileNameWithCustomer = `${this.fileName} - ${this.customerName}`;
 
     this.xlsxExporterService.generate(fileNameWithCustomer, this.rows);
+  }
+
+  generatePdf(): void {
+    const doc = new jsPDF();
+
+    autoTable(doc, {
+      html: 'table',
+      didDrawPage: (data) => {
+        doc.addImage('assets/images/logo/logo.png', 'PNG', data.settings.margin.left, 15, 100, 20);
+      },
+      margin: {top: 50},
+      columnStyles: {
+        0: {
+          cellWidth: 30,
+          fontSize: 8,
+        }
+      }
+    });
+
+    doc.save('table.pdf');
   }
 
   get customerName(): string {

@@ -28,7 +28,7 @@
 
         <tbody>
         <tr *ngFor="let data of table.data; index as i">
-          <td>{{ data.startedAt | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ data.startedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>{{ data.status }}</td>
           <td>{{ data.positionEvent?.eventDescription }}</td>
         </tr>
@@ -49,7 +49,6 @@
         <thead>
         <tr>
           <th nzWidth="200px">Semana</th>
-          <th>Dias não trabalhados</th>
           <th>Data</th>
           <th>Dia</th>
           <th>Jornada</th>
@@ -68,11 +67,11 @@
             Semana: {{data.week}}<br>
             Dias apurados: {{data.evaluatedDays}}<br>
             Dias trabalhados: {{data.workingDays}}<br>
+            Dias não trabalhados: {{data.nonWorkingDays}}<br>
             Horas semanais (trabalhadas): {{data.weeklyWorkingHours}}<br>
             Horas semanais: {{data.weeklyExtraHours}}
           </td>
 
-          <td>{{data.nonWorkingDays}}</td>
           <td>{{data.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{data.day}}</td>
           <td>{{data.workdayHours}}</td>

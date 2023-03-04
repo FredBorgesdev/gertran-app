@@ -14,7 +14,8 @@
             (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
           >
-            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                       [nzValue]="customer.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -125,17 +126,24 @@
       nzType="primary"
       style="width: 100%"
       (click)="emitGenerateReport()"
-    >Gerar relatório</button>
+    >Gerar relatório
+    </button>
   </div>
   <div nz-col nzSpan="8">
-    <button nz-button style="width: 100%">Gerar pdf</button>
+    <button
+      nz-button
+      style="width: 100%"
+      (click)="generatePdf()"
+    >Gerar pdf
+    </button>
   </div>
   <div nz-col nzSpan="8">
     <button
       nz-button
       style="width: 100%"
       (click)="generateExcel()"
-    >Gerar planilha</button>
+    >Gerar planilha
+    </button>
   </div>
 </div>
 
