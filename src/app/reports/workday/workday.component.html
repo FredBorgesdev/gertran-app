@@ -74,13 +74,13 @@
 
           <td>{{data.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{data.day}}</td>
-          <td>{{data.workdayHours}}</td>
-          <td>{{data.drivingHours}}</td>
-          <td>{{data.lunchHours}}</td>
-          <td>{{data.waitingHours}}</td>
-          <td>{{data.restHours}}</td>
-          <td>{{data.extraHours}}</td>
-          <td>{{data.nightShiftHours}}</td>
+          <td>{{data.workdayHours | simpleHour}}</td>
+          <td>{{data.drivingHours | simpleHour}}</td>
+          <td>{{data.lunchHours | simpleHour}}</td>
+          <td>{{data.waitingHours | simpleHour}}</td>
+          <td>{{data.restHours | simpleHour}}</td>
+          <td>{{data.extraHours | simpleHour}}</td>
+          <td>{{data.nightShiftHours | simpleHour}}</td>
         </tr>
         </tbody>
       </nz-table>

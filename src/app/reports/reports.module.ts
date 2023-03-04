@@ -37,6 +37,7 @@ import {NgChartsModule} from 'ng2-charts';
 import {NzStatisticModule} from 'ng-zorro-antd/statistic';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
+import { SimpleHourPipe } from './pipes/simple-hour.pipe';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import {environment} from '../../environments/environment';
     BaseWorkdayFilterComponent,
     WorkdayJustificationComponent,
     LogisticReportComponent,
+    SimpleHourPipe,
   ],
   exports: [
     WorkdayComponent
