@@ -22,6 +22,7 @@ import {AnalyticalReportComponent} from './analytical-report/analytical-report.c
 import {Permissions} from '../authentication/permissions';
 import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
 import {WorkdayComponent} from './workday/workday.component';
+import {LogisticReportComponent} from './logistic-report/logistic-report.component';
 
 const routes: Routes = [
   {
@@ -146,6 +147,10 @@ const routes: Routes = [
   {
     path: 'workday',
     component: WorkdayComponent,
+  },
+  {
+    path: 'logisticreport',
+    component: LogisticReportComponent
   }
 ];
 

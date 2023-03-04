@@ -1,37 +1,42 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ReportsRoutingModule } from './reports-routing.module';
-import { LoadUnloadByMacroComponent } from './load-unload-by-macro/load-unload-by-macro.component';
+import {ReportsRoutingModule} from './reports-routing.module';
+import {LoadUnloadByMacroComponent} from './load-unload-by-macro/load-unload-by-macro.component';
 import {SharedModule} from '../shared/shared.module';
-import { BaseCustomerFilterComponent } from './filters/base-customer-filter/base-customer-filter.component';
-import { LoadUnloadByPointComponent } from './load-unload-by-point/load-unload-by-point.component';
-import { LoadUnloadByRadiusComponent } from './load-unload-by-radius/load-unload-by-radius.component';
-import { TripsLateComponent } from './trips-late/trips-late.component';
-import { TravelRequestsComponent } from './travel-requests/travel-requests.component';
-import { BaseGenericFiltersComponent } from './filters/base-generic-filters/base-generic-filters.component';
-import { AvailableVehiclesComponent } from './available-vehicles/available-vehicles.component';
-import { LogisticsComponent } from './logistics/logistics.component';
-import { TravelStartComponent } from './travel-start/travel-start.component';
-import { BaseVehicleFilterComponent } from './filters/base-vehicle-filter/base-vehicle-filter.component';
-import { TravelEndComponent } from './travel-end/travel-end.component';
-import { ClosingComponent } from './closing/closing.component';
-import { ScheduledTripsComponent } from './scheduled-trips/scheduled-trips.component';
-import { InsuranceCompaniesComponent } from './insurance-companies/insurance-companies.component';
-import { CommandsHistoryComponent } from './commands-history/commands-history.component';
-import { PositionsHistoryComponent } from './positions-history/positions-history.component';
-import { BaitsComponent } from './baits/baits.component';
-import { OperationalAuditCommandsComponent } from './operational-audit-commands/operational-audit-commands.component';
+import {BaseCustomerFilterComponent} from './filters/base-customer-filter/base-customer-filter.component';
+import {LoadUnloadByPointComponent} from './load-unload-by-point/load-unload-by-point.component';
+import {LoadUnloadByRadiusComponent} from './load-unload-by-radius/load-unload-by-radius.component';
+import {TripsLateComponent} from './trips-late/trips-late.component';
+import {TravelRequestsComponent} from './travel-requests/travel-requests.component';
+import {BaseGenericFiltersComponent} from './filters/base-generic-filters/base-generic-filters.component';
+import {AvailableVehiclesComponent} from './available-vehicles/available-vehicles.component';
+import {LogisticsComponent} from './logistics/logistics.component';
+import {TravelStartComponent} from './travel-start/travel-start.component';
+import {BaseVehicleFilterComponent} from './filters/base-vehicle-filter/base-vehicle-filter.component';
+import {TravelEndComponent} from './travel-end/travel-end.component';
+import {ClosingComponent} from './closing/closing.component';
+import {ScheduledTripsComponent} from './scheduled-trips/scheduled-trips.component';
+import {InsuranceCompaniesComponent} from './insurance-companies/insurance-companies.component';
+import {CommandsHistoryComponent} from './commands-history/commands-history.component';
+import {PositionsHistoryComponent} from './positions-history/positions-history.component';
+import {BaitsComponent} from './baits/baits.component';
+import {OperationalAuditCommandsComponent} from './operational-audit-commands/operational-audit-commands.component';
 import {BaseUserFilterComponent} from './filters/base-user-filter/base-user-filter.component';
-import { OperationalAuditMessagesComponent } from './operational-audit-messages/operational-audit-messages.component';
-import { MacrovehicleComponent } from './macrovehicle/macrovehicle.component';
-import { BaseMacroFilterComponent } from './filters/base-macro-filter/base-macro-filter.component';
-import { AnalyticalReportComponent } from './analytical-report/analytical-report.component';
-import { ChecklistHistoryComponent } from './checklist-history/checklist-history.component';
-import { WorkdayComponent } from './workday/workday.component';
-import { BaseWorkdayFilterComponent } from './filters/base-workday-filter/base-workday-filter.component';
+import {OperationalAuditMessagesComponent} from './operational-audit-messages/operational-audit-messages.component';
+import {MacrovehicleComponent} from './macrovehicle/macrovehicle.component';
+import {BaseMacroFilterComponent} from './filters/base-macro-filter/base-macro-filter.component';
+import {AnalyticalReportComponent} from './analytical-report/analytical-report.component';
+import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
+import {WorkdayComponent} from './workday/workday.component';
+import {BaseWorkdayFilterComponent} from './filters/base-workday-filter/base-workday-filter.component';
 import {TextMaskModule} from 'angular2-text-mask';
-import { WorkdayJustificationComponent } from './extra/workday-justification/workday-justification.component';
+import {WorkdayJustificationComponent} from './extra/workday-justification/workday-justification.component';
+import {LogisticReportComponent} from './logistic-report/logistic-report.component';
+import {NgChartsModule} from 'ng2-charts';
+import {NzStatisticModule} from 'ng-zorro-antd/statistic';
+import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
+import {environment} from '../../environments/environment';
 
 
 @NgModule({
@@ -65,6 +70,7 @@ import { WorkdayJustificationComponent } from './extra/workday-justification/wor
     WorkdayComponent,
     BaseWorkdayFilterComponent,
     WorkdayJustificationComponent,
+    LogisticReportComponent,
   ],
   exports: [
     WorkdayComponent
@@ -74,6 +80,12 @@ import { WorkdayJustificationComponent } from './extra/workday-justification/wor
     CommonModule,
     ReportsRoutingModule,
     TextMaskModule,
+    NgChartsModule,
+    NzStatisticModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapboxAccessToken,
+    }),
   ]
 })
-export class ReportsModule { }
+export class ReportsModule {
+}
