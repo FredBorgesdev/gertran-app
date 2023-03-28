@@ -287,7 +287,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   get showShipperSelect(): boolean {
-    return this.resource?.customer?.shippers.length > 0;
+    return this.resource?.customer?.shippers?.length > 0;
   }
 
   loadTransporterData(): void {
