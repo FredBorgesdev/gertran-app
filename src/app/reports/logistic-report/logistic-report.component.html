@@ -1,85 +1,86 @@
-<div nz-row nzGutter="16">
-  <div nz-col nzSpan="8">
-    <nz-card>
-      <nz-statistic
-        [nzTitle]="'Valor acumulado (R$)'"
-        [nzValue]="(12656000 | number: '1.0-0')"
-        [nzPrefix]="'R$'"
-        [nzValueStyle]="{ color: '#3f8600' }"
-      ></nz-statistic>
-    </nz-card>
+<nz-spin [nzSpinning]="loading" nzTip="Carregando...">
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="8">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Valor acumulado (R$)'"
+          [nzValue]="(data?.totalValue | number: '1.0-0')"
+          [nzPrefix]="'R$'"
+          [nzValueStyle]="{ color: '#3f8600' }"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="8">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Viagens Canceladas'"
+          [nzValue]="data?.countByStatus.canceled.value"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="8">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos em viagem'"
+          [nzValue]="data?.countByStatus.inProgress.value"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="8">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos em análise'"
+          [nzValue]="data?.countByStatus.underReview.value"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="8">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos esperando aprovação'"
+          [nzValue]="data?.countByStatus.waitingForStart.value"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="8">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos reprovados'"
+          [nzValue]="data?.countByStatus.reproved.value"
+        ></nz-statistic>
+      </nz-card>
+    </div>
   </div>
 
-  <div nz-col nzSpan="8">
-    <nz-card>
-      <nz-statistic
-        [nzTitle]="'Viagens atrasadas'"
-        [nzValue]="116"
-      ></nz-statistic>
-    </nz-card>
-  </div>
 
-  <div nz-col nzSpan="8">
-    <nz-card>
-      <nz-statistic
-        [nzTitle]="'Veiculos em viagem'"
-        [nzValue]="12"
-      ></nz-statistic>
-    </nz-card>
-  </div>
-
-  <div nz-col nzSpan="8">
-    <nz-card>
-      <nz-statistic
-        [nzTitle]="'Veiculos em viagem'"
-        [nzValue]="12"
-      ></nz-statistic>
-    </nz-card>
-  </div>
-
-  <div nz-col nzSpan="8">
-    <nz-card>
-      <nz-statistic
-        [nzTitle]="'Veiculos em viagem'"
-        [nzValue]="12"
-      ></nz-statistic>
-    </nz-card>
-  </div>
-
-  <div nz-col nzSpan="8">
-    <nz-card>
-      <nz-statistic
-        [nzTitle]="'Veiculos em viagem'"
-        [nzValue]="12"
-      ></nz-statistic>
-    </nz-card>
-  </div>
-</div>
-
-
-<div nz-row nzGutter="12">
-  <div nz-col nzSpan="12">
-    <nz-card nzTitle="Status da frota" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
-      <canvas baseChart class="chart"
-              [data]="doughnutChartData"
-              [type]="'doughnut'"
-              [options]="{ aspectRatio: 2, responsive: true }"
-      >
-      </canvas>
-    </nz-card>
-  </div>
-
-  <div nz-col nzSpan="12">
-    <nz-card nzTitle="Mapa" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
-      <mgl-map
-        [style]="'mapbox://styles/mapbox/streets-v9'"
-        [center]="mapCenter"
-        [zoom]="[3]"
-      >
-        <mgl-marker
-          *ngFor="let marker of markers; let i = index"
-          [lngLat]="marker"
+  <div nz-row nzGutter="12">
+    <div nz-col nzSpan="12">
+      <nz-card nzTitle="Status da frota" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
+        <canvas baseChart class="chart"
+                [data]="countByTravelStatusDoughnutChart"
+                [type]="'doughnut'"
+                [options]="{ aspectRatio: 2, responsive: true }"
         >
+        </canvas>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-card nzTitle="Mapa" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
+        <mgl-map
+          [style]="'mapbox://styles/mapbox/streets-v9'"
+          [center]="mapCenter"
+          [zoom]="[3]"
+        >
+          <mgl-marker
+            *ngFor="let marker of markers; let i = index"
+            [lngLat]="marker"
+          >
       <span nz-icon>
         <img
           src="assets/images/logo/truck.svg"
@@ -88,33 +89,34 @@
           height="25px"
         />
       </span>
-        </mgl-marker>
-      </mgl-map>
-    </nz-card>
-  </div>
-</div>
-
-<div nz-row nzGutter="12">
-  <div nz-col nzSpan="12">
-    <nz-card nzTitle="Status da frota">
-      <canvas baseChart class="chart"
-              [data]="doughnutChartData"
-              [type]="'doughnut'"
-              [options]="{ aspectRatio: 2, responsive: true }"
-      >
-      </canvas>
-    </nz-card>
+          </mgl-marker>
+        </mgl-map>
+      </nz-card>
+    </div>
   </div>
 
-  <div nz-col nzSpan="12">
-    <nz-card nzTitle="Status da frota">
-      <canvas baseChart class="chart"
-              [data]="doughnutChartData"
-              [type]="'doughnut'"
-              [options]="{ aspectRatio: 2, responsive: true }"
-      >
-      </canvas>
-    </nz-card>
-  </div>
-</div>
+  <div nz-row nzGutter="12">
+    <div nz-col nzSpan="12">
+      <nz-card nzTitle="Status SM">
+        <canvas baseChart class="chart"
+                [data]="countByStatusDoughnutChart"
+                [type]="'doughnut'"
+                [options]="{ aspectRatio: 2, responsive: true }"
+        >
+        </canvas>
+      </nz-card>
+    </div>
 
+    <div nz-col nzSpan="12">
+      <nz-card nzTitle="Tipo de carga">
+        <canvas baseChart class="chart"
+                [data]="countByLoadTypeDoughnutChart"
+                [type]="'doughnut'"
+                [options]="{ aspectRatio: 2, responsive: true }"
+        >
+        </canvas>
+      </nz-card>
+    </div>
+  </div>
+
+</nz-spin>

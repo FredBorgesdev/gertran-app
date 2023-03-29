@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ChartData, ChartType} from 'chart.js';
+import {ChartData} from 'chart.js';
+import {LogisticReport, ReportsService} from '../reports.service';
+import {format, subMonths} from 'date-fns';
 
 @Component({
   selector: 'app-logistic-report',
@@ -7,23 +9,68 @@ import {ChartData, ChartType} from 'chart.js';
   styleUrls: ['./logistic-report.component.css']
 })
 export class LogisticReportComponent implements OnInit {
-  doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.doughnutChartLabels,
-    datasets: [
-      {data: [350, 450, 100]},
-    ]
+  countByStatusDoughnutChart: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: [ {data: [] }, ]
   };
-
+  countByTravelStatusDoughnutChart: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: [ {data: [] }, ]
+  };
+  countByLoadTypeDoughnutChart: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: [ {data: [] }, ]
+  };
   mapCenter = {lat: -14.2400732, lng: -53.1805017};
-  markers = [
-    {lat: -19.879024, lng: -44.0103829},
-  ];
+  markers = [];
+  data: LogisticReport;
+  loading = false;
 
-  constructor() {
+  constructor(private reportService: ReportsService) {
   }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.reportService.getLogisticReport(this.dateFilters).subscribe((data) => {
+      this.data = data;
+      this.countByStatusDoughnutChart = {
+        labels: Object.values(data.countByStatus).map(({ label }) => label),
+        datasets: [
+          {data: Object.values(data.countByStatus).map(({ value }) => value)}
+        ]
+      };
+      this.countByTravelStatusDoughnutChart = {
+        labels: Object.values(data.countByTravelStatus).map(({ label }) => label),
+        datasets: [
+          {data: Object.values(data.countByTravelStatus).map(({ value }) => value)},
+        ]
+      };
+      this.countByLoadTypeDoughnutChart = {
+        labels: Object.values(data.countByLoadType).map(({ label }) => label),
+        datasets: [
+          {data: Object.values(data.countByLoadType).map(({ value }) => value)},
+        ]
+      };
+      this.markers = data.lastPositions.map((position) => ({
+        lat: position.latitude,
+        lng: position.longitude
+      }));
+      this.loading = false;
+    }, () => {
+      this.loading = false;
+    });
+  }
+
+  get dateFilters(): {
+    from: string,
+    to: string
+  } {
+    return {
+      // from: format(new Date(), 'yyyy-MM-dd'),
+      // to: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
+      from: '2023-01-01',
+      to: '2023-03-27'
+    };
   }
 
 }

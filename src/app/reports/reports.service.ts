@@ -20,6 +20,11 @@ export interface BaseUserFilter extends BasePeriodFilter {
   user: string;
 }
 
+export interface LabelValue {
+  label: string;
+  value: number;
+}
+
 
 export interface BaseWorkdayFilter extends BasePeriodFilter {
   driver: string;
@@ -169,6 +174,45 @@ export type ChecklistHistory = {
   status: string;
   requestedBy: number;
   reviewedBy?: any;
+};
+
+export type LogisticReport = {
+  totalValue: string
+  countByStatus: {
+    canceled: LabelValue;
+    draft: LabelValue;
+    finished: LabelValue;
+    importedUnavailable: LabelValue;
+    inProgress: LabelValue;
+    pending: LabelValue;
+    reproved: LabelValue;
+    successfullyTerminated: LabelValue;
+    terminatedDisapproved: LabelValue;
+    underReview: LabelValue;
+    unsuccessfullyTerminated: LabelValue;
+    waitingForStart: LabelValue;
+  }
+  countByTravelStatus: {
+    contingency: LabelValue;
+    driverInOvernight: LabelValue;
+    inProgress: LabelValue;
+    logisticManagement: LabelValue;
+    none: LabelValue;
+    priority: LabelValue;
+    stopped: LabelValue;
+    vehicleInCustomer: LabelValue;
+    waitingForStart: LabelValue;
+  }
+  countByLoadType: {
+    frozen: LabelValue;
+    refrigerated: LabelValue;
+    unrefrigerated: LabelValue;
+  }
+  lastPositions: {
+    id: string
+    latitude: number
+    longitude: number
+  }[]
 };
 
 @Injectable({
@@ -399,5 +443,16 @@ export class ReportsService {
     });
 
     return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', {params});
+  }
+
+  getLogisticReport(form: Omit<BasePeriodFilter, 'customer'>): Observable<LogisticReport> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: form.from,
+        to_date: form.to,
+      }
+    });
+
+    return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', { params });
   }
 }
