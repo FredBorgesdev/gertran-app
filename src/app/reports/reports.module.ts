@@ -38,6 +38,7 @@ import {NzStatisticModule} from 'ng-zorro-antd/statistic';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
 import { SimpleHourPipe } from './pipes/simple-hour.pipe';
+import {NzTypographyModule} from 'ng-zorro-antd/typography';
 
 
 @NgModule({
@@ -77,17 +78,18 @@ import { SimpleHourPipe } from './pipes/simple-hour.pipe';
   exports: [
     WorkdayComponent
   ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    ReportsRoutingModule,
-    TextMaskModule,
-    NgChartsModule,
-    NzStatisticModule,
-    NgxMapboxGLModule.withConfig({
-      accessToken: environment.mapboxAccessToken,
-    }),
-  ]
+    imports: [
+        SharedModule,
+        CommonModule,
+        ReportsRoutingModule,
+        TextMaskModule,
+        NgChartsModule,
+        NzStatisticModule,
+        NgxMapboxGLModule.withConfig({
+            accessToken: environment.mapboxAccessToken,
+        }),
+        NzTypographyModule,
+    ]
 })
 export class ReportsModule {
 }

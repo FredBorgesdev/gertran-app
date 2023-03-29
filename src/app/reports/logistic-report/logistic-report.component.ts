@@ -21,6 +21,14 @@ export class LogisticReportComponent implements OnInit {
     labels: [],
     datasets: [ {data: [] }, ]
   };
+  temperatureDoughnutChart: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: [ { label: 'Velocidade', data: [] }, ]
+  };
+  speedLineChart: ChartData<'line'> = {
+    labels: [],
+    datasets: [ {data: [] }, ]
+  };
   mapCenter = {lat: -14.2400732, lng: -53.1805017};
   markers = [];
   data: LogisticReport;
@@ -56,6 +64,8 @@ export class LogisticReportComponent implements OnInit {
         lng: position.longitude
       }));
       this.loading = false;
+      this.temperatureDoughnutChart = this.getTemperatureChartData(data.lastPositions);
+      this.speedLineChart = this.getSpeedChartData(data.lastPositions);
     }, () => {
       this.loading = false;
     });
@@ -70,6 +80,115 @@ export class LogisticReportComponent implements OnInit {
       // to: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
       from: '2023-01-01',
       to: '2023-03-27'
+    };
+  }
+
+  getTemperatureChartData(positions: LogisticReport['lastPositions']): ChartData<'doughnut'> {
+    const initialData = {
+      upTo20: {
+        label: 'De 0ºC até 20ºC',
+        value: 0
+      },
+      upTo40: {
+        label: 'De 21ºC até 40ºC',
+        value: 0
+      },
+      upTo60: {
+        label: 'De 41ºC até 60ºC',
+        value: 0
+      },
+      upTo80: {
+        label: 'De 61ºC até 80ºC',
+        value: 0
+      },
+      upTo100: {
+        label: 'De 81ºC até 100ºC',
+        value: 0
+      }
+    };
+
+    const data = positions.reduce((acc, position) => {
+      if (position.temperature1 <= 20) {
+        acc.upTo20.value++;
+      } else if (position.temperature1 <= 40) {
+        acc.upTo40.value++;
+      } else if (position.temperature1 <= 60) {
+        acc.upTo60.value++;
+      } else if (position.temperature1 <= 80) {
+        acc.upTo80.value++;
+      } else if (position.temperature1 <= 100) {
+        acc.upTo100.value++;
+      }
+
+      return acc;
+    }, initialData);
+
+    return {
+      labels: Object.values(data).map(({ label }) => label),
+      datasets: [
+        {data: Object.values(data).map(({ value }) => value)},
+      ]
+    };
+  }
+
+  getSpeedChartData(positions: LogisticReport['lastPositions']): ChartData<'line'> {
+    const initialData = {
+      upTo20: {
+        label: 'De 0km/h até 20km/h',
+        value: 0,
+        percentage: 0,
+      },
+      upTo40: {
+        label: 'De 21km/h até 40km/h',
+        value: 0,
+        percentage: 0,
+      },
+      upTo60: {
+        label: 'De 41km/h até 60km/h',
+        value: 0,
+        percentage: 0,
+      },
+      upTo80: {
+        label: 'De 61km/h até 80km/h',
+        value: 0,
+        percentage: 0,
+      },
+      upTo100: {
+        label: 'De 81km/h até 100km/h',
+        value: 0,
+        percentage: 0,
+      }
+    };
+
+    const data = positions.reduce((acc, position) => {
+      if (position.speed <= 20) {
+        acc.upTo20.value++;
+        acc.upTo20.percentage = (acc.upTo20.value / positions.length) * 100;
+      } else if (position.speed <= 40) {
+        acc.upTo40.value++;
+        acc.upTo40.percentage = (acc.upTo40.value / positions.length) * 100;
+      } else if (position.speed <= 60) {
+        acc.upTo60.value++;
+        acc.upTo60.percentage = (acc.upTo60.value / positions.length) * 100;
+      } else if (position.speed <= 80) {
+        acc.upTo80.value++;
+        acc.upTo80.percentage = (acc.upTo80.value / positions.length) * 100;
+      } else if (position.speed <= 100) {
+        acc.upTo100.value++;
+        acc.upTo100.percentage = (acc.upTo100.value / positions.length) * 100;
+      }
+
+      return acc;
+    }, initialData);
+
+    return {
+      labels: Object.values(data).map(({ label }) => label),
+      datasets: [
+        {
+          label: 'Velocidade',
+          data: Object.values(data).map(({ percentage }) => percentage)
+        },
+      ]
     };
   }
 

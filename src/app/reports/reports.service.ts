@@ -212,6 +212,8 @@ export type LogisticReport = {
     id: string
     latitude: number
     longitude: number
+    temperature1: number
+    speed: number
   }[]
 };
 

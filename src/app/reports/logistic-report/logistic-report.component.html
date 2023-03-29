@@ -1,4 +1,5 @@
 <nz-spin [nzSpinning]="loading" nzTip="Carregando...">
+  <span nz-typography nzType="secondary">Dados dos ultimos 30 dias</span>
   <div nz-row nzGutter="16">
     <div nz-col nzSpan="8">
       <nz-card>
@@ -72,6 +73,7 @@
 
     <div nz-col nzSpan="12">
       <nz-card nzTitle="Mapa" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
+        <span nz-typography nzType="secondary">100 últimas posições</span>
         <mgl-map
           [style]="'mapbox://styles/mapbox/streets-v9'"
           [center]="mapCenter"
@@ -112,6 +114,30 @@
         <canvas baseChart class="chart"
                 [data]="countByLoadTypeDoughnutChart"
                 [type]="'doughnut'"
+                [options]="{ aspectRatio: 2, responsive: true }"
+        >
+        </canvas>
+      </nz-card>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="12">
+    <div nz-col nzSpan="12">
+      <nz-card nzTitle="Temperatura">
+        <canvas baseChart class="chart"
+                [data]="temperatureDoughnutChart"
+                [type]="'doughnut'"
+                [options]="{ aspectRatio: 2, responsive: true }"
+        >
+        </canvas>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="12">
+      <nz-card nzTitle="Percentual de veiculos por velocidade">
+        <canvas baseChart class="chart"
+                [data]="speedLineChart"
+                [type]="'line'"
                 [options]="{ aspectRatio: 2, responsive: true }"
         >
         </canvas>
