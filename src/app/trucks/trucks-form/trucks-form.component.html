@@ -173,6 +173,30 @@
       </nz-form-item>
     </div>
   </div>
+
+  <div nz-row nzGutter="24">
+    <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label></nz-form-label>
+        <nz-form-control [nzSpan]="null" [nzOffset]="null">
+          <label
+            nz-checkbox
+            formControlName="hasFatigueCamera"
+          >Possui camera de fadiga?</label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="12" *ngIf="validateForm.value.hasFatigueCamera">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="cameraSerialNumber">Número Serial da Câmera</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <nz-form-control [nzSpan]="null">
+            <input id="cameraSerialNumber" nz-input formControlName="cameraSerialNumber" />
+          </nz-form-control>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="description">Descrição</nz-form-label>
     <nz-form-control [nzSpan]="null">

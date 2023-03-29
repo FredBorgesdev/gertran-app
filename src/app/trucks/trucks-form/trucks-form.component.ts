@@ -61,6 +61,8 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     super.loadFormBuilder([
       'numberOfAxles',
       'cubage',
+      'hasFatigueCamera',
+      'cameraSerialNumber'
     ]);
   }
 
@@ -68,6 +70,8 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     super.loadResource([
       'numberOfAxles',
       'cubage',
+      'hasFatigueCamera',
+      'cameraSerialNumber'
     ]);
   }
 

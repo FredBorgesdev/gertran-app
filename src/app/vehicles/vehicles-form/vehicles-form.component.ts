@@ -135,7 +135,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     customProperties?.forEach(property => {
       this.validateForm.addControl(
         property,
-        this.formBuilder.control(null, [Validators.required])
+        this.formBuilder.control(null, [])
       );
     });
   }
