@@ -42,7 +42,7 @@
     <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
-          [nzTitle]="'Veiculos esperando aprovação'"
+          [nzTitle]="'Veiculos aguardando inicio'"
           [nzValue]="data?.countByStatus.waitingForStart.value"
         ></nz-statistic>
       </nz-card>
@@ -61,7 +61,7 @@
 
   <div nz-row nzGutter="12">
     <div nz-col nzSpan="12">
-      <nz-card nzTitle="Status da frota" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
+      <nz-card nzTitle="Status dos veiculos" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
         <canvas baseChart class="chart"
                 [data]="countByTravelStatusDoughnutChart"
                 [type]="'doughnut'"
@@ -72,7 +72,7 @@
     </div>
 
     <div nz-col nzSpan="12">
-      <nz-card nzTitle="Mapa" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
+      <nz-card nzTitle="Mapa" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }" [nzExtra]="extraTemplate">
         <span nz-typography nzType="secondary">100 últimas posições</span>
         <mgl-map
           [style]="'mapbox://styles/mapbox/streets-v9'"
@@ -83,17 +83,21 @@
             *ngFor="let marker of markers; let i = index"
             [lngLat]="marker"
           >
-      <span nz-icon>
-        <img
-          src="assets/images/logo/truck.svg"
-          alt="Caminhão"
-          width="25px"
-          height="25px"
-        />
-      </span>
+            <span nz-icon>
+              <img
+                src="assets/images/logo/truck.svg"
+                alt="Caminhão"
+                width="25px"
+                height="25px"
+              />
+            </span>
           </mgl-marker>
         </mgl-map>
       </nz-card>
+
+      <ng-template #extraTemplate>
+        <a (click)="expandMap()">Expandir</a>
+      </ng-template>
     </div>
   </div>
 

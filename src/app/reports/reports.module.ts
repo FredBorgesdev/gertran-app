@@ -39,6 +39,7 @@ import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
 import { SimpleHourPipe } from './pipes/simple-hour.pipe';
 import {NzTypographyModule} from 'ng-zorro-antd/typography';
+import { MapMarkersModalComponent } from './extra/map-markers-modal/map-markers-modal.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import {NzTypographyModule} from 'ng-zorro-antd/typography';
     WorkdayJustificationComponent,
     LogisticReportComponent,
     SimpleHourPipe,
+    MapMarkersModalComponent,
   ],
   exports: [
     WorkdayComponent

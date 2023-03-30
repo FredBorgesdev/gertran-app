@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ChartData} from 'chart.js';
 import {LogisticReport, ReportsService} from '../reports.service';
 import {format, subMonths} from 'date-fns';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {MapModalComponent} from '../../monitoring-requests/map-modal/map-modal.component';
+import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
 
 @Component({
   selector: 'app-logistic-report',
@@ -34,7 +37,10 @@ export class LogisticReportComponent implements OnInit {
   data: LogisticReport;
   loading = false;
 
-  constructor(private reportService: ReportsService) {
+  constructor(
+    private reportService: ReportsService,
+    private modalService: NzModalService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -192,4 +198,15 @@ export class LogisticReportComponent implements OnInit {
     };
   }
 
+  expandMap(): void {
+    this.modalService.create({
+      nzTitle: 'Mapa',
+      nzContent: MapMarkersModalComponent,
+      nzComponentParams: {
+        markers: this.markers,
+        mapCenter: this.mapCenter
+      },
+      nzWidth: '80%',
+    });
+  }
 }
