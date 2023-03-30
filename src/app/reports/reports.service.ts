@@ -460,12 +460,17 @@ export class ReportsService {
     return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', {params});
   }
 
-  getLogisticReport(form: Omit<BasePeriodFilter, 'customer'>): Observable<LogisticReport> {
+  getLogisticReport(form: Partial<BasePeriodFilter>): Observable<LogisticReport> {
+    const filtersParams: any = {
+      from_date: form.from,
+      to_date: form.to,
+    };
+    if (form.customer) {
+      filtersParams.customer = form.customer;
+    }
+
     const params = new HttpParams({
-      fromObject: {
-        from_date: form.from,
-        to_date: form.to,
-      }
+      fromObject: filtersParams
     });
 
     return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', { params });

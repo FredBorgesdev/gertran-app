@@ -16,7 +16,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Viagens Canceladas'"
-          [nzValue]="data?.countByStatus.canceled.value"
+          [nzValue]="data?.countByStatus.canceled?.value ?? 0"
         ></nz-statistic>
       </nz-card>
     </div>
@@ -25,7 +25,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Veiculos em viagem'"
-          [nzValue]="data?.countByStatus.inProgress.value"
+          [nzValue]="data?.countByStatus.inProgress?.value ?? 0"
         ></nz-statistic>
       </nz-card>
     </div>
@@ -34,7 +34,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Veiculos em análise'"
-          [nzValue]="data?.countByStatus.underReview.value"
+          [nzValue]="data?.countByStatus.underReview?.value ?? 0"
         ></nz-statistic>
       </nz-card>
     </div>
@@ -43,7 +43,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Veiculos aguardando inicio'"
-          [nzValue]="data?.countByStatus.waitingForStart.value"
+          [nzValue]="data?.countByStatus.waitingForStart?.value ?? 0"
         ></nz-statistic>
       </nz-card>
     </div>
@@ -52,7 +52,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Veiculos reprovados'"
-          [nzValue]="data?.countByStatus.reproved.value"
+          [nzValue]="data?.countByStatus.reproved?.value ?? 0"
         ></nz-statistic>
       </nz-card>
     </div>
@@ -62,6 +62,10 @@
   <div nz-row nzGutter="12">
     <div nz-col nzSpan="12">
       <nz-card nzTitle="Status dos veiculos" style="height: 30vw" [nzBodyStyle]="{ height: '100%' }">
+        <div *ngIf="countByTravelStatusDoughnutChart.datasets?.[0].data.length === 0">
+          <span nz-typography nzType="secondary">Nenhum dado encontrado</span>
+        </div>
+
         <canvas baseChart class="chart"
                 [data]="countByTravelStatusDoughnutChart"
                 [type]="'doughnut'"
@@ -104,6 +108,10 @@
   <div nz-row nzGutter="12">
     <div nz-col nzSpan="12">
       <nz-card nzTitle="Status SM">
+        <div *ngIf="countByStatusDoughnutChart.datasets?.[0].data.length === 0">
+          <span nz-typography nzType="secondary">Nenhum dado encontrado</span>
+        </div>
+
         <canvas baseChart class="chart"
                 [data]="countByStatusDoughnutChart"
                 [type]="'doughnut'"
@@ -115,6 +123,10 @@
 
     <div nz-col nzSpan="12">
       <nz-card nzTitle="Tipo de carga">
+        <div *ngIf="countByLoadTypeDoughnutChart.datasets?.[0].data.length === 0">
+          <span nz-typography nzType="secondary">Nenhum dado encontrado</span>
+        </div>
+
         <canvas baseChart class="chart"
                 [data]="countByLoadTypeDoughnutChart"
                 [type]="'doughnut'"

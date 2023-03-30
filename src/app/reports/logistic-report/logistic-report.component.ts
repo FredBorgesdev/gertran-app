@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ChartData} from 'chart.js';
 import {LogisticReport, ReportsService} from '../reports.service';
-import {format, subMonths} from 'date-fns';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {MapModalComponent} from '../../monitoring-requests/map-modal/map-modal.component';
 import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-logistic-report',
@@ -36,16 +35,25 @@ export class LogisticReportComponent implements OnInit {
   markers = [];
   data: LogisticReport;
   loading = false;
+  customers = [];
 
   constructor(
     private reportService: ReportsService,
     private modalService: NzModalService,
+    private authService: AuthenticationService,
   ) {
   }
 
   ngOnInit(): void {
+    this.loadReport();
+  }
+
+  loadReport(): void {
     this.loading = true;
-    this.reportService.getLogisticReport(this.dateFilters).subscribe((data) => {
+    this.reportService.getLogisticReport({
+      ...this.dateFilters,
+      customer: this.authService.customerId,
+    }).subscribe((data) => {
       this.data = data;
       this.countByStatusDoughnutChart = {
         labels: Object.values(data.countByStatus).map(({ label }) => label),
