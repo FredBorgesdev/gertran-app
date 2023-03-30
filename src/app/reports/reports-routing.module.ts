@@ -23,6 +23,7 @@ import {Permissions} from '../authentication/permissions';
 import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
 import {WorkdayComponent} from './workday/workday.component';
 import {LogisticReportComponent} from './logistic-report/logistic-report.component';
+import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
 
 const routes: Routes = [
   {
@@ -151,6 +152,10 @@ const routes: Routes = [
   {
     path: 'logisticreport',
     component: LogisticReportComponent
+  },
+  {
+    path: 'fatiguereport',
+    component: FatigueReportComponent,
   }
 ];
 

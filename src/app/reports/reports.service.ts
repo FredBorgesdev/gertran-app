@@ -25,7 +25,6 @@ export interface LabelValue {
   value: number;
 }
 
-
 export interface BaseWorkdayFilter extends BasePeriodFilter {
   driver: string;
   reportFormat: string;
@@ -215,6 +214,20 @@ export type LogisticReport = {
     temperature1: number
     speed: number
   }[]
+};
+
+export type FatigueReport = {
+  eventType: number
+  trackerSerialNumber: string
+  latitude: number
+  longitude: number
+  eventId: number
+  eventDatetime: string
+  vehiclePlate: string
+  driverName: string
+  imageUrl: string
+  speed: number
+  level: any
 };
 
 @Injectable({
@@ -456,5 +469,18 @@ export class ReportsService {
     });
 
     return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', { params });
+  }
+
+  getFatigueReport(form: BaseVehicleFilter): Observable<FatigueReport[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: form.from,
+        to_date: form.to,
+        customer: form.customer,
+        plate: form.plate,
+      }
+    });
+
+    return this.http.get<FatigueReport[]>('reports/monitoring/fatiguesummary?1=1', { params });
   }
 }

@@ -327,15 +327,6 @@ export const ROUTES: SideNavInterface[] = [
             icon: 'bar-chart',
             submenu: [],
           },
-          // {
-          //   path: '/dashboard/reports15',
-          //   title: 'Histórico de alertas',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   gertranStaffOnly: true
-          // },
           {
             path: '/reports/commands-history',
             title: 'Histórico de comandos',
@@ -353,33 +344,6 @@ export const ROUTES: SideNavInterface[] = [
             icon: 'bar-chart',
             submenu: [],
           },
-          // {
-          //   path: '/dashboard/reports18',
-          //   title: 'Histórico temperatura (analítico)',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
-          // },
-          // {
-          //   path: '/dashboard/reports19',
-          //   title: 'Histórico temperatura (gráfico)',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   permission: Permissions.VIEW_TEMPERATURE_HISTORY_REPORT
-          // },
-          // {
-          //   path: '/dashboard/reports20',
-          //   title: 'Relatório analítico por S.M.',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   permission: Permissions.VIEW_ANALYTICAL_PER_SM_REPORT
-          // },
         ],
       },
       {
@@ -389,15 +353,6 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'line-chart',
         submenu: [
-          // {
-          //   path: '/dashboard/reports21',
-          //   title: 'Histórico de ocorrências',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   permission: Permissions.REPORTS_VIEW_INCIDENT_REPORT
-          // },
           {
             path: '/reports/analytical',
             title: 'Relatório analítico',
@@ -416,24 +371,6 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             gertranStaffOnly: true
           },
-          // {
-          //   path: '/dashboard/reports24',
-          //   title: 'Relatório de pânico',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   permission: Permissions.REPORTS_VIEW_PANIC_HISTORY_REPORT
-          // },
-          // {
-          //   path: '/dashboard/reports25',
-          //   title: 'Ocorrências por turno',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   submenu: [],
-          //   gertranStaffOnly: true
-          // },
           {
             path: '/reports/operational-audit-commands',
             title: 'Auditoria Operacional Comandos',
@@ -470,142 +407,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
-      // {
-      //   path: '/dashboard/reports29',
-      //   title: 'Relatório de eventos',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'line-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports30',
-      //   title: 'Relatório Gráficos',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'line-chart',
-      //   submenu: []
-      // }
-      // {
-      //   path: '/dashboard/reports1',
-      //   title: 'Violações',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports2',
-      //   title: 'Inicio de Viagem',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports3',
-      //   title: 'Carga e descarga',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports4',
-      //   title: 'Viagens em atraso',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports5',
-      //   title: 'Solicitação',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports6',
-      //   title: 'Veiculos liberados',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports7',
-      //   title: 'Fim de viagem',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports8',
-      //   title: 'Fechamento',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports9',
-      //   title: 'Macros',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports10',
-      //   title: 'Posições',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports11',
-      //   title: 'Alertas',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports12',
-      //   title: 'Comandos',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports13',
-      //   title: 'Checklist',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports14',
-      //   title: 'Temperatura',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
-      // {
-      //   path: '/dashboard/reports15',
-      //   title: 'Analítico',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'bar-chart',
-      //   submenu: []
-      // },
+      {
+        path: '/reports/fatiguereport',
+        title: 'Relatório de fadiga',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
     ]
   },
   {

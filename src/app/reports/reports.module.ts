@@ -40,6 +40,7 @@ import {environment} from '../../environments/environment';
 import { SimpleHourPipe } from './pipes/simple-hour.pipe';
 import {NzTypographyModule} from 'ng-zorro-antd/typography';
 import { MapMarkersModalComponent } from './extra/map-markers-modal/map-markers-modal.component';
+import { FatigueReportComponent } from './fatigue-report/fatigue-report.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { MapMarkersModalComponent } from './extra/map-markers-modal/map-markers-
     LogisticReportComponent,
     SimpleHourPipe,
     MapMarkersModalComponent,
+    FatigueReportComponent,
   ],
   exports: [
     WorkdayComponent
