@@ -476,11 +476,10 @@ export class ReportsService {
       fromObject: {
         from_date: form.from,
         to_date: form.to,
-        customer: form.customer,
         plate: form.plate,
       }
     });
 
-    return this.http.get<FatigueReport[]>('reports/monitoring/fatiguesummary?1=1', { params });
+    return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', { params });
   }
 }
