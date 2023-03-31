@@ -220,7 +220,7 @@
     <tbody>
       <tr *ngFor="let data of table.data; index as i">
         <td>{{ data?.truck.vehicle.plate ?? '-' }}</td>
-        <td>{{ data?.eventDatetime | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data?.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
         <td>{{ data?.driver.name ?? '-' }}</td>
         <td>{{ data?.driver.phoneNumber ?? '-' }}</td>
         <td>{{ data?.lastPosition?.pointReference ?? '-' }}</td>
