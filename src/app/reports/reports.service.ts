@@ -214,6 +214,10 @@ export type LogisticReport = {
     temperature1: number
     speed: number
   }[]
+  vehiclesCount: number;
+  vehiclesTravellingCount: number;
+  vehiclesOutOfServiceCount: number;
+  monitoringRequestsFinishingWithin6Hours: any[];
 };
 
 export type FatigueReport = {

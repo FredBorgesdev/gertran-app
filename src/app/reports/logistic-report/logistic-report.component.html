@@ -5,7 +5,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Valor acumulado (R$)'"
-          [nzValue]="(data?.totalValue | number: '1.0-0')"
+          [nzValue]="(data?.totalValue ?? 0 | number: '1.0-0')"
           [nzPrefix]="'R$'"
           [nzValueStyle]="{ color: '#3f8600' }"
         ></nz-statistic>
@@ -33,7 +33,7 @@
     <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
-          [nzTitle]="'Veiculos em análise'"
+          [nzTitle]="'Viagens em análise'"
           [nzValue]="data?.countByStatus.underReview?.value ?? 0"
         ></nz-statistic>
       </nz-card>
@@ -42,7 +42,7 @@
     <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
-          [nzTitle]="'Veiculos aguardando inicio'"
+          [nzTitle]="'Viagens aguardando inicio'"
           [nzValue]="data?.countByStatus.waitingForStart?.value ?? 0"
         ></nz-statistic>
       </nz-card>
@@ -51,13 +51,12 @@
     <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
-          [nzTitle]="'Veiculos reprovados'"
+          [nzTitle]="'Viagens reprovadas'"
           [nzValue]="data?.countByStatus.reproved?.value ?? 0"
         ></nz-statistic>
       </nz-card>
     </div>
   </div>
-
 
   <div nz-row nzGutter="12">
     <div nz-col nzSpan="12">
@@ -107,7 +106,7 @@
 
   <div nz-row nzGutter="12">
     <div nz-col nzSpan="12">
-      <nz-card nzTitle="Status SM">
+      <nz-card nzTitle="Status da viagem">
         <div *ngIf="countByStatusDoughnutChart.datasets?.[0].data.length === 0">
           <span nz-typography nzType="secondary">Nenhum dado encontrado</span>
         </div>
@@ -160,5 +159,75 @@
       </nz-card>
     </div>
   </div>
+
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="6">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Total de veiculos'"
+          [nzValue]="data?.vehiclesCount"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos em viagem'"
+          [nzValue]="data?.vehiclesTravellingCount"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos fora de viagem'"
+          [nzValue]="data?.vehiclesOutOfServiceCount"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-card>
+        <nz-statistic
+          [nzTitle]="'Veiculos com prev. de término nas próx. 6h'"
+          [nzValue]="data?.monitoringRequestsFinishingWithin6Hours?.length"
+        ></nz-statistic>
+      </nz-card>
+    </div>
+  </div>
+
+  <nz-table
+    #table
+    [nzData]="data?.monitoringRequestsFinishingWithin6Hours"
+    nzBordered
+    class="m-t-50"
+    [nzFrontPagination]="false"
+    nzTableLayout="fixed"
+  >
+    <thead>
+    <tr>
+      <th>Placa</th>
+      <th>Data/hora</th>
+      <th>Motorista</th>
+      <th>Telefone</th>
+      <th>Localização</th>
+      <th>Hora prevista de termino</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data?.truck.vehicle.plate ?? '-' }}</td>
+        <td>{{ data?.eventDatetime | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data?.driver.name ?? '-' }}</td>
+        <td>{{ data?.driver.phoneNumber ?? '-' }}</td>
+        <td>{{ data?.lastPosition?.pointReference ?? '-' }}</td>
+        <td>{{ getLastTravelStep(data) }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </nz-table>
 
 </nz-spin>

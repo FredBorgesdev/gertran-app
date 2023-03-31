@@ -4,6 +4,7 @@ import {LogisticReport, ReportsService} from '../reports.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-logistic-report',
@@ -216,5 +217,19 @@ export class LogisticReportComponent implements OnInit {
       },
       nzWidth: '80%',
     });
+  }
+
+  getLastTravelStep(data: any): string {
+    if (!data.travelSteps) {
+      return '-';
+    }
+
+    const lastStep = data.travelSteps[data.travelSteps.length - 1];
+
+    if (!lastStep) {
+      return '-';
+    }
+
+    return format(new Date(lastStep.date), 'dd/MM/yyyy') + ' ' + lastStep.time;
   }
 }
