@@ -161,7 +161,7 @@
   </div>
 
   <div nz-row nzGutter="16">
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
           [nzTitle]="'Total de veiculos'"
@@ -170,7 +170,7 @@
       </nz-card>
     </div>
 
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
           [nzTitle]="'Veiculos em viagem'"
@@ -179,7 +179,7 @@
       </nz-card>
     </div>
 
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="8">
       <nz-card>
         <nz-statistic
           [nzTitle]="'Veiculos fora de viagem'"
@@ -187,37 +187,29 @@
         ></nz-statistic>
       </nz-card>
     </div>
-
-    <div nz-col nzSpan="6">
-      <nz-card>
-        <nz-statistic
-          [nzTitle]="'Veiculos com prev. de término nas próx. 6h'"
-          [nzValue]="data?.monitoringRequestsFinishingWithin6Hours?.length"
-        ></nz-statistic>
-      </nz-card>
-    </div>
   </div>
 
-  <nz-table
-    #table
-    [nzData]="data?.monitoringRequestsFinishingWithin6Hours"
-    nzBordered
-    class="m-t-50"
-    [nzFrontPagination]="false"
-    nzTableLayout="fixed"
-  >
-    <thead>
-    <tr>
-      <th>Placa</th>
-      <th>Data/hora</th>
-      <th>Motorista</th>
-      <th>Telefone</th>
-      <th>Localização</th>
-      <th>Hora prevista de termino</th>
-    </tr>
-    </thead>
+  <nz-card [nzTitle]="data?.monitoringRequestsFinishingWithin6Hours?.length + ' veiculo(s) com previsão de terminar nas próx. 6h'">
+    <nz-table
+      #table
+      [nzData]="data?.monitoringRequestsFinishingWithin6Hours"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Placa</th>
+        <th>Data/hora</th>
+        <th>Motorista</th>
+        <th>Telefone</th>
+        <th>Localização</th>
+        <th>Hora prevista de termino</th>
+      </tr>
+      </thead>
 
-    <tbody>
+      <tbody>
       <tr *ngFor="let data of table.data; index as i">
         <td>{{ data?.truck.vehicle.plate ?? '-' }}</td>
         <td>{{ data?.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
@@ -226,7 +218,9 @@
         <td>{{ data?.lastPosition?.pointReference ?? '-' }}</td>
         <td>{{ getLastTravelStep(data) }}</td>
       </tr>
-    </tbody>
-  </nz-table>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
 
 </nz-spin>
