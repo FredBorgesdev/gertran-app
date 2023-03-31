@@ -230,6 +230,8 @@ export class LogisticReportComponent implements OnInit {
       return '-';
     }
 
-    return format(new Date(lastStep.date), 'dd/MM/yyyy') + ' ' + lastStep.time;
+    const [year, month, day] = lastStep.date.split('-');
+
+    return `${day}/${month}/${year} ${lastStep.time}`;
   }
 }
