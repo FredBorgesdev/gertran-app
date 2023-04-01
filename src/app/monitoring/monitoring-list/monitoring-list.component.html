@@ -251,7 +251,7 @@
       <td>{{ item.info?.driverName || '-' }}</td>
       <td>{{ item.info?.wagonsPlates || '-' }}</td>
       <td *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">{{ getCommunicationChannel(item.communicationChannel) }}</td>
+          data-testid="td-gertran-only">{{ getCommunicationChannel(item.info?.communicationChannel) }}</td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <nz-badge *ngIf="item.info?.hasMacro" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.info?.hasMacro" nzStatus="error"></nz-badge>
