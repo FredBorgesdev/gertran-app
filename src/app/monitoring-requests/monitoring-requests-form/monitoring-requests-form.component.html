@@ -97,7 +97,7 @@
               nzServerSearch
               nzPlaceHolder="Selecione um cavalo"
               formControlName="truck"
-              (nzOnSearch)="searchByPlate($event)"
+              (nzOnSearch)="searchTruckByPlate($event)"
               (nzScrollToBottom)="selectableTruckService.loadMoreTrucks()"
               (ngModelChange)="saveDraft('truck')"
               [disabled]="disabled"
@@ -118,12 +118,14 @@
               formControlName="wagons"
               nzMode="multiple"
               nzMaxMultipleCount="2"
-              (nzScrollToBottom)="loadMoreWagons()"
+              nzServerSearch
+              (nzScrollToBottom)="selectableWagonService.loadMoreWagons()"
               (ngModelChange)="saveDraft('wagons')"
+              (nzOnSearch)="filterByWagonByPlate($event)"
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >
-              <nz-option *ngFor="let wagon of wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
+              <nz-option *ngFor="let wagon of selectableWagonService.wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -142,7 +144,6 @@
               nzPlaceHolder="Selecione uma operação"
               formControlName="operation"
               (ngModelChange)="saveDraft('operation')"
-              (nzScrollToBottom)="loadMoreWagons()"
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >

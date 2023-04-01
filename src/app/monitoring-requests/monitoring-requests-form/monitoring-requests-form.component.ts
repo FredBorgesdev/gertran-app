@@ -7,8 +7,8 @@ import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-fo
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Stop, StopsService} from '../../stops/stops.service';
 import {Driver, DriversService} from '../../drivers/drivers.service';
-import {Truck, TrucksService} from '../../trucks/trucks.service';
-import {Wagon, WagonsService} from '../../wagons/wagons.service';
+import {TrucksService} from '../../trucks/trucks.service';
+import {WagonsService} from '../../wagons/wagons.service';
 import {Choice} from '../../shared/services/api.service';
 import {Operations, OperationsService} from '../../operations/operations.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
@@ -16,6 +16,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
 import {SelectableTruckService} from '../../trucks/selectable-truck.service';
+import {SelectableWagonService} from '../../wagons/selectable-wagon.service';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -25,7 +26,6 @@ import {SelectableTruckService} from '../../trucks/selectable-truck.service';
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
   stops: Stop[] = [];
   drivers: Driver[] = [];
-  wagons: Wagon[] = [];
   surveyConductors: Choice[] = [];
   monitoringRequests: Choice[] = [];
 
@@ -55,6 +55,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     private operationService: OperationsService,
     public selectableCustomerService: SelectableCustomerServiceService,
     public selectableTruckService: SelectableTruckService,
+    public selectableWagonService: SelectableWagonService,
     public authService: AuthenticationService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
@@ -78,6 +79,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.selectableTruckService.init();
+    this.selectableWagonService.init();
 
     this.loadCustomers();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
@@ -118,13 +120,11 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
 
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {
-      console.log('here 1', value);
       this.operations = [];
       this.loadMoreOperations();
     });
     this.validateForm.get('shipper').valueChanges.subscribe((value) => {
       if (this.showShipperSelect) {
-        console.log('here 2', value);
         this.operations = [];
         this.loadMoreOperations();
       }
@@ -253,20 +253,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
   }
 
-  loadMoreWagons(): void {
-    this.isLoadingMoreData = true;
-    this.wagonsService.getAll({
-      limit: 50,
-      url: this.wagonsNextUrl
-    }, {
-      customer: this.validateForm.get('transporter').value,
-    }).subscribe((wagons) => {
-      this.wagonsNextUrl = wagons.next;
-      this.wagons = [...this.wagons, ...wagons.results];
-      this.isLoadingMoreData = false;
-    });
-  }
-
   get surveyConductedRowSpan(): number {
     return this.validateForm.controls.surveyConductedBy.value === 'others' ? 8 : 12;
   }
@@ -281,16 +267,21 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   loadTransporterData(): void {
     this.drivers = [];
-    this.wagons = [];
 
     this.loadMoreDrivers();
     this.selectableTruckService.resetFilters();
-    this.loadMoreWagons();
+    this.selectableWagonService.resetFilters();
     this.saveDraft('transporter');
   }
 
-  searchByPlate(plate: string): void {
+  searchTruckByPlate(plate: string): void {
     this.selectableTruckService.searchByPlate({
+      plate,
+    });
+  }
+
+  filterByWagonByPlate(plate: string): void {
+    this.selectableWagonService.searchByPlate({
       plate,
     });
   }
