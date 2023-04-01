@@ -185,35 +185,35 @@ export const ROUTES: SideNavInterface[] = [
         iconTheme: 'outline',
         icon: 'line-chart',
         submenu: [
-          {
-            path: '/reports/load-unload-by-macro',
-            title: 'Carga e descarga por Macro',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_REPORT
-          },
-          {
-            path: '/reports/load-unload-by-point',
-            title: 'Carga e descarga por Ponto',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            queryParams: {
-              'navbar-closed': true
-            },
-            submenu: [],
-            permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_BY_POINT_REPORT
-          },
-          {
-            path: '/reports/load-unload-by-radius',
-            title: 'Carga e descarga por Ponto Raio',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-          },
+          // {
+          //   path: '/reports/load-unload-by-macro',
+          //   title: 'Carga e descarga por Macro',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_REPORT
+          // },
+          // {
+          //   path: '/reports/load-unload-by-point',
+          //   title: 'Carga e descarga por Ponto',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   queryParams: {
+          //     'navbar-closed': true
+          //   },
+          //   submenu: [],
+          //   permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_BY_POINT_REPORT
+          // },
+          // {
+          //   path: '/reports/load-unload-by-radius',
+          //   title: 'Carga e descarga por Ponto Raio',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          // },
           {
             path: '/reports/trips-late',
             title: 'Viagens em atraso',
@@ -247,15 +247,15 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             permission: Permissions.REPORTS_VIEW_VEHICLES_RELESED_REPORT
           },
-          {
-            path: '/reports/logistics',
-            title: 'Relatórios Logisticos',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            permission: Permissions.REPORTS_VIEW_LOGISTIC_REPORT
-          },
+          // {
+          //   path: '/reports/logistics',
+          //   title: 'Relatórios Logisticos',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   permission: Permissions.REPORTS_VIEW_LOGISTIC_REPORT
+          // },
           {
             path: '/reports/travel-start',
             title: 'Inicio de viagem',
@@ -283,24 +283,24 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             gertranStaffOnly: true
           },
-          {
-            path: '/reports/scheduled-trips',
-            title: 'Programação de viagens',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            gertranStaffOnly: true,
-          },
-          {
-            path: '/reports/insurance-companies',
-            title: 'Seguradoras',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            submenu: [],
-            gertranStaffOnly: true,
-          },
+          // {
+          //   path: '/reports/scheduled-trips',
+          //   title: 'Programação de viagens',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   gertranStaffOnly: true,
+          // },
+          // {
+          //   path: '/reports/insurance-companies',
+          //   title: 'Seguradoras',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'bar-chart',
+          //   submenu: [],
+          //   gertranStaffOnly: true,
+          // },
         ]
       },
       {
