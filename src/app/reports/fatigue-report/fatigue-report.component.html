@@ -28,6 +28,8 @@
         <th>Data</th>
         <th>Motorista</th>
         <th>Placa</th>
+        <th>Tipo de evento</th>
+        <th>Severidade</th>
         <th>Velocidade</th>
         <th>Foto</th>
       </tr>
@@ -38,6 +40,8 @@
         <td>{{ data.eventDatetime | date: 'dd/MM/yyyy HH:mm' }}</td>
         <td>{{ data.driverName ?? '-' }}</td>
         <td>{{ data.vehiclePlate ?? '-' }}</td>
+        <td>{{ data.eventType ?? '-' }}</td>
+        <td>{{ data.level ?? '-' }}</td>
         <td>{{ data.speed ?? '-' }}</td>
         <td>
           <a
