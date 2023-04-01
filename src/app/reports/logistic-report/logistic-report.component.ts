@@ -91,8 +91,8 @@ export class LogisticReportComponent implements OnInit {
     to: string
   } {
     return {
-      from: format(new Date(), 'yyyy-MM-dd'),
-      to: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
+      to: format(new Date(), 'yyyy-MM-dd'),
+      from: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
     };
   }
 
