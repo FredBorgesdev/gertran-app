@@ -15,6 +15,7 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
+import {SelectableTruckService} from '../../trucks/selectable-truck.service';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -24,7 +25,6 @@ import {createNumberMask} from 'text-mask-addons';
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
   stops: Stop[] = [];
   drivers: Driver[] = [];
-  trucks: Truck[] = [];
   wagons: Wagon[] = [];
   surveyConductors: Choice[] = [];
   monitoringRequests: Choice[] = [];
@@ -54,6 +54,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     private wagonsService: WagonsService,
     private operationService: OperationsService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    public selectableTruckService: SelectableTruckService,
     public authService: AuthenticationService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
@@ -75,6 +76,8 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.stopsService.getAll({limit: 50}).subscribe((stops) => {
       this.stops = stops.results;
     });
+
+    this.selectableTruckService.init();
 
     this.loadCustomers();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
@@ -156,7 +159,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     if (this.resource?.truck) {
       this.trucksService.get(this.resource.truck.id).subscribe((truck) => {
-        this.trucks = [truck, ...this.trucks];
+        this.selectableTruckService.appendTruck(truck);
       });
     }
 
@@ -226,20 +229,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     });
   }
 
-  loadMoreTrucks(): void {
-    this.isLoadingMoreData = true;
-    this.trucksService.getAll({
-      limit: 50,
-      url: this.trucksNextUrl
-    }, {
-      customerId: this.validateForm.get('transporter').value,
-    }).subscribe((trucks) => {
-      this.trucksNextUrl = trucks.next;
-      this.trucks = [...this.trucks, ...trucks.results];
-      this.isLoadingMoreData = false;
-    });
-  }
-
   loadMoreOperations(): void {
     const transporterId = this.validateForm.get('transporter').value?.id ||
       this.validateForm.get('transporter').value;
@@ -292,12 +281,17 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
   loadTransporterData(): void {
     this.drivers = [];
-    this.trucks = [];
     this.wagons = [];
 
     this.loadMoreDrivers();
-    this.loadMoreTrucks();
+    this.selectableTruckService.resetFilters();
     this.loadMoreWagons();
     this.saveDraft('transporter');
+  }
+
+  searchByPlate(plate: string): void {
+    this.selectableTruckService.searchByPlate({
+      plate,
+    });
   }
 }

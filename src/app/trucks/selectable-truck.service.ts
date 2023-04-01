@@ -11,7 +11,7 @@ export class SelectableTruckService {
   isLoadingMoreData: boolean;
   trucks: Truck[] = [];
   searchTruckSubject = new Subject<{
-    customerId: string;
+    customerId?: string;
     plate: string;
   }>();
 
@@ -42,13 +42,17 @@ export class SelectableTruckService {
     });
   }
 
-  searchByPlate(filter: { customerId: string; plate: string }): void {
+  searchByPlate(filter: { customerId?: string; plate: string }): void {
     if (filter.plate === '') {
       this.trucksNextUrl = null;
       this.loadMoreTrucks();
     } else {
       this.searchTruckSubject.next(filter);
     }
+  }
+
+  appendTruck(truck: Truck): void {
+    this.trucks = [truck, ...this.trucks];
   }
 
   setupSearch(): void {

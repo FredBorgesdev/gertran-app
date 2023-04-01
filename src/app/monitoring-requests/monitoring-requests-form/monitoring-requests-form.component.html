@@ -94,14 +94,16 @@
               id="truck"
               nzShowSearch
               nzAllowClear
+              nzServerSearch
               nzPlaceHolder="Selecione um cavalo"
               formControlName="truck"
-              (nzScrollToBottom)="loadMoreTrucks()"
+              (nzOnSearch)="searchByPlate($event)"
+              (nzScrollToBottom)="selectableTruckService.loadMoreTrucks()"
               (ngModelChange)="saveDraft('truck')"
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >
-              <nz-option *ngFor="let truck of trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
+              <nz-option *ngFor="let truck of selectableTruckService.trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -247,5 +249,5 @@
 </nz-spin>
 
 <ng-template #selectLoading>
-  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+  <nz-spin *ngIf="isLoadingMoreData || selectableTruckService.isLoadingMoreData"></nz-spin>
 </ng-template>
