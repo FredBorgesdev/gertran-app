@@ -57,12 +57,14 @@
               nzAllowClear
               nzPlaceHolder="Selecione um motorista"
               formControlName="driver"
-              (nzScrollToBottom)="loadMoreDrivers()"
+              nzServerSearch
+              (nzOnSearch)="selectableDriverService.searchByName($event)"
+              (nzScrollToBottom)="selectableDriverService.loadMoreDrivers()"
               (ngModelChange)="saveDraft('driver')"
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >
-              <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
+              <nz-option *ngFor="let driver of selectableDriverService.drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -75,10 +77,13 @@
               nzAllowClear
               nzPlaceHolder="Selecione um motorista"
               formControlName="auxiliaryDriver"
+              nzServerSearch
+              (nzOnSearch)="selectableDriverService.searchByName($event)"
+              (nzScrollToBottom)="selectableDriverService.loadMoreDrivers()"
               (ngModelChange)="saveDraft('auxiliaryDriver')"
               [disabled]="disabled"
             >
-              <nz-option *ngFor="let driver of drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
+              <nz-option *ngFor="let driver of selectableDriverService.drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>

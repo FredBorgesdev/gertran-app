@@ -53,4 +53,14 @@ export class SelectableDriversService {
       this.message.error('Erro ao carregar os registros. Tente novamente.');
     });
   }
+
+  resetFilters(): void {
+    this.driversNextUrl = null;
+    this.drivers = [];
+    this.loadMoreDrivers();
+  }
+
+  appendDriver(driver: Driver) {
+    this.drivers = [driver, ...this.drivers];
+  }
 }

@@ -17,6 +17,7 @@ import User from '../../users/user';
 import {createNumberMask} from 'text-mask-addons';
 import {SelectableTruckService} from '../../trucks/selectable-truck.service';
 import {SelectableWagonService} from '../../wagons/selectable-wagon.service';
+import {SelectableDriversService} from '../../drivers/selectable-drivers.service';
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -56,6 +57,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     public selectableCustomerService: SelectableCustomerServiceService,
     public selectableTruckService: SelectableTruckService,
     public selectableWagonService: SelectableWagonService,
+    public selectableDriverService: SelectableDriversService,
     public authService: AuthenticationService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
@@ -80,6 +82,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     this.selectableTruckService.init();
     this.selectableWagonService.init();
+    this.selectableDriverService.init();
 
     this.loadCustomers();
     (this.service as MonitoringRequestsService).getSurveyConductors().subscribe((surveyConductors) => {
@@ -147,13 +150,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     if (this.resource?.driver) {
       this.driversService.get(this.resource.driver.id).subscribe((driver) => {
-        this.drivers = [driver, ...this.drivers];
+        this.selectableDriverService.appendDriver(driver);
       });
     }
 
     if (this.resource?.auxiliaryDriver) {
       this.driversService.get(this.resource.auxiliaryDriver.id).subscribe((driver) => {
-        this.drivers = [driver, ...this.drivers];
+        this.selectableDriverService.appendDriver(driver);
       });
     }
 
@@ -215,20 +218,6 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     }
   }
 
-  loadMoreDrivers(): void {
-    this.isLoadingMoreData = true;
-    this.driversService.getAll({
-      limit: 50,
-      url: this.driversNextUrl,
-    }, {
-      customer: this.validateForm.get('transporter').value,
-    }).subscribe((drivers) => {
-      this.driversNextUrl = drivers.next;
-      this.drivers = [...this.drivers, ...drivers.results];
-      this.isLoadingMoreData = false;
-    });
-  }
-
   loadMoreOperations(): void {
     const transporterId = this.validateForm.get('transporter').value?.id ||
       this.validateForm.get('transporter').value;
@@ -266,9 +255,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   loadTransporterData(): void {
-    this.drivers = [];
-
-    this.loadMoreDrivers();
+    this.selectableDriverService.resetFilters();
     this.selectableTruckService.resetFilters();
     this.selectableWagonService.resetFilters();
     this.saveDraft('transporter');
