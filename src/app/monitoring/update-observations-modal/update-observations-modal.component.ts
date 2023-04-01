@@ -20,14 +20,14 @@ export class UpdateObservationsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.observation = this.item.info.observations;
+    this.observation = this.item.positionInfo.observations;
   }
 
   save(): void {
     this.service.update(this.item.truck.id, {
       description: this.observation,
     } as any).subscribe(() => {
-      this.item.info.observations = this.observation;
+      this.item.positionInfo.observations = this.observation;
       this.message.success('Observações atualizadas com sucesso');
     }, () => {
       this.message.error('Erro ao atualizar observações');
