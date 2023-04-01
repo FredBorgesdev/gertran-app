@@ -6,7 +6,7 @@ import { LogisticReportComponent } from '../reports/logistic-report/logistic-rep
 const routes: Routes = [
   {
     path: 'home',
-    component: LogisticReportComponent,
+    component: DashboardComponent,
     data: {
       title: 'Dashboard ',
       headerDisplay: 'none'
