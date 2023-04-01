@@ -4,7 +4,7 @@ import {LogisticReport, ReportsService} from '../reports.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
-import {format} from 'date-fns';
+import {format, subMonths} from 'date-fns';
 
 @Component({
   selector: 'app-logistic-report',
@@ -91,10 +91,8 @@ export class LogisticReportComponent implements OnInit {
     to: string
   } {
     return {
-      // from: format(new Date(), 'yyyy-MM-dd'),
-      // to: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
-      from: '2023-01-01',
-      to: '2023-03-27'
+      from: format(new Date(), 'yyyy-MM-dd'),
+      to: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
     };
   }
 
