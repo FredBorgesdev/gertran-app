@@ -185,16 +185,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getOrigin(item: Position): string {
-    if (item.info?.originCity) {
-      return item.info.originCity + ', ' + item.info.originState;
+    if (item.positionInfo?.originCity) {
+      return item.positionInfo.originCity + ', ' + item.positionInfo.originState;
     }
 
     return item.origin;
   }
 
   getDestiny(item: Position): string {
-    if (item.info?.destinyCity) {
-      return item.info.destinyCity + ', ' + item.info.destinyState;
+    if (item.positionInfo?.destinyCity) {
+      return item.positionInfo.destinyCity + ', ' + item.positionInfo.destinyState;
     }
 
     return item.destiny;

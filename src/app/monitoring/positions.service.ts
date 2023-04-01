@@ -66,7 +66,7 @@ export interface Position {
   truck: Truck;
   events: PositionEvent[];
   trackerModel: TrackerModel;
-  info: PositionInfo;
+  positionInfo: PositionInfo;
   monitoringRequest: MonitoringRequest;
 }
 

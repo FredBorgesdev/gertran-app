@@ -145,11 +145,11 @@
     <tbody>
     <tr
       *ngFor="let item of table.data; let i=index"
-      [class]="getRowBackgroundColor(item.info?.travelStatus)"
+      [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight, item)"
       (click)="setPlate(item?.vehiclePlate)"
     >
-      <td nzLeft [class]="getRowBackgroundColor(item.info?.travelStatus)">
+      <td nzLeft [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)">
         <img
           [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
           alt="logo"
@@ -159,17 +159,17 @@
       </td>
       <td
         nzLeft
-        [class]="getRowBackgroundColor(item.info?.travelStatus)"
+        [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
       >{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
         [nzTooltipTitle]="item.monitoringRequest?.id"
-        [class]="getRowBackgroundColor(item.info?.travelStatus)"
+        [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
       >{{ item.monitoringRequest?.id || '' | id}}</td>
       <td
         nzLeft
-        [class]="getRowBackgroundColor(item.info?.travelStatus)"
+        [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
       >{{ item.vehiclePlate || '-' }}</td>
       <td>
         <span
@@ -196,7 +196,7 @@
           nz-icon
           nzType="info-circle"
           nzTheme="fill"
-          [style]="'font-size: 20px; color: ' + (item.info?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
+          [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
       <td>
@@ -219,7 +219,7 @@
         <nz-progress
           nzStrokeWidth="2"
           nzSize="small"
-          [nzPercent]="item.info?.travelProgress"
+          [nzPercent]="item.positionInfo?.travelProgress"
           [nzFormat]="formatPercent"
         ></nz-progress>
       </td>
@@ -240,29 +240,29 @@
       <td
         nzEllipsis
         nz-tooltip
-        [nzTooltipTitle]="getStatusTranslation(item.info?.travelStatus)"
+        [nzTooltipTitle]="getStatusTranslation(item.positionInfo?.travelStatus)"
         *ngIf="user.isGertranStaff"
         data-testid="td-gertran-only"
       >
-        {{getStatusTranslation(item.info?.travelStatus)}}
+        {{getStatusTranslation(item.positionInfo?.travelStatus)}}
       </td>
       <td *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">{{ item.info?.observations || '-' }}</td>
-      <td>{{ item.info?.driverName || '-' }}</td>
-      <td>{{ item.info?.wagonsPlates || '-' }}</td>
+          data-testid="td-gertran-only">{{ item.positionInfo?.observations || '-' }}</td>
+      <td>{{ item.positionInfo?.driverName || '-' }}</td>
+      <td>{{ item.positionInfo?.wagonsPlates || '-' }}</td>
       <td *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">{{ getCommunicationChannel(item.info?.communicationChannel) }}</td>
+          data-testid="td-gertran-only">{{ getCommunicationChannel(item.positionInfo?.communicationChannel) }}</td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <nz-badge *ngIf="item.info?.hasMacro" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.info?.hasMacro" nzStatus="error"></nz-badge>
+        <nz-badge *ngIf="item.positionInfo?.hasMacro" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.positionInfo?.hasMacro" nzStatus="error"></nz-badge>
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <nz-badge *ngIf="item.info?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.info?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
+        <nz-badge *ngIf="item.positionInfo?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.positionInfo?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <nz-badge *ngIf="item.info?.hasBaits" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.info?.hasBaits" nzStatus="error"></nz-badge>
+        <nz-badge *ngIf="item.positionInfo?.hasBaits" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.positionInfo?.hasBaits" nzStatus="error"></nz-badge>
       </td>
       <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
