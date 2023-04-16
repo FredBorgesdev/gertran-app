@@ -80,6 +80,17 @@
         </ul>
       </nz-dropdown-menu>
 
+      <button
+        (click)="openUpdateObservationModal(item)"
+        nz-button
+        nzType="default"
+        nzSize="small"
+        nzShape="round"
+        class="m-r-10"
+      >
+        Observações
+      </button>
+
       <a
         (click)="markAsSolved(item)"
         nz-button
@@ -104,6 +115,6 @@
   (nzOnOk)="resolveAlert()"
 >
   <ng-container *nzModalContent>
-    <input placeholder="Considerações" nz-input [(ngModel)]="urgentMessage" />
+    <input placeholder="Considerações" nz-input [(ngModel)]="urgentMessage"/>
   </ng-container>
 </nz-modal>

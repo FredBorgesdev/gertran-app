@@ -9,7 +9,10 @@ import {TrucksService} from '../../trucks/trucks.service';
   styleUrls: ['./update-observations-modal.component.css']
 })
 export class UpdateObservationsModalComponent implements OnInit {
-  @Input() item: Position;
+  @Input() item?: Position;
+
+  @Input() truckId?: string;
+  @Input() currentObservation?: string;
 
   observation: string;
 
@@ -20,14 +23,17 @@ export class UpdateObservationsModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.observation = this.item.positionInfo.observations;
+    this.observation = this.item?.positionInfo.observations ?? this.currentObservation;
   }
 
   save(): void {
-    this.service.update(this.item.truck.id, {
+    this.service.update(this.item?.truck.id || this.truckId, {
       description: this.observation,
     } as any).subscribe(() => {
-      this.item.positionInfo.observations = this.observation;
+      if (this.item) {
+        this.item.positionInfo.observations = this.observation;
+      }
+
       this.message.success('Observações atualizadas com sucesso');
     }, () => {
       this.message.error('Erro ao atualizar observações');

@@ -7,6 +7,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
 import {Position} from '../positions.service';
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
+import {UpdateObservationsModalComponent} from "../update-observations-modal/update-observations-modal.component";
 import {MonitoringRequestsService} from "../../monitoring-requests/monitoring-requests.service";
 
 @Component({
@@ -43,7 +44,8 @@ export class MonitoringAlertModalComponent implements OnInit {
     private alertsService: AlertsService,
     private message: NzMessageService,
     private monitoringRequestService: MonitoringRequestsService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadAlerts();
@@ -51,7 +53,7 @@ export class MonitoringAlertModalComponent implements OnInit {
 
   loadAlerts(url?: string): void {
     this.isLoading = true;
-    this.alertsService.getAlerts({ url }, {
+    this.alertsService.getAlerts({url}, {
       alertType: AlertTypes.terminal,
       severity: this.severity,
       terminal: this.terminal,
@@ -75,7 +77,8 @@ export class MonitoringAlertModalComponent implements OnInit {
       return;
     }
 
-    this.alertsService.markAsRead(ids).subscribe(() => {});
+    this.alertsService.markAsRead(ids).subscribe(() => {
+    });
   }
 
   markAsSolved(item: Alert): void {
@@ -178,6 +181,20 @@ export class MonitoringAlertModalComponent implements OnInit {
           this.message.error('Erro ao atualizar status');
         });
       }
+    });
+  }
+
+  openUpdateObservationModal(item: Alert): void {
+    this.modal.create({
+      nzTitle: item.message,
+      nzContent: UpdateObservationsModalComponent,
+      nzOnOk: (componentInstance) => componentInstance.save(),
+      nzComponentParams: {
+        truckId: item.position.monitoringRequest.truck.id,
+        observation: item.position.positionInfo.observation
+      },
+      nzOkText: 'Salvar',
+      nzCancelText: 'Cancelar',
     });
   }
 }
