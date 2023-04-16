@@ -60,6 +60,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   }
 
   updateField(field: string, value: any): void {
+    this.resource.customer = this.resource.customer.map(({ id }) => id) as any;
     this.resource[field] = value;
     this.service.update(this.resource.id, this.resource).subscribe(() => {
       this.message.success('Campo salvo com sucesso!');
