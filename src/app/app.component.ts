@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor() {
-    if (location.host === 'web3.gertran.com.br') {
-      location.href = 'http://web.gertran.com.br';
-    }
+    // if (location.host === 'web3.gertran.com.br') {
+    //   location.href = 'http://web.gertran.com.br';
+    // }
   }
 }
