@@ -157,7 +157,7 @@
           <nz-form-label></nz-form-label>
           <nz-radio-group formControlName="status" [nzDisabled]="readOnly">
             <label nz-radio nzValue="approved">Aprovado</label>
-            <label nz-radio nzValue="reproved">Reprovado</label>
+            <label nz-radio nzValue="reproved">Não autorizado</label>
           </nz-radio-group>
         </nz-form-item>
 
@@ -295,7 +295,7 @@
           <nz-form-label></nz-form-label>
           <nz-radio-group formControlName="approved" [nzDisabled]="readOnly">
             <label nz-radio [nzValue]="true">Aprovado</label>
-            <label nz-radio [nzValue]="false">Reprovado</label>
+            <label nz-radio [nzValue]="false">Não autorizado</label>
           </nz-radio-group>
         </nz-form-item>
 
