@@ -19,6 +19,7 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
   truckColumns = [
     { title: 'ID' },
     { title: 'Modelo' },
+    { title: 'Rastreador' },
     { title: 'Clientes' },
     { title: 'Tipo de modelo' },
     { title: 'Placa' },
@@ -58,5 +59,9 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
 
   getCustomerNames(truck: Truck): string {
     return truck.vehicle.customers.map(c => c.tradingName).join(', ');
+  }
+
+  getTracker(truck: Truck): string {
+    return truck.vehicle.trackers.map(t => `${t.trackerModel.trackerTechnology.name} (${t.trackerId})`).join(', ');
   }
 }

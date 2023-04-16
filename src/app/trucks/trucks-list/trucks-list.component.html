@@ -55,7 +55,6 @@
       <tr>
         <th
           *ngFor="let column of truckColumns"
-          [nzSortFn]="column.compare"
           nzWidth="150px"
         >{{ column.title }}</th>
       </tr>
@@ -67,6 +66,9 @@
           <div class="d-flex align-items-center">
             <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel?.name}}</h6>
           </div>
+        </td>
+        <td>
+          {{getTracker(item)}}
         </td>
         <td>{{getCustomerNames(item)}}</td>
         <td>{{item.vehicle.vehicleModelType?.name}}</td>
