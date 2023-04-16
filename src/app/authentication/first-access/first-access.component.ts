@@ -29,11 +29,6 @@ export class FirstAccessComponent implements OnInit {
       this.validateForm.controls[control].updateValueAndValidity();
     }
 
-    const passwordStrength = zxcvbn(this.validateForm.value.password);
-    if (passwordStrength.score < 3) {
-      this.message.error('Senha fraca. Tente outra.');
-    }
-
     if (!this.validateForm.valid) {
       return;
     }
