@@ -55,6 +55,31 @@
         Enviar mensagem
       </button>
 
+      <button
+        nz-button
+        nz-dropdown
+        nzType="default"
+        nzSize="small"
+        nzShape="round"
+        class="m-r-10"
+        [nzDropdownMenu]="statusMenu"
+      >
+        Mover status
+        <span nz-icon nzType="down"></span>
+      </button>
+
+      <nz-dropdown-menu #statusMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li
+            *ngFor="let status of travelStatus"
+            nz-menu-item
+            (click)="changeStatus(item, status.value)"
+          >
+            {{ status.title }}
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+
       <a
         (click)="markAsSolved(item)"
         nz-button

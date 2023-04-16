@@ -7,6 +7,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
 import {Position} from '../positions.service';
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
+import {MonitoringRequestsService} from "../../monitoring-requests/monitoring-requests.service";
 
 @Component({
   selector: 'app-monitoring-alert-modal',
@@ -25,10 +26,23 @@ export class MonitoringAlertModalComponent implements OnInit {
 
   alerts: GetAllResponse<Alert>;
 
+  travelStatus = [
+    {title: 'Parado', value: 'stopped'},
+    {title: 'Em viagem', value: 'in_progress'},
+    {title: 'Ag. Início', value: 'waiting_for_start'},
+    {title: 'Cliente', value: 'vehicle_in_customer'},
+    {title: 'Pernoite', value: 'driver_in_overnight'},
+    {title: 'Nenhum', value: 'none'},
+    {title: 'Gerenciamento logistico', value: 'logistic_management'},
+    {title: 'Prioridade', value: 'priority'},
+    {title: 'Contigência', value: 'contingency'},
+  ];
+
   constructor(
     private modal: NzModalService,
     private alertsService: AlertsService,
     private message: NzMessageService,
+    private monitoringRequestService: MonitoringRequestsService,
   ) { }
 
   ngOnInit(): void {
@@ -149,6 +163,21 @@ export class MonitoringAlertModalComponent implements OnInit {
       nzOkText: 'Enviar',
       nzCancelText: 'Fechar',
       nzWidth: '70%',
+    });
+  }
+
+  changeStatus(alert: Alert, travelStatus: string): void {
+    this.modal.confirm({
+      nzTitle: 'Deseja alterar o status da viagem?',
+      nzOnOk: () => {
+        this.monitoringRequestService.update(alert.position.monitoringRequest.id, {
+          travelStatus,
+        } as any).subscribe(() => {
+          this.message.success('Status alterado com sucesso');
+        }, () => {
+          this.message.error('Erro ao atualizar status');
+        });
+      }
     });
   }
 }

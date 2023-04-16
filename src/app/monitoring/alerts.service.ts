@@ -24,7 +24,11 @@ export type Alert = {
   id: string;
   message: string;
   monitoringRequest: number | null;
-  position: number | null;
+  position: {
+    monitoringRequest: {
+      id: string;
+    }
+  };
   readAt: Date | null;
   severity: Severity;
   solvedAt: Date | null;
