@@ -171,7 +171,7 @@ export class PointsTabComponent implements OnInit {
       longitude,
       state,
       city,
-      zipCode,
+      zipCode: zipCode?.longName ?? undefined,
     });
 
     this._routeCoordinates = await this.getRouteCoordinates();
