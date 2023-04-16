@@ -54,7 +54,6 @@
                 <nz-select
                   nzPlaceHolder="Selecione o tipo"
                   formControlName="pointType"
-                  [nzDisabled]="i === 0 || i === getPointsControls().length - 1"
                 >
                   <nz-option
                     *ngFor="let pointType of pointTypes"
