@@ -19,6 +19,10 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   // };
 
   @Input() monitoringRequest: any;
+  @Input() driver: {
+    name: string;
+    phone: string;
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -77,8 +81,8 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
       incidentDate: [null],
       incidentLocation: [null],
       driverContactedAt: [null],
-      driverName: [this.monitoringRequest.driverName],
-      driverPhone: [this.monitoringRequest.driverPhone],
+      driverName: [this.driver?.name],
+      driverPhone: [this.driver?.phone],
       shipperName: [null],
       shipperContactedAt: [null],
       wasImmediateActionApproved: [null],

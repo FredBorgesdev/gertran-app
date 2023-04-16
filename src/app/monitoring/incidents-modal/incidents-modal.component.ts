@@ -72,7 +72,11 @@ export class IncidentsModalComponent implements OnInit {
       nzTitle: 'Criar evento',
       nzContent: CreateIncidentModalComponent,
       nzComponentParams: {
-        monitoringRequest: this.position.monitoringRequest
+        monitoringRequest: this.position.monitoringRequest,
+        driver: {
+          name: this.position.positionInfo.driverName,
+          phone: this.position.positionInfo.driverPhone,
+        }
       },
       nzWidth: '80%',
       nzOkText: 'Salvar',
