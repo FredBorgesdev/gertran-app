@@ -172,9 +172,9 @@ export class PointsTabComponent implements OnInit {
     const latitude = address.geometry?.location.lat().toFixed(6);
     const longitude = address.geometry?.location.lng().toFixed(6);
     const formattedAddress = address.formatted_address;
-    const state = address.address_components.find((component) => component.types.includes('administrative_area_level_1'))?.short_name;
-    const city = address.address_components.find((component) => component.types.includes('administrative_area_level_2'))?.short_name;
-    const zipCode = address.address_components.find((component) => component.types.includes('postal_code'));
+    const state = address.address_components?.find((component) => component.types.includes('administrative_area_level_1'))?.short_name;
+    const city = address.address_components?.find((component) => component.types.includes('administrative_area_level_2'))?.short_name;
+    const zipCode = address.address_components?.find((component) => component.types.includes('postal_code'));
 
     formGroup.patchValue({
       address: formattedAddress,
