@@ -177,7 +177,7 @@
             </nz-select>
           </nz-form-control>
         </div>
-        <div nz-col [nzSpan]="surveyConductedRowSpan">
+        <div nz-col [nzSpan]="surveyConductedRowSpan" *ngIf="shouldShowSurveyConductorInput">
           <nz-form-label nzFor="surveyConductedByOthers">Prestador de serviço</nz-form-label>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
             <input

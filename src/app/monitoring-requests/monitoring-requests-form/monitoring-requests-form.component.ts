@@ -246,6 +246,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     return this.validateForm.controls.surveyConductedBy.value === 'others' ? 8 : 12;
   }
 
+  get shouldShowSurveyConductorInput(): boolean {
+    return this.validateForm.controls.surveyConductedBy.value === 'others';
+  }
+
   get user(): User {
     return this.authService.user;
   }
