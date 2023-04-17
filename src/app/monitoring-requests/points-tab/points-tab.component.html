@@ -81,19 +81,20 @@
       <div nz-row nzGutter="12">
         <div nz-col nzSpan="12">
           <nz-select
-            nzShowSearch
             nzAllowClear
             nzPlaceHolder="Pontos"
             nzServerSearch
             style="width: 100%"
             formControlName="chosenPoint"
+            (nzScrollToBottom)="selectablePointService.loadMorePoints()"
+            [nzDropdownRender]="selectLoading"
           >
             <nz-option
               nzLabel="Ponto em branco"
               nzValue="blank"
             ></nz-option>
             <nz-option
-              *ngFor="let point of stops"
+              *ngFor="let point of selectablePointService.points"
               [nzLabel]="point.name"
               [nzValue]="point"
             ></nz-option>
@@ -120,3 +121,7 @@
     </nz-form-item>
   </form>
 </nz-spin>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectablePointService.isLoadingMoreData"></nz-spin>
+</ng-template>

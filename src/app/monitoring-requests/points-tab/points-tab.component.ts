@@ -18,6 +18,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {forkJoin} from 'rxjs';
 import {DirectionsService} from '../../shared/services/directions.service';
 import {MonitoringRequests} from '../monitoring-requests.service';
+import {SelectablePointService} from "../../stops/selectable-point.service";
 
 interface LatLng {
   lat: number;
@@ -50,9 +51,12 @@ export class PointsTabComponent implements OnInit {
     private service: TravelStepService,
     private message: NzMessageService,
     private directionsService: DirectionsService,
+    public selectablePointService: SelectablePointService,
   ) { }
 
   ngOnInit(): void {
+    this.selectablePointService.init();
+
     this.validateForm = this.formBuilder.group({
       points: this.formBuilder.array([]),
       chosenPoint: [BLANK_ROUTE.id],
@@ -118,14 +122,14 @@ export class PointsTabComponent implements OnInit {
       new FormGroup({
         id: new FormControl(null),
         pointId: new FormControl(null),
-        address: new FormControl(address, [Validators.required]),
-        latitude: new FormControl(null, [Validators.required]),
-        longitude: new FormControl(null, [Validators.required]),
+        address: new FormControl(chosenPoint?.address, [Validators.required]),
+        latitude: new FormControl(chosenPoint?.latitude, [Validators.required]),
+        longitude: new FormControl(chosenPoint?.longitude, [Validators.required]),
         date: new FormControl(new Date(), [Validators.required]),
-        pointType: new FormControl(null, [Validators.required]),
-        state: new FormControl(null, [Validators.required]),
-        city: new FormControl(null, [Validators.required]),
-        zipCode: new FormControl(null, []),
+        pointType: new FormControl(chosenPoint?.pointType, [Validators.required]),
+        state: new FormControl(chosenPoint?.state, [Validators.required]),
+        city: new FormControl(chosenPoint?.city, [Validators.required]),
+        zipCode: new FormControl(chosenPoint?.zipCode, []),
       }),
     );
 
@@ -168,8 +172,8 @@ export class PointsTabComponent implements OnInit {
     const latitude = address.geometry?.location.lat().toFixed(6);
     const longitude = address.geometry?.location.lng().toFixed(6);
     const formattedAddress = address.formatted_address;
-    const state = address.address_components.find((component) => component.types.includes('administrative_area_level_1')).short_name;
-    const city = address.address_components.find((component) => component.types.includes('administrative_area_level_2')).short_name;
+    const state = address.address_components.find((component) => component.types.includes('administrative_area_level_1'))?.short_name;
+    const city = address.address_components.find((component) => component.types.includes('administrative_area_level_2'))?.short_name;
     const zipCode = address.address_components.find((component) => component.types.includes('postal_code'));
 
     formGroup.patchValue({
@@ -273,6 +277,8 @@ export class PointsTabComponent implements OnInit {
 
     const points = this.validateForm.get('points') as FormArray;
     if (!points.valid) {
+      console.log(points)
+      this.isLoading = false;
       this.message.error('Preencha todos os campos');
       return;
     }
