@@ -37,6 +37,10 @@ export class MapModalComponent implements OnInit {
     }
 
     this.directionsService.getDirections(this.points).then((e) => {
+      if (!e?.route?.[0]) {
+        return;
+      }
+
       this.directionsGeoJson = polyline.toGeoJSON(e.route[0].geometry);
       this.bounds = new mapboxgl.LngLatBounds(
         this.directionsGeoJson.coordinates[0],

@@ -53,6 +53,11 @@ export class DirectionsService {
 
   async getCoordinates(points: any[]): Promise<number[][]> {
     const result = await this.getDirections(points);
+
+    if (!result?.route?.[0]) {
+      return [];
+    }
+
     const routes = polyline.toGeoJSON(result.route[0].geometry);
 
     return routes.coordinates;
