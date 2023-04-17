@@ -278,7 +278,7 @@ export class PointsTabComponent implements OnInit {
     }
 
     const routeCoordinates = await this.getRouteCoordinates();
-    await this.updateRouteCoordinates.emit(routeCoordinates);
+    this.updateRouteCoordinates.emit(routeCoordinates);
     this._routeCoordinates = routeCoordinates;
 
     const operations = pointsWithOrder.map((point) => {
@@ -288,6 +288,11 @@ export class PointsTabComponent implements OnInit {
 
       return this.service.save(point, this.monitoringRequest.id);
     });
+
+    if (operations.length === 0) {
+      this.handleSuccess();
+      return;
+    }
 
     forkJoin(operations).subscribe(
       () => this.handleSuccess(),
