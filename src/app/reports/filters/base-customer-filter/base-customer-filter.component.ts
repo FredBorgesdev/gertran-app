@@ -1,16 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
-import {Customer, CustomersService} from '../../../customers/customers.service';
+import {Customer} from '../../../customers/customers.service';
 import {BasePeriodFilter} from '../../reports.service';
 import {format, subMonths} from 'date-fns';
-import {Subject} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
+import {AuthenticationService} from "../../../authentication/authentication.service";
 
 export enum ReportFormat {
   SYNTHETIC = 'synthetic',
@@ -43,6 +42,7 @@ export class BaseCustomerFilterComponent implements OnInit {
     public selectableCustomerService: SelectableCustomerServiceService,
     private message: NzMessageService,
     private xlsxExporterService: XlsxExporterService,
+    private authService: AuthenticationService,
   ) {
   }
 
@@ -51,7 +51,7 @@ export class BaseCustomerFilterComponent implements OnInit {
     const lastMonth = subMonths(today, 1);
 
     this.validateForm = this.formBuilder.group({
-      customer: [null, [Validators.required]],
+      customer: [this.authService.customerId, [Validators.required]],
       from: [lastMonth, [Validators.required]],
       to: [today, [Validators.required]],
       reportFormat: [ReportFormat.ANALYTIC, [Validators.required]],
@@ -107,5 +107,9 @@ export class BaseCustomerFilterComponent implements OnInit {
     });
 
     doc.save('table.pdf');
+  }
+
+  get isGertranStaff(): boolean {
+    return this.authService.user.isGertranStaff;
   }
 }

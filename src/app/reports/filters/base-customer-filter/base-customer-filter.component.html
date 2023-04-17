@@ -1,6 +1,6 @@
 <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
   <div nz-row nzGutter="16">
-    <div nz-col nzSpan="6">
+    <div nz-col nzSpan="6" *ngIf="isGertranStaff">
       <nz-form-item class="m-b-0">
         <nz-form-label>Cliente</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -23,7 +23,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="6">
+    <div nz-col [nzSpan]="isGertranStaff ? 6 : 8">
       <nz-form-item class="m-b-0">
         <nz-form-label>Data inicial</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -36,7 +36,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="6">
+      <div nz-col [nzSpan]="isGertranStaff ? 6 : 8">
       <nz-form-item class="m-b-0">
         <nz-form-label>Data final</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -49,7 +49,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="6">
+    <div nz-col [nzSpan]="isGertranStaff ? 6 : 8">
       <nz-form-item class="m-b-0">
         <nz-form-label>Formato de relatório</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
