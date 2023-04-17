@@ -8,6 +8,7 @@ import { FullLayout_ROUTES } from './shared/routes/full-layout.routes';
 import { CommonLayout_ROUTES } from './shared/routes/common-layout.routes';
 import { AuthGuard } from './authentication/auth.guard';
 import {PermissionGuard} from './authentication/permission.guard';
+import {Error2Component} from "./authentication/error-2/error-2.component";
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,10 @@ const appRoutes: Routes = [
     path: '',
     component: FullLayoutComponent,
     children: FullLayout_ROUTES
+  },
+  {
+    path: 'error/500',
+    component: Error2Component,
   }
 ];
 

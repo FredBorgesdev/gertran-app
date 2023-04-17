@@ -99,15 +99,21 @@ export class AuthenticationService {
       return null;
     }
 
-    const decoded: any = decode(jwt);
-    const user = await this.usersService.get(decoded.user_id).toPromise();
+    try {
+      const decoded: any = decode(jwt);
+      const user = await this.usersService.get(decoded.user_id).toPromise();
 
-    this.user = new User(user);
+      this.user = new User(user);
 
-    if (user.customer.length > 0 && !this.customerId) {
-      const selectedCustomer = user.customer[0].id;
-      this.setCustomer(selectedCustomer);
-      window.location.reload();
+      if (user.customer.length > 0 && !this.customerId) {
+        const selectedCustomer = user.customer[0].id;
+        this.setCustomer(selectedCustomer);
+        window.location.reload();
+      }
+    } catch (e) {
+      if (window.location.pathname !== '/error/500') {
+        window.location.href = '/error/500';
+      }
     }
   }
 
