@@ -108,7 +108,12 @@ export class AuthenticationService {
       if (user.customer.length > 0 && !this.customerId) {
         const selectedCustomer = user.customer[0].id;
         this.setCustomer(selectedCustomer);
-        window.location.reload();
+
+        if (window.location.pathname === '/error/500') {
+          window.location.href = '/';
+        } else {
+          window.location.reload();
+        }
       }
     } catch (e) {
       if (window.location.pathname !== '/error/500') {
