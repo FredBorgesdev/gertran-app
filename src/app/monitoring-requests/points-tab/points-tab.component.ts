@@ -304,6 +304,11 @@ export class PointsTabComponent implements OnInit {
     const routeCoordinates = await this.directionsService.getDirections(
       this.getPointsControls().map((point) => point.value),
     );
+
+    if (!routeCoordinates.route[0]) {
+      return [];
+    }
+
     const directionsGeoJson = polyline.toGeoJSON(routeCoordinates.route[0]?.geometry);
 
     return directionsGeoJson.coordinates;
