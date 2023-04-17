@@ -150,7 +150,14 @@ export class PointsTabComponent implements OnInit {
 
         this.service.delete(point.id, this.monitoringRequest.id).subscribe(async () => {
           (this.validateForm.get('points') as FormArray).removeAt(index);
-          this._routeCoordinates = await this.getRouteCoordinates();
+          this.getRouteCoordinates()
+            .then((routeCoordinates) => {
+              this._routeCoordinates = routeCoordinates;
+            })
+            .catch((e) => {
+              console.log('Error calculating route', e);
+            });
+
           this.isLoading = false;
         });
       }
