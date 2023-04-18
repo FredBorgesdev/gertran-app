@@ -229,7 +229,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   }
 
   private handleSaveError(error: HttpErrorResponse): void {
-    if (error.error.extra.fields === 'No fields were updated.') {
+    if (error.error.extra?.fields === 'No fields were updated.') {
       return super.handleSuccess();
     }
 
