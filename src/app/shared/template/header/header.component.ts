@@ -100,7 +100,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get showSelect(): boolean {
-    return this.user.customer.length > 1 || this.user.isGertranStaff;
+    return this.user?.customer.length > 1 || this.user.isGertranStaff;
   }
 
   get customers(): Customer[] {
