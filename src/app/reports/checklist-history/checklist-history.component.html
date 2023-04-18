@@ -31,6 +31,7 @@
         <th>Tecnologia</th>
         <th>Solicitante</th>
         <th>Status checklist</th>
+        <th>Justificativa</th>
         <th>Data liberação</th>
         <th>Operador</th>
       </tr>
@@ -46,6 +47,7 @@
         <td>{{ data.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</td>
         <td>{{ data.requestedBy?.name }}</td>
         <td>{{ getStatusChecklistLocalized(data.status) }}</td>
+        <td>{{ data.justification }}</td>
         <td>{{ data.reviewedAt | date: 'dd/MM/yyyy' }}</td>
         <td>{{ data.reviewedBy?.name }}</td>
       </tr>
