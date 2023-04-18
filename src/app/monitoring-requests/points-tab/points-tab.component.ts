@@ -7,7 +7,7 @@ import polyline from '@mapbox/polyline';
 
 import {MapModalComponent} from '../map-modal/map-modal.component';
 import {environment} from '../../../environments/environment';
-import {addSeconds, differenceInDays, format, isBefore, setHours} from 'date-fns';
+import {addSeconds, differenceInDays, format, setHours} from 'date-fns';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -339,7 +339,10 @@ export class PointsTabComponent implements OnInit {
     return (current: Date) => {
       const previousPoint = this.getPointsControls()[pointIndex - 1];
 
-      if (previousPoint && isBefore(current, previousPoint.value.date)) {
+      if (
+        previousPoint &&
+        differenceInDays(current, previousPoint.value.date) < 0
+      ) {
         return true;
       }
 
