@@ -120,6 +120,36 @@
   </nz-descriptions-item>
 </nz-descriptions>
 
+<div>
+  <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-15">
+    Pontos
+  </div>
+
+  <nz-table
+    #travelStepsTable
+    nzSize="small"
+    [nzData]="monitoringRequest.data.travelSteps"
+    [nzShowPagination]="false"
+  >
+    <thead>
+    <tr>
+      <th class="text-left">Endereço</th>
+      <th class="text-right">Data/hora</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let travelStep of travelStepsTable.data">
+      <td class="text-left">{{travelStep.address}}</td>
+      <td class="text-right">
+        {{travelStep.date | date: 'dd/MM/yyyy'}}
+        &nbsp;
+        {{travelStep.time}}
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+
 <form nz-form nzLayout="vertical">
   <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15">
     Checklist
