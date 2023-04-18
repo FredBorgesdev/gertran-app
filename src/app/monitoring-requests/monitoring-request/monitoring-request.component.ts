@@ -63,9 +63,14 @@ export class MonitoringRequestComponent implements OnInit {
           },
           (error) => {
             let message = '';
-            Object.values(error?.error?.extra?.fields)?.forEach(field => {
+            Object.values(error?.error?.extra?.fields ?? {})?.forEach(field => {
               message += `<p>${field}</p>`;
             });
+
+            if (message === '') {
+              message = 'Erro ao enviar a solicitação. Tente novamente.';
+            }
+
             this.isLoading = false;
             this.message.error(message, { nzDuration: 7000 });
           });
