@@ -43,7 +43,7 @@
           {{ data.customer.tradingName }}
         </td>
         <td>{{ data.vehicle.plate }}</td>
-        <td>TODO</td>
+        <td>{{ data.workingSituation }}</td>
         <td>{{ data.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</td>
         <td>{{ data.requestedBy?.name }}</td>
         <td>{{ getStatusChecklistLocalized(data.status) }}</td>
