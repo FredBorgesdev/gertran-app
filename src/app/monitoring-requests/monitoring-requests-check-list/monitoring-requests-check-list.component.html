@@ -137,7 +137,7 @@
     <nz-table
       #travelStepsTable
       nzSize="small"
-      [nzData]="monitoringRequest.data.travelSteps"
+      [nzData]="monitoringRequest?.data.travelSteps ?? []"
       [nzShowPagination]="false"
     >
       <thead>
