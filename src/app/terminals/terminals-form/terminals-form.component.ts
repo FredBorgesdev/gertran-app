@@ -47,6 +47,7 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
     super.ngOnInit();
 
     this.setVehicles();
+
     this.terminalGroupsService.getAll({ limit: 50 }).subscribe((response) => {
       this.terminalGroups = response.results;
     });
@@ -120,18 +121,19 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
 
   setVehicles(url?: string): void {
     this.trucksService.getAll({ limit: 15, url }, { plate: this.searchPlateValue }).subscribe((response) => {
+      this.resources = { ...response };
+      // this.resources.results = response.results.map(item => this.toTransferItem(item));
+
       this.vehicleTransferItems = response.results
         .map(this.toTransferItem)
         .concat(this.selectedVehicles)
+        .reduce(this.removeDuplicates, [])
         .map((item) => {
           const hasVehicle = this.selectedVehicles.some((vehicle) => vehicle.id === item.key);
-          if (!hasVehicle) {
-            return item;
-          }
 
           return {
             ...item,
-            direction: 'right',
+            direction: hasVehicle ? 'right' : 'left',
           };
         });
     });
@@ -142,6 +144,16 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
       key: item.vehicle.id,
       title: item.vehicle.plate,
     };
+  }
+
+  removeDuplicates(accumulator, current): TransferItem[] {
+    const hasItem = accumulator.some((item) => item.key === current.key);
+
+    if (hasItem) {
+      return accumulator;
+    }
+
+    return [...accumulator, current];
   }
 
   list(): void {
