@@ -114,6 +114,8 @@ export class AuthenticationService {
         } else {
           window.location.reload();
         }
+      } else if (window.location.pathname === '/error/500') {
+        window.location.href = '/';
       }
     } catch (e) {
       if (window.location.pathname !== '/error/500') {

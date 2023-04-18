@@ -103,8 +103,6 @@ export class TerminalsFormComponent extends BaseCrudFormComponent<Terminals> imp
   saveVehicles(): void {
     this.isLoading = true;
 
-    console.log(this.selectedVehicles)
-
     this.service.update(
       this.resource.id,
       {

@@ -60,7 +60,7 @@
       <nz-tab nzTitle="Veiculos">
         <nz-transfer
           [nzDataSource]="vehicleTransferItems"
-          [nzTitles]="['Veiculos', 'Veiculos do terminal']"
+          [nzTitles]="['Veiculos disponiveis', 'Veiculos do terminal']"
           [nzShowSearch]="true"
           [nzSearchPlaceholder]="'Pesquisar veiculo'"
           [nzNotFoundContent]="'Nenhum veiculo encontrado'"
@@ -98,7 +98,11 @@
                 <th nzCustomFilter>
                   Placa
 
-                  <nz-filter-trigger [(nzVisible)]="plateFilterVisible" [nzActive]="searchPlateValue.length > 0" [nzDropdownMenu]="menu">
+                  <nz-filter-trigger
+                    [(nzVisible)]="plateFilterVisible"
+                    [nzActive]="searchPlateValue.length > 0"
+                    [nzDropdownMenu]="menu"
+                  >
                     <span nz-icon nzType="search" style="color: #5E99F6"></span>
                   </nz-filter-trigger>
                 </th>
