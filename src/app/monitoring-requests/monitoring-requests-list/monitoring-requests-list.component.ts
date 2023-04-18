@@ -103,7 +103,6 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.IN_PROGRESS,
-        ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
       this.inProgressResponse = result;
