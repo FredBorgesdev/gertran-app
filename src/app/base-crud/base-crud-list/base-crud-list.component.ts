@@ -16,8 +16,8 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   isLoading = false;
   resources: GetAllResponse<T> = null;
 
-  private field = 'name';
-  private searchSubject = new Subject<string>();
+  protected field = 'name';
+  protected searchSubject = new Subject<string>();
 
   constructor(
     @Inject(String) private resource: string,
@@ -128,13 +128,18 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   private setupSearch(): void {
     this.searchSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.isLoading = true;
-      this.service.getAll({ limit: 50 }, { [this.field]: value }).subscribe((result) => {
-        this.resources = result;
-        this.isLoading = false;
-      });
+
+      this.performSearch(value);
     }, () => {
       this.isLoading = false;
       this.message.error('Erro ao carregar os registros. Tente novamente.');
+    });
+  }
+
+  protected performSearch(value: string): void {
+    this.service.getAll({ limit: 50 }, { [this.field]: value }).subscribe((result) => {
+      this.resources = result;
+      this.isLoading = false;
     });
   }
 }

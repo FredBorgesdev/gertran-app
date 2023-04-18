@@ -30,13 +30,18 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   underReviewResponse: GetAllResponse<MonitoringRequests>;
   reprovedResponse: GetAllResponse<MonitoringRequests>;
 
+  field = 'plate';
+  search = '';
+
   monitoringRequestFilters: {
     fromDate: string;
     toDate: string;
     customer?: string;
+    plate?: string;
   } = {
     fromDate: this.twoDaysBefore,
     toDate: this.now,
+    plate: this.search,
   };
 
   refreshAfterClose = new EventEmitter<ModalDestroyResult>();
@@ -103,6 +108,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.pagination(url),
       {
         status: Status.IN_PROGRESS,
+        plate: this.search,
       }
     ).subscribe((result) => {
       this.inProgressResponse = result;
@@ -300,5 +306,17 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
   get user(): User {
     return this.authService.user;
+  }
+
+  filterByPlate(): void {
+    this.monitoringRequestFilters = {
+      ...this.monitoringRequestFilters,
+      plate: this.search,
+    };
+    this.searchSubject.next(this.search);
+  }
+
+  protected performSearch(value: string): void {
+    this.loadAllResources(true);
   }
 }

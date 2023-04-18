@@ -122,6 +122,7 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     fromDate?: string;
     toDate?: string;
     customer?: string;
+    plate?: string;
   }): Observable<GetAllResponse<MonitoringRequests>> {
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
@@ -144,6 +145,10 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
 
     if (filters?.status) {
       params.status = filters.status;
+    }
+
+    if (filters?.plate) {
+      params.plate = filters.plate;
     }
 
     return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', {params});
