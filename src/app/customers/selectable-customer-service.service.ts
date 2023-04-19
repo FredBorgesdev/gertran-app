@@ -33,6 +33,8 @@ export class SelectableCustomerServiceService {
       this.customersNextUrl = customers.next;
       this.customers = [...this.customers, ...customers.results];
       this.isLoadingMoreData = false;
+    }, () => {
+      this.isLoadingMoreData = false;
     });
   }
 

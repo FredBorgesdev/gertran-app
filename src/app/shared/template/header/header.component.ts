@@ -72,13 +72,21 @@ export class HeaderComponent implements OnInit {
       queryParams: value && {
         customer: value,
       },
-    }).then(() => window.location.reload());
+    }).then(() => {
+      window.location.reload()
+    });
   }
 
   private setCustomers(): void {
     this.user = this.authService.user;
     const customerQueryParam = this.activatedRoute.snapshot.queryParams?.customer;
     const loggedUserHasCustomer = this.user.customer.length > 0;
+
+    if (customerQueryParam) {
+      this.selectedCustomer = customerQueryParam;
+      this.authService.setCustomer(this.selectedCustomer);
+      return;
+    }
 
     if (loggedUserHasCustomer && !this.user.isGertranStaff) {
       this.selectedCustomer = this.user.customer[0].id;
@@ -91,12 +99,6 @@ export class HeaderComponent implements OnInit {
       this.authService.removeCustomer();
       return;
     }
-
-    this.customerService.get(customerQueryParam).subscribe(customer => {
-      this.selectedCustomer = customer.id;
-      this.authService.setCustomer(this.selectedCustomer);
-      this.selectableCustomerService.appendCustomer(customer);
-    });
   }
 
   get showSelect(): boolean {
