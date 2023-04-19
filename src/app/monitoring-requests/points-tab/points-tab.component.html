@@ -17,6 +17,7 @@
           formArrayName="points"
           *ngFor="let point of getPointsControls(); let i = index"
           cdkDrag
+          style="cursor: grab"
         >
           <ng-container [formGroup]="point">
             <div nz-col nzSpan="8">
@@ -119,6 +120,15 @@
         Salvar
       </button>
     </nz-form-item>
+
+    <div>
+      <p>
+        Voce pode clicar e arrastar os pontos para alterar a ordem deles.
+      </p>
+      <p>
+        Sempre coloque os pontos intermediarios entre os pontos de partida e chegada.
+      </p>
+    </div>
   </form>
 </nz-spin>
 
