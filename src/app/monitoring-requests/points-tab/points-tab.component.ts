@@ -116,24 +116,30 @@ export class PointsTabComponent implements OnInit {
 
   addPoint(): FormGroup {
     const chosenPoint = this.validateForm.get('chosenPoint').value;
-    const address = chosenPoint?.address || null;
+    const formGroup = new FormGroup({
+      id: new FormControl(null),
+      pointId: new FormControl(null),
+      address: new FormControl(chosenPoint?.address, [Validators.required]),
+      latitude: new FormControl(
+        Number(chosenPoint?.latitude || 0).toFixed(6),
+        [Validators.required]
+      ),
+      longitude: new FormControl(
+        Number(chosenPoint?.longitude || 0).toFixed(6),
+        [Validators.required]
+      ),
+      date: new FormControl(new Date(), [Validators.required]),
+      pointType: new FormControl(chosenPoint?.pointType, [Validators.required]),
+      state: new FormControl(chosenPoint?.state, [Validators.required]),
+      city: new FormControl(chosenPoint?.city, [Validators.required]),
+      zipCode: new FormControl(chosenPoint?.zipCode, []),
+    });
 
-    (this.validateForm.get('points') as FormArray).push(
-      new FormGroup({
-        id: new FormControl(null),
-        pointId: new FormControl(null),
-        address: new FormControl(chosenPoint?.address, [Validators.required]),
-        latitude: new FormControl(chosenPoint?.latitude, [Validators.required]),
-        longitude: new FormControl(chosenPoint?.longitude, [Validators.required]),
-        date: new FormControl(new Date(), [Validators.required]),
-        pointType: new FormControl(chosenPoint?.pointType, [Validators.required]),
-        state: new FormControl(chosenPoint?.state, [Validators.required]),
-        city: new FormControl(chosenPoint?.city, [Validators.required]),
-        zipCode: new FormControl(chosenPoint?.zipCode, []),
-      }),
-    );
+    (this.validateForm.get('points') as FormArray).push(formGroup);
 
     this.setPointsCorrectTypes().then();
+
+    formGroup.markAsDirty();
 
     return this.getPointsControls()[this.getPointsControls().length - 1];
   }
@@ -277,7 +283,6 @@ export class PointsTabComponent implements OnInit {
 
     const points = this.validateForm.get('points') as FormArray;
     if (!points.valid) {
-      console.log(points)
       this.isLoading = false;
       this.message.error('Preencha todos os campos');
       return;
@@ -353,6 +358,7 @@ export class PointsTabComponent implements OnInit {
   private handleSuccess(): void {
     this.isLoading = false;
     this.message.success('Pontos salvos com sucesso!');
+    this.validateForm.markAsPristine();
   }
 
   private handleError(): void {
