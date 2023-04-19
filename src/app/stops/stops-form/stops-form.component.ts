@@ -7,6 +7,7 @@ import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-fo
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
   selector: 'app-stops-form',
@@ -25,6 +26,7 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
     private router: Router,
     private customersService: CustomersService,
     public selectableCustomerService: SelectableCustomerServiceService,
+    public authService: AuthenticationService,
     service: StopsService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute
@@ -54,7 +56,7 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
       latitude: [null, [Validators.required]],
       longitude: [null, [Validators.required]],
       isMain: [false, [Validators.required]],
-      customer: [null, [Validators.required]],
+      customer: [this.authService.customerId, [Validators.required]],
     });
   }
 

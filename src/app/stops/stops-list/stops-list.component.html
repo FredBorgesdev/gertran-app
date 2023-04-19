@@ -35,7 +35,7 @@
 
       <div
         class="col-lg-4 text-right"
-        *ngIf="authService.user.hasPermission('point.add_point')"
+        *ngIf="authService.user.hasPermission('settings.add_point')"
       >
         <button
           (click)="create()"
@@ -78,7 +78,7 @@
             nzShape="circle"
             nz-tooltip
             nzTooltipTitle="Editar"
-            *ngIf="authService.user.hasPermission('point.change_point')"
+            *ngIf="authService.user.hasPermission('settings.change_point')"
           >
             <i nz-icon nzType="edit" theme="outline"></i>
           </a>
@@ -89,7 +89,7 @@
             nz-tooltip
             nzTooltipTitle="Excluir"
             (click)="delete(item)"
-            *ngIf="authService.user.hasPermission('point.delete_point')"
+            *ngIf="authService.user.hasPermission('settings.delete_point')"
           >
             <i nz-icon nzType="delete" theme="outline"></i>
           </a>
