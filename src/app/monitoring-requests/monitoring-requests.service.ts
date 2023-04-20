@@ -132,11 +132,13 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     }
 
     if (filters?.fromDate) {
-      params.from_date = filters.fromDate;
+      params.from_date = filters.fromDate.split('T')[0];
     }
 
     if (filters?.toDate) {
-      params.to_date = filters.toDate;
+      const date = new Date(filters.toDate);
+      date.setDate(date.getDate() + 1);
+      params.to_date = date.toISOString().split('T')[0];
     }
 
     if (filters?.customer) {

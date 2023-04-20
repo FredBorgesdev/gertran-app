@@ -351,11 +351,15 @@
 
   <form nz-form [formGroup]="validateForm" nzLayout="vertical" *ngIf="showFooter">
     <div nz-row nzGutter="12" nzAlign="middle">
-      <div nz-col nzSpan="4">
+      <div nz-col nzSpan="4" *ngIf="authSevice.user.isGertranStaff">
         <nz-form-label>Terminal</nz-form-label>
         <nz-form-item>
           <nz-select formControlName="terminal">
-            <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
+            <nz-option
+              *ngFor="let terminal of terminals"
+              [nzLabel]="terminal.name"
+              [nzValue]="terminal.id"
+            ></nz-option>
           </nz-select>
         </nz-form-item>
       </div>

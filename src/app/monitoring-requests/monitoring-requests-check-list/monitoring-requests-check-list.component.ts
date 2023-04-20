@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MonitoringRequestsService} from '../monitoring-requests.service';
+import {MonitoringRequestsService, Status} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
@@ -7,6 +7,7 @@ import {UtilsService} from '../../shared/services/utils.service';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import MonitoringRequest from '../monitoring-request';
 import {ChecklistsService} from '../../checklists/checklists.service';
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 export type ModalDestroyResult = {
   updateList: boolean;
@@ -56,6 +57,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private utils: UtilsService,
     private modal: NzModalRef,
     public checklistService: ChecklistsService,
+    public authSevice: AuthenticationService,
   ) {
   }
 
@@ -185,8 +187,18 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   private setPossibleStatus(): void {
+    if (!this.authSevice.user.isGertranStaff) {
+      if (this.monitoringRequest?.data?.status === Status.REPROVED) {
+        this.possibleStatus = this.monitoringRequestService.possibleStatus[
+          this.monitoringRequest?.data?.status
+        ];
+      }
+
+      return;
+    }
+
     this.possibleStatus = this.monitoringRequestService.possibleStatus[
       this.monitoringRequest?.data?.status
-      ] || [];
+    ] || [];
   }
 }
