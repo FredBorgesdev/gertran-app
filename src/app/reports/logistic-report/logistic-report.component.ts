@@ -36,6 +36,7 @@ export class LogisticReportComponent implements OnInit {
   markers = [];
   data: LogisticReport;
   loading = false;
+  isGertranStaff = this.authService.user?.isGertranStaff;
   customers = [];
 
   constructor(
@@ -50,62 +51,67 @@ export class LogisticReportComponent implements OnInit {
 
   loadReport(): void {
     this.loading = true;
-    this.reportService
-      .getLogisticReport({
-        ...this.dateFilters,
-        customer: this.authService.customerId,
-      })
-      .subscribe(
-        (data) => {
-          this.data = data;
-          this.countByStatusDoughnutChart = {
-            labels: Object.values(data.countByStatus).map(({ label }) => label),
-            datasets: [
-              {
-                data: Object.values(data.countByStatus).map(
-                  ({ value }) => value
-                ),
-              },
-            ],
-          };
-          this.countByTravelStatusDoughnutChart = {
-            labels: Object.values(data.countByTravelStatus).map(
-              ({ label }) => label
-            ),
-            datasets: [
-              {
-                data: Object.values(data.countByTravelStatus).map(
-                  ({ value }) => value
-                ),
-              },
-            ],
-          };
-          this.countByLoadTypeDoughnutChart = {
-            labels: Object.values(data.countByLoadType).map(
-              ({ label }) => label
-            ),
-            datasets: [
-              {
-                data: Object.values(data.countByLoadType).map(
-                  ({ value }) => value
-                ),
-              },
-            ],
-          };
-          // this.markers = data.lastPositions.map((position) => ({
-          //   lat: position.latitude,
-          //   lng: position.longitude,
-          // }));
-          // this.temperatureDoughnutChart = this.getTemperatureChartData(
-          //   data.lastPositions
-          // );
-          // this.speedLineChart = this.getSpeedChartData(data.lastPositions);
-          this.loading = false;
-        },
-        () => {
-          this.loading = false;
-        }
-      );
+
+    if (!this.isGertranStaff) {
+      this.reportService
+        .getLogisticReport({
+          ...this.dateFilters,
+          customer: this.authService.customerId,
+        })
+        .subscribe(
+          (data) => {
+            this.data = data;
+            this.countByStatusDoughnutChart = {
+              labels: Object.values(data.countByStatus).map(
+                ({ label }) => label
+              ),
+              datasets: [
+                {
+                  data: Object.values(data.countByStatus).map(
+                    ({ value }) => value
+                  ),
+                },
+              ],
+            };
+            this.countByTravelStatusDoughnutChart = {
+              labels: Object.values(data.countByTravelStatus).map(
+                ({ label }) => label
+              ),
+              datasets: [
+                {
+                  data: Object.values(data.countByTravelStatus).map(
+                    ({ value }) => value
+                  ),
+                },
+              ],
+            };
+            this.countByLoadTypeDoughnutChart = {
+              labels: Object.values(data.countByLoadType).map(
+                ({ label }) => label
+              ),
+              datasets: [
+                {
+                  data: Object.values(data.countByLoadType).map(
+                    ({ value }) => value
+                  ),
+                },
+              ],
+            };
+            // this.markers = data.lastPositions.map((position) => ({
+            //   lat: position.latitude,
+            //   lng: position.longitude,
+            // }));
+            // this.temperatureDoughnutChart = this.getTemperatureChartData(
+            //   data.lastPositions
+            // );
+            // this.speedLineChart = this.getSpeedChartData(data.lastPositions);
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
+    }
   }
 
   get dateFilters(): {

@@ -1,4 +1,5 @@
-<nz-spin [nzSpinning]="loading" nzTip="Carregando...">
+<h2 >Bem Vindo</h2>
+<nz-spin *ngIf="!isGertranStaff" [nzSpinning]="loading" nzTip="Carregando...">
   <span nz-typography nzType="secondary">Dados dos ultimos 30 dias</span>
   <div nz-row nzGutter="16">
     <div nz-col nzSpan="8">
