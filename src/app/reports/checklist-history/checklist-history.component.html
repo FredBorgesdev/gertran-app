@@ -33,6 +33,7 @@
         <th>Status checklist</th>
         <th>Justificativa</th>
         <th>Data liberação</th>
+        <th>Data expiração</th>
         <th>Operador</th>
       </tr>
       </thead>
@@ -49,6 +50,7 @@
         <td>{{ getStatusChecklistLocalized(data.status) }}</td>
         <td>{{ data.justification }}</td>
         <td>{{ data.reviewedAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ data.expirationDate | date: 'dd/MM/yyyy' }}</td>
         <td>{{ data.reviewedBy?.name }}</td>
       </tr>
       </tbody>
