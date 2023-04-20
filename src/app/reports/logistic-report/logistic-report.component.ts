@@ -1,38 +1,38 @@
-import {Component, OnInit} from '@angular/core';
-import {ChartData} from 'chart.js';
-import {LogisticReport, ReportsService} from '../reports.service';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
-import {AuthenticationService} from '../../authentication/authentication.service';
-import {format, subMonths} from 'date-fns';
+import { Component, OnInit } from '@angular/core';
+import { ChartData } from 'chart.js';
+import { LogisticReport, ReportsService } from '../reports.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MapMarkersModalComponent } from '../extra/map-markers-modal/map-markers-modal.component';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { format, subMonths } from 'date-fns';
 
 @Component({
   selector: 'app-logistic-report',
   templateUrl: './logistic-report.component.html',
-  styleUrls: ['./logistic-report.component.css']
+  styleUrls: ['./logistic-report.component.css'],
 })
 export class LogisticReportComponent implements OnInit {
   countByStatusDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [ {data: [] }, ]
+    datasets: [{ data: [] }],
   };
   countByTravelStatusDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [ {data: [] }, ]
+    datasets: [{ data: [] }],
   };
   countByLoadTypeDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [ {data: [] }, ]
+    datasets: [{ data: [] }],
   };
   temperatureDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [ { label: 'Velocidade', data: [] }, ]
+    datasets: [{ label: 'Velocidade', data: [] }],
   };
   speedLineChart: ChartData<'line'> = {
     labels: [],
-    datasets: [ {data: [] }, ]
+    datasets: [{ data: [] }],
   };
-  mapCenter = {lat: -14.2400732, lng: -53.1805017};
+  mapCenter = { lat: -14.2400732, lng: -53.1805017 };
   markers = [];
   data: LogisticReport;
   loading = false;
@@ -41,9 +41,8 @@ export class LogisticReportComponent implements OnInit {
   constructor(
     private reportService: ReportsService,
     private modalService: NzModalService,
-    private authService: AuthenticationService,
-  ) {
-  }
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     this.loadReport();
@@ -51,73 +50,98 @@ export class LogisticReportComponent implements OnInit {
 
   loadReport(): void {
     this.loading = true;
-    this.reportService.getLogisticReport({
-      ...this.dateFilters,
-      customer: this.authService.customerId,
-    }).subscribe((data) => {
-      this.data = data;
-      this.countByStatusDoughnutChart = {
-        labels: Object.values(data.countByStatus).map(({ label }) => label),
-        datasets: [
-          {data: Object.values(data.countByStatus).map(({ value }) => value)}
-        ]
-      };
-      this.countByTravelStatusDoughnutChart = {
-        labels: Object.values(data.countByTravelStatus).map(({ label }) => label),
-        datasets: [
-          {data: Object.values(data.countByTravelStatus).map(({ value }) => value)},
-        ]
-      };
-      this.countByLoadTypeDoughnutChart = {
-        labels: Object.values(data.countByLoadType).map(({ label }) => label),
-        datasets: [
-          {data: Object.values(data.countByLoadType).map(({ value }) => value)},
-        ]
-      };
-      this.markers = data.lastPositions.map((position) => ({
-        lat: position.latitude,
-        lng: position.longitude
-      }));
-      this.loading = false;
-      this.temperatureDoughnutChart = this.getTemperatureChartData(data.lastPositions);
-      this.speedLineChart = this.getSpeedChartData(data.lastPositions);
-    }, () => {
-      this.loading = false;
-    });
+    this.reportService
+      .getLogisticReport({
+        ...this.dateFilters,
+        customer: this.authService.customerId,
+      })
+      .subscribe(
+        (data) => {
+          this.data = data;
+          this.countByStatusDoughnutChart = {
+            labels: Object.values(data.countByStatus).map(({ label }) => label),
+            datasets: [
+              {
+                data: Object.values(data.countByStatus).map(
+                  ({ value }) => value
+                ),
+              },
+            ],
+          };
+          this.countByTravelStatusDoughnutChart = {
+            labels: Object.values(data.countByTravelStatus).map(
+              ({ label }) => label
+            ),
+            datasets: [
+              {
+                data: Object.values(data.countByTravelStatus).map(
+                  ({ value }) => value
+                ),
+              },
+            ],
+          };
+          this.countByLoadTypeDoughnutChart = {
+            labels: Object.values(data.countByLoadType).map(
+              ({ label }) => label
+            ),
+            datasets: [
+              {
+                data: Object.values(data.countByLoadType).map(
+                  ({ value }) => value
+                ),
+              },
+            ],
+          };
+          // this.markers = data.lastPositions.map((position) => ({
+          //   lat: position.latitude,
+          //   lng: position.longitude,
+          // }));
+          // this.temperatureDoughnutChart = this.getTemperatureChartData(
+          //   data.lastPositions
+          // );
+          // this.speedLineChart = this.getSpeedChartData(data.lastPositions);
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
   }
 
   get dateFilters(): {
-    from: string,
-    to: string
+    from: string;
+    to: string;
   } {
     return {
       to: format(new Date(), 'yyyy-MM-dd'),
-      from: format(subMonths(new Date(), 1), 'yyyy-MM-dd')
+      from: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
     };
   }
 
-  getTemperatureChartData(positions: LogisticReport['lastPositions']): ChartData<'doughnut'> {
+  getTemperatureChartData(
+    positions: LogisticReport['lastPositions']
+  ): ChartData<'doughnut'> {
     const initialData = {
       upTo20: {
         label: 'De 0ºC até 20ºC',
-        value: 0
+        value: 0,
       },
       upTo40: {
         label: 'De 21ºC até 40ºC',
-        value: 0
+        value: 0,
       },
       upTo60: {
         label: 'De 41ºC até 60ºC',
-        value: 0
+        value: 0,
       },
       upTo80: {
         label: 'De 61ºC até 80ºC',
-        value: 0
+        value: 0,
       },
       upTo100: {
         label: 'De 81ºC até 100ºC',
-        value: 0
-      }
+        value: 0,
+      },
     };
 
     const data = positions.reduce((acc, position) => {
@@ -138,13 +162,13 @@ export class LogisticReportComponent implements OnInit {
 
     return {
       labels: Object.values(data).map(({ label }) => label),
-      datasets: [
-        {data: Object.values(data).map(({ value }) => value)},
-      ]
+      datasets: [{ data: Object.values(data).map(({ value }) => value) }],
     };
   }
 
-  getSpeedChartData(positions: LogisticReport['lastPositions']): ChartData<'line'> {
+  getSpeedChartData(
+    positions: LogisticReport['lastPositions']
+  ): ChartData<'line'> {
     const initialData = {
       upTo20: {
         label: 'De 0km/h até 20km/h',
@@ -170,7 +194,7 @@ export class LogisticReportComponent implements OnInit {
         label: 'De 81km/h até 100km/h',
         value: 0,
         percentage: 0,
-      }
+      },
     };
 
     const data = positions.reduce((acc, position) => {
@@ -199,9 +223,9 @@ export class LogisticReportComponent implements OnInit {
       datasets: [
         {
           label: 'Velocidade',
-          data: Object.values(data).map(({ percentage }) => percentage)
+          data: Object.values(data).map(({ percentage }) => percentage),
         },
-      ]
+      ],
     };
   }
 
@@ -211,7 +235,7 @@ export class LogisticReportComponent implements OnInit {
       nzContent: MapMarkersModalComponent,
       nzComponentParams: {
         markers: this.markers,
-        mapCenter: this.mapCenter
+        mapCenter: this.mapCenter,
       },
       nzWidth: '80%',
     });

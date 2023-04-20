@@ -6,19 +6,19 @@ import { LogisticReportComponent } from '../reports/logistic-report/logistic-rep
 const routes: Routes = [
   {
     path: 'home',
-    component: DashboardComponent,
+    component: LogisticReportComponent,
     data: {
       title: 'Dashboard ',
-      headerDisplay: 'none'
-    }
-  }
+      headerDisplay: 'none',
+    },
+  },
 ];
 
 // TODO: Remove when all reports are implemented
 new Array(30).fill(0).forEach((_, i) => {
   routes.push({
     path: `reports${i}`,
-    component: DashboardComponent
+    component: DashboardComponent,
   });
 });
 
@@ -26,4 +26,4 @@ new Array(30).fill(0).forEach((_, i) => {
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}
