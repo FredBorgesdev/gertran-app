@@ -67,7 +67,7 @@
   <nz-card nzTitle="Em análise">
     <app-monitoring-requests-table
       [monitoringRequests]="underReviewResponse"
-      [rowColor]="'#DFFFEDFF'"
+      [rowColor]="'#73ffb2'"
       (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
@@ -91,7 +91,7 @@
   <nz-card nzTitle="Em viagem">
     <app-monitoring-requests-table
       [monitoringRequests]="inProgressResponse"
-      [rowColor]="'#EAFDF2FF'"
+      [rowColor]="'#91aaff'"
       (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
@@ -100,26 +100,26 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Cancelado">
-    <app-monitoring-requests-table
-      [monitoringRequests]="resources"
-      [rowColor]="'#fff7f9'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChange($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
-
   <nz-card nzTitle="Reprovado">
     <app-monitoring-requests-table
       [monitoringRequests]="reprovedResponse"
-      [rowColor]="'#fff7f9'"
+      [rowColor]="'#ff6a6a'"
       (view)="view($event)"
       (edit)="edit($event)"
       (delete)="delete($event)"
       (handleQueryParamsChange)="handleQueryParamsChangeReproved($event)"
+      (refreshAll)="loadAllResources()"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
+  <nz-card nzTitle="Cancelado">
+    <app-monitoring-requests-table
+      [monitoringRequests]="resources"
+      [rowColor]="'#a9a9a9'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChange($event)"
       (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
