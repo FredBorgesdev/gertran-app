@@ -49,7 +49,7 @@
   </nz-card>
 
   <nz-card
-    nzTitle="Rascunho"
+    [nzTitle]="'Rascunho' + ' (' + draftResponse?.count + ')'"
     *ngIf="authService.customerId"
     data-testid="table-draft"
   >
@@ -64,7 +64,9 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Em análise">
+  <nz-card
+    [nzTitle]="'Em análise' + ' (' + underReviewResponse?.count + ')'"
+  >
     <app-monitoring-requests-table
       [monitoringRequests]="underReviewResponse"
       [rowColor]="'#73ffb2'"
@@ -76,7 +78,9 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Aguardando inicio">
+  <nz-card
+    [nzTitle]="'Aguardando inicio' + ' (' + waitingForStartResponse?.count + ')'"
+  >
     <app-monitoring-requests-table
       [monitoringRequests]="waitingForStartResponse"
       [rowColor]="'#EAFDF2FF'"
@@ -88,7 +92,9 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Em viagem">
+  <nz-card
+    [nzTitle]="'Em viagem' + ' (' + inProgressResponse?.count + ')'"
+  >
     <app-monitoring-requests-table
       [monitoringRequests]="inProgressResponse"
       [rowColor]="'#91aaff'"
@@ -100,7 +106,9 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Reprovado">
+  <nz-card
+    [nzTitle]="'Reprovado' + ' (' + reprovedResponse?.count + ')'"
+  >
     <app-monitoring-requests-table
       [monitoringRequests]="reprovedResponse"
       [rowColor]="'#ff6a6a'"
@@ -112,7 +120,9 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
-  <nz-card nzTitle="Cancelado">
+  <nz-card
+    [nzTitle]="'Cancelado' + ' (' + resources?.count + ')'"
+  >
     <app-monitoring-requests-table
       [monitoringRequests]="resources"
       [rowColor]="'#a9a9a9'"
