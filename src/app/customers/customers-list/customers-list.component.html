@@ -51,6 +51,7 @@
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
+      nzSize="small"
     >
       <thead>
         <tr>
@@ -58,7 +59,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of customersListTable.data">
+        <tr
+          *ngFor="let item of customersListTable.data"
+          [class.innactive]="!item.isActive"
+        >
           <td>{{item.id | id}}</td>
           <td>
             <div class="d-flex align-items-center">
@@ -68,28 +72,28 @@
           <td>{{item.corporateName}}</td>
           <td>{{item.cnpj}}</td>
           <td>{{item.email}}</td>
-          <td class="text-md-center">
+          <td class="d-flex">
             <a
-                (click)="edit(item)"
-                class="m-r-5"
-                nz-button
-                nzType="default"
-                nzShape="circle"
-                nz-tooltip
-                nzTooltipTitle="Editar"
-                >
-                <i nz-icon nzType="edit" theme="outline"></i>
+              (click)="edit(item)"
+              class="m-r-5"
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Editar"
+            >
+              <i nz-icon nzType="edit" theme="outline"></i>
             </a>
 
             <a
-                (click)="delete(item)"
-                nz-button
-                nzType="default"
-                nzShape="circle"
-                nz-tooltip
-                nzTooltipTitle="Deletar"
-                >
-                <i nz-icon nzType="delete" theme="outline"></i>
+              (click)="delete(item)"
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Deletar"
+            >
+              <i nz-icon nzType="delete" theme="outline"></i>
             </a>
           </td>
         </tr>
