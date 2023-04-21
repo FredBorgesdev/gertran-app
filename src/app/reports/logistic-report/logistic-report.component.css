@@ -2,3 +2,10 @@ mgl-map {
   width: 100%;
   height: 80%;
 }
+
+.gertran-logo-container {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
