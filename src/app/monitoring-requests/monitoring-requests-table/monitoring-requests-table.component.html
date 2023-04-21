@@ -69,6 +69,23 @@
         <i nz-icon nzType="edit" theme="outline"></i>
       </a>
 
+      <div *ngIf="item.status === 'draft'">
+        <a
+          (click)="delete.emit(item)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nz-tooltip
+        >
+          <i
+            nz-icon
+            nzType="delete"
+            theme="outline"
+          ></i>
+        </a>
+      </div>
+
       <div
         *ngIf="authService.user.isGertranStaff && !['draft', 'under_review'].includes(item.status)"
       >
