@@ -17,6 +17,7 @@ import {
 import {MonitoringRequestsFilter} from '../monitoring-requests-filter/monitoring-requests-filter.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
+import {Observable, timer} from "rxjs";
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -46,6 +47,8 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
   refreshAfterClose = new EventEmitter<ModalDestroyResult>();
 
+  monitoringRequestRefresher: Observable<number>;
+
   constructor(
     private directionsService: DirectionsService,
     public authService: AuthenticationService,
@@ -66,7 +69,10 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    await this.loadAllResources();
+    this.monitoringRequestRefresher = timer(0, 2 * 60 * 1000);
+    this.monitoringRequestRefresher.subscribe(async () => {
+      await this.loadAllResources();
+    });
 
     this.refreshAfterClose.subscribe((result) => {
       if (result?.updateList) {
