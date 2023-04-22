@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from "../../../shared/services/api.service";
 import {
   MonitoringRequests,
@@ -6,16 +6,20 @@ import {
   Status
 } from "../../../monitoring-requests/monitoring-requests.service";
 import {NzTableQueryParams} from "ng-zorro-antd/table";
+import {Subject, timer} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-monitoring-requests',
   templateUrl: './monitoring-requests.component.html',
   styleUrls: ['./monitoring-requests.component.css']
 })
-export class MonitoringRequestsComponent implements OnInit {
+export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   underReviewResponse: GetAllResponse<MonitoringRequests>;
   approvedResponse: GetAllResponse<MonitoringRequests>;
   reprovedResponse: GetAllResponse<MonitoringRequests>;
+
+  stopTimer = new Subject();
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
@@ -23,7 +27,15 @@ export class MonitoringRequestsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAllResources();
+    timer(0, 1 * 60 * 1000).pipe(
+      takeUntil(this.stopTimer)
+    ).subscribe(
+      () => this.loadAllResources()
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer.next();
   }
 
   loadAllResources(): void {
