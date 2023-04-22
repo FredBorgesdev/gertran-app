@@ -65,4 +65,8 @@ export class SelectableVehicleModelService {
   searchByName(name: string): void {
     this.searchModelsSubject.next({name});
   }
+
+  concatModels(vehicleModels: VehicleModels[]): void {
+    this.models = [...this.models, ...vehicleModels];
+  }
 }

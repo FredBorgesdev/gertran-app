@@ -59,7 +59,6 @@ interface VehicleChild {
 })
 export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormComponent<T> implements OnInit {
   customers: Customer[] = [];
-  vehicleModels: VehicleModels[] = [];
   vehicleModelTypes: VehicleModelTypes[] = [];
   isLoadingMoreData = false;
 
@@ -190,7 +189,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
         this.resource.vehicle.vehicleModel.id,
         this.resource.vehicle.manufacturer.id
       ).subscribe((model) => {
-        this.vehicleModels = [model].concat(this.vehicleModels);
+        this.selectableVehicleModelService.concatModels([model]);
       });
     }
 
@@ -211,7 +210,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
   selectType(): void {
     const vehicleModelId = this.validateForm.controls.vehicleModel.value;
-    const selectedModel = this.vehicleModels.find(model => model.id === vehicleModelId);
+    const selectedModel = this.selectableVehicleModelService.models.find(model => model.id === vehicleModelId);
     const vehicleModelTypeId = selectedModel?.vehicleModelType ?? this.validateForm.controls.vehicleModelType.value;
 
     this.vehicleModelTypesService.get(vehicleModelTypeId).subscribe((vehicleModelType) => {

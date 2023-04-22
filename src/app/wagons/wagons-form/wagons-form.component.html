@@ -7,7 +7,7 @@
           [nzSpan]="null"
           nzErrorTip="Preencha a placa"
         >
-          <input id="plate" type="text" nz-input formControlName="plate" />
+          <input id="plate" type="text" nz-input formControlName="plate"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -17,7 +17,8 @@
         nz-button
         nzType="primary"
         (click)="filterVehicleByPlate()"
-      >Buscar</button>
+      >Buscar
+      </button>
     </div>
   </div>
 
@@ -51,12 +52,16 @@
         (ngModelChange)="loadModels()"
         id="manufacturer"
         nzAllowClear
+        nzShowSearch
+        nzServerSearch
         nzPlaceHolder="Selecione uma montadora"
         formControlName="manufacturer"
         (nzScrollToBottom)="selectableVehicleManufacturersService.loadMoreManufacturers()"
         [nzDropdownRender]="selectLoading"
+        (nzOnSearch)="selectableVehicleManufacturersService.searchByName($event)"
       >
-        <nz-option *ngFor="let manufacturer of selectableVehicleManufacturersService.manufacturers" [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
+        <nz-option *ngFor="let manufacturer of selectableVehicleManufacturersService.manufacturers"
+                   [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -66,7 +71,11 @@
         <nz-form-label [nzSpan]="null" nzRequired nzFor="vehicleModel">Modelo</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Modelo inválido!">
           <nz-select
-            [nzDisabled]="vehicleModels.length === 0"
+            nzServerSearch
+            (nzScrollToBottom)="selectableVehicleModelService.loadMoreModels()"
+            [nzDropdownRender]="selectLoading"
+            (nzOnSearch)="selectableVehicleModelService.searchByName($event)"
+            [nzDisabled]="selectableVehicleModelService.models.length === 0"
             (ngModelChange)="selectType()"
             id="vehicleModel"
             nzShowSearch
@@ -74,7 +83,9 @@
             nzPlaceHolder="Selecione um modelo"
             formControlName="vehicleModel"
           >
-            <nz-option *ngFor="let vehicleModel of vehicleModels" [nzLabel]="vehicleModel.name" [nzValue]="vehicleModel.id"></nz-option>
+            <nz-option *ngFor="let vehicleModel of selectableVehicleModelService.models"
+                       [nzLabel]="vehicleModel.name"
+                       [nzValue]="vehicleModel.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -91,7 +102,8 @@
             nzPlaceHolder="Selecione um tipo"
             formControlName="vehicleModelType"
           >
-            <nz-option *ngFor="let vehicleModelType of vehicleModelTypes" [nzLabel]="vehicleModelType.name" [nzValue]="vehicleModelType.id"></nz-option>
+            <nz-option *ngFor="let vehicleModelType of vehicleModelTypes" [nzLabel]="vehicleModelType.name"
+                       [nzValue]="vehicleModelType.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -101,8 +113,8 @@
     <div nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado. Apenas UF. (MG, SP, etc)">
-          <input id="state" type="text" nz-input formControlName="state" />
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado. Apenas UF. (MG, SP, etc)">
+          <input id="state" type="text" nz-input formControlName="state"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -110,7 +122,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
-          <input id="city" type="text" nz-input formControlName="city" />
+          <input id="city" type="text" nz-input formControlName="city"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -120,7 +132,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="color">Cor</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cor">
-          <input id="color" type="text" nz-input formControlName="color" />
+          <input id="color" type="text" nz-input formControlName="color"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -128,7 +140,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="modelYear">Ano modelo</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o ano modelo">
-          <input id="year" type="text" nz-input formControlName="modelYear" />
+          <input id="year" type="text" nz-input formControlName="modelYear"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -138,7 +150,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="chassis">Chassi</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o chassi">
-          <input id="chassis" type="text" nz-input formControlName="chassis" />
+          <input id="chassis" type="text" nz-input formControlName="chassis"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -146,7 +158,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="renavam">Renavam</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o renavam">
-          <input id="renavam" type="text" nz-input formControlName="renavam" />
+          <input id="renavam" type="text" nz-input formControlName="renavam"/>
         </nz-form-control>
       </nz-form-item>
     </div>
