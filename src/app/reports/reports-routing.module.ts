@@ -25,6 +25,7 @@ import {WorkdayComponent} from './workday/workday.component';
 import {LogisticReportComponent} from './logistic-report/logistic-report.component';
 import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
 import {MonitoringRequestsComponent} from "./dashboards/monitoring-requests/monitoring-requests.component";
+import {ChecklistsComponent} from "./dashboards/checklists/checklists.component";
 
 const routes: Routes = [
   {
@@ -161,6 +162,10 @@ const routes: Routes = [
   {
     path: 'dashboards/monitoring-requests',
     component: MonitoringRequestsComponent,
+  },
+  {
+    path: 'dashboards/checklists',
+    component: ChecklistsComponent,
   }
 ];
 

@@ -1,8 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import ApiService, {DEFAULT_LIMIT, GetAllResponse, getCurrentPage, Pagination} from 'src/app/shared/services/api.service';
+import {Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import ApiService, {
+  DEFAULT_LIMIT,
+  GetAllResponse,
+  getCurrentPage,
+  Pagination
+} from 'src/app/shared/services/api.service';
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {Subject} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
@@ -25,14 +30,16 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     @Inject('service') public service: ApiService<T>,
     public message: NzMessageService,
     public modal: NzModalService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadResources();
     this.setupSearch();
   }
 
-  performPostLoadActions(): void {}
+  performPostLoadActions(): void {
+  }
 
   loadResources(url?: string): void {
     this.isLoading = true;
@@ -125,7 +132,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     }
   }
 
-  private setupSearch(): void {
+  protected setupSearch(): void {
     this.searchSubject.pipe(debounceTime(500)).subscribe((value) => {
       this.isLoading = true;
 
@@ -137,7 +144,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   protected performSearch(value: string): void {
-    this.service.getAll({ limit: 50 }, { [this.field]: value }).subscribe((result) => {
+    this.service.getAll({limit: 50}, {[this.field]: value}).subscribe((result) => {
       this.resources = result;
       this.isLoading = false;
     });

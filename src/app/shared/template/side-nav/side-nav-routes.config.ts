@@ -196,6 +196,17 @@ export const ROUTES: SideNavInterface[] = [
               'navbar-closed': true
             },
             submenu: [],
+          },
+          {
+            path: 'reports/dashboards/checklists',
+            title: 'Checklists',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              'navbar-closed': true
+            },
+            submenu: [],
           }
         ]
       },

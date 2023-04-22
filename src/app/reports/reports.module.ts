@@ -43,6 +43,7 @@ import {MapMarkersModalComponent} from './extra/map-markers-modal/map-markers-mo
 import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
 import {MonitoringRequestsComponent} from './dashboards/monitoring-requests/monitoring-requests.component';
 import {MonitoringRequestsModule} from "../monitoring-requests/monitoring-requests.module";
+import { ChecklistsComponent } from './dashboards/checklists/checklists.component';
 
 
 @NgModule({
@@ -81,6 +82,7 @@ import {MonitoringRequestsModule} from "../monitoring-requests/monitoring-reques
     MapMarkersModalComponent,
     FatigueReportComponent,
     MonitoringRequestsComponent,
+    ChecklistsComponent,
   ],
   exports: [
     WorkdayComponent
