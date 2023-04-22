@@ -5,15 +5,18 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {FormBuilder, Validators} from '@angular/forms';
 import {VehicleModels, VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
 import {VehicleModelTypes, VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
-import { VehicleManufacturersService } from '../../vehicle-manufacturers/vehicle-manufacturers.service';
+import {VehicleManufacturersService} from '../../vehicle-manufacturers/vehicle-manufacturers.service';
 import {Customer} from '../../customers/customers.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {VehiclesService} from '../vehicles.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {Tracker} from '../../trackers/trackers.service';
-import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
+import {
+  SelectableVehicleManufacturersService
+} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 import {UtilsService} from '../../shared/services/utils.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {SelectableVehicleModelService} from "../selectable-vehicle-model.service";
 
 export interface Vehicle {
   id: string;
@@ -72,6 +75,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     public selectableCustomerService: SelectableCustomerServiceService,
     public selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
     public authService: AuthenticationService,
+    public selectableVehicleModelService: SelectableVehicleModelService,
   ) {
     super(service, message, activatedRoute);
   }
@@ -80,6 +84,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     super.ngOnInit();
 
     this.selectableVehicleManufacturersService.init();
+    this.selectableVehicleModelService.setupSearch();
 
     if (!this.authService.customerId) {
       this.selectableCustomerService.init();
@@ -197,11 +202,11 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   }
 
   loadModels(): void {
-    this.vehicleModelsService
-      .getAll({ limit: 50 }, this.validateForm.controls.manufacturer.value)
-      .subscribe((vehicleModels) => {
-        this.vehicleModels = vehicleModels.results;
-      });
+    this.selectableVehicleModelService.setVehicleManufacturerId(
+      this.validateForm.controls.manufacturer.value
+    );
+
+    this.selectableVehicleModelService.loadMoreModels();
   }
 
   selectType(): void {
@@ -211,7 +216,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
     this.vehicleModelTypesService.get(vehicleModelTypeId).subscribe((vehicleModelType) => {
       this.vehicleModelTypes = [vehicleModelType];
-      this.validateForm.patchValue({ vehicleModelType: vehicleModelType.id });
+      this.validateForm.patchValue({vehicleModelType: vehicleModelType.id});
     });
   }
 

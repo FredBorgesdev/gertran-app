@@ -59,4 +59,8 @@ export class SelectableVehicleManufacturersService {
     this.manufacturersNextUrl = null;
     this.loadMoreManufacturers();
   }
+
+  searchByName(name: string): void {
+    this.searchManufacturersSubject.next({ name });
+  }
 }

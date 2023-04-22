@@ -20,14 +20,19 @@ export class VehicleModelsService implements ApiService<VehicleModels> {
 
   getAll(
     pagination: Pagination,
-    vehicleManufacturerId: string
+    vehicleManufacturerId: string,
+    filters?: { name: string }
   ): Observable<GetAllResponse<VehicleModels>> {
-    const params = { limit: DEFAULT_LIMIT };
+    const params: any = { limit: DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
     }
+    if (filters?.name) {
+      params.name = filters.name;
+    }
+
     return this.http.get<GetAllResponse<VehicleModels>>(
       `vehicles/manufacturers/${vehicleManufacturerId}/vehicle-models`,
       { params }

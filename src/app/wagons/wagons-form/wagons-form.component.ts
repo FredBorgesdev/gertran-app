@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Wagon, WagonsService} from '../wagons.service';
 import {VehicleModelsService} from '../../vehicle-manufacturers/vehicle-models.service';
@@ -8,9 +8,12 @@ import {FormBuilder} from '@angular/forms';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {VehiclesFormComponent} from '../../vehicles/vehicles-form/vehicles-form.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
-import {SelectableVehicleManufacturersService} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
+import {
+  SelectableVehicleManufacturersService
+} from '../../vehicle-manufacturers/selectable-vehicle-manufacturers.service';
 import {UtilsService} from '../../shared/services/utils.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {SelectableVehicleModelService} from "../../vehicles/selectable-vehicle-model.service";
 
 @Component({
   selector: 'app-wagons-form',
@@ -24,6 +27,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
     private router: Router,
     selectableVehicleManufacturersService: SelectableVehicleManufacturersService,
     selectableCustomerService: SelectableCustomerServiceService,
+    selectableVehicleModelService: SelectableVehicleModelService,
     vehicleModelsService: VehicleModelsService,
     vehicleModelTypesService: VehicleModelTypesService,
     vehicleManufacturersService: VehicleManufacturersService,
@@ -46,6 +50,7 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
       selectableCustomerService,
       selectableVehicleManufacturersService,
       authService,
+      selectableVehicleModelService,
     );
   }
 
@@ -56,6 +61,6 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
   }
 
   list(): void {
-    this.router.navigate([ '/wagons/wagons-list' ]);
+    this.router.navigate(['/wagons/wagons-list']);
   }
 }
