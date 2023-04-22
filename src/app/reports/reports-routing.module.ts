@@ -24,6 +24,7 @@ import {ChecklistHistoryComponent} from './checklist-history/checklist-history.c
 import {WorkdayComponent} from './workday/workday.component';
 import {LogisticReportComponent} from './logistic-report/logistic-report.component';
 import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
+import {MonitoringRequestsComponent} from "./dashboards/monitoring-requests/monitoring-requests.component";
 
 const routes: Routes = [
   {
@@ -156,6 +157,10 @@ const routes: Routes = [
   {
     path: 'fatiguereport',
     component: FatigueReportComponent,
+  },
+  {
+    path: 'dashboards/monitoring-requests',
+    component: MonitoringRequestsComponent,
   }
 ];
 

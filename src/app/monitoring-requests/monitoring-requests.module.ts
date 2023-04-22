@@ -18,12 +18,19 @@ import {InvoicesTabComponent} from './invoices-tab/invoices-tab.component';
 import {BaitsTabComponent} from './baits-tab/baits-tab.component';
 import {ArmedGuardTabComponent} from './armed-guard-tab/armed-guard-tab.component';
 import {MonitoringRequestsTableComponent} from './monitoring-requests-table/monitoring-requests-table.component';
-import {MonitoringRequestsCheckListComponent} from './monitoring-requests-check-list/monitoring-requests-check-list.component';
+import {
+  MonitoringRequestsCheckListComponent
+} from './monitoring-requests-check-list/monitoring-requests-check-list.component';
 import {MonitoringRequestsFilterComponent} from './monitoring-requests-filter/monitoring-requests-filter.component';
 import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
 import {TextMaskModule} from 'angular2-text-mask';
 import {NgxPrintElementModule} from 'ngx-print-element';
-import { MonitoringRequestsCheckListPrintableComponent } from './monitoring-requests-check-list-printable/monitoring-requests-check-list-printable.component';
+import {
+  MonitoringRequestsCheckListPrintableComponent
+} from './monitoring-requests-check-list-printable/monitoring-requests-check-list-printable.component';
+import {
+  MonitoringRequestsTableMinimalComponent
+} from "./monitoring-requests-table-minimal/monitoring-requests-table-minimal.component";
 
 
 @NgModule({
@@ -41,7 +48,12 @@ import { MonitoringRequestsCheckListPrintableComponent } from './monitoring-requ
     MonitoringRequestsTableComponent,
     MonitoringRequestsCheckListComponent,
     MonitoringRequestsFilterComponent,
-    MonitoringRequestsCheckListPrintableComponent
+    MonitoringRequestsCheckListPrintableComponent,
+    MonitoringRequestsTableMinimalComponent
+  ],
+  exports: [
+    MonitoringRequestsTableComponent,
+    MonitoringRequestsTableMinimalComponent
   ],
   imports: [
     CommonModule,

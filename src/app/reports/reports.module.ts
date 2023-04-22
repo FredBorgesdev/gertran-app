@@ -37,10 +37,12 @@ import {NgChartsModule} from 'ng2-charts';
 import {NzStatisticModule} from 'ng-zorro-antd/statistic';
 import {NgxMapboxGLModule} from 'ngx-mapbox-gl';
 import {environment} from '../../environments/environment';
-import { SimpleHourPipe } from './pipes/simple-hour.pipe';
+import {SimpleHourPipe} from './pipes/simple-hour.pipe';
 import {NzTypographyModule} from 'ng-zorro-antd/typography';
-import { MapMarkersModalComponent } from './extra/map-markers-modal/map-markers-modal.component';
-import { FatigueReportComponent } from './fatigue-report/fatigue-report.component';
+import {MapMarkersModalComponent} from './extra/map-markers-modal/map-markers-modal.component';
+import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
+import {MonitoringRequestsComponent} from './dashboards/monitoring-requests/monitoring-requests.component';
+import {MonitoringRequestsModule} from "../monitoring-requests/monitoring-requests.module";
 
 
 @NgModule({
@@ -78,22 +80,24 @@ import { FatigueReportComponent } from './fatigue-report/fatigue-report.componen
     SimpleHourPipe,
     MapMarkersModalComponent,
     FatigueReportComponent,
+    MonitoringRequestsComponent,
   ],
   exports: [
     WorkdayComponent
   ],
-    imports: [
-        SharedModule,
-        CommonModule,
-        ReportsRoutingModule,
-        TextMaskModule,
-        NgChartsModule,
-        NzStatisticModule,
-        NgxMapboxGLModule.withConfig({
-            accessToken: environment.mapboxAccessToken,
-        }),
-        NzTypographyModule,
-    ]
+  imports: [
+    SharedModule,
+    CommonModule,
+    ReportsRoutingModule,
+    TextMaskModule,
+    NgChartsModule,
+    NzStatisticModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: environment.mapboxAccessToken,
+    }),
+    NzTypographyModule,
+    MonitoringRequestsModule,
+  ]
 })
 export class ReportsModule {
 }

@@ -1,0 +1,32 @@
+<nz-table
+  #table
+  [nzData]="monitoringRequests?.results"
+  [nzTotal]="monitoringRequests?.count"
+  [nzPageSize]="monitoringRequests?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange.emit($event)"
+  nzSize="small"
+  nzTableLayout="fixed"
+  [nzScroll]="{ y: '768px', x: '768px' }"
+  [nzLoading]="isLoading"
+>
+  <thead>
+  <tr>
+    <th
+      *ngFor="let column of monitoringRequestsColumns"
+      [nzSortFn]="column.compare"
+      nzWidth="110px"
+    >{{ column.title }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of table.data; let i=index" [style]="'background-color:' + rowColor">
+    <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
+    <td>{{item.customer?.tradingName ?? '-'}}</td>
+    <td>{{item.driver?.name ?? '-'}}</td>
+    <td>{{item.truck?.vehicle.plate}}</td>
+    <td>{{getWagons(item)}}</td>
+  </tr>
+  </tbody>
+</nz-table>

@@ -180,6 +180,27 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [
       {
         path: '',
+        title: 'Dashboards',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        gertranStaffOnly: true,
+        submenu: [
+          {
+            path: 'reports/dashboards/monitoring-requests',
+            title: 'Solicitações de monitoramento',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              'navbar-closed': true
+            },
+            submenu: [],
+          }
+        ]
+      },
+      {
+        path: '',
         title: 'Viagens monitoradas',
         iconType: 'nzIcon',
         iconTheme: 'outline',
