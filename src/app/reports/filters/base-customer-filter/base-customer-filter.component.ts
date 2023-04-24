@@ -101,9 +101,9 @@ export class BaseCustomerFilterComponent implements OnInit {
     autoTable(doc, {
       html: 'table',
       didDrawPage: (data) => {
-        doc.addImage('assets/images/logo/logo.png', 'PNG', data.settings.margin.left, 15, 100, 20);
+        doc.addImage('assets/images/logo/logogertran.png', 'PNG', 80, 10, 50, 50);
       },
-      margin: {top: 50}
+      margin: {top: 70}
     });
 
     doc.save('table.pdf');
