@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseGenericFilter} from '../filters/base-generic-filters/base-generic-filters.component';
 import {ReportsService} from '../reports.service';
@@ -21,7 +21,8 @@ export class TripsLateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private reportsService: ReportsService,
     public selectableCustomerService: SelectableCustomerServiceService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.selectableCustomerService.init();
@@ -37,6 +38,11 @@ export class TripsLateComponent implements OnInit {
       ...form
     };
     this.isLoading = true;
+
+    if (!filter.customer) {
+      this.isLoading = false;
+      return;
+    }
 
     this.reportsService.getDelayedTripes(filter).subscribe((response) => {
       this.isLoading = false;
