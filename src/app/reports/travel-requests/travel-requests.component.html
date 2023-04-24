@@ -14,9 +14,9 @@
       [rows]="monitoringRequests"
       [fileName]="'Relatório de Solicitações'"
     ></app-base-customer-filter>
-<!--    <app-base-generic-filters-->
-<!--      (generateReport)="generateReport($event)"-->
-<!--    ></app-base-generic-filters>-->
+    <!--    <app-base-generic-filters-->
+    <!--      (generateReport)="generateReport($event)"-->
+    <!--    ></app-base-generic-filters>-->
 
     <nz-table
       *ngIf="!syntheticReport"
@@ -48,8 +48,8 @@
         <td>{{ getInvoices(data) }}</td>
         <td>{{ data.truck?.vehicle?.plate }}</td>
         <td>{{ getWagons(data) }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getFinalTravelStep(data) }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data?.address">{{ getInitialTravelStep(data) }}</td>
+        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data?.address">{{ getFinalTravelStep(data) }}</td>
         <td>{{ data.operation?.name ?? '-' }}</td>
         <td>{{ getTechnology(data) || '-' }}</td>
         <td>{{ data.status }}</td>

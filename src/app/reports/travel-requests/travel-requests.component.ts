@@ -17,7 +17,8 @@ export class TravelRequestsComponent implements OnInit {
   constructor(
     private reportsService: ReportsService,
     private message: NzMessageService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -42,11 +43,11 @@ export class TravelRequestsComponent implements OnInit {
   }
 
   getInitialTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps[0].address;
+    return data.travelSteps[0]?.address;
   }
 
   getFinalTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps[data.travelSteps.length - 1].address;
+    return data.travelSteps[data.travelSteps.length - 1]?.address;
   }
 
   getInvoices(data: MonitoringRequests): string {
@@ -61,6 +62,6 @@ export class TravelRequestsComponent implements OnInit {
     const total = monitoringRequests.length;
     const loadPriceTotal = monitoringRequests.reduce((acc, curr) => acc + Number(curr.loadValue), 0);
 
-    this.syntheticReport = { total, loadPriceTotal };
+    this.syntheticReport = {total, loadPriceTotal};
   }
 }
