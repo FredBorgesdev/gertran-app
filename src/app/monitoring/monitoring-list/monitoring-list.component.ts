@@ -283,7 +283,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.modal.create({
       nzTitle: 'Solicitação de monitoramento',
       nzContent: MonitoringRequestsCheckListComponent,
-      nzComponentParams: {monitoringRequestId: id, readOnly: true},
+      nzComponentParams: {monitoringRequestId: id, readOnly: true, showFooter: true},
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
