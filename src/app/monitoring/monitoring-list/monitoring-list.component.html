@@ -145,11 +145,11 @@
     <tbody>
     <tr
       *ngFor="let item of table.data; let i=index"
-      [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
+      [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       (contextmenu)="openDropdown($event, moreActionsRight, item)"
       (click)="setPlate(item?.vehiclePlate)"
     >
-      <td nzLeft [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)">
+      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
         <img
           [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
           alt="logo"
@@ -159,17 +159,17 @@
       </td>
       <td
         nzLeft
-        [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
         [nzTooltipTitle]="item.monitoringRequest?.id"
-        [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.monitoringRequest?.id || '' | id}}</td>
       <td
         nzLeft
-        [class]="getRowBackgroundColor(item.positionInfo?.travelStatus)"
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.vehiclePlate || '-' }}</td>
       <td>
         <span
@@ -240,11 +240,11 @@
       <td
         nzEllipsis
         nz-tooltip
-        [nzTooltipTitle]="getStatusTranslation(item.positionInfo?.travelStatus)"
+        [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)"
         *ngIf="user.isGertranStaff"
         data-testid="td-gertran-only"
       >
-        {{getStatusTranslation(item.positionInfo?.travelStatus)}}
+        {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
       <td *ngIf="user.isGertranStaff"
           data-testid="td-gertran-only">{{ item.positionInfo?.observations || '-' }}</td>
