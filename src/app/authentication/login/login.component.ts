@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { AuthenticationService } from '../authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {AuthenticationService} from '../authentication.service';
 
 @Component({
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 
 export class LoginComponent implements OnInit {
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private message: NzMessageService,
-  ) {}
+  ) {
+  }
 
   async submitForm(): Promise<void> {
     for (const control in this.loginForm.controls) {
@@ -27,7 +29,9 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls[control].updateValueAndValidity();
     }
 
-    if (!this.loginForm.valid) { return; }
+    if (!this.loginForm.valid) {
+      return;
+    }
 
     this.isLoading = true;
     try {
