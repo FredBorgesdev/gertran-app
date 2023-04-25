@@ -1,4 +1,4 @@
-<div *ngIf="isGertranStaff" class="gertran-logo-container">
+<div *ngIf="shouldShowGertranLogo" class="gertran-logo-container">
   <img
     src="assets/images/logo/logogertran.png"
     alt="Logo gertran"
@@ -6,7 +6,7 @@
   >
 </div>
 
-<nz-spin *ngIf="!isGertranStaff" [nzSpinning]="loading" nzTip="Carregando...">
+<nz-spin *ngIf="!shouldShowGertranLogo" [nzSpinning]="loading" nzTip="Carregando...">
   <span nz-typography nzType="secondary">Dados dos ultimos 30 dias</span>
   <div nz-row nzGutter="16">
     <div nz-col nzSpan="8">
@@ -197,7 +197,8 @@
     </div>
   </div>
 
-  <nz-card [nzTitle]="data?.monitoringRequestsFinishingWithin6Hours?.length + ' veiculo(s) com previsão de terminar nas próx. 6h'">
+  <nz-card
+    [nzTitle]="data?.monitoringRequestsFinishingWithin6Hours?.length + ' veiculo(s) com previsão de terminar nas próx. 6h'">
     <nz-table
       #table
       [nzData]="data?.monitoringRequestsFinishingWithin6Hours"

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ChartData } from 'chart.js';
-import { LogisticReport, ReportsService } from '../reports.service';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { MapMarkersModalComponent } from '../extra/map-markers-modal/map-markers-modal.component';
-import { AuthenticationService } from '../../authentication/authentication.service';
-import { format, subMonths } from 'date-fns';
+import {Component, OnInit} from '@angular/core';
+import {ChartData} from 'chart.js';
+import {LogisticReport, ReportsService} from '../reports.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {format, subMonths} from 'date-fns';
 
 @Component({
   selector: 'app-logistic-report',
@@ -14,36 +14,36 @@ import { format, subMonths } from 'date-fns';
 export class LogisticReportComponent implements OnInit {
   countByStatusDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [{ data: [] }],
+    datasets: [{data: []}],
   };
   countByTravelStatusDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [{ data: [] }],
+    datasets: [{data: []}],
   };
   countByLoadTypeDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [{ data: [] }],
+    datasets: [{data: []}],
   };
   temperatureDoughnutChart: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [{ label: 'Velocidade', data: [] }],
+    datasets: [{label: 'Velocidade', data: []}],
   };
   speedLineChart: ChartData<'line'> = {
     labels: [],
-    datasets: [{ data: [] }],
+    datasets: [{data: []}],
   };
-  mapCenter = { lat: -14.2400732, lng: -53.1805017 };
+  mapCenter = {lat: -14.2400732, lng: -53.1805017};
   markers = [];
   data: LogisticReport;
   loading = false;
-  isGertranStaff = this.authService.user?.isGertranStaff;
   customers = [];
 
   constructor(
     private reportService: ReportsService,
     private modalService: NzModalService,
     private authService: AuthenticationService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadReport();
@@ -52,66 +52,68 @@ export class LogisticReportComponent implements OnInit {
   loadReport(): void {
     this.loading = true;
 
-    if (!this.isGertranStaff) {
-      this.reportService
-        .getLogisticReport({
-          ...this.dateFilters,
-          customer: this.authService.customerId,
-        })
-        .subscribe(
-          (data) => {
-            this.data = data;
-            this.countByStatusDoughnutChart = {
-              labels: Object.values(data.countByStatus).map(
-                ({ label }) => label
-              ),
-              datasets: [
-                {
-                  data: Object.values(data.countByStatus).map(
-                    ({ value }) => value
-                  ),
-                },
-              ],
-            };
-            this.countByTravelStatusDoughnutChart = {
-              labels: Object.values(data.countByTravelStatus).map(
-                ({ label }) => label
-              ),
-              datasets: [
-                {
-                  data: Object.values(data.countByTravelStatus).map(
-                    ({ value }) => value
-                  ),
-                },
-              ],
-            };
-            this.countByLoadTypeDoughnutChart = {
-              labels: Object.values(data.countByLoadType).map(
-                ({ label }) => label
-              ),
-              datasets: [
-                {
-                  data: Object.values(data.countByLoadType).map(
-                    ({ value }) => value
-                  ),
-                },
-              ],
-            };
-            // this.markers = data.lastPositions.map((position) => ({
-            //   lat: position.latitude,
-            //   lng: position.longitude,
-            // }));
-            // this.temperatureDoughnutChart = this.getTemperatureChartData(
-            //   data.lastPositions
-            // );
-            // this.speedLineChart = this.getSpeedChartData(data.lastPositions);
-            this.loading = false;
-          },
-          () => {
-            this.loading = false;
-          }
-        );
+    if (this.shouldShowGertranLogo) {
+      return;
     }
+
+    this.reportService
+      .getLogisticReport({
+        ...this.dateFilters,
+        customer: this.authService.customerId,
+      })
+      .subscribe(
+        (data) => {
+          this.data = data;
+          this.countByStatusDoughnutChart = {
+            labels: Object.values(data.countByStatus).map(
+              ({label}) => label
+            ),
+            datasets: [
+              {
+                data: Object.values(data.countByStatus).map(
+                  ({value}) => value
+                ),
+              },
+            ],
+          };
+          this.countByTravelStatusDoughnutChart = {
+            labels: Object.values(data.countByTravelStatus).map(
+              ({label}) => label
+            ),
+            datasets: [
+              {
+                data: Object.values(data.countByTravelStatus).map(
+                  ({value}) => value
+                ),
+              },
+            ],
+          };
+          this.countByLoadTypeDoughnutChart = {
+            labels: Object.values(data.countByLoadType).map(
+              ({label}) => label
+            ),
+            datasets: [
+              {
+                data: Object.values(data.countByLoadType).map(
+                  ({value}) => value
+                ),
+              },
+            ],
+          };
+          // this.markers = data.lastPositions.map((position) => ({
+          //   lat: position.latitude,
+          //   lng: position.longitude,
+          // }));
+          // this.temperatureDoughnutChart = this.getTemperatureChartData(
+          //   data.lastPositions
+          // );
+          // this.speedLineChart = this.getSpeedChartData(data.lastPositions);
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
   }
 
   get dateFilters(): {
@@ -167,8 +169,8 @@ export class LogisticReportComponent implements OnInit {
     }, initialData);
 
     return {
-      labels: Object.values(data).map(({ label }) => label),
-      datasets: [{ data: Object.values(data).map(({ value }) => value) }],
+      labels: Object.values(data).map(({label}) => label),
+      datasets: [{data: Object.values(data).map(({value}) => value)}],
     };
   }
 
@@ -225,11 +227,11 @@ export class LogisticReportComponent implements OnInit {
     }, initialData);
 
     return {
-      labels: Object.values(data).map(({ label }) => label),
+      labels: Object.values(data).map(({label}) => label),
       datasets: [
         {
           label: 'Velocidade',
-          data: Object.values(data).map(({ percentage }) => percentage),
+          data: Object.values(data).map(({percentage}) => percentage),
         },
       ],
     };
@@ -261,5 +263,11 @@ export class LogisticReportComponent implements OnInit {
     const [year, month, day] = lastStep.date.split('-');
 
     return `${day}/${month}/${year} ${lastStep.time}`;
+  }
+
+  get shouldShowGertranLogo(): boolean {
+    const pathname = window.location.pathname;
+
+    return this.authService.user?.isGertranStaff && pathname === '/dashboard/home';
   }
 }
