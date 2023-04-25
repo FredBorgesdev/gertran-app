@@ -13,23 +13,26 @@
       (generateReport)="generateReport($event)"
       [rows]="monitoringRequests"
       [fileName]="'Relatório de Solicitações'"
+      (valueChanges)="changeValue($event)"
+      [columnStyles]="columnStyles"
     ></app-base-customer-filter>
     <!--    <app-base-generic-filters-->
     <!--      (generateReport)="generateReport($event)"-->
     <!--    ></app-base-generic-filters>-->
 
     <nz-table
-      *ngIf="!syntheticReport"
+      *ngIf="reportFormat === 'analytic' || reportFormat === 'all'"
       #table
       [nzData]="monitoringRequests"
       nzBordered
       class="m-t-50"
       [nzFrontPagination]="false"
       nzTableLayout="fixed"
+      nzSize="small"
     >
       <thead>
       <tr>
-        <th>Código</th>
+        <th>ID</th>
         <th>Data</th>
         <th>Notas</th>
         <th>Placa</th>
@@ -37,9 +40,9 @@
         <th>Saída</th>
         <th>Chegada</th>
         <th>Operação</th>
-        <th>Tecnologia</th>
+        <th>Tec.</th>
         <th>Status</th>
-        <th>Valor da carga</th>
+        <th>Valor</th>
       </tr>
       </thead>
 
@@ -61,7 +64,7 @@
     </nz-table>
 
     <nz-table
-      *ngIf="syntheticReport"
+      *ngIf="reportFormat === 'synthetic' || reportFormat === 'all'"
       [nzData]="[1]"
       nzBordered
       class="m-t-50"
@@ -77,8 +80,8 @@
 
       <tbody>
       <tr>
-        <td>{{ syntheticReport.total }}</td>
-        <td>{{ syntheticReport.loadPriceTotal | reais }}</td>
+        <td>{{ syntheticReport?.total }}</td>
+        <td>{{ syntheticReport?.loadPriceTotal | reais }}</td>
       </tr>
       </tbody>
     </nz-table>

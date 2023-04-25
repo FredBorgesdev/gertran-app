@@ -14,6 +14,7 @@ import {AuthenticationService} from "../../../authentication/authentication.serv
 export enum ReportFormat {
   SYNTHETIC = 'synthetic',
   ANALYTIC = 'analytic',
+  ALL = 'all',
 }
 
 export type CustomerFilter = BasePeriodFilter & {
@@ -32,6 +33,7 @@ export class BaseCustomerFilterComponent implements OnInit {
   @Input() hideButtons = false;
   @Input() rows: any[];
   @Input() fileName = 'Report.xlsx';
+  @Input() columnStyles = {};
 
   validateForm: FormGroup;
   customers: Customer[] = [];
@@ -96,14 +98,15 @@ export class BaseCustomerFilterComponent implements OnInit {
   }
 
   generatePdf(): void {
-    const doc = new jsPDF();
+    const doc = new jsPDF('l', 'pt', 'a4');
 
     autoTable(doc, {
       html: 'table',
       didDrawPage: (data) => {
         doc.addImage('assets/images/logo/logogertran.png', 'PNG', 80, 10, 50, 50);
       },
-      margin: {top: 70}
+      margin: {top: 70},
+      columnStyles: this.columnStyles,
     });
 
     doc.save('table.pdf');

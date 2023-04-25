@@ -13,6 +13,13 @@ export class TravelRequestsComponent implements OnInit {
   isLoading = false;
   monitoringRequests: MonitoringRequests[] = [];
   syntheticReport: { total: number; loadPriceTotal: number; };
+  reportFormat: ReportFormat = ReportFormat.ANALYTIC;
+  columnStyles = {
+    5: {
+      cellWidth: 70,
+      fontSize: 8,
+    }
+  };
 
   constructor(
     private reportsService: ReportsService,
@@ -28,10 +35,7 @@ export class TravelRequestsComponent implements OnInit {
     this.reportsService.getMonitoringRequests(form).subscribe((monitoringRequests) => {
       this.monitoringRequests = monitoringRequests;
       this.isLoading = false;
-
-      if (form.reportFormat === ReportFormat.SYNTHETIC) {
-        this.calculateSyntheticReport(monitoringRequests);
-      }
+      this.calculateSyntheticReport(monitoringRequests);
     }, () => {
       this.isLoading = false;
       this.message.error('Ocorreu um erro ao gerar o relatório');
@@ -43,11 +47,11 @@ export class TravelRequestsComponent implements OnInit {
   }
 
   getInitialTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps[0]?.address;
+    return data.travelSteps?.[0]?.address;
   }
 
   getFinalTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps[data.travelSteps.length - 1]?.address;
+    return data.travelSteps?.[data.travelSteps.length - 1]?.address;
   }
 
   getInvoices(data: MonitoringRequests): string {
@@ -55,7 +59,7 @@ export class TravelRequestsComponent implements OnInit {
   }
 
   getTechnology(data: MonitoringRequests): string {
-    return data.truck?.vehicle.trackers[0]?.trackerModel?.trackerTechnology?.name;
+    return data.truck?.vehicle.trackers?.[0]?.trackerModel?.trackerTechnology?.name;
   }
 
   private calculateSyntheticReport(monitoringRequests: ReportsResults): void {
@@ -63,5 +67,9 @@ export class TravelRequestsComponent implements OnInit {
     const loadPriceTotal = monitoringRequests.reduce((acc, curr) => acc + Number(curr.loadValue), 0);
 
     this.syntheticReport = {total, loadPriceTotal};
+  }
+
+  changeValue(filters: CustomerFilter): void {
+    this.reportFormat = filters.reportFormat;
   }
 }
