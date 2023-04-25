@@ -13,6 +13,7 @@
       (generateReport)="generateReport($event)"
       [rows]="positions"
       [fileName]="'Posições do veiculo'"
+      [xlsxValues]="xlsxValues"
     ></app-base-vehicle-filter>
 
     <nz-table
@@ -29,6 +30,9 @@
         <th>Latitude</th>
         <th>Longitude</th>
         <th>Localização</th>
+        <th>Referencia</th>
+        <th>Ignição</th>
+        <th>Velocidade</th>
       </tr>
       </thead>
 
@@ -37,7 +41,10 @@
         <td>{{ data.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
         <td>{{ data.latitude }}</td>
         <td>{{ data.longitude }}</td>
+        <td>{{ data.street }}</td>
         <td>{{ data.pointReference }}</td>
+        <td>{{ data.ignition ? 'Ligado' : 'Desligado' }}</td>
+        <td>{{ data.speed }}</td>
       </tr>
       </tbody>
     </nz-table>

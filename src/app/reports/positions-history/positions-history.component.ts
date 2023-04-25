@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseVehicleFilter, CommandSentHistory, ReportsService} from '../reports.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Position} from '../../monitoring/positions.service';
+import {format} from "date-fns";
 
 @Component({
   selector: 'app-positions-history',
@@ -15,7 +16,8 @@ export class PositionsHistoryComponent implements OnInit {
   constructor(
     private reportsService: ReportsService,
     private message: NzMessageService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -31,4 +33,15 @@ export class PositionsHistoryComponent implements OnInit {
     });
   }
 
+  get xlsxValues(): any[] {
+    return this.positions.map((position) => ({
+      Data: format(new Date(position.positionDate), 'dd/MM/yyyy HH:mm:ss'),
+      Latitude: position.latitude,
+      Longitude: position.longitude,
+      Referencia: position.pointReference,
+      Localizacao: position.street,
+      Ignição: position.ignition ? 'Ligada' : 'Desligada',
+      'Velocidade (km/h)': position.speed,
+    }));
+  }
 }

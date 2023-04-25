@@ -23,6 +23,7 @@ export class BaseVehicleFilterComponent implements OnInit {
   @Input() hideButtons = false;
   @Input() rows: any[];
   @Input() fileName = 'relatorio';
+  @Input() xlsxValues: any[];
 
   validateForm: FormGroup;
 
@@ -72,7 +73,7 @@ export class BaseVehicleFilterComponent implements OnInit {
     }
     const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
 
-    this.xlsxExporterService.generate(fileNameWithPlate, this.rows);
+    this.xlsxExporterService.generate(fileNameWithPlate, this.xlsxValues);
   }
 
   generatePdf(): void {
