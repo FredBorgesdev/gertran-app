@@ -114,10 +114,14 @@ export class MonitoringRequestsTableComponent implements OnInit {
     status: PossibleStatus[string][0]
   ): void {
     this.isLoading = true;
+    const body: any = {
+      status: status.value,
+    };
+    if (body.status === Status.IN_PROGRESS) {
+      body.travelStatus = 'in_progress';
+    }
 
-    this.monitoringRequestService.update(item.id, {
-      status: status.value
-    } as MonitoringRequests).subscribe(() => {
+    this.monitoringRequestService.update(item.id, body as MonitoringRequests).subscribe(() => {
       this.isLoading = false;
       this.message.success('Status atualizado com sucesso!');
       this.refreshAll.emit();

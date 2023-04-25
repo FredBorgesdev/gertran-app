@@ -175,6 +175,13 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       status,
     };
 
+    if (
+      status === Status.IN_PROGRESS &&
+      this.monitoringRequest.data.travelStatus === 'none'
+    ) {
+      body.travelStatus = 'in_progress';
+    }
+
     this.isLoading = true;
     return this.monitoringRequestService.release(this.monitoringRequest.data.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
@@ -191,7 +198,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       if (this.monitoringRequest?.data?.status === Status.REPROVED) {
         this.possibleStatus = this.monitoringRequestService.possibleStatus[
           this.monitoringRequest?.data?.status
-        ];
+          ];
       }
 
       return;
@@ -199,6 +206,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
     this.possibleStatus = this.monitoringRequestService.possibleStatus[
       this.monitoringRequest?.data?.status
-    ] || [];
+      ] || [];
   }
 }
