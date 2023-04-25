@@ -15,14 +15,14 @@ export class IncidentsModalComponent implements OnInit {
   @Input() position: Position;
   isLoading = false;
   incidentsColumns = [
-    { title: 'Id' },
-    { title: 'Viagem' },
-    { title: 'Data' },
-    { title: 'Criado por' },
-    { title: 'Tipo' },
-    { title: 'Descrição' },
-    { title: 'Resolução' },
-    { title: 'Status' },
+    {title: 'Id'},
+    {title: 'Viagem'},
+    {title: 'Data'},
+    {title: 'Criado por'},
+    {title: 'Tipo'},
+    {title: 'Descrição'},
+    {title: 'Resolução'},
+    {title: 'Status'},
     // { title: 'Ações' }
   ];
 
@@ -31,7 +31,8 @@ export class IncidentsModalComponent implements OnInit {
   constructor(
     private service: IncidentsService,
     private modal: NzModalService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadIncidents();
@@ -81,7 +82,18 @@ export class IncidentsModalComponent implements OnInit {
       nzWidth: '80%',
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',
-      nzOnOk: (componentInstance) => componentInstance.save(),
+      nzOnOk: (componentInstance) => {
+        this.isLoading = true;
+        componentInstance.save({
+          success: () => {
+            this.loadIncidents();
+            this.isLoading = false;
+          },
+          error: () => {
+            this.isLoading = false;
+          }
+        });
+      },
     });
   }
 }
