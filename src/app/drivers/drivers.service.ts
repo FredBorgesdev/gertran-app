@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable, of} from 'rxjs';
 import {Customer} from '../customers/customers.service';
@@ -27,7 +27,8 @@ export interface Driver {
 })
 export class DriversService implements ApiService<Driver> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(
     pagination: Pagination,
@@ -36,7 +37,7 @@ export class DriversService implements ApiService<Driver> {
       search?: string;
     }
   ): Observable<GetAllResponse<Driver>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -49,11 +50,15 @@ export class DriversService implements ApiService<Driver> {
       params.search = filters.search;
     }
 
-    return this.http.get<GetAllResponse<Driver>>('drivers', { params });
+    return this.http.get<GetAllResponse<Driver>>('drivers', {params});
   }
 
   get(id: string): Observable<Driver> {
     return this.http.get<Driver>(`drivers/${id}`);
+  }
+
+  getByCpf(cpf: string): Observable<Driver> {
+    return this.http.get<Driver>(`drivers/${cpf}/info`);
   }
 
   save(body: Omit<Driver, 'id'>): Observable<Driver> {
@@ -70,9 +75,9 @@ export class DriversService implements ApiService<Driver> {
 
   getWorkingSituations(): Observable<Choice[]> {
     return of([
-      { value: 'fleet', label: 'Frota' },
-      { value: 'aggregate', label: 'Agregado' },
-      { value: 'third_party', label: 'Terceirizado' },
+      {value: 'fleet', label: 'Frota'},
+      {value: 'aggregate', label: 'Agregado'},
+      {value: 'third_party', label: 'Terceirizado'},
     ]);
   }
 
@@ -84,7 +89,7 @@ export class DriversService implements ApiService<Driver> {
   }
 
   private parseDatesToYearMonthDay(body: Omit<Driver, 'id'>): Omit<Driver, 'id'> {
-    const bodyCopy = { ...body };
+    const bodyCopy = {...body};
     const dateFields = ['cnhValidity', 'cnhFirstIssue', 'cnhEmission', 'admissionDate'];
     dateFields.forEach((field) => {
       if (bodyCopy[field]) {

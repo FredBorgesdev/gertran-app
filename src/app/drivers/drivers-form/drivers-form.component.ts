@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { conformToMask } from 'angular2-text-mask';
-import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
-import { Customer, CustomersService } from 'src/app/customers/customers.service';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {conformToMask} from 'angular2-text-mask';
+import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
+import {Customer, CustomersService} from 'src/app/customers/customers.service';
 import {Driver, DriversService} from '../drivers.service';
 import {Choice} from '../../shared/services/api.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
@@ -20,7 +20,8 @@ export class DriversFormComponent implements OnInit {
   workingSituations: Choice[] = [];
 
   @Input() driver: Driver;
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
+  @Output() driverChange: EventEmitter<any> = new EventEmitter<any>();
 
   validateForm: FormGroup;
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
@@ -35,10 +36,11 @@ export class DriversFormComponent implements OnInit {
     private service: DriversService,
     public selectableCustomerService: SelectableCustomerServiceService,
     public authService: AuthenticationService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    const { conformedValue: maskedCpf } = conformToMask(this.driver?.cpf, this.cpfMask, { guide: false });
+    const {conformedValue: maskedCpf} = conformToMask(this.driver?.cpf, this.cpfMask, {guide: false});
     const defaultCustomers = [this.authService.customerId].filter(Boolean);
 
     this.validateForm = this.formBuilder.group({
@@ -86,7 +88,7 @@ export class DriversFormComponent implements OnInit {
 
   save(): void {
     if (this.validateForm.valid) {
-      this.onSubmit.emit(this.validateForm.value);
+      this.submitForm.emit(this.validateForm.value);
     } else {
       Object.keys(this.validateForm.controls).forEach(key => {
         this.validateForm.controls[key].markAsDirty();
@@ -97,5 +99,31 @@ export class DriversFormComponent implements OnInit {
 
   listDrivers(): void {
     this.router.navigate(['/drivers/drivers-list']);
+  }
+
+  async filterDriverByCpf(): Promise<void> {
+    const cpf = this.validateForm.get('cpf').value.replace(/\D/g, '');
+    if (!cpf) {
+      return;
+    }
+
+    const {cpf: currentCf, ...driver} = await this.getByCpf(cpf);
+    if (!driver) {
+      return;
+    }
+
+    this.driverChange.emit(driver);
+    this.selectableCustomerService.concatCustomers(driver.customers);
+
+    this.validateForm.patchValue({
+      ...driver,
+      customers: driver.customers.map(
+        (customer) => customer.id
+      ).concat(this.authService.customerId).filter(Boolean),
+    });
+  }
+
+  private getByCpf(cpf: string): Promise<Driver> {
+    return this.service.getByCpf(cpf).toPromise().catch(() => null);
   }
 }

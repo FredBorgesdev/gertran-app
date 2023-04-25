@@ -14,9 +14,37 @@
         (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
         [nzDropdownRender]="selectLoading"
       >
-        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                   [nzValue]="customer.id"></nz-option>
       </nz-select>
     </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <div nz-row nzGutter="16" nzAlign="middle">
+      <div nz-col nzSpan="18">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">CPF</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CPF no formato 999.999.999-99">
+            <input
+              [textMask]="{ mask: cpfMask, guide: false }"
+              id="cpf"
+              type="text"
+              nz-input
+              formControlName="cpf"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="6">
+        <button
+          nz-button
+          nzType="primary"
+          (click)="filterDriverByCpf()"
+        >Buscar
+        </button>
+      </div>
+    </div>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
@@ -37,51 +65,41 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
-      <input id="name" type="text" nz-input formControlName="name" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="phoneNumber">Telefone</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-      <input
-        id="phoneNumber"
-        type="text"
-        nz-input
-        formControlName="phoneNumber"
-        [textMask]="{ mask: phoneNumberMask, guide: false }"
-      />
+      <input id="name" type="text" nz-input formControlName="name"/>
     </nz-form-control>
   </nz-form-item>
 
   <div nz-row nzGutter="16">
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">CPF</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CPF no formato 999.999.999-99">
-          <input
-            [textMask]="{ mask: cpfMask, guide: false }"
-            id="cpf"
-            type="text"
-            nz-input
-            formControlName="cpf"
-          />
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="rg">RG</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o RG no formato 99.999.999-99">
+          <input id="rg" type="text" nz-input formControlName="rg"/>
         </nz-form-control>
       </nz-form-item>
     </div>
-
     <div nz-col nzSpan="12">
       <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="rg">RG</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o RG no formato 99.999.999-99">
-          <input id="rg" type="text" nz-input formControlName="rg" />
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="phoneNumber">Telefone</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <input
+            id="phoneNumber"
+            type="text"
+            nz-input
+            formControlName="phoneNumber"
+            [textMask]="{ mask: phoneNumberMask, guide: false }"
+          />
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
   <nz-form-item>
-    <nz-form-label [nzRequired]="validateForm.value.workingSituation === 'working'" nzFor="admissionDate">Data de admissão</nz-form-label>
+    <nz-form-label [nzRequired]="validateForm.value.workingSituation === 'working'" nzFor="admissionDate">Data de
+      admissão
+    </nz-form-label>
     <nz-form-control nzErrorTip="Data inválida!">
-      <nz-date-picker style="width: 100%;" id="admissionDate" nzFormat="dd/MM/yyyy" formControlName="admissionDate"></nz-date-picker>
+      <nz-date-picker style="width: 100%;" id="admissionDate" nzFormat="dd/MM/yyyy"
+                      formControlName="admissionDate"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
   <div nz-row nzGutter="16">
@@ -89,7 +107,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhNumber">CNH</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-          <input id="cnhNumber" type="text" formControlName="cnhNumber" nz-input />
+          <input id="cnhNumber" type="text" formControlName="cnhNumber" nz-input/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -105,6 +123,7 @@
             <nz-option nzLabel="C" nzValue="C"></nz-option>
             <nz-option nzLabel="D" nzValue="D"></nz-option>
             <nz-option nzLabel="E" nzValue="E"></nz-option>
+            <nz-option nzLabel="AE" nzValue="AE"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -114,7 +133,8 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhValidity">CNH Validade</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-          <nz-date-picker style="width: 100%;" id="cnhValidity" nzFormat="dd/MM/yyyy" formControlName="cnhValidity"></nz-date-picker>
+          <nz-date-picker style="width: 100%;" id="cnhValidity" nzFormat="dd/MM/yyyy"
+                          formControlName="cnhValidity"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -126,7 +146,8 @@
       <nz-form-item>
         <nz-form-label nzRequired nzFor="cnhEmission">CNH Emissão</nz-form-label>
         <nz-form-control nzErrorTip="Data inválida!">
-          <nz-date-picker style="width: 100%;" id="cnhEmission" nzFormat="dd/MM/yyyy" formControlName="cnhEmission"></nz-date-picker>
+          <nz-date-picker style="width: 100%;" id="cnhEmission" nzFormat="dd/MM/yyyy"
+                          formControlName="cnhEmission"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -135,7 +156,8 @@
       <nz-form-item>
         <nz-form-label nzRequired nzFor="cnhFirstIssue">CNH Primeira Emissão</nz-form-label>
         <nz-form-control nzErrorTip="Data inválida!">
-          <nz-date-picker style="width: 100%;" id="cnhFirstIssue" nzFormat="dd/MM/yyyy" formControlName="cnhFirstIssue"></nz-date-picker>
+          <nz-date-picker style="width: 100%;" id="cnhFirstIssue" nzFormat="dd/MM/yyyy"
+                          formControlName="cnhFirstIssue"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>

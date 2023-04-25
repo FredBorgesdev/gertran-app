@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Driver, DriversService } from '../drivers.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {Driver, DriversService} from '../drivers.service';
 
 @Component({
   selector: 'app-drivers-driver',
@@ -19,7 +19,8 @@ export class DriversDriverComponent implements OnInit {
     private messageService: NzMessageService,
     private message: NzMessageService,
     private driversService: DriversService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadDriver();
@@ -53,7 +54,7 @@ export class DriversDriverComponent implements OnInit {
     };
   }
 
-  onSubmit(value: Driver) {
+  submitForm(value: Driver): void {
     this.isLoading = true;
 
     if (this.driver?.id) {
@@ -63,10 +64,15 @@ export class DriversDriverComponent implements OnInit {
       );
     } else {
       this.driversService.save(value).subscribe(
-        ({ id }) => this.handleSuccess(id),
+        ({id}) => this.handleSuccess(id),
         () => this.handleFailure()
       );
     }
+  }
+
+  changeDriver(value: Driver): void {
+    console.log(value)
+    this.driver = value;
   }
 
   listDrivers() {
