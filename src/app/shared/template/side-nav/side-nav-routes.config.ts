@@ -193,7 +193,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             queryParams: {
-              'navbar-closed': true
+              fullscreen: true,
             },
             submenu: [],
           },
@@ -204,7 +204,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             queryParams: {
-              'navbar-closed': true
+              fullscreen: true
             },
             submenu: [],
           }
