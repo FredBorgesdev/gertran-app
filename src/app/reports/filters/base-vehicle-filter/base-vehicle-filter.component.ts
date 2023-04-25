@@ -73,7 +73,8 @@ export class BaseVehicleFilterComponent implements OnInit {
     }
     const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
 
-    this.xlsxExporterService.generate(fileNameWithPlate, this.xlsxValues);
+    const values = this.xlsxValues.length > 0 ? this.xlsxValues : this.rows;
+    this.xlsxExporterService.generate(fileNameWithPlate, values);
   }
 
   generatePdf(): void {

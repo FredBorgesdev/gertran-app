@@ -91,7 +91,8 @@ export class BaseCustomerFilterComponent implements OnInit {
     }
     const fileNameWithCustomer = `${this.fileName} - ${this.selectedCustomerName}`;
 
-    this.xlsxExporterService.generate(fileNameWithCustomer, this.xlsxValues);
+    const values = this.xlsxValues.length > 0 ? this.xlsxValues : this.rows;
+    this.xlsxExporterService.generate(fileNameWithCustomer, values);
   }
 
   get selectedCustomerName(): string {
