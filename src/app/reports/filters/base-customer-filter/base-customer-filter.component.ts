@@ -34,6 +34,7 @@ export class BaseCustomerFilterComponent implements OnInit {
   @Input() rows: any[];
   @Input() fileName = 'Report.xlsx';
   @Input() columnStyles = {};
+  @Input() xlsxValues = [];
 
   validateForm: FormGroup;
   customers: Customer[] = [];
@@ -90,11 +91,14 @@ export class BaseCustomerFilterComponent implements OnInit {
     }
     const fileNameWithCustomer = `${this.fileName} - ${this.selectedCustomerName}`;
 
-    this.xlsxExporterService.generate(fileNameWithCustomer, this.rows);
+    this.xlsxExporterService.generate(fileNameWithCustomer, this.xlsxValues);
   }
 
   get selectedCustomerName(): string {
-    return this.customers.find((customer) => customer.id === this.validateForm.controls.customer.value)?.tradingName;
+    return this.selectableCustomerService.customers
+      .find(
+        (customer) => customer.id === this.validateForm.controls.customer.value
+      )?.tradingName;
   }
 
   generatePdf(): void {

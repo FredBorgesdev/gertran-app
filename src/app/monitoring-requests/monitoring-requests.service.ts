@@ -29,6 +29,7 @@ export enum Status {
 }
 
 export interface MonitoringRequests {
+  createdAt: string;
   loadingOrders: {
     id: string;
     ocrNumber: string;

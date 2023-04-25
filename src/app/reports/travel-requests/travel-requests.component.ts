@@ -3,6 +3,7 @@ import {ReportsResults, ReportsService} from '../reports.service';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {CustomerFilter, ReportFormat} from '../filters/base-customer-filter/base-customer-filter.component';
+import {format} from "date-fns";
 
 @Component({
   selector: 'app-travel-requests',
@@ -71,5 +72,22 @@ export class TravelRequestsComponent implements OnInit {
 
   changeValue(filters: CustomerFilter): void {
     this.reportFormat = filters.reportFormat;
+  }
+
+  get xlsxValues(): any[] {
+    return this.monitoringRequests.map((monitoringRequest) => {
+      return {
+        'Data criacao': format(new Date(monitoringRequest.createdAt), 'dd/MM/yyyy'),
+        Carga: monitoringRequest.loadValue,
+        Placas: this.getWagons(monitoringRequest),
+        Origem: this.getInitialTravelStep(monitoringRequest),
+        Destino: this.getFinalTravelStep(monitoringRequest),
+        NF: this.getInvoices(monitoringRequest),
+        Tecnologia: this.getTechnology(monitoringRequest),
+        Operacao: monitoringRequest.operation?.name,
+        Status: monitoringRequest.status,
+        Valor: monitoringRequest.loadValue,
+      };
+    });
   }
 }
