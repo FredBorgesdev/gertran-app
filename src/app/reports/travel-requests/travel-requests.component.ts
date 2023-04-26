@@ -79,7 +79,8 @@ export class TravelRequestsComponent implements OnInit {
       return {
         'Data criacao': format(new Date(monitoringRequest.createdAt), 'dd/MM/yyyy'),
         Carga: monitoringRequest.loadValue,
-        Placas: this.getWagons(monitoringRequest),
+        Cavalo: monitoringRequest.truck?.vehicle.plate,
+        Carretas: this.getWagons(monitoringRequest),
         Origem: this.getInitialTravelStep(monitoringRequest),
         Destino: this.getFinalTravelStep(monitoringRequest),
         NF: this.getInvoices(monitoringRequest),
