@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Route, RoutesService} from '../../routes/routes.service';
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
@@ -41,7 +41,8 @@ export class RoutesModalComponent implements OnInit {
     public selectableCustomerService: SelectableCustomerServiceService,
     private message: NzMessageService,
     public authService: AuthenticationService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     if (!this.authService.customerId) {
@@ -69,8 +70,8 @@ export class RoutesModalComponent implements OnInit {
   loadRoutes(url?: string): void {
     this.isLoading = true;
     this.routesService.getAll(
-      { url },
-      { hasPoints: true, description: this.searchDescriptionValue, customer: this.customer }
+      {url},
+      {description: this.searchDescriptionValue, customer: this.customer}
     ).subscribe(data => {
       this.routes = data;
       this.isLoading = false;

@@ -30,7 +30,7 @@
       <div
         class="col-lg-4 text-right"
         *ngIf="authService.user.hasPermission('route.add_route')">
-      >
+        >
         <button
           (click)="create()"
           nz-button
@@ -50,6 +50,7 @@
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
+      nzSize="small"
     >
       <thead>
       <tr>
@@ -65,7 +66,7 @@
         <td>{{item.distance}}</td>
         <td>{{item.averageSpeed}}</td>
         <td>{{item.durationInMinutes}}</td>
-        <td class="text-md-center">
+        <td class="d-flex">
           <a
             (click)="edit(item)"
             class="m-r-5"

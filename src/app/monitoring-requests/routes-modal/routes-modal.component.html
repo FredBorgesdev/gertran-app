@@ -12,7 +12,8 @@
       [(ngModel)]="customer"
       (ngModelChange)="loadRoutes()"
     >
-      <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+      <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                 [nzValue]="customer.id"></nz-option>
     </nz-select>
   </nz-form-control>
 </nz-form-item>
@@ -30,6 +31,7 @@
   [nzFrontPagination]="false"
   (nzQueryParams)="handleRoutesQueryParamsChange($event)"
   [nzLoading]="isLoading"
+  nzSize="small"
 >
   <thead>
   <tr>
@@ -38,7 +40,8 @@
     <th nzCustomFilter>
       Descrição
 
-      <nz-filter-trigger [(nzVisible)]="descriptionFilterVisible" [nzActive]="searchDescriptionValue.length > 0" [nzDropdownMenu]="menu">
+      <nz-filter-trigger [(nzVisible)]="descriptionFilterVisible" [nzActive]="searchDescriptionValue.length > 0"
+                         [nzDropdownMenu]="menu">
         <span nz-icon nzType="search" style="color: #5E99F6"></span>
       </nz-filter-trigger>
     </th>
@@ -65,8 +68,9 @@
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box p-15">
-      <input type="text" nz-input placeholder="Descrição" class="m-b-5" [(ngModel)]="searchDescriptionValue" />
-      <button nz-button nzSize="small" nzType="primary" class="m-r-10" (click)="search()" class="search-button">Buscar</button>
+      <input type="text" nz-input placeholder="Descrição" class="m-b-5" [(ngModel)]="searchDescriptionValue"/>
+      <button nz-button nzSize="small" nzType="primary" class="m-r-10" (click)="search()" class="search-button">Buscar
+      </button>
       <button nz-button nzSize="small" (click)="reset()">Resetar</button>
     </div>
   </div>
