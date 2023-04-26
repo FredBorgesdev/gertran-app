@@ -29,8 +29,8 @@
 
       <div
         class="col-lg-4 text-right"
-        *ngIf="authService.user.hasPermission('route.add_route')">
-        >
+        *ngIf="authService.user.hasPermission('route.add_route')"
+      >
         <button
           (click)="create()"
           nz-button
