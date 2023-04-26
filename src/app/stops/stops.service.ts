@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -40,7 +40,8 @@ export enum PointTypes {
 })
 export class StopsService implements ApiService<Stop> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(
     pagination: Pagination,
@@ -49,7 +50,7 @@ export class StopsService implements ApiService<Stop> {
       name?: string;
     }
   ): Observable<GetAllResponse<Stop>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -62,7 +63,7 @@ export class StopsService implements ApiService<Stop> {
       params.name = filters.name;
     }
 
-    return this.http.get<GetAllResponse<Stop>>('settings/points', { params });
+    return this.http.get<GetAllResponse<Stop>>('settings/points', {params});
   }
 
   get(id: string): Observable<Stop> {

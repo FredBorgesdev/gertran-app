@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TransferItem, TransferSearchChange} from 'ng-zorro-antd/transfer';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Stop, StopsService} from '../../stops/stops.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
@@ -47,7 +47,7 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
     this.selectableCustomerService.init();
 
     this.searchPointsSubject.pipe(debounceTime(1000)).subscribe((params: TransferSearchChange) => {
-      this.loadPointsFromCustomer(undefined, { name: params.value });
+      this.loadPointsFromCustomer(undefined, {name: params.value});
     });
   }
 
@@ -66,7 +66,7 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
 
   performResourceChange(): void {
     if (this.points.length === 0) {
-      this.stopsService.getAll({ limit: 50 }).subscribe((stops) => {
+      this.stopsService.getAll({limit: 15}).subscribe((stops) => {
         this.points = this.mapStopsToTransferItems([
           ...this.resource.points.map((point) => point.point),
           ...stops.results
@@ -142,7 +142,7 @@ export class RoutesFormComponent extends BaseCrudFormComponent<Route> implements
       customer: this.validateForm.get('customer').value,
       name: filters?.name,
     }).subscribe((stops) => {
-      this.points = this.mapStopsToTransferItems(stops.results);
+      this.points = this.mapStopsToTransferItems(stops.results).concat(this.selectedPoints);
       this.pointsResponse = stops;
       this.pointsLoading = false;
     }, () => {
