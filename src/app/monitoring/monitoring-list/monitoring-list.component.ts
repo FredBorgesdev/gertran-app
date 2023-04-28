@@ -69,6 +69,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   monitoringData$: Observable<GetAllResponse<Position>>;
   monitoringData: Position[] = null;
   alertsCount: AlertCount = null;
+  refreshPositions = new EventEmitter();
 
   customers: Customer[] = [];
   terminals: Terminals[] = [];
@@ -128,6 +129,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     );
 
     this.refreshAlertCount.subscribe(() => this.setAlertsCount());
+    this.refreshPositions.subscribe(() => this.subscribeToMonitoringData());
 
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
@@ -283,10 +285,15 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.modal.create({
       nzTitle: 'Solicitação de monitoramento',
       nzContent: MonitoringRequestsCheckListComponent,
-      nzComponentParams: {monitoringRequestId: id, readOnly: true, showFooter: true},
+      nzComponentParams: {
+        monitoringRequestId: id,
+        readOnly: true,
+        showFooter: true,
+      },
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
+      nzAfterClose: this.refreshPositions,
     });
   }
 

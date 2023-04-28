@@ -162,7 +162,9 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   save(status: string): Promise<void> {
-    const hasInvalidForm = this.checklistForm.invalid || this.checklistBaitForm.invalid || this.validateForm.invalid;
+    const hasInvalidForm = this.checklistForm.invalid ||
+      this.checklistBaitForm.invalid ||
+      this.validateForm.invalid;
     if (hasInvalidForm) {
       this.message.error('Preencha os dados corretamente.');
       return;
