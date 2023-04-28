@@ -19,7 +19,7 @@
     <nz-divider></nz-divider>
 
     <form nzLayout="vertical" nz-form [formGroup]="validateForm">
-      <nz-form-item>
+      <nz-form-item *ngIf="!authService.customerId">
         <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
           <nz-select
