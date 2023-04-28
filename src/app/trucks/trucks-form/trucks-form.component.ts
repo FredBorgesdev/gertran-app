@@ -93,4 +93,10 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
   log($event: Event) {
     console.log($event);
   }
+
+  protected handleSuccess(response?: any): void {
+    this.message.success('Registro salvo com sucesso');
+    this.router.navigate(['trucks', 'trucks-edit', response.id]);
+    this.isLoading = false;
+  }
 }

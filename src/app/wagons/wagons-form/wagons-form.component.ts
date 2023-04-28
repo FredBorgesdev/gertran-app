@@ -63,4 +63,10 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
   list(): void {
     this.router.navigate(['/wagons/wagons-list']);
   }
+
+  protected handleSuccess(response?: any): void {
+    this.message.success('Registro salvo com sucesso');
+    this.router.navigate(['wagons', 'wagons-edit', response.id]);
+    this.isLoading = false;
+  }
 }
