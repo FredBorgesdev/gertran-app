@@ -11,6 +11,7 @@ import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.servic
 import {NzMessageService} from 'ng-zorro-antd/message';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import {AuthenticationService} from "../../../authentication/authentication.service";
 
 @Component({
   selector: 'app-base-vehicle-filter',
@@ -34,20 +35,27 @@ export class BaseVehicleFilterComponent implements OnInit {
     public selectableCustomerService: SelectableCustomerServiceService,
     private xlsxExporterService: XlsxExporterService,
     private message: NzMessageService,
+    private authService: AuthenticationService,
   ) {
   }
 
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
-      customer: [null, [Validators.required]],
+      customer: [this.authService.customerId || null, [Validators.required]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
       plate: [null, []],
     });
 
     this.i18n.setLocale(en_US);
-    this.selectableCustomerService.init();
     this.selectableTrucksService.setupSearch();
+
+    if (this.authService.user.customer) {
+      this.selectableCustomerService.concatCustomers(this.authService.user.customer);
+      this.loadVehicles(this.authService.customerId);
+    } else {
+      this.selectableCustomerService.init();
+    }
   }
 
   emitGenerateReport(): void {
