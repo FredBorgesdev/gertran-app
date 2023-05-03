@@ -467,8 +467,10 @@ export class ReportsService {
       from_date: form.from,
       to_date: form.to,
       customer: form.customer,
-      plate: form.plate,
     };
+    if (form.plate) {
+      filtersParams.plate = form.plate;
+    }
     const params = new HttpParams({
       fromObject: filtersParams
     });
