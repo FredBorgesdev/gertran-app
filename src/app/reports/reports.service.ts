@@ -234,6 +234,43 @@ export type FatigueReport = {
   level: any
 };
 
+export type IncidentReport = {
+  id: string
+  incident_type: {
+    id: string
+    type: string
+    instructions: string
+    require_tracker_action: boolean
+    require_driver_action: boolean
+    require_shipper_action: boolean
+    require_immediate_action: boolean
+    require_federal_police_action: boolean
+    require_additional_information: boolean
+    require_optional_email: boolean
+  }
+  solved_by: any
+  was_added_by_automation: boolean
+  datetime: string
+  incident_datetime: string
+  incident_location: string
+  incident_latitude: number
+  incident_longitude: number
+  driver_name: string
+  driver_phone: string
+  driver_contacted_at: any
+  shipper_name: string
+  shipper_contacted_at: any
+  was_immediate_action_approved: any
+  immediate_action_responsible_name: any
+  immediate_action_taken_at: any
+  was_federal_police_action_needed: any
+  federal_police_action_responsible_name: any
+  federal_police_action_taken_at: any
+  additional_information: any
+  optional_email: any
+  was_solved: boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -491,5 +528,21 @@ export class ReportsService {
     });
 
     return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', {params});
+  }
+
+  getIncidentsReport(form: BaseVehicleFilter): Observable<IncidentReport[]> {
+    const fromObject: any = {
+      from_date: form.from,
+      to_date: form.to,
+      customer: form.customer,
+    };
+    if (form.plate) {
+      fromObject.plate = form.plate;
+    }
+    const params = new HttpParams({
+      fromObject
+    });
+
+    return this.http.get<IncidentReport[]>('reports/events/incidents?1=1', {params});
   }
 }

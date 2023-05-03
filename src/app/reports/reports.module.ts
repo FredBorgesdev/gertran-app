@@ -44,6 +44,7 @@ import {FatigueReportComponent} from './fatigue-report/fatigue-report.component'
 import {MonitoringRequestsComponent} from './dashboards/monitoring-requests/monitoring-requests.component';
 import {MonitoringRequestsModule} from "../monitoring-requests/monitoring-requests.module";
 import { ChecklistsComponent } from './dashboards/checklists/checklists.component';
+import { IncidentsComponent } from './incidents/incidents.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { ChecklistsComponent } from './dashboards/checklists/checklists.componen
     FatigueReportComponent,
     MonitoringRequestsComponent,
     ChecklistsComponent,
+    IncidentsComponent,
   ],
   exports: [
     WorkdayComponent

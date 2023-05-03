@@ -447,6 +447,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
+      {
+        path: '/reports/incidents',
+        title: 'Relatório de ocorrências',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
     ]
   },
   {

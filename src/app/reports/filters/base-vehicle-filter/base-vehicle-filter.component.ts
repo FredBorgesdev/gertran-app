@@ -50,11 +50,13 @@ export class BaseVehicleFilterComponent implements OnInit {
     this.i18n.setLocale(en_US);
     this.selectableTrucksService.setupSearch();
 
+    if (this.authService.user.isGertranStaff) {
+      this.selectableCustomerService.init();
+    }
+
     if (this.authService.user.customer) {
       this.selectableCustomerService.concatCustomers(this.authService.user.customer);
       this.loadVehicles(this.authService.customerId);
-    } else {
-      this.selectableCustomerService.init();
     }
   }
 

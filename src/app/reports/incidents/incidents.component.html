@@ -1,0 +1,47 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Histórico de Checklist</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-vehicle-filter
+      (generateReport)="generateReport($event)"
+      [rows]="incidents"
+      fileName="Histórico de Checklist"
+    ></app-base-vehicle-filter>
+
+    <nz-table
+      #table
+      [nzData]="incidents"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Data/hora</th>
+        <th>Local</th>
+        <th>Lat/lng</th>
+        <th>Motorista</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>
+          {{ data.datetime | date: 'dd/MM/yyyy HH:mm' }}
+        </td>
+        <td>{{ data.incidentLocation }}</td>
+        <td>{{ data.incidentLatitude }} / {{ data.incidentLongitude }}</td>
+        <td>{{ data.driverName }} / {{ data.driverPhone }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>
