@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BasePeriodFilter, ChecklistHistory, ReportsService} from '../reports.service';
+import {BasePeriodFilter, BaseVehicleFilter, ChecklistHistory, ReportsService} from '../reports.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
@@ -20,7 +20,7 @@ export class ChecklistHistoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  generateReport(form: BasePeriodFilter): void {
+  generateReport(form: BaseVehicleFilter): void {
     this.isLoading = true;
 
     this.reportsService.getChecklistHistory(form).subscribe(response => {

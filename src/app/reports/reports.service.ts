@@ -425,11 +425,12 @@ export class ReportsService {
     return this.http.get<MacroVehicleReport[]>('reports/events/analytical?1=1', {params});
   }
 
-  getChecklistHistory(form: BasePeriodFilter): Observable<ChecklistHistory[]> {
+  getChecklistHistory(form: BaseVehicleFilter): Observable<ChecklistHistory[]> {
     const filtersParams: any = {
       from_date: form.from,
       to_date: form.to,
       customer: form.customer,
+      plate: form.plate,
     };
     const params = new HttpParams({
       fromObject: filtersParams
@@ -477,7 +478,7 @@ export class ReportsService {
       fromObject: filtersParams
     });
 
-    return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', { params });
+    return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', {params});
   }
 
   getFatigueReport(form: BaseVehicleFilter): Observable<FatigueReport[]> {
@@ -489,6 +490,6 @@ export class ReportsService {
       }
     });
 
-    return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', { params });
+    return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', {params});
   }
 }
