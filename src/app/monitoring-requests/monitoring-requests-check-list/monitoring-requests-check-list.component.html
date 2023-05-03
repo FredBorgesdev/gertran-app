@@ -53,6 +53,34 @@
     </nz-descriptions-item>
   </nz-descriptions>
 
+  <div>
+    <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-15">
+      Rastreadores
+    </div>
+
+    <nz-table
+      #trackersTable
+      nzSize="small"
+      [nzData]="monitoringRequest?.data.truck.vehicle.trackers ?? []"
+      [nzShowPagination]="false"
+    >
+      <thead>
+      <tr>
+        <th class="text-left">Tecnologia</th>
+        <th class="text-right">Num de serie</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let tracker of trackersTable.data">
+        <td class="text-left">{{tracker.trackerModel.trackerTechnology.name}}</td>
+        <td class="text-right">
+          {{tracker.trackerId}}
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
   <nz-descriptions nzTitle="Viagem" nzBordered nzSize="small" class="m-t-15">
     <nz-descriptions-item nzTitle="Operação">
       {{monitoringRequest?.data?.operation?.name}}
