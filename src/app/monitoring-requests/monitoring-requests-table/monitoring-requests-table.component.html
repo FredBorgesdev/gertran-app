@@ -45,7 +45,7 @@
     </td>
     <td class="d-flex">
       <a
-        *ngIf="!['draft', 'reproved'].includes(item.status)"
+        *ngIf="!['draft'].includes(item.status)"
         (click)="view.emit(item)"
         class="m-r-5"
         nz-button
