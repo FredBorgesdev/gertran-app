@@ -265,7 +265,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: Permissions.REPORTS_VIEW_MONITORING_REQUEST_REPORT
           },
           {
             path: '/reports/available-vehicles',
