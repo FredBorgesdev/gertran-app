@@ -57,9 +57,6 @@ const routes: Routes = [
   {
     path: 'travel-requests',
     component: TravelRequestsComponent,
-    data: {
-      permission: Permissions.REPORTS_VIEW_MONITORING_REQUEST_REPORT
-    }
   },
   {
     path: 'available-vehicles',
