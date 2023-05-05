@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {MonitoringRequestsService, MonitoringRequests} from '../monitoring-requests.service';
+import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-requests.service';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Stop, StopsService} from '../../stops/stops.service';
@@ -18,6 +18,7 @@ import {createNumberMask} from 'text-mask-addons';
 import {SelectableTruckService} from '../../trucks/selectable-truck.service';
 import {SelectableWagonService} from '../../wagons/selectable-wagon.service';
 import {SelectableDriversService} from '../../drivers/selectable-drivers.service';
+import {SharedOperationsItem, SharedOperationsService} from "../../customers/shared-operations.service";
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -31,6 +32,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   monitoringRequests: Choice[] = [];
 
   operations: Operations[] = [];
+  sharedOperations: SharedOperationsItem[] = [];
 
   driversNextUrl: string;
   trucksNextUrl: string;
@@ -59,6 +61,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     public selectableWagonService: SelectableWagonService,
     public selectableDriverService: SelectableDriversService,
     public authService: AuthenticationService,
+    private sharedOperationsService: SharedOperationsService,
     activatedRoute: ActivatedRoute,
     service: MonitoringRequestsService,
     message: NzMessageService,
@@ -111,6 +114,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       truck: [null, []],
       wagons: [[], []],
       operation: [null, []],
+      sharedOperation: [null, []],
       loadDescription: [null, []],
       loadValue: [null, []],
       loadType: [null, []],
@@ -125,11 +129,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {
       this.operations = [];
       this.loadMoreOperations();
+      this.loadSharedOperations();
     });
     this.validateForm.get('shipper').valueChanges.subscribe((value) => {
       if (this.showShipperSelect) {
         this.operations = [];
         this.loadMoreOperations();
+        this.loadSharedOperations();
       }
     });
   }
@@ -180,6 +186,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       });
     }
 
+    if (this.resource?.sharedOperation) {
+      this.sharedOperations = [this.resource?.sharedOperation, ...this.sharedOperations];
+    }
+
     this.validateForm.patchValue({
       shipper: this.resource.shipper?.id,
       transporter: this.resource.transporter?.id,
@@ -187,6 +197,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       auxiliaryDriver: this.resource.auxiliaryDriver?.id,
       truck: this.resource.truck?.id,
       operation: this.resource.operation?.id,
+      sharedOperation: this.resource.sharedOperation?.id,
       wagons: this.resource.wagons?.map((wagon) => wagon.id),
       loadValue: this.resource.loadValue ? this.resource.loadValue.toString().replace('.', ',') : null,
     });
@@ -219,11 +230,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   loadMoreOperations(): void {
-    const transporterId = this.validateForm.get('transporter').value?.id ||
-      this.validateForm.get('transporter').value;
-    const shipperId = this.validateForm.get('shipper').value?.id ||
-      this.validateForm.get('shipper').value;
-    const customerId = shipperId || transporterId;
+    const customerId = this.getCustomerId();
 
     if (!customerId) {
       return;
@@ -243,7 +250,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   get surveyConductedRowSpan(): number {
-    return this.validateForm.controls.surveyConductedBy.value === 'others' ? 8 : 12;
+    return this.validateForm.controls.surveyConductedBy.value === 'others' ? 12 : 24;
   }
 
   get shouldShowSurveyConductorInput(): boolean {
@@ -275,5 +282,26 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
     this.selectableWagonService.searchByPlate({
       plate,
     });
+  }
+
+  private loadSharedOperations(): void {
+    const customerId = this.getCustomerId();
+
+    if (!customerId) {
+      return;
+    }
+
+    this.sharedOperationsService.getAll({}, customerId).subscribe((operations) => {
+      this.sharedOperations = operations.results;
+    });
+  }
+
+  private getCustomerId(): string {
+    const transporterId = this.validateForm.get('transporter').value?.id ||
+      this.validateForm.get('transporter').value;
+    const shipperId = this.validateForm.get('shipper').value?.id ||
+      this.validateForm.get('shipper').value;
+
+    return shipperId || transporterId;
   }
 }

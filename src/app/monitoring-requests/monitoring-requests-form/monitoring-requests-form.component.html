@@ -64,7 +64,8 @@
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >
-              <nz-option *ngFor="let driver of selectableDriverService.drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
+              <nz-option *ngFor="let driver of selectableDriverService.drivers" [nzLabel]="driver.name"
+                         [nzValue]="driver.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -83,7 +84,8 @@
               (ngModelChange)="saveDraft('auxiliaryDriver')"
               [disabled]="disabled"
             >
-              <nz-option *ngFor="let driver of selectableDriverService.drivers" [nzLabel]="driver.name" [nzValue]="driver.id"></nz-option>
+              <nz-option *ngFor="let driver of selectableDriverService.drivers" [nzLabel]="driver.name"
+                         [nzValue]="driver.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -108,7 +110,8 @@
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >
-              <nz-option *ngFor="let truck of selectableTruckService.trucks" [nzLabel]="truck.vehicle.plate" [nzValue]="truck.id"></nz-option>
+              <nz-option *ngFor="let truck of selectableTruckService.trucks" [nzLabel]="truck.vehicle.plate"
+                         [nzValue]="truck.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -130,7 +133,8 @@
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
             >
-              <nz-option *ngFor="let wagon of selectableWagonService.wagons" [nzLabel]="wagon.vehicle.plate" [nzValue]="wagon.id"></nz-option>
+              <nz-option *ngFor="let wagon of selectableWagonService.wagons" [nzLabel]="wagon.vehicle.plate"
+                         [nzValue]="wagon.id"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>
@@ -139,7 +143,7 @@
 
     <nz-form-item>
       <div nz-row nzGutter="6">
-        <div nz-col [nzSpan]="surveyConductedRowSpan">
+        <div nz-col [nzSpan]="12">
           <nz-form-label [nzSpan]="null" nzFor="operation">Operação</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
             <nz-select
@@ -157,6 +161,30 @@
             </nz-select>
           </nz-form-control>
         </div>
+        <div nz-col [nzSpan]="12">
+          <nz-form-label [nzSpan]="null" nzFor="sharedOperation">Operação Compartilhada</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="sharedOperation"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma operação comp."
+              formControlName="sharedOperation"
+              (ngModelChange)="saveDraft('sharedOperation')"
+              [disabled]="disabled"
+              [nzDropdownRender]="selectLoading"
+            >
+              <nz-option *ngFor="let operation of sharedOperations"
+                         [nzLabel]="operation.name + ' - ' + operation.email"
+                         [nzValue]="operation.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+
+    <nz-form-item>
+      <div nz-row nzGutter="6">
         <div nz-col [nzSpan]="surveyConductedRowSpan">
           <nz-form-label nzFor="surveyConductedBy">Pesquisa cadastral realizada por</nz-form-label>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">

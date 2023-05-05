@@ -10,6 +10,7 @@ import {ArmedGuard} from './armed-guard.service';
 import {Bait} from './baits.service';
 import {Terminals} from '../terminals/terminals.service';
 import {Checklist} from '../checklists/checklists.service';
+import {SharedOperationsItem} from "../customers/shared-operations.service";
 
 export enum Status {
   DRAFT = 'draft',
@@ -83,6 +84,7 @@ export interface MonitoringRequests {
     id: string;
     name: string;
   };
+  sharedOperation: SharedOperationsItem;
   routeCoordinates: any[];
   travelSteps: any[];
   checklist: Checklist;
