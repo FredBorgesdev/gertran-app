@@ -85,6 +85,9 @@
     <nz-descriptions-item nzTitle="Operação">
       {{monitoringRequest?.data?.operation?.name}}
     </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Operação Compartilhada">
+      {{monitoringRequest?.data?.sharedOperation?.name}} - {{monitoringRequest?.data?.sharedOperation?.email}}
+    </nz-descriptions-item>
     <nz-descriptions-item nzTitle="Ordem de carregamento / OCR">
       {{monitoringRequest?.ocrNumber}}
     </nz-descriptions-item>
