@@ -53,6 +53,12 @@
         </ng-template>
       </nz-tab>
 
+      <nz-tab nzTitle="Operações compartilhadas" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-shared-operations-tab *ngIf="customer?.id" [customer]="customer"></app-shared-operations-tab>
+        </ng-template>
+      </nz-tab>
+
       <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
         <ng-template nz-tab>
           <app-documents-tab

@@ -17,6 +17,9 @@ import {PermissionsModule} from '../permissions/permissions.module';
 import { CustomersTransferComponent } from './customers-transfer/customers-transfer.component';
 import {NzTransferModule} from 'ng-zorro-antd/transfer';
 import {WorkdaysModule} from '../workdays/workdays.module';
+import { SharedOperationsTabComponent } from './shared-operations-tab/shared-operations-tab.component';
+import { SharedOperationsFormComponent } from './shared-operations-form/shared-operations-form.component';
+import { SharedOperationsTableComponent } from './shared-operations-table/shared-operations-table.component';
 
 const antdModule = [
   NzTransferModule,
@@ -35,6 +38,9 @@ const antdModule = [
     CustomersCustomerComponent,
     AddressesFormComponent,
     CustomersTransferComponent,
+    SharedOperationsTabComponent,
+    SharedOperationsFormComponent,
+    SharedOperationsTableComponent,
   ],
   imports: [
     SharedModule,
