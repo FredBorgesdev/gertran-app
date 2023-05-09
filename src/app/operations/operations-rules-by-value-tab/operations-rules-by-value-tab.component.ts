@@ -1,9 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { createNumberMask } from 'text-mask-addons';
+import {createNumberMask} from 'text-mask-addons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {Router} from '@angular/router';
-import {OperationRuleByPriceValue, OperationsRulesByPriceValueService} from '../operations-rules-by-price-value.service';
+import {
+  OperationRuleByPriceValue,
+  OperationsRulesByPriceValueService
+} from '../operations-rules-by-price-value.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {Choice} from '../../shared/services/api.service';
@@ -30,11 +33,11 @@ export class OperationsRulesByValueTabComponent extends BaseCrudListComponent<an
   });
 
   operationsRulesColumns = [
-    { title: 'Valor Mínimo' },
-    { title: 'Valor Máximo' },
-    { title: 'Redundância Mínima' },
-    { title: 'Guarda Armada' },
-    { title: 'Isca' },
+    {title: 'Valor Mínimo'},
+    {title: 'Valor Máximo'},
+    {title: 'Redundância Mínima'},
+    {title: 'Guarda Armada'},
+    {title: 'Isca'},
   ];
 
   constructor(
@@ -75,8 +78,8 @@ export class OperationsRulesByValueTabComponent extends BaseCrudListComponent<an
     }
 
     this.isLoading = true;
-    const unmaskedMinimumPriceValue = this.validateForm.controls.minimumPriceValue.value.replace('R$ ', '').replace('.', '').replace(',', '.');
-    const unmaskedMaximumPriceValue = this.validateForm.controls.maximumPriceValue.value.replace('R$ ', '').replace('.', '').replace(',', '.');
+    const unmaskedMinimumPriceValue = this.validateForm.controls.minimumPriceValue.value.replace('R$ ', '').replaceAll('.', '').replace(',', '.');
+    const unmaskedMaximumPriceValue = this.validateForm.controls.maximumPriceValue.value.replace('R$ ', '').replaceAll('.', '').replace(',', '.');
     const payload = {
       ...this.validateForm.value,
       minimumPriceValue: unmaskedMinimumPriceValue,
