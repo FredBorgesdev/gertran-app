@@ -98,14 +98,13 @@ export class IncidentsModalComponent implements OnInit {
 
   openIncidentDetailsModal(incident: Incident): void {
     this.modal.create({
-      nzTitle: 'Detalhes do incidente',
+      nzTitle: 'Detalhes da ocorrência',
       nzContent: IncidentDetailsModalComponent,
       nzComponentParams: {
         incident
       },
       nzWidth: '80%',
-      nzOkText: null,
-      nzCancelText: 'Fechar',
+      nzFooter: null,
     });
   }
 }

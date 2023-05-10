@@ -26,9 +26,11 @@
       <thead>
       <tr>
         <th>Data/hora</th>
+        <th>Placa</th>
         <th>Local</th>
         <th>Lat/lng</th>
         <th>Motorista</th>
+        <th>Ações</th>
       </tr>
       </thead>
 
@@ -37,9 +39,15 @@
         <td>
           {{ data.datetime | date: 'dd/MM/yyyy HH:mm' }}
         </td>
+        <td>{{ data.monitoringRequest.truck.vehicle.plate }}</td>
         <td>{{ data.incidentLocation }}</td>
         <td>{{ data.incidentLatitude }} / {{ data.incidentLongitude }}</td>
         <td>{{ data.driverName }} / {{ data.driverPhone }}</td>
+        <td>
+          <button nz-button nzType="link" (click)="openIncidentDetailModal(data)">
+            <i nz-icon nzType="eye"></i>
+          </button>
+        </td>
       </tr>
       </tbody>
     </nz-table>
