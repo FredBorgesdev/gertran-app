@@ -20,24 +20,32 @@
   [nzLoading]="isLoading"
 >
   <thead>
-    <tr>
-      <th *ngFor="let column of incidentsColumns">
-        {{ column.title }}
-      </th>
-    </tr>
+  <tr>
+    <th *ngFor="let column of incidentsColumns">
+      {{ column.title }}
+    </th>
+  </tr>
   </thead>
 
   <tbody>
-    <tr *ngFor="let incident of incidentsTable.data">
-      <td>{{ incident.id | id }}</td>
-      <td>{{ position.monitoringRequest.id | id }}</td>
-      <td>{{ incident.datetime | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td>{{ incident.wasAddedByAutomation ? 'Automação' : 'Operador' }}</td>
-      <td>{{ incident.incidentType.type }}</td>
-      <td>{{ incident.incidentLocation + ' ' + incident.additionalInformation }}</td>
-      <td>{{ incident.wasSolved ? 'Sim' : 'Não' }}</td>
-      <td></td>
-    </tr>
+  <tr *ngFor="let incident of incidentsTable.data">
+    <td>{{ incident.id | id }}</td>
+    <td>{{ position.monitoringRequest.id | id }}</td>
+    <td>{{ incident.datetime | date: 'dd/MM/yyyy HH:mm' }}</td>
+    <td>{{ incident.wasAddedByAutomation ? 'Automação' : 'Operador' }}</td>
+    <td>{{ incident.incidentType.type }}</td>
+    <td>{{ incident.incidentLocation + ' ' + incident.additionalInformation }}</td>
+    <td>
+      <button
+        nz-button
+        nzType="link"
+        nzSize="small"
+        (click)="openIncidentDetailsModal(incident)"
+      >
+        <i nz-icon nzType="eye"></i>
+      </button>
+    </td>
+  </tr>
   </tbody>
 
 </nz-table>

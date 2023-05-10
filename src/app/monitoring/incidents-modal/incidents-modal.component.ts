@@ -5,6 +5,7 @@ import {GetAllResponse, getCurrentPage, replaceOffsetWithPage} from '../../share
 import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {CreateIncidentModalComponent} from '../../incidents/create-incident-modal/create-incident-modal.component';
+import {IncidentDetailsModalComponent} from "../incident-details-modal/incident-details-modal.component";
 
 @Component({
   selector: 'app-incidents-modal',
@@ -21,9 +22,7 @@ export class IncidentsModalComponent implements OnInit {
     {title: 'Criado por'},
     {title: 'Tipo'},
     {title: 'Descrição'},
-    {title: 'Resolução'},
-    {title: 'Status'},
-    // { title: 'Ações' }
+    {title: 'Ações'}
   ];
 
   incidents: GetAllResponse<Incident>;
@@ -94,6 +93,19 @@ export class IncidentsModalComponent implements OnInit {
           }
         });
       },
+    });
+  }
+
+  openIncidentDetailsModal(incident: Incident): void {
+    this.modal.create({
+      nzTitle: 'Detalhes do incidente',
+      nzContent: IncidentDetailsModalComponent,
+      nzComponentParams: {
+        incident
+      },
+      nzWidth: '80%',
+      nzOkText: null,
+      nzCancelText: 'Fechar',
     });
   }
 }

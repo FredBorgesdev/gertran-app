@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
+import {MonitoringRequests} from "../monitoring-requests/monitoring-requests.service";
 
 export interface IncidentType {
   id: string;
@@ -40,6 +41,7 @@ export interface Incident {
   additionalInformation?: any;
   optionalEmail?: any;
   wasSolved: boolean;
+  monitoringRequest: MonitoringRequests;
 }
 
 @Injectable({
@@ -47,13 +49,14 @@ export interface Incident {
 })
 export class IncidentsService implements ApiService<Incident> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(
     pagination: Pagination,
     filters?: { monitoringRequest: string }
   ): Observable<GetAllResponse<Incident>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -63,7 +66,7 @@ export class IncidentsService implements ApiService<Incident> {
       params.monitoring_request = filters.monitoringRequest;
     }
 
-    return this.http.get<GetAllResponse<Incident>>('incidents', { params });
+    return this.http.get<GetAllResponse<Incident>>('incidents', {params});
   }
 
   get(id: string, ...params): Observable<Incident> {
