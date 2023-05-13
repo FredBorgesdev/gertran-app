@@ -1,7 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import {
+  DEFAULT_LIMIT,
+  GetAllResponse,
+  Pagination,
+} from '../shared/services/api.service';
 
 export enum AlertTypes {
   vehicle = 'vehicle',
@@ -28,12 +32,16 @@ export type Alert = {
     positionInfo: {
       observation: string;
     };
+    truck: {
+      id: string;
+      observations: string;
+    };
     monitoringRequest: {
       truck: {
         id: string;
       };
       id: string;
-    }
+    };
   };
   readAt: Date | null;
   severity: Severity;
@@ -46,20 +54,18 @@ export type Alert = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertsService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAlerts(
     pagination: Pagination,
     filters: {
-      alertType: AlertTypes,
-      terminal?: string,
-      customer?: string,
-      severity?: Severity
+      alertType: AlertTypes;
+      terminal?: string;
+      customer?: string;
+      severity?: Severity;
     }
   ): Observable<GetAllResponse<Alert>> {
     const params: any = {
@@ -79,19 +85,19 @@ export class AlertsService {
       });
     }
 
-    return this.http.get<GetAllResponse<Alert>>('alerts', {params});
+    return this.http.get<GetAllResponse<Alert>>('alerts', { params });
   }
 
   getAlertsCount(
     filters: {
-      terminal?: string
-      customer?: string
+      terminal?: string;
+      customer?: string;
     },
     alertType: AlertTypes,
     severity?: Severity
   ): Observable<AlertCount> {
     const fromObject: any = {
-      alert_type: alertType
+      alert_type: alertType,
     };
     if (filters.terminal) {
       fromObject.terminal = filters.terminal;
@@ -100,18 +106,21 @@ export class AlertsService {
       fromObject.customer = filters.customer;
     }
 
-    const params = new HttpParams({fromObject});
+    const params = new HttpParams({ fromObject });
 
-    return this.http.get<AlertCount>('alerts/count?1=1', {params});
+    return this.http.get<AlertCount>('alerts/count?1=1', { params });
   }
 
   markAsRead(ids: string[]): Observable<void> {
-    return this.http.patch<void>('alerts/mark-as-read', {alerts: ids});
+    return this.http.patch<void>('alerts/mark-as-read', { alerts: ids });
   }
 
-  markAsSolved(id: string, body?: {
-    solvedDescription: string,
-  }): Observable<void> {
+  markAsSolved(
+    id: string,
+    body?: {
+      solvedDescription: string;
+    }
+  ): Observable<void> {
     return this.http.patch<void>(`alerts/${id}/mark-as-solved`, body);
   }
 }

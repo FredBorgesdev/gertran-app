@@ -247,7 +247,7 @@
         {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
       <td *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">{{ item.positionInfo?.observations || '-' }}</td>
+          data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
       <td>{{ item.positionInfo?.driverName || '-' }}</td>
       <td>{{ item.positionInfo?.wagonsPlates || '-' }}</td>
       <td *ngIf="user.isGertranStaff"

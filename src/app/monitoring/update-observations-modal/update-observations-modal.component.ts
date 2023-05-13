@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Position} from '../positions.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {TrucksService} from '../../trucks/trucks.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Position } from '../positions.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { TrucksService } from '../../trucks/trucks.service';
 
 @Component({
   selector: 'app-update-observations-modal',
   templateUrl: './update-observations-modal.component.html',
-  styleUrls: ['./update-observations-modal.component.css']
+  styleUrls: ['./update-observations-modal.component.css'],
 })
 export class UpdateObservationsModalComponent implements OnInit {
   @Input() item?: Position;
@@ -18,25 +18,29 @@ export class UpdateObservationsModalComponent implements OnInit {
 
   constructor(
     private service: TrucksService,
-    private message: NzMessageService,
-  ) {
-  }
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {
-    this.observation = this.item?.positionInfo.observations ?? this.currentObservation;
+    this.observation = this.item?.truck.observations ?? this.currentObservation;
   }
 
   save(): void {
-    this.service.update(this.item?.truck.id || this.truckId, {
-      description: this.observation,
-    } as any).subscribe(() => {
-      if (this.item) {
-        this.item.positionInfo.observations = this.observation;
-      }
+    this.service
+      .update(this.item?.truck.id || this.truckId, {
+        description: this.observation,
+      } as any)
+      .subscribe(
+        () => {
+          if (this.item) {
+            this.item.truck.observations = this.observation;
+          }
 
-      this.message.success('Observações atualizadas com sucesso');
-    }, () => {
-      this.message.error('Erro ao atualizar observações');
-    });
+          this.message.success('Observações atualizadas com sucesso');
+        },
+        () => {
+          this.message.error('Erro ao atualizar observações');
+        }
+      );
   }
 }

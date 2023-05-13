@@ -1,7 +1,11 @@
-import {Injectable} from '@angular/core';
-import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import ApiService, {
+  DEFAULT_LIMIT,
+  GetAllResponse,
+  Pagination,
+} from '../shared/services/api.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 interface PositionInfo {
   id: string;
@@ -39,6 +43,7 @@ interface Customer {
 
 interface Truck {
   id: string;
+  observations: string;
 }
 
 interface MonitoringRequest {
@@ -71,12 +76,10 @@ export interface Position {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PositionsService implements ApiService<Position> {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getAll(
     pagination: Pagination,
@@ -84,11 +87,11 @@ export class PositionsService implements ApiService<Position> {
       customer?: string;
       terminal?: string;
       groupBy?: string;
-      travelStatus?: string
-      travelling?: boolean
+      travelStatus?: string;
+      travelling?: boolean;
     }
   ): Observable<GetAllResponse<Position>> {
-    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -107,7 +110,7 @@ export class PositionsService implements ApiService<Position> {
       params.travelling = filters.travelling;
     }
 
-    return this.http.get<GetAllResponse<Position>>('positions', {params});
+    return this.http.get<GetAllResponse<Position>>('positions', { params });
   }
 
   get(id: string): Observable<Position> {
@@ -126,12 +129,16 @@ export class PositionsService implements ApiService<Position> {
     return this.http.delete<void>(`positions/${id}/delete`);
   }
 
-  updatePointReferences(ids: string[]): Observable<{
-    id: string;
-    latitude: number;
-    longitude: number;
-    pointReference: string;
-  }[]> {
-    return this.http.patch<any[]>('positions/update_points_reference', {position_ids: ids});
+  updatePointReferences(ids: string[]): Observable<
+    {
+      id: string;
+      latitude: number;
+      longitude: number;
+      pointReference: string;
+    }[]
+  > {
+    return this.http.patch<any[]>('positions/update_points_reference', {
+      position_ids: ids,
+    });
   }
 }
