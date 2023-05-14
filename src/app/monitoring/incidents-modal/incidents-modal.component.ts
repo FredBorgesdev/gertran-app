@@ -6,6 +6,30 @@ import {NzTableQueryParams} from 'ng-zorro-antd/table';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {CreateIncidentModalComponent} from '../../incidents/create-incident-modal/create-incident-modal.component';
 import {IncidentDetailsModalComponent} from "../incident-details-modal/incident-details-modal.component";
+import {NzMessageService} from "ng-zorro-antd/message";
+
+const fieldTranslations = {
+  monitoring_request: 'Viagem monitorada',
+  incident_type: 'Tipo de ocorrência',
+  incident_date: 'Data da ocorrência',
+  incident_location: 'Local da ocorrência',
+  driver_contacted_at: 'Motorista contatado em',
+  driver_name: 'Nome do motorista',
+  driver_phone: 'Telefone do motorista',
+  shipper_name: 'Nome do transportador',
+  shipper_contacted_at: 'Transportador contatado em',
+  was_immediate_action_approved: 'Autorização pronta resposta',
+  immediate_action_responsible_name: 'Nome do responsável pela pronta resposta',
+  immediate_action_taken_at: 'Autorização pronta resposta em',
+  was_federal_police_action_needed: 'Contato orgãos publicos',
+  federal_police_action_responsible_name: 'Nome do responsável pelo contato com orgãos publicos',
+  federal_police_action_taken_at: 'Contato orgãos publicos em',
+  additional_information: 'Informações adicionais',
+  optional_email: 'Email opcional',
+  incident_latitude: 'Latitude da ocorrência',
+  incident_longitude: 'Longitude da ocorrência',
+  incident_datetime: 'Data e hora da ocorrência',
+};
 
 @Component({
   selector: 'app-incidents-modal',
@@ -30,6 +54,7 @@ export class IncidentsModalComponent implements OnInit {
   constructor(
     private service: IncidentsService,
     private modal: NzModalService,
+    private message: NzMessageService,
   ) {
   }
 
@@ -81,17 +106,32 @@ export class IncidentsModalComponent implements OnInit {
       nzWidth: '80%',
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',
-      nzOnOk: (componentInstance) => {
+      nzOnOk: async (componentInstance) => {
         this.isLoading = true;
-        componentInstance.save({
+        let shouldCloseModal = false;
+
+        await componentInstance.save({
           success: () => {
             this.loadIncidents();
             this.isLoading = false;
+            shouldCloseModal = true;
           },
-          error: () => {
+          error: (err) => {
+            let message = '';
+            Object.entries(err?.error?.extra?.fields ?? {})?.forEach(([key, field]) => {
+              message += `<p>${fieldTranslations[key] ?? key}: ${field}</p>`;
+            });
+            if (message === '') {
+              message = 'Erro ao enviar a solicitação. Tente novamente.';
+            }
+
+            shouldCloseModal = false;
             this.isLoading = false;
+            this.message.error(message, {nzDuration: 7000});
           }
         });
+
+        return shouldCloseModal;
       },
     });
   }

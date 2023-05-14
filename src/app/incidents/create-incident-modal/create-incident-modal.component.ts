@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Choice} from '../../shared/services/api.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {Incident, IncidentsService} from '../../monitoring/incidents.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -83,8 +83,8 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
       driverContactedAt: [null],
       driverName: [this.driver?.name],
       driverPhone: [this.driver?.phone],
-      shipperName: [null],
-      shipperContactedAt: [null],
+      shipperName: [null, [Validators.required]],
+      shipperContactedAt: [null, [Validators.required]],
       wasImmediateActionApproved: [null],
       immediateActionResponsibleName: [null],
       immediateActionTakenAt: [null],
