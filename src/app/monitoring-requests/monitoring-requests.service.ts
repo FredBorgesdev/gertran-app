@@ -213,6 +213,9 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
       ],
       [Status.REPROVED]: [
         {label: 'Solicitar Reavaliação', value: Status.UNDER_REVIEW},
+      ],
+      [Status.FINISHED]: [
+        {label: 'Em andamento', value: Status.IN_PROGRESS},
       ]
     };
   }

@@ -133,4 +133,18 @@
       (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
+
+  <nz-card
+    [nzTitle]="'Finalizado' + ' (' + finishedResponse?.count + ')'"
+  >
+    <app-monitoring-requests-table
+      [monitoringRequests]="finishedResponse"
+      [rowColor]="'#73ffb2'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChangeFinished($event)"
+      (refreshAll)="loadAllResources()"
+    ></app-monitoring-requests-table>
+  </nz-card>
 </nz-spin>

@@ -31,6 +31,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   draftResponse: GetAllResponse<MonitoringRequests>;
   underReviewResponse: GetAllResponse<MonitoringRequests>;
   reprovedResponse: GetAllResponse<MonitoringRequests>;
+  finishedResponse: GetAllResponse<MonitoringRequests>;
 
   field = 'plate';
   search = '';
@@ -97,6 +98,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     this.loadInProgress();
     this.loadUnderReview();
     this.loadReproved();
+    this.loadFinished();
   }
 
   loadWaitingForStart(url?: string): void {
@@ -151,6 +153,20 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       this.reprovedResponse = result;
+      this.isLoading = false;
+    });
+  }
+
+  loadFinished(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.FINISHED,
+        ...this.monitoringRequestFilters,
+      }
+    ).subscribe((result) => {
+      this.finishedResponse = result;
       this.isLoading = false;
     });
   }
@@ -291,6 +307,16 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     } else if (params.pageIndex > getCurrentPage(this.reprovedResponse)) {
       const url = this.replaceOffsetWithPage(this.reprovedResponse.next, params.pageIndex);
       this.loadReproved(url);
+    }
+  }
+
+  handleQueryParamsChangeFinished(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.finishedResponse)) {
+      const url = this.replaceOffsetWithPage(this.finishedResponse.previous, params.pageIndex);
+      this.loadFinished(url);
+    } else if (params.pageIndex > getCurrentPage(this.finishedResponse)) {
+      const url = this.replaceOffsetWithPage(this.finishedResponse.next, params.pageIndex);
+      this.loadFinished(url);
     }
   }
 
