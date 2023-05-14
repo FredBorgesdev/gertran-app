@@ -93,7 +93,7 @@ export class IncidentsModalComponent implements OnInit {
   }
 
   openCreateIncidentModal(): void {
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: 'Criar evento',
       nzContent: CreateIncidentModalComponent,
       nzComponentParams: {
@@ -108,13 +108,13 @@ export class IncidentsModalComponent implements OnInit {
       nzCancelText: 'Cancelar',
       nzOnOk: async (componentInstance) => {
         this.isLoading = true;
-        let shouldCloseModal = false;
 
         await componentInstance.save({
           success: () => {
             this.loadIncidents();
             this.isLoading = false;
-            shouldCloseModal = true;
+            modal.close();
+            this.message.success('Ocorrência criada com sucesso!');
           },
           error: (err) => {
             let message = '';
@@ -125,13 +125,12 @@ export class IncidentsModalComponent implements OnInit {
               message = 'Erro ao enviar a solicitação. Tente novamente.';
             }
 
-            shouldCloseModal = false;
             this.isLoading = false;
             this.message.error(message, {nzDuration: 7000});
           }
         });
 
-        return shouldCloseModal;
+        return false;
       },
     });
   }
