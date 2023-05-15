@@ -39,6 +39,9 @@ export type Alert = {
     monitoringRequest: {
       truck: {
         id: string;
+        vehicle: {
+          description: string;
+        };
       };
       id: string;
     };

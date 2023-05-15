@@ -217,7 +217,7 @@ export class MonitoringAlertModalComponent implements OnInit {
       nzOnOk: (componentInstance) => componentInstance.save(),
       nzComponentParams: {
         truckId: item.position.monitoringRequest.truck.id,
-        observation: item.position.truck.observations,
+        observation: item.position.monitoringRequest.truck.vehicle.description,
       },
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',
