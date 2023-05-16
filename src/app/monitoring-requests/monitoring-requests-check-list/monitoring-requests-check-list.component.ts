@@ -41,6 +41,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       'td { padding: 5px !important; }',
       // Styles copied from antd implementation
       '.ant-checkbox-inner::after { position: absolute !important; display: table !important; border: 2px solid #3f87f5 !important; border-top: 0 !important; border-left: 0 !important; transform: rotate(45deg) scale(1) translate(-50%,-50%) !important; opacity: 1 !important; transition: all .2s cubic-bezier(.12,.4,.29,1.46) .1s !important; content: \' \' !important; }',
+      '.metadata-text { font-size: 20px; margin-bottom: 10px }',
       '* { font-size: 10px; }',
     ],
   };

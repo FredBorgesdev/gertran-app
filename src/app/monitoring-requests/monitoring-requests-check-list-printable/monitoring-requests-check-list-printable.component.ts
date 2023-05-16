@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import MonitoringRequest from '../monitoring-request';
 import {ChecklistsService} from '../../checklists/checklists.service';
+import {format} from "date-fns";
 
 @Component({
   selector: 'app-monitoring-requests-check-list-printable',
@@ -17,5 +18,9 @@ export class MonitoringRequestsCheckListPrintableComponent implements OnInit {
 
   ngOnInit(): void {
     this.checklistItems = this.checklistService.localizedValues;
+  }
+
+  get currentDate(): string {
+    return format(new Date(), 'dd/MM/yyyy HH:mm:ss');
   }
 }
