@@ -25,6 +25,10 @@ export class BaseVehicleFilterComponent implements OnInit {
   @Input() rows: any[];
   @Input() fileName = 'relatorio';
   @Input() xlsxValues: any[];
+  @Input() additionalFilters: {
+    label: string;
+    value: string;
+  }[] = [];
 
   validateForm: FormGroup;
 
@@ -45,6 +49,13 @@ export class BaseVehicleFilterComponent implements OnInit {
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
       plate: [null, []],
+    });
+
+    this.additionalFilters.forEach((filter) => {
+      this.validateForm.addControl(
+        filter.value,
+        this.formBuilder.control(null, [])
+      );
     });
 
     this.i18n.setLocale(en_US);

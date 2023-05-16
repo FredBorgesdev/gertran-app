@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseVehicleFilter, IncidentReport, ReportsService} from '../reports.service';
+import {BaseVehicleFilter, IncidentReport, IncidentsFilter, ReportsService} from '../reports.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Incident} from "../../monitoring/incidents.service";
 import {NzModalService} from "ng-zorro-antd/modal";
@@ -21,7 +21,7 @@ export class IncidentsComponent {
   ) {
   }
 
-  generateReport(form: BaseVehicleFilter): void {
+  generateReport(form: IncidentsFilter): void {
     this.isLoading = true;
 
     this.reportsService.getIncidentsReport(form).subscribe(response => {

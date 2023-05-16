@@ -72,6 +72,17 @@
       </nz-form-item>
     </div>
   </div>
+
+  <div nz-row nzGutter="16" class="m-t-25" *ngIf="additionalFilters.length > 0">
+    <div nz-col nzSpan="6" *ngFor="let filter of additionalFilters">
+      <nz-form-control>
+        <label
+          nz-checkbox
+          [formControlName]="filter.value"
+        >{{ filter.label }}</label>
+      </nz-form-control>
+    </div>
+  </div>
 </form>
 
 <div nz-row nzGutter="16" *ngIf="!hideButtons" class="m-t-25">
@@ -81,21 +92,27 @@
       nzType="primary"
       style="width: 100%"
       (click)="emitGenerateReport()"
-    >Gerar relatório</button>
+    >
+      Gerar relatório
+    </button>
   </div>
   <div nz-col nzSpan="8">
     <button
       nz-button
       style="width: 100%"
       (click)="generatePdf()"
-    >Gerar pdf</button>
+    >
+      Gerar pdf
+    </button>
   </div>
   <div nz-col nzSpan="8">
     <button
       nz-button
       style="width: 100%"
       (click)="generateExcel()"
-    >Gerar planilha</button>
+    >
+      Gerar planilha
+    </button>
   </div>
 </div>
 

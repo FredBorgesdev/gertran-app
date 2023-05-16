@@ -20,6 +20,10 @@ export interface BaseUserFilter extends BasePeriodFilter {
   user: string;
 }
 
+export interface IncidentsFilter extends BaseVehicleFilter {
+  includesByAutomation: boolean;
+}
+
 export interface LabelValue {
   label: string;
   value: number;
@@ -532,7 +536,7 @@ export class ReportsService {
     return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', {params});
   }
 
-  getIncidentsReport(form: BaseVehicleFilter): Observable<IncidentReport[]> {
+  getIncidentsReport(form: IncidentsFilter): Observable<IncidentReport[]> {
     const fromObject: any = {
       from_date: form.from,
       to_date: form.to,
@@ -540,6 +544,9 @@ export class ReportsService {
     };
     if (form.plate) {
       fromObject.plate = form.plate;
+    }
+    if (form.includesByAutomation) {
+      fromObject.includes_by_automation = form.includesByAutomation;
     }
     const params = new HttpParams({
       fromObject
