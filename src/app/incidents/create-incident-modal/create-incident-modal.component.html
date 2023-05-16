@@ -1,18 +1,26 @@
-<nz-descriptions
-  nzTitle="Motorista"
-  nzBordered
-  nzSize="small"
-  class="m-b-50"
->
-  <nz-descriptions-item nzTitle="Nome">
-    {{driver?.name}}
-  </nz-descriptions-item>
-  <nz-descriptions-item nzTitle="Telefone">
-    {{driver?.phone}}
-  </nz-descriptions-item>
-</nz-descriptions>
-
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+  <nz-descriptions
+    nzTitle="Motorista"
+    nzBordered
+    nzSize="small"
+    class="m-b-50"
+  >
+    <nz-descriptions-item nzTitle="Nome">
+      {{driver?.name}}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Telefone">
+      <input
+        nzSize="small"
+        id="driverPhone"
+        type="text"
+        nz-input
+        placeholder="Digite o telefone"
+        formControlName="driverPhone"
+        nzBorderless
+      />
+    </nz-descriptions-item>
+  </nz-descriptions>
+
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
@@ -116,7 +124,8 @@
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="8">
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="wasImmediateActionApproved">Autorização pronta resposta</nz-form-label>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="wasImmediateActionApproved">Autorização pronta resposta
+        </nz-form-label>
 
         <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
           <nz-radio-group formControlName="wasImmediateActionApproved" nzSize="small">
@@ -158,7 +167,8 @@
   <nz-form-item>
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="8">
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="wasFederalPoliceActionNeeded">Contato órgãos públicos</nz-form-label>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="wasFederalPoliceActionNeeded">Contato órgãos públicos
+        </nz-form-label>
 
         <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
           <nz-radio-group formControlName="wasFederalPoliceActionNeeded" nzSize="small">

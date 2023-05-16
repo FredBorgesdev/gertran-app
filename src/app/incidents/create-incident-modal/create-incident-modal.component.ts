@@ -75,6 +75,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   validateForm: FormGroup;
 
   ngOnInit(): void {
+    console.log(this.driver)
     this.validateForm = this.formBuilder.group({
       monitoringRequest: [this.monitoringRequest.id],
       incidentType: [null],
