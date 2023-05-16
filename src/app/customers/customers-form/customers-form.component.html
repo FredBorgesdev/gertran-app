@@ -2,13 +2,13 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="tradingName">Nome Fantasia</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
-      <input id="tradingName" type="text" nz-input formControlName="tradingName" />
+      <input id="tradingName" type="text" nz-input formControlName="tradingName"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="corporateName">Razão Social</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a razão social!">
-      <input id="corporateName" type="text" nz-input formControlName="corporateName" />
+      <input id="corporateName" type="text" nz-input formControlName="corporateName"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -26,7 +26,7 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="email">Email da empresa</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Email inválido!">
-      <input id="email" type="url" nz-input formControlName="email" />
+      <input id="email" type="url" nz-input formControlName="email"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -34,6 +34,7 @@
     <nz-radio-group formControlName="checklistExpirationPeriod">
       <label nz-radio nzValue="twenty_four_hours">24h</label>
       <label nz-radio nzValue="seventy_two_hours">72h</label>
+      <label nz-radio nzValue="fifteen_days">15 dias</label>
       <label nz-radio nzValue="thirty_days">30 dias</label>
     </nz-radio-group>
   </nz-form-item>
