@@ -146,4 +146,12 @@ export class IncidentsModalComponent implements OnInit {
       nzFooter: null,
     });
   }
+
+  getCreatedBy(data: Incident): string {
+    if (data.wasAddedByAutomation) {
+      return 'Automação';
+    }
+
+    return data.createdBy?.name ?? 'Não disponível';
+  }
 }

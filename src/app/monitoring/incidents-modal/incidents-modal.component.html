@@ -32,7 +32,7 @@
     <td>{{ incident.id | id }}</td>
     <td>{{ position.monitoringRequest.id | id }}</td>
     <td>{{ incident.datetime | date: 'dd/MM/yyyy HH:mm' }}</td>
-    <td>{{ incident.wasAddedByAutomation ? 'Automação' : 'Operador' }}</td>
+    <td>{{ getCreatedBy(incident)}}</td>
     <td>{{ incident.incidentType.type }}</td>
     <td>{{ incident.incidentLocation + ' ' + incident.additionalInformation }}</td>
     <td>

@@ -42,6 +42,10 @@ export interface Incident {
   optionalEmail?: any;
   wasSolved: boolean;
   monitoringRequest: MonitoringRequests;
+  createdBy: {
+    id: string;
+    name: string;
+  }
 }
 
 @Injectable({
