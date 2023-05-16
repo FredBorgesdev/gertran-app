@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
 import {MonitoringRequests, MonitoringRequestsService, PossibleStatus} from '../monitoring-requests.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
 import {AuthenticationService} from '../../authentication/authentication.service';
+import {differenceInMinutes} from 'date-fns';
 
 @Component({
   selector: 'app-monitoring-requests-table-minimal',
@@ -21,6 +21,7 @@ export class MonitoringRequestsTableMinimalComponent implements OnInit {
   monitoringRequestsColumns = [
     {title: 'Código'},
     {title: 'Empresa'},
+    {title: 'Modificação'},
     {title: 'Motorista'},
     {title: 'Placa'},
     {title: 'Carretas'},
@@ -28,7 +29,6 @@ export class MonitoringRequestsTableMinimalComponent implements OnInit {
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
-    private message: NzMessageService,
     public authService: AuthenticationService,
   ) {
   }
@@ -43,5 +43,35 @@ export class MonitoringRequestsTableMinimalComponent implements OnInit {
 
   getWagons(item: MonitoringRequests): string {
     return item.wagons?.map(wagon => wagon.vehicle.plate).join(', ');
+  }
+
+  getUpdateDiff(monitoringRequest: MonitoringRequests): string {
+    const diffInMinutes = differenceInMinutes(
+      new Date(),
+      new Date(monitoringRequest.updatedAt)
+    );
+
+    if (diffInMinutes > 60) {
+      return `Atualizado há ${Math.floor(diffInMinutes / 60)}h`;
+    }
+
+    return `Atualizado há ${diffInMinutes}m`;
+  }
+
+  getUnderReviewClass(monitoringRequest: MonitoringRequests): string {
+    const diffInMinutes = differenceInMinutes(
+      new Date(),
+      new Date(monitoringRequest.updatedAt)
+    );
+
+    if (diffInMinutes > 15) {
+      return 'red-alert';
+    }
+
+    if (diffInMinutes > 10) {
+      return 'yellow-alert';
+    }
+
+    return 'default-alert';
   }
 }

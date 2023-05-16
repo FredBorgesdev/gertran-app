@@ -8,6 +8,7 @@ import {
 import {NzTableQueryParams} from "ng-zorro-antd/table";
 import {Subject, timer} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {format} from "date-fns";
 
 @Component({
   selector: 'app-monitoring-requests',
@@ -20,6 +21,7 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   reprovedResponse: GetAllResponse<MonitoringRequests>;
 
   stopTimer = new Subject();
+  nextUpdate = 60;
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
@@ -32,6 +34,14 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => this.loadAllResources()
     );
+
+    timer(0, 1 * 1000).pipe(
+      takeUntil(this.stopTimer)
+    ).subscribe(
+      () => {
+        this.nextUpdate -= 1;
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -39,6 +49,8 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   }
 
   loadAllResources(): void {
+    this.nextUpdate = 60;
+
     this.loadUnderReview();
     this.loadApproved();
     this.loadReproved();
@@ -111,5 +123,13 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
       fromDate: date.toISOString().split('T')[0],
       toDate: new Date().toISOString().split('T')[0],
     };
+  }
+
+  get currentTime(): string {
+    return format(new Date(), 'HH:mm:ss');
+  }
+
+  formatSeconds(nextUpdate: number): string {
+    return `00:00:${nextUpdate.toString().padStart(2, '0')}`;
   }
 }

@@ -1,3 +1,13 @@
+<div class="m-b-30 text-center">
+  <h1>
+    Hora atual: {{ currentTime }}
+  </h1>
+
+  <h3>
+    Próxima atualização em {{ formatSeconds(nextUpdate) }}
+  </h3>
+</div>
+
 <div nz-row nzGutter="16">
   <div nz-col nzSpan="12">
     <nz-card
@@ -27,7 +37,7 @@
     >
       <app-monitoring-requests-table-minimal
         [monitoringRequests]="reprovedResponse"
-        [rowColor]="'#ff7373'"
+        [rowColor]="'#ff8e8e'"
         (handleQueryParamsChange)="handleQueryParamsChange($event, loadReproved)"
       ></app-monitoring-requests-table-minimal>
     </nz-card>

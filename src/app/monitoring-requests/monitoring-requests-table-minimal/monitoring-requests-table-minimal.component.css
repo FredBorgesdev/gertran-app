@@ -2,3 +2,17 @@ td,
 th {
   font-size: 14px;
 }
+
+.red-alert {
+  background-color: #ff3232;
+  color: #fff
+}
+
+.yellow-alert {
+  background-color: #ff9f1a;
+}
+
+.default-alert {
+  background-color: #f2f2f2;
+}
+

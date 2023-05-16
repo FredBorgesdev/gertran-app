@@ -22,9 +22,14 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of table.data; let i=index" [style]="'background-color:' + rowColor">
+  <tr
+    *ngFor="let item of table.data; let i=index"
+    [style]="item.status !== 'under_review' ? 'background-color:' + rowColor : ''"
+    [class]="item.status === 'under_review' ? getUnderReviewClass(item) : ''"
+  >
     <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
     <td>{{item.customer?.tradingName ?? '-'}}</td>
+    <td>{{getUpdateDiff(item)}}</td>
     <td>{{item.driver?.name ?? '-'}}</td>
     <td>{{item.truck?.vehicle.plate}}</td>
     <td>{{getWagons(item)}}</td>
