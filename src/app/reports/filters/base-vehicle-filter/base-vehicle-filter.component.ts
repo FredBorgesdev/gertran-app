@@ -5,7 +5,7 @@ import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Truck, TrucksService} from '../../../trucks/trucks.service';
 import {BaseVehicleFilter} from '../../reports.service';
 import {SelectableTruckService} from '../../../trucks/selectable-truck.service';
-import {format} from 'date-fns';
+import {format, subDays} from 'date-fns';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -29,6 +29,7 @@ export class BaseVehicleFilterComponent implements OnInit {
     label: string;
     value: string;
   }[] = [];
+  @Input() filterByAllCustomers = false;
 
   validateForm: FormGroup;
 
@@ -44,10 +45,13 @@ export class BaseVehicleFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const today = new Date();
+    const yesterday = subDays(today, 1);
+
     this.validateForm = this.formBuilder.group({
       customer: [this.authService.customerId || null, [Validators.required]],
-      startDate: [null, [Validators.required]],
-      endDate: [null, [Validators.required]],
+      startDate: [yesterday, [Validators.required]],
+      endDate: [today, [Validators.required]],
       plate: [null, []],
     });
 
@@ -79,11 +83,16 @@ export class BaseVehicleFilterComponent implements OnInit {
         ...this.validateForm.value,
         from: fromDate,
         to: toDate,
+        customer: this.validateForm.value.customer === 'all' ? null : this.validateForm.value.customer,
       });
     }
   }
 
   loadVehicles(customerId: string): void {
+    if (!customerId || customerId === 'all') {
+      return;
+    }
+
     this.selectableTrucksService.loadMoreTrucks({customerId});
   }
 

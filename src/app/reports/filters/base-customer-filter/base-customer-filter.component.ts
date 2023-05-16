@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Customer} from '../../../customers/customers.service';
 import {BasePeriodFilter} from '../../reports.service';
-import {format, subMonths} from 'date-fns';
+import {format, subMonths, subWeeks} from 'date-fns';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 import jsPDF from 'jspdf';
@@ -35,6 +35,7 @@ export class BaseCustomerFilterComponent implements OnInit {
   @Input() fileName = 'Report.xlsx';
   @Input() columnStyles = {};
   @Input() xlsxValues = [];
+  @Input() filterByAllCustomers = false;
 
   validateForm: FormGroup;
   customers: Customer[] = [];
@@ -51,11 +52,11 @@ export class BaseCustomerFilterComponent implements OnInit {
 
   ngOnInit(): void {
     const today = new Date();
-    const lastMonth = subMonths(today, 1);
+    const oneWeekFromNow = subWeeks(today, 1);
 
     this.validateForm = this.formBuilder.group({
       customer: [this.authService.customerId, [Validators.required]],
-      from: [lastMonth, [Validators.required]],
+      from: [oneWeekFromNow, [Validators.required]],
       to: [today, [Validators.required]],
       reportFormat: [ReportFormat.ANALYTIC, [Validators.required]],
     });
@@ -79,7 +80,8 @@ export class BaseCustomerFilterComponent implements OnInit {
       this.generateReport.emit({
         ...this.validateForm.value,
         from: fromDate,
-        to: toDate
+        to: toDate,
+        customer: this.validateForm.value.customer === 'all' ? null : this.validateForm.value.customer,
       });
     }
   }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ReportsResults, ReportsService} from '../reports.service';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -10,7 +10,7 @@ import {format} from "date-fns";
   templateUrl: './travel-requests.component.html',
   styleUrls: ['./travel-requests.component.css']
 })
-export class TravelRequestsComponent implements OnInit {
+export class TravelRequestsComponent {
   isLoading = false;
   monitoringRequests: MonitoringRequests[] = [];
   syntheticReport: { total: number; loadPriceTotal: number; };
@@ -26,9 +26,6 @@ export class TravelRequestsComponent implements OnInit {
     private reportsService: ReportsService,
     private message: NzMessageService,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   generateReport(form: CustomerFilter): void {

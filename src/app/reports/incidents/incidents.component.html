@@ -13,6 +13,7 @@
       [additionalFilters]="[{ label: 'Criado por automação?', value: 'includesByAutomation' }]"
       (generateReport)="generateReport($event)"
       [rows]="incidents"
+      [filterByAllCustomers]="true"
       fileName="Histórico de Checklist"
     ></app-base-vehicle-filter>
 
@@ -31,7 +32,7 @@
         <th>Local</th>
         <th>Lat/lng</th>
         <th>Motorista</th>
-        <th>Criado por automação?</th>
+        <th>Criado por</th>
         <th>Ações</th>
       </tr>
       </thead>
@@ -45,7 +46,7 @@
         <td>{{ data.incidentLocation }}</td>
         <td>{{ data.incidentLatitude }} / {{ data.incidentLongitude }}</td>
         <td>{{ data.driverName }} / {{ data.driverPhone }}</td>
-        <td>{{ data.wasAddedByAutomation ? 'Sim' : 'Não' }}</td>
+        <td>{{ getCreatedBy(data) }}</td>
         <td>
           <button nz-button nzType="link" (click)="openIncidentDetailModal(data)">
             <i nz-icon nzType="eye"></i>

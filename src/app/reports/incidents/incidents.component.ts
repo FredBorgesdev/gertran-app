@@ -44,4 +44,12 @@ export class IncidentsComponent {
       nzWidth: '80%',
     });
   }
+
+  getCreatedBy(data: IncidentReport): string {
+    if (data.wasAddedByAutomation) {
+      return 'Automação';
+    }
+
+    return data.createdBy?.name ?? 'Não disponível';
+  }
 }

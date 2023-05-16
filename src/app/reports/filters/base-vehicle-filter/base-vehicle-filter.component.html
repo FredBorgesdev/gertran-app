@@ -14,6 +14,12 @@
             (nzOnSearch)="selectableCustomerService.searchByName($event)"
           >
             <nz-option
+              *ngIf="filterByAllCustomers"
+              nzLabel="Todos os clientes"
+              nzValue="all"
+            ></nz-option>
+
+            <nz-option
               *ngFor="let customer of selectableCustomerService.customers"
               [nzLabel]="customer.tradingName"
               [nzValue]="customer.id"
