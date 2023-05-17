@@ -28,6 +28,7 @@
       <thead>
       <tr>
         <th>Cliente</th>
+        <th>NC</th>
         <th>Data/hora</th>
         <th>Placa</th>
         <th>Local</th>
@@ -41,6 +42,7 @@
       <tbody>
       <tr *ngFor="let data of table.data; index as i">
         <td>{{ data.monitoringRequest.customer.tradingName }}</td>
+        <td>{{ data.incidentType.type }}</td>
         <td>
           {{ data.datetime | date: 'dd/MM/yyyy HH:mm' }}
         </td>
