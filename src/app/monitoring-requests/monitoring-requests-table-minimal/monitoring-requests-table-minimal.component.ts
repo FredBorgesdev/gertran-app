@@ -52,26 +52,38 @@ export class MonitoringRequestsTableMinimalComponent implements OnInit {
     );
 
     if (diffInMinutes > 60) {
-      return `Atualizado há ${Math.floor(diffInMinutes / 60)}h`;
+      return `Atualizado à ${Math.floor(diffInMinutes / 60)}h`;
     }
 
-    return `Atualizado há ${diffInMinutes}m`;
+    return `Atualizado à ${diffInMinutes}m`;
   }
 
-  getUnderReviewClass(monitoringRequest: MonitoringRequests): string {
+  getUnderReviewAlert(monitoringRequest: MonitoringRequests): {
+    class: string;
+    message: string;
+  } {
     const diffInMinutes = differenceInMinutes(
       new Date(),
       new Date(monitoringRequest.updatedAt)
     );
 
     if (diffInMinutes > 15) {
-      return 'red-alert';
+      return {
+        class: 'red-alert',
+        message: 'Liberação atrasada',
+      };
     }
 
     if (diffInMinutes > 10) {
-      return 'yellow-alert';
+      return {
+        class: 'yellow-alert',
+        message: 'Em avaliação',
+      };
     }
 
-    return 'default-alert';
+    return {
+      class: 'default-alert',
+      message: 'Em avaliação',
+    };
   }
 }

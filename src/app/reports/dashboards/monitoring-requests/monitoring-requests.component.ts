@@ -71,7 +71,7 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   loadApproved(url?: string): void {
     this.monitoringRequestService.getAll({
       url,
-      limit: 5
+      limit: 50
     }, {
       ...this.filters,
       status: Status.WAITING_FOR_START,
@@ -83,7 +83,7 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   loadReproved(url?: string): void {
     this.monitoringRequestService.getAll({
       url,
-      limit: 5
+      limit: 50
     }, {
       ...this.filters,
       status: Status.REPROVED,
