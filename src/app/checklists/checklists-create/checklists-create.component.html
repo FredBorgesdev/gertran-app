@@ -96,6 +96,10 @@
               </nz-form-control>
             </nz-form-item>
           </div>
+
+          <span *ngIf="vehicleMessages[form.value.vehicle]" class="m-b-20">
+            {{ vehicleMessages[form.value.vehicle] }}
+          </span>
         </div>
       </div>
 
