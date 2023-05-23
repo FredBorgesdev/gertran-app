@@ -12,6 +12,7 @@
     <app-base-vehicle-filter
       (generateReport)="generateReport($event)"
       [rows]="checklistHistory"
+      [xlsxValues]="xlsxValues"
       fileName="Histórico de Checklist"
     ></app-base-vehicle-filter>
 
@@ -22,19 +23,23 @@
       class="m-t-50"
       [nzFrontPagination]="false"
       nzTableLayout="fixed"
+      [nzScroll]="{ y: '768px', x: '768px' }"
     >
       <thead>
       <tr>
-        <th>Empresa</th>
-        <th>Placa</th>
-        <th>Tipo</th>
-        <th>Tecnologia</th>
-        <th>Solicitante</th>
-        <th>Status checklist</th>
-        <th>Justificativa</th>
-        <th>Data liberação</th>
-        <th>Data expiração</th>
-        <th>Operador</th>
+        <th nzWidth="110px">Empresa</th>
+        <th nzWidth="110px">Placa</th>
+        <th nzWidth="110px">Tipo</th>
+        <th nzWidth="110px">Tecnologia</th>
+        <th nzWidth="110px">Solicitante</th>
+        <th nzWidth="110px">Status checklist</th>
+        <th nzWidth="110px">Justificativa</th>
+        <th nzWidth="110px">Data liberação</th>
+        <th nzWidth="110px">Data expiração</th>
+        <th nzWidth="110px">Motorista</th>
+        <th nzWidth="110px">Origem</th>
+        <th nzWidth="110px">Destino</th>
+        <th nzWidth="110px">Operador</th>
       </tr>
       </thead>
 
@@ -51,6 +56,9 @@
         <td>{{ data.justification }}</td>
         <td>{{ data.reviewedAt | date: 'dd/MM/yyyy' }}</td>
         <td>{{ data.expirationDate | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ data.driver?.name }} / {{ data.driver?.phoneNumber }}</td>
+        <td>{{ data.origin }}</td>
+        <td>{{ data.destiny }}</td>
         <td>{{ data.reviewedBy?.name }}</td>
       </tr>
       </tbody>

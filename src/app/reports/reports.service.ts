@@ -153,6 +153,14 @@ export type Customer = {
 };
 
 export type ChecklistHistory = {
+  origin: string;
+  destiny: string;
+  driver: {
+    id: string;
+    name: string;
+    phoneNumber: string;
+  };
+  workingSituation: string;
   vehicle: Vehicle;
   customer: Customer;
   id: string;
@@ -175,7 +183,10 @@ export type ChecklistHistory = {
   embeddedIntelligenceJustification: string;
   reviewedAt: Date;
   status: string;
-  requestedBy: number;
+  requestedBy: {
+    id: string;
+    name: string;
+  };
   reviewedBy?: any;
 };
 
