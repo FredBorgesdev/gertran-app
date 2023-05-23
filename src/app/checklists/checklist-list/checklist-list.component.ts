@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 import {Router} from '@angular/router';
 import {Checklist, ChecklistsService} from '../checklists.service';
@@ -13,11 +13,14 @@ import {AuthenticationService} from '../../authentication/authentication.service
 })
 export class ChecklistListComponent extends BaseCrudListComponent<Checklist> {
   checklistColumns = [
-    { title: 'Data criação' },
-    { title: 'Placa' },
-    { title: 'Tecnologia' },
-    { title: 'Cliente' },
-    { title: 'Ações' }
+    {title: 'Data criação'},
+    {title: 'Placa'},
+    {title: 'Tecnologia'},
+    {title: 'Cliente'},
+    {title: 'Motorista'},
+    {title: 'Origem'},
+    {title: 'Destino'},
+    {title: 'Ações'}
   ];
 
   constructor(
