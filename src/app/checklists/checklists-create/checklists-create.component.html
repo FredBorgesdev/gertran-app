@@ -16,31 +16,87 @@
     <nz-divider></nz-divider>
 
     <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-      <div formArrayName="vehicles">
-        <nz-form-item *ngFor="let form of vehicles.controls; let i = index">
-          <nz-form-label>Veiculo {{ i + 1 }}</nz-form-label>
-          <nz-form-control>
-            <nz-select
-              [formControlName]="i"
-              nzAllowClear
-              [nzDisabled]="selectableTrucksService.trucks.length === 0"
-              (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
-              [nzDropdownRender]="selectLoading"
-              nzShowSearch
-              nzServerSearch
-              (nzOnSearch)="selectableTrucksService.searchByPlate({ plate: $event, customerId: '' })"
-              (ngModelChange)="handleModelChange()"
-            >
-              <nz-option
-                *ngFor="let vehicle of selectableTrucksService.trucks"
-                [nzLabel]="vehicle.vehicle.plate"
-                [nzValue]="vehicle.vehicle.id"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-
-          <span>{{ vehicleMessages[form.value] }}</span>
-        </nz-form-item>
+      <div formArrayName="checklistRequests">
+        <div
+          nz-row
+          nzGutter="16"
+          *ngFor="let form of checklists.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div nz-col nzSpan="5">
+            <nz-form-item>
+              <nz-form-label>Veiculo {{ i + 1 }}</nz-form-label>
+              <nz-form-control>
+                <nz-select
+                  nzAllowClear
+                  [nzDisabled]="selectableTrucksService.trucks.length === 0"
+                  (nzScrollToBottom)="selectableTrucksService.loadMoreTrucks()"
+                  [nzDropdownRender]="selectLoading"
+                  nzShowSearch
+                  nzServerSearch
+                  (nzOnSearch)="selectableTrucksService.searchByPlate({ plate: $event, customerId: '' })"
+                  (ngModelChange)="handleModelChange()"
+                  formControlName="vehicle"
+                >
+                  <nz-option
+                    *ngFor="let vehicle of selectableTrucksService.trucks"
+                    [nzLabel]="vehicle.vehicle.plate"
+                    [nzValue]="vehicle.vehicle.id"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null" nzFor="driver">Motorista</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                <nz-select
+                  id="driver"
+                  nzShowSearch
+                  nzAllowClear
+                  nzPlaceHolder="Selecione um motorista"
+                  formControlName="driver"
+                  nzServerSearch
+                  (nzOnSearch)="selectableDriverService.searchByName($event)"
+                  (nzScrollToBottom)="selectableDriverService.loadMoreDrivers()"
+                  [nzDropdownRender]="selectLoading"
+                  (ngModelChange)="loadDriverPhone($event, i)"
+                >
+                  <nz-option
+                    *ngFor="let driver of selectableDriverService.drivers"
+                    [nzLabel]="driver.name"
+                    [nzValue]="driver.id"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null" nzFor="driverPhone">Tel. motorista</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                <input nz-input formControlName="driverPhone" id="driverPhone" disabled/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null" nzFor="origin">Origem</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                <input nz-input formControlName="origin" id="origin"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="4">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null" nzFor="destiny">Destino</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                <input nz-input formControlName="destiny" id="destiny"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
       </div>
 
       <nz-divider></nz-divider>
