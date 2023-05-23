@@ -15,12 +15,17 @@
     >
       <thead>
       <tr>
-        <th class="text-center" *ngFor="let column of checklistColumns">{{ column.title }}</th>
+        <th
+          class="text-center"
+          *ngFor="let column of checklistColumns"
+        >{{ column.title }}</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of checklistTable.data;  let i=index">
-        <td class="text-center">{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td class="text-center">
+          {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+        </td>
         <td>
           <h6 class="text-center">{{item.vehicle.plate}}</h6>
         </td>
@@ -28,6 +33,9 @@
           {{item.vehicle?.trackers?.[0]?.trackerModel.name}}
         </td>
         <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
+        <td class="text-center">{{item.driver?.name }} / {{item.driver?.phoneNumber}}</td>
+        <td class="text-center">{{item.origin}}</td>
+        <td class="text-center">{{item.destiny}}</td>
         <td
           class="text-md-center"
           *ngIf="authService.user.isGertranStaff"

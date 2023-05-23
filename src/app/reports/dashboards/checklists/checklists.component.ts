@@ -19,6 +19,9 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
     {title: 'Placa'},
     {title: 'Tecnologia'},
     {title: 'Cliente'},
+    {title: 'Motorista'},
+    {title: 'Origem'},
+    {title: 'Destino'},
     {title: 'Ações'}
   ];
 
