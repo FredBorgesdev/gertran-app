@@ -36,7 +36,8 @@ export class HeaderComponent implements OnInit {
     this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
     this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
     this.setCustomers();
-    if (this.user.isGertranStaff) {
+
+    if (this.user?.isGertranStaff) {
       this.selectableCustomerService.init();
     }
   }

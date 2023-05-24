@@ -41,7 +41,7 @@
       </li>
     </ul>
     <ul class="nav-right">
-      <li class="m-r-25">{{ user.name }}</li>
+      <li class="m-r-25">{{ user?.name || 'Usuário' }}</li>
 
       <li>
         <a (click)="quickViewToggle()">
