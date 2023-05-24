@@ -19,7 +19,8 @@
         (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
         [nzDropdownRender]="selectLoading"
       >
-        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                   [nzValue]="customer.id"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -27,14 +28,14 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
-      <input id="name" type="text" nz-input formControlName="name" />
+      <input id="name" type="text" nz-input formControlName="name"/>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
-      <input id="description" type="text" nz-input formControlName="description" />
+      <input id="description" type="text" nz-input formControlName="description"/>
     </nz-form-control>
   </nz-form-item>
 
@@ -44,6 +45,7 @@
       <input
         ngx-google-places-autocomplete
         (onAddressChange)="handleAddressChange($event)"
+        [options]="googlePlacesOptions"
         id="address"
         type="text"
         nz-input
@@ -56,21 +58,21 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
-      <input id="state" nz-input formControlName="state" />
+      <input id="state" nz-input formControlName="state"/>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
-      <input id="city" nz-input formControlName="city" />
+      <input id="city" nz-input formControlName="city"/>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="radius">Raio</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o raio">
-      <input id="radius" type="number" nz-input formControlName="radius" />
+      <input id="radius" type="number" nz-input formControlName="radius"/>
     </nz-form-control>
   </nz-form-item>
 

@@ -6,6 +6,7 @@ import {Incident, IncidentsService} from '../../monitoring/incidents.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from '@angular/router';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
+import {googlePlacesOptions} from "../../shared/data/google-places-options";
 
 @Component({
   selector: 'app-create-incident-modal',
@@ -17,6 +18,8 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   //   driverName: string;
   //   driverPhone: string;
   // };
+
+  googlePlacesOptions = googlePlacesOptions;
 
   @Input() monitoringRequest: any;
   @Input() driver: {
@@ -111,4 +114,5 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
       incidentLongitude: longitude,
     });
   }
+
 }

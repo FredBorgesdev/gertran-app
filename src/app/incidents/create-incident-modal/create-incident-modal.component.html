@@ -79,6 +79,7 @@
             nzSize="small"
             ngx-google-places-autocomplete
             (onAddressChange)="handleAddressChange($event)"
+            [options]="googlePlacesOptions"
             id="incidentLocation"
             type="text"
             nz-input

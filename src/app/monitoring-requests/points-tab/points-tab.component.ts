@@ -19,6 +19,7 @@ import {forkJoin} from 'rxjs';
 import {DirectionsService} from '../../shared/services/directions.service';
 import {MonitoringRequests} from '../monitoring-requests.service';
 import {SelectablePointService} from "../../stops/selectable-point.service";
+import {googlePlacesOptions} from "../../shared/data/google-places-options";
 
 interface LatLng {
   lat: number;
@@ -33,6 +34,7 @@ interface LatLng {
 export class PointsTabComponent implements OnInit {
   @Input() monitoringRequest: MonitoringRequests;
   @Output() updateRouteCoordinates = new EventEmitter<any[]>();
+  googlePlacesOptions = googlePlacesOptions;
 
   isLoading = false;
   stops = [];
@@ -52,7 +54,8 @@ export class PointsTabComponent implements OnInit {
     private message: NzMessageService,
     private directionsService: DirectionsService,
     public selectablePointService: SelectablePointService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.selectablePointService.init();
@@ -69,7 +72,7 @@ export class PointsTabComponent implements OnInit {
     this._routeCoordinates = this.monitoringRequest.routeCoordinates;
 
     this.isLoading = true;
-    this.service.getAll({ limit: 50 }, this.monitoringRequest.id).subscribe((points) => {
+    this.service.getAll({limit: 50}, this.monitoringRequest.id).subscribe((points) => {
       points.results.forEach((point) => {
         const formGroup = this.addPoint();
         const pointWithDate = {
@@ -86,7 +89,7 @@ export class PointsTabComponent implements OnInit {
       this.message.error('Erro ao carregar paradas');
     });
 
-    const { routeId } = this.activatedRoute.snapshot.queryParams || {};
+    const {routeId} = this.activatedRoute.snapshot.queryParams || {};
     if (!routeId || routeId === BLANK_ROUTE.id) {
       return;
     }
@@ -206,16 +209,16 @@ export class PointsTabComponent implements OnInit {
     const lastPoint = this.getPointsControls()[this.getPointsControls().length - 1];
     const waypoints = this.getPointsControls().slice(1, this.getPointsControls().length - 1);
 
-    firstPoint?.patchValue({ pointType: PointTypes.START });
+    firstPoint?.patchValue({pointType: PointTypes.START});
     waypoints?.forEach((point) => {
-      point.patchValue({ pointType: PointTypes.WAYPOINT });
+      point.patchValue({pointType: PointTypes.WAYPOINT});
     });
-    lastPoint?.patchValue({ pointType: PointTypes.END });
+    lastPoint?.patchValue({pointType: PointTypes.END});
   }
 
   async calculateEtaForAllPoints(): Promise<void> {
     const points = this.getPointsControls();
-    points[0]?.patchValue({ date: points[0]?.value.date || new Date() });
+    points[0]?.patchValue({date: points[0]?.value.date || new Date()});
 
     for (let index = 1; index < points.length; index++) {
       const previousPoint = points[index - 1];
@@ -226,8 +229,8 @@ export class PointsTabComponent implements OnInit {
       }
 
       const eta = await this.calculateETA(
-        { lat: previousPoint.value.latitude, lng: previousPoint.value.longitude },
-        { lat: currentPoint.value.latitude, lng: currentPoint.value.longitude },
+        {lat: previousPoint.value.latitude, lng: previousPoint.value.longitude},
+        {lat: currentPoint.value.latitude, lng: currentPoint.value.longitude},
       );
 
       currentPoint.patchValue({
@@ -258,7 +261,7 @@ export class PointsTabComponent implements OnInit {
       });
       directions.setOrigin([origin.lng, origin.lat]);
       directions.setDestination([destination.lng, destination.lat]);
-      directions.on('route', ({ route }) => {
+      directions.on('route', ({route}) => {
         resolve(route[0]?.duration);
       });
     });
@@ -327,7 +330,9 @@ export class PointsTabComponent implements OnInit {
 
   getChangedPointsWithOrder(): any[] {
     return this.getPointsControls().reduce((acc, point, index) => {
-      if (!point.dirty) { return acc; }
+      if (!point.dirty) {
+        return acc;
+      }
 
       const pointWithOrder = {
         ...point.value,

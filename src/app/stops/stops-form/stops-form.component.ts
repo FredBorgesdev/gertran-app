@@ -1,13 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { TransferItem } from 'ng-zorro-antd/transfer';
+import {TransferItem} from 'ng-zorro-antd/transfer';
 import {Stop, StopsService} from '../stops.service';
 import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Customer, CustomersService} from '../../customers/customers.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AuthenticationService} from "../../authentication/authentication.service";
+import {googlePlacesOptions} from "../../shared/data/google-places-options";
 
 @Component({
   selector: 'app-stops-form',
@@ -17,6 +18,7 @@ import {AuthenticationService} from "../../authentication/authentication.service
 })
 export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements OnInit {
   @Input() stop: Stop;
+  googlePlacesOptions = googlePlacesOptions;
 
   stopTypes = [];
   customers: Customer[] = [];
@@ -101,4 +103,6 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
       address: formattedAddress,
     });
   }
+
+  protected readonly google = google;
 }
