@@ -7,7 +7,7 @@ import polyline from '@mapbox/polyline';
 
 import {MapModalComponent} from '../map-modal/map-modal.component';
 import {environment} from '../../../environments/environment';
-import {addSeconds, differenceInDays, format, setHours} from 'date-fns';
+import {addSeconds, differenceInDays, differenceInHours, format, setHours} from 'date-fns';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -117,7 +117,7 @@ export class PointsTabComponent implements OnInit {
     return (this.validateForm.get('points') as FormArray).controls as FormGroup[];
   }
 
-  addPoint(): FormGroup {
+  addPoint(markAsDirty = false): FormGroup {
     const chosenPoint = this.validateForm.get('chosenPoint').value;
     const formGroup = new FormGroup({
       id: new FormControl(null),
@@ -142,7 +142,9 @@ export class PointsTabComponent implements OnInit {
 
     this.setPointsCorrectTypes().then();
 
-    formGroup.markAsDirty();
+    if (markAsDirty) {
+      formGroup.markAsDirty();
+    }
 
     return this.getPointsControls()[this.getPointsControls().length - 1];
   }
@@ -217,6 +219,9 @@ export class PointsTabComponent implements OnInit {
   }
 
   async calculateEtaForAllPoints(): Promise<void> {
+    // TODO
+    return;
+
     const points = this.getPointsControls();
     points[0]?.patchValue({date: points[0]?.value.date || new Date()});
 
@@ -228,10 +233,20 @@ export class PointsTabComponent implements OnInit {
         return;
       }
 
+      // TODO: double check
+      // skip if current point is greater than previous point
+      if (currentPoint.value.date > previousPoint.value.date) {
+        continue;
+      }
+
       const eta = await this.calculateETA(
         {lat: previousPoint.value.latitude, lng: previousPoint.value.longitude},
         {lat: currentPoint.value.latitude, lng: currentPoint.value.longitude},
       );
+
+      if (!eta) {
+        return;
+      }
 
       currentPoint.patchValue({
         date: addSeconds(previousPoint.value.date, eta),
