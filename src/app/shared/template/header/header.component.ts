@@ -79,6 +79,11 @@ export class HeaderComponent implements OnInit {
 
   private setCustomers(): void {
     this.user = this.authService.user;
+
+    if (!this.user) {
+      return;
+    }
+
     const customerQueryParam = this.activatedRoute.snapshot.queryParams?.customer;
     const loggedUserHasCustomer = this.user.customer.length > 0;
 
@@ -102,12 +107,12 @@ export class HeaderComponent implements OnInit {
   }
 
   get showSelect(): boolean {
-    return this.user?.customer.length > 1 || this.user.isGertranStaff;
+    return this.user?.customer.length > 1 || this.user?.isGertranStaff;
   }
 
   get customers(): Customer[] {
-    if (!this.user.isGertranStaff) {
-      return this.user.customer;
+    if (!this.user?.isGertranStaff) {
+      return this.user?.customer;
     }
 
     return this.selectableCustomerService.customers;
