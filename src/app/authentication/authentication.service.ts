@@ -124,9 +124,9 @@ export class AuthenticationService {
         window.location.href = '/';
       }
     } catch (e) {
-      if (e.status === 500) {
-        this.logout();
-      }
+      // if (e.status === 500) {
+      //   this.logout();
+      // }
 
       if (window.location.pathname !== '/error/500') {
         window.location.href = '/error/500';
