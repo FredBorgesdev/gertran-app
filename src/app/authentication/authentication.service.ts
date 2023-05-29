@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import Cookies from 'js-cookie';
 import {from, Observable} from 'rxjs';
 import decode from 'jwt-decode';
-import { AbstractUser, UsersService } from '../users/users.service';
+import {AbstractUser, UsersService} from '../users/users.service';
 import User from '../users/user';
 
 export const GERTRAN_CUSTOMER_ID = 'GERTRAN_CUSTOMER_ID';
@@ -19,7 +19,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private usersService: UsersService,
-  ) { }
+  ) {
+  }
 
   async login(
     cpf: string,
@@ -76,7 +77,9 @@ export class AuthenticationService {
 
   async isAuthenticated(): Promise<boolean> {
     const token = Cookies.get(GERTRAN_WEB_TOKEN);
-    if (!token) { return false; }
+    if (!token) {
+      return false;
+    }
 
     const isTokenValid = await this.http.post('auth/jwt/verify', {
       token: Cookies.get(GERTRAN_WEB_TOKEN)
@@ -96,6 +99,9 @@ export class AuthenticationService {
   async init(): Promise<User | null> {
     const jwt = Cookies.get(GERTRAN_WEB_TOKEN);
     if (!jwt) {
+      if (window.location.pathname !== '/authentication/login') {
+        window.location.href = '/authentication/login';
+      }
       return null;
     }
 
@@ -118,8 +124,14 @@ export class AuthenticationService {
         window.location.href = '/';
       }
     } catch (e) {
+      if (e.status === 500) {
+        this.logout();
+      }
+
       if (window.location.pathname !== '/error/500') {
         window.location.href = '/error/500';
+      } else {
+        window.location.href = '/';
       }
     }
   }
