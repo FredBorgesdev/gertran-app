@@ -26,6 +26,7 @@ import {
 import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
+import {format} from "date-fns";
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -203,7 +204,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getAlerts(item: Position): string {
-    return item.events.map(prop('eventDescription')).join(', ');
+    if (!item.events || !item.events.length) {
+      return '';
+    }
+
+    const lastEvent = item.events[item.events.length - 1];
+    const dateFormatted = format(new Date(lastEvent.createdAt), 'dd/MM/yyyy HH:mm:ss');
+    return `${lastEvent.eventDescription} - ${dateFormatted}`;
   }
 
   loadPositions(): void {

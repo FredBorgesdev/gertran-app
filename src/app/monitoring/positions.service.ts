@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import ApiService, {
   DEFAULT_LIMIT,
   GetAllResponse,
   Pagination,
 } from '../shared/services/api.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 interface PositionInfo {
   id: string;
@@ -27,6 +27,7 @@ interface PositionInfo {
 }
 
 interface PositionEvent {
+  createdAt: string;
   eventName: string;
   eventDescription: string;
 }
@@ -79,7 +80,8 @@ export interface Position {
   providedIn: 'root',
 })
 export class PositionsService implements ApiService<Position> {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAll(
     pagination: Pagination,
@@ -91,7 +93,7 @@ export class PositionsService implements ApiService<Position> {
       travelling?: boolean;
     }
   ): Observable<GetAllResponse<Position>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -110,7 +112,7 @@ export class PositionsService implements ApiService<Position> {
       params.travelling = filters.travelling;
     }
 
-    return this.http.get<GetAllResponse<Position>>('positions', { params });
+    return this.http.get<GetAllResponse<Position>>('positions', {params});
   }
 
   get(id: string): Observable<Position> {
