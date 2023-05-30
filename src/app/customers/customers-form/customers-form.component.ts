@@ -5,8 +5,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 import {Customer, CustomersService} from '../customers.service';
 import {conformToMask} from 'angular2-text-mask';
 
@@ -29,7 +29,8 @@ export class CustomersFormComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private customersService: CustomersService
-  ) { }
+  ) {
+  }
 
   saveCustomer(): void {
     if (this.validateForm.valid) {
@@ -43,10 +44,10 @@ export class CustomersFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const { conformedValue: maskedCnpj } = conformToMask(
+    const {conformedValue: maskedCnpj} = conformToMask(
       this.customer?.cnpj,
       this.cnpjMask,
-      { guide: false }
+      {guide: false}
     );
 
     this.validateForm = this.formBuilder.group({
@@ -56,11 +57,12 @@ export class CustomersFormComponent implements OnInit {
       email: [this.customer?.email, [Validators.email]],
       checklistExpirationPeriod: [this.customer?.checklistExpirationPeriod, Validators.required],
       shippers: [this.customer.shippers],
+      closingDay: [this.customer?.closingDay, []],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);
     });
-    this.customersService.getAll({ limit: 50 }, { isShipper: true }).subscribe((response) => {
+    this.customersService.getAll({limit: 50}, {isShipper: true}).subscribe((response) => {
       this.shippers = response.results;
     });
   }

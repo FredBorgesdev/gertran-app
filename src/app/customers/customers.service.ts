@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Workday} from '../workdays/workday.service';
 
 export interface Customer {
+  closingDay: number;
   checklistExpirationPeriod: string;
   canSelectShipper: boolean;
   id: string;

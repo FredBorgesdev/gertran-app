@@ -38,6 +38,14 @@
       <label nz-radio nzValue="thirty_days">30 dias</label>
     </nz-radio-group>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="domain">Dia de fechamento</nz-form-label>
+    <nz-radio-group formControlName="closingDay">
+      <label nz-radio [nzValue]="10">10</label>
+      <label nz-radio [nzValue]="20">20</label>
+      <label nz-radio [nzValue]="30">30</label>
+    </nz-radio-group>
+  </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="shippers">Embarcadores</nz-form-label>
