@@ -99,3 +99,7 @@ nz-select,
 .ant-table-tbody > .bg-info:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
   background-color: #b8ffff !important;
 }
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid black;
+}
