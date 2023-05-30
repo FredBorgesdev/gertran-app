@@ -16,6 +16,12 @@ export interface BasePeriodFilter extends BaseFilter {
   to: string;
 }
 
+export interface BaseClosingFilter {
+  from: string;
+  to: string;
+  closingDay: number;
+}
+
 export interface BaseUserFilter extends BasePeriodFilter {
   user: string;
 }
@@ -345,12 +351,12 @@ export class ReportsService {
     return this.http.get<ReportsResults>('reports/monitoring/vehiclesreleased?1=1', {params});
   }
 
-  getClosure(filters: BasePeriodFilter): Observable<ReportsResults> {
+  getClosure(filters: BaseClosingFilter): Observable<ReportsResults> {
     const params = new HttpParams({
       fromObject: {
         from_date: filters.from,
         to_date: filters.to,
-        customer: filters.customer,
+        closing_day: filters.closingDay,
       }
     });
     return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', {params});

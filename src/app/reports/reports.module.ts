@@ -43,14 +43,16 @@ import {MapMarkersModalComponent} from './extra/map-markers-modal/map-markers-mo
 import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
 import {MonitoringRequestsComponent} from './dashboards/monitoring-requests/monitoring-requests.component';
 import {MonitoringRequestsModule} from "../monitoring-requests/monitoring-requests.module";
-import { ChecklistsComponent } from './dashboards/checklists/checklists.component';
-import { IncidentsComponent } from './incidents/incidents.component';
+import {ChecklistsComponent} from './dashboards/checklists/checklists.component';
+import {IncidentsComponent} from './incidents/incidents.component';
+import {BaseClosingFilterComponent} from "./filters/base-closing-filter/base-closing-filter.component";
 
 
 @NgModule({
   declarations: [
     LoadUnloadByMacroComponent,
     BaseCustomerFilterComponent,
+    BaseClosingFilterComponent,
     BaseUserFilterComponent,
     LoadUnloadByPointComponent,
     LoadUnloadByRadiusComponent,
