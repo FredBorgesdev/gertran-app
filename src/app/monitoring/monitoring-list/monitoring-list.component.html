@@ -172,12 +172,8 @@
         [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.vehiclePlate || '-' }}</td>
       <td>
-        <span
-          nz-icon
-          nzType="key"
-          nzTheme="outline"
-          [style]="'font-size: 20px; color: ' + (item.ignition ? '#ff7118' : '#ccc')"
-        ></span>
+        <img src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
+        <img src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <span
