@@ -96,7 +96,7 @@
 
       <br/>
 
-      <button nz-button nzSize="small" class="m-b-5" (click)="isTableFullscreen = true">
+      <button nz-button nzSize="small" class="m-b-5" (click)="openFullScreenTable()">
         <span nz-icon nzType="fullscreen"></span>
       </button>
 
@@ -108,15 +108,36 @@
 <nz-modal
   nzTitle="Monitoramento"
   [nzVisible]="isTableFullscreen"
-  (nzOnCancel)="isTableFullscreen = false"
-  (nzOnOk)="isTableFullscreen = false"
-  nzWidth="95%"
-  [nzBodyStyle]="{ height: '80vh' }"
+  (nzOnCancel)="closeFullScreenTable()"
+  (nzOnOk)="closeFullScreenTable()"
+  nzWidth="100%"
+  [nzBodyStyle]="{ height: '85vh' }"
   [nzStyle]="{ top: '10px' }"
   nzOkText="Fechar"
   nzCancelText="Cancelar"
 >
   <div *nzModalContent>
+    <nz-radio-group
+      class="m-t-15 m-b-15"
+      nzButtonStyle="outline"
+      nzSize="small"
+    >
+      <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all">Todos</label>
+      <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')"
+             class="border-ag-start">Ag. Inicio</label>
+      <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')"
+             class="border-contingency">Contigência</label>
+      <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')"
+             class="border-client">Cliente</label>
+      <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')"
+             class="border-travelling">Em viagem</label>
+      <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="border-standby">Parado</label>
+      <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')"
+             class="border-overnight">Pernoite</label>
+      <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
+             class="border-out-of-point">Fora do ponto</label>
+    </nz-radio-group>
+
     <div *ngIf="!isTableFullscreen else monitoringDataTable"></div>
   </div>
 </nz-modal>
@@ -129,6 +150,7 @@
     nzTableLayout="fixed"
     nzSize="small"
     [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'calc(100vh - 400px)' }"
+    [nzLoading]="isLoading"
   >
     <thead>
     <tr>
@@ -172,14 +194,14 @@
         [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.vehiclePlate || '-' }}</td>
       <td>
-        <img src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
-        <img src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
+        <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
+        <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
-          [nzTooltipTitle]="getLastEvent(item)?.eventName"
+          [nzTooltipTitle]="getLastEvent(item)?.eventDescription"
           nz-icon
           [nzType]="getAlertIcon(item)?.icon"
           nzTheme="twotone"

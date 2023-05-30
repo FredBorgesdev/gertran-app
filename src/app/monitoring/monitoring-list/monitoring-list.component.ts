@@ -493,4 +493,40 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.alertsCount = response;
     });
   }
+
+  openFullScreenTable(): void {
+    this.isTableFullscreen = true;
+    this.openBrowserFullScreen();
+  }
+
+  closeFullScreenTable(): void {
+    this.isTableFullscreen = false;
+    this.closeBrowserFullScreen();
+  }
+
+  private openBrowserFullScreen(): void {
+    const body = document.body as any;
+    if (body.requestFullscreen) {
+      body.requestFullscreen();
+    } else if (body.webkitRequestFullscreen) {
+      body.webkitRequestFullscreen();
+    } else if (body.msRequestFullscreen) {
+      body.msRequestFullscreen();
+    } else if (body.mozRequestFullScreen) {
+      body.mozRequestFullScreen();
+    }
+  }
+
+  private closeBrowserFullScreen(): void {
+    const body = document as any;
+    if (body.exitFullscreen) {
+      body.exitFullscreen();
+    } else if (body.webkitExitFullscreen) {
+      body.webkitExitFullscreen();
+    } else if (body.msExitFullscreen) {
+      body.msExitFullscreen();
+    } else if (body.mozCancelFullScreen) {
+      body.mozCancelFullScreen();
+    }
+  }
 }
