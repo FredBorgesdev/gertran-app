@@ -36,7 +36,7 @@
       <tr *ngFor="let data of table.data; index as i">
         <td>{{ data.id | id }}</td>
         <td>{{ data.installationLocation }}</td>
-        <td>{{ data.technology }}</td>
+        <td>{{ data.technology?.name }}</td>
         <td>{{ data.serialNumber }}</td>
       </tr>
       </tbody>
