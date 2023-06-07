@@ -233,13 +233,9 @@
           />
         </button>
       </td>
-      <td>
-        <nz-progress
-          nzStrokeWidth="2"
-          nzSize="small"
-          [nzPercent]="item.positionInfo?.travelProgress"
-          [nzFormat]="formatPercent"
-        ></nz-progress>
+      <td [nzAlign]="'center'">
+        <div class="progress-bar" [style]="'--progress:' + item.positionInfo?.travelProgress + '%'">
+        </div>
       </td>
       <td>{{ item.speed }}km</td>
       <td>{{ item.customer?.name }}</td>
