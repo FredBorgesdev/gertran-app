@@ -193,12 +193,11 @@
         nzLeft
         [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
       >{{ item.vehiclePlate || '-' }}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
+      <td>
         <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
         <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
       </td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)" *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
@@ -210,8 +209,7 @@
           style="font-size: 20px"
         ></span>
       </td>
-      <td nzLeft style="cursor: pointer" (click)="openAutomationModal(item)"
-          [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
+      <td style="cursor: pointer" (click)="openAutomationModal(item)">
         <span
           nz-icon
           nzType="info-circle"
@@ -219,7 +217,7 @@
           [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
+      <td>
         <button
           nz-button
           nzType="link"
@@ -235,27 +233,15 @@
           />
         </button>
       </td>
-      <td nzLeft [nzAlign]="'center'" [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
+      <td [nzAlign]="'center'">
         <div class="progress-bar" [style]="'--progress:' + item.positionInfo?.travelProgress + '%'">
         </div>
       </td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">{{ item.speed }}km</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">{{ item.customer?.name }}</td>
-      <td nzLeft
-          [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)" nzEllipsis nz-tooltip
+      <td>{{ item.speed }}km</td>
+      <td>{{ item.customer?.name }}</td>
+      <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td nzEllipsis nz-tooltip
           [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
-      <td
-        nzLeft
-        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
-        nzEllipsis
-        nz-tooltip
-        [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)"
-        *ngIf="user.isGertranStaff"
-        data-testid="td-gertran-only"
-      >
-        {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
-      </td>
       <td>{{ getOrigin(item) }}</td>
       <td>{{ getDestiny(item) }}</td>
       <td
@@ -265,6 +251,15 @@
         nz-tooltip
         [nzTooltipTitle]="getAlerts(item)"
       >{{ getAlerts(item) || '-' }}</td>
+      <td
+        nzEllipsis
+        nz-tooltip
+        [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)"
+        *ngIf="user.isGertranStaff"
+        data-testid="td-gertran-only"
+      >
+        {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
+      </td>
       <td *ngIf="user.isGertranStaff"
           data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
       <td>{{ item.positionInfo?.driverName || '-' }}</td>
