@@ -454,6 +454,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
+      {
+        path: '/reports/panic-history',
+        title: 'Relatório de Pânico',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
     ]
   },
   {

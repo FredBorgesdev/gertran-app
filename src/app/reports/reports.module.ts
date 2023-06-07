@@ -46,6 +46,7 @@ import {MonitoringRequestsModule} from "../monitoring-requests/monitoring-reques
 import {ChecklistsComponent} from './dashboards/checklists/checklists.component';
 import {IncidentsComponent} from './incidents/incidents.component';
 import {BaseClosingFilterComponent} from "./filters/base-closing-filter/base-closing-filter.component";
+import {PanicHistoryComponent} from "./panic-history/panic-history.component";
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import {BaseClosingFilterComponent} from "./filters/base-closing-filter/base-clo
     MonitoringRequestsComponent,
     ChecklistsComponent,
     IncidentsComponent,
+    PanicHistoryComponent,
   ],
   exports: [
     WorkdayComponent

@@ -27,6 +27,7 @@ import {FatigueReportComponent} from './fatigue-report/fatigue-report.component'
 import {MonitoringRequestsComponent} from "./dashboards/monitoring-requests/monitoring-requests.component";
 import {ChecklistsComponent} from "./dashboards/checklists/checklists.component";
 import {IncidentsComponent} from "./incidents/incidents.component";
+import {PanicHistoryComponent} from "./panic-history/panic-history.component";
 
 const routes: Routes = [
   {
@@ -168,6 +169,10 @@ const routes: Routes = [
   {
     path: 'dashboards/checklists',
     component: ChecklistsComponent,
+  },
+  {
+    path: 'panic-history',
+    component: PanicHistoryComponent,
   }
 ];
 

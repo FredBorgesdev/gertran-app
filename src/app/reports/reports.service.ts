@@ -578,4 +578,22 @@ export class ReportsService {
 
     return this.http.get<IncidentReport[]>('reports/events/incidents?1=1', {params});
   }
+
+  getPanicHistory(form: IncidentsFilter): Observable<IncidentReport[]> {
+    const fromObject: any = {
+      from_date: form.from,
+      to_date: form.to,
+    };
+    if (form.plate) {
+      fromObject.plate = form.plate;
+    }
+    if (form.customer) {
+      fromObject.customer = form.customer;
+    }
+    const params = new HttpParams({
+      fromObject
+    });
+
+    return this.http.get<IncidentReport[]>('reports/events/panichistory?1=1', {params});
+  }
 }

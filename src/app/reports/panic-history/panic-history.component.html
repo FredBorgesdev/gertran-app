@@ -1,0 +1,62 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Histórico de Pânico</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-vehicle-filter
+      (generateReport)="generateReport($event)"
+      [rows]="incidents"
+      [filterByAllCustomers]="true"
+      fileName="Histórico de Checklist"
+    ></app-base-vehicle-filter>
+
+    <nz-table
+      #table
+      [nzData]="incidents"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Cliente</th>
+        <th>NC</th>
+        <th>Data/hora</th>
+        <th>Placa</th>
+        <th>Local</th>
+        <th>Lat/lng</th>
+        <th>Motorista</th>
+        <th>Criado por</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.monitoringRequest.customer.tradingName }}</td>
+        <td>{{ data.incidentType.type }}</td>
+        <td>
+          {{ data.datetime | date: 'dd/MM/yyyy HH:mm' }}
+        </td>
+        <td>{{ data.monitoringRequest.truck.vehicle.plate }}</td>
+        <td>{{ data.incidentLocation }}</td>
+        <td>{{ data.incidentLatitude }} / {{ data.incidentLongitude }}</td>
+        <td>{{ data.driverName }} / {{ data.driverPhone }}</td>
+        <td>{{ getCreatedBy(data) }}</td>
+        <td>
+          <button nz-button nzType="link" (click)="openIncidentDetailModal(data)">
+            <i nz-icon nzType="eye"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>
