@@ -93,6 +93,7 @@
 .is-folded {
   .side-nav {
     width: $side-nav-folded;
+    left: -$side-nav-folded;
 
     .ant-menu-inline-collapsed {
       width: $side-nav-folded - 1px;
@@ -114,6 +115,10 @@
 }
 
 .is-expand {
+  .side-nav {
+    left: 0px;
+  }
+
   @include screen-tablet {
     .side-nav {
       left: 0px;

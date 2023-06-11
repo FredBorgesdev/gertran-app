@@ -1,5 +1,6 @@
 tr {
   font-size: 10px;
+  line-height: 1;
 }
 
 td {
@@ -78,6 +79,10 @@ nz-select,
 .border-out-of-point {
   background-color: #e3e3e3;
   color: #505050;
+}
+
+.ant-table .ant-table-fixed-header .ant-table-has-fix-left .ant-table-small .ant-table-ping-right {
+  line-height: 1 !important;
 }
 
 .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {

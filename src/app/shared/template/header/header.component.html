@@ -9,7 +9,11 @@
     <ul class="nav-left">
       <li class="desktop-toggle">
         <a (click)="toggleFold()">
-          <i nz-icon [nzType]="isFolded? 'menu-unfold':'menu-fold'" theme="outline"></i>
+          <i nz-icon [nzType]="isFolded ? 'menu-unfold' : 'menu-fold'" theme="outline"></i>
+
+          <span class="font-size-13">
+            Menu
+          </span>
         </a>
       </li>
       <li class="mobile-toggle">
@@ -18,7 +22,7 @@
         </a>
       </li>
 
-      <li *ngIf="showSelect">
+      <li *ngIf="showSelect" class="m-l-10">
         <nz-select
           data-testid="customer-select"
           style="width: 200px;"

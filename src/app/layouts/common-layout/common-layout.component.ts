@@ -23,7 +23,9 @@ export class CommonLayoutComponent {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.isFullScreen = params.fullscreen === 'true';
-      this.themeService.toggleFold(params['navbar-closed'] === 'true');
+      if (params['navbar-closed'] === 'true') {
+        this.themeService.toggleFold(params['navbar-closed'] === 'true');
+      }
     });
 
     this.router.events.pipe(
