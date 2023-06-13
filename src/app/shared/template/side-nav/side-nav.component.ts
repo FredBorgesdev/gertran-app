@@ -31,12 +31,10 @@ export class SideNavComponent implements OnInit {
   }
 
   closeMobileMenu(): void {
-    if (window.innerWidth < 992) {
-      this.isFolded = false;
-      this.isExpand = !this.isExpand;
-      this.themeService.toggleExpand(this.isExpand);
-      this.themeService.toggleFold(this.isFolded);
-    }
+    this.isFolded = true;
+    this.isExpand = false;
+    this.themeService.toggleExpand(this.isExpand);
+    this.themeService.toggleFold(this.isFolded);
   }
 
   get user(): User {

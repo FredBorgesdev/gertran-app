@@ -61,7 +61,6 @@ export class ThemeConstantService {
   }
 
   toggleFold(isFolded: boolean) {
-    console.log('toggleFold', isFolded)
     this.isMenuFoldedActived.next(isFolded);
   }
 
