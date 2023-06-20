@@ -49,7 +49,7 @@ export class ChecklistHistoryComponent implements OnInit {
       Tecnologia: checklistHistory.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name,
       Solicitante: checklistHistory.requestedBy?.name,
       'Status Checklist': this.getStatusChecklistLocalized(checklistHistory.status),
-      Justificativa: checklistHistory.justification,
+      Motivo: checklistHistory.justification,
       'Data Liberação': format(new Date(checklistHistory.reviewedAt), 'dd/MM/yyyy HH:mm:ss'),
       'Data Exp.': format(new Date(checklistHistory.expirationDate), 'dd/MM/yyyy HH:mm:ss'),
       Motorista: `${checklistHistory.driver?.name ?? ''} / ${checklistHistory.driver?.phoneNumber ?? ''}`,

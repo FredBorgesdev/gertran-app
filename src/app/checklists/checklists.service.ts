@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export interface Checklist {
+  status: string;
   id: string;
   driverDoorChecked: boolean;
   passengerDoorChecked: boolean;

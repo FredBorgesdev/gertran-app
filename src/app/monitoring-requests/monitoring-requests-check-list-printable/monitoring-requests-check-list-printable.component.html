@@ -181,7 +181,7 @@
       <nz-form-item>
         <nz-form-label></nz-form-label>
         <nz-radio-group
-          [(ngModel)]="monitoringRequest.data.status"
+          [(ngModel)]="monitoringRequest.data.checklist.status"
           [ngModelOptions]="{standalone: true}"
         >
           <label nz-radio nzValue="approved">Aprovado</label>
@@ -190,9 +190,9 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label>Justificativa</nz-form-label>
+        <nz-form-label>Motivo</nz-form-label>
         <nz-form-control [nzSpan]="null" [nzOffset]="null">
-          <input nz-input [value]="monitoringRequest.data?.checklist.justification"/>
+          <input nz-input [defaultValue]="monitoringRequest.data?.checklist.justification"/>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -324,7 +324,7 @@
       </nz-form-item>
 
       <nz-form-item>
-        <nz-form-label>Justificativa</nz-form-label>
+        <nz-form-label>Motivo</nz-form-label>
         <nz-form-control [nzSpan]="null" [nzOffset]="null">
           <input nz-input [value]="monitoringRequest.data?.checklistBait.justification"/>
         </nz-form-control>
