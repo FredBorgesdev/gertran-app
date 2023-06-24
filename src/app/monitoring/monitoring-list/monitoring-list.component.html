@@ -234,7 +234,10 @@
         </button>
       </td>
       <td [nzAlign]="'center'">
-        <div class="progress-bar" [style]="'--progress:' + item.positionInfo?.travelProgress + '%'">
+        <div
+          [style]="'--progress:' + item.positionInfo?.travelProgress + '%;' + '--progress-str: \'' + item.positionInfo?.travelProgress + '%\';'"
+          class="progress-bar"
+        >
         </div>
       </td>
       <td>{{ item.speed }}km</td>
