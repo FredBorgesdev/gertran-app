@@ -550,4 +550,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       item.events.find(({eventDescription}) => eventDescription.toLowerCase().includes('bloqueio'))
     );
   }
+
+  goToReport(path: string, item: Position): void {
+    this.router.navigate([path], {
+      queryParams: {
+        customerId: item.customer.id,
+        vehiclePlate: item.vehiclePlate,
+      }
+    });
+  }
 }

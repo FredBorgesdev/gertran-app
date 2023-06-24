@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Truck, TrucksService} from './trucks.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Subject} from 'rxjs';
@@ -21,7 +21,8 @@ export class SelectableTruckService {
   constructor(
     private trucksService: TrucksService,
     private message: NzMessageService,
-  ) {}
+  ) {
+  }
 
   init(): void {
     this.loadMoreTrucks();
@@ -55,9 +56,13 @@ export class SelectableTruckService {
     this.trucks = [truck, ...this.trucks];
   }
 
+  appendTrucks(trucks: Truck[]): void {
+    this.trucks = [...trucks, ...this.trucks];
+  }
+
   setupSearch(): void {
     this.searchTruckSubject.pipe(debounceTime(500)).subscribe((filters) => {
-      this.trucksService.getAll({ limit: 50 }, filters).subscribe((result) => {
+      this.trucksService.getAll({limit: 50}, filters).subscribe((result) => {
         this.trucks = result.results;
       });
     }, () => {

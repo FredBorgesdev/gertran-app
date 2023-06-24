@@ -5,13 +5,14 @@ import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Truck, TrucksService} from '../../../trucks/trucks.service';
 import {BaseVehicleFilter} from '../../reports.service';
 import {SelectableTruckService} from '../../../trucks/selectable-truck.service';
-import {format, subDays} from 'date-fns';
+import {format, subDays, subWeeks} from 'date-fns';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import {AuthenticationService} from "../../../authentication/authentication.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-base-vehicle-filter',
@@ -41,6 +42,9 @@ export class BaseVehicleFilterComponent implements OnInit {
     private xlsxExporterService: XlsxExporterService,
     private message: NzMessageService,
     private authService: AuthenticationService,
+    private route: ActivatedRoute,
+    private trucksService: TrucksService,
+    private customersService: CustomersService,
   ) {
   }
 
@@ -73,6 +77,30 @@ export class BaseVehicleFilterComponent implements OnInit {
       this.selectableCustomerService.concatCustomers(this.authService.user.customer);
       this.loadVehicles(this.authService.customerId);
     }
+
+    this.route.queryParams.subscribe(async params => {
+      const {customerId, vehiclePlate} = params || {};
+
+      if (!customerId || !vehiclePlate) {
+        return;
+      }
+
+      const customer = await this.customersService.get(customerId).toPromise();
+      const {results} = await this.trucksService.getAll({}, {
+        plate: vehiclePlate,
+      }).toPromise();
+
+      this.selectableCustomerService.appendCustomer(customer);
+      this.selectableTrucksService.appendTrucks(results);
+
+      const oneWeekAgo = subWeeks(new Date(), 1);
+      this.validateForm.patchValue({
+        customer: customerId,
+        plate: vehiclePlate,
+        startDate: oneWeekAgo,
+        endDate: new Date(),
+      });
+    });
   }
 
   emitGenerateReport(): void {

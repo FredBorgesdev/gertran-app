@@ -295,6 +295,16 @@
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
           <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
           <li nz-menu-item (click)="openIncidentsModal(item)">Ocorrências</li>
+          <li nz-submenu nzTitle="Relatórios">
+            <ul style="z-index: 999">
+              <li nz-menu-item (click)="goToReport('reports/commands-history', item)">
+                Histórico de comandos
+              </li>
+              <li nz-menu-item (click)="goToReport('reports/macro-vehicle', item)">
+                Histórico de mensagem
+              </li>
+            </ul>
+          </li>
           <li nz-submenu nzTitle="Mudar status">
             <ul style="z-index: 999">
               <li
