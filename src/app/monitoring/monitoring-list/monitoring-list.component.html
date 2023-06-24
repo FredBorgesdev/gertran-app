@@ -198,6 +198,14 @@
         <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+        <img width="16" src="assets/icons/green-alert.svg" alt="Grey siren" *ngIf="isSirenOn(item)">
+        <img width="16" src="assets/icons/grey-alert.svg" alt="Green siren" *ngIf="!isSirenOn(item)">
+      </td>
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+        <img width="16" src="assets/icons/green-lock.svg" alt="Grey lock" *ngIf="isLockOn(item)">
+        <img width="16" src="assets/icons/grey-lock.svg" alt="Green lock" *ngIf="!isLockOn(item)">
+      </td>
+      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip

@@ -43,6 +43,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '90px'},
     {title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px'},
     {title: 'Ign', width: '40px'},
+    {title: 'Sir', width: '40px', gertranStaffOnly: true},
+    {title: 'Blo', width: '40px', gertranStaffOnly: true},
     {title: 'Ale', width: '40px', gertranStaffOnly: true},
     {title: 'Automação', width: '90px'},
     {title: 'Mapa', width: '50px'},
@@ -535,5 +537,17 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     } else if (body.mozCancelFullScreen) {
       body.mozCancelFullScreen();
     }
+  }
+
+  isSirenOn(item: Position): boolean {
+    return Boolean(
+      item.events.find(({eventDescription}) => eventDescription.toLowerCase().includes('sirene'))
+    );
+  }
+
+  isLockOn(item: Position): boolean {
+    return Boolean(
+      item.events.find(({eventDescription}) => eventDescription.toLowerCase().includes('bloqueio'))
+    );
   }
 }
