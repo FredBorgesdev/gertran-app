@@ -36,6 +36,7 @@ export class BaseCustomerFilterComponent implements OnInit {
   @Input() columnStyles = {};
   @Input() xlsxValues = [];
   @Input() filterByAllCustomers = false;
+  @Input() reportName = 'Relatório';
 
   validateForm: FormGroup;
   customers: Customer[] = [];
@@ -110,13 +111,18 @@ export class BaseCustomerFilterComponent implements OnInit {
     autoTable(doc, {
       html: 'table',
       didDrawPage: (data) => {
-        doc.addImage('assets/images/logo/logogertran.png', 'PNG', 80, 10, 50, 50);
+        doc.setFontSize(30);
+        doc.text(this.reportName, data.settings.margin.left + 80, data.settings.margin.top - 60, {align: 'center'});
+        doc.addImage('assets/images/logo/logogertran.png', 'PNG', 650, 10, 100, 100);
       },
-      margin: {top: 70},
+      margin: {top: 140},
       columnStyles: this.columnStyles,
+      bodyStyles: {
+        fontSize: 7,
+      }
     });
 
-    doc.save('table.pdf');
+    doc.save(`${this.selectedCustomerName}.pdf`);
   }
 
   get isGertranStaff(): boolean {

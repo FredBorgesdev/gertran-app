@@ -31,6 +31,7 @@ export class BaseVehicleFilterComponent implements OnInit {
     value: string;
   }[] = [];
   @Input() filterByAllCustomers = false;
+  @Input() reportName = 'Relatório';
 
   validateForm: FormGroup;
 
@@ -135,17 +136,29 @@ export class BaseVehicleFilterComponent implements OnInit {
     this.xlsxExporterService.generate(fileNameWithPlate, values);
   }
 
+  get selectedCustomerName(): string {
+    return this.selectableCustomerService.customers
+      .find(
+        (customer) => customer.id === this.validateForm.controls.customer.value
+      )?.tradingName;
+  }
+
   generatePdf(): void {
-    const doc = new jsPDF();
+    const doc = new jsPDF('l', 'pt', 'a4');
 
     autoTable(doc, {
       html: 'table',
       didDrawPage: (data) => {
-        doc.addImage('assets/images/logo/logogertran.png', 'PNG', 80, 10, 50, 50);
+        doc.setFontSize(30);
+        doc.text(this.reportName, data.settings.margin.left + 80, data.settings.margin.top - 60, {align: 'center'});
+        doc.addImage('assets/images/logo/logogertran.png', 'PNG', 650, 10, 100, 100);
       },
-      margin: {top: 70}
+      margin: {top: 140},
+      bodyStyles: {
+        fontSize: 7,
+      }
     });
 
-    doc.save('table.pdf');
+    doc.save(`${this.reportName} - ${this.selectedCustomerName}.pdf`);
   }
 }
