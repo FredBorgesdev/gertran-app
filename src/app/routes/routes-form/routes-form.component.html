@@ -153,9 +153,8 @@
             #table
             [nzData]="items"
             nzSize="small"
-            [nzTotal]="pointsResponse?.count"
-            [nzPageSize]="pointsResponse?.limit"
-            [nzPageIndex]="pointsPage"
+            [nzTotal]="items.length"
+            [nzPageSize]="items.length"
             [nzFrontPagination]="true"
           >
             <thead>

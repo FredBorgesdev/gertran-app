@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { TransferItem, TransferSearchChange } from 'ng-zorro-antd/transfer';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Stop, StopsService } from '../../stops/stops.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { BaseCrudFormComponent } from '../../base-crud/base-crud-form/base-crud-form.component';
-import { Route, RoutesService } from '../routes.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SelectableCustomerServiceService } from '../../customers/selectable-customer-service.service';
+import {Component, OnInit} from '@angular/core';
+import {TransferItem, TransferSearchChange} from 'ng-zorro-antd/transfer';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import {Stop, StopsService} from '../../stops/stops.service';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
+import {Route, RoutesService} from '../routes.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {
   GetAllResponse,
   getCurrentPage,
 } from '../../shared/services/api.service';
-import { NzTableQueryParams } from 'ng-zorro-antd/table';
-import { debounceTime } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { AuthenticationService } from '../../authentication/authentication.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {debounceTime} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-routes-form',
@@ -25,8 +25,7 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 })
 export class RoutesFormComponent
   extends BaseCrudFormComponent<Route>
-  implements OnInit
-{
+  implements OnInit {
   points: TransferItem[] = [];
   pointsResponse: GetAllResponse<Stop>;
   pointsLoading = false;
@@ -55,7 +54,7 @@ export class RoutesFormComponent
     this.searchPointsSubject
       .pipe(debounceTime(1000))
       .subscribe((params: TransferSearchChange) => {
-        this.loadPointsFromCustomer(undefined, { name: params.value });
+        this.loadPointsFromCustomer(undefined, {name: params.value});
       });
   }
 
@@ -74,12 +73,13 @@ export class RoutesFormComponent
 
   performResourceChange(): void {
     if (this.points.length === 0) {
-      this.stopsService.getAll({ limit: 15 }).subscribe(
+      this.stopsService.getAll({limit: 15}).subscribe(
         (stops) => {
           this.points = this.mapStopsToTransferItems([
             ...this.resource.points.map((point) => point.point),
             ...stops.results,
           ]);
+          console.log(this.points)
           this.loadCurrentPoints();
         },
         () => {
