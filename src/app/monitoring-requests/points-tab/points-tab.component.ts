@@ -82,7 +82,14 @@ export class PointsTabComponent implements OnInit {
         formGroup.patchValue(pointWithDate);
       });
 
-      this.setPointsCorrectTypes();
+      const {firstPoint, waypoints, lastPoint} = this.setPointsCorrectTypes();
+      this.validateForm.patchValue({
+        points: [
+          firstPoint?.value,
+          ...waypoints?.map((point) => point.value),
+          lastPoint?.value,
+        ],
+      });
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
@@ -140,7 +147,7 @@ export class PointsTabComponent implements OnInit {
 
     (this.validateForm.get('points') as FormArray).push(formGroup);
 
-    this.setPointsCorrectTypes().then();
+    this.setPointsCorrectTypes();
 
     if (markAsDirty) {
       formGroup.markAsDirty();
@@ -203,19 +210,34 @@ export class PointsTabComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.getPointsControls(), event.previousIndex, event.currentIndex);
     this.calculateEtaForAllPoints().then();
-    this.setPointsCorrectTypes().then();
+    this.setPointsCorrectTypes();
   }
 
-  async setPointsCorrectTypes(): Promise<void> {
-    const firstPoint = this.getPointsControls()[0];
-    const lastPoint = this.getPointsControls()[this.getPointsControls().length - 1];
-    const waypoints = this.getPointsControls().slice(1, this.getPointsControls().length - 1);
+  setPointsCorrectTypes(): {
+    firstPoint: FormGroup,
+    waypoints: FormGroup[],
+    lastPoint: FormGroup,
+  } {
+    const pointControls = this.getPointsControls();
+    const firstPoint = pointControls.find(
+      (formGroup) => formGroup.value.pointType === 'start'
+    ) || pointControls[0];
+    const lastPoint = pointControls.find(
+      (formGroup) => formGroup.value.pointType === 'end'
+    ) || pointControls[pointControls.length - 1];
+    const waypoints = pointControls.slice(1, pointControls.length - 1);
 
     firstPoint?.patchValue({pointType: PointTypes.START});
     waypoints?.forEach((point) => {
       point.patchValue({pointType: PointTypes.WAYPOINT});
     });
     lastPoint?.patchValue({pointType: PointTypes.END});
+
+    return {
+      firstPoint,
+      waypoints,
+      lastPoint,
+    }
   }
 
   async calculateEtaForAllPoints(): Promise<void> {
