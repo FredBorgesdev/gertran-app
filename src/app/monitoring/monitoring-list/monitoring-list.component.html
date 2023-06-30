@@ -1,7 +1,7 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <form [formGroup]="validateForm" class="m-b-10">
-    <div nz-row nzGutter="12" nzAlign="middle">
-      <div nz-col nzSpan="8" *ngIf="authService.customerId">
+  <form [formGroup]="validateForm">
+    <div nz-row nzGutter="6" nzAlign="middle">
+      <div nz-col nzSpan="4" *ngIf="authService.customerId">
         <nz-select
           nzPlaceHolder="Cliente"
           formControlName="customer"
@@ -13,7 +13,8 @@
           ></nz-option>
         </nz-select>
       </div>
-      <div nz-col nzSpan="8" *ngIf="!authService.customerId">
+
+      <div nz-col nzSpan="4" *ngIf="!authService.customerId">
         <nz-select
           nzShowSearch
           nzAllowClear
@@ -34,13 +35,13 @@
         </nz-select>
       </div>
 
-      <div nz-col nzSpan="8" *ngIf="!authService.customerId">
+      <div nz-col nzSpan="4" *ngIf="!authService.customerId">
         <nz-select nzPlaceHolder="Terminal" formControlName="terminal" (ngModelChange)="loadPositions()" nzSize="small">
           <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
         </nz-select>
       </div>
 
-      <div nz-col nzSpan="8">
+      <div nz-col nzSpan="4">
         <label
           nz-checkbox
           formControlName="hideOld"
@@ -53,29 +54,31 @@
           class="font-size-12"
         >Em viagem</label>
       </div>
-    </div>
-  </form>
 
-  <ng-container *ngIf="monitoringData">
-    <div *ngIf="user.isGertranStaff">
-      <div nzSpan="8" data-testid="alerts">
-        <button nzSize="small" nz-button nzType="secondary" class="m-r-10" (click)="openAlertModal('info')">
+      <div nz-col nzSpan="12" data-testid="alerts" class="alert-button-group">
+        <button nzSize="small" nz-button nzType="secondary" class="m-r-5" (click)="openAlertModal('info')">
           ({{ alertsCount?.info }}) Mensagens
         </button>
-        <button nzSize="small" nz-button nzType="primary" class="m-r-10" (click)="openAlertModal('warning')">
+        <button nzSize="small" nz-button nzType="primary" class="m-r-5" (click)="openAlertModal('warning')">
           ({{ alertsCount?.warning }}) Alertas
         </button>
-        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-10" (click)="openAlertModal('danger')">
+        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-5" (click)="openAlertModal('danger')">
           ({{ alertsCount?.danger }}) Urgentes
         </button>
         <button nzSize="small" nz-button nzType="dashed">
           <span nz-icon nzType="car"></span>
           {{ plate }} - Placa
         </button>
+
       </div>
+    </div>
+  </form>
+
+  <ng-container *ngIf="monitoringData">
+    <div *ngIf="user.isGertranStaff">
 
       <nz-radio-group
-        class="m-t-15 m-b-15"
+        class="m-t-5 m-b-5"
         nzButtonStyle="outline"
         nzSize="small"
       >
@@ -94,15 +97,16 @@
         <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
                class="border-out-of-point">Fora do ponto</label>
       </nz-radio-group>
-    </div>
 
-    <button nz-button nzSize="small" class="m-b-5" (click)="openFullScreenTable()">
-      <span nz-icon nzType="fullscreen"></span>
-      Tela cheia
-    </button>
+      <button nz-button nzSize="small" class="m-b-5" (click)="openFullScreenTable()">
+        <span nz-icon nzType="fullscreen"></span>
+        Tela cheia
+      </button>
+    </div>
 
     <div *ngIf="isTableFullscreen else monitoringDataTable"></div>
   </ng-container>
+
 </nz-spin>
 
 <nz-modal
@@ -149,7 +153,7 @@
     [nzFrontPagination]="false"
     nzTableLayout="fixed"
     nzSize="small"
-    [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'calc(100vh - 400px)' }"
+    [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'auto' }"
     [nzLoading]="isLoading"
   >
     <thead>

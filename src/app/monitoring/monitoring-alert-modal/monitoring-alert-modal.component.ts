@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { Alert, AlertsService, AlertTypes, Severity } from '../alerts.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {Alert, AlertsService, AlertTypes, Severity, SeverityFlat} from '../alerts.service';
 import {
   GetAllResponse,
   getCurrentPage,
 } from '../../shared/services/api.service';
-import { NzTableQueryParams } from 'ng-zorro-antd/table';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { CommandsModalComponent } from '../commands-modal/commands-modal.component';
-import { Position } from '../positions.service';
-import { MessagesModalComponent } from '../messages-modal/messages-modal.component';
-import { UpdateObservationsModalComponent } from '../update-observations-modal/update-observations-modal.component';
-import { MonitoringRequestsService } from '../../monitoring-requests/monitoring-requests.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
+import {Position} from '../positions.service';
+import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
+import {UpdateObservationsModalComponent} from '../update-observations-modal/update-observations-modal.component';
+import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 
 @Component({
   selector: 'app-monitoring-alert-modal',
@@ -19,7 +19,7 @@ import { MonitoringRequestsService } from '../../monitoring-requests/monitoring-
   styleUrls: ['./monitoring-alert-modal.component.css'],
 })
 export class MonitoringAlertModalComponent implements OnInit {
-  @Input() severity: Severity;
+  @Input() severity: SeverityFlat;
   @Input() terminal?: string;
   @Input() customer?: string;
 
@@ -31,15 +31,15 @@ export class MonitoringAlertModalComponent implements OnInit {
   alerts: GetAllResponse<Alert>;
 
   travelStatus = [
-    { title: 'Parado', value: 'stopped' },
-    { title: 'Em viagem', value: 'in_progress' },
-    { title: 'Ag. Início', value: 'waiting_for_start' },
-    { title: 'Cliente', value: 'vehicle_in_customer' },
-    { title: 'Pernoite', value: 'driver_in_overnight' },
-    { title: 'Nenhum', value: 'none' },
-    { title: 'Gerenciamento logistico', value: 'logistic_management' },
-    { title: 'Prioridade', value: 'priority' },
-    { title: 'Contigência', value: 'contingency' },
+    {title: 'Parado', value: 'stopped'},
+    {title: 'Em viagem', value: 'in_progress'},
+    {title: 'Ag. Início', value: 'waiting_for_start'},
+    {title: 'Cliente', value: 'vehicle_in_customer'},
+    {title: 'Pernoite', value: 'driver_in_overnight'},
+    {title: 'Nenhum', value: 'none'},
+    {title: 'Gerenciamento logistico', value: 'logistic_management'},
+    {title: 'Prioridade', value: 'priority'},
+    {title: 'Contigência', value: 'contingency'},
   ];
 
   constructor(
@@ -47,7 +47,8 @@ export class MonitoringAlertModalComponent implements OnInit {
     private alertsService: AlertsService,
     private message: NzMessageService,
     private monitoringRequestService: MonitoringRequestsService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadAlerts();
@@ -57,7 +58,7 @@ export class MonitoringAlertModalComponent implements OnInit {
     this.isLoading = true;
     this.alertsService
       .getAlerts(
-        { url },
+        {url},
         {
           alertType: AlertTypes.terminal,
           severity: this.severity,
@@ -87,7 +88,8 @@ export class MonitoringAlertModalComponent implements OnInit {
       return;
     }
 
-    this.alertsService.markAsRead(ids).subscribe(() => {});
+    this.alertsService.markAsRead(ids).subscribe(() => {
+    });
   }
 
   markAsSolved(item: Alert): void {

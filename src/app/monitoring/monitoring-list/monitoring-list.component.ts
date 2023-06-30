@@ -19,7 +19,7 @@ import {CommandsModalComponent} from '../commands-modal/commands-modal.component
 import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
 import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
-import {AlertCount, AlertsService, AlertTypes, Severity} from '../alerts.service';
+import {AlertCount, AlertsService, AlertTypes, Severity, SeverityFlat} from '../alerts.service';
 import {
   MonitoringRequestsCheckListComponent
 } from '../../monitoring-requests/monitoring-requests-check-list/monitoring-requests-check-list.component';
@@ -253,7 +253,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openAlertModal(severity: Severity): void {
+  openAlertModal(severity: SeverityFlat): void {
     this.modal.create({
       nzTitle: 'Alertas',
       nzContent: MonitoringAlertModalComponent,

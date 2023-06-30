@@ -96,11 +96,11 @@ $body-color: $gray !default;
 // Template
 //
 // Configuration of template
-$header-height: 70px;
+$header-height: 45px;
 $side-nav-width: 530px;
 $side-nav-width-laptop: 400px;
 $side-nav-folded: 80px;
-$layout-content-gutter: 25px;
+$layout-content-gutter: 15px;
 $layout-content-gutter-sm: 15px;
 $footer-height: 65px;
 $content-height: $header-height + $footer-height + $layout-content-gutter + $layout-content-gutter + 2px;
