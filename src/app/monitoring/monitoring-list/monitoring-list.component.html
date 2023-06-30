@@ -175,7 +175,7 @@
       (contextmenu)="openDropdown($event, moreActionsRight, item)"
       (click)="setPlate(item?.vehiclePlate)"
     >
-      <td nzLeft [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)">
+      <td nzLeft class="bg-gray">
         <img
           [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
           alt="logo"
@@ -183,20 +183,14 @@
           height="25px"
         />
       </td>
-      <td
-        nzLeft
-        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
-      >{{ item.trackerSerialNumber || '-' }}</td>
+      <td nzLeft class="bg-gray">{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
         [nzTooltipTitle]="item.monitoringRequest?.id"
-        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
+        class="bg-gray"
       >{{ item.monitoringRequest?.id || '' | id}}</td>
-      <td
-        nzLeft
-        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
-      >{{ item.vehiclePlate || '-' }}</td>
+      <td nzLeft class="bg-gray">{{ item.vehiclePlate || '-' }}</td>
       <td>
         <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
         <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
@@ -229,27 +223,27 @@
           [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
-      <td>
-        <button
-          nz-button
-          nzType="link"
-          nzSize="small"
-          (click)="openMap(item)"
-        >
-          <img
-            src="assets/images/others/map-icon.svg"
-            alt="logo"
-            width="25px"
-            height="25px"
-            style="filter: invert(56%) sepia(97%) saturate(2141%) hue-rotate(155deg) brightness(87%) contrast(101%);"
-          />
-        </button>
+      <td
+        style="cursor: pointer"
+        (click)="openMap(item)"
+      >
+        <img
+          src="assets/images/others/map-icon.svg"
+          alt="logo"
+          width="25px"
+          height="25px"
+          style="filter: invert(56%) sepia(97%) saturate(2141%) hue-rotate(155deg) brightness(87%) contrast(101%);"
+        />
       </td>
       <td [nzAlign]="'center'">
-        <div
-          [style]="'--progress:' + item.positionInfo?.travelProgress + '%;' + '--progress-str: \'' + item.positionInfo?.travelProgress + '%\';'"
-          class="progress-bar"
-        >
+        <div class="progress-bar">
+          <div
+            [style]="'--progress:' + item.positionInfo?.travelProgress + '%;'"
+            class="progress"
+          ></div>
+          <span class="progress-text">
+            {{ item.positionInfo?.travelProgress }}%
+          </span>
         </div>
       </td>
       <td>{{ item.speed }}km</td>
