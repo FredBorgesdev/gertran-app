@@ -9,9 +9,14 @@
     <ul class="nav-left">
       <li class="desktop-toggle">
         <a (click)="toggleFold()">
-          <i nz-icon [nzType]="isFolded ? 'menu-unfold' : 'menu-fold'" theme="outline"></i>
+          <i
+            nz-icon
+            [nzType]="isFolded ? 'menu-unfold' : 'menu-fold'"
+            theme="outline"
+            style="color: #fff"
+          ></i>
 
-          <span class="font-size-13">
+          <span class="font-size-13 text-white">
             Menu
           </span>
         </a>
@@ -25,11 +30,12 @@
       <li *ngIf="showSelect" class="m-l-10">
         <nz-select
           data-testid="customer-select"
-          style="width: 200px;"
+          nzSize="small"
           nzShowSearch
           nzAllowClear
           nzPlaceHolder="Selecione um cliente"
           nzServerSearch
+          class="customer-select"
           [(ngModel)]="selectedCustomer"
           (ngModelChange)="onCustomerChange($event)"
           (nzOnSearch)="selectableCustomerService.searchByName($event)"
@@ -49,7 +55,12 @@
 
       <li>
         <a (click)="quickViewToggle()">
-          <i nz-icon nzType="appstore" theme="outline"></i>
+          <i
+            nz-icon
+            nzType="appstore"
+            theme="outline"
+            style="color: #fff"
+          ></i>
         </a>
         <nz-drawer [nzWidth]="280" nzTitle="Menu" [nzClosable]="false" [nzVisible]="quickViewVisible"
                    nzPlacement="right" (nzOnClose)="quickViewToggle()">
