@@ -25,7 +25,7 @@
       {{monitoringRequest?.driverWorkingSituation}}
     </nz-descriptions-item>
 
-    <div *ngIf="monitoringRequest?.data?.auxiliaryDriver">
+    <ng-container *ngIf="monitoringRequest?.data?.auxiliaryDriver">
       <nz-descriptions-item nzTitle="Nome motorista auxiliar">
         {{monitoringRequest?.data?.auxiliaryDriver?.name}}
       </nz-descriptions-item>
@@ -41,7 +41,7 @@
       <nz-descriptions-item nzTitle="Tipo Motorista auxiliar" nzSpan="3">
         {{monitoringRequest?.auxiliaryDriverWorkingSituation}}
       </nz-descriptions-item>
-    </div>
+    </ng-container>
   </nz-descriptions>
 
   <nz-descriptions nzTitle="Veiculo" nzBordered nzSize="small" class="m-t-15">
