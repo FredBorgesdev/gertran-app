@@ -9,6 +9,8 @@ import {Customer, CustomersService} from '../../customers/customers.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AuthenticationService} from "../../authentication/authentication.service";
 import {googlePlacesOptions} from "../../shared/data/google-places-options";
+import {AddressSelectComponent} from "../../shared/address-select/address-select.component";
+import brazilianStates from "../../shared/data/brazilian-states";
 
 @Component({
   selector: 'app-stops-form',
@@ -88,21 +90,30 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
     this.router.navigate(['/stops/stops-list']);
   }
 
-  handleAddressChange(address: any): void {
-    const city = address.address_components?.find(component => component.types.includes('administrative_area_level_2'));
-    const state = address.address_components?.find(component => component.types.includes('administrative_area_level_1'));
-    const latitude = address.geometry?.location.lat();
-    const longitude = address.geometry?.location.lng();
-    const formattedAddress = address.formatted_address;
+  handleAddressChange(nominatimAddress: any): void {
+    const city = nominatimAddress.address.city || nominatimAddress.address.town;
+    const state = brazilianStates.find(
+      ({name}) => name === nominatimAddress.address.state
+    ).abbreviation;
+    const latitude = nominatimAddress.lat;
+    const longitude = nominatimAddress.lon;
 
     this.validateForm.patchValue({
-      city: city?.long_name,
-      state: state?.short_name,
+      city,
+      state,
       latitude,
       longitude,
-      address: formattedAddress,
     });
   }
 
-  protected readonly google = google;
+  getValues(): Stop {
+    const formattedAddress = AddressSelectComponent.enhanceOutputAddress(
+      this.validateForm.value.address.displayName
+    );
+
+    return {
+      ...super.getValues(),
+      address: formattedAddress
+    };
+  }
 }

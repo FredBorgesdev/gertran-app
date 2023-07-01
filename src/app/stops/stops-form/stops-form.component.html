@@ -40,18 +40,13 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="address">Endereço</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
-      <input
-        ngx-google-places-autocomplete
-        (onAddressChange)="handleAddressChange($event)"
-        [options]="googlePlacesOptions"
-        id="address"
-        type="text"
-        nz-input
-        placeholder="Digite o endereço"
+    <nz-form-control>
+      <nz-form-label [nzSpan]="null" nzRequired nzFor="address">Endereço</nz-form-label>
+      <app-address-select
+        [formGroup]="validateForm"
         formControlName="address"
-      />
+        (handleAddressChange)="handleAddressChange($event)"
+      ></app-address-select>
     </nz-form-control>
   </nz-form-item>
 
