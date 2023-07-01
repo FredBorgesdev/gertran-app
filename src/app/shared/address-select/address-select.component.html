@@ -1,0 +1,32 @@
+<div [formGroup]="formGroup">
+  <div *ngIf="options.length === 0 && formGroup.value[formControlName]">
+    {{ formGroup.value[formControlName] }}
+  </div>
+
+  <nz-select
+    [nzPlaceHolder]="'Busca por nome, cep ou latitude/longitude'"
+    (nzOnSearch)="searchAddressSubject.next($event)"
+    [nzServerSearch]="true"
+    [nzShowSearch]="true"
+    [nzAllowClear]="true"
+    (ngModelChange)="openMap($event)"
+    [formControlName]="formControlName"
+  >
+    <nz-option
+      *ngFor="let option of options"
+      [nzLabel]="option.label"
+      [nzValue]="option.value"
+    ></nz-option>
+  </nz-select>
+</div>
+
+<div class="map" *ngIf="mapUrl">
+  <iframe
+    width="100%"
+    height="100%"
+    frameborder="0"
+    style="border:0"
+    [src]="mapUrl"
+    allowfullscreen
+  ></iframe>
+</div>

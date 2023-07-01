@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -7,25 +7,37 @@ import {
   HttpResponse, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import { environment } from 'src/environments/environment';
+import {environment} from 'src/environments/environment';
 import {catchError, map, mergeMap, retryWhen} from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
-import {AuthenticationService, GERTRAN_CUSTOMER_ID, GERTRAN_WEB_TOKEN} from '../../authentication/authentication.service';
+import {
+  AuthenticationService,
+  GERTRAN_CUSTOMER_ID,
+  GERTRAN_WEB_TOKEN
+} from '../../authentication/authentication.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService) {
+  }
 
   isFormData(request: HttpRequest<unknown>): boolean {
     return request.body instanceof FormData;
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    let path;
+    if (request.url.includes('http')) {
+      path = request.url;
+    } else {
+      path = `${environment.apiUrl}/${request.url}/`;
+    }
+
     const apiReq = request.clone({
-      url: `${environment.apiUrl}/${request.url}/`,
+      url: path,
       body: this.getBody(request),
       headers: this.getHeaders(request.url),
     });
@@ -56,9 +68,9 @@ export class ApiInterceptor implements HttpInterceptor {
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           if (Array.isArray(event.body)) {
-            return event.clone({ body: event.body.map(camelcaseKeys) });
+            return event.clone({body: event.body.map(camelcaseKeys)});
           } else {
-            return event.clone({ body: camelcaseKeys(event.body) });
+            return event.clone({body: camelcaseKeys(event.body)});
           }
         }
       }),
