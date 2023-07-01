@@ -13,11 +13,18 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class AddressSelectComponent implements OnInit {
   @Input() formControlName: string;
   @Input() formGroup: FormGroup;
+  @Input() showMap = true;
   @Output() handleAddressChange = new EventEmitter<any>();
 
   options: any[] = [];
   searchAddressSubject = new Subject<string>();
   mapUrl: any = '';
+
+  get showLabel(): boolean {
+    return this.options.length === 0 &&
+      this.formGroup.value[this.formControlName] &&
+      typeof this.formGroup.value[this.formControlName] === 'string';
+  }
 
   constructor(
     private nominatimService: NominatimService,
@@ -59,7 +66,10 @@ export class AddressSelectComponent implements OnInit {
   }
 
   openMap(item: any): void {
-    this.handleAddressChange.emit(item);
-    this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/place?key=AIzaSyAR18OijZ4fIbE01qRtOKyNzJyHZx9bqt8&q=${item.lat},${item.lon}`);
+    this.handleAddressChange?.emit(item);
+
+    if (this.showMap) {
+      this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/place?key=AIzaSyAR18OijZ4fIbE01qRtOKyNzJyHZx9bqt8&q=${item.lat},${item.lon}`);
+    }
   }
 }

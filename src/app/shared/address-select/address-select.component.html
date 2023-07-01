@@ -1,5 +1,5 @@
 <div [formGroup]="formGroup">
-  <div *ngIf="options.length === 0 && formGroup.value[formControlName]">
+  <div *ngIf="showLabel">
     {{ formGroup.value[formControlName] }}
   </div>
 

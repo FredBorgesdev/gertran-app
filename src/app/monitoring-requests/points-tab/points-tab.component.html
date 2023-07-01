@@ -23,16 +23,22 @@
             <div nz-col nzSpan="8">
               <nz-form-label nzRequired nzFor="address">Localização</nz-form-label>
               <nz-form-control nzErrorTip="Insira o endereço">
-                <input
-                  ngx-google-places-autocomplete
-                  (onAddressChange)="handleAddressChange($event, point)"
-                  [options]="googlePlacesOptions"
-                  id="address"
-                  type="text"
-                  nz-input
-                  placeholder="Digite o endereço"
+                <app-address-select
+                  [formGroup]="point"
+                  [showMap]="false"
                   formControlName="address"
-                />
+                ></app-address-select>
+
+                <!--                <input-->
+                <!--                  ngx-google-places-autocomplete-->
+                <!--                  (onAddressChange)="handleAddressChange($event, point)"-->
+                <!--                  [options]="googlePlacesOptions"-->
+                <!--                  id="address"-->
+                <!--                  type="text"-->
+                <!--                  nz-input-->
+                <!--                  placeholder="Digite o endereço"-->
+                <!--                  formControlName="address"-->
+                <!--                />-->
               </nz-form-control>
             </div>
 
