@@ -54,7 +54,10 @@ export type Alert = {
   solvedBy: string | null;
   solvedDescription: string | null;
   type: AlertTypes;
-  vehicle: number | null;
+  vehicle: {
+    id: string;
+    plate: string;
+  } | null;
   receivedAt: string | null;
 };
 
@@ -77,13 +80,15 @@ export class AlertsService {
     const params: any = {
       limit: pagination.limit || DEFAULT_LIMIT,
       alert_type: filters.alertType,
-      severity: filters.severity,
     };
     if (filters.terminal) {
       params.terminal = filters.terminal;
     }
     if (filters.customer) {
       params.customer = filters.customer;
+    }
+    if (filters?.severity) {
+      params.severity = filters.severity;
     }
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {

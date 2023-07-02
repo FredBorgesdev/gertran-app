@@ -1,0 +1,51 @@
+<div class="dash-header">
+  <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+
+  <h1 class="dash-header-title">
+    Alertas
+  </h1>
+
+  <nz-select
+    class="dash-select"
+    [ngModel]="currentTerminal"
+    (ngModelChange)="setTerminalAndLoadAlerts($event)"
+  >
+    <nz-option
+      *ngFor="let terminal of terminals"
+      [nzLabel]="terminal.name"
+      [nzValue]="terminal"
+    ></nz-option>
+  </nz-select>
+
+  <h1 class="dash-header-title">
+    {{ currentTime }}
+  </h1>
+</div>
+
+<h4 *ngIf="isLoading">Carregando...</h4>
+
+<h1 class="dash-title">
+  {{ currentTerminal?.name }}
+
+  <span *ngIf="currentAlerts?.length === 0">
+    sem alertas
+  </span>
+</h1>
+
+<ul class="dash-list">
+  <li
+    *ngFor="let alert of currentAlerts"
+    [class]="getClass(alert)"
+  >
+    {{alert.vehicle.plate}}
+
+    <div>
+      {{alert.message}}
+    </div>
+
+    <div class="justify-self-end">
+      {{ getRollingTimeInMinutes(alert) }} -
+      {{ alert.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+    </div>
+  </li>
+</ul>

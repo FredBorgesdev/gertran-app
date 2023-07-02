@@ -207,6 +207,17 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
+          },
+          {
+            path: 'reports/dashboards/alerts',
+            title: 'Alertas',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
           }
         ]
       },
