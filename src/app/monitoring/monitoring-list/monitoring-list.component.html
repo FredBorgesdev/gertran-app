@@ -36,7 +36,12 @@
       </div>
 
       <div nz-col nzSpan="4" *ngIf="!authService.customerId">
-        <nz-select nzPlaceHolder="Terminal" formControlName="terminal" (ngModelChange)="loadPositions()" nzSize="small">
+        <nz-select
+          nzPlaceHolder="Terminais"
+          formControlName="terminal"
+          (ngModelChange)="loadPositions()"
+          nzSize="small"
+        >
           <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
         </nz-select>
       </div>
@@ -51,19 +56,19 @@
           nz-checkbox
           formControlName="travelling"
           (ngModelChange)="loadPositions()"
-          class="font-size-12"
+          class="font-size-12 m-l-0"
         >Em viagem</label>
       </div>
 
       <div nz-col nzSpan="12" data-testid="alerts" class="alert-button-group">
         <button nzSize="small" nz-button nzType="secondary" class="m-r-5" (click)="openAlertModal('info')">
-          ({{ alertsCount?.info }}) Mensagens
+          ({{ alertsCount?.info ?? 0 }}) Mensagens
         </button>
         <button nzSize="small" nz-button nzType="primary" class="m-r-5" (click)="openAlertModal('warning')">
-          ({{ alertsCount?.warning }}) Alertas
+          ({{ alertsCount?.warning ?? 0 }}) Alertas
         </button>
         <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-5" (click)="openAlertModal('danger')">
-          ({{ alertsCount?.danger }}) Urgentes
+          ({{ alertsCount?.danger ?? 0 }}) Urgentes
         </button>
         <button nzSize="small" nz-button nzType="dashed">
           <span nz-icon nzType="car"></span>
