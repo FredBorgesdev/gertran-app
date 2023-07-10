@@ -20,6 +20,8 @@ import {DirectionsService} from '../../shared/services/directions.service';
 import {MonitoringRequests} from '../monitoring-requests.service';
 import {SelectablePointService} from "../../stops/selectable-point.service";
 import {googlePlacesOptions} from "../../shared/data/google-places-options";
+import brazilianStates from "../../shared/data/brazilian-states";
+import {AddressSelectComponent} from "../../shared/address-select/address-select.component";
 
 interface LatLng {
   lat: number;
@@ -186,21 +188,21 @@ export class PointsTabComponent implements OnInit {
     });
   }
 
-  async handleAddressChange(address: any, formGroup: FormGroup): Promise<void> {
-    const latitude = address.geometry?.location.lat().toFixed(6);
-    const longitude = address.geometry?.location.lng().toFixed(6);
-    const formattedAddress = address.formatted_address;
-    const state = address.address_components?.find((component) => component.types.includes('administrative_area_level_1'))?.short_name;
-    const city = address.address_components?.find((component) => component.types.includes('administrative_area_level_2'))?.short_name;
-    const zipCode = address.address_components?.find((component) => component.types.includes('postal_code'));
+  async handleAddressChange(nominatimAddress: any, formGroup: FormGroup): Promise<void> {
+    const city = nominatimAddress.address.city || nominatimAddress.address.town;
+    const state = brazilianStates.find(
+      ({name}) => name === nominatimAddress.address.state
+    ).abbreviation;
+    const latitude = Number(nominatimAddress.lat).toFixed(6);
+    const longitude = Number(nominatimAddress.lon).toFixed(6);
+    const zipCode = nominatimAddress.address.postcode;
 
     formGroup.patchValue({
-      address: formattedAddress,
       latitude,
       longitude,
       state,
       city,
-      zipCode: zipCode?.longName ?? undefined,
+      zipCode,
     });
 
     this._routeCoordinates = await this.getRouteCoordinates();
@@ -333,11 +335,15 @@ export class PointsTabComponent implements OnInit {
     this._routeCoordinates = routeCoordinates;
 
     const operations = pointsWithOrder.map((point) => {
+      const payload = {
+        ...point,
+        address: AddressSelectComponent.enhanceOutputAddress(point.address.displayName)
+      };
       if (point.id) {
-        return this.service.update(point.id, point, this.monitoringRequest.id);
+        return this.service.update(point.id, payload, this.monitoringRequest.id);
       }
 
-      return this.service.save(point, this.monitoringRequest.id);
+      return this.service.save(payload, this.monitoringRequest.id);
     });
 
     if (operations.length === 0) {

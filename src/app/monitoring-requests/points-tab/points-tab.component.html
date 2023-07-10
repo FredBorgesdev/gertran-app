@@ -27,6 +27,7 @@
                   [formGroup]="point"
                   [showMap]="false"
                   formControlName="address"
+                  (handleAddressChange)="handleAddressChange($event, point)"
                 ></app-address-select>
 
                 <!--                <input-->
