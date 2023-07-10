@@ -7,6 +7,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from '@angular/router';
 import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.service';
 import {googlePlacesOptions} from "../../shared/data/google-places-options";
+import {AddressSelectComponent} from "../../shared/address-select/address-select.component";
 
 @Component({
   selector: 'app-create-incident-modal',
@@ -103,10 +104,10 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
     });
   }
 
-  handleAddressChange(address: any): void {
-    const latitude = address.geometry?.location.lat();
-    const longitude = address.geometry?.location.lng();
-    const formattedAddress = address.formatted_address;
+  handleAddressChange(nominatimAddress: any): void {
+    const latitude = Number(nominatimAddress.lat).toFixed(6);
+    const longitude = Number(nominatimAddress.lon).toFixed(6);
+    const formattedAddress = AddressSelectComponent.enhanceOutputAddress(nominatimAddress.displayName);
 
     this.validateForm.patchValue({
       incidentLocation: formattedAddress,

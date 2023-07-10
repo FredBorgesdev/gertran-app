@@ -75,17 +75,25 @@
       <div nz-col nzSpan="12">
         <nz-form-label [nzSpan]="null" nzRequired nzFor="incidentLocation">Local do fato</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
-          <input
-            nzSize="small"
-            ngx-google-places-autocomplete
-            (onAddressChange)="handleAddressChange($event)"
-            [options]="googlePlacesOptions"
-            id="incidentLocation"
-            type="text"
-            nz-input
-            placeholder="Digite o endereço"
+          <app-address-select
+            [formGroup]="validateForm"
+            [showMap]="false"
             formControlName="incidentLocation"
-          />
+            (handleAddressChange)="handleAddressChange($event)"
+          ></app-address-select>
+
+
+          <!--          <input-->
+          <!--            nzSize="small"-->
+          <!--            ngx-google-places-autocomplete-->
+          <!--            (onAddressChange)="handleAddressChange($event)"-->
+          <!--            [options]="googlePlacesOptions"-->
+          <!--            id="incidentLocation"-->
+          <!--            type="text"-->
+          <!--            nz-input-->
+          <!--            placeholder="Digite o endereço"-->
+          <!--            formControlName="incidentLocation"-->
+          <!--          />-->
         </nz-form-control>
       </div>
     </div>
