@@ -34,6 +34,7 @@
               nzServerSearch
               (nzOnSearch)="selectableCustomerService.searchByName($event)"
               (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+              (ngModelChange)="saveDraft('transporter')"
               (nzBlur)="loadTransporterData()"
               [disabled]="disabled"
               [nzDropdownRender]="selectLoading"
