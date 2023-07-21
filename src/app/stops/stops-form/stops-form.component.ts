@@ -91,12 +91,12 @@ export class StopsFormComponent extends BaseCrudFormComponent<Stop> implements O
   }
 
   handleAddressChange(nominatimAddress: any): void {
-    const city = nominatimAddress.address.city || nominatimAddress.address.town;
+    const city = nominatimAddress.address.city || nominatimAddress.address.town || nominatimAddress.address.village;
     const state = brazilianStates.find(
       ({name}) => name === nominatimAddress.address.state
     ).abbreviation;
-    const latitude = nominatimAddress.lat;
-    const longitude = nominatimAddress.lon;
+    const latitude = Number(nominatimAddress.lat).toFixed(6);
+    const longitude = Number(nominatimAddress.lon).toFixed(6);
 
     this.validateForm.patchValue({
       city,
