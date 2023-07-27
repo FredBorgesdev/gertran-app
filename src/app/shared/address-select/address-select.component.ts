@@ -16,9 +16,11 @@ export class AddressSelectComponent implements OnInit {
   @Input() showMap = true;
   @Output() handleAddressChange = new EventEmitter<any>();
 
+  isLoading = false;
   options: any[] = [];
   searchAddressSubject = new Subject<string>();
   mapUrl: any = '';
+  houseNumber = '';
 
   get showLabel(): boolean {
     return this.options.length === 0 &&
@@ -39,28 +41,50 @@ export class AddressSelectComponent implements OnInit {
   }
 
   search(query: string): void {
+    /*
+      Nominatim doesn't get house numbers.
+      If the query has a house number, we omit it, and search only for the street name.
+      Then, when the user select, we concat the house number back to the address.
+     */
+    const queryParts = query.split(',');
+    if (queryParts.length > 1 && !isNaN(Number(queryParts[1]))) {
+      this.houseNumber = queryParts[1];
+      query = queryParts[0];
+    }
+
     if (!query) {
       this.options = [];
       return;
     }
 
+    this.isLoading = true;
     this.nominatimService.query(query).subscribe(
       (data: any[]) => {
         this.options = data.map((item: any) => ({
-          label: AddressSelectComponent.enhanceOutputAddress(item.displayName),
+          label: AddressSelectComponent.enhanceOutputAddress(item.displayName, this.houseNumber),
           value: item,
         }));
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
       }
     );
   }
 
-  static enhanceOutputAddress(address: string): string {
+  static enhanceOutputAddress(address: string, houseNumber?: string): string {
+    // Nominatim format: Rua Paulo de Lima Naves, Serrano, Residencial Sarandi, Pampulha, Belo Horizonte, Região Geográfica Imediata de Belo Horizonte, Região Metropolitana de Belo Horizonte, Região Geográfica Intermediária de Belo Horizonte, Minas Gerais, Southeast Region, 31360-310, Brazil
+
     const addressParts = address.split(',');
-    const result = addressParts
+    let result = addressParts
       .filter(part =>
         !part.toUpperCase().includes('MICRORREGIÃO') &&
         !part.toUpperCase().includes('REGIÃO'))
       .join(',');
+    if (houseNumber) {
+      const firstCommaIndex = result.indexOf(',');
+      result = result.substring(0, firstCommaIndex + 1) + `${houseNumber}, ` + result.substring(firstCommaIndex + 1);
+    }
 
     return result + '.';
   }

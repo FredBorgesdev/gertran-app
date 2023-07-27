@@ -12,6 +12,11 @@
     (ngModelChange)="openMap($event)"
     [formControlName]="formControlName"
   >
+    <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+      <span nz-icon nzType="loading" class="loading-icon"></span>
+      Carregando...
+    </nz-option>
+
     <nz-option
       *ngFor="let option of options"
       [nzLabel]="option.label"
