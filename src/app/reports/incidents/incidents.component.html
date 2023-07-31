@@ -46,7 +46,7 @@
         <td>
           {{ data.datetime | date: 'dd/MM/yyyy HH:mm' }}
         </td>
-        <td>{{ data.monitoringRequest.truck.vehicle.plate }}</td>
+        <td>{{ data.monitoringRequest?.truck?.vehicle.plate ?? '' }}</td>
         <td>{{ data.incidentLocation }}</td>
         <td>{{ data.incidentLatitude }} / {{ data.incidentLongitude }}</td>
         <td>{{ data.driverName }} / {{ data.driverPhone }}</td>
