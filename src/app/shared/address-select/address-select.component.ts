@@ -47,7 +47,8 @@ export class AddressSelectComponent implements OnInit {
       Then, when the user select, we concat the house number back to the address.
      */
     const queryParts = query.split(',');
-    if (queryParts.length > 1 && !isNaN(Number(queryParts[1]))) {
+    const isLatLon = queryParts.length === 2 && !isNaN(Number(queryParts[0])) && !isNaN(Number(queryParts[1]));
+    if (!isLatLon && queryParts.length > 1 && !isNaN(Number(queryParts[1]))) {
       this.houseNumber = queryParts[1];
       query = queryParts[0];
     }
