@@ -268,7 +268,12 @@
     </nz-form-item>
   </form>
 
-  <form nz-form [formGroup]="checklistBaitForm" nzLayout="vertical">
+  <form
+    nz-form
+    [formGroup]="checklistBaitForm"
+    nzLayout="vertical"
+    *ngIf="monitoringRequest?.data?.baits.length > 0"
+  >
     <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-30">
       Checklist Iscas
     </div>

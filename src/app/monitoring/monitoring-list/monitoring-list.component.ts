@@ -552,11 +552,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   goToReport(path: string, item: Position): void {
-    this.router.navigate([path], {
+    const url = this.router.serializeUrl(this.router.createUrlTree([path], {
       queryParams: {
         customerId: item.customer.id,
         vehiclePlate: item.vehiclePlate,
       }
-    });
+    }));
+
+    window.open(url, '_blank');
   }
 }
