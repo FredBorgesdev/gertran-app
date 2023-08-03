@@ -335,9 +335,10 @@ export class PointsTabComponent implements OnInit {
     this._routeCoordinates = routeCoordinates;
 
     const operations = pointsWithOrder.map((point) => {
+      const address = point.address instanceof Object ? point.address.displayName : point.address;
       const payload = {
         ...point,
-        address: AddressSelectComponent.enhanceOutputAddress(point.address.displayName)
+        address: AddressSelectComponent.enhanceOutputAddress(address)
       };
       if (point.id) {
         return this.service.update(point.id, payload, this.monitoringRequest.id);
