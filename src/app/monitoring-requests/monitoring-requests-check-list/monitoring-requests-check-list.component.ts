@@ -171,7 +171,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       return;
     }
 
-    const body = {
+    let body = {
       ...this.validateForm.value,
       checklist: this.utils.removeNullValues(this.checklistForm.value),
       checklistBait: this.utils.removeNullValues(this.checklistBaitForm.value),
@@ -183,6 +183,16 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.monitoringRequest.data.travelStatus === 'none'
     ) {
       body.travelStatus = 'in_progress';
+    }
+
+    if (status === Status.CANCELED) {
+      const observations = prompt('Informe o motivo do cancelamento');
+      if (!observations) {
+        this.message.error('Informe o motivo do cancelamento');
+        return;
+      }
+
+      body.observations = observations;
     }
 
     this.isLoading = true;
