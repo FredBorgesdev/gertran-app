@@ -185,10 +185,19 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       body.travelStatus = 'in_progress';
     }
 
+    let message;
     if (status === Status.CANCELED) {
-      const observations = prompt('Informe o motivo do cancelamento');
+      message = 'Informe o motivo do cancelamento';
+    }
+
+    if (status === Status.FINISHED) {
+      message = 'Informe o motivo da finalização';
+    }
+
+    if (message) {
+      const observations = prompt(message);
       if (!observations) {
-        this.message.error('Informe o motivo do cancelamento');
+        this.message.error('Preencha os dados corretamente.');
         return;
       }
 
