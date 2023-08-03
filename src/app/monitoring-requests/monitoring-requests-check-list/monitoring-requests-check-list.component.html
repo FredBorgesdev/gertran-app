@@ -385,6 +385,15 @@
     ></app-monitoring-requests-check-list-printable>
   </div>
 
+  <div
+    nz-col
+    nzSpan="24"
+    class="ant-descriptions-title m-t-15 m-b-15"
+    *ngIf="monitoringRequest?.data?.observations"
+  >
+    Motivo do cancelamento: {{monitoringRequest?.data?.observations}}
+  </div>
+
   <form nz-form [formGroup]="validateForm" nzLayout="vertical" *ngIf="showFooter">
     <div nz-row nzGutter="12" nzAlign="middle">
       <div nz-col nzSpan="4" *ngIf="authSevice.user.isGertranStaff">
