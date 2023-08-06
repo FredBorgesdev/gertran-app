@@ -11,8 +11,12 @@
   font-weight: 500;
 
   .logo {
-    width: $side-nav-folded;
-    border-right: 1px solid $border-color;
+    background-color: #fff;
+
+    width: 120px;
+    height: 120px;
+
+    //border-right: 1px solid $border-color;
     @include transition(all 0.2s ease);
 
     @include screen-laptop-only {
@@ -127,7 +131,7 @@
     .header {
 
       .logo {
-        width: $side-nav-folded;
+        //width: $side-nav-folded;
 
         img {
           display: none;
