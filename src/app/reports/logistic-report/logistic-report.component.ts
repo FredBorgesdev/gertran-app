@@ -5,6 +5,8 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {MapMarkersModalComponent} from '../extra/map-markers-modal/map-markers-modal.component';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {format, subMonths} from 'date-fns';
+import {PositionsService} from "../../monitoring/positions.service";
+import {Status} from "../../monitoring-requests/monitoring-requests.service";
 
 @Component({
   selector: 'app-logistic-report',
@@ -38,10 +40,13 @@ export class LogisticReportComponent implements OnInit {
   loading = false;
   customers = [];
 
+  mapLoading = false;
+
   constructor(
     private reportService: ReportsService,
     private modalService: NzModalService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private positionService: PositionsService,
   ) {
   }
 
@@ -100,10 +105,6 @@ export class LogisticReportComponent implements OnInit {
               },
             ],
           };
-          // this.markers = data.lastPositions.map((position) => ({
-          //   lat: position.latitude,
-          //   lng: position.longitude,
-          // }));
           // this.temperatureDoughnutChart = this.getTemperatureChartData(
           //   data.lastPositions
           // );
@@ -114,6 +115,21 @@ export class LogisticReportComponent implements OnInit {
           this.loading = false;
         }
       );
+
+    this.mapLoading = true;
+    this.positionService.getAll({}, {
+      customer: this.authService.customerId,
+      travelling: true,
+      travelStatus: Status.IN_PROGRESS,
+    }).subscribe((data) => {
+      this.mapLoading = false;
+      this.markers = data.results.map((position) => ({
+        lat: position.latitude,
+        lng: position.longitude,
+      }));
+    }, () => {
+      this.mapLoading = false;
+    });
   }
 
   get dateFilters(): {
