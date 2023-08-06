@@ -100,8 +100,28 @@ export class BaseClosingFilterComponent implements OnInit {
       html: 'table',
       didDrawPage: (data) => {
         doc.setFontSize(30);
-        doc.text(this.fileName, data.settings.margin.left, data.settings.margin.top - 60);
+        doc.text(this.fileName.toUpperCase(), data.settings.margin.left, data.settings.margin.top - 60);
         doc.addImage('assets/images/logo/logogertran.png', 'PNG', 650, 10, 100, 100);
+
+        doc.setFontSize(10);
+        doc.text(
+          `Filtros aplicados: ${format(this.validateForm.controls.from.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.to.value, 'dd/MM/yyyy')}`,
+          data.settings.margin.left,
+          data.settings.margin.top - 30
+        );
+
+        doc.text(
+          `Gerado em: ${format(new Date(), 'dd/MM/yyyy HH:mm')}`,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 30
+        );
+
+        // Logged user on the bottom right
+        doc.text(
+          `Usuário: ${this.authService.user.name}`,
+          doc.internal.pageSize.width - 150,
+          doc.internal.pageSize.height - 30
+        );
       },
       margin: {top: 140},
       columnStyles: this.columnStyles,

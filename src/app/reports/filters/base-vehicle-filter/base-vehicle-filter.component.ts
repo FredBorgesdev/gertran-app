@@ -149,8 +149,28 @@ export class BaseVehicleFilterComponent implements OnInit {
       html: 'table',
       didDrawPage: (data) => {
         doc.setFontSize(30);
-        doc.text(this.fileName, data.settings.margin.left, data.settings.margin.top - 60);
+        doc.text(this.fileName.toUpperCase(), data.settings.margin.left, data.settings.margin.top - 60);
         doc.addImage('assets/images/logo/logogertran.png', 'PNG', 650, 10, 100, 100);
+
+
+        doc.setFontSize(10);
+        doc.text(
+          `Filtros aplicados: ${this.selectedCustomerName} - ${this.validateForm.value.plate} - ${format(this.validateForm.controls.startDate.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.endDate.value, 'dd/MM/yyyy')}`,
+          data.settings.margin.left,
+          data.settings.margin.top - 30
+        );
+
+        doc.text(
+          `Gerado em: ${format(new Date(), 'dd/MM/yyyy HH:mm')}`,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 30
+        );
+
+        doc.text(
+          `Usuário: ${this.authService.user.name}`,
+          doc.internal.pageSize.width - 150,
+          doc.internal.pageSize.height - 30
+        );
       },
       margin: {top: 140},
       bodyStyles: {
