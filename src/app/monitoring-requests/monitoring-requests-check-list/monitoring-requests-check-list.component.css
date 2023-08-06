@@ -15,6 +15,7 @@
 }
 
 #printable,
-#checklist-print {
+#checklist-print,
+#release-print {
   display: none;
 }

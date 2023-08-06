@@ -1,0 +1,82 @@
+<h1 class="m-b-20 text-center">
+  Protocolo de liberação de viagem
+</h1>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Solicitação</strong>: {{ monitoringRequest?.data?.id }}
+  </span>
+  <span>
+    <strong>Cavalo</strong>: {{ monitoringRequest?.data?.truck?.vehicle.plate }}
+  </span>
+</div>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Empresa</strong>: {{ monitoringRequest?.data?.customer.tradingName }}
+  </span>
+  <span>
+    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0].trackerModel.name }}
+  </span>
+</div>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Motorista</strong>: {{ monitoringRequest?.data?.driver?.name }}
+  </span>
+  <span>
+    <strong>Carretas</strong>: {{ wagonsPlates() }}
+  </span>
+</div>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>CPF</strong>: {{ monitoringRequest?.data?.driver?.cpf }}
+  </span>
+</div>
+
+<h3 class="m-b-20 text-center">
+  Rastreador
+</h3>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0].trackerModel.trackerTechnology.name }}
+  </span>
+  <span>
+    <strong>N Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0].trackerId }}
+  </span>
+</div>
+
+<br>
+<br>
+
+<div>
+  <span *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">( x )</span>
+  <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">( )</span>
+  <span> Aprovado</span>
+
+  &nbsp;
+  &nbsp;
+  &nbsp;
+
+  <span *ngIf="monitoringRequest?.data?.checklist?.status === 'reproved'">( x )</span>
+  <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'reproved'">( )</span>
+  <span> Reprovado</span>
+
+  <div>
+    <span>Justifivativa: {{ monitoringRequest?.data?.checklist?.justification }}</span>
+  </div>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-top: 50px">
+  <div style="text-align: center;">
+    <div style="border-bottom: 1px solid black; width: 450px"></div>
+    <br>
+    <span>Assinatura do motorista</span>
+  </div>
+
+  <div style="width: 100%; text-align: center">
+    {{ currentDate }}
+  </div>
+</div>
