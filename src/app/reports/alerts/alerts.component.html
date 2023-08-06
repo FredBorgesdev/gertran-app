@@ -1,0 +1,54 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Alertas</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-vehicle-filter
+      (generateReport)="generateReport($event)"
+      [rows]="alerts"
+      [filterByAllCustomers]="true"
+      fileName="Histórico de Checklist"
+    ></app-base-vehicle-filter>
+
+    <nz-table
+      #table
+      [nzData]="alerts"
+      nzBordered
+      class="m-t-50"
+      [nzFrontPagination]="false"
+      nzTableLayout="fixed"
+    >
+      <thead>
+      <tr>
+        <th>Tipo de alerta</th>
+        <th>Severidade</th>
+        <th>Mensagem</th>
+        <th>Lido em</th>
+        <th>Resolvido em</th>
+        <th>Recebido em</th>
+        <th>Veiculo</th>
+        <th>Cliente</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let data of table.data; index as i">
+        <td>{{ data.alertType }}</td>
+        <td>{{ getSeverityTranslated(data.severity) }}</td>
+        <td>{{ data.message }}</td>
+        <td>{{ data.readAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data.solvedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data.receivedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ data.vehicle.plate }}</td>
+        <td>{{ data.customer.tradingName }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>

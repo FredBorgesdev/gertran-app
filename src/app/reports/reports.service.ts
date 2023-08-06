@@ -6,6 +6,7 @@ import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.ser
 import {AbstractUser} from '../users/users.service';
 import {Position} from '../monitoring/positions.service';
 import {Workday} from '../workdays/workday.service';
+import {Alert} from "../monitoring/alerts.service";
 
 export interface BaseFilter {
   customer: string;
@@ -295,6 +296,8 @@ export type IncidentReport = {
     name: string;
   }
 };
+
+export type AlertReport = Alert;
 
 @Injectable({
   providedIn: 'root'
@@ -595,5 +598,23 @@ export class ReportsService {
     });
 
     return this.http.get<IncidentReport[]>('reports/events/panichistory?1=1', {params});
+  }
+
+  getAlerts(form: IncidentsFilter): Observable<AlertReport[]> {
+    const fromObject: any = {
+      from_date: form.from,
+      to_date: form.to,
+    };
+    if (form.plate) {
+      fromObject.plate = form.plate;
+    }
+    if (form.customer) {
+      fromObject.customer = form.customer;
+    }
+    const params = new HttpParams({
+      fromObject
+    });
+
+    return this.http.get<AlertReport[]>('reports/tracking/alerts?1=1', {params});
   }
 }

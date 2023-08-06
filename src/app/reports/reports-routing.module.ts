@@ -28,7 +28,8 @@ import {MonitoringRequestsComponent} from "./dashboards/monitoring-requests/moni
 import {ChecklistsComponent} from "./dashboards/checklists/checklists.component";
 import {IncidentsComponent} from "./incidents/incidents.component";
 import {PanicHistoryComponent} from "./panic-history/panic-history.component";
-import {AlertsComponent} from "./dashboards/alerts/alerts.component";
+import {AlertsComponent as DashboardAlertsComponent} from "./dashboards/alerts/alerts.component";
+import {AlertsComponent} from "./alerts/alerts.component";
 
 const routes: Routes = [
   {
@@ -173,11 +174,15 @@ const routes: Routes = [
   },
   {
     path: 'dashboards/alerts',
-    component: AlertsComponent,
+    component: DashboardAlertsComponent,
   },
   {
     path: 'panic-history',
     component: PanicHistoryComponent,
+  },
+  {
+    path: 'alerts',
+    component: AlertsComponent,
   }
 ];
 

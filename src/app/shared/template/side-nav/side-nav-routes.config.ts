@@ -473,6 +473,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
+      {
+        path: '/reports/alerts',
+        title: 'Alertas',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
     ]
   },
   {

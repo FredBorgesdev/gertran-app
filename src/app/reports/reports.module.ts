@@ -47,8 +47,9 @@ import {ChecklistsComponent} from './dashboards/checklists/checklists.component'
 import {IncidentsComponent} from './incidents/incidents.component';
 import {BaseClosingFilterComponent} from "./filters/base-closing-filter/base-closing-filter.component";
 import {PanicHistoryComponent} from "./panic-history/panic-history.component";
-import {AlertsComponent} from './dashboards/alerts/alerts.component';
+import {AlertsComponent as DashboardAlertsComponent} from './dashboards/alerts/alerts.component';
 import {NzPageHeaderModule} from "ng-zorro-antd/page-header";
+import {AlertsComponent} from "./alerts/alerts.component";
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import {NzPageHeaderModule} from "ng-zorro-antd/page-header";
     ChecklistsComponent,
     IncidentsComponent,
     PanicHistoryComponent,
+    DashboardAlertsComponent,
     AlertsComponent,
   ],
   exports: [
