@@ -31,6 +31,7 @@ import {
 import {
   MonitoringRequestsTableMinimalComponent
 } from "./monitoring-requests-table-minimal/monitoring-requests-table-minimal.component";
+import { ChecklistPrintComponent } from './checklist-print/checklist-print.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {
     MonitoringRequestsCheckListComponent,
     MonitoringRequestsFilterComponent,
     MonitoringRequestsCheckListPrintableComponent,
-    MonitoringRequestsTableMinimalComponent
+    MonitoringRequestsTableMinimalComponent,
+    ChecklistPrintComponent
   ],
   exports: [
     MonitoringRequestsTableComponent,

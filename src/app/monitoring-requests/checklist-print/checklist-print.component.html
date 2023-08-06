@@ -1,0 +1,149 @@
+<h1 nz-col nzSpan="24" class="m-b-20 text-center">
+  Comprovante de Check-list
+</h1>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Solicitação</strong>: {{ monitoringRequest?.data?.id }}
+  </span>
+  <span>
+    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0].trackerId }}
+  </span>
+</div>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Empresa</strong>: {{ monitoringRequest?.data?.customer.tradingName }}
+  </span>
+  <span>
+    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0].trackerModel.name }}
+  </span>
+</div>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Operador</strong>: {{ monitoringRequest?.data?.checklist.reviewedBy?.name }}
+  </span>
+  <span>
+    <strong>Placa</strong>: {{ monitoringRequest?.data?.truck?.vehicle.plate }} - Reboque: {{ wagonsPlates() }}
+  </span>
+</div>
+
+<div style="display: flex; justify-content: space-between">
+  <span>
+    <strong>Data</strong>: {{ monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy' }}
+  </span>
+</div>
+
+<form nz-form nzLayout="vertical">
+  <h3 nz-col nzSpan="24" class="m-b-20 text-center">
+    Sensores e Atuadores
+  </h3>
+
+  <div nz-row>
+    <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
+      <span *ngIf="monitoringRequest?.data?.checklist?.[item.value]">( x )</span>
+      <span *ngIf="!monitoringRequest?.data?.checklist?.[item.value]">( )</span>
+      {{ item.label }}
+    </div>
+  </div>
+
+  <div nz-row class="m-t-15 m-b-15">
+    <span>Macro: {{monitoringRequest?.data?.checklist?.hasMacro ? 'Sim' : 'Não'}}</span>
+
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+
+    <span>Inteligência Embarcada: {{monitoringRequest?.data?.checklist?.hasEmbeddedIntelligence ? 'Sim' : 'Não'}}</span>
+  </div>
+
+  <div>
+    <span *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">( x )</span>
+    <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">( )</span>
+    <span> Aprovado</span>
+
+    &nbsp;
+    &nbsp;
+    &nbsp;
+
+    <span *ngIf="monitoringRequest?.data?.checklist?.status === 'reproved'">( x )</span>
+    <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'reproved'">( )</span>
+    <span> Reprovado</span>
+
+    <div>
+      <span>Justifivativa: {{ monitoringRequest?.data?.checklist?.justification }}</span>
+    </div>
+  </div>
+</form>
+
+<form
+  nz-form
+  nzLayout="vertical"
+>
+  <h3 nz-col nzSpan="24" class="m-b-20 text-center">
+    Iscas
+  </h3>
+
+  <div *ngIf="monitoringRequest?.data?.baits.length">
+    <div nz-row>
+      <div nz-col [nzSpan]="6">
+        <span *ngIf="monitoringRequest?.data?.checklistBait?.positionChecked">( x )</span>
+        <span *ngIf="!monitoringRequest?.data?.checklistBait?.positionChecked">( )</span>
+        Posição
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <span *ngIf="monitoringRequest?.data?.checklistBait?.decouplingChecked">( x )</span>
+        <span *ngIf="!monitoringRequest?.data?.checklistBait?.decouplingChecked">( )</span>
+        Desacoplamento
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <span *ngIf="monitoringRequest?.data?.checklistBait?.positionFrequencyChecked">( x )</span>
+        <span *ngIf="!monitoringRequest?.data?.checklistBait?.positionFrequencyChecked">( )</span>
+        Freq. de posição
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <span *ngIf="monitoringRequest?.data?.checklistBait?.batteriesChecked">( x )</span>
+        <span *ngIf="!monitoringRequest?.data?.checklistBait?.batteriesChecked">( )</span>
+        Bateria
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <span *ngIf="monitoringRequest?.data?.checklistBait?.timerChecked">( x )</span>
+        <span *ngIf="!monitoringRequest?.data?.checklistBait?.timerChecked">( )</span>
+        Temporizador
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <span *ngIf="monitoringRequest?.data?.checklistBait?.jammingChecked">( x )</span>
+        <span *ngIf="!monitoringRequest?.data?.checklistBait?.jammingChecked">( )</span>
+        Operação Jamming
+      </div>
+    </div>
+
+    <br>
+
+    <div>
+      <span *ngIf="monitoringRequest?.data?.checklistBait?.approved">( x )</span>
+      <span *ngIf="!monitoringRequest?.data?.checklistBait?.approved">( )</span>
+      <span> Aprovado</span>
+
+      &nbsp;
+      &nbsp;
+      &nbsp;
+
+      <span *ngIf="!monitoringRequest?.data?.checklistBait?.approved">( x )</span>
+      <span *ngIf="monitoringRequest?.data?.checklistBait?.approved">( )</span>
+      <span> Reprovado</span>
+
+      <div>
+        <span>Justifivativa: {{ monitoringRequest?.data?.checklistBait?.justification }}</span>
+      </div>
+    </div>
+  </div>
+</form>
