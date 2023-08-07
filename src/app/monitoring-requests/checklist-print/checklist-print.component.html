@@ -7,7 +7,7 @@
     <strong>Solicitação</strong>: {{ monitoringRequest?.data?.id }}
   </span>
   <span>
-    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0].trackerId }}
+    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}
   </span>
 </div>
 
@@ -16,7 +16,7 @@
     <strong>Empresa</strong>: {{ monitoringRequest?.data?.customer.tradingName }}
   </span>
   <span>
-    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0].trackerModel.name }}
+    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0]?.trackerModel.name }}
   </span>
 </div>
 

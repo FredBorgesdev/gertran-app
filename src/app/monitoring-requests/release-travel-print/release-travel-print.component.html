@@ -16,7 +16,7 @@
     <strong>Empresa</strong>: {{ monitoringRequest?.data?.customer.tradingName }}
   </span>
   <span>
-    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0].trackerModel.name }}
+    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0]?.trackerModel.name }}
   </span>
 </div>
 
@@ -41,10 +41,10 @@
 
 <div style="display: flex; justify-content: space-between">
   <span>
-    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0].trackerModel.trackerTechnology.name }}
+    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}
   </span>
   <span>
-    <strong>N Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0].trackerId }}
+    <strong>N Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}
   </span>
 </div>
 
