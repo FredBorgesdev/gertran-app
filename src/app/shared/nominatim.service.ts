@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
-const BASE_URL = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=';
+const BASE_URL = 'https://api.gertran.zayit.com.br/settings/points/get-lat-lng?address=';
 
 @Injectable({
   providedIn: 'root'
