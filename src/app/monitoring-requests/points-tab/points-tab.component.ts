@@ -189,7 +189,11 @@ export class PointsTabComponent implements OnInit {
   }
 
   async handleAddressChange(nominatimAddress: any, formGroup: FormGroup): Promise<void> {
-    const city = nominatimAddress.address.city || nominatimAddress.address.town || nominatimAddress.address.village;
+    const city =
+      nominatimAddress.address.city ||
+      nominatimAddress.address.town ||
+      nominatimAddress.address.village ||
+      nominatimAddress.address.municipality;
     const state = brazilianStates.find(
       ({name}) => name === nominatimAddress.address.state
     ).abbreviation;
