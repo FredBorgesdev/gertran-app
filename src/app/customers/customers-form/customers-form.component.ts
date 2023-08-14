@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Customer, CustomersService} from '../customers.service';
 import {conformToMask} from 'angular2-text-mask';
+import {Permission, PermissionsService} from "../../shared/services/permissions.service";
 
 @Component({
   selector: 'app-customers-form',
@@ -24,11 +25,13 @@ export class CustomersFormComponent implements OnInit {
 
   validateForm: FormGroup;
   shippers: Customer[] = [];
+  permissions: Permission[] = [];
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private customersService: CustomersService
+    private customersService: CustomersService,
+    private permissionsService: PermissionsService,
   ) {
   }
 
@@ -58,12 +61,29 @@ export class CustomersFormComponent implements OnInit {
       checklistExpirationPeriod: [this.customer?.checklistExpirationPeriod, Validators.required],
       shippers: [this.customer.shippers],
       closingDay: [this.customer?.closingDay, []],
+      dashboards: [],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);
     });
     this.customersService.getAll({limit: 50}, {isShipper: true}).subscribe((response) => {
       this.shippers = response.results;
+    });
+    this.permissionsService.getAll().subscribe((response) => {
+      this.permissions = response
+        .results
+        .filter(permission => permission.codename.includes('view_dashboard'))
+        .map(permission => ({...permission, id: Number(permission.id)}));
+
+      const customerPermission = this.customer.permissions.filter(
+        permission => this.permissions.some(
+          p => p.id === permission
+        )
+      );
+
+      this.validateForm.patchValue({
+        dashboards: customerPermission
+      });
     });
   }
 

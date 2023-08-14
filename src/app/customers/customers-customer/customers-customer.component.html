@@ -24,7 +24,7 @@
           <app-customers-form
             *ngIf="customer"
             [customer]="customer"
-            (save)="onSubmit()"
+            (save)="onSubmit($event)"
             (update)="onChangeCustomer($event)"
           ></app-customers-form>
         </ng-template>

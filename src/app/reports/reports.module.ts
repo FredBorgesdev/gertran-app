@@ -50,6 +50,7 @@ import {PanicHistoryComponent} from "./panic-history/panic-history.component";
 import {AlertsComponent as DashboardAlertsComponent} from './dashboards/alerts/alerts.component';
 import {NzPageHeaderModule} from "ng-zorro-antd/page-header";
 import {AlertsComponent} from "./alerts/alerts.component";
+import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import {AlertsComponent} from "./alerts/alerts.component";
     PanicHistoryComponent,
     DashboardAlertsComponent,
     AlertsComponent,
+    DashboardMapsComponent,
   ],
   exports: [
     WorkdayComponent

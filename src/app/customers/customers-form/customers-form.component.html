@@ -48,6 +48,26 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="dashboards">Dashboards</nz-form-label>
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o embarcador">
+      <nz-select
+        id="dashboards"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Permissões"
+        formControlName="dashboards"
+        nzMode="multiple"
+      >
+        <nz-option
+          *ngFor="let customer of permissions"
+          [nzLabel]="customer.name"
+          [nzValue]="customer.id"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="shippers">Embarcadores</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o embarcador">
       <nz-select

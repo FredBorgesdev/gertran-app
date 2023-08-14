@@ -184,9 +184,10 @@ export const ROUTES: SideNavInterface[] = [
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'line-chart',
-        gertranStaffOnly: true,
+        gertranStaffOnly: false,
         submenu: [
           {
+            permission: Permissions.VIEW_DASHBOARD_MONITORING_REQUEST,
             path: 'reports/dashboards/monitoring-requests',
             title: 'Solicitações de monitoramento',
             iconType: 'nzIcon',
@@ -198,6 +199,7 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
           },
           {
+            permission: Permissions.VIEW_DASHBOARD_CHECKLIST,
             path: 'reports/dashboards/checklists',
             title: 'Checklists',
             iconType: 'nzIcon',
@@ -211,6 +213,19 @@ export const ROUTES: SideNavInterface[] = [
           {
             path: 'reports/dashboards/alerts',
             title: 'Alertas',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            gertranStaffOnly: true,
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+          },
+          {
+            permission: Permissions.VIEW_DASHBOARD_MAPS,
+            path: 'reports/dashboards/maps',
+            title: 'Mapa',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',

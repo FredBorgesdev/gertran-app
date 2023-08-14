@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { Customer, CustomersService } from '../customers.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {Customer, CustomersService} from '../customers.service';
 import {UtilsService} from '../../shared/services/utils.service';
 
 @Component({
@@ -21,7 +21,8 @@ export class CustomersCustomerComponent implements OnInit {
     private customersService: CustomersService,
     private router: Router,
     private utilsService: UtilsService
-  ) { }
+  ) {
+  }
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
@@ -53,11 +54,12 @@ export class CustomersCustomerComponent implements OnInit {
     };
   }
 
-  onSubmit(): void {
+  onSubmit(form?: any): void {
     this.isLoading = true;
     const payload = {
       ...this.utilsService.removeNullValues(this.customer),
       complement: this.customer.complement || undefined,
+      permissions: this.customer.permissions.concat(form?.dashboards ?? [])
     };
 
     if (this.customer.id) {
@@ -67,14 +69,14 @@ export class CustomersCustomerComponent implements OnInit {
       );
     } else {
       this.customersService.save(payload).subscribe(
-        ({ id }) => this.handleSuccess(id),
+        ({id}) => this.handleSuccess(id),
         () => this.handleError()
       );
     }
   }
 
   onChangeCustomer(value: Customer): void {
-    this.customer = { ...this.customer, ...value };
+    this.customer = {...this.customer, ...value};
   }
 
   savePermission(permissions: number[]): void {
@@ -90,7 +92,7 @@ export class CustomersCustomerComponent implements OnInit {
     this.isLoading = false;
     this.message.success(
       'As informações foram salvas com sucesso!',
-      { nzDuration: 3000 }
+      {nzDuration: 3000}
     );
     if (id) {
       this.router.navigate(['/customers', 'customers-edit', id]);
@@ -103,7 +105,7 @@ export class CustomersCustomerComponent implements OnInit {
     this.isLoading = false;
     this.message.error(
       'Ocorreu um erro ao salvar as informações.',
-      { nzDuration: 3000 }
+      {nzDuration: 3000}
     );
   }
 }

@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {GetAllResponse} from './api.service';
 
-interface Permission {
+export interface Permission {
   id: number;
   name: string;
+  codename: string;
 }
 
 @Injectable({
@@ -13,10 +14,11 @@ interface Permission {
 })
 export class PermissionsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(): Observable<GetAllResponse<Permission>> {
-    const params = { limit: 999 };
-    return this.http.get<GetAllResponse<Permission>>('permissions', { params });
+    const params = {limit: 999};
+    return this.http.get<GetAllResponse<Permission>>('permissions', {params});
   }
 }

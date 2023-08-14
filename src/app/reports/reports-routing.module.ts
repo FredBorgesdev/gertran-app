@@ -30,6 +30,7 @@ import {IncidentsComponent} from "./incidents/incidents.component";
 import {PanicHistoryComponent} from "./panic-history/panic-history.component";
 import {AlertsComponent as DashboardAlertsComponent} from "./dashboards/alerts/alerts.component";
 import {AlertsComponent} from "./alerts/alerts.component";
+import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 
 const routes: Routes = [
   {
@@ -175,6 +176,10 @@ const routes: Routes = [
   {
     path: 'dashboards/alerts',
     component: DashboardAlertsComponent,
+  },
+  {
+    path: 'dashboards/maps',
+    component: DashboardMapsComponent,
   },
   {
     path: 'panic-history',

@@ -310,4 +310,7 @@ export enum Permissions {
   ADDRESSES_ADD_ADDRESS = 'addresses.add_address',
   VIEW_TEMPERATURE_HISTORY_REPORT = 'view_temperature_history_report',
   VIEW_ANALYTICAL_PER_SM_REPORT = 'view_analytical_per_sm_report',
+  VIEW_DASHBOARD_MAPS = 'reports.view_dashboard_maps',
+  VIEW_DASHBOARD_CHECKLIST = 'reports.view_dashboard_checklist',
+  VIEW_DASHBOARD_MONITORING_REQUEST = 'reports.view_dashboard_monitoring_request',
 }
