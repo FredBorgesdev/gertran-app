@@ -54,12 +54,11 @@ export class CustomersCustomerComponent implements OnInit {
     };
   }
 
-  onSubmit(form?: any): void {
+  onSubmit(): void {
     this.isLoading = true;
     const payload = {
       ...this.utilsService.removeNullValues(this.customer),
       complement: this.customer.complement || undefined,
-      permissions: this.customer.permissions.concat(form?.dashboards ?? [])
     };
 
     if (this.customer.id) {

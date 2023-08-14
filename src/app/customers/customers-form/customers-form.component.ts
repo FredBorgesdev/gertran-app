@@ -61,7 +61,7 @@ export class CustomersFormComponent implements OnInit {
       checklistExpirationPeriod: [this.customer?.checklistExpirationPeriod, Validators.required],
       shippers: [this.customer.shippers],
       closingDay: [this.customer?.closingDay, []],
-      dashboards: [],
+      permissions: [this.customer?.permissions],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);
@@ -72,19 +72,12 @@ export class CustomersFormComponent implements OnInit {
     this.permissionsService.getAll().subscribe((response) => {
       this.permissions = response
         .results
-        .filter(permission => permission.codename.includes('view_dashboard'))
         .map(permission => ({...permission, id: Number(permission.id)}));
-
-      const customerPermission = this.customer.permissions.filter(
-        permission => this.permissions.some(
-          p => p.id === permission
-        )
-      );
-
-      this.validateForm.patchValue({
-        dashboards: customerPermission
-      });
     });
+  }
+
+  isDashboardPermission(permission: Permission): boolean {
+    return permission.codename.includes('view_dashboard');
   }
 
   listCustomers(): void {
