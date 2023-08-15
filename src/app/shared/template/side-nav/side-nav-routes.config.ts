@@ -221,6 +221,18 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
+          },
+          {
+            path: 'reports/dashboards/alerts',
+            title: 'Alertas',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            gertranStaffOnly: true,
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
           }
         ]
       },
@@ -390,17 +402,13 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
           },
           {
-            path: 'reports/dashboards/alerts',
+            path: '/reports/alerts',
             title: 'Histórico de Alertas',
             iconType: 'nzIcon',
             iconTheme: 'outline',
-            icon: 'bar-chart',
-            gertranStaffOnly: true,
-            queryParams: {
-              fullscreen: true
-            },
-            submenu: [],
-          },
+            icon: 'line-chart',
+            submenu: []
+          }
         ],
       },
       {
@@ -483,14 +491,6 @@ export const ROUTES: SideNavInterface[] = [
       {
         path: '/reports/panic-history',
         title: 'Relatório de Pânico',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'line-chart',
-        submenu: []
-      },
-      {
-        path: '/reports/alerts',
-        title: 'Alertas',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'line-chart',
