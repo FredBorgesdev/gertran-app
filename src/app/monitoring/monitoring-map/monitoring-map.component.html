@@ -1,6 +1,10 @@
 <nz-tabset>
   <nz-tab nzTitle="Mapa">
     <nz-card [nzCover]="map">
+      <button nz-button nzType="primary" (click)="openStreetView()">
+        <span nz-icon nzType="environment"></span>
+        Street View
+      </button>
     </nz-card>
   </nz-tab>
 

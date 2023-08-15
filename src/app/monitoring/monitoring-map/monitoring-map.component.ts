@@ -25,12 +25,16 @@ export class MonitoringMapComponent implements OnInit {
     private service: MonitoringService,
     private monitoringRequestService: MonitoringRequestsService,
     private directionsService: DirectionsService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.driverLocation = [this.item.longitude, this.item.latitude];
 
-    this.monitoringRequestService.get(this.item.monitoringRequest.id).subscribe(async ({ routeCoordinates, travelSteps }) => {
+    this.monitoringRequestService.get(this.item.monitoringRequest.id).subscribe(async ({
+                                                                                         routeCoordinates,
+                                                                                         travelSteps
+                                                                                       }) => {
       this.markers = travelSteps.map(point => [point.longitude, point.latitude]);
 
       if (!routeCoordinates && travelSteps?.length > 0) {
@@ -103,5 +107,17 @@ export class MonitoringMapComponent implements OnInit {
       color: 'lightred',
       theme: 'fill'
     };
+  }
+
+  openStreetView(): void {
+    const allLatLng = this.markers.map(([lng, lat]) => ({lng, lat}));
+    const originLatLng = `${allLatLng[0].lat},${allLatLng[0].lng}`;
+    const destinationLatLng = `${allLatLng[allLatLng.length - 1].lat},${allLatLng[allLatLng.length - 1].lng}`;
+    const waypointsLatLng = allLatLng.slice(1, allLatLng.length - 1).map(({lng, lat}) => `${lat},${lng}`).join('|');
+
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&origin=${originLatLng}&destination=${destinationLatLng}&waypoints=${waypointsLatLng}&travelmode=driving&dir_action=navigate`,
+      '_blank'
+    );
   }
 }
