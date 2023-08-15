@@ -211,18 +211,6 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
           },
           {
-            path: 'reports/dashboards/alerts',
-            title: 'Alertas',
-            iconType: 'nzIcon',
-            iconTheme: 'outline',
-            icon: 'bar-chart',
-            gertranStaffOnly: true,
-            queryParams: {
-              fullscreen: true
-            },
-            submenu: [],
-          },
-          {
             permission: Permissions.VIEW_DASHBOARD_MAPS,
             path: 'reports/dashboards/maps',
             title: 'Mapa',
@@ -399,6 +387,18 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
+            submenu: [],
+          },
+          {
+            path: 'reports/dashboards/alerts',
+            title: 'Histórico de Alertas',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            gertranStaffOnly: true,
+            queryParams: {
+              fullscreen: true
+            },
             submenu: [],
           },
         ],
