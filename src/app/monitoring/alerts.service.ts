@@ -75,6 +75,7 @@ export class AlertsService {
       terminal?: string;
       customer?: string;
       severity?: SeverityFlat;
+      alertsOnly?: boolean;
     }
   ): Observable<GetAllResponse<Alert>> {
     const params: any = {
@@ -89,6 +90,9 @@ export class AlertsService {
     }
     if (filters?.severity) {
       params.severity = filters.severity;
+    }
+    if (filters?.alertsOnly) {
+      params.alerts_only = filters.alertsOnly;
     }
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {

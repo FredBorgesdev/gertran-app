@@ -69,6 +69,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
     this.alertsService.getAlerts({limit: 999}, {
       terminal: nextTerminal.id,
       alertType: AlertTypes.terminal,
+      alertsOnly: true,
     }).subscribe((data) => {
       this.currentAlerts = data.results.reverse();
       this.currentTerminal = nextTerminal;
