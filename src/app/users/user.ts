@@ -1,4 +1,5 @@
-import { AbstractUser } from './users.service';
+import {AbstractUser} from './users.service';
+
 export default class User extends AbstractUser {
 
   constructor(data: AbstractUser) {
@@ -12,5 +13,13 @@ export default class User extends AbstractUser {
     }
 
     return this.permissions.includes(permission);
+  }
+
+  hasOneOfPermissions(oneOfPermissions: string[]): boolean {
+    if (this.isGertranStaff) {
+      return true;
+    }
+
+    return oneOfPermissions.some(permission => this.permissions.includes(permission));
   }
 }

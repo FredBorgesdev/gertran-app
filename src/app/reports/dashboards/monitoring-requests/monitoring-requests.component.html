@@ -1,10 +1,10 @@
-<div class="m-b-30 text-center">
+<div class="m-b-30 text-center" *ngIf="!hideHeader">
   <h4>
     Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
   </h4>
 </div>
 
-<span>
+<span *ngIf="!hideHeader">
   {{ 'Aguardando liberação' + ' (' + (underReviewResponse?.count ?? 0) + ')' }}
   {{ 'Aprovadas' + ' (' + (approvedResponse?.count ?? 0) + ')' }}
   {{ 'Rejeitadas' + ' (' + (reprovedResponse?.count ?? 0) + ')' }}

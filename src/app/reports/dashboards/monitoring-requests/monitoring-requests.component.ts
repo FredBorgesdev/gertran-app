@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from "../../../shared/services/api.service";
 import {
   MonitoringRequests,
@@ -16,6 +16,8 @@ import {format} from "date-fns";
   styleUrls: ['./monitoring-requests.component.css']
 })
 export class MonitoringRequestsComponent implements OnInit, OnDestroy {
+  @Input() hideHeader = false;
+
   underReviewResponse: GetAllResponse<MonitoringRequests>;
   approvedResponse: GetAllResponse<MonitoringRequests>;
   reprovedResponse: GetAllResponse<MonitoringRequests>;

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Checklist, ChecklistsService} from '../../../checklists/checklists.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -14,6 +14,8 @@ import {takeUntil} from 'rxjs/operators';
   styleUrls: ['./checklists.component.css']
 })
 export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implements OnInit, OnDestroy {
+  @Input() hideHeader = false;
+
   checklistColumns = [
     {title: 'Data criação'},
     {title: 'Placa'},

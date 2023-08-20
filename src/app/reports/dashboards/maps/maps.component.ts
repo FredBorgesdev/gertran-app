@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {PositionsService} from '../../../monitoring/positions.service';
@@ -13,6 +13,8 @@ import {MapMarkersModalComponent} from '../../extra/map-markers-modal/map-marker
   providers: [DatePipe]
 })
 export class DashboardMapsComponent implements OnInit {
+  @Input() height = '80vh';
+
   markers = [];
   mapLoading = false;
   mapCenter = {lat: -14.2400732, lng: -53.1805017};

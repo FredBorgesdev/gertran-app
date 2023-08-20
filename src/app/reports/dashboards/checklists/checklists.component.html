@@ -1,60 +1,57 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <h1 class="text-center">
+  <h1 class="text-center" *ngIf="!hideHeader">
     Check-list por veículo - {{resources.count}} solicitações
   </h1>
 
-  <nz-card>
-    <nz-table
-      #checklistTable
-      [nzData]="resources?.results"
-      [nzTotal]="resources?.count"
-      [nzPageSize]="resources?.limit"
-      [nzPageIndex]="page"
-      [nzFrontPagination]="false"
-      (nzQueryParams)="handleQueryParamsChange($event)"
-    >
-      <thead>
-      <tr>
-        <th
-          class="text-center"
-          *ngFor="let column of checklistColumns"
-        >{{ column.title }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of checklistTable.data;  let i=index">
-        <td class="text-center">
-          {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
-        </td>
-        <td>
-          <h6 class="text-center">{{item.vehicle.plate}}</h6>
-        </td>
-        <td class="text-center">
-          {{item.vehicle?.trackers?.[0]?.trackerModel.name}}
-        </td>
-        <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
-        <td class="text-center">{{item.driver?.name }} / {{item.driver?.phoneNumber}}</td>
-        <td class="text-center">{{item.origin}}</td>
-        <td class="text-center">{{item.destiny}}</td>
-        <td
-          class="text-md-center"
-          *ngIf="authService.user.isGertranStaff"
+  <nz-table
+    #checklistTable
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th
+        class="text-center"
+        *ngFor="let column of checklistColumns"
+      >{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of checklistTable.data;  let i=index">
+      <td class="text-center">
+        {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+      </td>
+      <td>
+        <h6 class="text-center">{{item.vehicle.plate}}</h6>
+      </td>
+      <td class="text-center">
+        {{item.vehicle?.trackers?.[0]?.trackerModel.name}}
+      </td>
+      <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
+      <td class="text-center">{{item.driver?.name }} / {{item.driver?.phoneNumber}}</td>
+      <td class="text-center">{{item.origin}}</td>
+      <td class="text-center">{{item.destiny}}</td>
+      <td
+        class="text-md-center"
+        *ngIf="authService.user.isGertranStaff"
+      >
+        <a
+          (click)="edit(item)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nz-tooltip
+          nzTooltipTitle="Avaliar"
         >
-          <a
-            (click)="edit(item)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Avaliar"
-          >
-            <i nz-icon nzType="check-circle" theme="outline"></i>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
-
+          <i nz-icon nzType="check-circle" theme="outline"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
 </nz-spin>

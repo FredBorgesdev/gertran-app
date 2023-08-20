@@ -1,0 +1,23 @@
+<div *ngIf="authService.user.hasPermission('reports.view_dashboard_maps')">
+  <app-maps height="45vh"></app-maps>
+</div>
+
+<div nz-row nzGutter="16">
+  <div
+    nz-col
+    [nzSpan]="authService.user.hasPermission('reports.view_dashboard_monitoring_request') ? 12 : 24"
+    *ngIf="authService.user.hasPermission('reports.view_dashboard_checklist')"
+  >
+    <h3>Checklists</h3>
+    <app-checklists [hideHeader]="true"></app-checklists>
+  </div>
+
+  <div
+    nz-col
+    [nzSpan]="authService.user.hasPermission('reports.view_dashboard_checklist') ? 12 : 24"
+    *ngIf="authService.user.hasPermission('reports.view_dashboard_monitoring_request')"
+  >
+    <h3>Solicitações de monitoramento</h3>
+    <app-monitoring-requests [hideHeader]="true"></app-monitoring-requests>
+  </div>
+</div>

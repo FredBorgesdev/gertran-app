@@ -233,6 +233,22 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
+          },
+          {
+            path: 'reports/dashboards/client',
+            title: 'Cliente',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+            oneOfPermissions: [
+              Permissions.VIEW_DASHBOARD_MONITORING_REQUEST,
+              Permissions.VIEW_DASHBOARD_CHECKLIST,
+              Permissions.VIEW_DASHBOARD_MAPS,
+            ]
           }
         ]
       },

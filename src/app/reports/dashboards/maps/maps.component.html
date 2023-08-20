@@ -1,6 +1,6 @@
 <div>
   <nz-spin [nzSpinning]="mapLoading">
-    <nz-card nzTitle="Mapa de posições por veiculo" style="height: 80vh" [nzBodyStyle]="{ height: '100%' }"
+    <nz-card nzTitle="Mapa de posições por veiculo" [style]="'height:' + height" [nzBodyStyle]="{ height: '100%' }"
              [nzExtra]="extraTemplate">
       <mgl-map
         [style]="'mapbox://styles/mapbox/streets-v9'"

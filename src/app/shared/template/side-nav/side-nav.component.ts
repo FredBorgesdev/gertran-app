@@ -55,6 +55,9 @@ export class SideNavComponent implements OnInit {
       if (menuItem.permission && !this.user.hasPermission(menuItem.permission)) {
         return false;
       }
+      if (menuItem.oneOfPermissions && !this.user.hasOneOfPermissions(menuItem.oneOfPermissions)) {
+        return false;
+      }
       if (menuItem.gertranStaffOnly) {
         return this.user.isGertranStaff;
       }
