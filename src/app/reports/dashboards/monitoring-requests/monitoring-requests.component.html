@@ -1,14 +1,22 @@
-<div class="m-b-30 text-center" *ngIf="!hideHeader">
+<div class="m-b-10 text-center" *ngIf="!hideHeader">
   <h4>
     Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
   </h4>
 </div>
 
-<span *ngIf="!hideHeader">
-  {{ 'Aguardando liberação' + ' (' + (underReviewResponse?.count ?? 0) + ')' }}
-  {{ 'Aprovadas' + ' (' + (approvedResponse?.count ?? 0) + ')' }}
-  {{ 'Rejeitadas' + ' (' + (reprovedResponse?.count ?? 0) + ')' }}
-</span>
+<div class="d-flex justify-content-between">
+  <span *ngIf="!hideHeader">
+    {{ 'Aguardando liberação' + ' (' + (underReviewResponse?.count ?? 0) + ')' }}
+    {{ 'Aprovadas' + ' (' + (approvedResponse?.count ?? 0) + ')' }}
+    {{ 'Rejeitadas' + ' (' + (reprovedResponse?.count ?? 0) + ')' }}
+  </span>
+
+  <span>
+    <div class="square bg-under-review"></div> Aguardando liberação
+    <div class="square bg-approved"></div> Aprovadas
+    <div class="square bg-reproved"></div> Rejeitadas
+  </span>
+</div>
 
 <app-monitoring-requests-table-minimal
   [underReview]="underReviewResponse"

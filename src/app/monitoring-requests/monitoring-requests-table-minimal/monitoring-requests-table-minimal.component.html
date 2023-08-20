@@ -3,11 +3,12 @@
   [nzData]="monitoringRequests"
   nzBordered
   [nzFrontPagination]="false"
+  nzSize="small"
   nzTableLayout="fixed"
 >
   <thead>
   <tr>
-    <th>Status</th>
+    <th nzWidth="32px"></th>
     <th>Solicitação</th>
     <th>Cliente</th>
     <th>Atualizado em</th>
@@ -17,7 +18,7 @@
 
   <tbody>
   <tr *ngFor="let data of table.data; index as i">
-    <td [class]="'bg-' + data.status">{{ getTitle(data.status) }}</td>
+    <td [class]="'bg-' + data.status"></td>
     <td nz-tooltip [nzTooltipTitle]="data.id">{{ data.id | id }}</td>
     <td>
       {{ data.customer.tradingName }}

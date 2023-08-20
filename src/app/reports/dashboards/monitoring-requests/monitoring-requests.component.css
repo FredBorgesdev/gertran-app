@@ -2,3 +2,22 @@
   height: 500px;
   overflow-y: scroll;
 }
+
+.square {
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+}
+
+.bg-under-review {
+  background: red;
+}
+
+.bg-approved {
+  background: yellow;
+}
+
+.bg-reproved {
+  border: 1px solid #000;
+  background: white;
+}

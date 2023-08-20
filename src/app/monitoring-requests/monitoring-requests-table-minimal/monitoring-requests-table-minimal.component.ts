@@ -73,15 +73,4 @@ export class MonitoringRequestsTableMinimalComponent implements OnChanges {
       message: 'Em avaliação',
     };
   }
-
-  getTitle(status: Status): string {
-    switch (status) {
-      case 'under_review':
-        return 'Aguardando liberação';
-      case 'reproved':
-        return 'Reprovadas';
-      case 'waiting_for_start':
-        return 'Aprovadas';
-    }
-  }
 }
