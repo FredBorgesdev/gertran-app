@@ -1,31 +1,11 @@
-td,
-th {
-  font-size: 14px;
+.bg-under_review {
+  background: red;
+  color: white;
 }
 
-.red-alert {
-  background-color: #ff3232;
-  width: 15px;
-  height: 15px;
-  border-radius: 3px;
+.bg-waiting_for_start {
+  background: yellow;
 }
 
-.yellow-alert {
-  background-color: #ff9f1a;
-}
-
-.default-alert {
-  background-color: #f2f2f2;
-}
-
-.vertical-bar {
-  border-left: 2px solid #e3e3e3;
-  height: 100%;
-}
-
-.list-item {
-  border: 1px solid #e3e3e3;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+.bg-reproved {
 }

@@ -1,47 +1,18 @@
 <div class="m-b-30 text-center">
   <h4>
-    Hora atual: {{ currentTime }}
+    Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
   </h4>
-
-  <h6>
-    Próxima atualização em {{ formatSeconds(nextUpdate) }}
-  </h6>
 </div>
 
-<div nz-row nzGutter="2">
-  <div nz-col nzSpan="12">
-    <nz-card
-      [nzTitle]="'Aguardando liberação' + ' (' + (underReviewResponse?.count ?? 0) + ')'"
-    >
-      <app-monitoring-requests-table-minimal
-        [monitoringRequests]="underReviewResponse"
-        [rowColor]="'#ffd773'"
-        (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"
-      ></app-monitoring-requests-table-minimal>
-    </nz-card>
-  </div>
+<span>
+  {{ 'Aguardando liberação' + ' (' + (underReviewResponse?.count ?? 0) + ')' }}
+  {{ 'Aprovadas' + ' (' + (approvedResponse?.count ?? 0) + ')' }}
+  {{ 'Rejeitadas' + ' (' + (reprovedResponse?.count ?? 0) + ')' }}
+</span>
 
-  <div nz-col nzSpan="12">
-    <nz-card
-      class="m-b-0 scrollable-card"
-      [nzTitle]="'Aprovadas' + ' (' + (approvedResponse?.count ?? 0) + ')'"
-    >
-      <app-monitoring-requests-table-minimal
-        [monitoringRequests]="approvedResponse"
-        [rowColor]="'#73deff'"
-        (handleQueryParamsChange)="handleQueryParamsChange($event, loadApproved)"
-      ></app-monitoring-requests-table-minimal>
-    </nz-card>
-
-    <nz-card
-      class="scrollable-card"
-      [nzTitle]="'Rejeitadas' + ' (' + (reprovedResponse?.count ?? 0) + ')'"
-    >
-      <app-monitoring-requests-table-minimal
-        [monitoringRequests]="reprovedResponse"
-        [rowColor]="'#ff8e8e'"
-        (handleQueryParamsChange)="handleQueryParamsChange($event, loadReproved)"
-      ></app-monitoring-requests-table-minimal>
-    </nz-card>
-  </div>
-</div>
+<app-monitoring-requests-table-minimal
+  [underReview]="underReviewResponse"
+  [approved]="approvedResponse"
+  [reproved]="reprovedResponse"
+  (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"
+></app-monitoring-requests-table-minimal>

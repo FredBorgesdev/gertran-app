@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
-import {MonitoringRequests, MonitoringRequestsService, PossibleStatus} from '../monitoring-requests.service';
+import {MonitoringRequests, MonitoringRequestsService, PossibleStatus, Status} from '../monitoring-requests.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {differenceInMinutes} from 'date-fns';
 
@@ -10,39 +10,26 @@ import {differenceInMinutes} from 'date-fns';
   styleUrls: ['./monitoring-requests-table-minimal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MonitoringRequestsTableMinimalComponent implements OnInit {
-  @Input() monitoringRequests: GetAllResponse<MonitoringRequests>;
+export class MonitoringRequestsTableMinimalComponent implements OnChanges {
+  @Input() underReview: GetAllResponse<MonitoringRequests>;
+  @Input() approved: GetAllResponse<MonitoringRequests>;
+  @Input() reproved: GetAllResponse<MonitoringRequests>;
   @Input() rowColor = 'inherit';
   @Output() handleQueryParamsChange = new EventEmitter<any>();
 
+  monitoringRequests = [];
+
   isLoading = false;
-  possibleStatus: PossibleStatus;
 
-  monitoringRequestsColumns = [
-    {title: 'Código'},
-    {title: 'Empresa'},
-    {title: 'Modificação'},
-    {title: 'Motorista'},
-    {title: 'Placa'},
-    {title: 'Carretas'},
-  ];
-
-  constructor(
-    private monitoringRequestService: MonitoringRequestsService,
-    public authService: AuthenticationService,
-  ) {
+  constructor(public authService: AuthenticationService) {
   }
 
-  ngOnInit(): void {
-    this.possibleStatus = this.monitoringRequestService.possibleStatus;
-  }
-
-  get page(): number {
-    return getCurrentPage(this.monitoringRequests);
-  }
-
-  getWagons(item: MonitoringRequests): string {
-    return item.wagons?.map(wagon => wagon.vehicle.plate).join(', ');
+  ngOnChanges(): void {
+    this.monitoringRequests = [
+      ...((this.underReview || {}).results || []),
+      ...((this.approved || {}).results || []),
+      ...((this.reproved || {}).results || []),
+    ];
   }
 
   getUpdateDiff(monitoringRequest: MonitoringRequests): string {
@@ -85,5 +72,16 @@ export class MonitoringRequestsTableMinimalComponent implements OnInit {
       class: 'default-alert',
       message: 'Em avaliação',
     };
+  }
+
+  getTitle(status: Status): string {
+    switch (status) {
+      case 'under_review':
+        return 'Aguardando liberação';
+      case 'reproved':
+        return 'Reprovadas';
+      case 'waiting_for_start':
+        return 'Aprovadas';
+    }
   }
 }
