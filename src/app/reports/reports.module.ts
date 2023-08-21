@@ -52,6 +52,7 @@ import {NzPageHeaderModule} from "ng-zorro-antd/page-header";
 import {AlertsComponent} from "./alerts/alerts.component";
 import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import { ClientComponent } from './dashboards/client/client.component';
+import { TechnologiesComponent } from './technologies/technologies.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { ClientComponent } from './dashboards/client/client.component';
     AlertsComponent,
     DashboardMapsComponent,
     ClientComponent,
+    TechnologiesComponent,
   ],
   exports: [
     WorkdayComponent

@@ -32,6 +32,7 @@ import {AlertsComponent as DashboardAlertsComponent} from "./dashboards/alerts/a
 import {AlertsComponent} from "./alerts/alerts.component";
 import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import {ClientComponent} from "./dashboards/client/client.component";
+import {TechnologiesComponent} from "./technologies/technologies.component";
 
 const routes: Routes = [
   {
@@ -193,6 +194,10 @@ const routes: Routes = [
   {
     path: 'alerts',
     component: AlertsComponent,
+  },
+  {
+    path: 'technologies',
+    component: TechnologiesComponent,
   }
 ];
 

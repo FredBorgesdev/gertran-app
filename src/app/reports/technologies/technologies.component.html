@@ -1,0 +1,106 @@
+<div nz-row nzGutter="12">
+  <div nz-col nzSpan="6">
+    <nz-card nzTitle="Autotrac">
+      <img width="140" height="140" src="assets/images/brand/200x200/autotrac.png" alt="Autotrac">
+
+      <span class="m-t-15">
+        Status: <strong>{{equipmentStatus['autotrac']?.online ? 'Online' : 'Offline'}}</strong>
+      </span>
+
+      <br>
+
+      <span>
+        Ultima atualização:
+        <strong>
+          {{equipmentStatus['autotrac']?.positionDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </strong>
+      </span>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="6">
+    <nz-card nzTitle="Sascar">
+      <img width="140" height="140" src="assets/images/brand/200x200/sascar.png" alt="Sascar">
+
+      <span class="m-t-15">
+        Status:
+        <strong>{{equipmentStatus['sascar']?.online ? 'Online' : 'Offline'}}</strong>
+      </span>
+
+      <br>
+
+      <span>
+        Ultima atualização:
+        <strong>
+          {{equipmentStatus['sascar']?.positionDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </strong>
+      </span>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="6">
+    <nz-card nzTitle="Omnilink">
+      <img width="140" height="140" src="assets/images/brand/200x200/omnilink.png" alt="Omnilink">
+
+      <span class="m-t-15">
+        Status:
+        <strong>
+          {{equipmentStatus['omnilink']?.online ? 'Online' : 'Offline'}}
+        </strong>
+      </span>
+
+      <br>
+
+      <span>
+        Ultima atualização:
+        <strong>
+          {{equipmentStatus['omnilink']?.positionDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </strong>
+      </span>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="6">
+    <nz-card nzTitle="Positron">
+      <img width="140" height="140" src="assets/images/brand/200x200/positron.png" alt="Position">
+
+      <span class="m-t-15">
+        Status:
+        <strong>
+          {{equipmentStatus['positron']?.online ? 'Online' : 'Offline'}}
+        </strong>
+      </span>
+
+      <br>
+
+      <span>
+        Ultima atualização:
+        <strong>
+          {{equipmentStatus['positron']?.positionDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </strong>
+      </span>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="6">
+    <nz-card nzTitle="Onixsat">
+      <img width="140" height="140" src="assets/images/brand/200x200/onixsat.png" alt="Onixsat">
+
+      <span class="m-t-15">
+        Status:
+        <strong>
+          {{equipmentStatus['onixsat']?.online ? 'Online' : 'Offline'}}
+        </strong>
+      </span>
+
+      <br>
+
+      <span>
+        Ultima atualização:
+        <strong>
+          {{equipmentStatus['onixsat']?.positionDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+        </strong>
+      </span>
+    </nz-card>
+  </div>
+</div>

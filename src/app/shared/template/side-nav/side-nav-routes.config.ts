@@ -512,6 +512,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
+      {
+        path: '/reports/technologies',
+        title: 'Teconologias',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
     ]
   },
   {

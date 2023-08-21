@@ -299,6 +299,11 @@ export type IncidentReport = {
 
 export type AlertReport = Alert;
 
+export type EquipmentStatusReport = {
+  trackerTechnologyName: string;
+  positionDate: string;
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -616,5 +621,9 @@ export class ReportsService {
     });
 
     return this.http.get<AlertReport[]>('reports/tracking/alerts?1=1', {params});
+  }
+
+  getEquipmentStatus(): Observable<EquipmentStatusReport[]> {
+    return this.http.get<EquipmentStatusReport[]>('reports/technology/status?1=1');
   }
 }
