@@ -228,7 +228,7 @@ export const ROUTES: SideNavInterface[] = [
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
-            gertranStaffOnly: true,
+            permission: Permissions.VIEW_DASHBOARD_ALERT,
             queryParams: {
               fullscreen: true
             },

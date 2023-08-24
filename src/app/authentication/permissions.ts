@@ -313,4 +313,5 @@ export enum Permissions {
   VIEW_DASHBOARD_MAPS = 'reports.view_dashboard_maps',
   VIEW_DASHBOARD_CHECKLIST = 'reports.view_dashboard_checklist',
   VIEW_DASHBOARD_MONITORING_REQUEST = 'reports.view_dashboard_monitoring_request',
+  VIEW_DASHBOARD_ALERT = 'reports.view_dashboard_alert',
 }
