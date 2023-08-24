@@ -33,6 +33,10 @@ export type Alert = {
   position: {
     positionInfo: {
       observation: string;
+      destinyCity: string;
+      destinyState: string;
+      originCity: string;
+      originState: string;
     };
     truck: {
       id: string;
@@ -59,6 +63,10 @@ export type Alert = {
     plate: string;
   } | null;
   receivedAt: string | null;
+  customer: {
+    tradingName: string;
+    corporateName: string;
+  }
 };
 
 @Injectable({

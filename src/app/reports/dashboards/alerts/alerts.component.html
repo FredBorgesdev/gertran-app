@@ -35,15 +35,25 @@
 <ul class="dash-list">
   <li
     *ngFor="let alert of currentAlerts"
-    [class]="getClass(alert)"
+    [class]="getClass(alert) + ' d-flex justify-content-between'"
   >
     {{alert.vehicle.plate}}
 
     <div>
+      {{alert.customer.tradingName}}
+    </div>
+
+    <div>
+      {{alert.position.positionInfo.destinyCity}} -
+      {{alert.position.positionInfo.destinyState}}
+
+      {{alert.position.positionInfo.originCity}} -
+      {{alert.position.positionInfo.originState}}
+
       {{alert.message}}
     </div>
 
-    <div class="justify-self-end">
+    <div>
       {{ getRollingTimeInMinutes(alert) }} -
       {{ alert.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}
     </div>
