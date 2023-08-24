@@ -1,11 +1,12 @@
 .bg-under_review {
-  background: red;
+  background: yellow;
   color: white;
 }
 
 .bg-waiting_for_start {
-  background: yellow;
+  background: green;
 }
 
 .bg-reproved {
+  background: red;
 }
