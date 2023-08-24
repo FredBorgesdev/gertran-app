@@ -10,14 +10,13 @@
 }
 
 .bg-under-review {
-  background: red;
-}
-
-.bg-approved {
   background: yellow;
 }
 
+.bg-approved {
+  background: green;
+}
+
 .bg-reproved {
-  border: 1px solid #000;
-  background: white;
+  background: red;
 }
