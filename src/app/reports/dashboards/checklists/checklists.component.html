@@ -1,8 +1,8 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <h1 class="text-center m-b-0" *ngIf="!hideHeader">
+  <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
     Check-list por veículo
   </h1>
-  <h3 class="text-center m-b-25" *ngIf="!hideHeader">
+  <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-25'">
     Tempo: {{ currentTime }}
     &nbsp;
     &nbsp;
@@ -10,7 +10,12 @@
     Total - {{resources?.count ?? '0'}}
   </h3>
 
-  <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+  <img
+    *ngIf="!hideHeader"
+    src="assets/images/logo/logogertran.png"
+    alt="Gertran"
+    class="logo"
+  >
 
   <div class="d-flex justify-content-between">
     <div></div>
