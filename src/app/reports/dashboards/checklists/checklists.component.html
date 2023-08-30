@@ -1,7 +1,26 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <h1 class="text-center" *ngIf="!hideHeader">
-    Check-list por veículo - {{resources.count}} solicitações
+  <h1 class="text-center m-b-0" *ngIf="!hideHeader">
+    Check-list por veículo
   </h1>
+  <h3 class="text-center m-b-25" *ngIf="!hideHeader">
+    Tempo: {{ currentTime }}
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    Total - {{resources?.count ?? '0'}}
+  </h3>
+
+  <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+
+  <div class="d-flex justify-content-between">
+    <div></div>
+
+    <span>
+      <div class="square bg-danger"></div> Acima de 15 minutos
+      <div class="square bg-alert"></div> Acima de 10 minutos
+      <div class="square bg-default"></div> No prazo
+    </span>
+  </div>
 
   <nz-table
     #checklistTable
@@ -10,26 +29,27 @@
     [nzPageSize]="resources?.limit"
     [nzPageIndex]="page"
     [nzFrontPagination]="false"
+    nzSize="small"
     (nzQueryParams)="handleQueryParamsChange($event)"
   >
     <thead>
     <tr>
       <th
-        class="text-center"
+        class="text-center table-header"
         *ngFor="let column of checklistColumns"
       >{{ column.title }}</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of checklistTable.data;  let i=index">
+    <tr *ngFor="let item of checklistTable.data;  let i=index" [class]="getRowClass(item)">
       <td class="text-center">
         {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
       </td>
-      <td>
-        <h6 class="text-center">{{item.vehicle.plate}}</h6>
+      <td class="text-center">
+        {{item.vehicle.plate}}
       </td>
       <td class="text-center">
-        {{item.vehicle?.trackers?.[0]?.trackerModel.name}}
+        {{item.vehicle?.trackers?.[0]?.trackerModel.trackerTechnology.name}}
       </td>
       <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
       <td class="text-center">{{item.driver?.name }} / {{item.driver?.phoneNumber}}</td>
