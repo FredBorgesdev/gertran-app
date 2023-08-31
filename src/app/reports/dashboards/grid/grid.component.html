@@ -1,0 +1,75 @@
+<nz-table
+  #table
+  [nzData]="monitoringData"
+  [nzFrontPagination]="false"
+  nzTableLayout="fixed"
+  nzSize="small"
+  [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'auto' }"
+  [nzLoading]="isLoading"
+>
+  <thead>
+  <tr>
+    <th
+      *ngFor="let column of monitoringColumns"
+      [nzSortFn]="column.compare"
+      [nzLeft]="column.nzLeft"
+      [nzWidth]="column.width"
+      class="text-center"
+      [style]="column.style"
+      class="table-header"
+    >{{ column.title }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+    *ngFor="let item of table.data; let i=index"
+    [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
+    (contextmenu)="openDropdown($event, moreActionsRight, item)"
+    (click)="setPlate(item?.vehiclePlate)"
+  >
+    <td nzLeft class="bg-gray">
+      <img
+        [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
+        alt="logo"
+        width="25px"
+        height="25px"
+      />
+    </td>
+    <td nzLeft class="bg-gray">{{ item.vehiclePlate || '-' }}</td>
+    <td>
+      SM
+    </td>
+    <td>
+      <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
+      <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
+    </td>
+    <td [nzAlign]="'center'">
+      <div class="progress-bar">
+        <div
+          [style]="'--progress:' + item.positionInfo?.travelProgress + '%;'"
+          class="progress"
+        ></div>
+        <span class="progress-text">
+          {{ item.positionInfo?.travelProgress }}%
+        </span>
+      </div>
+    </td>
+    <td
+      style="cursor: pointer"
+      (click)="openMap(item)"
+    >
+      <img
+        src="assets/images/others/map-icon.svg"
+        alt="logo"
+        width="25px"
+        height="25px"
+        style="filter: invert(56%) sepia(97%) saturate(2141%) hue-rotate(155deg) brightness(87%) contrast(101%);"
+      />
+    </td>
+    <td>{{ getOrigin(item) }}</td>
+    <td>{{ getDestiny(item) }}</td>
+    <td nzEllipsis nz-tooltip
+        [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
+  </tr>
+  </tbody>
+</nz-table>

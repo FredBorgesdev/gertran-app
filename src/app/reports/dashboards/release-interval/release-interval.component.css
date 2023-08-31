@@ -33,12 +33,3 @@
   top: 20px;
   right: 20px;
 }
-
-h1.header-small {
-  font-size: 1.5em;
-}
-
-h3.header-small {
-  font-size: 1.2em;
-  margin-bottom: 10px !important;
-}
