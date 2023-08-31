@@ -1,12 +1,20 @@
-.bg-under_review {
+.bg-alert {
   background: yellow;
-  color: white;
+  font-weight: bold;
 }
 
 .bg-waiting_for_start {
   background: green;
 }
 
-.bg-reproved {
+.bg-danger {
   background: red;
+  color: #fff;
+  font-weight: bold;
+}
+
+th.table-header {
+  background: #187bff;
+  color: #fff;
+  font-weight: bold;
 }

@@ -3,6 +3,7 @@ import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service'
 import {MonitoringRequests, MonitoringRequestsService, PossibleStatus, Status} from '../monitoring-requests.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {differenceInMinutes} from 'date-fns';
+import {getClassName} from "codelyzer/util/utils";
 
 @Component({
   selector: 'app-monitoring-requests-table-minimal',
@@ -29,7 +30,9 @@ export class MonitoringRequestsTableMinimalComponent implements OnChanges {
       ...((this.underReview || {}).results || []),
       ...((this.approved || {}).results || []),
       ...((this.reproved || {}).results || []),
-    ];
+    ].sort((a, b) => {
+      return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+    });
   }
 
   getUpdateDiff(monitoringRequest: MonitoringRequests): string {
@@ -72,5 +75,17 @@ export class MonitoringRequestsTableMinimalComponent implements OnChanges {
       class: 'default-alert',
       message: 'Em avaliação',
     };
+  }
+
+  getRowName(item: MonitoringRequests): string {
+    const createdInMinutes = (new Date().getTime() - new Date(item.updatedAt).getTime()) / 1000 / 60;
+
+    if (createdInMinutes >= 15) {
+      return 'bg-danger';
+    }
+
+    if (createdInMinutes >= 10) {
+      return 'bg-alert';
+    }
   }
 }

@@ -7,16 +7,29 @@
   height: 16px;
   width: 16px;
   display: inline-block;
+  border: 1px solid black;
 }
 
-.bg-under-review {
+.square:not(:first-of-type) {
+  margin-left: 10px;
+}
+
+.bg-alert {
   background: yellow;
 }
 
-.bg-approved {
+.bg-default {
   background: green;
 }
 
-.bg-reproved {
+.bg-danger {
   background: red;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }

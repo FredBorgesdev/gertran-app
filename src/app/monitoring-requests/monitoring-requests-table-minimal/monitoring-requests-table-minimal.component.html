@@ -8,17 +8,18 @@
 >
   <thead>
   <tr>
-    <th nzWidth="32px"></th>
-    <th>Solicitação</th>
-    <th>Cliente</th>
-    <th>Atualizado em</th>
-    <th>Ação</th>
+    <th class="text-center table-header">Solicitação</th>
+    <th class="text-center table-header">Cliente</th>
+    <th class="text-center table-header">Atualizado em</th>
+    <th class="text-center table-header">Ação</th>
   </tr>
   </thead>
 
   <tbody>
-  <tr *ngFor="let data of table.data; index as i">
-    <td [class]="'bg-' + data.status"></td>
+  <tr
+    *ngFor="let data of table.data; index as i"
+    [class]="getRowName(data)"
+  >
     <td nz-tooltip [nzTooltipTitle]="data.id">{{ data.id | id }}</td>
     <td>
       {{ data.customer.tradingName }}
