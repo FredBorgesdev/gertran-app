@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MonitoringRequestsService} from '../monitoring-requests.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
@@ -19,7 +19,8 @@ export class MonitoringRequestComponent implements OnInit {
     private message: NzMessageService,
     private modal: NzModalService,
     private router: Router,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
@@ -39,9 +40,10 @@ export class MonitoringRequestComponent implements OnInit {
       });
   }
 
-  updateRouteCoordinates(routeCoordinates: any[]): void {
+  updateRouteCoordinates({coordinates, route}: any): void {
     this.service.update(this.resource.id, {
-      routeCoordinates
+      routeCoordinates: coordinates,
+      // distanceInKm: Math.ceil(route.distance / 1000)
     } as any).subscribe(() => {
       this.loadMonitoringRequest();
     });
@@ -72,7 +74,7 @@ export class MonitoringRequestComponent implements OnInit {
             }
 
             this.isLoading = false;
-            this.message.error(message, { nzDuration: 7000 });
+            this.message.error(message, {nzDuration: 7000});
           });
       },
     });

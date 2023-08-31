@@ -162,7 +162,7 @@ export class PointsTabComponent implements OnInit {
     const point = this.getPointsControls()[index]?.value;
     if (!point?.id) {
       (this.validateForm.get('points') as FormArray).removeAt(index);
-      this._routeCoordinates = await this.getRouteCoordinates();
+      this._routeCoordinates = (await this.getRouteCoordinates()).coordinates;
 
       return;
     }
@@ -176,7 +176,7 @@ export class PointsTabComponent implements OnInit {
           (this.validateForm.get('points') as FormArray).removeAt(index);
           this.getRouteCoordinates()
             .then((routeCoordinates) => {
-              this._routeCoordinates = routeCoordinates;
+              this._routeCoordinates = routeCoordinates.coordinates;
             })
             .catch((e) => {
               console.log('Error calculating route', e);
@@ -209,7 +209,7 @@ export class PointsTabComponent implements OnInit {
       zipCode,
     });
 
-    this._routeCoordinates = await this.getRouteCoordinates();
+    this._routeCoordinates = (await this.getRouteCoordinates()).coordinates;
     this.calculateEtaForAllPoints().then();
   }
 
@@ -336,7 +336,7 @@ export class PointsTabComponent implements OnInit {
 
     const routeCoordinates = await this.getRouteCoordinates();
     this.updateRouteCoordinates.emit(routeCoordinates);
-    this._routeCoordinates = routeCoordinates;
+    this._routeCoordinates = routeCoordinates.coordinates;
 
     const operations = pointsWithOrder.map((point) => {
       const address = point.address instanceof Object ? point.address.displayName : point.address;
@@ -362,7 +362,7 @@ export class PointsTabComponent implements OnInit {
     );
   }
 
-  async getRouteCoordinates(): Promise<any[]> {
+  async getRouteCoordinates(): Promise<any> {
     const routeCoordinates = await this.directionsService.getDirections(
       this.getPointsControls().map((point) => point.value),
     );
@@ -373,7 +373,10 @@ export class PointsTabComponent implements OnInit {
 
     const directionsGeoJson = polyline.toGeoJSON(routeCoordinates.route[0]?.geometry);
 
-    return directionsGeoJson.coordinates;
+    return {
+      route: routeCoordinates.route[0],
+      coordinates: directionsGeoJson.coordinates
+    };
   }
 
   getChangedPointsWithOrder(): any[] {
