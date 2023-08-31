@@ -1,9 +1,8 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {GetAllResponse, getCurrentPage} from '../../shared/services/api.service';
-import {MonitoringRequests, MonitoringRequestsService, PossibleStatus, Status} from '../monitoring-requests.service';
+import {GetAllResponse} from '../../shared/services/api.service';
+import {MonitoringRequests} from '../monitoring-requests.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {differenceInMinutes} from 'date-fns';
-import {getClassName} from "codelyzer/util/utils";
 
 @Component({
   selector: 'app-monitoring-requests-table-minimal',
@@ -13,8 +12,6 @@ import {getClassName} from "codelyzer/util/utils";
 })
 export class MonitoringRequestsTableMinimalComponent implements OnChanges {
   @Input() underReview: GetAllResponse<MonitoringRequests>;
-  @Input() approved: GetAllResponse<MonitoringRequests>;
-  @Input() reproved: GetAllResponse<MonitoringRequests>;
   @Input() rowColor = 'inherit';
   @Output() handleQueryParamsChange = new EventEmitter<any>();
 
@@ -28,8 +25,6 @@ export class MonitoringRequestsTableMinimalComponent implements OnChanges {
   ngOnChanges(): void {
     this.monitoringRequests = [
       ...((this.underReview || {}).results || []),
-      ...((this.approved || {}).results || []),
-      ...((this.reproved || {}).results || []),
     ].sort((a, b) => {
       return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
     });

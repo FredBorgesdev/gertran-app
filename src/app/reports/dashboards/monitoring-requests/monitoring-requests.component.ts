@@ -1,14 +1,14 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {GetAllResponse, getCurrentPage} from "../../../shared/services/api.service";
+import {GetAllResponse, getCurrentPage} from '../../../shared/services/api.service';
 import {
   MonitoringRequests,
   MonitoringRequestsService,
   Status
-} from "../../../monitoring-requests/monitoring-requests.service";
-import {NzTableQueryParams} from "ng-zorro-antd/table";
-import {Subject, timer} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {format} from "date-fns";
+} from '../../../monitoring-requests/monitoring-requests.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {Subject, timer} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-monitoring-requests',
@@ -19,8 +19,6 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   @Input() hideHeader = false;
 
   underReviewResponse: GetAllResponse<MonitoringRequests>;
-  approvedResponse: GetAllResponse<MonitoringRequests>;
-  reprovedResponse: GetAllResponse<MonitoringRequests>;
 
   stopTimer = new Subject();
   nextUpdate = 60;
@@ -54,8 +52,6 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
     this.nextUpdate = 60;
 
     this.loadUnderReview();
-    this.loadApproved();
-    this.loadReproved();
   }
 
   loadUnderReview(url?: string): void {
@@ -67,30 +63,6 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
       status: Status.UNDER_REVIEW,
     }).subscribe(response => {
       this.underReviewResponse = response;
-    });
-  }
-
-  loadApproved(url?: string): void {
-    this.monitoringRequestService.getAll({
-      url,
-      limit: 50
-    }, {
-      ...this.filters,
-      status: Status.WAITING_FOR_START,
-    }).subscribe(response => {
-      this.approvedResponse = response;
-    });
-  }
-
-  loadReproved(url?: string): void {
-    this.monitoringRequestService.getAll({
-      url,
-      limit: 50
-    }, {
-      ...this.filters,
-      status: Status.REPROVED,
-    }).subscribe(response => {
-      this.reprovedResponse = response;
     });
   }
 
