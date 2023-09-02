@@ -1,9 +1,9 @@
-<div class="m-b-15 text-center" *ngIf="!hideHeader">
+<div class="m-b-15 text-center">
   <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
-    Solicitações de monitoramento
+    Controle tempo de liberações
   </h1>
 
-  <h4>
+  <h4 *ngIf="!hideHeader">
     Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
   </h4>
 
@@ -16,11 +16,7 @@
 </div>
 
 <div class="d-flex justify-content-between">
-  <span *ngIf="!hideHeader">
-    {{ 'Aguardando liberação' + ' (' + (underReviewResponse?.count ?? 0) + ')' }}
-    {{ 'Aprovadas' + ' (' + (approvedResponse?.count ?? 0) + ')' }}
-    {{ 'Rejeitadas' + ' (' + (reprovedResponse?.count ?? 0) + ')' }}
-  </span>
+  <div></div>
 
   <span>
     <div class="square bg-danger"></div> Acima de 15 minutos
@@ -29,9 +25,36 @@
   </span>
 </div>
 
-<app-monitoring-requests-table-minimal
-  [underReview]="underReviewResponse"
-  [approved]="approvedResponse"
-  [reproved]="reprovedResponse"
-  (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"
-></app-monitoring-requests-table-minimal>
+<nz-table
+  #table
+  [nzData]="monitoringRequestResponse?.results ?? []"
+  nzBordered
+  [nzFrontPagination]="false"
+  nzSize="small"
+  nzTableLayout="fixed"
+>
+  <thead>
+  <tr>
+    <th class="text-center table-header">Data/hora criação</th>
+    <th class="text-center table-header">Data/hora liberação</th>
+    <th class="text-center table-header">Tempo</th>
+    <th class="text-center table-header">Placa</th>
+    <th class="text-center table-header">Tecnologia</th>
+    <th class="text-center table-header">Cliente</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr
+    *ngFor="let data of table.data; index as i"
+    [class]="getRowClass(data)"
+  >
+    <td>{{ data.publishedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+    <td>{{ data.releasedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+    <td>{{ getUpdateDiff(data) }} minutos</td>
+    <td>{{ data.truck.vehicle.plate }}</td>
+    <td></td>
+    <td>{{ data.customer.tradingName }}</td>
+  </tr>
+  </tbody>
+</nz-table>

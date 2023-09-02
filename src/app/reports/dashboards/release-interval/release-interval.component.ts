@@ -1,14 +1,14 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {GetAllResponse, getCurrentPage} from "../../../shared/services/api.service";
+import {GetAllResponse, getCurrentPage} from '../../../shared/services/api.service';
 import {
   MonitoringRequests,
   MonitoringRequestsService,
   Status
-} from "../../../monitoring-requests/monitoring-requests.service";
-import {NzTableQueryParams} from "ng-zorro-antd/table";
-import {Subject, timer} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {format} from "date-fns";
+} from '../../../monitoring-requests/monitoring-requests.service';
+import {NzTableQueryParams} from 'ng-zorro-antd/table';
+import {Subject, timer} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {differenceInMinutes, format} from 'date-fns';
 
 @Component({
   selector: 'app-release-interval',
@@ -18,9 +18,7 @@ import {format} from "date-fns";
 export class ReleaseIntervalComponent implements OnInit, OnDestroy {
   @Input() hideHeader = false;
 
-  underReviewResponse: GetAllResponse<MonitoringRequests>;
-  approvedResponse: GetAllResponse<MonitoringRequests>;
-  reprovedResponse: GetAllResponse<MonitoringRequests>;
+  monitoringRequestResponse: GetAllResponse<MonitoringRequests>;
 
   stopTimer = new Subject();
   nextUpdate = 60;
@@ -53,44 +51,18 @@ export class ReleaseIntervalComponent implements OnInit, OnDestroy {
   loadAllResources(): void {
     this.nextUpdate = 60;
 
-    this.loadUnderReview();
-    this.loadApproved();
-    this.loadReproved();
+    this.loadMonitoringRequests();
   }
 
-  loadUnderReview(url?: string): void {
+  loadMonitoringRequests(url?: string): void {
     this.monitoringRequestService.getAll({
       url,
       limit: 20
     }, {
       ...this.filters,
-      status: Status.UNDER_REVIEW,
-    }).subscribe(response => {
-      this.underReviewResponse = response;
-    });
-  }
-
-  loadApproved(url?: string): void {
-    this.monitoringRequestService.getAll({
-      url,
-      limit: 50
-    }, {
-      ...this.filters,
       status: Status.WAITING_FOR_START,
     }).subscribe(response => {
-      this.approvedResponse = response;
-    });
-  }
-
-  loadReproved(url?: string): void {
-    this.monitoringRequestService.getAll({
-      url,
-      limit: 50
-    }, {
-      ...this.filters,
-      status: Status.REPROVED,
-    }).subscribe(response => {
-      this.reprovedResponse = response;
+      this.monitoringRequestResponse = response;
     });
   }
 
@@ -98,11 +70,11 @@ export class ReleaseIntervalComponent implements OnInit, OnDestroy {
     params: NzTableQueryParams,
     callbackFn: (url?: string) => void,
   ): void {
-    if (params.pageIndex < getCurrentPage(this.underReviewResponse)) {
-      const url = this.replaceOffsetWithPage(this.underReviewResponse.previous, params.pageIndex);
+    if (params.pageIndex < getCurrentPage(this.monitoringRequestResponse)) {
+      const url = this.replaceOffsetWithPage(this.monitoringRequestResponse.previous, params.pageIndex);
       callbackFn(url);
-    } else if (params.pageIndex > getCurrentPage(this.underReviewResponse)) {
-      const url = this.replaceOffsetWithPage(this.underReviewResponse.next, params.pageIndex);
+    } else if (params.pageIndex > getCurrentPage(this.monitoringRequestResponse)) {
+      const url = this.replaceOffsetWithPage(this.monitoringRequestResponse.next, params.pageIndex);
       callbackFn(url);
     }
   }
@@ -133,5 +105,24 @@ export class ReleaseIntervalComponent implements OnInit, OnDestroy {
 
   formatSeconds(nextUpdate: number): string {
     return `00:00:${nextUpdate.toString().padStart(2, '0')}`;
+  }
+
+  getRowClass(item: MonitoringRequests): string {
+    const createdInMinutes = this.getUpdateDiff(item);
+
+    if (createdInMinutes >= 15) {
+      return 'bg-danger';
+    }
+
+    if (createdInMinutes >= 10) {
+      return 'bg-alert';
+    }
+  }
+
+  getUpdateDiff(row: MonitoringRequests): number {
+    return differenceInMinutes(
+      new Date(row.releasedAt),
+      new Date(row.publishedAt),
+    );
   }
 }

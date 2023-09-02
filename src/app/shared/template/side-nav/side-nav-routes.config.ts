@@ -249,6 +249,18 @@ export const ROUTES: SideNavInterface[] = [
               Permissions.VIEW_DASHBOARD_CHECKLIST,
               Permissions.VIEW_DASHBOARD_MAPS,
             ]
+          },
+          {
+            path: 'reports/dashboards/tv1',
+            title: 'TV 1',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+            gertranStaffOnly: true,
           }
         ]
       },

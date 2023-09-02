@@ -14,17 +14,17 @@
   margin-left: 10px;
 }
 
-.bg-alert {
-  background: yellow;
-}
+/*.bg-alert {*/
+/*  background: yellow;*/
+/*}*/
 
-.bg-default {
-  background: green;
-}
+/*.bg-default {*/
+/*  background: green;*/
+/*}*/
 
-.bg-danger {
-  background: red;
-}
+/*.bg-danger {*/
+/*  background: red;*/
+/*}*/
 
 .logo {
   width: 80px;
@@ -32,4 +32,25 @@
   position: absolute;
   top: 20px;
   right: 20px;
+}
+
+.bg-alert {
+  background: yellow;
+  font-weight: bold;
+}
+
+.bg-waiting_for_start {
+  background: green;
+}
+
+.bg-danger {
+  background: red;
+  color: #fff;
+  font-weight: bold;
+}
+
+th.table-header {
+  background: #187bff;
+  color: #fff;
+  font-weight: bold;
 }

@@ -54,6 +54,8 @@ import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import {ClientComponent} from './dashboards/client/client.component';
 import {TechnologiesComponent} from './technologies/technologies.component';
 import {GridComponent} from "./dashboards/grid/grid.component";
+import {Tv1Component} from './dashboards/tv1/tv1.component';
+import {ReleaseIntervalComponent} from "./dashboards/release-interval/release-interval.component";
 
 
 @NgModule({
@@ -102,6 +104,8 @@ import {GridComponent} from "./dashboards/grid/grid.component";
     ClientComponent,
     TechnologiesComponent,
     GridComponent,
+    ReleaseIntervalComponent,
+    Tv1Component,
   ],
   exports: [
     WorkdayComponent

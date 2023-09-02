@@ -33,6 +33,7 @@ import {AlertsComponent} from "./alerts/alerts.component";
 import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import {ClientComponent} from "./dashboards/client/client.component";
 import {TechnologiesComponent} from "./technologies/technologies.component";
+import {Tv1Component} from "./dashboards/tv1/tv1.component";
 
 const routes: Routes = [
   {
@@ -198,6 +199,10 @@ const routes: Routes = [
   {
     path: 'technologies',
     component: TechnologiesComponent,
+  },
+  {
+    path: 'dashboards/tv1',
+    component: Tv1Component,
   }
 ];
 

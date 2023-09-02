@@ -30,6 +30,8 @@ export enum Status {
 }
 
 export interface MonitoringRequests {
+  releasedAt: string;
+  publishedAt: string;
   createdAt: string;
   loadingOrders: {
     id: string;
