@@ -73,6 +73,10 @@ export class MonitoringRequestsTableMinimalComponent implements OnChanges {
   }
 
   getRowName(item: MonitoringRequests): string {
+    if (!this.authService.user.isGertranStaff) {
+      return '';
+    }
+
     const createdInMinutes = (new Date().getTime() - new Date(item.updatedAt).getTime()) / 1000 / 60;
 
     if (createdInMinutes >= 15) {

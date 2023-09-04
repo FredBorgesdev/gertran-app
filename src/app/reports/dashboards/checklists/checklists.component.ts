@@ -75,6 +75,10 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
   }
 
   getRowClass(item: Checklist): string {
+    if (!this.authService.user.isGertranStaff) {
+      return '';
+    }
+
     const createdInMinutes = (new Date().getTime() - new Date(item.createdAt).getTime()) / 1000 / 60;
 
     if (createdInMinutes >= 15) {

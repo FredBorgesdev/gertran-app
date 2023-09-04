@@ -6,6 +6,7 @@ import ApiService, {
 } from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {TravelStep} from "../monitoring-requests/travel-step.service";
 
 interface PositionInfo {
   id: string;
@@ -49,6 +50,7 @@ interface Truck {
 
 interface MonitoringRequest {
   id: string;
+  travelSteps: TravelStep[];
 }
 
 export interface Position {

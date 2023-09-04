@@ -70,6 +70,8 @@
     <td>{{ getDestiny(item) }}</td>
     <td nzEllipsis nz-tooltip
         [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
+    <td>{{getStartTravelDate(item)}}</td>
+    <td>{{getEndTravelDate(item)}}</td>
   </tr>
   </tbody>
 </nz-table>

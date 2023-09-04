@@ -241,6 +241,28 @@ export class GridComponent implements OnInit, OnDestroy {
     );
   }
 
+  getStartTravelDate(item: Position): string {
+    const travelStep = item.monitoringRequest.travelSteps?.[0];
+    if (!travelStep) {
+      return '-';
+    }
+
+    const dateTime = `${travelStep.date} ${travelStep.time}`;
+
+    return format(new Date(dateTime), 'dd/MM/yyyy HH:mm:ss');
+  }
+
+  getEndTravelDate(item: Position): string {
+    const travelStep = item.monitoringRequest.travelSteps?.[item.monitoringRequest.travelSteps.length - 1];
+    if (!travelStep) {
+      return '-';
+    }
+
+    const dateTime = `${travelStep.date} ${travelStep.time}`;
+
+    return format(new Date(dateTime), 'dd/MM/yyyy HH:mm:ss');
+  }
+
   private setAlertsCount(): void {
     this.alertsService.getAlertsCount(
       this.validateForm.value,
