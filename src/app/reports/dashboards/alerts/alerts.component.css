@@ -55,3 +55,11 @@ li.danger {
 li.warning {
   background: #ffda91;
 }
+
+.logo {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
