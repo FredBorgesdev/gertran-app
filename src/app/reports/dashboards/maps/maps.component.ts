@@ -13,7 +13,7 @@ import {MapMarkersModalComponent} from '../../extra/map-markers-modal/map-marker
   providers: [DatePipe]
 })
 export class DashboardMapsComponent implements OnInit {
-  @Input() height = '80vh';
+  @Input() embed = false;
 
   markers = [];
   mapLoading = false;

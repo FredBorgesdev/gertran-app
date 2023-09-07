@@ -13,6 +13,18 @@
     nz-col
     nzSpan="12"
   >
+    <nz-button-group nzSize="small" class="m-b-10">
+      <button class="m-r-10" nz-button nzType="primary" routerLink="/monitoring/monitoring-list"
+              [queryParams]="{'navbar-closed': true}">
+        Grid
+      </button>
+      <button class="m-r-10" nz-button nzType="primary" routerLink="/reports/dashboards/maps"
+              [queryParams]="{fullscreen: true}">Mapa
+      </button>
+      <button class="m-r-10" nz-button nzType="primary" routerLink="/monitoring-requests/monitoring-requests-list">SM
+      </button>
+      <button nz-button nzType="primary" routerLink="/checklists/checklists-list">Checklist</button>
+    </nz-button-group>
 
     <app-grid></app-grid>
   </div>
@@ -21,7 +33,7 @@
     nz-col
     nzSpan="12"
   >
-    <app-maps height="45vh"></app-maps>
+    <app-maps [embed]="true"></app-maps>
   </div>
 </div>
 
