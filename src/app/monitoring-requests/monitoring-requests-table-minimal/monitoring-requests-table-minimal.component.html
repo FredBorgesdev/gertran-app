@@ -8,10 +8,11 @@
 >
   <thead>
   <tr>
-    <th class="text-center table-header">Solicitação</th>
+    <th class="text-center table-header">Data/hora criação</th>
+    <th class="text-center table-header">Placa</th>
+    <th class="text-center table-header">Tecnologia</th>
     <th class="text-center table-header">Cliente</th>
-    <th class="text-center table-header">Atualizado em</th>
-    <th class="text-center table-header">Ação</th>
+    <th class="text-center table-header">Atualização</th>
   </tr>
   </thead>
 
@@ -20,20 +21,11 @@
     *ngFor="let data of table.data; index as i"
     [class]="getRowName(data)"
   >
-    <td nz-tooltip [nzTooltipTitle]="data.id">{{ data.id | id }}</td>
-    <td>
-      {{ data.customer.tradingName }}
-    </td>
+    <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+    <td>{{ data.truck.vehicle.plate }}</td>
+    <td>{{ data.trackerTechnology?.name ?? '-' }}</td>
+    <td>{{ data.customer.tradingName }}</td>
     <td>{{ getUpdateDiff(data) }}</td>
-    <td>
-      <div class="d-flex align-items-center" *ngIf="data.status === 'under_review'">
-            <span class="m-r-5">
-              {{getUnderReviewAlert(data).message}}
-            </span>
-
-        <div [class]="getUnderReviewAlert(data).class"></div>
-      </div>
-    </td>
   </tr>
   </tbody>
 </nz-table>
