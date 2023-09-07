@@ -231,7 +231,7 @@ export class GridComponent implements OnInit, OnDestroy {
 
   private getPositionsWithFilters(): Observable<GetAllResponse<Position>> {
     return this.positionsService.getAll(
-      {limit: 10},
+      {limit: 50},
       {
         customer: this.validateForm.get('customer').value,
         terminal: this.validateForm.get('terminal').value,
