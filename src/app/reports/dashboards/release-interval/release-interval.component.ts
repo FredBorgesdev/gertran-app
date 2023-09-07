@@ -63,6 +63,9 @@ export class ReleaseIntervalComponent implements OnInit, OnDestroy {
       status: Status.WAITING_FOR_START,
     }).subscribe(response => {
       this.monitoringRequestResponse = response;
+      this.monitoringRequestResponse.results = response.results.sort((a, b) => {
+        return this.getUpdateDiff(b) - this.getUpdateDiff(a);
+      });
     });
   }
 
