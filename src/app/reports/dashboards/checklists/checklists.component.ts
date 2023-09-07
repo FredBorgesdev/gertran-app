@@ -7,7 +7,7 @@ import {AuthenticationService} from '../../../authentication/authentication.serv
 import {BaseCrudListComponent} from '../../../base-crud/base-crud-list/base-crud-list.component';
 import {Subject, timer} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {format} from "date-fns";
+import {differenceInMinutes, format} from "date-fns";
 import {DatePipe} from "@angular/common";
 
 @Component({
@@ -26,10 +26,7 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
     {title: 'Placa'},
     {title: 'Tecnologia'},
     {title: 'Cliente'},
-    {title: 'Motorista'},
-    {title: 'Origem'},
-    {title: 'Destino'},
-    {title: 'Ações'}
+    {title: 'Atualização'},
   ];
 
   stopRefreshing = new Subject();
@@ -88,5 +85,18 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
     if (createdInMinutes >= 10) {
       return 'bg-alert';
     }
+  }
+
+  getUpdateDiff(checklist: Checklist): string {
+    const diffInMinutes = differenceInMinutes(
+      new Date(),
+      checklist.updatedAt ? new Date(checklist.updatedAt) : new Date(),
+    );
+
+    if (diffInMinutes > 60) {
+      return `Atualizado à ${Math.floor(diffInMinutes / 60)}h`;
+    }
+
+    return `Atualizado à ${diffInMinutes}m`;
   }
 }

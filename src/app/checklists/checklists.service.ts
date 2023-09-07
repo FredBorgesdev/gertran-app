@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import User from "../users/user";
 
 export interface Checklist {
+  updatedAt: string;
   createdAt: string;
   status: string;
   id: string;
