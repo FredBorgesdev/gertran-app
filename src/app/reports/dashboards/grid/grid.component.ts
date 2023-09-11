@@ -12,7 +12,7 @@ import {Position, PositionsService} from '../../../monitoring/positions.service'
 import {AlertCount, AlertsService, AlertTypes} from '../../../monitoring/alerts.service';
 import {Customer, CustomersService} from '../../../customers/customers.service';
 import {Terminals, TerminalsService} from '../../../terminals/terminals.service';
-import {MonitoringRequestsService} from '../../../monitoring-requests/monitoring-requests.service';
+import {MonitoringRequestsService, Status} from '../../../monitoring-requests/monitoring-requests.service';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {MonitoringMapComponent} from '../../../monitoring/monitoring-map/monitoring-map.component';
@@ -233,10 +233,9 @@ export class GridComponent implements OnInit, OnDestroy {
     return this.positionsService.getAll(
       {limit: 50},
       {
-        customer: this.validateForm.get('customer').value,
-        terminal: this.validateForm.get('terminal').value,
-        travelling: this.validateForm.get('travelling').value,
-        travelStatus: this.selectedTravelStatus,
+        customer: this.authService.customerId,
+        travelling: true,
+        travelStatus: Status.IN_PROGRESS,
       }
     );
   }
