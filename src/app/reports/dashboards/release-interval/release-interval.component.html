@@ -53,7 +53,7 @@
     <td>{{ data.releasedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
     <td>{{ getUpdateDiff(data) }} minutos</td>
     <td>{{ data.truck.vehicle.plate }}</td>
-    <td></td>
+    <td>{{ data.trackerTechnology?.name }}</td>
     <td>{{ data.customer.tradingName }}</td>
   </tr>
   </tbody>
