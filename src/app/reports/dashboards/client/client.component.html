@@ -63,6 +63,6 @@
     [nzSpan]="authService.user.hasPermission('reports.view_dashboard_monitoring_request') ? 12 : 24"
     *ngIf="authService.user.hasPermission('reports.view_dashboard_checklist')"
   >
-    <app-checklists [hideHeader]="true"></app-checklists>
+    <app-client-checklists [hideHeader]="true"></app-client-checklists>
   </div>
 </div>

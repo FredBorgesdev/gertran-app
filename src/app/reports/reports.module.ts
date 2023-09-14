@@ -56,6 +56,7 @@ import {TechnologiesComponent} from './technologies/technologies.component';
 import {GridComponent} from "./dashboards/grid/grid.component";
 import {Tv1Component} from './dashboards/tv1/tv1.component';
 import {ReleaseIntervalComponent} from "./dashboards/release-interval/release-interval.component";
+import {ClientChecklistsComponent} from "./dashboards/client-checklists/client-checklists.component";
 
 
 @NgModule({
@@ -106,6 +107,7 @@ import {ReleaseIntervalComponent} from "./dashboards/release-interval/release-in
     GridComponent,
     ReleaseIntervalComponent,
     Tv1Component,
+    ClientChecklistsComponent,
   ],
   exports: [
     WorkdayComponent
