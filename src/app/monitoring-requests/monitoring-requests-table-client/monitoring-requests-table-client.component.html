@@ -1,0 +1,78 @@
+<nz-table
+  #table
+  [nzData]="monitoringRequests"
+  nzBordered
+  [nzFrontPagination]="false"
+  nzSize="small"
+  nzTableLayout="fixed"
+>
+  <thead>
+  <tr>
+    <th class="text-center table-header">SM</th>
+    <th class="text-center table-header">Placa</th>
+    <th class="text-center table-header">Tecnologia</th>
+    <th class="text-center table-header">Origem</th>
+    <th class="text-center table-header">Destino</th>
+    <th class="text-center table-header">Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr
+    *ngFor="let data of table.data; index as i"
+    [class]="getRowName(data)"
+  >
+    <td>{{ data.id | id }}</td>
+    <td>{{ data.truck.vehicle.plate }}</td>
+    <td>{{ data.trackerTechnology.name }}</td>
+    <td>{{ getOrigin(data) }}</td>
+    <td>{{ getDestination(data) }}</td>
+    <td>{{ getLocalizedStatus(data.status) }}</td>
+  </tr>
+  </tbody>
+</nz-table>
+
+
+<!--<nz-list nzItemLayout="vertical" [nzLoading]="isLoading">-->
+<!--  <div class="list-item" *ngFor="let item of approved?.results">-->
+<!--    <div class="d-flex flex-column w-100">-->
+<!--      <div nz-row class="w-100">-->
+<!--        <div nz-col nzSpan="5">-->
+<!--        <span nz-tooltip [nzTooltipTitle]="item.id">-->
+<!--          SM <strong>{{ item.id | id}}</strong>-->
+<!--        </span>-->
+<!--        </div>-->
+
+<!--        <div nz-col nzSpan="1">-->
+<!--          <div class="vertical-bar"></div>-->
+<!--        </div>-->
+
+<!--        <div nz-col nzSpan="18">-->
+<!--        <span>-->
+<!--          Empresa: <strong>{{item.customer.tradingName}}</strong>-->
+<!--        </span>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="m-t-10 d-flex justify-content-between">-->
+<!--        <div class="d-flex" *ngIf="item.status === 'under_review'">-->
+<!--          <span class="m-r-10">-->
+<!--            {{getUpdateDiff(item)}}-->
+<!--          </span>-->
+
+<!--          <div class="vertical-bar m-r-10"></div>-->
+
+<!--          <div class="d-flex align-items-center">-->
+<!--            <span class="m-r-5">-->
+<!--              {{getUnderReviewAlert(item).message}}-->
+<!--            </span>-->
+
+<!--            <div [class]="getUnderReviewAlert(item).class"></div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <nz-list-empty *ngIf="approved?.results.length === 0"></nz-list-empty>-->
+<!--</nz-list>-->

@@ -1,0 +1,44 @@
+.scrollable-card {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.square {
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.square:not(:first-of-type) {
+  margin-left: 10px;
+}
+
+.bg-alert {
+  background: yellow;
+}
+
+.bg-default {
+  background: green;
+}
+
+.bg-danger {
+  background: red;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+h1.header-small {
+  font-size: 1.5em;
+}
+
+h3.header-small {
+  font-size: 1.2em;
+  margin-bottom: 10px !important;
+}

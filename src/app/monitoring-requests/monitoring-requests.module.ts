@@ -31,8 +31,11 @@ import {
 import {
   MonitoringRequestsTableMinimalComponent
 } from "./monitoring-requests-table-minimal/monitoring-requests-table-minimal.component";
-import { ChecklistPrintComponent } from './checklist-print/checklist-print.component';
-import { ReleaseTravelPrintComponent } from './release-travel-print/release-travel-print.component';
+import {ChecklistPrintComponent} from './checklist-print/checklist-print.component';
+import {ReleaseTravelPrintComponent} from './release-travel-print/release-travel-print.component';
+import {
+  MonitoringRequestsTableClientComponent
+} from "./monitoring-requests-table-client/monitoring-requests-table-client.component";
 
 
 @NgModule({
@@ -53,11 +56,13 @@ import { ReleaseTravelPrintComponent } from './release-travel-print/release-trav
     MonitoringRequestsCheckListPrintableComponent,
     MonitoringRequestsTableMinimalComponent,
     ChecklistPrintComponent,
-    ReleaseTravelPrintComponent
+    ReleaseTravelPrintComponent,
+    MonitoringRequestsTableClientComponent,
   ],
   exports: [
     MonitoringRequestsTableComponent,
-    MonitoringRequestsTableMinimalComponent
+    MonitoringRequestsTableMinimalComponent,
+    MonitoringRequestsTableClientComponent,
   ],
   imports: [
     CommonModule,
