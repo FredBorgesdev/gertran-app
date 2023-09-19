@@ -1,19 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { OperationsService, Operations } from '../operations.service';
-import { BaseCrudFormComponent } from '../../base-crud/base-crud-form/base-crud-form.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {OperationsService, Operations} from '../operations.service';
+import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
 import {CustomersService} from '../../customers/customers.service';
-import {TrackerTechnologiesModels, TrackerTechnologiesModelsService} from '../../tracker-technologies/tracker-technologies-models.service';
+import {
+  TrackerTechnologiesModels,
+  TrackerTechnologiesModelsService
+} from '../../tracker-technologies/tracker-technologies-models.service';
 import {TrackerTechnologies, TrackerTechnologiesService} from '../../tracker-technologies/tracker-technologies.service';
 import {VehicleModelTypes, VehicleModelTypesService} from '../../vehicle-model-types/vehicle-model-types.service';
 import {VehiclePeripherals, VehiclePeripheralsService} from '../../vehicle-peripherals/vehicle-peripherals.service';
 import {InsuranceCompaniesService, InsuranceCompany} from '../../insurance-companies/insurance-companies.service';
-import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
+import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Choice} from '../../shared/services/api.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
-import { find, propEq, pluck } from 'ramda';
+import {find, propEq, pluck} from 'ramda';
 
 type TrackerTechnologiesWithModels = TrackerTechnologies & { models?: TrackerTechnologiesModels[] }
 
@@ -72,23 +75,23 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
 
     this.selectableCustomerService.init();
 
-    this.trackerTechnologiesService.getAll({ limit: 50 }).subscribe(trackerTechnologiesModels => {
+    this.trackerTechnologiesService.getAll({limit: 50}).subscribe(trackerTechnologiesModels => {
       this.trackerTechnologies = trackerTechnologiesModels.results;
 
       this.trackerTechnologies.forEach(trackerTechnology => {
-        this.trackerTechnologiesModelsService.getAll({ limit: 50 }, trackerTechnology.id).subscribe(data => {
+        this.trackerTechnologiesModelsService.getAll({limit: 50}, trackerTechnology.id).subscribe(data => {
           trackerTechnology.models = data.results;
         });
       });
     });
-    this.vehicleModelTypesService.getAll({ limit: 50 }).subscribe(vehicleModelTypes => {
-      this.truckTypes = vehicleModelTypes.results.filter(({ type }) => type === 'truck');
-      this.wagonTypes = vehicleModelTypes.results.filter(({ type }) => type === 'wagon');
+    this.vehicleModelTypesService.getAll({limit: 50}).subscribe(vehicleModelTypes => {
+      this.truckTypes = vehicleModelTypes.results.filter(({type}) => type === 'truck');
+      this.wagonTypes = vehicleModelTypes.results.filter(({type}) => type === 'wagon');
     });
-    this.vehiclePeripheralsService.getAll({ limit: 50 }).subscribe(vehiclePeripherals => {
+    this.vehiclePeripheralsService.getAll({limit: 50}).subscribe(vehiclePeripherals => {
       this.vehiclePeripherals = vehiclePeripherals.results;
     });
-    this.insuranceCompaniesService.getAll({ limit: 50 }).subscribe(insuranceCompanies => {
+    this.insuranceCompaniesService.getAll({limit: 50}).subscribe(insuranceCompanies => {
       this.insuranceCompanies = insuranceCompanies.results;
     });
     (this.service as OperationsService).getOperationTypes().subscribe(data => {
@@ -122,10 +125,10 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     super.performFormGroupSetValues();
 
     this.validateForm.patchValue({
-      allowedTrackerModels: this.resource.allowedTrackerModels?.map(({ id }) => id),
-      allowedTruckTypes: this.resource.allowedTruckTypes?.map(({ id }) => id),
-      allowedWagonTypes: this.resource.allowedWagonTypes?.map(({ id }) => id),
-      requiredPeripherals: this.resource.requiredPeripherals?.map(({ id }) => id),
+      allowedTrackerModels: this.resource.allowedTrackerModels?.map(({id}) => id),
+      allowedTruckTypes: this.resource.allowedTruckTypes?.map(({id}) => id),
+      allowedWagonTypes: this.resource.allowedWagonTypes?.map(({id}) => id),
+      requiredPeripherals: this.resource.requiredPeripherals?.map(({id}) => id),
       insuranceCompany: this.resource.insuranceCompany?.id,
     });
   }
@@ -192,5 +195,11 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     this.validateForm.patchValue({
       [field]: pluck('id', list)
     });
+  }
+
+  protected handleSuccess(response?: any): void {
+    this.message.success('Registro salvo com sucesso');
+    this.router.navigate(['operations', 'operations-edit', response.id]);
+    this.isLoading = false;
   }
 }
