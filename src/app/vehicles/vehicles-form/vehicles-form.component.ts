@@ -17,6 +17,7 @@ import {
 import {UtilsService} from '../../shared/services/utils.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {SelectableVehicleModelService} from "../selectable-vehicle-model.service";
+import {Terminals} from "../../terminals/terminals.service";
 
 export interface Vehicle {
   id: string;
@@ -44,6 +45,7 @@ export interface Vehicle {
   renavam: string;
   description: string;
   trackers: Tracker[];
+  terminals: Terminals[];
 }
 
 interface VehicleChild {
