@@ -31,6 +31,7 @@ export interface Customer {
     tradingName: string;
   }[];
   workdaySettings: Workday;
+  hasApiIntegration: boolean;
 }
 
 @Injectable({

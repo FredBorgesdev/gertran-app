@@ -62,6 +62,7 @@ export class CustomersFormComponent implements OnInit {
       shippers: [this.customer.shippers],
       closingDay: [this.customer?.closingDay, []],
       permissions: [this.customer?.permissions],
+      hasApiIntegration: [this.customer?.hasApiIntegration, []],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);

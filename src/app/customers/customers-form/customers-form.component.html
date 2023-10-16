@@ -48,6 +48,13 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="hasApiIntegration">
+      Integração Tokyo Marine API
+    </nz-form-label>
+    <nz-switch formControlName="hasApiIntegration"></nz-switch>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="dashboards">Dashboards</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o embarcador">
       <nz-select
