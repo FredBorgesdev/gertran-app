@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -6,6 +6,8 @@ import {Observable} from 'rxjs';
 export interface Invoice {
   id: string;
   invoiceNumber: string;
+  invoiceCte: string;
+  value: string;
 }
 
 @Injectable({
@@ -13,17 +15,18 @@ export interface Invoice {
 })
 export class InvoicesService implements ApiService<Invoice> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getAll(pagination: Pagination, monitoringRequestId: string): Observable<GetAllResponse<Invoice>> {
-    const params = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
     }
 
-    return this.http.get<GetAllResponse<Invoice>>(`monitoring/monitoring-requests/${monitoringRequestId}/invoices`, { params });
+    return this.http.get<GetAllResponse<Invoice>>(`monitoring/monitoring-requests/${monitoringRequestId}/invoices`, {params});
   }
 
   get(id: string, monitoringRequestId: string): Observable<Invoice> {

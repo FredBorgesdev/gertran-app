@@ -30,6 +30,12 @@
     <tr *ngFor="let item of table.data; let i=index">
       <td> {{item.id | id}} </td>
       <td>{{item.invoiceNumber}}</td>
+      <td>{{item.invoiceCte}}</td>
+      <td>
+        <span *ngIf="item.value">
+          {{item.value | reais}}
+        </span>
+      </td>
       <td class="text-md-center">
         <a
           (click)="edit(item)"
@@ -77,6 +83,27 @@
             formControlName="invoiceNumber"
             id="invoiceNumber"
             placeholder="Insira o número"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="invoiceCte">Conhecimento (CTe)</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="invoiceCte"
+            id="invoiceCte"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="value">Valor</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <input
+            nz-input
+            formControlName="value"
+            id="value"
+            [textMask]="{ mask: reaisMask }"
           />
         </nz-form-control>
       </nz-form-item>
