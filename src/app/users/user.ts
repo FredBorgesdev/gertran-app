@@ -22,4 +22,8 @@ export default class User extends AbstractUser {
 
     return oneOfPermissions.some(permission => this.permissions.includes(permission));
   }
+
+  isInsuranceCompany(): boolean {
+    return this.customer.some(c => c.insuranceCompany);
+  }
 }

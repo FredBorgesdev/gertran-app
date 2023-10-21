@@ -52,6 +52,10 @@ export class SideNavComponent implements OnInit {
         return false;
       }
 
+      if (this.user.isInsuranceCompany()) {
+        return menuItem.path === '/reports/insurance' || isFolder;
+      }
+
       if (menuItem.permission && !this.user.hasPermission(menuItem.permission)) {
         return false;
       }
