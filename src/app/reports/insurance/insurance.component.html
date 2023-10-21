@@ -1,0 +1,75 @@
+<h1 class="text-center m-b-40">
+  CCG – CENTRO DE CONTROLE GERTRAN
+</h1>
+
+<img
+  src="assets/images/logo/logogertran.png"
+  alt="Gertran"
+  class="logo"
+>
+
+<div nz-row nzGutter="16" class="m-b-20" style="min-height: 40vh;">
+  <div
+    nz-col
+    nzSpan="12"
+  >
+    <nz-button-group nzSize="small" class="m-b-10">
+      <button class="m-r-10" nz-button nzType="primary"
+              (click)="goTo('/reports/grid', { 'navbar-closed': true })">
+        Grid
+      </button>
+      <button class="m-r-10" nz-button nzType="primary"
+              (click)="goTo('/reports/dashboards/maps', { fullscreen: true })">
+        Mapa
+      </button>
+      <button
+        class="m-r-10"
+        nz-button
+        nzType="primary"
+        (click)="goTo('/reports/dashboards/monitoring-requests')"
+      >
+        SM
+      </button>
+
+      <nz-form-item>
+        <nz-form-control [nzSpan]="null">
+          <nz-select
+            id="customer"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Cliente"
+            [(ngModel)]="customerId"
+          >
+            <div *ngFor="let customer of customers">
+              <nz-option
+                [nzLabel]="customer.tradingName"
+                [nzValue]="customer.id"
+              ></nz-option>
+            </div>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-button-group>
+
+    <app-grid [customerId]="customerId"></app-grid>
+  </div>
+
+  <div
+    nz-col
+    nzSpan="12"
+  >
+    <app-maps [customerId]="customerId" [embed]="true"></app-maps>
+  </div>
+</div>
+
+<div nz-row nzGutter="16">
+  <div
+    nz-col
+    [nzSpan]="12"
+  >
+    <app-client-monitoring-requests
+      [customerId]="customerId"
+      [hideHeader]="true"
+    ></app-client-monitoring-requests>
+  </div>
+</div>

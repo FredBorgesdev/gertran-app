@@ -60,6 +60,7 @@ import {ClientChecklistsComponent} from "./dashboards/client-checklists/client-c
 import {
   ClientMonitoringRequestsComponent
 } from "./dashboards/client-monitoring-requests/client-monitoring-requests.component";
+import { InsuranceComponent } from './insurance/insurance.component';
 
 
 @NgModule({
@@ -112,6 +113,7 @@ import {
     Tv1Component,
     ClientChecklistsComponent,
     ClientMonitoringRequestsComponent,
+    InsuranceComponent,
   ],
   exports: [
     WorkdayComponent

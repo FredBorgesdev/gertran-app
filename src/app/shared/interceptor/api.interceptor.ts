@@ -21,6 +21,9 @@ import {
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
 
+  modulesWithoutCustomerKey: string[] = ['customers'];
+  endpointsToAddCustomerHeader: string[] = ['insurance-companies/customers'];
+
   constructor(private authService: AuthenticationService) {
   }
 
@@ -84,7 +87,10 @@ export class ApiInterceptor implements HttpInterceptor {
     }
     if (
       Cookie.get(GERTRAN_CUSTOMER_ID) &&
-      this.modulesWithoutCustomerKey.some(module => !url.includes(module))
+      (
+        this.modulesWithoutCustomerKey.some(module => !url.includes(module)) ||
+        this.endpointsToAddCustomerHeader.some(endpoint => url.includes(endpoint))
+      )
     ) {
       headers['X-Customer-Key'] = Cookie.get(GERTRAN_CUSTOMER_ID);
     }
@@ -93,11 +99,5 @@ export class ApiInterceptor implements HttpInterceptor {
 
   private getBody(request: HttpRequest<any>): any {
     return this.isFormData(request) ? request.body : decamelizeKeys(request.body);
-  }
-
-  private get modulesWithoutCustomerKey(): string[] {
-    return [
-      'customers'
-    ];
   }
 }

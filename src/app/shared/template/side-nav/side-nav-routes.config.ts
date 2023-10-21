@@ -526,7 +526,15 @@ export const ROUTES: SideNavInterface[] = [
       },
       {
         path: '/reports/technologies',
-        title: 'Teconologias',
+        title: 'Tecnologias',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: []
+      },
+      {
+        path: '/reports/insurance',
+        title: 'Relatório para Seguradoras',
         iconType: 'nzIcon',
         iconTheme: 'outline',
         icon: 'line-chart',

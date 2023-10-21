@@ -34,6 +34,8 @@ import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import {ClientComponent} from "./dashboards/client/client.component";
 import {TechnologiesComponent} from "./technologies/technologies.component";
 import {Tv1Component} from "./dashboards/tv1/tv1.component";
+import {InsuranceComponent} from "./insurance/insurance.component";
+import {GridComponent} from "./dashboards/grid/grid.component";
 
 const routes: Routes = [
   {
@@ -203,6 +205,14 @@ const routes: Routes = [
   {
     path: 'dashboards/tv1',
     component: Tv1Component,
+  },
+  {
+    path: 'insurance',
+    component: InsuranceComponent,
+  },
+  {
+    path: 'grid',
+    component: GridComponent
   }
 ];
 

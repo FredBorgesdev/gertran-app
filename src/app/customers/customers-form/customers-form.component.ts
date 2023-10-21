@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 import {Customer, CustomersService} from '../customers.service';
 import {conformToMask} from 'angular2-text-mask';
 import {Permission, PermissionsService} from "../../shared/services/permissions.service";
+import {InsuranceCompaniesService, InsuranceCompany} from "../../insurance-companies/insurance-companies.service";
 
 @Component({
   selector: 'app-customers-form',
@@ -26,12 +27,14 @@ export class CustomersFormComponent implements OnInit {
   validateForm: FormGroup;
   shippers: Customer[] = [];
   permissions: Permission[] = [];
+  insuranceCompanies: InsuranceCompany[];
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private customersService: CustomersService,
     private permissionsService: PermissionsService,
+    private insuranceCompaniesService: InsuranceCompaniesService,
   ) {
   }
 
@@ -63,6 +66,7 @@ export class CustomersFormComponent implements OnInit {
       closingDay: [this.customer?.closingDay, []],
       permissions: [this.customer?.permissions],
       hasApiIntegration: [this.customer?.hasApiIntegration, []],
+      insuranceCompany: [this.customer?.insuranceCompany, []],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);
@@ -74,6 +78,9 @@ export class CustomersFormComponent implements OnInit {
       this.permissions = response
         .results
         .map(permission => ({...permission, id: Number(permission.id)}));
+    });
+    this.insuranceCompaniesService.getAll({limit: 999}).subscribe(response => {
+      this.insuranceCompanies = response.results;
     });
   }
 

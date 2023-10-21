@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {GetAllResponse, getCurrentPage} from '../../../shared/services/api.service';
 import {
   MonitoringRequests,
@@ -15,8 +15,9 @@ import {format} from 'date-fns';
   templateUrl: './client-monitoring-requests.component.html',
   styleUrls: ['./client-monitoring-requests.component.css']
 })
-export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy {
+export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy, OnChanges {
   @Input() hideHeader = false;
+  @Input() customerId: string;
 
   underReviewResponse: GetAllResponse<MonitoringRequests>;
 
@@ -28,7 +29,21 @@ export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.customerId.currentValue) {
+      this.load();
+    }
+  }
+
   ngOnInit(): void {
+    this.load();
+  }
+
+  ngOnDestroy(): void {
+    this.stopTimer.next();
+  }
+
+  load(): void {
     timer(0, 1 * 60 * 1000).pipe(
       takeUntil(this.stopTimer)
     ).subscribe(
@@ -42,10 +57,6 @@ export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy {
         this.nextUpdate -= 1;
       }
     );
-  }
-
-  ngOnDestroy(): void {
-    this.stopTimer.next();
   }
 
   loadAllResources(): void {

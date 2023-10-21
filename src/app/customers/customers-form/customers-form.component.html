@@ -55,6 +55,26 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="insuranceCompany">Seguradora?</nz-form-label>
+    <nz-form-control [nzSpan]="null">
+      <nz-select
+        id="insuranceCompany"
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Seguradora"
+        formControlName="insuranceCompany"
+      >
+        <div *ngFor="let insuranceCompany of insuranceCompanies">
+          <nz-option
+            [nzLabel]="insuranceCompany.name"
+            [nzValue]="insuranceCompany.id"
+          ></nz-option>
+        </div>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="dashboards">Dashboards</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o embarcador">
       <nz-select

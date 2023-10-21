@@ -32,6 +32,7 @@ export interface Customer {
   }[];
   workdaySettings: Workday;
   hasApiIntegration: boolean;
+  insuranceCompany: string;
 }
 
 @Injectable({

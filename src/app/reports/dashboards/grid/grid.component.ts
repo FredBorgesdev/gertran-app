@@ -1,5 +1,5 @@
 import {format} from 'date-fns';
-import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -25,7 +25,9 @@ const PLATE_KEY = 'GERTRAN_LAST_PLATE';
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.css']
 })
-export class GridComponent implements OnInit, OnDestroy {
+export class GridComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() customerId: string;
+
   isLoading = false;
   monitoringColumns = [
     {title: 'Tec', width: '40px'},
@@ -91,7 +93,17 @@ export class GridComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.customerId.currentValue) {
+      this.load();
+    }
+  }
+
   ngOnInit(): void {
+    this.load();
+  }
+
+  load(): void {
     this.monitoringData$ = timer(0, 100000).pipe(
       switchMap(() => this.getPositionsWithFilters()),
       share(),
@@ -114,7 +126,8 @@ export class GridComponent implements OnInit, OnDestroy {
     if (
       this.activatedRoute.snapshot.queryParams.terminal ||
       this.activatedRoute.snapshot.queryParams.customer ||
-      this.authService.customerId
+      this.authService.customerId ||
+      this.customerId
     ) {
       this.subscribeToMonitoringData();
     }
@@ -233,7 +246,10 @@ export class GridComponent implements OnInit, OnDestroy {
     return this.positionsService.getAll(
       {limit: 50},
       {
-        customer: this.authService.customerId,
+        customer:
+          this.activatedRoute.snapshot.queryParams.customerId ||
+          this.customerId ||
+          this.authService.customerId,
         travelling: true,
         travelStatus: Status.IN_PROGRESS,
       }
