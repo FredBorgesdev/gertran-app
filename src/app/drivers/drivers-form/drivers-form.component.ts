@@ -18,10 +18,15 @@ import {AuthenticationService} from '../../authentication/authentication.service
 })
 export class DriversFormComponent implements OnInit {
   workingSituations: Choice[] = [];
+  isChangePasswordModalVisible = false;
+  validatePasswordForm: FormGroup;
+
+
 
   @Input() driver: Driver;
   @Output() submitForm: EventEmitter<any> = new EventEmitter<any>();
   @Output() driverChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() changePassword: EventEmitter<string> = new EventEmitter<string>();
 
   validateForm: FormGroup;
   cpfMask = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
@@ -37,9 +42,17 @@ export class DriversFormComponent implements OnInit {
     public selectableCustomerService: SelectableCustomerServiceService,
     public authService: AuthenticationService,
   ) {
+
+    this.validatePasswordForm = formBuilder.group({
+      password: [null, [Validators.required, Validators.minLength(6)]],
+    });
+
+
   }
 
   ngOnInit(): void {
+
+
     const {conformedValue: maskedCpf} = conformToMask(this.driver?.cpf, this.cpfMask, {guide: false});
     const defaultCustomers = [this.authService.customerId].filter(Boolean);
 
@@ -61,6 +74,9 @@ export class DriversFormComponent implements OnInit {
       admissionDate: [this.driver?.admissionDate, []],
       phoneNumber: [this.driver?.phoneNumber, [Validators.required]],
     });
+
+
+
 
     this.validateForm.get('workingSituation').valueChanges.subscribe(value => {
       if (value === 'working') {
@@ -84,6 +100,16 @@ export class DriversFormComponent implements OnInit {
     });
 
     this.i18n.setLocale(en_US);
+  }
+
+
+  submitPassword():void {
+    if (this.validatePasswordForm.valid) {
+      const passwordL = this.validatePasswordForm.controls.password.value
+      // console.log(passwordL, );
+      this.changePassword.emit(passwordL);
+      this.isChangePasswordModalVisible = false;
+    }
   }
 
   save(): void {

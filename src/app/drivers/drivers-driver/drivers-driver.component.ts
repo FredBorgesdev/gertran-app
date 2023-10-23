@@ -70,6 +70,18 @@ export class DriversDriverComponent implements OnInit {
     }
   }
 
+
+  changePassword(password: string) {
+    console.log(password)
+    this.driversService.changePassword(this.driver.id, password).subscribe(() => {
+      this.message.success('Senha alterada com sucesso!');
+    }, () => {
+      this.message.error('Não foi possível alterar a senha. Tente novamente.');
+    });
+  }
+
+
+
   changeDriver(value: Driver): void {
     console.log(value)
     this.driver = value;

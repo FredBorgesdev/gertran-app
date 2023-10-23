@@ -81,6 +81,11 @@ export class DriversService implements ApiService<Driver> {
     ]);
   }
 
+  changePassword(id: string, password: string): Observable<void> {
+    return this.http.patch<void>(`drivers/${id}/change-password`, { password });
+  }
+
+  
   private getBody(body: Omit<Driver, 'id'>): Omit<Driver, 'id'> {
     return {
       ...this.parseDatesToYearMonthDay(body),
@@ -103,4 +108,6 @@ export class DriversService implements ApiService<Driver> {
   private removeSpecialCharactersFromCpf(body: Omit<Driver, 'id'>): string {
     return body.cpf.replace(/\D/g, '');
   }
+
+
 }

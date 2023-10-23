@@ -23,6 +23,7 @@
         <app-drivers-form
           [driver]="driver"
           (submitForm)="submitForm($event)"
+          (changePassword)="changePassword($event)"
           (driverChange)="changeDriver($event)"
           *ngIf="driver"
         ></app-drivers-form>
