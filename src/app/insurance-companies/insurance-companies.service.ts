@@ -60,6 +60,10 @@ export class InsuranceCompaniesService implements ApiService<InsuranceCompany> {
   }
 
   getCustomers(): Observable<GetAllResponse<Customer>> {
-    return this.http.get<GetAllResponse<Customer>>('insurance-companies/customers');
+    return this.http.get<GetAllResponse<Customer>>('insurance-companies/customers', {
+      params: {
+        limit: 999
+      }
+    });
   }
 }
