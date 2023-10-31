@@ -11,6 +11,7 @@ import {Customer, CustomersService} from '../customers.service';
 import {conformToMask} from 'angular2-text-mask';
 import {Permission, PermissionsService} from "../../shared/services/permissions.service";
 import {InsuranceCompaniesService, InsuranceCompany} from "../../insurance-companies/insurance-companies.service";
+import {AuthenticationService} from "../../authentication/authentication.service";
 
 @Component({
   selector: 'app-customers-form',
@@ -19,6 +20,7 @@ import {InsuranceCompaniesService, InsuranceCompany} from "../../insurance-compa
 })
 export class CustomersFormComponent implements OnInit {
   cnpjMask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
+  copyApiKeyTooltip = 'Copiar chave';
 
   @Input() customer: Customer = null;
   @Output() save: EventEmitter<Customer> = new EventEmitter<Customer>();
@@ -35,6 +37,7 @@ export class CustomersFormComponent implements OnInit {
     private customersService: CustomersService,
     private permissionsService: PermissionsService,
     private insuranceCompaniesService: InsuranceCompaniesService,
+    private authService: AuthenticationService,
   ) {
   }
 
@@ -67,6 +70,7 @@ export class CustomersFormComponent implements OnInit {
       permissions: [this.customer?.permissions],
       hasApiIntegration: [this.customer?.hasApiIntegration, []],
       insuranceCompany: [this.customer?.insuranceCompany, []],
+      gertranApiKey: [this.customer?.gertranApiKey, []],
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);
@@ -90,5 +94,20 @@ export class CustomersFormComponent implements OnInit {
 
   listCustomers(): void {
     this.router.navigate(['/customers/customers-list']);
+  }
+
+  get isGertranStaff(): boolean {
+    return this.authService.user.isGertranStaff;
+  }
+
+  copyApiKeyToClipboard(input): void {
+    input.select();
+    document.execCommand('copy');
+    input.setSelectionRange(0, 0);
+
+    this.copyApiKeyTooltip = 'Chave copiada!';
+    setTimeout(() => {
+      this.copyApiKeyTooltip = 'Copiar chave';
+    }, 2000);
   }
 }
