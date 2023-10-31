@@ -17,6 +17,17 @@ import {debounceTime} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {AuthenticationService} from '../../authentication/authentication.service';
 
+const sortByOrder = (a, b) => {
+  // some points may not have order
+  if (!a.order) {
+    return -1;
+  }
+  if (!b.order) {
+    return 1;
+  }
+  return a.order - b.order;
+};
+
 @Component({
   selector: 'app-routes-form',
   templateUrl: './routes-form.component.html',
@@ -79,7 +90,6 @@ export class RoutesFormComponent
             ...this.resource.points.map((point) => point.point),
             ...stops.results,
           ]);
-          console.log(this.points)
           this.loadCurrentPoints();
         },
         () => {
@@ -94,6 +104,17 @@ export class RoutesFormComponent
   loadCurrentPoints(): void {
     const pointsCopy = [...this.points];
     this.resource.points.forEach((point) => {
+      const points = this.points.filter((item) => item.id === point.point.id);
+      if (points.length > 1) {
+        const lastPoint = points[points.length - 1];
+        pointsCopy.push({
+          ...lastPoint,
+          direction: 'right',
+          order: point.order,
+        });
+        return;
+      }
+
       const index = this.points.findIndex((item) => item.id === point.point.id);
       if (index === -1) {
         return;
@@ -101,7 +122,6 @@ export class RoutesFormComponent
       pointsCopy[index].direction = 'right';
       pointsCopy[index].order = point.order;
     });
-    const sortByOrder = (a, b) => a.order - b.order;
     this.points = pointsCopy.sort(sortByOrder);
   }
 
