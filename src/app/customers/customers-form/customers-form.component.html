@@ -74,6 +74,27 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item *ngIf="isGertranStaff">
+    <nz-form-label [nzSpan]="null" nzRequired nzFor="gertranApiKey">Chave de API</nz-form-label>
+    <nz-form-control
+      [nzSpan]="null"
+      nz-tooltip
+      [nzTooltipTitle]="copyApiKeyTooltip"
+      (click)="copyApiKeyToClipboard(gertranApiKeyInput)"
+    >
+      <input
+        #gertranApiKeyInput
+        id="gertranApiKey"
+        type="text"
+        nz-input
+        formControlName="gertranApiKey"
+        readonly
+        disabled
+        class="copy-to-clipboard-input"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="dashboards">Dashboards</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o embarcador">

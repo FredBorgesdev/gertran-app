@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Workday} from '../workdays/workday.service';
 
 export interface Customer {
+  gertranApiKey: string;
   closingDay: number;
   checklistExpirationPeriod: string;
   canSelectShipper: boolean;
