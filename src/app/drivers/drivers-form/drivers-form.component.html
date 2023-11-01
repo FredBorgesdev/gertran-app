@@ -183,6 +183,14 @@
     </div>
   </div>
 
+    <a
+    nz-button
+    nzType="link"
+    class="m-b-50"
+    (click)="isChangePasswordModalVisible = true"
+    *ngIf="driver?.id"
+  >Trocar senha</a>
+
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
       <button type="button" (click)="save()" nz-button nzType="primary">
@@ -194,6 +202,44 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+
+
+
+
+
+<nz-modal
+  [(nzVisible)]="isChangePasswordModalVisible"
+  nzTitle="Trocar senha"
+  (nzOnCancel)="isChangePasswordModalVisible = false"
+>
+  <div *nzModalContent>
+    <form nzLayout="vertical" nz-form [formGroup]="validatePasswordForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="password">Senha</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo com no mínimo 6 caracteres">
+          <input id="password" type="password" nz-input formControlName="password" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <div *nzModalFooter>
+    <button
+      nz-button
+      nzType="default"
+      (click)="isChangePasswordModalVisible = false"
+    >Fechar</button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="submitPassword()"
+    >Enviar</button>
+  </div>
+</nz-modal>
+
+
+
 
 <ng-template #selectLoading>
   <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
