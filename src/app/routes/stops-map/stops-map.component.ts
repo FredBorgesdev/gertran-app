@@ -19,7 +19,8 @@ export class StopsMapComponent implements OnInit, OnChanges {
 
   constructor(
     private directionsService: DirectionsService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadMap(this.points);

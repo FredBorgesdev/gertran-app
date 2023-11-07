@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import {environment} from '../../../environments/environment';
 import polyline from '@mapbox/polyline';
@@ -8,7 +8,8 @@ import polyline from '@mapbox/polyline';
 })
 export class DirectionsService {
 
-  constructor() { }
+  constructor() {
+  }
 
   async getDirections(points: any[]): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -32,8 +33,8 @@ export class DirectionsService {
       }
 
       const waypoints = points.slice(1, points.length - 1);
-      waypoints.forEach((point) => {
-        directions.addWaypoint(0, [point.longitude, point.latitude]);
+      waypoints.forEach((point, index) => {
+        directions.addWaypoint(index, [point.longitude, point.latitude]);
       });
 
       const destination = points[points.length - 1];
