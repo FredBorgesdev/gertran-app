@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-companies.service';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {InsuranceCompaniesService, InsuranceCompany} from '../insurance-companies.service';
 import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
 
 @Component({
@@ -13,7 +13,7 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
 export class InsuranceCompaniesListComponent extends BaseCrudListComponent<InsuranceCompany> {
 
   insuranceCompaniesColumns = [
-    { title: 'ID' },
+    {title: 'ID'},
     {
       title: 'Nome',
       compare: (
@@ -21,7 +21,7 @@ export class InsuranceCompaniesListComponent extends BaseCrudListComponent<Insur
         b: InsuranceCompany
       ) => a.name.localeCompare(b.name),
     },
-    { title: 'Telefone' },
+    {title: 'Telefone'},
     {
       title: 'Email',
       compare: (
@@ -29,8 +29,9 @@ export class InsuranceCompaniesListComponent extends BaseCrudListComponent<Insur
         b: InsuranceCompany
       ) => a.email.localeCompare(b.email),
     },
-    { title: 'Site' },
-    { title: 'Ações' },
+    {title: 'Site'},
+    {title: 'Corretora?'},
+    {title: 'Ações'},
   ];
 
   constructor(

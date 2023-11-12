@@ -37,7 +37,7 @@
       [nzPageIndex]="page"
       [nzFrontPagination]="false"
       (nzQueryParams)="handleQueryParamsChange($event)"
-      >
+    >
       <thead>
       <tr>
         <th *ngFor="let column of insuranceCompaniesColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
@@ -54,6 +54,10 @@
         <td>{{item.phone || '-'}}</td>
         <td>{{item.email || '-'}}</td>
         <td>{{item.website || '-'}}</td>
+        <td>
+          <nz-badge *ngIf="item.isBroker" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.isBroker" nzStatus="error"></nz-badge>
+        </td>
         <td class="text-md-center">
           <a
             (click)="edit(item)"

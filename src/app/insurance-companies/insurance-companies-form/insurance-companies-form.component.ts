@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { InsuranceCompaniesService, InsuranceCompany } from '../insurance-companies.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {InsuranceCompaniesService, InsuranceCompany} from '../insurance-companies.service';
 
 @Component({
   selector: 'app-insurance-companies-form',
@@ -22,7 +22,8 @@ export class InsuranceCompaniesFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private insuranceCompaniesService: InsuranceCompaniesService,
     private message: NzMessageService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
@@ -31,6 +32,7 @@ export class InsuranceCompaniesFormComponent implements OnInit {
       phone: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       logo: [null],
+      isBroker: [false]
     });
     this.loadInsuranceCompany();
   }
@@ -48,6 +50,7 @@ export class InsuranceCompaniesFormComponent implements OnInit {
           phone: insuranceCompany.phone,
           email: insuranceCompany.email,
           logo: insuranceCompany.logo,
+          isBroker: insuranceCompany.isBroker
         });
 
         this.isLoading = false;
@@ -62,9 +65,11 @@ export class InsuranceCompaniesFormComponent implements OnInit {
   save() {
     if (!this.validateForm.valid) {
       Object.values(this.validateForm.controls).forEach(control => {
-        if (!control.invalid) { return; }
+        if (!control.invalid) {
+          return;
+        }
         control.markAsDirty();
-        control.updateValueAndValidity({ onlySelf: true });
+        control.updateValueAndValidity({onlySelf: true});
       });
     }
 

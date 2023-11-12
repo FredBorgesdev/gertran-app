@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Customer} from "../customers/customers.service";
 
 export interface InsuranceCompany {
+  isBroker: boolean;
   id: string;
   email?: string;
   logo?: string;
