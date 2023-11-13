@@ -218,6 +218,14 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       delete body.brokerPhone;
     }
 
+    if (body.brokerName === '') {
+      delete body.brokerName;
+    }
+
+    if (body.brokerPersonInCharge === '') {
+      delete body.brokerPersonInCharge;
+    }
+
     return body;
   }
 }
