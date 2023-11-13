@@ -1,10 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {format} from 'date-fns';
 
 export interface Operations {
+  broker: {
+    id: string;
+    name: string;
+  };
   id: string;
   name: string;
   policyEffectiveDate: string;
@@ -47,7 +51,8 @@ export class OperationsService implements ApiService<Operations> {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   getAll(
     pagination: Pagination,
@@ -56,7 +61,7 @@ export class OperationsService implements ApiService<Operations> {
       name?: string;
     }
   ): Observable<GetAllResponse<Operations>> {
-    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -69,7 +74,7 @@ export class OperationsService implements ApiService<Operations> {
       params.name = filters.name;
     }
 
-    return this.http.get<GetAllResponse<Operations>>('settings/operations', { params });
+    return this.http.get<GetAllResponse<Operations>>('settings/operations', {params});
   }
 
   get(id: string): Observable<Operations> {

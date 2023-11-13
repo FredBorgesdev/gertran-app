@@ -34,6 +34,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   wagonTypes: VehicleModelTypes[] = [];
   vehiclePeripherals: VehiclePeripherals[] = [];
   insuranceCompanies: InsuranceCompany[] = [];
+  brokerInsuranceCompanies: InsuranceCompany[] = [];
   operationTypes: Choice[] = [];
 
   constructor(
@@ -91,8 +92,13 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     this.vehiclePeripheralsService.getAll({limit: 50}).subscribe(vehiclePeripherals => {
       this.vehiclePeripherals = vehiclePeripherals.results;
     });
-    this.insuranceCompaniesService.getAll({limit: 50}).subscribe(insuranceCompanies => {
-      this.insuranceCompanies = insuranceCompanies.results;
+    this.insuranceCompaniesService.getAll({limit: 999}).subscribe(insuranceCompanies => {
+      this.insuranceCompanies = insuranceCompanies.results.filter(
+        company => !company.isBroker
+      );
+      this.brokerInsuranceCompanies = insuranceCompanies.results.filter(
+        company => company.isBroker
+      );
     });
     (this.service as OperationsService).getOperationTypes().subscribe(data => {
       this.operationTypes = data;
@@ -115,9 +121,10 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       operationType: [null, [Validators.required]],
       radiusToActivateRouteDeviation: [null, [Validators.required]],
       policyEffectiveDate: [null, [Validators.required]],
-      brokerName: [null, [Validators.required]],
-      brokerPhone: [null, [Validators.required]],
-      brokerPersonInCharge: [null, [Validators.required]],
+      brokerName: [null, []],
+      brokerPhone: [null, []],
+      brokerPersonInCharge: [null, []],
+      broker: [null]
     });
   }
 
@@ -130,6 +137,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       allowedWagonTypes: this.resource.allowedWagonTypes?.map(({id}) => id),
       requiredPeripherals: this.resource.requiredPeripherals?.map(({id}) => id),
       insuranceCompany: this.resource.insuranceCompany?.id,
+      broker: this.resource.broker?.id,
     });
   }
 
@@ -201,5 +209,15 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     this.message.success('Registro salvo com sucesso');
     this.router.navigate(['operations', 'operations-edit', response.id]);
     this.isLoading = false;
+  }
+
+  getValues(): Operations {
+    const body = {...this.validateForm.value};
+
+    if (body.brokerPhone === '') {
+      delete body.brokerPhone;
+    }
+
+    return body;
   }
 }
