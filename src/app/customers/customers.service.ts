@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
 import {Workday} from '../workdays/workday.service';
+import {InsuranceCompany} from "../insurance-companies/insurance-companies.service";
 
 export interface Customer {
   gertranApiKey: string;
@@ -33,7 +34,7 @@ export interface Customer {
   }[];
   workdaySettings: Workday;
   hasApiIntegration: boolean;
-  insuranceCompany: string;
+  insuranceCompany: string | InsuranceCompany;
 }
 
 @Injectable({

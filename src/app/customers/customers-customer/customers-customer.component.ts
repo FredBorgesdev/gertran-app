@@ -59,6 +59,7 @@ export class CustomersCustomerComponent implements OnInit {
     const payload = {
       ...this.utilsService.removeNullValues(this.customer),
       complement: this.customer.complement || undefined,
+      insuranceCompany: this.customer.insuranceCompany?.id || null,
     };
 
     if (this.customer.id) {

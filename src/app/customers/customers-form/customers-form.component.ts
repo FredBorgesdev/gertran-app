@@ -69,7 +69,10 @@ export class CustomersFormComponent implements OnInit {
       closingDay: [this.customer?.closingDay, []],
       permissions: [this.customer?.permissions],
       hasApiIntegration: [this.customer?.hasApiIntegration, []],
-      insuranceCompany: [this.customer?.insuranceCompany, []],
+      insuranceCompany: [
+        (this.customer?.insuranceCompany as InsuranceCompany)?.id,
+        []
+      ],
       gertranApiKey: [this.customer?.gertranApiKey, []],
     });
     this.validateForm.valueChanges.subscribe(form => {
