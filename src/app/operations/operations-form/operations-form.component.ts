@@ -214,15 +214,15 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   getValues(): Operations {
     const body = {...this.validateForm.value};
 
-    if (body.brokerPhone === '') {
+    if (['', null].includes(body.brokerPhone)) {
       delete body.brokerPhone;
     }
 
-    if (body.brokerName === '') {
+    if (['', null].includes(body.brokerName)) {
       delete body.brokerName;
     }
 
-    if (body.brokerPersonInCharge === '') {
+    if (['', null].includes(body.brokerPersonInCharge)) {
       delete body.brokerPersonInCharge;
     }
 
