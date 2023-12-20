@@ -1,0 +1,29 @@
+<nz-tabset>
+  <nz-tab nzTitle="Mapa">
+    <nz-card [nzCover]="map">
+    </nz-card>
+  </nz-tab>
+</nz-tabset>
+
+<ng-template #map>
+  <mgl-map
+    [style]="'mapbox://styles/mapbox/streets-v9'"
+
+    [fitBoundsOptions]="{ padding: 50 }"
+    [center]="personalLocation"
+    [zoom]="[10]"
+  >
+    <mgl-marker [lngLat]="personalLocation">
+      <span
+        nz-icon
+      >
+        <img
+          src="assets/images/logo/truck.svg"
+          alt="caminhão"
+          width="25px"
+          height="25px"
+        />
+      </span>
+    </mgl-marker>
+  </mgl-map>
+</ng-template>
