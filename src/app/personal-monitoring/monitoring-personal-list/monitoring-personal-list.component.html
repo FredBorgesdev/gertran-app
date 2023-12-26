@@ -1,0 +1,75 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <form [formGroup]="validateForm">
+    <div nz-row nzGutter="6" nzAlign="middle">
+    </div>
+  </form>
+
+  <ng-container *ngIf="monitoringData">
+    <div *ngIf="user.isGertranStaff">
+    </div>
+
+    <div *ngIf="isTableFullscreen else monitoringDataTable"></div>
+  </ng-container>
+
+</nz-spin>
+
+
+<ng-template #monitoringDataTable>
+  <nz-table
+    #table
+    [nzData]="monitoringData"
+    [nzFrontPagination]="false"
+    nzTableLayout="fixed"
+    nzSize="small"
+    [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'auto' }"
+    [nzLoading]="isLoading"
+  >
+    <thead>
+    <tr>
+      <th
+        *ngFor="let column of personalMonitoringColumns"
+        [nzSortFn]="column.compare"
+        [nzLeft]="column.nzLeft"
+        [nzWidth]="column.width"
+        class="text-center"
+        [style]="column.style"
+      >{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+      
+    <tr
+      *ngFor="let item of table.data; let i=index"
+      
+    >
+
+
+      <td nzLeft class="bg-gray">{{ item.deviceId || '-' }}</td>
+      <td
+        nzLeft
+        nz-tooltip
+        [nzTooltipTitle]="item.monitoringRequest?.id"
+        class="bg-gray"
+      >{{ item.device.idDevice || '-' }}</td>
+      <td nzLeft class="bg-gray">{{ item.device.user?.name || '-' }}</td>
+      <td nzLeft class="bg-gray">{{ item.createdAt  | date: 'dd/MM/yyyy HH:mm'}}</td> 
+
+      <td
+        style="cursor: pointer"
+        (click)="openMap(item)"
+      >
+        <img
+          src="assets/images/others/map-icon.svg"
+          alt="logo"
+          width="25px"
+          height="25px"
+          style="filter: invert(56%) sepia(97%) saturate(2141%) hue-rotate(155deg) brightness(87%) contrast(101%);"
+        />
+      </td>
+
+
+    </tr>
+    </tbody>
+  </nz-table>
+</ng-template>
+

@@ -599,5 +599,31 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
     ]
+  },
+  {
+    path: '',
+    title: 'Monitoramento Pessoal',
+    iconType: 'nzIcon',
+    iconTheme: 'outline',
+    icon: 'user',
+    gertranStaffOnly: true,
+    submenu: [
+      {
+        path: '/device/devices-list',
+        title: 'Dispositivos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'mobile',
+        submenu: []
+      },
+      {
+        path: '/device/personal-monitoring-list',
+        title: 'Monitoramento Dispositivos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'eye',
+        submenu: []
+      },
+    ]
   }
 ];

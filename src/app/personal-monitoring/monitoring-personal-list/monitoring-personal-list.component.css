@@ -1,0 +1,147 @@
+tr {
+  font-size: 10px;
+  line-height: 1;
+}
+
+td {
+  text-align: center;
+  padding: 2px !important;
+  border-right: 1px solid #d9d9d9;
+}
+
+.bg-alert {
+  background-color: #fcffab !important;
+}
+
+.bg-warning {
+  background-color: #ffd371 !important;
+}
+
+.bg-danger {
+  background-color: #ffdfdf !important;
+}
+
+.bg-success {
+  background-color: #95ffa1 !important;
+}
+
+.bg-info {
+  background-color: #86ffff !important;
+}
+
+.bg-gray {
+  background-color: #f3f3f3 !important;
+}
+
+nz-select,
+.status-filter {
+  width: 100%;
+}
+
+.status-filter {
+  border: none;
+}
+
+.status-filter:hover {
+  opacity: 0.3;
+}
+
+.border-all,
+.border-none {
+  background: #f3f3f3;
+  color: #626262;
+}
+
+.border-ag-start {
+  background-color: #deffe2;
+  color: #007217;
+}
+
+.border-contingency {
+  background-color: #ffdfdf;
+  color: #832222;
+}
+
+.border-client {
+  background-color: #fdf2da;
+  color: #654500;
+}
+
+.border-travelling {
+  background-color: #e3ffdd;
+  color: #115900;
+}
+
+.border-standby {
+  background-color: #ddffff;
+  color: #005656;
+}
+
+.border-overnight {
+  background-color: #fff7e3;
+  color: #573d00;
+}
+
+.border-out-of-point {
+  background-color: #e3e3e3;
+  color: #505050;
+}
+
+.ant-table .ant-table-fixed-header .ant-table-has-fix-left .ant-table-small .ant-table-ping-right {
+  line-height: 1 !important;
+}
+
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: inherit;
+}
+
+.ant-table-tbody > .bg-success:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #bfffc5 !important;
+}
+
+.ant-table-tbody > .bg-danger:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #ffbdbd !important;
+}
+
+.ant-table-tbody > .bg-warning:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #ffe8b8 !important;
+}
+
+.ant-table-tbody > .bg-info:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+  background-color: #b8ffff !important;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid black;
+}
+
+.progress-bar {
+  width: 40px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+  position: relative;
+}
+
+.progress {
+  width: var(--progress);
+  height: 100%;
+  background-color: #7676ff;
+  border-radius: 4px;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 1280px) {
+  .alert-button-group {
+    margin-left: -55px;
+  }
+}
+
