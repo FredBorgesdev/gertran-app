@@ -228,6 +228,7 @@
           [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
+      <td (click)="goToMonitoringProtocols(item.monitoringRequest.id)"  style="cursor: pointer" ><img width="16" src="assets/icons/camera.png" alt="Grey lock"></td>
       <td
         style="cursor: pointer"
         (click)="openMap(item)"
