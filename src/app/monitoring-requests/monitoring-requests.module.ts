@@ -36,6 +36,7 @@ import {ReleaseTravelPrintComponent} from './release-travel-print/release-travel
 import {
   MonitoringRequestsTableClientComponent
 } from "./monitoring-requests-table-client/monitoring-requests-table-client.component";
+import { MonitoringProtocolListComponent } from '../monitoring/protocol-list/protocol-list.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import {
     ArmedGuardTabComponent,
     MonitoringRequestsTableComponent,
     MonitoringRequestsCheckListComponent,
+    MonitoringProtocolListComponent,
     MonitoringRequestsFilterComponent,
     MonitoringRequestsCheckListPrintableComponent,
     MonitoringRequestsTableMinimalComponent,

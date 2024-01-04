@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -27,6 +27,7 @@ import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.compon
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
 import {format} from "date-fns";
+import { MonitoringProtocolListComponent } from '../protocol-list/protocol-list.component';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -47,6 +48,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Blo', width: '35px', gertranStaffOnly: true},
     {title: 'Ale', width: '35px', gertranStaffOnly: true},
     {title: 'Aut', width: '37px'},
+    {title: 'Prot.', width:'50px'},
     {title: 'Mapa', width: '45px'},
     {title: '%', width: '50px'},
     {title: 'Vel', width: '50px'},
@@ -294,6 +296,21 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.modal.create({
       nzTitle: 'Solicitação de monitoramento',
       nzContent: MonitoringRequestsCheckListComponent,
+      nzComponentParams: {
+        monitoringRequestId: id,
+        readOnly: true,
+        showFooter: true,
+      },
+      nzWidth: '90%',
+      nzOkText: null,
+      nzOnOk: null,
+      nzAfterClose: this.refreshPositions,
+    });
+  }
+  goToMonitoringProtocols(id: string): void {
+    this.modal.create({
+      nzTitle: 'Protocolos do monitoramento',
+      nzContent: MonitoringProtocolListComponent,
       nzComponentParams: {
         monitoringRequestId: id,
         readOnly: true,
