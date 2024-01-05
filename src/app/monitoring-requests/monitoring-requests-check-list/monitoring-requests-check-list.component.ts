@@ -162,6 +162,29 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     });
   }
 
+
+  checkRealease(body): boolean{
+    if(body.terminal == undefined) {
+      alert('Terminal não foi selecionado!')
+      return true
+    }
+
+
+    if(!body.checklist.allowedTravel){
+      const releaseTravelIfConfirmed = confirm("Veículo com viagem não autorizada, tem certeza em continuar liberação para viagem? ");
+      if(!releaseTravelIfConfirmed){
+        return true
+      }
+    }
+
+    if(body.checklist.status == 'reproved'){
+      const releaseTravelIfConfirmed = confirm("Veículo com status de checklist reprovado, tem certeza em continuar liberação para viagem?");
+      if(!releaseTravelIfConfirmed){
+        return true
+      }
+    }
+  }
+
   save(status: string): Promise<void> {
     const hasInvalidForm = this.checklistForm.invalid ||
       this.checklistBaitForm.invalid ||
@@ -178,25 +201,11 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       status,
     };
 
-    if(!body.checklist.allowedTravel){
-      const releaseTravelIfConfirmed = confirm("Veículo com viagem não autorizada, tem certeza em continuar liberação para viagem? ");
-      if(!releaseTravelIfConfirmed){
-        return
-      }
-    }
 
-    if(body.checklist.status == 'reproved'){
-      const releaseTravelIfConfirmed = confirm("Veículo com status de checklist reprovado, tem certeza em continuar liberação para viagem?");
-      if(!releaseTravelIfConfirmed){
-        return
-      }
-    }
 
     if(status == Status.WAITING_FOR_START){
-      if(body.terminal == undefined) {
-        alert('Terminal não foi selecionado!')
-        return
-      }
+      if(this.checkRealease(body)) return
+
     }
 
     if (
@@ -204,10 +213,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.monitoringRequest.data.travelStatus === 'none'
     ) {
 
-      if(body.terminal == undefined) {
-        alert('Terminal não foi selecionado!')
-        return
-      }
+      if(this.checkRealease(body)) return
 
       body.travelStatus = 'in_progress';
     }
