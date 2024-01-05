@@ -11,6 +11,7 @@ export interface PersonalPosition {
   id: string;
   latitude: number;
   longitude: number;
+  point_reference: string;
 }
 
 @Injectable({

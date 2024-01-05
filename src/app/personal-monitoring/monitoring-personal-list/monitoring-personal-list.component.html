@@ -53,6 +53,7 @@
       >{{ item.device.idDevice || '-' }}</td>
       <td nzLeft class="bg-gray">{{ item.device.user?.name || '-' }}</td>
       <td nzLeft class="bg-gray">{{ item.createdAt  | date: 'dd/MM/yyyy HH:mm'}}</td> 
+      <td nzLeft class="bg-gray">{{ item.pointReference || '-' }}</td>
 
       <td
         style="cursor: pointer"

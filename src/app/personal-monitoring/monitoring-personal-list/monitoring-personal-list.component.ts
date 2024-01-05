@@ -27,6 +27,7 @@ export class PersonalMonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Token', nzLeft: true, style: 'z-index: 999', width: '90px'},
     {title: 'Usuário', nzLeft: true, style: 'z-index: 999', width: '60px'},
     {title: 'Data-Hora', nzLeft: true, style: 'z-index: 999', width: '60px'},
+    {title: 'Referência', nzLeft: true, style: 'z-index: 999', width: '60px'},
     {title: 'Mapa', width: '45px'},
   ];
   validateForm: FormGroup;
