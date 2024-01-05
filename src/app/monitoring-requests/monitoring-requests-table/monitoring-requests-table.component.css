@@ -7,3 +7,12 @@ th {
 td {
   padding: 4px !important;
 }
+
+table:hover,
+tr:hover,
+thead:hover {
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: none !important;
+}
