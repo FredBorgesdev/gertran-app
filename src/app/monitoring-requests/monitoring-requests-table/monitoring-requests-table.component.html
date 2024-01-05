@@ -21,7 +21,13 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of table.data; let i=index" [style]="'background-color:' + rowColor">
+  <tr
+    *ngFor="let item of table.data; let i=index"
+    [style]="{
+      'background-color': rowColor,
+      color: rowColor.includes('fff') ? '#000' : '#fff'
+    }"
+  >
     <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
     <td>{{getOcrNumber(item)}}</td>
     <td>{{item.customer?.tradingName ?? '-'}}</td>
