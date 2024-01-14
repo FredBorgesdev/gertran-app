@@ -27,7 +27,7 @@ import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.compon
 import {AuthenticationService} from '../../authentication/authentication.service';
 import User from '../../users/user';
 import {format} from "date-fns";
-import { MonitoringProtocolListComponent } from '../protocol-list/protocol-list.component';
+import {MonitoringProtocolListComponent} from '../protocol-list/protocol-list.component';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -48,7 +48,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Blo', width: '35px', gertranStaffOnly: true},
     {title: 'Ale', width: '35px', gertranStaffOnly: true},
     {title: 'Aut', width: '37px'},
-    {title: 'Prot.', width:'50px'},
+    {title: 'Prot.', width: '50px'},
     {title: 'Mapa', width: '45px'},
     {title: '%', width: '50px'},
     {title: 'Vel', width: '50px'},
@@ -91,13 +91,14 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   travelStatus = [
     {title: 'Parado', value: 'stopped', backgroundColorClass: 'bg-info'},
     {title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success'},
-    {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-alert'},
+    {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-waiting-start'},
     {title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'bg-warning'},
-    {title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-alert'},
-    {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-gray-lightest'},
+    {title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-overnight'},
+    {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-none'},
     {title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest'},
     {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
-    {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-danger'},
+    {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
+    {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
   ];
 
   refreshAlertCount = new EventEmitter();
@@ -307,6 +308,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzAfterClose: this.refreshPositions,
     });
   }
+
   goToMonitoringProtocols(id: string): void {
     this.modal.create({
       nzTitle: 'Protocolos do monitoramento',

@@ -10,7 +10,15 @@ td {
 }
 
 .bg-alert {
+  background-color: #95ffa1 !important;
+}
+
+.bg-overnight {
   background-color: #fcffab !important;
+}
+
+.bg-waiting-start {
+  background-color: #ffff00 !important;
 }
 
 .bg-warning {
@@ -21,16 +29,28 @@ td {
   background-color: #ffdfdf !important;
 }
 
+.bg-none {
+  background-color: #fff !important;
+}
+
+.bg-contingency {
+  background-color: #d9d9d9 !important;
+}
+
 .bg-success {
-  background-color: #95ffa1 !important;
+  background-color: #71ad47 !important;
 }
 
 .bg-info {
-  background-color: #86ffff !important;
+  background-color: #00b0f0 !important;
 }
 
 .bg-gray {
   background-color: #f3f3f3 !important;
+}
+
+.bg-trip-end {
+  background-color: #b9b945 !important;
 }
 
 nz-select,
@@ -95,21 +115,21 @@ nz-select,
   background-color: inherit;
 }
 
-.ant-table-tbody > .bg-success:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-  background-color: #bfffc5 !important;
-}
+/*.ant-table-tbody > .bg-success:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {*/
+/*  background-color: #bfffc5 !important;*/
+/*}*/
 
-.ant-table-tbody > .bg-danger:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-  background-color: #ffbdbd !important;
-}
+/*.ant-table-tbody > .bg-danger:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {*/
+/*  background-color: #ffbdbd !important;*/
+/*}*/
 
-.ant-table-tbody > .bg-warning:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-  background-color: #ffe8b8 !important;
-}
+/*.ant-table-tbody > .bg-warning:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {*/
+/*  background-color: #ffe8b8 !important;*/
+/*}*/
 
-.ant-table-tbody > .bg-info:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-  background-color: #b8ffff !important;
-}
+/*.ant-table-tbody > .bg-info:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {*/
+/*  background-color: #b8ffff !important;*/
+/*}*/
 
 .ant-table-tbody > tr > td {
   border-bottom: 1px solid black;
