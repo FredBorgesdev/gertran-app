@@ -194,7 +194,22 @@
         nz-tooltip
         [nzTooltipTitle]="item.monitoringRequest?.id"
         class="bg-gray"
-      >{{ item.monitoringRequest?.id || '' | id}}</td>
+      >
+        <img
+          *ngIf="!['reproved', 'cancelled'].includes(item.monitoringRequest?.status)"
+          src="assets/icons/sm-aprovada.svg"
+          alt="SM aprovada"
+          width="20"
+          height="20"
+        >
+        <img
+          *ngIf="['reproved', 'cancelled'].includes(item.monitoringRequest?.status)"
+          src="assets/icons/sm-reprovada.svg"
+          alt="SM reprovada"
+          width="20"
+          height="20"
+        >
+      </td>
       <td nzLeft class="bg-gray">{{ item.vehiclePlate || '-' }}</td>
       <td>
         <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
@@ -228,7 +243,10 @@
           [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
       </td>
-      <td (click)="goToMonitoringProtocols(item.monitoringRequest.id)"  style="cursor: pointer" ><img width="16" src="assets/icons/camera.png" alt="Grey lock"></td>
+      <td (click)="goToMonitoringProtocols(item.monitoringRequest.id)" style="cursor: pointer"><img width="16"
+                                                                                                    src="assets/icons/camera.png"
+                                                                                                    alt="Grey lock">
+      </td>
       <td
         style="cursor: pointer"
         (click)="openMap(item)"
