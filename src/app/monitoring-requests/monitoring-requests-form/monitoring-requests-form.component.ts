@@ -250,11 +250,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   get surveyConductedRowSpan(): number {
-    return this.validateForm.controls.surveyConductedBy.value === 'others' ? 12 : 24;
+    return this.validateForm.controls.surveyConductedBy.value === 'others' || 
+    this.validateForm.controls.surveyConductedBy.value === 'both' ? 12 : 24;
   }
 
   get shouldShowSurveyConductorInput(): boolean {
-    return this.validateForm.controls.surveyConductedBy.value === 'others';
+    return this.validateForm.controls.surveyConductedBy.value === 'others' || 
+    this.validateForm.controls.surveyConductedBy.value === 'both' ;
   }
 
   get user(): User {
