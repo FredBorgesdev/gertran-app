@@ -104,7 +104,13 @@ export interface MonitoringRequests {
     justification: string;
   };
   ocrNumber: string;
+  user:{
+    id:any,
+    name:any
+  };
 }
+
+
 
 export type PossibleStatus = {
   [key: string]: {

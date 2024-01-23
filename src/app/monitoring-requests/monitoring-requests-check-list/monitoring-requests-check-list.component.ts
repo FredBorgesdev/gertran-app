@@ -199,6 +199,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       checklist: this.utils.removeNullValues(this.checklistForm.value),
       checklistBait: this.utils.removeNullValues(this.checklistBaitForm.value),
       status,
+      user: this.authSevice.user.id
     };
 
 
@@ -238,6 +239,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     }
 
     this.isLoading = true;
+
+
     return this.monitoringRequestService.release(this.monitoringRequest.data.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;

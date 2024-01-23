@@ -1,6 +1,8 @@
 <h1 class="m-b-20 text-center">
   Protocolo de liberação de viagem
+
 </h1>
+
 
 <div style="display: flex; justify-content: space-between">
   <span>
@@ -48,6 +50,8 @@
   </span>
 </div>
 
+
+
 <br>
 <br>
 
@@ -69,12 +73,31 @@
   </div>
 </div>
 
-<div style="display: flex; justify-content: space-between; margin-top: 50px">
-  <div style="text-align: center;">
+<br>
+<br>
+
+<div>
+
+  <span><span style="font-weight: bolder;">
+    
+
+    <span *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">Liberado</span>
+    <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">Reprovado</span>
+    
+     
+    
+    
+    por:</span> {{monitoringRequest?.data?.user?.name}}</span>
+
+</div>
+
+<div style="display: flex; margin-top: 50px">
+  
+  <!-- <div style="text-align: center;">
     <div style="border-bottom: 1px solid black; width: 450px"></div>
     <br>
-    <span>Assinatura do motorista</span>
-  </div>
+
+  </div> -->
 
   <div style="width: 100%; text-align: center">
     {{ currentDate }}
