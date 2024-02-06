@@ -1,149 +1,131 @@
-<h1 nz-col nzSpan="24" class="m-b-20 text-center">
-  Comprovante de Check-list
+<div style="display: flex; justify-content: center;">
+  <div style="flex-grow: 8">
+  </div>
+  <div style="flex-grow: 1">
+    <img height="100px" src="http://localhost:4200/assets/images/logo/logogertran.png" />
+  </div>
+</div>
+
+<hr style="border-top: 3px double #000000">
+<h1 style="text-align: center;margin-top: 12px;">
+  Check-list
 </h1>
 
-<div style="display: flex; justify-content: space-between">
-  <span>
-    <strong>Solicitação</strong>: {{ monitoringRequest?.data?.id }}
-  </span>
-  <span>
-    <strong>Tecnologia</strong>: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}
-  </span>
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #000; font-size: 30px;">
+  <tbody>
+    <tr style="border-bottom: 1px solid #000;">
+      <td style="width: 50%; border-right: 1px solid #000; padding: 5px;">
+        <span style="font-weight: bolder;">N° Documento:</span> {{ monitoringRequest?.data?.checklist?.id }}
+      </td>
+      <td style="padding: 5px;"><span style="font-weight: bolder;">Data: </span> {{
+        monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy' }}</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #000;">
+      <td style="width: 50%; border-right: 1px solid #000; padding: 5px;"><span
+          style="font-weight: bolder;">Empresa:</span> {{ monitoringRequest?.data?.customer.tradingName }}</td>
+      <td style="padding: 5px;"><span style="font-weight: bolder;">Motorista:</span>
+        {{monitoringRequest?.data?.driver?.name}}</td>
+    </tr>
+
+    <tr style="border-bottom: 1px solid #000;">
+      <td style="width: 50%; border-right: 1px solid #000; padding: 5px;"><span
+          style="font-weight: bolder;">Solicitação:</span> {{ monitoringRequest?.data?.id }}</td>
+      <td style="padding: 5px;"><span style="font-weight: bolder;">Veiculo:</span> {{
+        monitoringRequest?.data?.truck?.vehicle.plate }}</td>
+    </tr>
+
+    <tr style="border-bottom: 1px solid #000;">
+      <td style="width: 50%; border-right: 1px solid #000; padding: 5px;"><span style="font-weight: bolder;">Carreta
+          1:</span> {{ firstWagonPlate() }}</td>
+      <td style="padding: 5px;"><span style="font-weight: bolder;">Carreta 2:</span> {{ secondWagonPlate() }}</td>
+    </tr>
+
+    <tr style="border-bottom: 1px solid #000;">
+      <td style="width: 50%; border-right: 1px solid #000; padding: 5px;"><span style="font-weight: bolder;">sistema
+          rastreamento:</span> {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0]?.trackerModel.name }}</td>
+      <td style="padding: 5px;">
+        <span style="font-weight: bolder;">número serie(s):
+        </span> {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<h1 style="text-align: center;margin-top: 12px;">
+  Sensores/Atuadores
+</h1>
+
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #000; font-size: 30px;">
+  <tbody>
+    <ng-container *ngFor="let item of checklistItems; let i = index">
+
+      <tr *ngIf="i % 2 == 0" style="border-bottom: 1px solid #000;">
+
+        <td style="width: 50%; border-right: 1px solid #000; padding: 5px;">
+          <span style="font-weight: bolder;">
+            {{ checklistItems[i].label }}:
+          </span>
+          <span style="font-size: 12px;"
+            *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i].value]">SIM</span>
+          <span style="font-size: 12px;"
+            *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i].value]">NÃO</span>
+        </td>
+
+        <td style="width: 50%; padding: 5px;">
+          <span style="font-weight: bolder;">
+            {{ checklistItems[i+1].label }}:
+          </span>
+          <span style="font-size: 12px;"
+            *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">SIM</span>
+          <span style="font-size: 12px;"
+            *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">NÃO</span>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<table style="border-collapse: collapse; width: 100%; border: 1px solid #000; font-size: 30px;">
+  <tbody>
+    <tr style="border-bottom: 1px solid #000;">
+      <td colspan="2" style="padding: 5px;height: 80px; text-align: left;vertical-align: top;">
+        <span style="font-weight: bolder;">Observações:</span>
+        {{ monitoringRequest?.data?.checklistBait?.justification }}
+      </td>
+      <td></td>
+    </tr>
+
+    <tr style="border-bottom: 1px solid #000;">
+      <td colspan="2" style="padding: 5px; text-align: center;">
+        <span style="font-weight: bolder; font-size: 25px;">RESULTADO:</span>
+        <span style="font-size: 25px;color: green;font-weight: bolder;"
+          *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">
+          APROVADO
+        </span>
+
+        <span style="font-size: 25px;color: red;font-weight: bolder;"
+          *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">
+          REPROVADO
+        </span>
+      </td>
+      <td></td>
+    </tr>
+
+    <tr style="border-bottom: 1px solid #000;">
+      <td colspan="2" style="padding: 5px;">
+        <span style="font-weight: bolder;">Responsavel:</span>
+        {{ monitoringRequest?.data?.checklist.reviewedBy?.name }}
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+
+<div style="margin-top: 35px;">
 </div>
-
-<div style="display: flex; justify-content: space-between">
-  <span>
-    <strong>Empresa</strong>: {{ monitoringRequest?.data?.customer.tradingName }}
-  </span>
-  <span>
-    <strong>Equipamento</strong>: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0]?.trackerModel.name }}
-  </span>
-</div>
-
-<div style="display: flex; justify-content: space-between">
-  <span>
-    <strong>Operador</strong>: {{ monitoringRequest?.data?.checklist.reviewedBy?.name }}
-  </span>
-  <span>
-    <strong>Placa</strong>: {{ monitoringRequest?.data?.truck?.vehicle.plate }} - Reboque: {{ wagonsPlates() }}
-  </span>
-</div>
-
-<div style="display: flex; justify-content: space-between">
-  <span>
-    <strong>Data</strong>: {{ monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy' }}
-  </span>
-</div>
-
-<form nz-form nzLayout="vertical">
-  <h3 nz-col nzSpan="24" class="m-b-20 text-center">
-    Sensores e Atuadores
-  </h3>
-
-  <div nz-row>
-    <div nz-col [nzSpan]="6" *ngFor="let item of checklistItems">
-      <span *ngIf="monitoringRequest?.data?.checklist?.[item.value]">( x )</span>
-      <span *ngIf="!monitoringRequest?.data?.checklist?.[item.value]">( )</span>
-      {{ item.label }}
-    </div>
-  </div>
-
-  <div nz-row class="m-t-15 m-b-15">
-    <span>Macro: {{monitoringRequest?.data?.checklist?.hasMacro ? 'Sim' : 'Não'}}</span>
-
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-
-    <span>Inteligência Embarcada: {{monitoringRequest?.data?.checklist?.hasEmbeddedIntelligence ? 'Sim' : 'Não'}}</span>
-  </div>
-
-  <div>
-    <span *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">( x )</span>
-    <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">( )</span>
-    <span> Aprovado</span>
-
-    &nbsp;
-    &nbsp;
-    &nbsp;
-
-    <span *ngIf="monitoringRequest?.data?.checklist?.status === 'reproved'">( x )</span>
-    <span *ngIf="monitoringRequest?.data?.checklist?.status !== 'reproved'">( )</span>
-    <span> Reprovado</span>
-
-    <div>
-      <span>Justifivativa: {{ monitoringRequest?.data?.checklist?.justification }}</span>
-    </div>
-  </div>
-</form>
-
-<form
-  nz-form
-  nzLayout="vertical"
->
-  <h3 nz-col nzSpan="24" class="m-b-20 text-center">
-    Iscas
-  </h3>
-
-  <div *ngIf="monitoringRequest?.data?.baits.length">
-    <div nz-row>
-      <div nz-col [nzSpan]="6">
-        <span *ngIf="monitoringRequest?.data?.checklistBait?.positionChecked">( x )</span>
-        <span *ngIf="!monitoringRequest?.data?.checklistBait?.positionChecked">( )</span>
-        Posição
-      </div>
-
-      <div nz-col [nzSpan]="6">
-        <span *ngIf="monitoringRequest?.data?.checklistBait?.decouplingChecked">( x )</span>
-        <span *ngIf="!monitoringRequest?.data?.checklistBait?.decouplingChecked">( )</span>
-        Desacoplamento
-      </div>
-
-      <div nz-col [nzSpan]="6">
-        <span *ngIf="monitoringRequest?.data?.checklistBait?.positionFrequencyChecked">( x )</span>
-        <span *ngIf="!monitoringRequest?.data?.checklistBait?.positionFrequencyChecked">( )</span>
-        Freq. de posição
-      </div>
-
-      <div nz-col [nzSpan]="6">
-        <span *ngIf="monitoringRequest?.data?.checklistBait?.batteriesChecked">( x )</span>
-        <span *ngIf="!monitoringRequest?.data?.checklistBait?.batteriesChecked">( )</span>
-        Bateria
-      </div>
-
-      <div nz-col [nzSpan]="6">
-        <span *ngIf="monitoringRequest?.data?.checklistBait?.timerChecked">( x )</span>
-        <span *ngIf="!monitoringRequest?.data?.checklistBait?.timerChecked">( )</span>
-        Temporizador
-      </div>
-
-      <div nz-col [nzSpan]="6">
-        <span *ngIf="monitoringRequest?.data?.checklistBait?.jammingChecked">( x )</span>
-        <span *ngIf="!monitoringRequest?.data?.checklistBait?.jammingChecked">( )</span>
-        Operação Jamming
-      </div>
-    </div>
-
-    <br>
-
-    <div>
-      <span *ngIf="monitoringRequest?.data?.checklistBait?.approved">( x )</span>
-      <span *ngIf="!monitoringRequest?.data?.checklistBait?.approved">( )</span>
-      <span> Aprovado</span>
-
-      &nbsp;
-      &nbsp;
-      &nbsp;
-
-      <span *ngIf="!monitoringRequest?.data?.checklistBait?.approved">( x )</span>
-      <span *ngIf="monitoringRequest?.data?.checklistBait?.approved">( )</span>
-      <span> Reprovado</span>
-
-      <div>
-        <span>Justifivativa: {{ monitoringRequest?.data?.checklistBait?.justification }}</span>
-      </div>
-    </div>
-  </div>
-</form>

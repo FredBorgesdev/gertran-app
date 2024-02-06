@@ -37,7 +37,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
     {title: 'Ult. Posição'},
     {title: 'Horário'},
     {title: 'Tecnologia'},
-    {title: 'Ações'},
+    {title: 'Avaliação de Monitoramento'},
   ];
 
   constructor(

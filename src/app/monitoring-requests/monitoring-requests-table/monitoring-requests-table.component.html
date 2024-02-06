@@ -16,7 +16,8 @@
     <th
       *ngFor="let column of monitoringRequestsColumns"
       [nzSortFn]="column.compare"
-      nzWidth="110px"
+      nzWidth="250px"
+      style="white-space: nowrap;"
     >{{ column.title }}</th>
   </tr>
   </thead>

@@ -58,25 +58,21 @@
       Rastreadores
     </div>
 
-    <nz-table
-      #trackersTable
-      nzSize="small"
-      [nzData]="monitoringRequest?.data.truck.vehicle.trackers ?? []"
-      [nzShowPagination]="false"
-    >
+    <nz-table #trackersTable nzSize="small" [nzData]="monitoringRequest?.data.truck.vehicle.trackers ?? []"
+      [nzShowPagination]="false">
       <thead>
-      <tr>
-        <th class="text-left">Tecnologia</th>
-        <th class="text-right">Num de serie</th>
-      </tr>
+        <tr>
+          <th class="text-left">Tecnologia</th>
+          <th class="text-right">Num de serie</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let tracker of trackersTable.data">
-        <td class="text-left">{{tracker.trackerModel.trackerTechnology.name}}</td>
-        <td class="text-right">
-          {{tracker.trackerId}}
-        </td>
-      </tr>
+        <tr *ngFor="let tracker of trackersTable.data">
+          <td class="text-left">{{tracker.trackerModel.trackerTechnology.name}}</td>
+          <td class="text-right">
+            {{tracker.trackerId}}
+          </td>
+        </tr>
       </tbody>
     </nz-table>
   </div>
@@ -122,11 +118,8 @@
 
   <small style="color: #a3a3a3">* Escolta e isca irão aparecer caso a SM tenha configurado</small>
 
-  <nz-descriptions
-    nzTitle="Escolta"
-    *ngFor="let armedGuard of monitoringRequest?.data?.armedGuards ?? []"
-    class="m-t-15"
-  >
+  <nz-descriptions nzTitle="Escolta" *ngFor="let armedGuard of monitoringRequest?.data?.armedGuards ?? []"
+    class="m-t-15">
     <nz-descriptions-item nzTitle="Tecnologia">
       {{armedGuard.technology}}
     </nz-descriptions-item>
@@ -147,11 +140,7 @@
     </nz-descriptions-item>
   </nz-descriptions>
 
-  <nz-descriptions
-    nzTitle="Iscas"
-    *ngFor="let bait of monitoringRequest?.data?.baits ?? []"
-    class="m-t-15"
-  >
+  <nz-descriptions nzTitle="Iscas" *ngFor="let bait of monitoringRequest?.data?.baits ?? []" class="m-t-15">
     <nz-descriptions-item nzTitle="N Serie">
       {{bait.serialNumber}}
     </nz-descriptions-item>
@@ -165,27 +154,23 @@
       Pontos
     </div>
 
-    <nz-table
-      #travelStepsTable
-      nzSize="small"
-      [nzData]="monitoringRequest?.data.travelSteps ?? []"
-      [nzShowPagination]="false"
-    >
+    <nz-table #travelStepsTable nzSize="small" [nzData]="monitoringRequest?.data.travelSteps ?? []"
+      [nzShowPagination]="false">
       <thead>
-      <tr>
-        <th class="text-left">Endereço</th>
-        <th class="text-right">Data/hora</th>
-      </tr>
+        <tr>
+          <th class="text-left">Endereço</th>
+          <th class="text-right">Data/hora</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let travelStep of travelStepsTable.data">
-        <td class="text-left">{{travelStep.address}}</td>
-        <td class="text-right">
-          {{travelStep.date | date: 'dd/MM/yyyy'}}
-          &nbsp;
-          {{travelStep.time}}
-        </td>
-      </tr>
+        <tr *ngFor="let travelStep of travelStepsTable.data">
+          <td class="text-left">{{travelStep.address}}</td>
+          <td class="text-right">
+            {{travelStep.date | date: 'dd/MM/yyyy'}}
+            &nbsp;
+            {{travelStep.time}}
+          </td>
+        </tr>
       </tbody>
     </nz-table>
   </div>
@@ -202,11 +187,7 @@
             <nz-form-item>
               <nz-form-label></nz-form-label>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  [nzDisabled]="readOnly"
-                  [formControlName]="item.value"
-                >{{ item.label }}</label>
+                <label nz-checkbox [nzDisabled]="readOnly" [formControlName]="item.value">{{ item.label }}</label>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -225,11 +206,7 @@
         <nz-form-item>
           <nz-form-label>Motivo</nz-form-label>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <input
-              nz-input
-              formControlName="justification"
-              [disabled]="readOnly"
-            />
+            <input nz-input formControlName="justification" [disabled]="readOnly" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -239,21 +216,14 @@
       <div nz-col [nzSpan]="6">
         <nz-form-item>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label
-              nz-checkbox
-              formControlName="hasMacro"
-              [nzDisabled]="readOnly"
-            >Macro</label>
+            <label nz-checkbox formControlName="hasMacro" [nzDisabled]="readOnly">Macro</label>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label
-              nz-checkbox
-              formControlName="hasEmbeddedIntelligence"
-              [nzDisabled]="readOnly"
-            >Inteligência Embarcada</label>
+            <label nz-checkbox formControlName="hasEmbeddedIntelligence" [nzDisabled]="readOnly">Inteligência
+              Embarcada</label>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -268,12 +238,51 @@
     </nz-form-item>
   </form>
 
-  <form
-    nz-form
-    [formGroup]="checklistBaitForm"
-    nzLayout="vertical"
-    *ngIf="monitoringRequest?.data?.baits.length > 0"
-  >
+
+  <br>
+  <h2>
+    Liberações das ultimas 72 horas
+  </h2>
+
+  <div *ngIf="lastReleasedMonitoringRequests.length === 0; else tableContent">
+    <p>Não possui liberação</p>
+  </div>
+
+
+  <ng-template #tableContent>
+    <table style="border: 1px solid #000; ">
+      <thead>
+        <th style="border: 1px solid #000; "> ID </th>
+        <th style="border: 1px solid #000; "> Placa </th>
+        <th style="border: 1px solid #000; "> carretas</th>
+        <th style="border: 1px solid #000; "> saida</th>
+        <th style="border: 1px solid #000; "> chegada </th>
+        <th style="border: 1px solid #000; ">operação </th>
+        <th style="border: 1px solid #000; ">status </th>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of lastReleasedMonitoringRequests;">
+          <tr style="border: 1px solid #000;">
+            <td style="border: 1px solid #000; ">{{ item.id }}</td>
+            <td style="border: 1px solid #000; ">{{ item.truck.vehicle.plate }}</td>
+            <td style="border: 1px solid #000; ">
+              <ng-container *ngFor="let item of item.wagons;">
+                {{item.vehicle.plate}}
+              </ng-container>
+            </td>
+            <td style="border: 1px solid #000; "> {{item.travelSteps[0].address}} </td>
+            <td style="border: 1px solid #000; "> {{item.travelSteps[item.travelSteps.length - 1].address}} </td>
+            <td style="border: 1px solid #000; "> {{item.operation.name}} </td>
+            <td style="border: 1px solid #000; "> {{item.status}} </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+  </ng-template>
+  <br>
+
+  <form nz-form [formGroup]="checklistBaitForm" nzLayout="vertical" *ngIf="monitoringRequest?.data?.baits.length > 0">
     <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-30">
       Checklist Iscas
     </div>
@@ -284,72 +293,49 @@
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="positionChecked"
-                  [nzDisabled]="readOnly"
-                >Posição</label>
+                <label nz-checkbox formControlName="positionChecked" [nzDisabled]="readOnly">Posição</label>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="decouplingChecked"
-                  [nzDisabled]="readOnly"
-                >Desacoplamento</label>
+                <label nz-checkbox formControlName="decouplingChecked" [nzDisabled]="readOnly">Desacoplamento</label>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="positionFrequencyChecked"
-                  [nzDisabled]="readOnly"
-                >Freq. de posição</label>
+                <label nz-checkbox formControlName="positionFrequencyChecked" [nzDisabled]="readOnly">Freq. de
+                  posição</label>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="batteriesChecked"
-                  [nzDisabled]="readOnly"
-                >Bateria</label>
+                <label nz-checkbox formControlName="batteriesChecked" [nzDisabled]="readOnly">Bateria</label>
               </nz-form-control>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <input nz-input formControlName="batteryLevel"/>
+                <input nz-input formControlName="batteryLevel" />
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="timerChecked"
-                  [nzDisabled]="readOnly"
-                >Temporizador</label>
+                <label nz-checkbox formControlName="timerChecked" [nzDisabled]="readOnly">Temporizador</label>
               </nz-form-control>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <input nz-input formControlName="timerIntervalInMinutes" [disabled]="readOnly"/>
+                <input nz-input formControlName="timerIntervalInMinutes" [disabled]="readOnly" />
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label
-                  nz-checkbox
-                  formControlName="jammingChecked"
-                  [nzDisabled]="readOnly"
-                >Operação Jamming</label>
+                <label nz-checkbox formControlName="jammingChecked" [nzDisabled]="readOnly">Operação Jamming</label>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -368,11 +354,7 @@
         <nz-form-item>
           <nz-form-label>Motivo</nz-form-label>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <input
-              nz-input
-              formControlName="justification"
-              [disabled]="readOnly"
-            />
+            <input nz-input formControlName="justification" [disabled]="readOnly" />
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -381,28 +363,18 @@
 
   <div id="printable" *ngIf="monitoringRequest">
     <app-monitoring-requests-check-list-printable
-      [monitoringRequest]="monitoringRequest"
-    ></app-monitoring-requests-check-list-printable>
+      [monitoringRequest]="monitoringRequest"></app-monitoring-requests-check-list-printable>
   </div>
 
   <div id="checklist-print" *ngIf="monitoringRequest">
-    <app-checklist-print
-      [monitoringRequest]="monitoringRequest"
-    ></app-checklist-print>
+    <app-checklist-print [monitoringRequest]="monitoringRequest"></app-checklist-print>
   </div>
 
   <div id="release-print" *ngIf="monitoringRequest">
-    <app-release-travel-print
-      [monitoringRequest]="monitoringRequest"
-    ></app-release-travel-print>
+    <app-release-travel-print [monitoringRequest]="monitoringRequest"></app-release-travel-print>
   </div>
 
-  <div
-    nz-col
-    nzSpan="24"
-    class="ant-descriptions-title m-t-15 m-b-15"
-    *ngIf="monitoringRequest?.data?.observations"
-  >
+  <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-15" *ngIf="monitoringRequest?.data?.observations">
     Motivo do cancelamento: {{monitoringRequest?.data?.observations}}
   </div>
 
@@ -412,24 +384,15 @@
         <nz-form-label>Terminal</nz-form-label>
         <nz-form-item>
           <nz-select formControlName="terminal">
-            <nz-option
-              *ngFor="let terminal of terminals"
-              [nzLabel]="terminal.name"
-              [nzValue]="terminal.id"
-            ></nz-option>
+            <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
           </nz-select>
         </nz-form-item>
       </div>
 
       <div nz-col nzSpan="20">
         <nz-button-group>
-          <button
-            *ngFor="let status of possibleStatus"
-            class="m-r-15"
-            nz-button
-            (click)="save(status.value)"
-            nzType="primary"
-          >
+          <button *ngFor="let status of possibleStatus" class="m-r-15" nz-button (click)="save(status.value)"
+            nzType="primary">
             {{ status.label }}
           </button>
         </nz-button-group>

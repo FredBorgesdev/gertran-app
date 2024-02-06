@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import MonitoringRequest from "../monitoring-request";
-import {format} from "date-fns";
+import { format } from "date-fns";
 
 @Component({
   selector: 'app-release-travel-print',
@@ -13,8 +13,26 @@ export class ReleaseTravelPrintComponent {
   constructor() {
   }
 
-  wagonsPlates(): string {
-    return this.monitoringRequest?.data?.wagons.map(wagon => wagon.vehicle.plate).join('/') ?? '';
+
+  firstWagonPlate(): string {
+    return this.monitoringRequest?.data?.wagons.map(wagon => wagon.vehicle.plate)[0]
+  }
+
+  secondWagonPlate(): string {
+    return this.monitoringRequest?.data?.wagons.map(wagon => wagon.vehicle.plate)[1]
+  }
+
+  workingSituation(): string {
+    if (this.monitoringRequest?.data?.driver?.workingSituation == 'third_party') {
+      return 'Terceiro'
+    }
+    if (this.monitoringRequest?.data?.driver?.workingSituation == 'fleet') {
+      return 'Empregado'
+    }
+    if (this.monitoringRequest?.data?.driver?.workingSituation == 'aggregate') {
+      return 'Agregado'
+    }
+
   }
 
   get currentDate(): string {

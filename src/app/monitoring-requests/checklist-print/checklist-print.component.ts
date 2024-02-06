@@ -20,9 +20,14 @@ export class ChecklistPrintComponent implements OnInit {
     this.checklistItems = this.checklistService.localizedValues;
   }
 
-  wagonsPlates(): string {
-    return this.monitoringRequest?.data?.wagons.map(wagon => wagon.vehicle.plate).join(', ') ?? '';
+  firstWagonPlate(): string {
+    return this.monitoringRequest?.data?.wagons.map(wagon => wagon.vehicle.plate)[0]
   }
+
+  secondWagonPlate(): string {
+    return this.monitoringRequest?.data?.wagons.map(wagon => wagon.vehicle.plate)[1]
+  }
+  
 
   // get currentDate(): string {
   //   return format(new Date(), 'dd/MM/yyyy HH:mm:ss');

@@ -8,6 +8,7 @@ import {NzModalRef} from 'ng-zorro-antd/modal';
 import MonitoringRequest from '../monitoring-request';
 import {ChecklistsService} from '../../checklists/checklists.service';
 import {AuthenticationService} from "../../authentication/authentication.service";
+import { ReportsService,BasePeriodFilter  } from 'src/app/reports/reports.service';
 
 export type ModalDestroyResult = {
   updateList: boolean;
@@ -32,6 +33,9 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   terminals: Terminals[] = [];
 
   monitoringRequest: MonitoringRequest;
+
+
+  lastReleasedMonitoringRequests = []
 
   printConfig = {
     printMode: 'template-popup',
@@ -59,6 +63,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private modal: NzModalRef,
     public checklistService: ChecklistsService,
     public authSevice: AuthenticationService,
+    public reportsService: ReportsService
   ) {
   }
 
@@ -127,9 +132,40 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     }
   }
 
+  returnRange3Days() {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(currentDate);
+    sevenDaysAgo.setDate(currentDate.getDate() - 3);
+    const fromDate = this.formatDate(sevenDaysAgo);
+    const toDate = this.formatDate(currentDate);
+    return { fromDate, toDate };
+  }
+  
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+
   loadMonitoringRequest(): void {
     this.isLoading = true;
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
+      const {fromDate,toDate} = this.returnRange3Days()
+
+      const periodFielter: BasePeriodFilter = {
+        from:fromDate,
+        to:toDate,
+        customer:result.customer.id
+      }
+
+      this.reportsService.getVehiclesReleased(periodFielter)
+      .toPromise().then(releasedMonitoringRequests=>{
+        this.lastReleasedMonitoringRequests = releasedMonitoringRequests
+        .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
+      })
+
       this.monitoringRequest = new MonitoringRequest(result);
       this.setPossibleStatus();
       this.isLoading = false;
