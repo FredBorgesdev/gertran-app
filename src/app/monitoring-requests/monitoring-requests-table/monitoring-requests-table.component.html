@@ -29,6 +29,68 @@
       color: rowColor.includes('fff') ? '#000' : '#fff'
     }"
   >
+  <td>
+    <div class="d-flex">
+      <a
+        *ngIf="!['draft'].includes(item.status)"
+        (click)="view.emit(item)"
+        class="m-r-5"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Visualizar"
+      >
+        <i nz-icon nzType="eye" nzTheme="outline"></i>
+      </a>
+      <a
+        *ngIf="['draft', 'reproved'].includes(item.status)"
+        (click)="edit.emit(item)"
+        class="m-r-5"
+        nz-button
+        nzType="default"
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Editar"
+      >
+        <i nz-icon nzType="edit" theme="outline"></i>
+      </a>
+
+      <div *ngIf="item.status === 'draft'">
+        <a
+          (click)="delete.emit(item)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nz-tooltip
+        >
+          <i
+            nz-icon
+            nzType="delete"
+            theme="outline"
+          ></i>
+        </a>
+      </div>
+
+      <div
+        *ngIf="authService.user.isGertranStaff && !['draft', 'under_review'].includes(item.status)"
+      >
+        <a
+          *ngFor="let status of possibleStatus[item.status]; let i=index"
+          (click)="moveMonitoringRequestToStatus(item, status)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nz-tooltip
+          [nzTooltipTitle]="status.label"
+        >
+          <i nz-icon [nzType]="statusIcons[status.value]" theme="outline"></i>
+        </a>
+      </div>
+    </div>
+  </td>
     <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
     <td>{{getOcrNumber(item)}}</td>
     <td>{{item.customer?.tradingName ?? '-'}}</td>
@@ -50,68 +112,7 @@
         height="25px"
       />
     </td>
-    <td>
-      <div class="d-flex">
-        <a
-          *ngIf="!['draft'].includes(item.status)"
-          (click)="view.emit(item)"
-          class="m-r-5"
-          nz-button
-          nzType="default"
-          nzShape="circle"
-          nz-tooltip
-          nzTooltipTitle="Visualizar"
-        >
-          <i nz-icon nzType="eye" nzTheme="outline"></i>
-        </a>
-        <a
-          *ngIf="['draft', 'reproved'].includes(item.status)"
-          (click)="edit.emit(item)"
-          class="m-r-5"
-          nz-button
-          nzType="default"
-          nzShape="circle"
-          nz-tooltip
-          nzTooltipTitle="Editar"
-        >
-          <i nz-icon nzType="edit" theme="outline"></i>
-        </a>
 
-        <div *ngIf="item.status === 'draft'">
-          <a
-            (click)="delete.emit(item)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-          >
-            <i
-              nz-icon
-              nzType="delete"
-              theme="outline"
-            ></i>
-          </a>
-        </div>
-
-        <div
-          *ngIf="authService.user.isGertranStaff && !['draft', 'under_review'].includes(item.status)"
-        >
-          <a
-            *ngFor="let status of possibleStatus[item.status]; let i=index"
-            (click)="moveMonitoringRequestToStatus(item, status)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            [nzTooltipTitle]="status.label"
-          >
-            <i nz-icon [nzType]="statusIcons[status.value]" theme="outline"></i>
-          </a>
-        </div>
-      </div>
-    </td>
   </tr>
   </tbody>
 </nz-table>

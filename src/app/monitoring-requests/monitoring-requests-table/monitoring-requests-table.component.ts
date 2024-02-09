@@ -24,6 +24,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
   possibleStatus: PossibleStatus;
 
   monitoringRequestsColumns = [
+    {title: 'Avaliação de Monitoramento'},
     {title: 'Código'},
     {title: 'Nº de ordem'},
     {title: 'Empresa'},
@@ -37,7 +38,6 @@ export class MonitoringRequestsTableComponent implements OnInit {
     {title: 'Ult. Posição'},
     {title: 'Horário'},
     {title: 'Tecnologia'},
-    {title: 'Avaliação de Monitoramento'},
   ];
 
   constructor(
