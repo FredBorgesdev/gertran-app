@@ -49,6 +49,7 @@ interface Truck {
 }
 
 interface MonitoringRequest {
+  travelStatus: string;
   id: string;
   status: string;
   travelSteps: TravelStep[];

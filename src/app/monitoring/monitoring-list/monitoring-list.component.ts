@@ -99,6 +99,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
     {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
     {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
+    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'bg-dark'},
   ];
 
   refreshAlertCount = new EventEmitter();
@@ -246,6 +247,15 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
+      data.results.map(x => {
+        const currentDateTime:any = new Date(); // Obtém a data e hora atual
+        const currentDateTimeTracker: any = new Date(x.positionDate); // Substitua isso pela sua data
+        const differenceInMilliseconds = currentDateTime - currentDateTimeTracker; // Calcula a diferença em milissegundos
+        const differenceInMinutes = differenceInMilliseconds / (1000 * 60); // Converte a diferença para minutos
+        if (differenceInMinutes < 30) {} 
+        else { x.monitoringRequest.travelStatus='lost_track' }
+        return x
+      })
       this.monitoringData = data.results;
       this.isLoading = false;
 
