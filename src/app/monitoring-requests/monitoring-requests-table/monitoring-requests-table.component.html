@@ -92,17 +92,7 @@
     </div>
   </td>
     <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
-    <td>{{getOcrNumber(item)}}</td>
-    <td>{{item.customer?.tradingName ?? '-'}}</td>
-    <td>{{item.shipper?.tradingName || item.transporter?.tradingName || '-'}}</td>
-    <td>{{item.driver?.name ?? '-'}}</td>
     <td>{{item.truck?.vehicle.plate}}</td>
-    <td>{{getWagons(item)}}</td>
-    <td>{{getUpdateDiff(item)}}</td>
-    <td>{{getDepartureTime(item)}}</td>
-    <td>{{getArrivalTime(item)}}</td>
-    <td>{{item.lastPosition?.pointReference}}</td>
-    <td>{{item.lastPosition?.positionDate | date: 'dd/MM/yyyy HH:mm'}}</td>
     <td>
       <img
         *ngIf="item.lastPosition?.trackerTechnologyName"
@@ -112,6 +102,18 @@
         height="25px"
       />
     </td>
+    <td>{{getOcrNumber(item)}}</td>
+    <td>{{item.customer?.tradingName ?? '-'}}</td>
+    <td>{{item.shipper?.tradingName || item.transporter?.tradingName || '-'}}</td>
+    <td>{{item.driver?.name ?? '-'}}</td>
+    
+    <td>{{getWagons(item)}}</td>
+    <td>{{getUpdateDiff(item)}}</td>
+    <td>{{getDepartureTime(item)}}</td>
+    <td>{{getArrivalTime(item)}}</td>
+    <td>{{item.lastPosition?.pointReference}}</td>
+    <td>{{item.lastPosition?.positionDate | date: 'dd/MM/yyyy HH:mm'}}</td>
+
 
   </tr>
   </tbody>

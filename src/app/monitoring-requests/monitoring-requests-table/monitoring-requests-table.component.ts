@@ -26,18 +26,18 @@ export class MonitoringRequestsTableComponent implements OnInit {
   monitoringRequestsColumns = [
     {title: 'Avaliação de Monitoramento'},
     {title: 'Código'},
+    {title: 'Placa'},
+    {title: 'Tecnologia'},
     {title: 'Nº de ordem'},
     {title: 'Empresa'},
     {title: 'Embarcador'},
     {title: 'Motorista'},
-    {title: 'Placa'},
     {title: 'Carretas'},
     {title: 'Modificação'},
     {title: 'Saída'},
     {title: 'Chegada'},
     {title: 'Ult. Posição'},
     {title: 'Horário'},
-    {title: 'Tecnologia'},
   ];
 
   constructor(
