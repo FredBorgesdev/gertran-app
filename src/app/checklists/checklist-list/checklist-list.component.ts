@@ -42,4 +42,8 @@ export class ChecklistListComponent extends BaseCrudListComponent<Checklist> {
   edit(resource: Checklist): void {
     this.router.navigate(['checklists', 'checklists-review', resource.id]);
   }
+
+  goToApplyedCheckLists(): void {
+    this.router.navigate(['reports', 'checklist-history']);
+  }
 }

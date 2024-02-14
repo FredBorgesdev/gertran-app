@@ -14,19 +14,31 @@
     <nz-divider></nz-divider>
 
     <div class="row m-b-30">
-      <div class="col-lg-8">
+      <div class="col-lg-7">
         <div class="d-md-flex">
         </div>
       </div>
-      <div class="col-lg-4 text-right">
-        <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Solicitar checklist</span>
-        </button>
+      <div class="col-lg-5 text-right">
+        <nz-button-group nzSize="large" class="m-b-2">
+          <button
+            (click)="goToApplyedCheckLists()"
+            nz-button
+            nzType="primary"
+            style="margin-right: 26px;"
+          >
+            <span nz-icon nzType="history" nzTheme="outline"></span>
+            <span>HISTORICO CHECKLIST </span>
+          </button>
+      
+          <button
+            (click)="create()"
+            nz-button
+            nzType="primary"
+          >
+            <i nz-icon nzType="plus" theme="outline"></i>
+            <span>Solicitar checklist</span>
+          </button>
+        </nz-button-group>
       </div>
     </div>
     <nz-table
