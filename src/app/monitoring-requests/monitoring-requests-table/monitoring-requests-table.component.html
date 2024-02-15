@@ -93,6 +93,7 @@
   </td>
     <td nz-tooltip [nzTooltipTitle]="item.id">{{item.id | id}}</td>
     <td>{{item.truck?.vehicle.plate}}</td>
+    <td>{{getWagons(item)}}</td>
     <td>
       <img
         *ngIf="item.lastPosition?.trackerTechnologyName"
@@ -105,9 +106,7 @@
     <td>{{getOcrNumber(item)}}</td>
     <td>{{item.customer?.tradingName ?? '-'}}</td>
     <td>{{item.shipper?.tradingName || item.transporter?.tradingName || '-'}}</td>
-    <td>{{item.driver?.name ?? '-'}}</td>
-    
-    <td>{{getWagons(item)}}</td>
+    <td>{{item.driver?.name ?? '-'}}</td>    
     <td>{{getUpdateDiff(item)}}</td>
     <td>{{getDepartureTime(item)}}</td>
     <td>{{getArrivalTime(item)}}</td>
