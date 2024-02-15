@@ -99,7 +99,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
     {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
     {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
-    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'bg-dark'},
+    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'bg-dark text-white'},
   ];
 
   refreshAlertCount = new EventEmitter();
