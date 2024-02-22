@@ -35,7 +35,7 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
     {title: 'SM', width: '80px'},
     {title: 'Ig', width: '35px'},
     {title: '%', width: '50px'},
-    {title: 'Mapa', width: '45px'},
+    {title: 'Mapa', width: '50px'},
     {title: 'Origem', width: '110px'},
     {title: 'Destino', width: '110px'},
     {title: 'Posição', width: '110px'},

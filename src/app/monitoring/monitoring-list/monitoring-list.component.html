@@ -188,7 +188,7 @@
           height="25px"
         />
       </td>
-      <td nzLeft class="bg-gray">{{ item.trackerSerialNumber || '-' }}</td>
+      <td nzLeft class="bg-gray text-dark">{{ item.trackerSerialNumber || '-' }}</td>
       <td
         nzLeft
         nz-tooltip
@@ -210,7 +210,7 @@
           height="20"
         >
       </td>
-      <td nzLeft class="bg-gray">{{ item.vehiclePlate || '-' }}</td>
+      <td nzLeft class="bg-gray text-dark">{{ item.vehiclePlate || '-' }}</td>
       <td>
         <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
         <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
