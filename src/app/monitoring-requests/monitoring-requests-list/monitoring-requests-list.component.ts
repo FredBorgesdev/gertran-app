@@ -123,19 +123,21 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     for (let index = 0; index < sms.results.length; index++) {
       const element = sms.results[index];
       const customerId = element.customer.id;
-      if (!custumers.includes(customerId)) {
-        custumers.push({customer_id:customerId ,truck_id: element.truck.id});
-      }
+      // if (!custumers.includes(customerId)) {
+        // this.releasedByCustomersService.releaseByCustomer([{customer_id:customerId ,truck_id: element.truck.id}]).toPromise()
+        // .then(responseLast72HReleasedTravels=>{
+        //   for (let index = 0; index < sms.results.length; index++) {
+        //     const sm = sms.results[index];
+        //     sm['hasRecentReleased']=
+        //     (responseLast72HReleasedTravels
+        //       .filter(travels=>travels.customer.id==sm.customer.id&&sm.id!=travels.id&&sm.truck.id==travels.truck.id)) 
+        //   }
+        // })
+
+        // custumers.push({customer_id:customerId ,truck_id: element.truck.id});
+      // }
     }
-    this.releasedByCustomersService.releaseByCustomer(custumers).toPromise()
-    .then(responseLast72HReleasedTravels=>{
-      for (let index = 0; index < sms.results.length; index++) {
-        const sm = sms.results[index];
-        sm['hasRecentReleased']=
-        (responseLast72HReleasedTravels
-          .filter(travels=>travels.customer.id==sm.customer.id&&sm.id!=travels.id&&sm.truck.id==travels.truck.id)) 
-      }
-    })
+
   }
 
   loadInProgress(url?: string): void {
