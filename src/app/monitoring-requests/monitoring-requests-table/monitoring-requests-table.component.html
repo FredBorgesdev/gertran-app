@@ -31,6 +31,18 @@
   >
   <td>
     <div class="d-flex">
+
+      <a
+      *ngIf="item.status == 'under_review'"
+      class="m-r-5"
+      nz-button
+      nzShape="circle"
+      nz-tooltip
+      nzTooltipTitle="Liberações das últimas 72H"
+      >
+        {{ item.hasRecentReleased ? item.hasRecentReleased.length : 0 }}
+      </a>
+
       <a
         *ngIf="!['draft'].includes(item.status)"
         (click)="view.emit(item)"
@@ -43,6 +55,7 @@
       >
         <i nz-icon nzType="eye" nzTheme="outline"></i>
       </a>
+    
       <a
         *ngIf="['draft', 'reproved'].includes(item.status)"
         (click)="edit.emit(item)"

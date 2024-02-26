@@ -19,6 +19,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 import {Observable, Subject, timer} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import { ReleasedByCustomersService } from '../releasedByCustomers.service';
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -54,6 +55,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
 
   constructor(
     private directionsService: DirectionsService,
+    private releasedByCustomersService: ReleasedByCustomersService, 
     public authService: AuthenticationService,
     service: MonitoringRequestsService,
     router: Router,
@@ -111,8 +113,29 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       this.waitingForStartResponse = result;
+      this.checkSMs(result)
       this.isLoading = false;
     });
+  }
+
+  checkSMs(sms: GetAllResponse<MonitoringRequests>){
+    const custumers=[]
+    for (let index = 0; index < sms.results.length; index++) {
+      const element = sms.results[index];
+      const customerId = element.customer.id;
+      if (!custumers.includes(customerId)) {
+        custumers.push(customerId);
+      }
+    }
+    this.releasedByCustomersService.releaseByCustomer(custumers).toPromise()
+    .then(responseLast72HReleasedTravels=>{
+      for (let index = 0; index < sms.results.length; index++) {
+        const sm = sms.results[index];
+        sm['hasRecentReleased']=
+        (responseLast72HReleasedTravels
+          .filter(travels=>travels.customer.id==sm.customer.id&&sm.id!=travels.id&&sm.truck.id==travels.truck.id)) 
+      }
+    })
   }
 
   loadInProgress(url?: string): void {
@@ -181,6 +204,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       this.underReviewResponse = result;
+      this.checkSMs(result)
       this.isLoading = false;
     });
   }
