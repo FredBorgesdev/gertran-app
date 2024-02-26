@@ -124,7 +124,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       const element = sms.results[index];
       const customerId = element.customer.id;
       if (!custumers.includes(customerId)) {
-        custumers.push(customerId);
+        custumers.push({customer_id:customerId ,truck_id: element.truck.id});
       }
     }
     this.releasedByCustomersService.releaseByCustomer(custumers).toPromise()
