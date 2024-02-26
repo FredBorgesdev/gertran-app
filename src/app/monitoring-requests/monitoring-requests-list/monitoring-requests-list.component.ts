@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, ChangeDetectorRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
@@ -20,6 +20,7 @@ import User from '../../users/user';
 import {Observable, Subject, timer} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import { ReleasedByCustomersService } from '../releasedByCustomers.service';
+import { BasePeriodFilter, ReportsService } from 'src/app/reports/reports.service';
 
 @Component({
   selector: 'app-monitoring-requests-list',
@@ -54,6 +55,8 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   stopTimer = new Subject();
 
   constructor(
+    private cdr: ChangeDetectorRef,
+    public reportsService: ReportsService,
     private directionsService: DirectionsService,
     private releasedByCustomersService: ReleasedByCustomersService, 
     public authService: AuthenticationService,
@@ -112,31 +115,51 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
-      this.waitingForStartResponse = result;
-      this.checkSMs(result)
+      
+      this.waitingForStartResponse = this.checkSMsIfVehicleWasReleasedIn72H(result);
       this.isLoading = false;
     });
   }
 
-  checkSMs(sms: GetAllResponse<MonitoringRequests>){
-    const custumers=[]
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = (date.getDate()+1).toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  returnRange3Days() {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(currentDate);
+    sevenDaysAgo.setDate(currentDate.getDate() - 3);
+    const fromDate = this.formatDate(sevenDaysAgo);
+    const toDate = this.formatDate(currentDate);
+    return { fromDate, toDate };
+  }
+
+
+  checkSMsIfVehicleWasReleasedIn72H(sms: GetAllResponse<MonitoringRequests>){
     for (let index = 0; index < sms.results.length; index++) {
       const element = sms.results[index];
       const customerId = element.customer.id;
-      // if (!custumers.includes(customerId)) {
-        // this.releasedByCustomersService.releaseByCustomer([{customer_id:customerId ,truck_id: element.truck.id}]).toPromise()
-        // .then(responseLast72HReleasedTravels=>{
-        //   for (let index = 0; index < sms.results.length; index++) {
-        //     const sm = sms.results[index];
-        //     sm['hasRecentReleased']=
-        //     (responseLast72HReleasedTravels
-        //       .filter(travels=>travels.customer.id==sm.customer.id&&sm.id!=travels.id&&sm.truck.id==travels.truck.id)) 
-        //   }
-        // })
+    
+      const {fromDate,toDate} = this.returnRange3Days()
 
-        // custumers.push({customer_id:customerId ,truck_id: element.truck.id});
-      // }
+      const periodFielter: BasePeriodFilter = {
+        from:fromDate,
+        to:toDate,
+        customer:customerId
+      }
+    
+      this.reportsService.getVehiclesReleased(periodFielter)
+      .toPromise().then(releasedMonitoringRequests=>{
+        const sm = sms.results[index];
+        sm['hasRecentReleased']=(releasedMonitoringRequests
+          .filter(filter=>filter.truck.id==element.truck.id && element.id != filter.id))
+      })
+      this.cdr.detectChanges();
     }
+    return sms
 
   }
 
@@ -205,8 +228,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
-      this.underReviewResponse = result;
-      this.checkSMs(result)
+      this.underReviewResponse = this.checkSMsIfVehicleWasReleasedIn72H(result);
       this.isLoading = false;
     });
   }

@@ -31,9 +31,9 @@
   >
   <td>
     <div class="d-flex">
-<!-- 
+
       <a
-      *ngIf="item.status == 'under_review'"
+      *ngIf="item.status == 'under_review' || item.status == 'waiting_for_start'"
       class="m-r-5"
       nz-button
       nzShape="circle"
@@ -41,7 +41,7 @@
       nzTooltipTitle="Liberações das últimas 72H"
       >
         {{ item.hasRecentReleased ? item.hasRecentReleased.length : 0 }}
-      </a> -->
+      </a>
 
       <a
         *ngIf="!['draft'].includes(item.status)"
