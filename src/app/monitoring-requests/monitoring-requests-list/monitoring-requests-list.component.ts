@@ -116,7 +116,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       
-      this.waitingForStartResponse = this.checkSMsIfVehicleWasReleasedIn72H(result);
+      this.waitingForStartResponse = result;
       this.isLoading = false;
     });
   }
@@ -228,7 +228,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
-      this.underReviewResponse = this.checkSMsIfVehicleWasReleasedIn72H(result);
+      this.underReviewResponse = result;
       this.isLoading = false;
     });
   }
