@@ -6,6 +6,7 @@ import {Status} from '../../../monitoring-requests/monitoring-requests.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {MapMarkersModalComponent} from '../../extra/map-markers-modal/map-markers-modal.component';
 import {ActivatedRoute, Route, Router} from "@angular/router";
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-maps',
@@ -16,9 +17,11 @@ import {ActivatedRoute, Route, Router} from "@angular/router";
 export class DashboardMapsComponent implements OnInit, OnChanges {
   @Input() embed = false;
   @Input() customerId: string;
+  map: mapboxgl.Map;
 
   markers = [];
   mapLoading = false;
+  //mapCenter = {lat: -20.2400732, lng: -13.1805017};
   mapCenter = {lat: -14.2400732, lng: -53.1805017};
 
   constructor(
@@ -49,12 +52,13 @@ export class DashboardMapsComponent implements OnInit, OnChanges {
     this.positionService.getAll({}, {
       customer,
       travelling: true,
-      travelStatus: Status.IN_PROGRESS,
+      // travelStatus: Status.IN_PROGRESS,
     }).subscribe((data) => {
       this.mapLoading = false;
       this.markers = data.results.map((position) => ({
         lat: position.latitude,
         lng: position.longitude,
+        plate: position.vehiclePlate
       }));
     }, () => {
       this.mapLoading = false;
@@ -71,5 +75,16 @@ export class DashboardMapsComponent implements OnInit, OnChanges {
       },
       nzWidth: '80%',
     });
+  }
+
+  showPopup(marker: any) {
+    const popup = new mapboxgl.Popup({ closeButton: false })
+      .setHTML(marker.plate)
+      .setLngLat(marker)
+      .addTo(this.map);
+  }
+
+  mapLoaded(map: mapboxgl.Map): void {
+    this.map = map;
   }
 }
