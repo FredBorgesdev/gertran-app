@@ -105,6 +105,7 @@
         nzPlaceHolder="Permissões"
         formControlName="permissions"
         nzMode="multiple"
+        (ngModelChange)="onPermissionsChange($event)"
       >
         <div *ngFor="let permission of permissions">
           <nz-option

@@ -41,6 +41,10 @@ export class CustomersFormComponent implements OnInit {
   ) {
   }
 
+  onPermissionsChange(selectedPermissions: any[]) {
+    this.validateForm.value.permissions = selectedPermissions
+  }
+
   saveCustomer(): void {
     if (this.validateForm.valid) {
       this.save.emit(this.validateForm.value);
