@@ -2,11 +2,13 @@
   #table
   [nzData]="monitoringData"
   [nzFrontPagination]="false"
-  nzTableLayout="fixed"
   nzSize="small"
-  [nzScroll]="{ y: '35vh' }"
+  nzBordered
+  [nzFrontPagination]="false"
   [nzLoading]="isLoading"
 >
+<!-- [nzScroll]="{ y: '35vh' }" -->
+<!-- nzTableLayout="fixed" -->
   <thead>
   <tr>
     <th
