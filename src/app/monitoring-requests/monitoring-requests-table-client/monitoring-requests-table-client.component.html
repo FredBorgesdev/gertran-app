@@ -8,7 +8,7 @@
 >
   <thead>
   <tr>
-    <th class="text-center table-header">SM</th>
+    <th class="text-center table-header" style="width: 10%;">SM</th>
     <th class="text-center table-header">Placa</th>
     <th class="text-center table-header">Tecnologia</th>
     <th class="text-center table-header">Origem</th>
@@ -22,12 +22,12 @@
     *ngFor="let data of table.data; index as i"
     [class]="getRowName(data)"
   >
-    <td>{{ data.id | id }}</td>
-    <td>{{ data.truck.vehicle.plate }}</td>
-    <td>{{ data.trackerTechnology.name }}</td>
-    <td>{{ getOrigin(data) }}</td>
-    <td>{{ getDestination(data) }}</td>
-    <td>{{ getLocalizedStatus(data.status) }}</td>
+    <td class="text-center max-width-cell">{{ data.id | id }}</td>
+    <td class="text-center max-width-cell">{{ data.truck.vehicle.plate }}</td>
+    <td class="text-center max-width-cell">{{ data.trackerTechnology.name }}</td>
+    <td class="text-center max-width-cell">{{ getOrigin(data) }}</td>
+    <td class="text-center max-width-cell">{{ getDestination(data) }}</td>
+    <td class="text-center max-width-cell">{{ getLocalizedStatus(data.status) }}</td>
   </tr>
   </tbody>
 </nz-table>
