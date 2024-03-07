@@ -18,3 +18,9 @@ th.table-header {
   color: #fff;
   font-weight: bold;
 }
+.max-width-cell {
+  max-width: 200px; /* Set your desired maximum width */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

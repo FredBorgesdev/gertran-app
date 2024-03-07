@@ -8,11 +8,11 @@
 >
   <thead>
   <tr>
-    <th class="text-center table-header">Data/hora criação</th>
-    <th class="text-center table-header">Placa</th>
-    <th class="text-center table-header">Tecnologia</th>
+    <th class="text-center table-header" style="width: 15%;">Data/hora criação</th>
+    <th class="text-center table-header" style="width: 10%;">Placa</th>
+    <th class="text-center table-header" style="width: 10%;">Tecnologia</th>
     <th class="text-center table-header">Cliente</th>
-    <th class="text-center table-header">Atualização</th>
+    <th class="text-center table-header"style="width: 15%;">Atualização</th>
   </tr>
   </thead>
 
@@ -21,11 +21,11 @@
     *ngFor="let data of table.data; index as i"
     [class]="getRowName(data)"
   >
-    <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-    <td>{{ data.truck.vehicle.plate }}</td>
-    <td>{{ data.trackerTechnology?.name ?? '-' }}</td>
-    <td>{{ data.customer.tradingName }}</td>
-    <td>{{ getUpdateDiff(data) }}</td>
+    <td class="text-center max-width-cell">{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+    <td class="text-center max-width-cell">{{ data.truck.vehicle.plate }}</td>
+    <td class="text-center max-width-cell">{{ data.trackerTechnology?.name ?? '-' }}</td>
+    <td class="text-center max-width-cell">{{ data.customer.tradingName }}</td>
+    <td class="text-center max-width-cell">{{ getUpdateDiff(data) }}</td>
   </tr>
   </tbody>
 </nz-table>
