@@ -19,7 +19,7 @@
 }
 
 .bg-default {
-  background: green;
+  background: white;
 }
 
 .bg-danger {
@@ -30,15 +30,15 @@
   width: 80px;
   height: 80px;
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 20px;
 }
 
-h1.header-small {
+h3.header-small {
   font-size: 1.5em;
 }
 
-h3.header-small {
+h4.header-small {
   font-size: 1.2em;
   margin-bottom: 10px !important;
 }

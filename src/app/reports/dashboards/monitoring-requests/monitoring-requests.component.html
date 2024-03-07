@@ -1,11 +1,11 @@
 <div class="m-b-15 text-center">
-  <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
+  <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
     Solicitações de monitoramento
-  </h1>
-
-  <h3 [class]="(hideHeader && 'header-small') + ' text-center'">
-    Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
   </h3>
+
+  <h4 [class]="(hideHeader && 'header-small') + ' text-center'">
+    Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
+  </h4>
 
   <img
     *ngIf="!hideHeader"
