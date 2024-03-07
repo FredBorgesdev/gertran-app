@@ -2,7 +2,7 @@
   <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
     Check-list por veículo
   </h1>
-  <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-25'">
+  <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-20'">
     Tempo: {{ currentTime }}
     &nbsp;
     &nbsp;
@@ -35,6 +35,7 @@
     [nzPageIndex]="page"
     [nzFrontPagination]="false"
     nzSize="small"
+    nzBordered
     (nzQueryParams)="handleQueryParamsChange($event)"
   >
     <thead>
