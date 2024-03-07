@@ -3,12 +3,13 @@
   [center]="mapCenter"
   [zoom]="[3]"
   [class]="embed && 'embed-map'"
+  (mapLoad)="mapLoaded($event)"
 >
   <mgl-marker
     *ngFor="let marker of markers; let i = index"
     [lngLat]="marker"
   >
-             <span nz-icon>
+             <span nz-icon (mouseover)="showPopup(marker)">
                <img
                  src="assets/images/logo/truck.svg"
                  alt="Caminhão"
