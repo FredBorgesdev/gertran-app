@@ -5,16 +5,8 @@
     Alertas
   </h1>
 
-  <nz-select
-    class="dash-select"
-    [ngModel]="currentTerminal"
-    (ngModelChange)="setTerminalAndLoadAlerts($event)"
-  >
-    <nz-option
-      *ngFor="let terminal of terminals"
-      [nzLabel]="terminal.name"
-      [nzValue]="terminal"
-    ></nz-option>
+  <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="setTerminalAndLoadAlerts($event)">
+    <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal"></nz-option>
   </nz-select>
 
   <h1 class="dash-header-title">
@@ -24,24 +16,28 @@
 
 <h4 *ngIf="isLoading">Carregando...</h4>
 
-<img
-  src="assets/images/logo/logogertran.png"
-  alt="Gertran"
-  class="logo"
->
+<img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
 
-<h1 class="dash-title">
+<h3 class="dash-title">
   {{ currentTerminal?.name }}
 
   <span *ngIf="currentAlerts?.length === 0">
     sem alertas
   </span>
-</h1>
+</h3>
 
-<ul class="dash-list">
+
+
+
+
+
+<!-- <ul class="dash-list">
   <li
     *ngFor="let alert of currentAlerts"
     [class]="getClass(alert) + ' d-flex justify-content-between'"
+
+    nzBordered
+
   >
     {{alert.vehicle.plate}}
 
@@ -64,4 +60,31 @@
       {{ alert.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}
     </div>
   </li>
-</ul>
+</ul> -->
+
+
+
+
+
+<nz-table #table [nzData]="currentAlerts" [nzFrontPagination]="false" nzSize="small" nzBordered>
+  <thead>
+    <tr>
+      <th  class="table-header">Placa</th>
+      <th  class="table-header">Cliente</th>
+      <th  class="table-header">Destino</th>
+      <th  class="table-header">Origem</th>
+      <th  class="table-header">Alerta</th>
+      <th  class="table-header">Tempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of currentAlerts; let i=index" [class]="getClass(item)">
+      <td>{{item.vehicle.plate}}</td>
+      <td>{{item.customer.tradingName}}</td>
+      <td>{{item.position.positionInfo.destinyCity}} - {{item.position.positionInfo.destinyState}}</td>
+      <td>{{item.position.positionInfo.originCity}} - {{item.position.positionInfo.originState}}</td>
+      <td>{{item.message}}</td>
+      <td>{{getRollingTimeInMinutes(item) }} - {{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+    </tr>
+  </tbody>
+</nz-table>
