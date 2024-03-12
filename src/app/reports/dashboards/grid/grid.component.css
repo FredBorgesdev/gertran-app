@@ -150,3 +150,13 @@ th.table-header {
   color: #fff;
   font-weight: bold;
 }
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid black;
+}
+
+th, td {
+  font-weight: bold;
+  font-size: 18px;
+}

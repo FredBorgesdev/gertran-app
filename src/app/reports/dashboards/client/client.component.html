@@ -1,68 +1,36 @@
-<h1 class="text-center m-b-40">
+<h1 class="text-center m-b-1">
   CCG – CENTRO DE CONTROLE GERTRAN
 </h1>
+<img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+<br>
+<div style="display: flex;flex-direction: column;">
 
-<img
-  src="assets/images/logo/logogertran.png"
-  alt="Gertran"
-  class="logo"
->
+  <div style="flex:5;">
+    <div style="flex-direction: row;display: flex;">
 
-<div nz-row nzGutter="16" class="m-b-20" style="min-height: 40vh;">
-  <div
-    nz-col
-    nzSpan="12"
-  >
-    <nz-button-group nzSize="small" class="m-b-10">
-      <button class="m-r-10" nz-button nzType="primary"
-              (click)="goTo('/monitoring/monitoring-list', { 'navbar-closed': true })">
-        Grid
-      </button>
-      <button class="m-r-10" nz-button nzType="primary"
-              (click)="goTo('/reports/dashboards/maps', { fullscreen: true })">
-        Mapa
-      </button>
-      <button
-        class="m-r-10"
-        nz-button
-        nzType="primary"
-        (click)="goTo('/monitoring-requests/monitoring-requests-list')"
-      >
-        SM
-      </button>
-      <button
-        nz-button
-        nzType="primary"
-        (click)="goTo('/checklists/checklists-list')"
-      >Checklist
-      </button>
-    </nz-button-group>
+      <div style="flex:8;">
+        <app-grid></app-grid>
+      </div>
 
-    <app-grid></app-grid>
+      <div style="flex:3;">
+        <app-maps [embed]="true"></app-maps>
+      </div>
+
+    </div>
   </div>
 
-  <div
-    nz-col
-    nzSpan="12"
-  >
-    <app-maps [embed]="true"></app-maps>
-  </div>
-</div>
+  <div style="flex:5;">
+    <div style="flex-direction: row;display: flex;">
 
-<div nz-row nzGutter="16">
-  <div
-    nz-col
-    [nzSpan]="authService.user.hasPermission('reports.view_dashboard_checklist') ? 12 : 24"
-    *ngIf="authService.user.hasPermission('reports.view_dashboard_monitoring_request')"
-  >
-    <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
+      <div style="flex:5;">
+        <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
+      </div>
+
+      <div style="flex:5;">
+        <app-client-checklists [hideHeader]="true"></app-client-checklists>
+      </div>
+
+    </div>
   </div>
 
-  <div
-    nz-col
-    [nzSpan]="authService.user.hasPermission('reports.view_dashboard_monitoring_request') ? 12 : 24"
-    *ngIf="authService.user.hasPermission('reports.view_dashboard_checklist')"
-  >
-    <app-client-checklists [hideHeader]="true"></app-client-checklists>
-  </div>
 </div>

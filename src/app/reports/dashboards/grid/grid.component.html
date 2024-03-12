@@ -3,11 +3,11 @@
   [nzData]="monitoringData"
   [nzFrontPagination]="false"
   nzSize="small"
-  nzBordered
+  class="custom-table"
   [nzFrontPagination]="false"
   [nzLoading]="isLoading"
+  [nzScroll]="{ y: '35vh' }"
 >
-<!-- [nzScroll]="{ y: '35vh' }" -->
 <!-- nzTableLayout="fixed" -->
   <thead>
   <tr>
@@ -38,9 +38,6 @@
       />
     </td>
     <td nzLeft class="bg-gray">{{ item.vehiclePlate || '-' }}</td>
-    <td>
-      SM
-    </td>
     <td>
       <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
       <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">

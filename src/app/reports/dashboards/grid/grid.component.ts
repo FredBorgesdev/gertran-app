@@ -30,17 +30,16 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
 
   isLoading = false;
   monitoringColumns = [
-    {title: 'Tec', width: '40px'},
-    {title: 'Placa', width: '60px'},
-    {title: 'SM', width: '80px'},
-    {title: 'Ig', width: '35px'},
-    {title: '%', width: '50px'},
-    {title: 'Mapa', width: '50px'},
-    {title: 'Origem', width: '110px'},
-    {title: 'Destino', width: '110px'},
-    {title: 'Posição', width: '110px'},
-    {title: 'Data/hora inicio de viagem', style: 'font-size: 7px; text-align: center;'},
-    {title: 'Data/hora previsão de fim', style: 'font-size: 7px; text-align: center;'},
+    {title: 'Tec', width: '6%'},
+    {title: 'Placa', width: '10%'},
+    {title: 'Ig', width: '4%'},
+    {title: '%', width: '7%'},
+    {title: 'Mapa', width: '5%'},
+    {title: 'Origem', width: '10%'},
+    {title: 'Destino', width: '10%'},
+    {title: 'Posição', width: '12%'},
+    {title: 'Previsão inicio', width: '12%'},
+    {title: 'Previsão fim', width: '12%'},
   ];
   validateForm: FormGroup;
 

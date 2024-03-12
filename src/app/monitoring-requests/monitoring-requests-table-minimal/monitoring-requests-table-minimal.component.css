@@ -24,3 +24,15 @@ th.table-header {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid black;
+}
+
+
+th, td {
+  font-weight: bold;
+  font-size: 18px;
+}
