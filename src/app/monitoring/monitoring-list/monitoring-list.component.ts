@@ -247,19 +247,27 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-      data.results.map(x => {
-        const currentDateTime:any = new Date(); // Obtém a data e hora atual
-        const currentDateTimeTracker: any = new Date(x.positionDate); // Substitua isso pela sua data
-        const differenceInMilliseconds = currentDateTime - currentDateTimeTracker; // Calcula a diferença em milissegundos
-        const differenceInMinutes = differenceInMilliseconds / (1000 * 60); // Converte a diferença para minutos
-        if (differenceInMinutes < 30) {} 
-        else { x.monitoringRequest.travelStatus='lost_track' }
-        return x
-      })
-      this.monitoringData = data.results;
-      this.isLoading = false;
-
-      this.updatePositionsPointReferences();
+      try {
+        data.results.map(x => {
+          const currentDateTime:any = new Date(); // Obtém a data e hora atual
+          const currentDateTimeTracker: any = new Date(x.positionDate); // Substitua isso pela sua data
+          const differenceInMilliseconds = currentDateTime - currentDateTimeTracker; // Calcula a diferença em milissegundos
+          const differenceInMinutes = differenceInMilliseconds / (1000 * 60); // Converte a diferença para minutos
+          if (differenceInMinutes < 30) {} 
+          else { x.monitoringRequest.travelStatus='lost_track' }
+          return x
+        })
+      } catch (error) {
+        console.log(error)
+      }
+      try {
+        this.monitoringData = data.results;
+        this.isLoading = false;
+  
+        this.updatePositionsPointReferences();
+      } catch (error) {
+        console.log(error)
+      }
     }, () => {
       this.isLoading = false;
       this.message.error('Erro ao carregar lista');

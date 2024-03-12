@@ -126,6 +126,25 @@
     ></app-monitoring-requests-table>
   </nz-card>
 
+<div *ngIf="reprovedDisapprovedResponse?.count > 0">
+
+    <nz-card
+    [nzTitle]="'Finalizado desaprovado ' + ' (' + reprovedDisapprovedResponse?.count + ')'"
+    [nzBodyStyle]="{ 'padding': '0px' }"
+  >
+    <app-monitoring-requests-table
+      [monitoringRequests]="reprovedDisapprovedResponse"
+      [rowColor]="'#fe0000'"
+      (view)="view($event)"
+      (edit)="edit($event)"
+      (delete)="delete($event)"
+      (handleQueryParamsChange)="handleQueryParamsChangeReprovedDisapproved($event)"
+      (refreshAll)="loadAllResources()"
+    ></app-monitoring-requests-table>
+  </nz-card>
+
+</div>
+
   <nz-card
     [nzTitle]="'Cancelado' + ' (' + resources?.count + ')'"
     [nzBodyStyle]="{ 'padding': '0px' }"

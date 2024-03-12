@@ -34,6 +34,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   underReviewResponse: GetAllResponse<MonitoringRequests>;
   reprovedResponse: GetAllResponse<MonitoringRequests>;
   finishedResponse: GetAllResponse<MonitoringRequests>;
+  reprovedDisapprovedResponse: GetAllResponse<MonitoringRequests>;
 
   field = 'plate';
   search = '';
@@ -103,6 +104,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     this.loadInProgress();
     this.loadUnderReview();
     this.loadReproved();
+    this.loadReprovedDisapproved();
     this.loadFinished();
   }
 
@@ -201,6 +203,20 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       }
     ).subscribe((result) => {
       this.reprovedResponse = result;
+      this.isLoading = false;
+    });
+  }
+
+  loadReprovedDisapproved(url?: string): void {
+    this.isLoading = true;
+    this.service.getAll(
+      this.pagination(url),
+      {
+        status: Status.TERMINATED_DISAPPROVED,
+        ...this.monitoringRequestFilters,
+      }
+    ).subscribe((result) => {
+      this.reprovedDisapprovedResponse = result;
       this.isLoading = false;
     });
   }
@@ -354,6 +370,16 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
       this.loadReproved(url);
     } else if (params.pageIndex > getCurrentPage(this.reprovedResponse)) {
       const url = this.replaceOffsetWithPage(this.reprovedResponse.next, params.pageIndex);
+      this.loadReproved(url);
+    }
+  }
+
+  handleQueryParamsChangeReprovedDisapproved(params: NzTableQueryParams): void {
+    if (params.pageIndex < getCurrentPage(this.reprovedDisapprovedResponse)) {
+      const url = this.replaceOffsetWithPage(this.reprovedDisapprovedResponse.previous, params.pageIndex);
+      this.loadReproved(url);
+    } else if (params.pageIndex > getCurrentPage(this.reprovedDisapprovedResponse)) {
+      const url = this.replaceOffsetWithPage(this.reprovedDisapprovedResponse.next, params.pageIndex);
       this.loadReproved(url);
     }
   }
