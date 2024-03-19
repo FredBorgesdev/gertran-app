@@ -400,7 +400,7 @@
         </nz-button-group>
       </div>
 
-      <nz-button-group>
+      <nz-button-group *ngIf="monitoringRequest?.data?.status != 'under_review' ">
         <button nz-button [print]="['printable', printConfig]" nzType="primary" class="m-r-15">
           <i nz-icon nzType="printer" nzTheme="outline"></i>
           Imprimir
