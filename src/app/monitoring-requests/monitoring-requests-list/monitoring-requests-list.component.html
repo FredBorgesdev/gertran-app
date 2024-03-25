@@ -80,7 +80,7 @@
       (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
-
+  <div *ngIf="waitingForStartResponse?.count > 0">
   <nz-card
     [nzTitle]="'Aguardando inicio' + ' (' + waitingForStartResponse?.count + ')'"
     [nzBodyStyle]="{ 'padding': '0px' }"
@@ -95,7 +95,7 @@
       (refreshAll)="loadAllResources()"
     ></app-monitoring-requests-table>
   </nz-card>
-
+</div>
   <nz-card
     [nzTitle]="'Em viagem' + ' (' + inProgressResponse?.count + ')'"
     [nzBodyStyle]="{ 'padding': '0px' }"

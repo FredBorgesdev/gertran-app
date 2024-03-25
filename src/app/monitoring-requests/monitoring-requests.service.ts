@@ -207,7 +207,8 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
         {label: 'Em análise', value: Status.UNDER_REVIEW},
       ],
       [Status.UNDER_REVIEW]: [
-        {label: 'Liberar', value: Status.WAITING_FOR_START},
+        {label: 'Iniciar viagem', value: Status.IN_PROGRESS},
+        // {label: 'Liberar', value: Status.WAITING_FOR_START},
         {label: 'Cancelar', value: Status.CANCELED},
         {label: 'Reprovar', value: Status.REPROVED},
         {label: 'Finalizar viagem', value: Status.FINISHED},
