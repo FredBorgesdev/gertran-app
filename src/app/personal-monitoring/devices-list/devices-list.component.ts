@@ -11,7 +11,8 @@ import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-li
   styleUrls: ['./devices-list.component.css']
 })
 export class PersonalMonitoringDevicesListComponent extends BaseCrudListComponent<PersonalMonitoring> {
-  
+  searchInput: string;
+
   personalMonitoringColumns = [
     {title: 'ID'},
     {title: 'Usuário'},
@@ -32,5 +33,10 @@ export class PersonalMonitoringDevicesListComponent extends BaseCrudListComponen
       message,
       modal,
     );
+  }
+
+
+  search(): void {
+    this.searchByField('search', this.searchInput);
   }
 }
