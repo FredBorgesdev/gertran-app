@@ -1,11 +1,48 @@
-<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+<!-- <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
 </nz-spin>
 <div *ngFor="let item of data">
   <img [src]="'https://gertran.nyc3.digitaloceanspaces.com' + item.pictureUrl" alt="Imagem" style="max-width: 100%; max-height: 100%;"  />
   <p style="bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">
-    Enviado em: {{ item.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+      Enviado em: {{ item.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+  </p>
+
+  <p style="bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">
+    Latitude-Longitude: {{item.latitude}},{{ item.longitude }}
+  </p>
+
+  <p style="bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">
+    Observação do protocolo: {{ item.observation }}
   </p>
 </div>
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
+</ng-template> -->
+
+
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+</nz-spin>
+
+<div *ngIf="data.length > 0; else noProtocolsMessage">
+  <div *ngFor="let item of data">
+    <img [src]="'https://gertran.nyc3.digitaloceanspaces.com' + item.pictureUrl" alt="Imagem" style="max-width: 100%; max-height: 100%;"  />
+    <p style="bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">
+      Enviado em: {{ item.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+    </p>
+
+    <p style="bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">
+      Latitude-Longitude: {{item.latitude}},{{ item.longitude }}
+    </p>
+
+    <p style="bottom: 0; left: 0; background-color: rgba(255, 255, 255, 0.7); padding: 5px;">
+      Observação do protocolo: {{ item.observation }}
+    </p>
+  </div>
+</div>
+
+<ng-template #noProtocolsMessage>
+  <p>Viagem não possui protocolos.</p>
+</ng-template>
+
 <ng-template #selectLoading>
   <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>
