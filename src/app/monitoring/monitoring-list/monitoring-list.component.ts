@@ -67,6 +67,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Int. Emb.', width: '50px', gertranStaffOnly: true},
     {title: 'Isca', width: '50px', gertranStaffOnly: true},
     {title: 'Temp.', width: '50px'},
+    {title: 'Previsão Inicio',width: '60px', gertranStaffOnly: true},
+    {title: 'Previsão Fim',width: '60px', gertranStaffOnly: true}
   ];
   validateForm: FormGroup;
 

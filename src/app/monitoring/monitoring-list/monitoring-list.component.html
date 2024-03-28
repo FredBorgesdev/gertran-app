@@ -312,6 +312,8 @@
         <nz-badge *ngIf="!item.positionInfo?.hasBaits" nzStatus="error"></nz-badge>
       </td>
       <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
+      <td>{{ item.monitoringRequest.plannedStartTravel | date: 'dd/MM/yyyy HH:mm'  }}</td>
+      <td>{{ item.monitoringRequest.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' }}</td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
