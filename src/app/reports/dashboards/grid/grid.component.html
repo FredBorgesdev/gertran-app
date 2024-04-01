@@ -4,9 +4,8 @@
   [nzFrontPagination]="false"
   nzSize="small"
   class="custom-table"
-  [nzFrontPagination]="false"
   [nzLoading]="isLoading"
-  [nzScroll]="{ y: '35vh' }"
+  [nzScroll]="getScrollConfig()"
 >
 <!-- nzTableLayout="fixed" -->
   <thead>

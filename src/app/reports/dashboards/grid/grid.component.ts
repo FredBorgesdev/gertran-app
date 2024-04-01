@@ -27,6 +27,7 @@ const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 })
 export class GridComponent implements OnInit, OnDestroy, OnChanges {
   @Input() customerId: string;
+  @Input() extendList: boolean;
 
   isLoading = false;
   monitoringColumns = [
@@ -90,6 +91,10 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
     private alertsService: AlertsService,
     public authService: AuthenticationService
   ) {
+  }
+
+  getScrollConfig() {
+    return this.extendList ? { y: '80vh' } : { y: '35vh' };
   }
 
   ngOnChanges(changes: SimpleChanges): void {
