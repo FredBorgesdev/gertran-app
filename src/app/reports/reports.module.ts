@@ -52,6 +52,11 @@ import {NzPageHeaderModule} from "ng-zorro-antd/page-header";
 import {AlertsComponent} from "./alerts/alerts.component";
 import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import {ClientComponent} from './dashboards/client/client.component';
+import {ControlTower1} from './dashboards/tc1/tc1.component';
+import {ControlTower2} from './dashboards/tc2/tc2.component';
+import {ControlTower3} from './dashboards/tc3/tc3.component';
+import {ControlTower4} from './dashboards/tc4/client.component';
+import {ControlTower5} from './dashboards/tc5/client.component';
 import {TechnologiesComponent} from './technologies/technologies.component';
 import {GridComponent} from "./dashboards/grid/grid.component";
 import {Tv1Component} from './dashboards/tv1/tv1.component';
@@ -107,6 +112,11 @@ import { InsuranceComponent } from './insurance/insurance.component';
     AlertsComponent,
     DashboardMapsComponent,
     ClientComponent,
+    ControlTower1,
+    ControlTower2,
+    ControlTower3,
+    ControlTower4,
+    ControlTower5,
     TechnologiesComponent,
     GridComponent,
     ReleaseIntervalComponent,

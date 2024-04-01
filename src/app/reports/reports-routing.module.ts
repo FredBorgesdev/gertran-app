@@ -36,6 +36,12 @@ import {TechnologiesComponent} from "./technologies/technologies.component";
 import {Tv1Component} from "./dashboards/tv1/tv1.component";
 import {InsuranceComponent} from "./insurance/insurance.component";
 import {GridComponent} from "./dashboards/grid/grid.component";
+import { ControlTower1 } from './dashboards/tc1/tc1.component';
+import { ControlTower2 } from './dashboards/tc2/tc2.component';
+import { ControlTower3 } from './dashboards/tc3/tc3.component';
+import { ControlTower4 } from './dashboards/tc4/client.component';
+import { ControlTower5 } from './dashboards/tc5/client.component';
+import { OccurenceFormComponent } from '../occurrence/occurrence-form/occurrence-form.component';
 
 const routes: Routes = [
   {
@@ -191,6 +197,18 @@ const routes: Routes = [
     component: ClientComponent,
   },
   {
+    path: 'dashboards/tc1',
+    component: ControlTower2,
+  },
+  {
+    path: 'dashboards/tc2',
+    component: ControlTower1,
+  },
+  {
+    path: 'dashboards/tc3',
+    component: ControlTower3,
+  },
+  {
     path: 'panic-history',
     component: PanicHistoryComponent,
   },
@@ -209,6 +227,10 @@ const routes: Routes = [
   {
     path: 'insurance',
     component: InsuranceComponent,
+  },
+  {
+    path: 'occurrence/occurrence-form',
+    component: OccurenceFormComponent,
   },
   {
     path: 'grid',
