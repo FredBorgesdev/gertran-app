@@ -83,11 +83,11 @@ export class AlertsComponent implements OnInit, OnDestroy {
   getClass(alert: Alert): string {
     const diffInMinutes = differenceInMinutes(new Date(), new Date(alert.receivedAt));
 
-    if (diffInMinutes >= 90) {
+    if (diffInMinutes >= 15) {
       return 'danger';
     }
 
-    if (diffInMinutes >= 9) {
+    if (diffInMinutes >= 10) {
       return 'warning';
     }
 
