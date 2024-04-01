@@ -1,1 +1,238 @@
 <h1>Ocorrência</h1>
+
+
+<form nz-form nzLayout="vertical" [formGroup]="validateForm">
+
+
+    <!-- <nz-descriptions
+      nzTitle="Motorista"
+      nzBordered
+      nzSize="small"
+      class="m-b-50"
+    > -->
+      <!-- <nz-descriptions-item nzTitle="Nome">
+        {{driver?.name}}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Telefone">
+        <input
+          nzSize="small"
+          id="driverPhone"
+          type="text"
+          nz-input
+          placeholder="Digite o telefone"
+          formControlName="driverPhone"
+          nzBorderless
+        />
+      </nz-descriptions-item> -->
+    <!-- </nz-descriptions> -->
+  
+    <!-- <nz-form-item>
+      <div nz-row nzGutter="16">
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="incidentType">Tipo de evento</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              nzPlaceHolder="Tipo de evento"
+              formControlName="incidentType"
+              nzSize="small"
+            >
+              <nz-option
+                *ngFor="let incidentType of incidentTypes"
+                [nzLabel]="incidentType.label"
+                [nzValue]="incidentType.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="12">
+          <nz-form-label nzRequired nzFor="driverContactedAt">Data/hora contato motorista</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-date-picker
+              nzSize="small"
+              nzFormat="dd/MM/yyyy HH:mm:ss"
+              formControlName="driverContactedAt"
+              nzShowTime
+              nzPlaceHolder="Selecione a data e hora"
+              style="width: 100%"
+            ></nz-date-picker>
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <div nz-row nzGutter="16">
+        <div nz-col nzSpan="12">
+          <nz-form-label nzRequired nzFor="incidentDatetime">Data e hora do evento</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-date-picker
+              nzSize="small"
+              nzFormat="dd/MM/yyyy HH:mm:ss"
+              formControlName="incidentDatetime"
+              nzShowTime
+              nzPlaceHolder="Selecione a data e hora"
+              style="width: 100%"
+            ></nz-date-picker>
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="incidentLocation">Local do fato</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
+            <app-address-select
+              [formGroup]="validateForm"
+              [showMap]="false"
+              formControlName="incidentLocation"
+              (handleAddressChange)="handleAddressChange($event)"
+            ></app-address-select>
+  
+  
+
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <div nz-row nzGutter="16">
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="shipperName">Contato transportador</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input
+              nzSize="small"
+              id="shipperName"
+              type="text"
+              nz-input
+              formControlName="shipperName"
+            />
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="12">
+          <nz-form-label [nzSpan]="null" nzFor="shipperContactedAt">Contato feito em</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-date-picker
+              nzShowTime
+              nzSize="small"
+              style="width: 100%"
+              nzFormat="dd/MM/yyyy HH:mm:ss"
+              formControlName="shipperContactedAt"
+              nzPlaceHolder="Selecione a data e hora"
+            ></nz-date-picker>
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <div nz-row nzGutter="16">
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="wasImmediateActionApproved">Autorização pronta resposta
+          </nz-form-label>
+  
+          <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
+            <nz-radio-group formControlName="wasImmediateActionApproved" nzSize="small">
+              <label nz-radio [nzValue]="true">Aprovado</label>
+              <label nz-radio [nzValue]="false">Reprovado</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="immediateActionResponsibleName">Nome responsável</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input
+              nzSize="small"
+              id="immediateActionResponsibleName"
+              type="text"
+              nz-input
+              formControlName="immediateActionResponsibleName"
+            />
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="immediateActionTakenAt">Data/hora da ação</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-date-picker
+              nzSize="small"
+              nzShowTime
+              style="width: 100%"
+              nzFormat="dd/MM/yyyy HH:mm:ss"
+              formControlName="immediateActionTakenAt"
+              nzPlaceHolder="Selecione a data e hora"
+            ></nz-date-picker>
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <div nz-row nzGutter="16">
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="wasFederalPoliceActionNeeded">Contato órgãos públicos
+          </nz-form-label>
+  
+          <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
+            <nz-radio-group formControlName="wasFederalPoliceActionNeeded" nzSize="small">
+              <label nz-radio [nzValue]="true">Sim</label>
+              <label nz-radio [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="federalPoliceActionResponsibleName">Nome responsável</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input
+              nzSize="small"
+              id="federalPoliceActionResponsibleName"
+              type="text"
+              nz-input
+              formControlName="federalPoliceActionResponsibleName"
+            />
+          </nz-form-control>
+        </div>
+  
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="federalPoliceActionTakenAt">Data/hora da ação</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-date-picker
+              nzSize="small"
+              style="width: 100%"
+              nzFormat="dd/MM/yyyy HH:mm:ss"
+              nzShowTime
+              formControlName="federalPoliceActionTakenAt"
+              nzPlaceHolder="Selecione a data e hora"
+            ></nz-date-picker>
+          </nz-form-control>
+        </div>
+      </div>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <nz-form-label>Informação adicional</nz-form-label>
+      <nz-form-control>
+        <textarea
+          nzSize="small"
+          nz-input
+          formControlName="additionalInformation"
+          rows="3"
+        ></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <nz-form-item>
+      <nz-form-label>Email opcional</nz-form-label>
+      <nz-form-control>
+        <input
+          nzSize="small"
+          id="optionalEmail"
+          type="email"
+          nz-input
+          formControlName="optionalEmail"
+        />
+      </nz-form-control>
+    </nz-form-item> -->
+  </form>

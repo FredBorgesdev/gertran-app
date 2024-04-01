@@ -55,7 +55,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: []
       },
       // {          
-      //   path: '/occurrence/occurrence-form',//#hmn*
+      //   path: '/occurrence/occurrence-form',
       //   title: 'Ocorrencia',
       //   iconType: 'nzIcon',
       //   iconTheme: 'outline',
@@ -258,44 +258,44 @@ export const ROUTES: SideNavInterface[] = [
               Permissions.VIEW_DASHBOARD_MAPS,
             ]
           },
-          // {
-          //   path: 'reports/dashboards/tc1',
-          //   title: 'TC1',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   queryParams: {
-          //     fullscreen: true
-          //   },
-          //   submenu: [],
-          //   oneOfPermissions: [
-          //     Permissions.VIEW_DASHBOARD_TC1
-          //   ]
-          // },
-          // {
-          //   path: 'reports/dashboards/tc2',
-          //   title: 'TC2',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   queryParams: {
-          //     fullscreen: true
-          //   },
-          //   submenu: [],
-          //   permission:Permissions.VIEW_DASHBOARD_TC2
-          // },
-          // {
-          //   path: 'reports/dashboards/tc3',
-          //   title: 'TC3',
-          //   iconType: 'nzIcon',
-          //   iconTheme: 'outline',
-          //   icon: 'bar-chart',
-          //   queryParams: {
-          //     fullscreen: true
-          //   },
-          //   submenu: [],
-          //   permission:Permissions.VIEW_DASHBOARD_TC3
-          // },
+          {
+            path: 'reports/dashboards/tc1',
+            title: 'TC1',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+            oneOfPermissions: [
+              Permissions.VIEW_DASHBOARD_TC1
+            ]
+          },
+          {
+            path: 'reports/dashboards/tc2',
+            title: 'TC2',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+            permission:Permissions.VIEW_DASHBOARD_TC2
+          },
+          {
+            path: 'reports/dashboards/tc3',
+            title: 'TC3',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+            permission:Permissions.VIEW_DASHBOARD_TC3
+          },
           {
             path: 'reports/dashboards/tv1',
             title: 'TV 1',

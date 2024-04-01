@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PermissionsService} from '../../shared/services/permissions.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-occurrence-form',
@@ -8,13 +8,16 @@ import {PermissionsService} from '../../shared/services/permissions.service';
 })
 export class OccurenceFormComponent implements OnInit {
 
-  constructor(
-    private permissionService: PermissionsService,
-  ) { }
+  validateForm: FormGroup;
 
-  ngOnInit(): void {
+  constructor(
+    private formBuilder: FormBuilder,
+  ) { 
+
+    this.validateForm = new FormGroup({
+    });
 
   }
 
-
+  ngOnInit(): void {}
 }
