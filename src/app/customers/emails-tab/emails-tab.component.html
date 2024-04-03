@@ -1,0 +1,29 @@
+<div class="row m-b-30">
+  <div class="col-lg-12 text-right">
+    <button
+      (click)="this.isCreatingEmail = true"
+      nz-button
+      nzType="primary"
+    >
+      <i nz-icon nzType="plus" theme="outline"></i>
+      <span> EMAIL</span>
+    </button>
+  </div>
+</div>
+
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <app-emails-table
+    [emails]="emailsDisplayData"
+    (onEdit)="edit($event)"
+    (onDelete)="delete($event)"
+    (onPaginate)="loadEmails($event)"
+  ></app-emails-table>
+
+  <app-emails-form
+    *ngIf="isCreatingEmail"
+    [email]="email"
+    [isVisible]="isCreatingEmail"
+    (onClose)="this.isCreatingEmail = false"
+    (onSubmit)="save($event)"
+  ></app-emails-form>
+</nz-spin>

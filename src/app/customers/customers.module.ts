@@ -21,6 +21,9 @@ import {SharedOperationsTabComponent} from './shared-operations-tab/shared-opera
 import {SharedOperationsFormComponent} from './shared-operations-form/shared-operations-form.component';
 import {SharedOperationsTableComponent} from './shared-operations-table/shared-operations-table.component';
 import {NzSwitchModule} from "ng-zorro-antd/switch";
+import { EmailsTabComponent } from './emails-tab/emails-tab.component';
+import { EmailsFormComponent } from './emails-form/emails-form.component';
+import { EmailsTableComponent } from './emails-table/emails-table.component';
 
 const antdModule = [
   NzTransferModule,
@@ -42,6 +45,9 @@ const antdModule = [
     SharedOperationsTabComponent,
     SharedOperationsFormComponent,
     SharedOperationsTableComponent,
+    EmailsTabComponent,
+    EmailsFormComponent,
+    EmailsTableComponent
   ],
   imports: [
     SharedModule,

@@ -47,6 +47,12 @@
         </ng-template>
       </nz-tab>
 
+      <!-- <nz-tab nzTitle="Emails" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-emails-tab *ngIf="customer?.id" [customer]="customer"> </app-emails-tab>
+        </ng-template>
+      </nz-tab> -->
+
       <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">
         <ng-template nz-tab>
           <app-contacts-tab *ngIf="customer?.id" [customer]="customer"></app-contacts-tab>
