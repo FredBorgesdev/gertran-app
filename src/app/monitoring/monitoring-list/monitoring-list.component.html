@@ -272,6 +272,8 @@
       </td>
       <td>{{ item.speed }}km</td>
       <td>{{ item.customer?.name }}</td>
+      <td *ngIf="user.isGertranStaff"
+      data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
       <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td nzEllipsis nz-tooltip
           [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
@@ -293,8 +295,7 @@
       >
         {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
-      <td *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
+ 
       <td>{{ item.positionInfo?.driverName || '-' }}</td>
       <td>{{ item.positionInfo?.wagonsPlates || '-' }}</td>
       <td *ngIf="user.isGertranStaff"

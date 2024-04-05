@@ -53,13 +53,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: '%', width: '50px'},
     {title: 'Vel', width: '50px'},
     {title: 'Cliente', width: '110px'},
+    {title: 'Obs.', width: '100px', gertranStaffOnly: true},
     {title: 'Data/Hora', width: '80px'},
     {title: 'Posição', width: '110px'},
     {title: 'Origem', width: '110px'},
     {title: 'Destino', width: '110px'},
     {title: 'Alertas', width: '80px', gertranStaffOnly: true},
     {title: 'Status V.', width: '80px', gertranStaffOnly: true},
-    {title: 'Obs.', width: '100px', gertranStaffOnly: true},
     {title: 'Motorista', width: '110px'},
     {title: 'Carreta', width: '80px'},
     {title: 'Comunicação', width: '100px', gertranStaffOnly: true},
@@ -101,7 +101,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
     {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
     {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
-    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'bg-dark text-white'},
+    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'signal-loss'},
   ];
 
   refreshAlertCount = new EventEmitter();
