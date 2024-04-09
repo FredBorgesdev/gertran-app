@@ -40,7 +40,7 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
     {title: 'Destino', width: '10%'},
     {title: 'Posição', width: '35%'},
     {title: 'Previsão inicio', width: '8%'},
-    {title: 'Previsão fim', width: '8%'},
+    {title: 'Previsão termino', width: '8%'},
   ];
   validateForm: FormGroup;
 
