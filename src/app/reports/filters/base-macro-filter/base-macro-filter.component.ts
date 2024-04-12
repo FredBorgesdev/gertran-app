@@ -10,6 +10,9 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {ActivatedRoute} from "@angular/router";
 import {TrucksService} from "../../../trucks/trucks.service";
 import {CustomersService} from "../../../customers/customers.service";
+import autoTable from 'jspdf-autotable';
+import jsPDF from 'jspdf';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
 
 @Component({
   selector: 'app-base-macro-filter',
@@ -34,6 +37,7 @@ export class BaseMacroFilterComponent implements OnInit {
     private route: ActivatedRoute,
     private trucksService: TrucksService,
     private customersService: CustomersService,
+    public authService: AuthenticationService,
   ) {
   }
 
@@ -116,5 +120,44 @@ export class BaseMacroFilterComponent implements OnInit {
 
   private get isFilterAll(): boolean {
     return this.validateForm.value.type === 'all';
+  }
+
+  generatePdf(): void {
+    const doc = new jsPDF('l', 'pt', 'a4');
+
+    autoTable(doc, {
+      html: 'table',
+      didDrawPage: (data) => {
+        doc.setFontSize(30);
+        doc.text(this.fileName.toUpperCase(), data.settings.margin.left, data.settings.margin.top - 60);
+        doc.addImage('assets/images/logo/logogertran.png', 'PNG', 650, 10, 100, 100);
+
+
+        doc.setFontSize(10);
+        doc.text(
+          `Filtros aplicados: ${this.validateForm.value.plate} - ${format(this.validateForm.controls.startDate.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.endDate.value, 'dd/MM/yyyy')}`,
+          data.settings.margin.left,
+          data.settings.margin.top - 30
+        );
+
+        doc.text(
+          `Gerado em: ${format(new Date(), 'dd/MM/yyyy HH:mm')}`,
+          data.settings.margin.left,
+          doc.internal.pageSize.height - 30
+        );
+
+        doc.text(
+          `Usuário: ${this.authService.user.name}`,
+          doc.internal.pageSize.width - 150,
+          doc.internal.pageSize.height - 30
+        );
+      },
+      margin: {top: 140},
+      bodyStyles: {
+        fontSize: 7,
+      }
+    });
+
+    doc.save(`${this.fileName} -.pdf`);
   }
 }
