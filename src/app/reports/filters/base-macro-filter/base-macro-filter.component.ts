@@ -135,7 +135,7 @@ export class BaseMacroFilterComponent implements OnInit {
 
         doc.setFontSize(10);
         doc.text(
-          `Filtros aplicados: ${this.validateForm.value.plate} - ${format(this.validateForm.controls.startDate.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.endDate.value, 'dd/MM/yyyy')}`,
+          `Filtros aplicados: ${this.validateForm.value.customer} ${this.validateForm.value.plate} - ${format(this.validateForm.controls.startDate.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.endDate.value, 'dd/MM/yyyy')}`,
           data.settings.margin.left,
           data.settings.margin.top - 30
         );
@@ -158,6 +158,6 @@ export class BaseMacroFilterComponent implements OnInit {
       }
     });
 
-    doc.save(`${this.fileName} -.pdf`);
+    doc.save(`${this.fileName} - ${this.validateForm.value.customer}.pdf`);
   }
 }
