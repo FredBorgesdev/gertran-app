@@ -260,7 +260,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/tc1',
-            title: 'TC1',
+            title: 'TORRE CONTROLE 1',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -274,7 +274,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/tc2',
-            title: 'TC2',
+            title: 'TORRE CONTROLE 2',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -286,7 +286,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/tc3',
-            title: 'TC3',
+            title: 'TORRE CONTROLE 3',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
