@@ -329,9 +329,11 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   verifyMonitoringRequestsItsInTimeAllowed(element: any){
     try {
+      if(element.monitoringRequest.operation.allowedTrafficStartTime == null) return
       const hourStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(0,2)
       const minuteStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(3,5)
   
+      if(element.monitoringRequest.operation.allowedTrafficEndTime == null) return
       const hourEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(0,2)
       const minuteEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(3,5)
   
@@ -356,10 +358,14 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   setColorRowInVehiclesWithoutPermission(data: any){
-    const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x=>this.verifyMonitoringRequestsItsInTimeAllowed(x) && x.monitoringRequest.travelStatus == 'in_progress')
-    for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
-      const element = monitoringRequestsFilteredIfAllowedToRoad[index];
-      element.monitoringRequest.travelStatus = 'not_allowed_to_road' 
+    try {
+      const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x=>this.verifyMonitoringRequestsItsInTimeAllowed(x) && x.monitoringRequest.travelStatus == 'in_progress')
+      for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
+        const element = monitoringRequestsFilteredIfAllowedToRoad[index];
+        element.monitoringRequest.travelStatus = 'not_allowed_to_road' 
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
