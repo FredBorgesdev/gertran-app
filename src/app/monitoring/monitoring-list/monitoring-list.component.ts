@@ -384,8 +384,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
       try {
         this.monitoringData = data.results;
-        this.loadAlerts('warning')
-        this.loadAlerts('danger')
+        // this.loadAlerts('warning')
+        // this.loadAlerts('danger')
 
         this.isLoading = false;
   
