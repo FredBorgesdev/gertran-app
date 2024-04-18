@@ -377,19 +377,15 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-      if(this.activatedRoute.snapshot.queryParams.travelling == true){
-        this.setColorRowInVehiclesWithLostTrack(data)
-        this.setColorRowInVehiclesWithLExceededStart(data)
-        this.setColorRowInVehiclesWithoutPermission(data)
-      }
+    this.setColorRowInVehiclesWithLostTrack(data)
+    this.setColorRowInVehiclesWithLExceededStart(data)
+    this.setColorRowInVehiclesWithoutPermission(data)
+
 
       try {
         this.monitoringData = data.results;
-
-        if(this.activatedRoute.snapshot.queryParams.travelling == true){
-          this.loadAlerts('warning')
-          this.loadAlerts('danger')
-        }
+        this.loadAlerts('warning')
+        this.loadAlerts('danger')
 
         this.isLoading = false;
   
