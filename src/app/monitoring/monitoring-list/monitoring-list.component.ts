@@ -68,7 +68,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Isca', width: '50px', gertranStaffOnly: true},
     {title: 'Temp.', width: '50px'},
     {title: 'Previsão Inicio',width: '70px', gertranStaffOnly: true},
-    {title: 'Previsão Fim',width: '70px', gertranStaffOnly: true}
+    {title: 'Previsão Fim',width: '70px', gertranStaffOnly: true},
+    {title: 'Inicio Horario permitido',width: '70px', gertranStaffOnly: true},
+    {title: 'Fim Horario permitido',width: '70px', gertranStaffOnly: true},
   ];
   validateForm: FormGroup;
 
@@ -102,7 +104,21 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
     {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
     {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'signal-loss'},
+    {title: 'Alerta + 10 min.', value: 'alert10', backgroundColorClass:'warning-alert'},
+    {title: 'Alerta + 15 min.', value: 'alert15', backgroundColorClass:'danger-alert'},
+    {title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass:'exceeded-start'},
+    {title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass:'not-allowed-to-road'},
   ];
+
+  filteredTravelStatus = this.travelStatus.filter
+  (status => 
+    status.value !== 'not_allowed_to_road' &&
+    status.value !== 'exceeded_start' &&
+    status.value !== 'alert10' &&
+    status.value !== 'alert15' &&
+    status.value !== 'lost_track'
+  );
+
 
   refreshAlertCount = new EventEmitter();
 
@@ -233,6 +249,119 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
     this.subscribeToMonitoringData();
   }
+  
+  setColorRowToPendentAlertsByTime(data: any){
+    for (let index = 0; index < data.results.length; index++) {
+      const element = data.results[index];
+      const monitoringRequestAlert  = this.monitoringData.filter(x=>x.vehiclePlate == element.vehicle.plate)[0]
+      try {
+        if(this.diffMin(element.receivedAt.replace(/\.\d+Z$/, "Z"))>10)
+          monitoringRequestAlert.monitoringRequest.travelStatus = 'alert10'
+
+        if(this.diffMin(element.receivedAt.replace(/\.\d+Z$/, "Z"))>15)
+          monitoringRequestAlert.monitoringRequest.travelStatus = 'alert15'
+
+      } catch (error) {
+        console.log(element.vehicle.plate)
+        console.log(monitoringRequestAlert)
+      }
+    }
+  }
+  
+  loadAlerts(severity: any, url?: string): void {
+    this.alertsService
+      .getAlerts(
+        {url},
+        {
+          alertType: AlertTypes.terminal,
+          terminal: this.activatedRoute.snapshot.queryParams.terminal,
+          severity: severity
+        }
+      )
+      .subscribe(
+        (data: any) => {
+          if(data.next != null){
+            this.loadAlerts(severity, data.next)
+          }
+
+          this.setColorRowToPendentAlertsByTime(data)
+        }
+      );
+  }
+
+  diffMin(time){
+    const currentDateTime:any = new Date();
+    const currentDateTimeTracker: any = new Date(time);
+    const differenceInMilliseconds = currentDateTime - currentDateTimeTracker;
+    const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+    return differenceInMinutes
+  }
+
+  setColorRowInVehiclesWithLostTrack(data:any){
+    try {
+      data.results.map(x => {
+        if (this.diffMin(x.positionDate) > 30) {
+          x.monitoringRequest.travelStatus='lost_track'
+        } 
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  setColorRowInVehiclesWithLExceededStart(data: any){
+    try {
+      const now = new Date();
+      const monitoringRequestsExceededStart = data.results.filter(viagem => {
+          const plannedStart = new Date(viagem.monitoringRequest.plannedStartTravel);
+          plannedStart.setMinutes(plannedStart.getMinutes() + 30);
+          return plannedStart.getTime() <= now.getTime()  && viagem.monitoringRequest.travelStatus == 'waiting_for_start';
+      });
+
+      for (let index = 0; index < monitoringRequestsExceededStart.length; index++) {
+        const element = monitoringRequestsExceededStart[index];
+        element.monitoringRequest.travelStatus = 'exceeded_start'
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  verifyMonitoringRequestsItsInTimeAllowed(element: any){
+    try {
+      const hourStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(0,2)
+      const minuteStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(3,5)
+  
+      const hourEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(0,2)
+      const minuteEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(3,5)
+  
+      const now = new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' });
+      const dateTimeNow = new Date(now);
+  
+      const dateTimeStart = new Date(dateTimeNow);
+      dateTimeStart.setHours(hourStart, minuteStart, 0, 0);
+    
+      const dateTimeEnd = new Date(dateTimeNow);
+      dateTimeEnd.setHours(hourEnd, minuteEnd, 0, 0); 
+    
+      if (dateTimeNow >= dateTimeStart && dateTimeNow <= dateTimeEnd) {
+        return false;
+      } 
+      else {
+        return true;
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  setColorRowInVehiclesWithoutPermission(data: any){
+    const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x=>this.verifyMonitoringRequestsItsInTimeAllowed(x) && x.monitoringRequest.travelStatus == 'in_progress')
+    for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
+      const element = monitoringRequestsFilteredIfAllowedToRoad[index];
+      element.monitoringRequest.travelStatus = 'not_allowed_to_road' 
+    }
+  }
 
   subscribeToMonitoringData(): void {
     if (
@@ -246,24 +375,22 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.stopMonitoring.next();
 
-    this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-      try {
-        data.results.map(x => {
-          const currentDateTime:any = new Date(); // Obtém a data e hora atual
-          const currentDateTimeTracker: any = new Date(x.positionDate); // Substitua isso pela sua data
-          const differenceInMilliseconds = currentDateTime - currentDateTimeTracker; // Calcula a diferença em milissegundos
-          const differenceInMinutes = differenceInMilliseconds / (1000 * 60); // Converte a diferença para minutos
-          if (differenceInMinutes < 30) {} 
-          else { x.monitoringRequest.travelStatus='lost_track' }
-          return x
-        })
-      } catch (error) {
-        console.log(error)
+      if(this.activatedRoute.snapshot.queryParams.travelling == true){
+        this.setColorRowInVehiclesWithLostTrack(data)
+        this.setColorRowInVehiclesWithLExceededStart(data)
+        this.setColorRowInVehiclesWithoutPermission(data)
       }
+
       try {
         this.monitoringData = data.results;
+
+        if(this.activatedRoute.snapshot.queryParams.travelling == true){
+          this.loadAlerts('warning')
+          this.loadAlerts('danger')
+        }
+
         this.isLoading = false;
   
         this.updatePositionsPointReferences();

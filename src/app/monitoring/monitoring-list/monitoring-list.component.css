@@ -169,3 +169,29 @@ nz-select,
 .signal-loss {
   background-color: orange !important;
 }
+
+.warning-alert {
+  background-color: yellow !important;
+}
+
+.danger-alert {
+  background-color: #EA1179 !important;
+}
+
+.exceeded-start{
+  background-color: #58A399 !important;
+}
+
+.not-allowed-to-road {
+  animation: pulse 1s ease infinite alternate;
+  background-color: #9ce7af !important;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}

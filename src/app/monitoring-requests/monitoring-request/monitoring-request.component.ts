@@ -66,7 +66,7 @@ export class MonitoringRequestComponent implements OnInit {
           (error) => {
             let message = '';
             Object.values(error?.error?.extra?.fields ?? {})?.forEach(field => {
-              message += `<p>${field}</p>`;
+              message += `${field}`;
             });
 
             if (message === '') {
