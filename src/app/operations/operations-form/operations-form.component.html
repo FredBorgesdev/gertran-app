@@ -293,6 +293,164 @@
     <!--      </div>-->
     <!--    </div>-->
 
+
+
+    <div style="display: flex; margin-top: 15px;">
+      <div style="flex:1;width:99% ">
+        <nz-form-item>
+          <nz-form-label nzFor="minimumPriceValueThirdParty">Inicio de horário de tráfego permitido</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-time-picker  [formGroup]="validateForm" formControlName="allowedTrafficStartTime" nzFormat="HH:mm" style="width: 100%;"></nz-time-picker>
+        </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div style="flex:1;margin-left: 1%;width:99% ">
+        <nz-form-item>
+          <nz-form-label nzFor="minimumPriceValueThirdParty">Término de horário de tráfego permitido</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-time-picker  [formGroup]="validateForm" formControlName="allowedTrafficEndTime" nzFormat="HH:mm" style="width: 100%;"></nz-time-picker>
+        </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+
+    <div style="display: flex;">
+      <div style="flex: 1;">
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="driverWorkingSituationFleet">
+              <span>Permitir Motorista Empregado</span>
+            </label>
+          </div>
+        </nz-form-control>
+      </div>
+
+      <div style="flex: 1;">
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <div nz-col [nzSpan]="12">
+            <label nz-checkbox formControlName="driverWorkingSituationAggregate">
+              <span>Permitir Motorista Agregado</span>
+            </label>
+          </div>
+        </nz-form-control>
+      </div>
+
+      <div style="flex: 1;">
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <div nz-col [nzSpan]="12" (click)="checkboxClicked()">
+            <label nz-checkbox formControlName="driverWorkingSituationThirdParty">
+              <span>Permitir Motorista Terceiro</span>
+            </label>
+          </div>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div *ngIf="ThirdPartyDriver">
+      <hr>
+      <br>
+      <div style="width: 100%;text-align: center;">
+        <h3>REGRAS PARA TERCEIRO</h3>
+      </div>
+      <div style="display: flex; margin-top: 40px;">
+        <div style="flex:1;width:98%;">
+          <nz-form-item>
+            <nz-form-label nzFor="minimumPriceValueThirdParty">Quantidade de viagens</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+            <input
+              id="quantityReleasedTravelsThirdParty"
+              type="number"
+              nz-input
+              formControlName="quantityReleasedTravelsThirdParty"
+            />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+
+        <div style="flex:1;width:98%; margin-left: 1%;">
+          <nz-form-item>
+            <nz-form-label nzFor="minimumPriceValueThirdParty">Valor minimo permitido para terceiro</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+              <input
+                id="minimumPriceValueThirdParty"
+                type="text"
+                nz-input
+                formControlName="minimumPriceValueThirdParty"
+                [textMask]="{ mask: reaisMask }"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div style="flex:1;width:98%;margin-left: 1%; ">
+          <nz-form-item>
+            <nz-form-label nzFor="maximumPriceValueThirdParty">Valor máximo permitido para terceiro</nz-form-label>
+            <nz-form-control nzErrorTip="Preencha o campo">
+              <input
+                id="maximumPriceValueThirdParty"
+                type="text"
+                nz-input
+                formControlName="maximumPriceValueThirdParty"
+                [textMask]="{ mask: reaisMask }"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+
+      <div style="display: flex;width: 98%;">
+        <div style="flex: 4;">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">Restrição de localidade</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
+              <app-address-select
+                [formGroup]="validateForm"
+                [showMap]="false"
+                formControlName="forbiddenLocation"
+                (handleAddressChange)="handleAddressChange($event)"
+              ></app-address-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div style="flex: 4;width: 98%;margin-left: 1%;">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">ESTADO SELECIONADA</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <input
+                id="forbiddenStateDriverThirdParty"
+                nz-input
+                formControlName="forbiddenStateDriverThirdParty"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div style="flex: 4; width: 98%;margin-left: 1%;">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">CIDADE SELECIONADA</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+              <input
+                id="forbiddenCityDriverThirdParty"
+                nz-input
+                formControlName="forbiddenCityDriverThirdParty"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div style="flex: 1;margin-left: 1%;">
+          <nz-form-label [nzSpan]="null"  nzFor="btn"><span style="color: white;">-</span></nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input type="button" id="btn" (click)="cleanForbiddenCityAndStateDriverThirdParty()" value="REMOVER LOCALIDADE" class="btn btn-secondary"/>
+          </nz-form-control>
+        </div>
+      </div>
+    </div>
+    
     <nz-divider></nz-divider>
 
     <nz-form-item>

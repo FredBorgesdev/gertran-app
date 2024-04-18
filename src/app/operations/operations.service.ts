@@ -42,6 +42,16 @@ export interface Operations {
     id: string;
     name: string;
   }[];
+  driverWorkingSituationAggregate: boolean;
+  driverWorkingSituationFleet: boolean;
+  driverWorkingSituationThirdParty: boolean;
+  forbiddenStateDriverThirdParty: String;
+  forbiddenCityDriverThirdParty: String;
+  quantityReleasedTravelsThirdParty: number;
+  allowedTrafficStartTime: String;
+  allowedTrafficEndTime: String;
+  maximumPriceValueThirdParty: String;
+  minimumPriceValueThirdParty: String;
 }
 
 @Injectable({
@@ -82,6 +92,15 @@ export class OperationsService implements ApiService<Operations> {
   }
 
   save(operations: Omit<Operations, 'id'>): Observable<Operations> {
+    if(operations.maximumPriceValueThirdParty!=null)
+      operations.maximumPriceValueThirdParty = operations.maximumPriceValueThirdParty.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+    if(operations.minimumPriceValueThirdParty!=null)
+      operations.minimumPriceValueThirdParty = operations.minimumPriceValueThirdParty.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+    if(operations.allowedTrafficStartTime!=null)
+      operations.allowedTrafficStartTime = format(new Date(operations.allowedTrafficStartTime.toString()), 'HH:mm');
+    if(operations.allowedTrafficEndTime!=null)
+      operations.allowedTrafficEndTime = format(new Date(operations.allowedTrafficEndTime.toString()), 'HH:mm');
+    
     operations.policyEffectiveDate = format(new Date(operations.policyEffectiveDate), 'yyyy-MM-dd');
     return this.http.post<Operations>('settings/operations/create', operations);
   }
@@ -90,6 +109,15 @@ export class OperationsService implements ApiService<Operations> {
     id: string,
     operations: Omit<Operations, 'id'>
   ): Observable<Operations> {
+    if(operations.maximumPriceValueThirdParty!=null)
+      operations.maximumPriceValueThirdParty = operations.maximumPriceValueThirdParty.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+    if(operations.minimumPriceValueThirdParty!=null)
+      operations.minimumPriceValueThirdParty = operations.minimumPriceValueThirdParty.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+    if(operations.allowedTrafficStartTime!=null)
+      operations.allowedTrafficStartTime = format(new Date(operations.allowedTrafficStartTime.toString()), 'HH:mm');
+    if(operations.allowedTrafficEndTime!=null)
+      operations.allowedTrafficEndTime = format(new Date(operations.allowedTrafficEndTime.toString()), 'HH:mm');
+    
     return this.http.patch<Operations>(`settings/operations/${id}/update`, operations);
   }
 

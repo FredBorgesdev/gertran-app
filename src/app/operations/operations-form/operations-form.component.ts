@@ -17,6 +17,8 @@ import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Choice} from '../../shared/services/api.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {find, propEq, pluck} from 'ramda';
+import brazilianStates from 'src/app/shared/data/brazilian-states';
+import {createNumberMask} from 'text-mask-addons';
 
 type TrackerTechnologiesWithModels = TrackerTechnologies & { models?: TrackerTechnologiesModels[] }
 
@@ -36,6 +38,8 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   insuranceCompanies: InsuranceCompany[] = [];
   brokerInsuranceCompanies: InsuranceCompany[] = [];
   operationTypes: Choice[] = [];
+  ThirdPartyDriver: boolean;
+  incidentLocation: any
 
   constructor(
     private router: Router,
@@ -59,6 +63,13 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     );
   }
 
+  reaisMask = createNumberMask({
+    prefix: 'R$ ',
+    allowDecimal: true,
+    thousandsSeparatorSymbol: '.',
+    decimalSymbol: ',',
+  });
+
   loadResource(): void {
     if (!this.operation) {
       return;
@@ -71,6 +82,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
 
   ngOnInit(): void {
     super.ngOnInit();
+    this.checkboxClicked();
 
     this.i18n.setLocale(en_US);
 
@@ -124,7 +136,18 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       brokerName: [null, []],
       brokerPhone: [null, []],
       brokerPersonInCharge: [null, []],
-      broker: [null]
+      broker: [null],
+      driverWorkingSituationFleet: [false, [Validators.required]],
+      driverWorkingSituationAggregate: [false, [Validators.required]],
+      driverWorkingSituationThirdParty: [false, [Validators.required]],
+      forbiddenStateDriverThirdParty: [null],
+      forbiddenCityDriverThirdParty: [null],
+      quantityReleasedTravelsThirdParty: [null],
+      allowedTrafficStartTime: [null],
+      allowedTrafficEndTime: [null],
+      forbiddenLocation: [null],
+      maximumPriceValueThirdParty: [null],
+      minimumPriceValueThirdParty:[null],
     });
   }
 
@@ -144,6 +167,29 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   list(): void {
     this.router.navigate(['/operations/operations-list']);
   }
+  
+  handleAddressChange(nominatimAddress: any): void {
+    const city = nominatimAddress.address.city || nominatimAddress.address.town || nominatimAddress.address.village || nominatimAddress.address.state;
+    const state = brazilianStates.find(
+      ({name}) => name === nominatimAddress.address.state
+    ).abbreviation;
+
+    this.validateForm.patchValue({
+      forbiddenStateDriverThirdParty: state,
+      forbiddenCityDriverThirdParty: city
+    });
+  }
+  
+  checkboxClicked(): void {
+    this.ThirdPartyDriver = this.validateForm.value.driverWorkingSituationThirdParty
+  }
+
+  cleanForbiddenCityAndStateDriverThirdParty(): void {
+     this.validateForm.patchValue({
+       forbiddenStateDriverThirdParty: null,
+       forbiddenCityDriverThirdParty: null
+     });
+   }
 
   selectAllTrackerModels(ids: string[]): void {
     const id = ids[ids.length - 1];

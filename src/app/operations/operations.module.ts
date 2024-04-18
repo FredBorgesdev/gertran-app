@@ -8,7 +8,7 @@ import { OperationsFormComponent } from './operations-form/operations-form.compo
 import {TextMaskModule} from 'angular2-text-mask';
 import { OperationsOperationComponent } from './operations-operation/operations-operation.component';
 import { OperationsRulesByValueTabComponent } from './operations-rules-by-value-tab/operations-rules-by-value-tab.component';
-
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { OperationsRulesByValueTabComponent } from './operations-rules-by-value-
         CommonModule,
         SharedModule,
         OperationsRoutingModule,
-        TextMaskModule
+        TextMaskModule,
+        NzTimePickerModule
     ]
 })
 export class OperationsModule { }

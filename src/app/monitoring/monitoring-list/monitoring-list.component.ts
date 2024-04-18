@@ -374,7 +374,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     this.stopMonitoring.next();
-
+    this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
       if(this.activatedRoute.snapshot.queryParams.travelling == true){
