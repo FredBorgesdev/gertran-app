@@ -1,17 +1,25 @@
-<h1>Ocorrência</h1>
+<!-- <h1>Ocorrência</h1> -->
 
 
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
 
 
-    <!-- <nz-descriptions
+    <nz-descriptions
       nzTitle="Motorista"
       nzBordered
       nzSize="small"
       class="m-b-50"
-    > -->
-      <!-- <nz-descriptions-item nzTitle="Nome">
-        {{driver?.name}}
+    >
+      <nz-descriptions-item nzTitle="Nome">
+        <input
+        nzSize="small"
+        id="driverName"
+        type="text"
+        nz-input
+        placeholder="Digite o nome do motorista"
+        formControlName="driverName"
+        nzBorderless
+      />
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Telefone">
         <input
@@ -23,10 +31,10 @@
           formControlName="driverPhone"
           nzBorderless
         />
-      </nz-descriptions-item> -->
-    <!-- </nz-descriptions> -->
+      </nz-descriptions-item>
+    </nz-descriptions> 
   
-    <!-- <nz-form-item>
+    <nz-form-item>
       <div nz-row nzGutter="16">
         <div nz-col nzSpan="12">
           <nz-form-label [nzSpan]="null" nzFor="incidentType">Tipo de evento</nz-form-label>
@@ -82,7 +90,6 @@
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
             <app-address-select
               [formGroup]="validateForm"
-              [showMap]="false"
               formControlName="incidentLocation"
               (handleAddressChange)="handleAddressChange($event)"
             ></app-address-select>
@@ -93,7 +100,7 @@
         </div>
       </div>
     </nz-form-item>
-  
+  <!--
     <nz-form-item>
       <div nz-row nzGutter="16">
         <div nz-col nzSpan="12">
