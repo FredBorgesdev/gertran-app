@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {OccurenceFormComponent} from './occurrence-form/occurrence-form.component';
-import { OccurrenceModule } from './OccurrenceModule';
+import { OccurrenceModule } from './occurrence.module';
 
 const routes: Routes = [
   {
