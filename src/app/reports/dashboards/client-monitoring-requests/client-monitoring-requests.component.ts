@@ -111,7 +111,7 @@ export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy, OnC
   }
 
   get currentTime(): string {
-    return format(new Date(), 'HH:mm:ss');
+    return format(new Date(), 'HH:mm');
   }
 
   formatSeconds(nextUpdate: number): string {
