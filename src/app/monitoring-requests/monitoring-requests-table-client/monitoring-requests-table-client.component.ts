@@ -89,17 +89,17 @@ export class MonitoringRequestsTableClientComponent implements OnChanges {
   }
 
   getOrigin(item: MonitoringRequests): string {
-    return item.travelSteps?.[0].address ?? '-';
+    return (item.travelSteps?.[0].city + ' - ' + item.travelSteps?.[0].state) ?? '-';
   }
 
   getDestination(item: MonitoringRequests): string {
-    return item.travelSteps?.[item.travelSteps.length - 1].address ?? '-';
+    return (item.travelSteps?.[item.travelSteps.length - 1].city + ' - ' + item.travelSteps?.[item.travelSteps.length - 1].state) ?? '-';
   }
 
   getLocalizedStatus(status: string): string {
     switch (status) {
       case Status.UNDER_REVIEW:
-        return 'Em avaliação';
+        return 'avaliação';
       case Status.WAITING_FOR_START:
         return 'Aguardando inicio';
       case Status.REPROVED:
