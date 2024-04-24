@@ -95,6 +95,6 @@ export class AlertsComponent implements OnInit, OnDestroy {
   }
 
   getRollingTimeInMinutes(alert: Alert): string {
-    return `${differenceInMinutes(new Date(), new Date(alert.receivedAt))} minutos corridos`;
+    return `${differenceInMinutes(new Date(), new Date(alert.receivedAt))} minutos`;
   }
 }

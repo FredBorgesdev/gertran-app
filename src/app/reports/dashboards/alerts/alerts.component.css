@@ -84,3 +84,35 @@ th, td {
   font-weight: bold;
   font-size: 18px;
 }
+
+.max-width-cell {
+  max-width: 200px; /* Set your desired maximum width */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+.square {
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.square:not(:first-of-type) {
+  margin-left: 10px;
+}
+
+.bg-alert {
+  background: yellow;
+}
+
+.bg-default {
+  background: white;
+}
+
+.bg-danger {
+  background: red;
+}
