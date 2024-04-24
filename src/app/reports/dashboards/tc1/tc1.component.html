@@ -1,16 +1,36 @@
-<div style="width: 100%;overflow-x: hidden;">
+<div style="position: fixed; bottom: 10px; left: 4vh; z-index: 1000;">
+  <nz-button-group nzSize="small">
+    <button *ngIf="!mapIsSelected"  nz-button nzType="primary" (click)="mapIsSelected = !mapIsSelected">
+      Mapa
+    </button>
 
+    <button *ngIf="mapIsSelected"  nz-button nzType="primary" (click)="mapIsSelected = !mapIsSelected">
+      Grid
+    </button>
+
+
+  </nz-button-group>
+</div>
+
+<div *ngIf="!mapIsSelected" style="width: 100%; height: 96vh;">
   <h1 class="text-center m-b-1">
     TORRE DE CONTROLE 2
   </h1>
   <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
   <br>
-  <div style="display: flex;flex-direction: column;">
-    <div style="flex:5;width: 100%;">
+  <div style="display: flex; flex-direction: column;">
+    <div style="flex: 0.7; width: 100%;">
       <app-grid></app-grid>
     </div>
-    <div id="mapContainer" style="flex:5;width: 100%;height: 50px;overflow: hidden;">
-      <app-maps></app-maps>
+    <div style="display: flex; flex: 1.3;">
+      <div style="flex: 5; min-width: 48%; margin-right: 0.5%;">
+        <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
+      </div>
+      <div style="flex: 5; min-width: 48%;">
+        <app-client-checklists [hideHeader]="true"></app-client-checklists>
+      </div>
     </div>
   </div>
 </div>
+
+<app-maps *ngIf="mapIsSelected"></app-maps>

@@ -8,20 +8,12 @@ import {Router} from "@angular/router";
   styleUrls: ['./tc1.component.css']
 })
 export class ControlTower1 {
+  mapIsSelected = false;
+
   constructor(
     public authService: AuthenticationService,
     private router: Router,
   ) {
-    const intervalId = setInterval(() => {
-      const mapContainer = document.getElementById('mapContainer');
-      if (mapContainer) {
-        clearInterval(intervalId);
-        this.fitMap(mapContainer)
-        window.addEventListener("resize", ()=>{
-          this.fitMap(mapContainer)
-        });
-      }
-    }, 100); 
   }
 
   goTo(link: string, qp?: any) {
@@ -31,13 +23,4 @@ export class ControlTower1 {
     window.open(url, '_blank');
   }
 
-  fitMap(element) {
-    const sizeMapInnerHeight = window.innerHeight - 124;
-    try {
-      element.style.height =
-        sizeMapInnerHeight + "px";
-    } catch (error) {
-      console.log('mapa não carregado')
-    }
-  }
 }
