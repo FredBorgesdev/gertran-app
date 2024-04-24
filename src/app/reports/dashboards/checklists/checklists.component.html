@@ -37,17 +37,19 @@
     nzSize="small"
     (nzQueryParams)="handleQueryParamsChange($event)"
     class="custom-table"
+    style="table-layout: fixed !important;width: 100%;"
   >
     <thead>
     <tr>
       <th
         class="text-center table-header"
         *ngFor="let column of checklistColumns"
+        [nzWidth]="column.width"
       >{{ column.title }}</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of checklistTable.data;  let i=index" [class]="getRowClass(item)">
+    <tr *ngFor="let item of checklistTable.data.reverse();  let i=index" [class]="getRowClass(item)">
       <td class="text-center">
         {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
       </td>

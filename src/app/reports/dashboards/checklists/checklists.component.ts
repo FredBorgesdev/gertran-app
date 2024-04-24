@@ -22,11 +22,11 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
   currentTimeInterval: any;
 
   checklistColumns = [
-    {title: 'Data/hora criação'},
-    {title: 'Placa'},
-    {title: 'Tecnologia'},
+    {title: 'Data/Hora', width: '14%'},
+    {title: 'Placa', width: '8%'},
+    {title: 'Tecnologia', width: '10%'},
     {title: 'Cliente'},
-    {title: 'Atualização'},
+    {title: 'Atualização', width: '16%'},
   ];
 
   stopRefreshing = new Subject();

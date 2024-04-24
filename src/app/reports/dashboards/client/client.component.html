@@ -3,7 +3,7 @@
 </h1>
 <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
 <br>
-<div style="display: flex;flex-direction: column;">
+<div style="display: flex;flex-direction: column;max-width: 100%;">
 
   <div style="flex:5;">
     <div style="flex-direction: row;display: flex;">
@@ -13,20 +13,20 @@
       </div>
 
       <div style="flex:3;">
-        <app-maps [embed]="true"></app-maps>
+        <app-maps [embed]="true" [mapFullPage]="false"></app-maps>
       </div>
 
     </div>
   </div>
 
   <div style="flex:5;">
-    <div style="flex-direction: row;display: flex;">
+    <div style="flex-direction: row;display: flex;max-width: 99.9%;">
 
-      <div style="flex:5;">
+      <div style="flex:4;max-width: 50%; margin-right: 0.5%;">
         <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
       </div>
 
-      <div style="flex:5;">
+      <div style="flex:4;max-width: 50%;">
         <app-client-checklists [hideHeader]="true"></app-client-checklists>
       </div>
 
