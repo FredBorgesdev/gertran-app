@@ -97,6 +97,9 @@ export class PositionsService implements ApiService<Position> {
       travelling?: boolean;
     }
   ): Observable<GetAllResponse<Position>> {
+    if(window.location.pathname == '/reports/dashboards/client')
+      pagination.limit = 50
+
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {

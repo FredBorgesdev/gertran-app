@@ -38,6 +38,14 @@ export class ChecklistsService implements ApiService<Checklist> {
   }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Checklist>> {
+    if(window.location.pathname == '/reports/dashboards/tc2' || 
+    window.location.pathname == '/reports/dashboards/client'
+    )
+      pagination.limit = 3
+
+    if(window.location.pathname == '/reports/dashboards/tc3')
+      pagination.limit = 5
+
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {

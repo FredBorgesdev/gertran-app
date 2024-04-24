@@ -135,6 +135,14 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     customer?: string;
     plate?: string;
   }): Observable<GetAllResponse<MonitoringRequests>> {
+    if(window.location.pathname == '/reports/dashboards/tc2' || 
+    window.location.pathname == '/reports/dashboards/client'
+    )
+      pagination.limit = 3
+
+    if(window.location.pathname == '/reports/dashboards/tc3')
+      pagination.limit = 5
+
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
