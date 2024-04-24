@@ -1,9 +1,10 @@
-mgl-map {
-  height: 40vh;
+
+.half-map{
+  height: 45vh;
   width: '100%';
 }
 
-.embed-map {
-  width: 100%;
-  height: 100%;
+.full-map{
+  height: 90vh;
+  width: '100%';
 }

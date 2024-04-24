@@ -2,7 +2,8 @@
   [style]="'mapbox://styles/mapbox/streets-v9'"
   [center]="mapCenter"
   [zoom]="[3]"
-  [class]="embed && 'embed-map'"
+  class=""
+  [class]="embed?'half-map':'full-map'"
   (mapLoad)="mapLoaded($event)"
 >
   <mgl-marker

@@ -17,6 +17,7 @@ import * as mapboxgl from 'mapbox-gl';
 export class DashboardMapsComponent implements OnInit, OnChanges {
   @Input() embed = false;
   @Input() customerId: string;
+  @Input() mapFullPage = true;
   map: mapboxgl.Map;
 
   markers = [];
@@ -44,6 +45,7 @@ export class DashboardMapsComponent implements OnInit, OnChanges {
   load(): void {
     this.mapLoading = true;
     const queryParams = new URLSearchParams(window.location.search);
+    console.log(this.mapFullPage)
     const customer =
       queryParams.get('customerId') ||
       this.customerId ||
