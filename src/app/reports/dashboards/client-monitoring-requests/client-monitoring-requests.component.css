@@ -1,7 +1,16 @@
-.scrollable-card {
+h1.header-small {
+  font-size: 1.5em;
+}
+
+h3.header-small {
+  font-size: 1.2em;
+  margin-bottom: 10px !important;
+}
+
+/* .scrollable-card {
   height: 500px;
   overflow-y: scroll;
-}
+} */
 
 .square {
   height: 16px;
@@ -9,6 +18,15 @@
   display: inline-block;
   border: 1px solid black;
 }
+
+.logo {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 
 .square:not(:first-of-type) {
   margin-left: 10px;
@@ -26,19 +44,5 @@
   background: red;
 }
 
-.logo {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
 
-h1.header-small {
-  font-size: 1.5em;
-}
 
-h3.header-small {
-  font-size: 1.2em;
-  margin-bottom: 10px !important;
-}

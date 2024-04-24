@@ -1,14 +1,18 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
+  <div style="max-width: 100%;">
+
+
+
+  <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-2'">
     Check-list por veículo
   </h1>
-  <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-20'">
+  <!-- <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-20'">
     Tempo: {{ currentTime }}
     &nbsp;
     &nbsp;
     &nbsp;
     Total - {{resources?.count ?? '0'}}
-  </h3>
+  </h3> -->
 
   <img
     *ngIf="!hideHeader"
@@ -18,8 +22,6 @@
   >
 
   <div class="d-flex justify-content-between" *ngIf="!hideHeader">
-    <div></div>
-
     <span>
       <div class="square bg-danger"></div> Acima de 15 minutos
       <div class="square bg-alert"></div> Acima de 10 minutos
@@ -35,6 +37,7 @@
     [nzPageIndex]="page"
     [nzFrontPagination]="false"
     nzSize="small"
+    style="table-layout: fixed !important;"
     class="custom-table"
     (nzQueryParams)="handleQueryParamsChange($event)"
   >
@@ -43,24 +46,26 @@
       <th
         class="text-center table-header"
         *ngFor="let column of checklistColumns"
+        [nzWidth]="column.width"
       >{{ column.title }}</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of checklistTable.data;  let i=index" [class]="getRowClass(item)">
-      <td class="text-center">
-        {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+      <td class="text-center max-width-cell ">
+        {{ item.createdAt | date: 'dd/MM HH:mm' }}
       </td>
       <td class="text-center">
         {{item.vehicle.plate}}
       </td>
-      <td class="text-center">
+      <td class="text-center ">
         {{item.vehicle?.trackers?.[0]?.trackerModel.trackerTechnology.name}}
       </td>
-      <td class="text-center">{{ item.origin }}</td>
-      <td class="text-center">{{ item.destiny }}</td>
+      <td class="text-center max-width-cell" nz-tooltip [nzTooltipTitle]="item.origin ">{{ item.origin }}</td>
+      <td class="text-center max-width-cell" nz-tooltip [nzTooltipTitle]="item.destiny">{{ item.destiny }}</td>
       <td class="text-center">{{ getStatusTranslated(item.status) }}</td>
     </tr>
     </tbody>
   </nz-table>
+</div>
 </nz-spin>

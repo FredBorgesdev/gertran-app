@@ -22,12 +22,12 @@ export class ClientChecklistsComponent extends BaseCrudListComponent<Checklist> 
   currentTimeInterval: any;
 
   checklistColumns = [
-    {title: 'Data'},
-    {title: 'Placa'},
-    {title: 'Tecnologia'},
-    {title: 'Origem'},
-    {title: 'Destino'},
-    {title: 'Status'}
+    {title: 'Data/hora',  width: '20%'},
+    {title: 'Placa', width: '12%'},
+    {title: 'Tec', width: '12%'},
+    {title: 'Origem',width: '20%'},
+    {title: 'Destino',width: '20%'},
+    {title: 'Status', width: '18%'}
   ];
 
   stopRefreshing = new Subject();
@@ -110,11 +110,26 @@ export class ClientChecklistsComponent extends BaseCrudListComponent<Checklist> 
   getStatusTranslated(status: string): string {
     switch (status.toLowerCase()) {
       case 'requested':
-        return 'Em avaliação';
+        return 'avaliação';
       case 'approved':
         return 'Aprovado';
       case 'rejected':
         return 'Rejeitado';
     }
   }
+
+  //#hmn***fitmap
+  fitMap() {
+    const sizeMapInnerHeight = window.innerHeight;
+    const sizeMapInnerWidth = window.innerWidth;
+    try {
+      document.getElementById("googleMap").style.height =
+        sizeMapInnerHeight + "px";
+      document.getElementById("googleMap").style.width = sizeMapInnerWidth + "px";
+    } catch (error) {
+      console.log('mapa não carregado')
+    }
+  }
+
+
 }
