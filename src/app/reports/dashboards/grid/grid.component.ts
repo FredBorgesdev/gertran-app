@@ -32,13 +32,13 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
   isLoading = false;
   monitoringColumns = [
     {title: 'Tec', width: '3%'},
-    {title: 'Placa', width: '5%'},
+    {title: 'Placa', width: '7%'},
     {title: 'Ig', width: '2%'},
-    {title: '%', width: '4%'},
+    {title: '%', width: '6%'},
     {title: 'Mapa', width: '3%'},
     {title: 'Origem', width: '10%'},
     {title: 'Destino', width: '10%'},
-    {title: 'Posição', width: '35%'},
+    {title: 'Posição', width: '30%'},
     {title: 'Previsão inicio', width: '8%'},
     {title: 'Previsão termino', width: '8%'},
   ];
