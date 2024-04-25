@@ -86,6 +86,9 @@ export class AlertsService {
       alertsOnly?: boolean;
     }
   ): Observable<GetAllResponse<Alert>> {
+    if(window.location.pathname == '/reports/dashboards/tc-gertran')
+      pagination.limit = 4
+
     const params: any = {
       limit: pagination.limit || DEFAULT_LIMIT,
       alert_type: filters.alertType,

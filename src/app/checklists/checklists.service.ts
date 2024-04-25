@@ -39,7 +39,8 @@ export class ChecklistsService implements ApiService<Checklist> {
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Checklist>> {
     if(window.location.pathname == '/reports/dashboards/tc2' || 
-    window.location.pathname == '/reports/dashboards/client'
+    window.location.pathname == '/reports/dashboards/client' ||
+    window.location.pathname == '/reports/dashboards/tc-gertran' 
     )
       pagination.limit = 3
 

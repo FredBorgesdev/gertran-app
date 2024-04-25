@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Terminals, TerminalsService} from "../../../terminals/terminals.service";
 import {DatePipe} from "@angular/common";
 import {Alert, AlertsService, AlertTypes} from "../../../monitoring/alerts.service";
 import {differenceInMinutes, subMinutes} from "date-fns";
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'app-alerts-page',
@@ -11,12 +12,15 @@ import {differenceInMinutes, subMinutes} from "date-fns";
   providers: [DatePipe]
 })
 export class AlertsComponent implements OnInit, OnDestroy {
+  @Input() showTitle = true
   terminals: Terminals[] = [];
   currentTime = '';
   intervals: any[] = [];
   currentTerminal: Terminals;
   currentAlerts: Alert[] = [];
   isLoading = false;
+  currentCount = 0
+  currentLimit = 0
 
   constructor(
     private terminalsService: TerminalsService,
@@ -73,12 +77,30 @@ export class AlertsComponent implements OnInit, OnDestroy {
     }).subscribe((data) => {
       this.currentAlerts = data.results.reverse();
       this.currentTerminal = nextTerminal;
-
+      this.currentCount = data.count
+      this.currentLimit = data.limit
       if (terminal) {
         this.isLoading = false;
       }
     });
   }
+
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    // if (params.pageIndex < this.page) {
+    //   const url = this.replaceOffsetWithPage(this.resources.previous, params.pageIndex);
+    //   this.loadResources(url);
+    // } else if (params.pageIndex > this.page) {
+    //   const url = this.replaceOffsetWithPage(this.resources.next, params.pageIndex);
+    //   this.loadResources(url);
+    // }
+  }
+
+  // replaceOffsetWithPage(url: string, page: number): string {
+  //   const limit = +url.match(/limit=\d+/)[0].split('=')[1];
+
+  //   return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
+  // }
 
   getClass(alert: Alert): string {
     const diffInMinutes = differenceInMinutes(new Date(), new Date(alert.receivedAt));

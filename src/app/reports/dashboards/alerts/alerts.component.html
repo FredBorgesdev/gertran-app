@@ -1,7 +1,7 @@
 <div class="dash-header">
   <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
 
-  <h1 class="dash-header-title">
+  <h1 class="dash-header-title" *ngIf="showTitle">
     Alertas
   </h1>
 
@@ -16,7 +16,7 @@
 
 <h4 *ngIf="isLoading">Carregando...</h4>
 
-<img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+<img *ngIf="showTitle" src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
 
 <h3 class="dash-title">
   {{ currentTerminal?.name }}
@@ -76,7 +76,15 @@
 
 
 
-<nz-table #table [nzData]="currentAlerts" [nzFrontPagination]="false" nzSize="small" class="custom-table">
+<nz-table #table 
+  [nzData]="currentAlerts" 
+  [nzFrontPagination]="true" 
+  nzSize="small" 
+  class="custom-table"  
+  (nzQueryParams)="handleQueryParamsChange($event)"     
+  [nzTotal]="currentCount"
+  [nzPageSize]="currentLimit"
+> 
   <thead>
     <tr>
       <th  class="table-header text-center" style="width: 5%;">Placa</th>
