@@ -54,6 +54,7 @@ import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
 import {ClientComponent} from './dashboards/client/client.component';
 import {ControlTower1} from './dashboards/tc1/tc1.component';
 import {ControlTower2} from './dashboards/tc2/tc2.component';
+import {ControlTowerGertran} from './dashboards/tc-gertran/tc-gertran.component';
 import {ControlTower3} from './dashboards/tc3/tc3.component';
 import {ControlTower4} from './dashboards/tc4/client.component';
 import {ControlTower5} from './dashboards/tc5/client.component';
@@ -124,6 +125,7 @@ import { InsuranceComponent } from './insurance/insurance.component';
     ClientChecklistsComponent,
     ClientMonitoringRequestsComponent,
     InsuranceComponent,
+    ControlTowerGertran,
   ],
   exports: [
     WorkdayComponent

@@ -42,6 +42,7 @@ import { ControlTower3 } from './dashboards/tc3/tc3.component';
 import { ControlTower4 } from './dashboards/tc4/client.component';
 import { ControlTower5 } from './dashboards/tc5/client.component';
 import { OccurenceFormComponent } from '../occurrence/occurrence-form/occurrence-form.component';
+import { ControlTowerGertran } from './dashboards/tc-gertran/tc-gertran.component';
 
 const routes: Routes = [
   {
@@ -203,6 +204,10 @@ const routes: Routes = [
   {
     path: 'dashboards/tc2',
     component: ControlTower1,
+  },
+  {
+    path: 'dashboards/tc-gertran',
+    component: ControlTowerGertran,
   },
   {
     path: 'dashboards/tc3',

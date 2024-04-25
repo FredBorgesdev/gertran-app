@@ -5,7 +5,7 @@ import {Alert, AlertsService, AlertTypes} from "../../../monitoring/alerts.servi
 import {differenceInMinutes, subMinutes} from "date-fns";
 
 @Component({
-  selector: 'app-alerts',
+  selector: 'app-alerts-page',
   templateUrl: './alerts.component.html',
   styleUrls: ['./alerts.component.css'],
   providers: [DatePipe]
