@@ -401,15 +401,15 @@
       </div>
 
       <nz-button-group *ngIf="monitoringRequest?.data?.status != 'under_review' ">
-        <button nz-button [print]="['printable', printConfig]" nzType="primary" class="m-r-15">
+        <button nz-button [print]="['printable', printConfig]" nzType="primary" class="m-r-15" *ngIf="monitoringRequest">
           <i nz-icon nzType="printer" nzTheme="outline"></i>
           Imprimir
         </button>
-        <button nz-button [print]="['checklist-print', printConfig]" nzType="primary" class="m-r-15">
+        <button nz-button [print]="['checklist-print', printConfig]" nzType="primary" class="m-r-15" *ngIf="monitoringRequest">
           <i nz-icon nzType="printer" nzTheme="outline"></i>
           Comprovante de checklist
         </button>
-        <button nz-button [print]="['release-print', printConfig]" nzType="primary">
+        <button nz-button [print]="['release-print', printConfig]" nzType="primary" *ngIf="monitoringRequest">
           <i nz-icon nzType="printer" nzTheme="outline"></i>
           Protocolo de liberação de viagem
         </button>
