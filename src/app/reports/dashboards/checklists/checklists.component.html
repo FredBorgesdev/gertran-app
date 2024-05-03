@@ -49,7 +49,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of checklistTable.data.reverse();  let i=index" [class]="getRowClass(item)">
+    <tr *ngFor="let item of checklistTable.data;  let i=index" [class]="getRowClass(item)">
       <td class="text-center">
         {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
       </td>
