@@ -9,6 +9,7 @@ import MonitoringRequest from '../monitoring-request';
 import {ChecklistsService} from '../../checklists/checklists.service';
 import {AuthenticationService} from "../../authentication/authentication.service";
 import { ReportsService,BasePeriodFilter  } from 'src/app/reports/reports.service';
+import { NgxPrintElementService } from 'ngx-print-element';
 
 export type ModalDestroyResult = {
   updateList: boolean;
@@ -63,7 +64,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private modal: NzModalRef,
     public checklistService: ChecklistsService,
     public authSevice: AuthenticationService,
-    public reportsService: ReportsService
+    public reportsService: ReportsService,
+    private printService: NgxPrintElementService
   ) {
   }
 
@@ -75,6 +77,14 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.loadChecklistBaitForm();
     this.loadMonitoringRequest();
     this.loadTerminals();
+  }
+  
+  onPrintClickCheckList(): void {
+    this.printService.print('checklist-print', this.printConfig);
+  }
+
+  onPrintClickReleasedVehicle(): void {
+    this.printService.print('release-print', this.printConfig);
   }
 
   loadChecklistForm(): void {
