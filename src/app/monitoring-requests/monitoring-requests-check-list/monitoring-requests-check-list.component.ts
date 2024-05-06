@@ -166,13 +166,11 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
       })
 
-      setTimeout(() => {
-        this.monitoringRequest = new MonitoringRequest(result);
-        this.setPossibleStatus();
-        this.isLoading = false;
-        this.patchFormsValues();
-        this.printConfig.pageTitle = `Checklist de Monitoramento - ${this.monitoringRequest?.data.customer?.tradingName}`;
-      },3000)
+      this.monitoringRequest = new MonitoringRequest(result);
+      this.setPossibleStatus();
+      this.isLoading = false;
+      this.patchFormsValues();
+      this.printConfig.pageTitle = `Checklist de Monitoramento - ${this.monitoringRequest?.data.customer?.tradingName}`;
     }, () => {
       this.isLoading = false;
       this.message.error('Não foi possível carregar o pedido de monitoramento.');

@@ -406,15 +406,15 @@
   </form>
 </nz-spin>
 
-<div id="printable" *ngIf="monitoringRequest">
+<div id="printable">
   <app-monitoring-requests-check-list-printable
     [monitoringRequest]="monitoringRequest"></app-monitoring-requests-check-list-printable>
 </div>
 
-<div id="checklist-print" *ngIf="monitoringRequest">
+<div id="checklist-print">
   <app-checklist-print [monitoringRequest]="monitoringRequest"></app-checklist-print>
 </div>
 
-<div id="release-print" *ngIf="monitoringRequest">
+<div id="release-print">
   <app-release-travel-print [monitoringRequest]="monitoringRequest"></app-release-travel-print>
 </div>
