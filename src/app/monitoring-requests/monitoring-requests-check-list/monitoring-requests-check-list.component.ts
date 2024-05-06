@@ -172,7 +172,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         this.isLoading = false;
         this.patchFormsValues();
         this.printConfig.pageTitle = `Checklist de Monitoramento - ${this.monitoringRequest?.data.customer?.tradingName}`;
-      },1000)
+      },3000)
     }, () => {
       this.isLoading = false;
       this.message.error('Não foi possível carregar o pedido de monitoramento.');
