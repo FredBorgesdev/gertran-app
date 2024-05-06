@@ -192,6 +192,21 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       observations: this.monitoringRequest.data.observations,
       terminal: this.monitoringRequest.data.terminal?.id
     });
+
+    if(this.monitoringRequest.data.status == Status.UNDER_REVIEW){
+      this.checklistForm.patchValue({
+        hasMacro:true,
+        hasEmbeddedIntelligence:true,
+        driverDoorChecked: true,
+        passengerDoorChecked: true,
+        wagonEngagedChecked:true,
+        panelSensorChecked:true,
+        trunkChecked:true,
+        sirenChecked: true,
+        blockChecked: true,
+        trunkLockChecked: true
+      })
+    }
   }
 
   loadTerminals(): void {

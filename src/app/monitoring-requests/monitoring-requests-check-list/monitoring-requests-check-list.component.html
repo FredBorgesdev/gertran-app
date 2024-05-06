@@ -363,18 +363,6 @@
     </div>
   </form>
 
-  <div id="printable" *ngIf="monitoringRequest">
-    <app-monitoring-requests-check-list-printable
-      [monitoringRequest]="monitoringRequest"></app-monitoring-requests-check-list-printable>
-  </div>
-
-  <div id="checklist-print" *ngIf="monitoringRequest">
-    <app-checklist-print [monitoringRequest]="monitoringRequest"></app-checklist-print>
-  </div>
-
-  <div id="release-print" *ngIf="monitoringRequest">
-    <app-release-travel-print [monitoringRequest]="monitoringRequest"></app-release-travel-print>
-  </div>
 
   <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-15" *ngIf="monitoringRequest?.data?.observations">
     Motivo do cancelamento: {{monitoringRequest?.data?.observations}}
@@ -417,3 +405,16 @@
     </div>
   </form>
 </nz-spin>
+
+<div id="printable" *ngIf="monitoringRequest">
+  <app-monitoring-requests-check-list-printable
+    [monitoringRequest]="monitoringRequest"></app-monitoring-requests-check-list-printable>
+</div>
+
+<div id="checklist-print" *ngIf="monitoringRequest">
+  <app-checklist-print [monitoringRequest]="monitoringRequest"></app-checklist-print>
+</div>
+
+<div id="release-print" *ngIf="monitoringRequest">
+  <app-release-travel-print [monitoringRequest]="monitoringRequest"></app-release-travel-print>
+</div>
