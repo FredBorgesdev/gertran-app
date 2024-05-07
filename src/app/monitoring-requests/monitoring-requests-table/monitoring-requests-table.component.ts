@@ -120,6 +120,22 @@ export class MonitoringRequestsTableComponent implements OnInit {
     if (body.status === Status.IN_PROGRESS) {
       body.travelStatus = 'in_progress';
     }
+    
+    let message;
+    if (body.status === Status.FINISHED) {
+      message = 'Informe o motivo da finalização';
+    }
+
+    if (message) {
+      const observations = prompt(message);
+      if (!observations) {
+        this.message.error('Preencha o motivo da finalização corretamente.');
+        this.isLoading = false;
+        return;
+      }
+
+      body.observations = observations;
+    }
 
     this.monitoringRequestService.update(item.id, body as MonitoringRequests).subscribe(() => {
       this.isLoading = false;
