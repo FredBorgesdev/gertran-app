@@ -15,6 +15,13 @@
     TORRE DE CONTROLE 2
   </h1>
   <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+  <div style="display: flex; justify-content: left;">
+    <button nz-button nzType="default" (click)="goBack()">Voltar</button>
+    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
+    <button nz-button nzType="default" (click)="exitFullscreen()">Sair Tela Cheia</button>
+    <button nz-button nzType="default" (click)="goToTowerControl1()" >Torre controle 1</button>
+    <button nz-button nzType="default" (click)="goToTowerControl3()" >Torre controle 3</button>
+  </div>
   <br>
   <div style="display: flex; flex-direction: column;">
     <div style="flex: 0.7; width: 100%;">
