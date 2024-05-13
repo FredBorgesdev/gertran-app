@@ -83,14 +83,7 @@ export class OperationsService implements ApiService<Operations> {
     if (filters?.name) {
       params.name = filters.name;
     }
-    if(window.location.pathname.includes('customers/customers')
-    ){
-      const currentUrl = window.location.href;
-      const urlParts = currentUrl.split('/');
-      const uuid = urlParts[urlParts.length - 1];
-      params.customer = uuid;
-    }
-    
+
     return this.http.get<GetAllResponse<Operations>>('settings/operations', {params});
   }
 

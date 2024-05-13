@@ -16,7 +16,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'driver-create/:customer_id',
+    path: 'driver-create',
     component: DriversDriverComponent,
     data: {
       title: 'Adicionar Motorista ',
@@ -24,7 +24,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'driver-edit/:id/:customer_id',
+    path: 'driver-edit/:id',
     component: DriversDriverComponent,
     data: {
       title: 'Editar Motorista ',

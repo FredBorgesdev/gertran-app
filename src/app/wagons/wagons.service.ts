@@ -37,13 +37,6 @@ export class WagonsService extends VehiclesService<Wagon> {
     if (filters?.plate) {
       params.plate = filters.plate;
     }
-    if(window.location.pathname.includes('customers/customers')
-    ){
-      const currentUrl = window.location.href;
-      const urlParts = currentUrl.split('/');
-      const uuid = urlParts[urlParts.length - 1];
-      params.customer = uuid;
-    }
 
     return this.http.get<GetAllResponse<Wagon>>('vehicles/wagons', { params });
   }

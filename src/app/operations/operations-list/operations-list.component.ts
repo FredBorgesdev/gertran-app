@@ -36,12 +36,4 @@ export class OperationsListComponent extends BaseCrudListComponent<Operations> {
       modal,
     );
   }
-
-  create(){
-    const currentUrl = window.location.href;
-    const urlParts = currentUrl.split('/');
-    const uuid = urlParts[urlParts.length - 1];
- 
-    this.router.navigate(['operations', `operations-create`,uuid]);
-  }
 }

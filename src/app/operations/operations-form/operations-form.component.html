@@ -1,5 +1,27 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
   <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+      <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+        <nz-select
+          id="customer"
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Selecione uma empresa"
+          formControlName="customer"
+          nzServerSearch
+          (nzOnSearch)="selectableCustomerService.searchByName($event)"
+          (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+          [nzDropdownRender]="selectLoading"
+        >
+          <nz-option
+            *ngFor="let customer of selectableCustomerService.customers"
+            [nzLabel]="customer.tradingName"
+            [nzValue]="customer.id"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
     <nz-form-item>
       <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome da operação</nz-form-label>
@@ -436,8 +458,8 @@
         <button type="button" (click)="save()" nz-button nzType="primary">
           <i nz-icon nzType="save"></i>Salvar Operações
         </button>
-        <button type="button" (click)="backToCustomerList()" nz-button>
-          <i class="fas fa-arrow-left"></i> Voltar
+        <button type="button" (click)="list()" nz-button>
+          <i nz-icon nzType="unordered-list"></i>Listar Operações
         </button>
       </nz-form-control>
     </nz-form-item>

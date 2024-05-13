@@ -59,7 +59,7 @@ export class DriversDriverComponent implements OnInit {
 
     if (this.driver?.id) {
       this.driversService.update(this.driver.id, value).subscribe(
-        () => this.handleSuccess(this.driver.id),
+        () => this.handleSuccess(),
         () => this.handleFailure()
       );
     } else {
@@ -72,6 +72,7 @@ export class DriversDriverComponent implements OnInit {
 
 
   changePassword(password: string) {
+    console.log(password)
     this.driversService.changePassword(this.driver.id, password).subscribe(() => {
       this.message.success('Senha alterada com sucesso!');
     }, () => {
@@ -82,13 +83,23 @@ export class DriversDriverComponent implements OnInit {
 
 
   changeDriver(value: Driver): void {
+    console.log(value)
     this.driver = value;
+  }
+
+  listDrivers() {
+    this.router.navigate(['/drivers/drivers-list']);
   }
 
   private handleSuccess(id?: string) {
     this.isLoading = false;
     this.messageService.success('Motorista salvo com sucesso');
-    this.router.navigate(['/drivers/driver-edit', id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+
+    if (id) {
+      this.router.navigate(['/drivers/driver-edit', id]);
+    } else {
+      this.listDrivers();
+    }
   }
 
   private handleFailure() {

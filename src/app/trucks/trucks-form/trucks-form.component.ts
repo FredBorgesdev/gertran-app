@@ -86,8 +86,8 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     super.ngOnInit();
   }
 
-  backToCustomerList(): void {
-    this.router.navigate(['customers', 'customers-edit', this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+  list(): void {
+    this.router.navigate(['/trucks/trucks-list']);
   }
 
   log($event: Event) {
@@ -96,7 +96,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
 
   protected handleSuccess(response?: any): void {
     this.message.success('Registro salvo com sucesso');
-    this.router.navigate(['trucks', 'trucks-edit', response.id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+    this.router.navigate(['trucks', 'trucks-edit', response.id]);
     this.isLoading = false;
   }
 }

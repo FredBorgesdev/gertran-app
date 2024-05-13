@@ -19,7 +19,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'wagons-create/:customer_id',
+    path: 'wagons-create',
     component: WagonsWagonComponent,
     data: {
       title: 'Adicionar Carreta ',
@@ -28,7 +28,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'wagons-edit/:id/:customer_id',
+    path: 'wagons-edit/:id',
     component: WagonsWagonComponent,
     data: {
       title: 'Editar Carreta ',

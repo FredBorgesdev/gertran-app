@@ -24,11 +24,6 @@ import {NzSwitchModule} from "ng-zorro-antd/switch";
 import { EmailsTabComponent } from './emails-tab/emails-tab.component';
 import { EmailsFormComponent } from './emails-form/emails-form.component';
 import { EmailsTableComponent } from './emails-table/emails-table.component';
-import { OperationsListComponent } from '../operations/operations-list/operations-list.component'
-import { UsersListComponent } from '../users/users-list/users-list.component'
-import { TrucksListComponent } from '../trucks/trucks-list/trucks-list.component'
-import { WagonsListComponent } from '../wagons/wagons-list/wagons-list.component'
-import { DriversListComponent } from '../drivers/drivers-list/drivers-list.component'
 
 const antdModule = [
   NzTransferModule,
@@ -52,12 +47,7 @@ const antdModule = [
     SharedOperationsTableComponent,
     EmailsTabComponent,
     EmailsFormComponent,
-    EmailsTableComponent,
-    OperationsListComponent,
-    UsersListComponent,
-    TrucksListComponent,
-    WagonsListComponent,
-    DriversListComponent
+    EmailsTableComponent
   ],
   imports: [
     SharedModule,
