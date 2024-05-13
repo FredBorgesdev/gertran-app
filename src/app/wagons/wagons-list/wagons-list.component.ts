@@ -58,4 +58,19 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
   getCustomerNames(wagon: Wagon): string {
     return wagon.vehicle.customers.map(c => c.tradingName).join(', ');
   }
+
+  create(){
+    this.router.navigate(['/wagons/wagons-create', this.getCustomerUUID()]);
+  }
+
+  edit(item){
+    this.router.navigate(['/wagons/wagons-edit', item.id, this.getCustomerUUID()]);
+  }
+
+  getCustomerUUID(){
+    const currentUrl = window.location.href;
+    const urlParts = currentUrl.split('/');
+    const uuid = urlParts[urlParts.length - 1];
+    return uuid
+  }
 }

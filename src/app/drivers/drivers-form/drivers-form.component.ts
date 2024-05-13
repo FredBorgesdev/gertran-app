@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute,Router} from '@angular/router';
 import {conformToMask} from 'angular2-text-mask';
 import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
 import {Customer, CustomersService} from 'src/app/customers/customers.service';
@@ -41,6 +41,7 @@ export class DriversFormComponent implements OnInit {
     private service: DriversService,
     public selectableCustomerService: SelectableCustomerServiceService,
     public authService: AuthenticationService,
+    private activatedRoute: ActivatedRoute
   ) {
 
     this.validatePasswordForm = formBuilder.group({
@@ -51,14 +52,12 @@ export class DriversFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
     const {conformedValue: maskedCpf} = conformToMask(this.driver?.cpf, this.cpfMask, {guide: false});
-    const defaultCustomers = [this.authService.customerId].filter(Boolean);
+    // const defaultCustomers = [this.authService.customerId].filter(Boolean);
 
     this.validateForm = this.formBuilder.group({
       customers: [
-        this.driver?.customers || defaultCustomers,
+        [this.driver?.customers || this.activatedRoute.snapshot.paramMap.get('customer_id')],
         [Validators.required]
       ],
       workingSituation: [this.driver?.workingSituation, []],
@@ -123,8 +122,8 @@ export class DriversFormComponent implements OnInit {
     }
   }
 
-  listDrivers(): void {
-    this.router.navigate(['/drivers/drivers-list']);
+  backToCustomerList(): void {
+    this.router.navigate(['customers', 'customers-edit',  this.activatedRoute.snapshot.paramMap.get('customer_id')]);
   }
 
   async filterDriverByCpf(): Promise<void> {

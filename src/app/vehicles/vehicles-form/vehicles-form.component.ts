@@ -113,7 +113,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     this.resource = vehicle;
     this.loadResource();
     this.validateForm.patchValue({
-      customers: this.validateForm.controls.customers.value.concat(this.authService.customerId),
+      customers: this.validateForm.controls.customers.value.concat( this.activatedRoute.snapshot.paramMap.get('customer_id')),
     });
     this.isLoading = false;
   }
@@ -124,7 +124,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
   loadFormBuilder(customProperties?: string[]): void {
     this.validateForm = this.formBuilder.group({
-      customers: [[this.authService.customerId], [Validators.required]],
+      customers: [[this.authService.customerId, this.activatedRoute.snapshot.paramMap.get('customer_id')], [Validators.required]],
       manufacturer: [null, [Validators.required]],
       vehicleModel: [null, [Validators.required]],
       vehicleModelType: [null, [Validators.required]],

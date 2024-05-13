@@ -29,7 +29,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
-      customer: [[this.authService.customerId], []],
+      customer: [[this.authService.customerId, this.activatedRoute.snapshot.paramMap.get('customer_id')], []],
       email: [null, [Validators.required, Validators.email]],
       cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
@@ -83,5 +83,11 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   updateResource(user: AbstractUser): void {
     this.resource = user;
+  }
+  
+  handleSuccess(response?: any): void {
+    this.message.success('Registro salvo com sucesso');
+    this.isLoading = false
+    this.router.navigate(['users', 'users-edit', response.id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
   }
 }

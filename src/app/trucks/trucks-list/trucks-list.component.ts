@@ -74,4 +74,19 @@ export class TrucksListComponent extends BaseCrudListComponent<Truck> implements
 
     return truck.vehicle.terminals.map(t => t.name).join(', ');
   }
+
+  create(){
+    this.router.navigate(['/trucks/trucks-create', this.getCustomerUUID()]);
+  }
+
+  edit(item){
+    this.router.navigate(['/trucks/trucks-edit', item.id,this.getCustomerUUID()]);
+  }
+
+  getCustomerUUID(){
+    const currentUrl = window.location.href;
+    const urlParts = currentUrl.split('/');
+    const uuid = urlParts[urlParts.length - 1];
+    return uuid
+  }
 }

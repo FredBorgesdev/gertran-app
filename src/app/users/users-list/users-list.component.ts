@@ -51,4 +51,19 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
   search(): void {
     this.searchByField('search', this.searchInput);
   }
+
+  create(){
+    this.router.navigate(['users', `users-create`, this.getCustomerUUID()]);
+  }
+
+  edit(item){
+    this.router.navigate(['users', `users-edit`,item.id, this.getCustomerUUID()]);
+  }
+
+  getCustomerUUID(){
+    const currentUrl = window.location.href;
+    const urlParts = currentUrl.split('/');
+    const uuid = urlParts[urlParts.length - 1];
+    return uuid
+  }
 }

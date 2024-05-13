@@ -120,7 +120,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   loadFormBuilder(): void {
     this.validateForm = this.formBuilder.group({
       name: [null, [Validators.required]],
-      customer: [null, [Validators.required]],
+      customer: [this.activatedRoute.snapshot.paramMap.get('customer_id'), [Validators.required]],
       allowedTrackerModels: [[], [Validators.required]],
       allowedTruckTypes: [[], [Validators.required]],
       allowedWagonTypes: [[], [Validators.required]],
@@ -255,6 +255,13 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     this.message.success('Registro salvo com sucesso');
     this.router.navigate(['operations', 'operations-edit', response.id]);
     this.isLoading = false;
+  }
+
+  backToCustomerList(): void {
+    if(this.validateForm.value.customer)
+      this.router.navigate(['customers', 'customers-edit', this.validateForm.value.customer]);
+    else
+      this.router.navigate(['customers', 'customers-edit', this.activatedRoute.snapshot.paramMap.get('customer_id')]);
   }
 
   getValues(): Operations {

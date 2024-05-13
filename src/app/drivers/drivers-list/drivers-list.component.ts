@@ -48,11 +48,18 @@ export class DriversListComponent extends BaseCrudListComponent<Driver> {
   }
 
   create(): void {
-    this.router.navigate(['/drivers/driver-create']);
+    this.router.navigate(['/drivers/driver-create', this.getCustomerUUID()]);
   }
 
   edit(item: Driver): void {
-    this.router.navigate(['/drivers/driver-edit', item.id]);
+    this.router.navigate(['/drivers/driver-edit', item.id,this.getCustomerUUID() ]);
+  }
+  
+  getCustomerUUID(){
+    const currentUrl = window.location.href;
+    const urlParts = currentUrl.split('/');
+    const uuid = urlParts[urlParts.length - 1];
+    return uuid
   }
 
   delete(item: Driver): void {

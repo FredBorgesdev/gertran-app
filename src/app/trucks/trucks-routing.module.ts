@@ -19,7 +19,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'trucks-create',
+    path: 'trucks-create/:customer_id',
     component: TrucksTruckComponent,
     data: {
       title: 'Adicionar Carreta ',
@@ -28,7 +28,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'trucks-edit/:id',
+    path: 'trucks-edit/:id/:customer_id',
     component: TrucksTruckComponent,
     data: {
       title: 'Editar Carreta ',

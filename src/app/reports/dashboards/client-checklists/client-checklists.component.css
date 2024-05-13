@@ -45,6 +45,7 @@ th.table-header {
   background: red;
   font-weight: bold;
   color: #fff;
+  /* color: black; */
 }
 
 .custom-table th,
