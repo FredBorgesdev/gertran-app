@@ -7,7 +7,7 @@
 
 <hr style="border-top: 3px double #000000">
 
-<h1 style="text-align: center;margin-top: 12px;  ">
+<h1 style="text-align: center;margin-top: 12px; font-weight: bolder; ">
   Protocolo de avaliação SM
 </h1>
 
@@ -15,32 +15,32 @@
 <table style="border-collapse: collapse; width: 100%; border: 1px solid #000; font-size: 30px;">
   <tbody>
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style=" font-size: x-small;">Solicitação: {{ monitoringRequest?.data?.id }}</h5></td>
-      <td><h5 style=" font-size: x-small;">Data: {{ currentDate }}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Solicitação: {{ monitoringRequest?.data?.id }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Data: {{ currentDate }}</h5></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style=" font-size: x-small;">Motorista: {{monitoringRequest?.data?.driver?.name}}</h5></td>
-      <td><h5 style=" font-size: x-small;">CPF: {{monitoringRequest?.data?.driver?.cpf}}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Motorista: {{monitoringRequest?.data?.driver?.name}}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">CPF: {{monitoringRequest?.data?.driver?.cpf}}</h5></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style=" font-size: x-small;">Empresa: {{ monitoringRequest?.data?.customer.tradingName }}</h5></td>
-      <td><h5 style=" font-size: x-small;">Veiculo: {{ monitoringRequest?.data?.truck?.vehicle.plate }}</h5></td>
-    </tr>
-
-
-
-    <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style=" font-size: x-small;">Carreta 1: {{ firstWagonPlate() }}</h5></td>
-      <td><h5 style=" font-size: x-small;">Carreta 2: {{ secondWagonPlate() }}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Empresa: {{ monitoringRequest?.data?.customer.tradingName }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Veiculo: {{ monitoringRequest?.data?.truck?.vehicle.plate }}</h5></td>
     </tr>
 
 
 
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style=" font-size: x-small;">Equipamento: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}</h5></td>
-      <td><h5 style=" font-size: x-small;">Tecnlogia: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Carreta 1: {{ firstWagonPlate() }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Carreta 2: {{ secondWagonPlate() }}</h5></td>
+    </tr>
+
+
+
+    <tr style="border-bottom: 1px solid #000;">
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Equipamento: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Tecnlogia: {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</h5></td>
     </tr>
 
 
@@ -49,7 +49,7 @@
   </tbody>
 </table>
 
-<h1 style="text-align: center;margin-top: 12px; ">
+<h1 style="text-align: center;margin-top: 12px; font-weight: bolder;">
   Pesquisa Cadastral
 </h1>
 
@@ -57,16 +57,16 @@
   <tbody>
     <tr style="border-bottom: 1px solid #000;">
       <td style="width: 50%; border-right: 1px solid #000;">
-        <h5 style=" font-size: x-small;">
+        <h5 style="font-weight: bold; font-size: x-small;">
           Gerenciadora de Risco: {{ monitoringRequest?.data?.surveyConductedBy === 'others' ? monitoringRequest?.data?.surveyConductedByOthers : monitoringRequest?.data?.surveyConductedBy }}
         </h5>
       </td>
-      <td><h5 style=" font-size: x-small;">N° Pesquisa: {{ monitoringRequest?.data?.protocolResearch }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">N° Pesquisa: {{ monitoringRequest?.data?.protocolResearch }}</h5></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style=" font-size: x-small;">Situação Funcional: {{ workingSituation()}}</h5></td>
-      <td><h5 style=" font-size: x-small;">Validade: {{ monitoringRequest?.data?.expirationDateResearch | date: 'dd/MM/yyyy' }}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Situação Funcional: {{ workingSituation()}}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Validade: {{ monitoringRequest?.data?.expirationDateResearch | date: 'dd/MM/yyyy' }}</h5></td>
     </tr>
 
 
@@ -82,7 +82,7 @@
 
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2" style="padding: 5px;height: 80px; text-align: left;vertical-align: top;">
-        <h5 style=" font-size: x-small;">Observações: {{ monitoringRequest?.data?.checklist?.justification }}</h5>
+        <h5 style="font-weight: bold; font-size: x-small;">Observações: {{ monitoringRequest?.data?.checklist?.justification }}</h5>
       </td>
       <td></td>
     </tr>
@@ -90,12 +90,12 @@
 
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2" style="padding: 5px; text-align: center;">
-        <!-- <h5 style=" font-size: 25px;">RESULTADO:</h5> -->
-        <h5 style="font-size: 25px; " *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">
+        <!-- <h5 style="font-weight: bolder; font-size: 25px;">RESULTADO:</h5> -->
+        <h5 style="font-size: 25px; font-weight: bolder;" *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">
           RESULTADO: APROVADO
         </h5>
 
-        <h5 style="font-size: 25px; " *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">
+        <h5 style="font-size: 25px; font-weight: bolder;" *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">
           RESULTADO: REPROVADO
         </h5>
       </td>
@@ -106,20 +106,20 @@
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2" style="padding: 5px;height: 80px; text-align: left;vertical-align: top;">
 
-        <h5 style=" font-size: x-small;">
+        <h5 style="font-weight: bold; font-size: x-small;">
           Atenção:
         </h5>
 
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: 500; font-size: x-small;">
           - Manter o sinal disponibilizado para a central de monitoramento gertran, e recursos de ações embarcadas, mensagens e comandos.
         </h5>
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: 500; font-size: x-small;">
           - Não interferir nas ações de iniciativa da gertran
         </h5>
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: 500; font-size: x-small;">
           - Orientar ao motorista em relação a envio de mensagens e horário de tráfego
         </h5>
 
@@ -129,7 +129,7 @@
 
 
     <tr style="border-bottom: 1px solid #000;">
-      <td colh5="2"> <h5 style="font-size: x-small;">Responsavel: {{ monitoringRequest?.data?.user?.name }}</h5></td>
+      <td colh5="2"> <h5 style="font-weight: bold;font-size: x-small;">Responsavel: {{ monitoringRequest?.data?.user?.name }}</h5></td>
       <td></td>
     </tr>
 

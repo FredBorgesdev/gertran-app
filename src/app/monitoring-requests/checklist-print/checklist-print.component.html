@@ -6,45 +6,45 @@
 </div>
 
 <hr style="border-top: 3px double #000000">
-<h1 style="text-align: center;margin-top: 12px;">
+<h1 style="text-align: center;margin-top: 12px; font-weight: bolder;">
   Check-list
 </h1>
 
 <table style="border-collapse: collapse; width: 100%; border: 1px solid #000; font-size: 30px;">
   <tbody>
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000; "><h5 style="font-size: x-small;">N° Documento: {{ monitoringRequest?.data?.checklist?.id }}</h5></td>
-      <td><h5 style="font-size: x-small;">Data: {{ monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy' }}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000; "><h5 style="font-weight: bold; font-size: x-small;">N° Documento: {{ monitoringRequest?.data?.checklist?.id }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Data: {{ monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy' }}</h5></td>
     </tr>
     <tr style="border-bottom: 1px solid #000;">
       <td style="width: 50%; border-right: 1px solid #000; "><h5
-          style="font-size: x-small;">Empresa: {{ monitoringRequest?.data?.customer.tradingName }}</h5></td>
-      <td><h5 style="font-size: x-small;">Motorista:  {{monitoringRequest?.data?.driver?.name}}</h5></td>
+          style="font-weight: bold; font-size: x-small;">Empresa: {{ monitoringRequest?.data?.customer.tradingName }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Motorista:  {{monitoringRequest?.data?.driver?.name}}</h5></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
       <td style="width: 50%; border-right: 1px solid #000; "><h5
-          style="font-size: x-small;">Solicitação: {{ monitoringRequest?.data?.id }}</h5></td>
-      <td><h5 style="font-size: x-small;">Veiculo: {{ monitoringRequest?.data?.truck?.vehicle.plate }}</h5></td>
+          style="font-weight: bold; font-size: x-small;">Solicitação: {{ monitoringRequest?.data?.id }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Veiculo: {{ monitoringRequest?.data?.truck?.vehicle.plate }}</h5></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000; "><h5 style="font-size: x-small;">Carreta 1: {{ firstWagonPlate() }}</h5></td>
-      <td><h5 style="font-size: x-small;">Carreta 2:</h5> {{ secondWagonPlate() }}</td>
+      <td style="width: 50%; border-right: 1px solid #000; "><h5 style="font-weight: bold; font-size: x-small;">Carreta 1: {{ firstWagonPlate() }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Carreta 2:</h5> {{ secondWagonPlate() }}</td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
       <td style="width: 50%; border-right: 1px solid #000; ">
-        <h5 style="font-size: x-small;">sistema rastreamento: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0]?.trackerModel.name }}</h5></td>
+        <h5 style="font-weight: bold; font-size: x-small;">sistema rastreamento: {{ monitoringRequest?.data?.truck?.vehicle?.trackers?.[0]?.trackerModel.name }}</h5></td>
       <td>
-        <h5 style="font-size: x-small;">número serie(s): {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}</h5> 
+        <h5 style="font-weight: bold; font-size: x-small;">número serie(s): {{ monitoringRequest?.data?.truck?.vehicle.trackers?.[0]?.trackerId }}</h5> 
       </td>
     </tr>
 
   </tbody>
 </table>
 
-<h1 style="text-align: center;margin-top: 12px;">
+<h1 style="text-align: center;margin-top: 12px; font-weight: bolder;">
   Sensores/Atuadores
 </h1>
 
@@ -55,23 +55,23 @@
       <tr *ngIf="i % 2 == 0" style="border-bottom: 1px solid #000;">
 
         <td style="width: 50%; border-right: 1px solid #000; ">
-          <!-- <h5 style="font-size: x-small;"> {{ checklistItems[i].label }}: SIM</h5> -->
-          <h5 style="font-size: x-small;" *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i].value]"> {{ checklistItems[i].label }}: SIM</h5>
-          <h5 style="font-size: x-small;" *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i].value]"> {{ checklistItems[i].label }}: NÃO</h5>
+          <!-- <h5 style="font-weight: bold; font-size: x-small;"> {{ checklistItems[i].label }}: SIM</h5> -->
+          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i].value]"> {{ checklistItems[i].label }}: SIM</h5>
+          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i].value]"> {{ checklistItems[i].label }}: NÃO</h5>
         </td>
 
         <td style="width: 50%; ">
-          <!-- <h5 style="font-size: x-small;">
+          <!-- <h5 style="font-weight: bold; font-size: x-small;">
             {{ checklistItems[i+1].label }}:
           </h5> -->
-          <h5 style="font-size: x-small;" *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">{{ checklistItems[i+1].label }}: SIM</h5>
-          <h5 style="font-size: x-small;" *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">{{ checklistItems[i+1].label }}: NÃO</h5>
+          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">{{ checklistItems[i+1].label }}: SIM</h5>
+          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">{{ checklistItems[i+1].label }}: NÃO</h5>
         </td>
       </tr>
     </ng-container>
   </tbody>
 </table>
-<h5>* 'SIM' PARA SENSORES/ATUADORES TESTADOS</h5>
+<h5 style="font-weight: 500;">* 'SIM' PARA SENSORES/ATUADORES TESTADOS</h5>
 
 <br>
 <br>
@@ -80,20 +80,20 @@
   <tbody>
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2" style="height: 80px; text-align: left;vertical-align: top;">
-        <h5 style="font-size: x-small;">Observações: {{ monitoringRequest?.data?.checklistBait?.justification }}</h5>
+        <h5 style="font-weight: bold; font-size: x-small;">Observações: {{ monitoringRequest?.data?.checklistBait?.justification }}</h5>
       </td>
       <td></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2" style=" text-align: center;">
-        <!-- <h5 style="font-size: x-small; font-size: 25px;">RESULTADO:</h5> -->
-        <h5 style="font-size: 25px;"
+        <!-- <h5 style="font-weight: bold; font-size: x-small; font-size: 25px;">RESULTADO:</h5> -->
+        <h5 style="font-size: 25px; font-weight: bolder;"
           *ngIf="monitoringRequest?.data?.checklist?.status === 'approved'">
           RESULTADO: APROVADO
         </h5>
 
-        <h5 style="font-size: 25px;"
+        <h5 style="font-size: 25px; font-weight: bolder;"
           *ngIf="monitoringRequest?.data?.checklist?.status !== 'approved'">
           RESULTADO: REPROVADO
         </h5>
@@ -104,20 +104,20 @@
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2" style="padding: 5px;height: 80px; text-align: left;vertical-align: top;">
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: bold; font-size: x-small;">
           Atenção:
         </h5>
 
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: 500; font-size: x-small;">
           - Manter o sinal disponibilizado para a central de monitoramento gertran, e recursos de ações embarcadas, mensagens e comandos.
         </h5>
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: 500; font-size: x-small;">
           - Não interferir nas ações de iniciativa da gertran
         </h5>
 
-        <h5 style="font-size: x-small;">
+        <h5 style="font-weight: 500; font-size: x-small;">
           - Orientar ao motorista em relação a envio de mensagens e horário de tráfego
         </h5>
 
@@ -127,7 +127,7 @@
 
     <tr style="border-bottom: 1px solid #000;">
       <td colh5="2">
-        <h5 style="font-size: x-small;">Responsavel: {{ monitoringRequest?.data?.checklist.reviewedBy?.name }}</h5>
+        <h5 style="font-weight: bold; font-size: x-small;">Responsavel: {{ monitoringRequest?.data?.checklist.reviewedBy?.name }}</h5>
       </td>
       <td></td>
     </tr>
