@@ -196,8 +196,14 @@
       <button type="button" (click)="save()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Motorista
       </button>
-      <button type="button" (click)="listDrivers()" nz-button>
-        <i nz-icon nzType="unordered-list"></i>Listar Motoristas
+      <button type="button" (click)="backToCustomerList()" nz-button>
+        <div  *ngIf="!authService.customerId">
+          <i class="fas fa-arrow-left"></i> Voltar ao Cadastro
+        </div>
+
+        <div  *ngIf="authService.customerId">
+          <i nz-icon nzType="unordered-list"></i> Listar Motoristas
+        </div>
       </button>
     </nz-form-control>
   </nz-form-item>

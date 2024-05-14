@@ -9,7 +9,7 @@ import {AbstractUser, UsersService} from '../users.service';
 import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
-
+import {ActivatedRoute,Router} from '@angular/router';
 @Component({
   selector: 'app-users-form',
   templateUrl: './users-form.component.html',
@@ -36,6 +36,8 @@ export class UsersFormComponent implements OnInit {
     public authService: AuthenticationService,
     private service: UsersService,
     private message: NzMessageService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.validatePasswordForm = formBuilder.group({
       password: [null, [Validators.required, Validators.minLength(6)]],
@@ -74,5 +76,9 @@ export class UsersFormComponent implements OnInit {
     }, () => {
       this.message.error('Não foi possível encontrar o usuário.');
     });
+  }
+
+  backToCustomerList(): void {
+      this.router.navigate(['customers', 'customers-edit', this.activatedRoute.snapshot.paramMap.get('customer_id')]);
   }
 }

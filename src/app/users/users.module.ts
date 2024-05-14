@@ -4,7 +4,7 @@ import { NzTransferModule } from 'ng-zorro-antd/transfer';
 import { SharedModule } from '../shared/shared.module';
 
 import { UsersFormComponent } from './users-form/users-form.component';
-import { UsersListComponent } from './users-list/users-list.component';
+// import { UsersListComponent } from './users-list/users-list.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersUserComponent } from './users-user/users-user.component';
 import {GroupsModule} from '../groups/groups.module';
@@ -18,7 +18,7 @@ const antdModule = [
 @NgModule({
   declarations: [
     UsersFormComponent,
-    UsersListComponent,
+    // UsersListComponent,
     UsersUserComponent,
   ],
     imports: [

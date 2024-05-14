@@ -60,13 +60,16 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
     super.ngOnInit();
   }
 
-  list(): void {
-    this.router.navigate(['/wagons/wagons-list']);
+  backToCustomerList(): void {
+    if(this.authService.customerId || this.activatedRoute.snapshot.paramMap.get('customer_id') == '')
+      this.router.navigate(['wagons', 'wagons-list']);
+    else
+      this.router.navigate(['customers', 'customers-edit', this.activatedRoute.snapshot.paramMap.get('customer_id')]);
   }
 
   protected handleSuccess(response?: any): void {
     this.message.success('Registro salvo com sucesso');
-    this.router.navigate(['wagons', 'wagons-edit', response.id]);
+    this.router.navigate(['wagons', 'wagons-edit', response.id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
     this.isLoading = false;
   }
 }

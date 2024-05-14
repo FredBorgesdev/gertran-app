@@ -49,7 +49,14 @@ export class DriversService implements ApiService<Driver> {
     if (filters?.search) {
       params.search = filters.search;
     }
-
+    if(window.location.pathname.includes('customers/customers')
+    ){
+      const currentUrl = window.location.href;
+      const urlParts = currentUrl.split('/');
+      const uuid = urlParts[urlParts.length - 1];
+      params.customer = uuid;
+    }
+    
     return this.http.get<GetAllResponse<Driver>>('drivers', {params});
   }
 

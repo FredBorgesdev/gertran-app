@@ -1,15 +1,17 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
   <nz-card>
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        Usuários
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
+    <div *ngIf="authService.customerId">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <i nz-icon nzType="dashboard"></i>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          Usuários
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+  
+      <nz-divider></nz-divider>
+    </div>
 
     <div class="row m-b-30">
       <div class="col-lg-8">

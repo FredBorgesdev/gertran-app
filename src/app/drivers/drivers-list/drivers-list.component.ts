@@ -6,6 +6,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { TableService } from '../../shared/services/table.service';
 import { Driver, DriversService } from '../drivers.service';
 import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-drivers-list',
@@ -39,6 +40,7 @@ export class DriversListComponent extends BaseCrudListComponent<Driver> {
     driversService: DriversService,
     message: NzMessageService,
     modal: NzModalService,
+    public authService: AuthenticationService
   ) {
     super('drivers', router, driversService, message, modal);
   }
@@ -48,11 +50,20 @@ export class DriversListComponent extends BaseCrudListComponent<Driver> {
   }
 
   create(): void {
-    this.router.navigate(['/drivers/driver-create']);
+    this.router.navigate(['/drivers', 'driver-create', this.getCustomerUUID()]);
   }
 
   edit(item: Driver): void {
-    this.router.navigate(['/drivers/driver-edit', item.id]);
+    this.router.navigate(['/drivers/driver-edit', item.id,this.getCustomerUUID() ]);
+  }
+  
+  getCustomerUUID(): string {
+    const currentUrl = window.location.href;
+    const urlParts = currentUrl.split('/');
+    const uuid = urlParts[urlParts.length - 1];
+    const uuidRegex =
+      /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
+    return uuidRegex.test(uuid) ? uuid : '';
   }
 
   delete(item: Driver): void {

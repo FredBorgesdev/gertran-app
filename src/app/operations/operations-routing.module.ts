@@ -13,7 +13,7 @@ const routes: Routes = [
     }
   },
   {
-    path: 'operations-create',
+    path: 'operations-create/:customer_id',
     component: OperationsOperationComponent,
     data: {
       title: 'Criar Operações ',

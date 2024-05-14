@@ -225,8 +225,14 @@
       <button type="button" (click)="saveWithErrorHandling()" nz-button nzType="primary">
         <i nz-icon nzType="save"></i>Salvar Cavalo
       </button>
-      <button type="button" (click)="list()" nz-button>
-        <i nz-icon nzType="unordered-list"></i>Listar Cavalos
+      <button type="button" (click)="backToCustomerList()" nz-button>
+        <div  *ngIf="!authService.customerId">
+          <i class="fas fa-arrow-left"></i> Voltar ao Cadastro
+        </div>
+
+        <div  *ngIf="authService.customerId">
+          <i nz-icon nzType="unordered-list"></i> Listar Cavalos
+        </div>
       </button>
     </nz-form-control>
   </nz-form-item>

@@ -113,7 +113,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
     this.resource = vehicle;
     this.loadResource();
     this.validateForm.patchValue({
-      customers: this.validateForm.controls.customers.value.concat(this.authService.customerId),
+      customers: this.validateForm.controls.customers.value.concat( this.activatedRoute.snapshot.paramMap.get('customer_id')),
     });
     this.isLoading = false;
   }
@@ -123,8 +123,15 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   }
 
   loadFormBuilder(customProperties?: string[]): void {
+    const customerId = this.activatedRoute.snapshot.paramMap.get('customer_id');
+    const customersDriversArray =  this.resource?.vehicle?.customers != undefined ? this.resource.vehicle.customers.map(x=>x.id) : []
+    if(this.authService.customerId != undefined)
+      customersDriversArray.push(this.authService.customerId)
+    if(customerId != undefined)
+      customersDriversArray.push(customerId)
+
     this.validateForm = this.formBuilder.group({
-      customers: [[this.authService.customerId], [Validators.required]],
+      customers: [customersDriversArray, [Validators.required]],
       manufacturer: [null, [Validators.required]],
       vehicleModel: [null, [Validators.required]],
       vehicleModelType: [null, [Validators.required]],
@@ -151,8 +158,15 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       return;
     }
 
+    const customerId = this.activatedRoute.snapshot.paramMap.get('customer_id');
+    const customersDriversArray =  this.resource.vehicle.customers.map(x=>x.id)
+    if(this.authService.customerId != undefined)
+      customersDriversArray.push(this.authService.customerId)
+    if(customerId != '')
+      customersDriversArray.push(customerId)
+
     this.validateForm.patchValue({
-      customers: this.resource.vehicle.customers.map(customer => customer.id),
+      customers: customersDriversArray,
       manufacturer: this.resource.vehicle.manufacturer.id,
       vehicleModel: this.resource.vehicle.vehicleModel.id,
       vehicleModelType: this.resource.vehicle.vehicleModelType.id,
@@ -173,9 +187,9 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
         this.selectableCustomerService.concatCustomers(this.resource.vehicle.customers);
       }
 
-      this.validateForm.patchValue({
-        customers: this.resource.vehicle.customers.map((customer) => customer.id)
-      });
+      // this.validateForm.patchValue({
+      //   customers: this.resource.vehicle.customers.map((customer) => customer.id)
+      // });
     }
 
     if (this.resource.vehicle?.manufacturer) {

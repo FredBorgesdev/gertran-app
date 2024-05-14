@@ -40,6 +40,35 @@
           ></app-addresses-form>
         </ng-template>
       </nz-tab>
+      <nz-tab nzTitle="Usuarios" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-users-list *ngIf="customer?.id"></app-users-list>
+        </ng-template>
+      </nz-tab> 
+
+      <nz-tab nzTitle="Motoristas" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-drivers-list *ngIf="customer?.id"></app-drivers-list>
+        </ng-template>
+      </nz-tab> 
+
+      <nz-tab nzTitle="Cavalos" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-trucks-list *ngIf="customer?.id"></app-trucks-list>
+        </ng-template>
+      </nz-tab> 
+
+      <nz-tab nzTitle="Carretas" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-wagons-list *ngIf="customer?.id"></app-wagons-list>
+        </ng-template>
+      </nz-tab> 
+
+      <nz-tab nzTitle="Operações" [nzDisabled]="!customer?.id">
+        <ng-template nz-tab>
+          <app-operations-list *ngIf="customer?.id"></app-operations-list>
+        </ng-template>
+      </nz-tab>
 
       <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
         <ng-template nz-tab>
