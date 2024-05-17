@@ -16,7 +16,7 @@
   <tbody>
     <tr style="border-bottom: 1px solid #000;">
       <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Solicitação: {{ monitoringRequest?.data?.id }}</h5></td>
-      <td><h5 style="font-weight: bold; font-size: x-small;">Data: {{ currentDate }}</h5></td>
+      <td><h5 style="font-weight: bold; font-size: x-small;">Data: {{ monitoringRequest?.data.releasedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</h5></td>
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
