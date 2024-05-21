@@ -49,6 +49,7 @@ interface Truck {
 }
 
 interface MonitoringRequest {
+  operation: any;
   travelStatus: string;
   id: string;
   status: string;

@@ -37,7 +37,11 @@ export class ChecklistsService implements ApiService<Checklist> {
   constructor(private http: HttpClient) {
   }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<Checklist>> {
+  getAll(pagination: Pagination, filters?: {
+    fromDate?: string;
+    toDate?: string;
+    customer?: string;
+  }): Observable<GetAllResponse<Checklist>> {
     if(window.location.pathname == '/reports/dashboards/tc2' || 
     window.location.pathname == '/reports/dashboards/client' ||
     window.location.pathname == '/reports/dashboards/tc-gertran' 
@@ -53,6 +57,22 @@ export class ChecklistsService implements ApiService<Checklist> {
         params[key] = value;
       });
     }
+
+
+    if (filters?.fromDate) {
+      params.from_date = filters.fromDate.split('T')[0];
+    }
+
+    if (filters?.toDate) {
+      const date = new Date(filters.toDate);
+      date.setDate(date.getDate() + 1);
+      params.to_date = date.toISOString().split('T')[0];
+    }
+
+    if (filters?.customer) {
+      params.customer = filters.customer;
+    }
+    
     return this.http.get<GetAllResponse<Checklist>>('monitoring/checklists', {params});
   }
 

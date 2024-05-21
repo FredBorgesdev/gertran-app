@@ -14,15 +14,15 @@ import { ReportsService } from '../../reports.service';
 
 export class ControlTower4 implements OnInit {
   @Input() customerId: string;
-  colors = ['#95ffa1', '#fcffab','#86ffff','#fcffab','#ffd371']
-  
+  colors = ['#95ffa1', '#fcffab', '#86ffff', '#fcffab', '#ffd371']
+
   positionsData = {
     labels: [
-      {status:'VIAGEM',count:0}, 
-      {status:'PERNOITE',count:0}, 
-      {status:'PARADO',count:0}, 
-      {status:'AGUARDANDO INICIO',count:0}, 
-      {status:'CLIENTE',count:0}
+      { status: 'VIAGEM', count: 0 },
+      { status: 'PERNOITE', count: 0 },
+      { status: 'PARADO', count: 0 },
+      { status: 'AGUARDANDO INICIO', count: 0 },
+      { status: 'CLIENTE', count: 0 }
     ],
     backGroundColors: this.colors,
     totalPositionsMonitoring: 0,
@@ -30,9 +30,9 @@ export class ControlTower4 implements OnInit {
 
   monitoringRequestsData = {
     labels: [
-      {status:'ANALISE',count:0}, 
-      {status:'APROVADO',count:0}, 
-      {status:'REPROVADO',count:0}
+      { status: 'ANALISE', count: 0 },
+      { status: 'APROVADO', count: 0 },
+      { status: 'REPROVADO', count: 0 }
     ],
     backGroundColors: this.colors,
     totalMonitoringRequests: 0,
@@ -40,19 +40,28 @@ export class ControlTower4 implements OnInit {
 
   checkListsData = {
     labels: [
-      {status:'SOLICITADO',count:0}, 
-      {status:'APROVADO',count:0}, 
-      {status:'REPROVADO',count:0}
+      { status: 'SOLICITADO', count: 0 },
+      { status: 'APROVADO', count: 0 },
+      { status: 'REPROVADO', count: 0 }
     ],
     backGroundColors: this.colors,
     totalCheckLists: 0,
   }
 
   operationsData = {
-    labels:[],
+    labels: [],
     backGroundColors: this.colors,
     totalOperations: 0
   }
+
+
+  operationsPositionsData = {
+    labels: [],
+    backGroundColors: this.colors,
+    totalOperationsPositionsData: 0
+  }
+
+
 
   constructor(
     public authService: AuthenticationService,
@@ -141,6 +150,39 @@ export class ControlTower4 implements OnInit {
         this.positionsData.totalPositionsMonitoring = data.results.length
 
 
+        const operations = data.results.map(x=>x.monitoringRequest.operation)
+
+
+        const operationCounts = operations.reduce((acc, curr) => {
+          if (curr && curr.name != null) {
+            const name = curr.name;
+            acc[name] = (acc[name] || 0) + 1;
+          }
+          return acc;
+        }, {});
+
+        const newArray = Object.keys(operationCounts).map(name => ({
+          status: name,
+          count: operationCounts[name]
+        }));
+
+
+        this.operationsPositionsData.labels = newArray 
+
+        this.operationsPositionsData.totalOperationsPositionsData = operations.length
+
+
+      const config2 = this.createConfigChart(
+        this.operationsPositionsData.labels.map(x => x.status),
+        this.operationsPositionsData.labels.map(x => x.count),
+        this.operationsPositionsData.backGroundColors
+      )
+
+      const ctx2 = document.getElementById('operationsPositionsChart') as HTMLCanvasElement;
+      new Chart(ctx2, config2);
+
+
+
         data.results.forEach(item => {
           switch (item.monitoringRequest.travelStatus) {
             case 'in_progress':
@@ -164,14 +206,14 @@ export class ControlTower4 implements OnInit {
         });
 
 
-        
+
         const config = this.createConfigChart(
-          this.positionsData.labels.map(x=>x.status), 
-          this.positionsData.labels.map(x=>x.count),
-          this.positionsData.backGroundColors 
+          this.positionsData.labels.map(x => x.status),
+          this.positionsData.labels.map(x => x.count),
+          this.positionsData.backGroundColors
         )
-        
-        const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+
+        const ctx = document.getElementById('positonsChart') as HTMLCanvasElement;
         new Chart(ctx, config);
       });
   }
@@ -183,7 +225,7 @@ export class ControlTower4 implements OnInit {
       this.customerId ||
       this.authService.customerId;
 
-    const { fromDate,toDate } = this.returnRange7Days() 
+    const { fromDate, toDate } = this.returnRange7Days()
 
     this.reportsService.getChecklistHistory({
       customer,
@@ -193,41 +235,41 @@ export class ControlTower4 implements OnInit {
     }).subscribe(response => {
       this.checkListsData.totalCheckLists = response.length
 
-        // const approved = response.filter(x => x.status === 'approved')
-        // const reproved = response.filter(x => x.status === 'reproved')
-        // const requested = response.filter(x => x.status === 'requested')
+      // const approved = response.filter(x => x.status === 'approved')
+      // const reproved = response.filter(x => x.status === 'reproved')
+      // const requested = response.filter(x => x.status === 'requested')
 
-        // const newData = [
-        //   requested.length,
-        //   approved.length,
-        //   reproved.length,
-        // ];
+      // const newData = [
+      //   requested.length,
+      //   approved.length,
+      //   reproved.length,
+      // ];
 
 
 
-        response.forEach(item => {
-          switch (item.status) {
-            case 'approved':
-              this.incrementStatusCount('APROVADO', 'checkListsData');
-              break;
-            case 'reproved':
-              this.incrementStatusCount('REPROVADO', 'checkListsData');
-              break;
-            case 'requested':
-              this.incrementStatusCount('SOLICITADO', 'checkListsData');
-              break;
-          }
-        });
+      response.forEach(item => {
+        switch (item.status) {
+          case 'approved':
+            this.incrementStatusCount('APROVADO', 'checkListsData');
+            break;
+          case 'reproved':
+            this.incrementStatusCount('REPROVADO', 'checkListsData');
+            break;
+          case 'requested':
+            this.incrementStatusCount('SOLICITADO', 'checkListsData');
+            break;
+        }
+      });
 
 
 
       const config = this.createConfigChart(
-        this.checkListsData.labels.map(x=>x.status),
-        this.checkListsData.labels.map(x=>x.count),
-        this.checkListsData.backGroundColors 
+        this.checkListsData.labels.map(x => x.status),
+        this.checkListsData.labels.map(x => x.count),
+        this.checkListsData.backGroundColors
       )
-      
-      const ctx = document.getElementById('myChart3') as HTMLCanvasElement;
+
+      const ctx = document.getElementById('checkListChart') as HTMLCanvasElement;
       new Chart(ctx, config);
     });
   }
@@ -235,73 +277,73 @@ export class ControlTower4 implements OnInit {
   loadMonitoringRequests() {
     const queryParams = new URLSearchParams(window.location.search);
 
-    const { fromDate,toDate } = this.returnRange7Days() 
+    const { fromDate, toDate } = this.returnRange7Days()
 
     const customer = queryParams.get('customerId') ||
       this.customerId ||
       this.authService.customerId;
 
     this.service
-    .getAll({ limit: 999 },{customer: customer,fromDate: fromDate, toDate: toDate})
-    .subscribe((result) => {
+      .getAll({ limit: 999 }, { customer: customer, fromDate: fromDate, toDate: toDate })
+      .subscribe((result) => {
 
-      result.results.forEach(item => {
-        switch (item.status) {
-          case 'under_review':
-            this.incrementStatusCount('ANALISE', 'monitoringRequestsData');
-            break;
+        result.results.forEach(item => {
+          switch (item.status) {
+            case 'under_review':
+              this.incrementStatusCount('ANALISE', 'monitoringRequestsData');
+              break;
             case 'in_progress':
             case 'finished':
-            this.incrementStatusCount('APROVADO', 'monitoringRequestsData');
-            break;
-          case 'reproved':
-          case 'terminated_disapproved':
-            this.incrementStatusCount('REPROVADO', 'monitoringRequestsData');
-            break;
-        }
+              this.incrementStatusCount('APROVADO', 'monitoringRequestsData');
+              break;
+            case 'reproved':
+            case 'terminated_disapproved':
+              this.incrementStatusCount('REPROVADO', 'monitoringRequestsData');
+              break;
+          }
+        });
+
+
+
+        this.monitoringRequestsData.totalMonitoringRequests = result.results.length
+
+        const config = this.createConfigChart(
+          this.monitoringRequestsData.labels.map(x => x.status),
+          this.monitoringRequestsData.labels.map(x => x.count),
+          this.monitoringRequestsData.backGroundColors
+        )
+
+        const ctx = document.getElementById('myChart2') as HTMLCanvasElement;
+        new Chart(ctx, config);
+
+
+        const operationCounts = result.results.reduce((acc, curr) => {
+          if (curr.operation && curr.operation.name != null) {
+            const name = curr.operation.name;
+            acc[name] = (acc[name] || 0) + 1;
+          }
+          return acc;
+        }, {});
+
+        const newArray = Object.keys(operationCounts).map(name => ({
+          status: name,
+          count: operationCounts[name]
+        }));
+
+        this.operationsData.labels = newArray
+
+
+        const config4 = this.createConfigChart(
+          this.operationsData.labels.map(x => x.status),
+          this.operationsData.labels.map(x => x.count),
+          this.operationsData.backGroundColors
+        )
+
+        this.operationsData.totalOperations = result.results.length
+
+        const ctx4 = document.getElementById('myChart4') as HTMLCanvasElement;
+        new Chart(ctx4, config4);
       });
-
-
-
-      this.monitoringRequestsData.totalMonitoringRequests = result.results.length
-
-      const config = this.createConfigChart(
-        this.monitoringRequestsData.labels.map(x=>x.status), 
-        this.monitoringRequestsData.labels.map(x=>x.count),
-        this.monitoringRequestsData.backGroundColors 
-      )
-      
-      const ctx = document.getElementById('myChart2') as HTMLCanvasElement;
-      new Chart(ctx, config);
-
-
-      const operationCounts = result.results.reduce((acc, curr) => {
-        if (curr.operation && curr.operation.name != null) {
-        const name = curr.operation.name;
-        acc[name] = (acc[name] || 0) + 1;
-        }
-        return acc;
-      }, {});
-      
-      const newArray = Object.keys(operationCounts).map(name => ({
-        status: name,
-        count: operationCounts[name]
-      }));
-      
-      this.operationsData.labels = newArray
-
-
-      const config4 = this.createConfigChart(
-        this.operationsData.labels.map(x=>x.status), 
-        this.operationsData.labels.map(x=>x.count),
-        this.operationsData.backGroundColors 
-      )
-
-      this.operationsData.totalOperations = result.results.length
-
-      const ctx4 = document.getElementById('myChart4') as HTMLCanvasElement;
-      new Chart(ctx4, config4);
-    });
   }
 
   goBack(): void {
@@ -339,11 +381,11 @@ export class ControlTower4 implements OnInit {
     const toDate = this.formatDate(currentDate);
     return { fromDate, toDate };
   }
-  
+
   formatDate(date) {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = (date.getDate()+1).toString().padStart(2, '0');
+    const day = (date.getDate() + 1).toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
 
