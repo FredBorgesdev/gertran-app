@@ -18,46 +18,41 @@ export class ControlTower4 implements OnInit {
 
   positionsData = {
     labels: [
-      { status: 'VIAGEM', count: 0 },
-      { status: 'PERNOITE', count: 0 },
-      { status: 'PARADO', count: 0 },
-      { status: 'AGUARDANDO INICIO', count: 0 },
-      { status: 'CLIENTE', count: 0 }
+      { status: 'VIAGEM', count: 0, color: '#95ffa1' },
+      { status: 'PERNOITE', count: 0, color: '#fcffab' },
+      { status: 'PARADO', count: 0, color: '#86ffff' },
+      { status: 'AGUARDANDO INICIO', count: 0, color: '#fcffab' },
+      { status: 'CLIENTE', count: 0, color: '#ffd371' }
     ],
-    backGroundColors: this.colors,
     totalPositionsMonitoring: 0,
   }
 
   monitoringRequestsData = {
     labels: [
-      { status: 'ANALISE', count: 0 },
-      { status: 'APROVADO', count: 0 },
-      { status: 'REPROVADO', count: 0 }
+      { status: 'ANALISE', count: 0, color: 'blue' },
+      { status: 'APROVADO', count: 0, color: 'green' },
+      { status: 'REPROVADO', count: 0, color: 'red' }
     ],
-    backGroundColors: this.colors,
     totalMonitoringRequests: 0,
   }
 
   checkListsData = {
     labels: [
-      { status: 'SOLICITADO', count: 0 },
-      { status: 'APROVADO', count: 0 },
-      { status: 'REPROVADO', count: 0 }
+      { status: 'SOLICITADO', count: 0, color: 'blue' },
+      { status: 'APROVADO', count: 0, color: 'green' },
+      { status: 'REPROVADO', count: 0, color: 'red' }
     ],
-    backGroundColors: this.colors,
     totalCheckLists: 0,
   }
 
   operationsData = {
     labels: [],
-    backGroundColors: this.colors,
     totalOperations: 0
   }
 
 
   operationsPositionsData = {
     labels: [],
-    backGroundColors: this.colors,
     totalOperationsPositionsData: 0
   }
 
@@ -150,7 +145,7 @@ export class ControlTower4 implements OnInit {
         this.positionsData.totalPositionsMonitoring = data.results.length
 
 
-        const operations = data.results.map(x=>x.monitoringRequest.operation)
+        const operations = data.results.map(x => x.monitoringRequest.operation)
 
 
         const operationCounts = operations.reduce((acc, curr) => {
@@ -161,25 +156,38 @@ export class ControlTower4 implements OnInit {
           return acc;
         }, {});
 
-        const newArray = Object.keys(operationCounts).map(name => ({
+
+
+
+        const colors = ['red', 'blue', 'yellow', 'green', 'brown']; // Array of colors
+
+        const newArray = Object.keys(operationCounts).map((name, index) => ({
           status: name,
-          count: operationCounts[name]
+          count: operationCounts[name],
+          color: colors[index % colors.length] // Assign color based on index
         }));
 
 
-        this.operationsPositionsData.labels = newArray 
+        
+        // const newArray = Object.keys(operationCounts).map(name => ({
+        //   status: name,
+        //   count: operationCounts[name]
+        // }));
+
+
+        this.operationsPositionsData.labels = newArray
 
         this.operationsPositionsData.totalOperationsPositionsData = operations.length
 
 
-      const config2 = this.createConfigChart(
-        this.operationsPositionsData.labels.map(x => x.status),
-        this.operationsPositionsData.labels.map(x => x.count),
-        this.operationsPositionsData.backGroundColors
-      )
+        const config2 = this.createConfigChart(
+          this.operationsPositionsData.labels.map(x => x.status),
+          this.operationsPositionsData.labels.map(x => x.count),
+          this.operationsPositionsData.labels.map(x => x.color)
+        )
 
-      const ctx2 = document.getElementById('operationsPositionsChart') as HTMLCanvasElement;
-      new Chart(ctx2, config2);
+        const ctx2 = document.getElementById('operationsPositionsChart') as HTMLCanvasElement;
+        new Chart(ctx2, config2);
 
 
 
@@ -210,7 +218,7 @@ export class ControlTower4 implements OnInit {
         const config = this.createConfigChart(
           this.positionsData.labels.map(x => x.status),
           this.positionsData.labels.map(x => x.count),
-          this.positionsData.backGroundColors
+          this.positionsData.labels.map(x => x.color)
         )
 
         const ctx = document.getElementById('positonsChart') as HTMLCanvasElement;
@@ -266,7 +274,7 @@ export class ControlTower4 implements OnInit {
       const config = this.createConfigChart(
         this.checkListsData.labels.map(x => x.status),
         this.checkListsData.labels.map(x => x.count),
-        this.checkListsData.backGroundColors
+        this.checkListsData.labels.map(x => x.color)
       )
 
       const ctx = document.getElementById('checkListChart') as HTMLCanvasElement;
@@ -310,7 +318,7 @@ export class ControlTower4 implements OnInit {
         const config = this.createConfigChart(
           this.monitoringRequestsData.labels.map(x => x.status),
           this.monitoringRequestsData.labels.map(x => x.count),
-          this.monitoringRequestsData.backGroundColors
+          this.monitoringRequestsData.labels.map(x => x.color)
         )
 
         const ctx = document.getElementById('myChart2') as HTMLCanvasElement;
@@ -325,9 +333,13 @@ export class ControlTower4 implements OnInit {
           return acc;
         }, {});
 
-        const newArray = Object.keys(operationCounts).map(name => ({
+
+        const colors = ['red', 'blue', 'yellow', 'green', 'brown']; // Array of colors
+
+        const newArray = Object.keys(operationCounts).map((name, index) => ({
           status: name,
-          count: operationCounts[name]
+          count: operationCounts[name],
+          color: colors[index % colors.length] // Assign color based on index
         }));
 
         this.operationsData.labels = newArray
@@ -336,7 +348,7 @@ export class ControlTower4 implements OnInit {
         const config4 = this.createConfigChart(
           this.operationsData.labels.map(x => x.status),
           this.operationsData.labels.map(x => x.count),
-          this.operationsData.backGroundColors
+          this.operationsData.labels.map(x => x.color)
         )
 
         this.operationsData.totalOperations = result.results.length
