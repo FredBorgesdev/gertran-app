@@ -68,7 +68,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
     {label: 'Excesso de velocidade', value: 'speeding'},
     {label: 'Possivel ação de jammer', value: 'possible_jammer_action'},
     {label: 'Retirada do espelhamento', value: 'mirroring_removal'},
-    {label: 'Atraso inicio de viagem', value: 'delay_start_of_traveling'},
+    // {label: 'Atraso inicio de viagem', value: 'delay_start_of_traveling'},
     {label: 'Inicio de viagem sem informar', value: 'start_traveling_without_notify'},
     {label: 'Fim de viagem sem informar', value: 'finish_traveling_without_notify'},
     {label: 'Ausencia no inicio de mensagem (macro)', value: 'failure_to_send_message_or_macro'},
