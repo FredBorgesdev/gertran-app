@@ -214,6 +214,10 @@ const routes: Routes = [
     component: ControlTower3,
   },
   {
+    path: 'dashboards/tc4',
+    component: ControlTower4,
+  },
+  {
     path: 'panic-history',
     component: PanicHistoryComponent,
   },

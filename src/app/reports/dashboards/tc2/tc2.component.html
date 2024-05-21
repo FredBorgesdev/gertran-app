@@ -1,24 +1,32 @@
-<div class="m-b-15 text-center">
+<div class="moldura">
+  <div style="margin: 2%;">
 
-  <h1 class="text-center m-b-1">
-    TORRE DE CONTROLE 1
-  </h1>
+    <h1 class="text-center m-b-1">
+      TORRE DE CONTROLE 1
+    </h1>
 
-  <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
-  <div style="display: flex; justify-content: left;">
-    <button nz-button nzType="default" (click)="goBack()">Voltar</button>
-    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
-    <button nz-button nzType="default" (click)="exitFullscreen()">Sair Tela Cheia</button>
-    <button nz-button nzType="default" (click)="goToTowerControl2()" >Torre controle 2</button>
-    <button nz-button nzType="default" (click)="goToTowerControl3()" >Torre controle 3</button>
-  </div>
-  <br>
+    <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+    <br>
 
 
-  <div style="display: flex;">
-    <div style="flex: 1;">
-      <app-grid [extendList]="true"></app-grid>
+    <div style="display: flex;">
+      <div style="flex: 1; max-width: 99%;">
+        <app-grid [nzPageSize]="15" [extendList]="true"></app-grid>
+      </div>
     </div>
+
+    <!-- ##hmn -->
+
+
+
   </div>
 
+  <div style="display: flex; justify-content: space-around;" class="fixed-buttons">
+    <button nz-button nzType="default" (click)="goBack()">Sair</button>
+    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
+    <!-- <button nz-button nzType="default" (click)="exitFullscreen()">Sair Tela Cheia</button> -->
+    <button nz-button nzType="default" (click)="goToTowerControl2()">Torre controle 2</button>
+    <button nz-button nzType="default" (click)="goToTowerControl3()">Torre controle 3</button>
+    <button nz-button nzType="default" (click)="goToTowerControl4()" >Torre controle 4</button>
+  </div>
 </div>

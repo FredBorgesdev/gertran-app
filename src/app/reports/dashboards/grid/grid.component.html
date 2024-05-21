@@ -1,13 +1,15 @@
 <nz-table
   #table
   [nzData]="monitoringData"
-  [nzFrontPagination]="false"
   nzSize="small"
   class="custom-table"
   [nzLoading]="isLoading"
-  [nzScroll]="getScrollConfig()"
+  nzTableLayout="fixed"
+  [nzFrontPagination]="true"
+  [nzPageSize]="nzPageSize"
 >
-<!-- nzTableLayout="fixed" -->
+<!-- [nzScroll]="getScrollConfig()" -->
+
   <thead>
   <tr>
     <th
@@ -68,6 +70,11 @@
     <td>{{ getDestiny(item) }}</td>
     <td nzEllipsis nz-tooltip
         [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
+
+        <!-- <td nzEllipsis nz-tooltip>{{ item.monitoringRequest.travelStatus }}</td>  -->
+        <!-- ##hmn -->
+
+
     <td>{{getStartTravelDate(item)}}</td>
     <td>{{getEndTravelDate(item)}}</td>
   </tr>

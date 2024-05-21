@@ -1,24 +1,34 @@
-<h1 class="text-center m-b-1">
-  TORRE DE CONTROLE 3
-</h1>
+<div class="moldura">
+  <div style="margin: 2%;">
 
-<img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
-<div style="display: flex; justify-content: left;">
-  <button nz-button nzType="default" (click)="goBack()">Voltar</button>
-  <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
-  <button nz-button nzType="default" (click)="exitFullscreen()">Sair Tela Cheia</button>
-  <button nz-button nzType="default" (click)="goToTowerControl1()" >Torre controle 1</button>
-  <button nz-button nzType="default" (click)="goToTowerControl2()" >Torre controle 2</button>
-</div>
-<br>
-<div style="display: flex; ">
+    <h1 class="text-center m-b-1">
+      TORRE DE CONTROLE 3
+    </h1>
 
-  <div style="display: flex; flex-direction: column; height: 100px;">
-    <div style="flex: 0.3;">
-      <app-client-checklists [hideHeader]="true"></app-client-checklists>
+    <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+    <br>
+
+    <div style="display: flex; ">
+
+      <div style="display: flex; flex-direction: column; height: 100px;">
+        <div style="flex: 0.3;">
+          <app-client-checklists [hideHeader]="true"></app-client-checklists>
+        </div>
+        <div style="flex: 0.7;">
+          <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
+        </div>
+      </div>
     </div>
-    <div style="flex: 0.7;">
-      <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
-    </div>
+
+
+
   </div>
+
+  <div style="display: flex; justify-content: space-around;" class="fixed-buttons">
+    <button nz-button nzType="default" (click)="goBack()">Sair</button>
+    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
+    <button nz-button nzType="default" (click)="goToTowerControl1()" >Torre controle 1</button>
+    <button nz-button nzType="default" (click)="goToTowerControl2()" >Torre controle 2</button>
+    <button nz-button nzType="default" (click)="goToTowerControl4()" >Torre controle 4</button>
+  </div> 
 </div>

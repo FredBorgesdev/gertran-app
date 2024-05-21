@@ -28,7 +28,8 @@ const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 export class GridComponent implements OnInit, OnDestroy, OnChanges {
   @Input() customerId: string;
   @Input() extendList: boolean;
-
+  @Input() nzPageSize: number = 999; 
+  
   isLoading = false;
   monitoringColumns = [
     {title: 'Tec', width: '3%'},
@@ -156,8 +157,9 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getRowBackgroundColor(status: string): string {
-    if (!this.user.isGertranStaff) {
-      return '';
+    if (!this.user.isGertranStaff) {//##hmn
+      return ''
+      // return this.travelStatus.find(item => {if(item.value == 'in_progress') return item.value === status; else return item.value !== 'vehicle_in_customer'})?.backgroundColorClass;
     }
     return this.travelStatus.find(item => item.value === status)?.backgroundColorClass;
   }
@@ -248,13 +250,14 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
 
   private getPositionsWithFilters(): Observable<GetAllResponse<Position>> {
     return this.positionsService.getAll(
-      {limit: 50},
+      {limit: 100},//##hmn
       {
         customer:
           this.activatedRoute.snapshot.queryParams.customerId ||
           this.customerId ||
           this.authService.customerId,
         travelling: true,
+        // travelStatus: Status.IN_PROGRESS,//##hmn
       }
     );
   }

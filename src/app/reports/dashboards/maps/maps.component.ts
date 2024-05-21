@@ -15,15 +15,15 @@ import * as mapboxgl from 'mapbox-gl';
   providers: [DatePipe]
 })
 export class DashboardMapsComponent implements OnInit, OnChanges {
-  @Input() embed = false;
+  // @Input() embed = false;
   @Input() customerId: string;
-  @Input() mapFullPage = true;
+  // @Input() mapFullPage = true;
   map: mapboxgl.Map;
-
+  @Input() mapClassHeight: string = 'full-map'
   markers = [];
   mapLoading = false;
   //mapCenter = {lat: -20.2400732, lng: -13.1805017};
-  mapCenter = {lat: -14.2400732, lng: -53.1805017};
+  mapCenter = {lat: -16.4400732, lng: -50.1805017};
 
   constructor(
     private modalService: NzModalService,
@@ -45,13 +45,14 @@ export class DashboardMapsComponent implements OnInit, OnChanges {
   load(): void {
     this.mapLoading = true;
     const queryParams = new URLSearchParams(window.location.search);
-    console.log(this.mapFullPage)
     const customer =
       queryParams.get('customerId') ||
       this.customerId ||
       this.authService.customerId;
 
-    this.positionService.getAll({}, {
+    this.positionService.getAll({
+      limit:100
+    }, {
       customer,
       travelling: true,
       // travelStatus: Status.IN_PROGRESS,
@@ -60,7 +61,8 @@ export class DashboardMapsComponent implements OnInit, OnChanges {
       this.markers = data.results.map((position) => ({
         lat: position.latitude,
         lng: position.longitude,
-        plate: position.vehiclePlate
+        plate: position.vehiclePlate,
+        travelStatus: position.monitoringRequest.travelStatus
       }));
     }, () => {
       this.mapLoading = false;

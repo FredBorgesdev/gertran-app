@@ -24,7 +24,7 @@ export class ControlTower1 {
   }
 
   goBack(): void {
-    window.history.back();
+    this.router.navigate(['dashboard', 'home']);
   }
 
   toggleFullscreen(): void {
@@ -38,18 +38,16 @@ export class ControlTower1 {
     }
   }
 
-  exitFullscreen(): void {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    }
-  }
-
   goToTowerControl1(): void {
     this.router.navigate(['reports', 'dashboards','tc1'], { queryParams: { fullscreen: 'true' } });
   }
 
   goToTowerControl3(): void {
     this.router.navigate(['reports', 'dashboards','tc3'], { queryParams: { fullscreen: 'true' } });
+  }
+  
+  goToTowerControl4(): void {
+    this.router.navigate(['reports', 'dashboards','tc4'], { queryParams: { fullscreen: 'true' } });
   }
 
 }

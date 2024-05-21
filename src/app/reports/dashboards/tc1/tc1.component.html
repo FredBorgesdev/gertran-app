@@ -1,3 +1,42 @@
+<div class="moldura">
+  <div style="margin: 2%;">
+
+    <h1 class="text-center m-b-1">
+      TORRE DE CONTROLE 2
+    </h1>
+
+    <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
+    <br>
+
+    <div style="display: flex; flex-direction: column;">
+      <div style="flex: 0.5; max-width: 99%;">
+        <app-grid [nzPageSize]="6"></app-grid>
+      </div>
+      <div style="display: flex; flex: 1.2;">
+        <div style="flex: 5; min-width: 48%; margin-right: 0.5%;">
+          <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
+        </div>
+        <div style="flex: 5; min-width: 48%;">
+          <app-client-checklists [hideHeader]="true"></app-client-checklists>
+        </div>
+      </div>
+
+      <div style="flex: 0.2;">
+      </div>
+    </div>
+
+
+    <div style="display: flex; justify-content: space-around;" class="fixed-buttons">
+      <button nz-button nzType="default" (click)="goBack()">Sair</button>
+      <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
+      <button nz-button nzType="default" (click)="goToTowerControl1()">Torre controle 1</button>
+      <button nz-button nzType="default" (click)="goToTowerControl3()">Torre controle 3</button>
+      <button nz-button nzType="default" (click)="goToTowerControl4()" >Torre controle 4</button>
+    </div>
+  </div>
+</div>
+<!-- ##hmn -->
+
 <!-- <div style="position: fixed; bottom: 10px; left: 4vh; z-index: 1000;">
   <nz-button-group nzSize="small">
     <button *ngIf="!mapIsSelected"  nz-button nzType="primary" (click)="mapIsSelected = !mapIsSelected">
@@ -9,33 +48,3 @@
     </button>
   </nz-button-group>
 </div> -->
-
-<div *ngIf="!mapIsSelected" style="width: 100%; height: 96vh;">
-  <h1 class="text-center m-b-1">
-    TORRE DE CONTROLE 2
-  </h1>
-  <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
-  <div style="display: flex; justify-content: left;">
-    <button nz-button nzType="default" (click)="goBack()">Voltar</button>
-    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
-    <button nz-button nzType="default" (click)="exitFullscreen()">Sair Tela Cheia</button>
-    <button nz-button nzType="default" (click)="goToTowerControl1()" >Torre controle 1</button>
-    <button nz-button nzType="default" (click)="goToTowerControl3()" >Torre controle 3</button>
-  </div>
-  <br>
-  <div style="display: flex; flex-direction: column;">
-    <div style="flex: 0.7; width: 100%;">
-      <app-grid></app-grid>
-    </div>
-    <div style="display: flex; flex: 1.3;">
-      <div style="flex: 5; min-width: 48%; margin-right: 0.5%;">
-        <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
-      </div>
-      <div style="flex: 5; min-width: 48%;">
-        <app-client-checklists [hideHeader]="true"></app-client-checklists>
-      </div>
-    </div>
-  </div>
-</div>
-
-<app-maps *ngIf="mapIsSelected"></app-maps>

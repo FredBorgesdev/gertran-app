@@ -19,9 +19,50 @@ h1 {
 }
 
 .logo {
-  width: 80px;
+  width: 70px;
   height: 80px;
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 8px;
+  right: 25px;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid black;
+}
+
+th, td {
+  font-weight: bold;
+  font-size: 18px;
+}
+/*
+#hmn
+*/
+.moldura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 5px solid #000; /* Espessura da moldura */
+  box-sizing: border-box; /* Garante que a largura/altura da moldura inclua a espessura da borda */
+  padding: 0; /* Removido o padding para que a moldura alcance as bordas */
+  height: 100%; /* Altura igual à altura da página */
+  overflow: auto; /* Permite rolagem dentro da moldura quando necessário */
+}
+
+
+
+.fixed-buttons {
+  position: fixed;
+  bottom: 10px; /* Altere conforme necessário para ajustar a posição vertical */
+  left: 50%; /* Posiciona no centro horizontal */
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  display: flex;
+  justify-content: space-around;
+  width: 90%; /* Largura dos botões */
+  background-color: white; /* Cor de fundo dos botões */
+  padding: 10px; /* Espaçamento interno dos botões */
+  border-radius: 5px; /* Borda arredondada */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
 }
