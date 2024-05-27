@@ -17,7 +17,7 @@
         <div style="flex-direction: row;display: flex;">
 
           <div style="flex:7;margin-right: 5px;">
-            <h2 class="text-center m-b-1">VIAGENS COM SM</h2>
+            <h2 class="text-center m-b-1">VEÍCULO MONITORADOS</h2>
             <nz-card style="background-color: ghostwhite; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
               <div style="flex:3;flex-direction: row;display: flex;">
 
@@ -65,7 +65,7 @@
               </div>
             </nz-card>
 
-            <h2 class="text-center m-b-1">Geral últimos 7 dias</h2>
+            <h2 class="text-center m-b-1">RESUMO 7 DIAS</h2>
             <nz-card style="background-color: ghostwhite; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
               <div style="flex:3;flex-direction: row;display: flex; margin-top: 30px;">
 
@@ -149,13 +149,9 @@
 
   </div>
 
-  <div style="display: flex; justify-content: space-around;" class="fixed-buttons">
-    <button nz-button nzType="default" (click)="goBack()">Sair</button>
-    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
-    <button nz-button nzType="default" (click)="goToTowerControl1()">Torre controle 1</button>
-    <button nz-button nzType="default" (click)="goToTowerControl2()">Torre controle 2</button>
-    <button nz-button nzType="default" (click)="goToTowerControl3()">Torre controle 3</button>
-  </div>
+
+
+  <app-fixed-buttons></app-fixed-buttons>
 
 </div>
 

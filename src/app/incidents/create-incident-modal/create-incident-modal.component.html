@@ -40,7 +40,7 @@
         </nz-form-control>
       </div>
 
-      <div nz-col nzSpan="12">
+      <div nz-col nzSpan="12" *ngIf="!blank">
         <nz-form-label nzRequired nzFor="driverContactedAt">Data/hora contato motorista</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <nz-date-picker
@@ -56,7 +56,7 @@
     </div>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="!blank">
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
         <nz-form-label nzRequired nzFor="incidentDatetime">Data e hora do evento</nz-form-label>
@@ -99,7 +99,7 @@
     </div>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="!blank">
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="12">
         <nz-form-label [nzSpan]="null" nzFor="shipperName">Contato transportador</nz-form-label>
@@ -130,7 +130,7 @@
     </div>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="!blank">
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="8">
         <nz-form-label [nzSpan]="null" nzRequired nzFor="wasImmediateActionApproved">Autorização pronta resposta
@@ -173,7 +173,7 @@
     </div>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="!blank">
     <div nz-row nzGutter="16">
       <div nz-col nzSpan="8">
         <nz-form-label [nzSpan]="null" nzRequired nzFor="wasFederalPoliceActionNeeded">Contato órgãos públicos
@@ -216,7 +216,7 @@
     </div>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="!blank">
     <nz-form-label>Informação adicional</nz-form-label>
     <nz-form-control>
       <textarea
@@ -228,7 +228,19 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item *ngIf="blank">
+    <nz-form-label>Informações da ocorrência</nz-form-label>
+    <nz-form-control>
+      <textarea
+        nzSize="small"
+        nz-input
+        formControlName="additionalInformation"
+        rows="3"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="!blank">
     <nz-form-label>Email opcional</nz-form-label>
     <nz-form-control>
       <input

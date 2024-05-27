@@ -18,7 +18,7 @@
     <nz-descriptions-item nzTitle="Tipo de ocorrência" [nzSpan]="6">
       {{incident.incidentType.type}}
     </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Local do fato" [nzSpan]="6">
+    <nz-descriptions-item nzTitle="Local do fato" [nzSpan]="6" *ngIf="!blank">
       {{incident.incidentLocation}}
     </nz-descriptions-item>
   </nz-descriptions>
@@ -53,7 +53,7 @@
     </nz-descriptions-item>
   </nz-descriptions>
 
-  <nz-descriptions nzTitle="Ações por parte da central operações - Gertran" class="m-t-30" nzSize="small" nzBordered>
+  <nz-descriptions nzTitle="Ações por parte da central operações - Gertran" class="m-t-30" nzSize="small" nzBordered *ngIf="!blank">
     <nz-descriptions-item nzTitle="Foi necessário autorização pronta resposta" [nzSpan]="6">
       {{incident.wasImmediateActionApproved ? 'Sim' : 'Não'}}
     </nz-descriptions-item>

@@ -9,6 +9,7 @@ import {getLocaleFirstDayOfWeek} from "@angular/common";
 })
 export class IncidentDetailsModalComponent {
   @Input() incident: Incident;
+  @Input() blank: boolean = false;
 
   printConfig = {
     printMode: 'template-popup',

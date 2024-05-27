@@ -93,10 +93,6 @@ export const CommonLayout_ROUTES: Routes = [
     loadChildren: () => import('../../checklists/checklists.module').then(m => m.ChecklistsModule)
   },
   {
-    path: 'occurrence',
-    loadChildren: () => import('../../occurrence/occurrence-routing.module').then(m => m.OccurrenceRoutingModule)
-  },
-  {
     path: 'incidents',
     loadChildren: () => import('../../incidents/incidents.module').then(m => m.IncidentsModule)
   }

@@ -4,11 +4,13 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Terminals, TerminalsService} from '../../terminals/terminals.service';
 import {UtilsService} from '../../shared/services/utils.service';
-import {NzModalRef} from 'ng-zorro-antd/modal';
+import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
 import MonitoringRequest from '../monitoring-request';
 import {ChecklistsService} from '../../checklists/checklists.service';
 import {AuthenticationService} from "../../authentication/authentication.service";
 import { ReportsService,BasePeriodFilter  } from 'src/app/reports/reports.service';
+import { IncidentsModalComponent } from 'src/app/monitoring/incidents-modal/incidents-modal.component';
+import { Position } from 'src/app/monitoring/positions.service';
 
 export type ModalDestroyResult = {
   updateList: boolean;
@@ -63,7 +65,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     private modal: NzModalRef,
     public checklistService: ChecklistsService,
     public authSevice: AuthenticationService,
-    public reportsService: ReportsService
+    public reportsService: ReportsService,
+    private modalIncident: NzModalService,
   ) {
   }
 
@@ -316,5 +319,66 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.possibleStatus = this.monitoringRequestService.possibleStatus[
       this.monitoringRequest?.data?.status
       ] || [];
+  }
+  
+  openIncidentsModal(): void {
+    
+    const item: Position = {
+      monitoringRequest: {
+        id: this.monitoringRequest.data.id,
+        operation: undefined,
+        travelSteps: [],
+        travelStatus: '',
+        status: ''
+      },
+      id: '',
+      ignition: false,
+      origin: '',
+      destiny: '',
+      speed: '',
+      trackerSerialNumber: '',
+      latitude: 0,
+      longitude: 0,
+      street: '',
+      vehicleStatus: '',
+      pointReference: '',
+      positionDate: '',
+      temperature: 0,
+      trackerTechnologyName: '',
+      customer: undefined,
+      communicationChannel: '',
+      vehiclePlate: '',
+      truck: undefined,
+      events: [],
+      trackerModel: undefined,
+      positionInfo: {
+        driverName: this.monitoringRequest.data.driver.name,
+        driverPhone: this.monitoringRequest.data.driver.phoneNumber,
+        id: '',
+        originState: '',
+        originCity: '',
+        destinyState: '',
+        destinyCity: '',
+        status: '',
+        travelStatus: '',
+        travelProgress: 0,
+        wagonsPlates: '',
+        hasMacro: false,
+        hasBaits: false,
+        hasEmbeddedIntelligence: false,
+        hasAutomations: false,
+        observations: ''
+      }
+    }
+
+    this.modalIncident.create({
+      nzTitle: 'Ocorrências',
+      nzContent: IncidentsModalComponent,
+      nzWidth: '80%',
+      nzComponentParams: {
+        position:item,
+        blank:true
+      },
+    });
   }
 }

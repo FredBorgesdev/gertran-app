@@ -297,6 +297,18 @@ export const ROUTES: SideNavInterface[] = [
             permission:Permissions.VIEW_DASHBOARD_TC3
           },
           {
+            path: 'reports/dashboards/tc4',
+            title: 'TORRE CONTROLE 4',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            queryParams: {
+              fullscreen: true
+            },
+            submenu: [],
+            permission:Permissions.VIEW_DASHBOARD_TC4
+          },
+          {
             path: 'reports/dashboards/tc-gertran',
             title: 'TORRE CONTROLE GERTRAN',
             iconType: 'nzIcon',

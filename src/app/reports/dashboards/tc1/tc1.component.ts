@@ -23,31 +23,4 @@ export class ControlTower1 {
     window.open(url, '_blank');
   }
 
-  goBack(): void {
-    this.router.navigate(['dashboard', 'home']);
-  }
-
-  toggleFullscreen(): void {
-    const elem = document.documentElement;
-    if (!document.fullscreenElement) {
-      elem.requestFullscreen().catch(err => {
-        console.log(`Erro ao tentar entrar em tela cheia: ${err.message}`);
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  }
-
-  goToTowerControl1(): void {
-    this.router.navigate(['reports', 'dashboards','tc1'], { queryParams: { fullscreen: 'true' } });
-  }
-
-  goToTowerControl3(): void {
-    this.router.navigate(['reports', 'dashboards','tc3'], { queryParams: { fullscreen: 'true' } });
-  }
-  
-  goToTowerControl4(): void {
-    this.router.navigate(['reports', 'dashboards','tc4'], { queryParams: { fullscreen: 'true' } });
-  }
-
 }

@@ -67,7 +67,7 @@ import {
   ClientMonitoringRequestsComponent
 } from "./dashboards/client-monitoring-requests/client-monitoring-requests.component";
 import { InsuranceComponent } from './insurance/insurance.component';
-
+import { FixedButtonsComponent } from '../shared/fixed-buttons/fixed-buttons.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +126,7 @@ import { InsuranceComponent } from './insurance/insurance.component';
     ClientMonitoringRequestsComponent,
     InsuranceComponent,
     ControlTowerGertran,
+    FixedButtonsComponent
   ],
   exports: [
     WorkdayComponent

@@ -22,6 +22,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
 
   googlePlacesOptions = googlePlacesOptions;
 
+  @Input() blank: boolean = false;
   @Input() monitoringRequest: any;
   @Input() driver: {
     name: string;
@@ -78,30 +79,56 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
   ];
   validateForm: FormGroup;
 
+
   ngOnInit(): void {
-    console.log(this.driver)
-    this.validateForm = this.formBuilder.group({
-      monitoringRequest: [this.monitoringRequest.id],
-      incidentType: [null],
-      incidentDate: [null],
-      incidentLocation: [null],
-      driverContactedAt: [null],
-      driverName: [this.driver?.name],
-      driverPhone: [this.driver?.phone],
-      shipperName: [null, [Validators.required]],
-      shipperContactedAt: [null, [Validators.required]],
-      wasImmediateActionApproved: [null],
-      immediateActionResponsibleName: [null],
-      immediateActionTakenAt: [null],
-      wasFederalPoliceActionNeeded: [null],
-      federalPoliceActionResponsibleName: [null],
-      federalPoliceActionTakenAt: [null],
-      additionalInformation: [null],
-      optionalEmail: [null],
-      incidentLatitude: [null],
-      incidentLongitude: [null],
-      incidentDatetime: [null],
-    });
+    if(!this.blank){
+      this.validateForm = this.formBuilder.group({
+        monitoringRequest: [this.monitoringRequest.id],
+        incidentType: [null],
+        incidentDate: [null],
+        incidentLocation: [null],
+        driverContactedAt: [null],
+        driverName: [this.driver?.name],
+        driverPhone: [this.driver?.phone],
+        shipperName: [null, [Validators.required]],
+        shipperContactedAt: [null, [Validators.required]],
+        wasImmediateActionApproved: [null],
+        immediateActionResponsibleName: [null],
+        immediateActionTakenAt: [null],
+        wasFederalPoliceActionNeeded: [null],
+        federalPoliceActionResponsibleName: [null],
+        federalPoliceActionTakenAt: [null],
+        additionalInformation: [null],
+        optionalEmail: [null],
+        incidentLatitude: [null],
+        incidentLongitude: [null],
+        incidentDatetime: [null],
+      });
+    }else{
+      this.validateForm = this.formBuilder.group({
+        monitoringRequest: [this.monitoringRequest?.id], 
+        incidentType: [null],
+        incidentDate: [new Date()], 
+        incidentLocation: ['\u200B'],
+        driverContactedAt: [new Date()], 
+        driverName: [this.driver?.name], 
+        driverPhone: [this.driver?.phone], 
+        shipperName: ['\u200B', [Validators.required]], 
+        shipperContactedAt: [new Date(), [Validators.required]],
+        wasImmediateActionApproved: [false], 
+        immediateActionResponsibleName: ['\u200B'],
+        immediateActionTakenAt: [new Date()], 
+        wasFederalPoliceActionNeeded: [false], 
+        federalPoliceActionResponsibleName: ['\u200B'],
+        federalPoliceActionTakenAt: [new Date()], 
+        additionalInformation: [null],
+        optionalEmail: [null],
+        incidentLatitude: [0.0], 
+        incidentLongitude: [0.0], 
+        incidentDatetime: [new Date()] 
+      });
+    }
+    
   }
 
   handleAddressChange(nominatimAddress: any): void {

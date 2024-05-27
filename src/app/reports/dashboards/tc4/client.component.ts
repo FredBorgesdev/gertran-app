@@ -67,10 +67,20 @@ export class ControlTower4 implements OnInit {
 
   ) { }
 
+  updateCharts() {
+    this.loadPositions();
+    this.loadMonitoringRequests();
+    this.loadCheckLists();
+  }
+
   ngOnInit() {
     this.loadPositions();
     this.loadMonitoringRequests()
     this.loadCheckLists()
+
+    setInterval(() => {
+      this.updateCharts();
+    }, 15 * 60 * 1000);
   }
 
   incrementStatusCount(status: string, obj) {
@@ -243,17 +253,12 @@ export class ControlTower4 implements OnInit {
     }).subscribe(response => {
       this.checkListsData.totalCheckLists = response.length
 
-      // const approved = response.filter(x => x.status === 'approved')
-      // const reproved = response.filter(x => x.status === 'reproved')
-      // const requested = response.filter(x => x.status === 'requested')
 
-      // const newData = [
-      //   requested.length,
-      //   approved.length,
-      //   reproved.length,
-      // ];
-
-
+      this.checkListsData.labels = [
+        { status: 'SOLICITADO', count: 0, color: 'blue' },
+        { status: 'APROVADO', count: 0, color: 'green' },
+        { status: 'REPROVADO', count: 0, color: 'red' }
+      ]
 
       response.forEach(item => {
         switch (item.status) {
@@ -294,6 +299,12 @@ export class ControlTower4 implements OnInit {
     this.service
       .getAll({ limit: 999 }, { customer: customer, fromDate: fromDate, toDate: toDate })
       .subscribe((result) => {
+
+        this.monitoringRequestsData.labels = [
+          { status: 'ANALISE', count: 0, color: 'blue' },
+          { status: 'APROVADO', count: 0, color: 'green' },
+          { status: 'REPROVADO', count: 0, color: 'red' }
+        ]
 
         result.results.forEach(item => {
           switch (item.status) {
@@ -356,33 +367,6 @@ export class ControlTower4 implements OnInit {
         const ctx4 = document.getElementById('myChart4') as HTMLCanvasElement;
         new Chart(ctx4, config4);
       });
-  }
-
-  goBack(): void {
-    this.router.navigate(['dashboard', 'home']);
-  }
-
-  toggleFullscreen(): void {
-    const elem = document.documentElement;
-    if (!document.fullscreenElement) {
-      elem.requestFullscreen().catch(err => {
-        // c/onsole.log(`Erro ao tentar entrar em tela cheia: ${err.message}`);
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  }
-
-  goToTowerControl1(): void {
-    this.router.navigate(['reports', 'dashboards', 'tc1'], { queryParams: { fullscreen: 'true' } });
-  }
-
-  goToTowerControl2(): void {
-    this.router.navigate(['reports', 'dashboards', 'tc2'], { queryParams: { fullscreen: 'true' } });
-  }
-
-  goToTowerControl3(): void {
-    this.router.navigate(['reports', 'dashboards', 'tc3'], { queryParams: { fullscreen: 'true' } });
   }
 
   returnRange7Days() {

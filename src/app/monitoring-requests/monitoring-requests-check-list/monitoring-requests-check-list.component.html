@@ -397,9 +397,14 @@
           <i nz-icon nzType="printer" nzTheme="outline"></i>
           Comprovante de checklist
         </button>
-        <button nz-button [print]="['release-print', printConfig]" nzType="primary" *ngIf="monitoringRequest">
+        <button nz-button [print]="['release-print', printConfig]"  class="m-r-15"  nzType="primary" *ngIf="monitoringRequest">
           <i nz-icon nzType="printer" nzTheme="outline"></i>
           Protocolo de liberação de viagem
+        </button>
+
+        <button nz-button  nzType="primary"   (click)="openIncidentsModal()">
+          <i nz-icon nzType="alert"  class="m-r-15"  nzTheme="outline"></i>
+          ocorrência
         </button>
       </nz-button-group>
     </div>

@@ -38,6 +38,7 @@ const fieldTranslations = {
 })
 export class IncidentsModalComponent implements OnInit {
   @Input() position: Position;
+  @Input() blank: boolean = false;
   isLoading = false;
   incidentsColumns = [
     {title: 'Id'},
@@ -101,7 +102,8 @@ export class IncidentsModalComponent implements OnInit {
         driver: {
           name: this.position.positionInfo.driverName,
           phone: this.position.positionInfo.driverPhone,
-        }
+        },
+        blank: this.blank
       },
       nzWidth: '80%',
       nzOkText: 'Salvar',
@@ -140,7 +142,8 @@ export class IncidentsModalComponent implements OnInit {
       nzTitle: 'Detalhes da ocorrência',
       nzContent: IncidentDetailsModalComponent,
       nzComponentParams: {
-        incident
+        incident,
+        blank:this.blank
       },
       nzWidth: '80%',
       nzFooter: null,

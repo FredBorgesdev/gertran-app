@@ -1,0 +1,8 @@
+<div style="display: flex; justify-content: space-around;" class="fixed-buttons">
+    <button nz-button nzType="default" (click)="goBack()">Sair</button>
+    <button nz-button nzType="default" (click)="toggleFullscreen()">Tela Cheia</button>
+    <button nz-button nzType="default" *ngIf="btn1" (click)="goToTowerControl1()">Torre controle 1</button>
+    <button nz-button nzType="default" *ngIf="btn2" (click)="goToTowerControl2()">Torre controle 2</button>
+    <button nz-button nzType="default" *ngIf="btn3" (click)="goToTowerControl3()">Torre controle 3</button>
+    <button nz-button nzType="default" *ngIf="btn4" (click)="goToTowerControl4()" >Torre controle 4</button>
+  </div>
