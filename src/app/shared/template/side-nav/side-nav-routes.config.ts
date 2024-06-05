@@ -54,14 +54,6 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'database',
         submenu: []
       },
-      // {          
-      //   path: '/occurrence/occurrence-form',
-      //   title: 'Ocorrencia',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'database',
-      //   submenu: []
-      // },
     ]
   },
   {

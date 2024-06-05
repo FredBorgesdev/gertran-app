@@ -25,7 +25,7 @@
     </tr>
 
     <tr style="border-bottom: 1px solid #000;">
-      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Empresa: {{ monitoringRequest?.data?.customer.tradingName }}</h5></td>
+      <td style="width: 50%; border-right: 1px solid #000;"><h5 style="font-weight: bold; font-size: x-small;">Empresa: {{ monitoringRequest?.data?.customer?.tradingName ?? '-' }}</h5></td>
       <td><h5 style="font-weight: bold; font-size: x-small;">Veiculo: {{ monitoringRequest?.data?.truck?.vehicle.plate }}</h5></td>
     </tr>
 

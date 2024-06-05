@@ -22,11 +22,32 @@ export class PermissionsTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissionService.getAll().subscribe(data => {
-      this.list = data.results.map(item => ({
-        id: item.id,
-        title: item.name,
-        direction: this.targetKeys.includes(item.id.toString()) ? 'right' : 'left',
-      }));
+      this.list = data.results.map(item => {
+        const isAllNumberStrings = this.targetKeys.every(item => typeof item === 'string' && /^\d+$/.test(item));
+
+        if (isAllNumberStrings) {
+          return ({
+            id: item.id,
+            title: item.name,
+            direction: this.targetKeys.includes(item.id.toString()) ? 'right' : 'left',
+          })
+  
+        } else {
+
+          const textAfterDot = this.targetKeys.map(item => {
+            const parts = item.split('.');
+            return parts.length > 1 ? parts[1] : item;
+          });
+
+          return ({
+            id: item.id,
+            title: item.name,
+            direction: textAfterDot.includes(item.codename.toString()) ? 'right' : 'left',
+          })      
+        }
+
+
+      });
     });
   }
 

@@ -11,10 +11,10 @@
 
 <nz-descriptions nzTitle="Cliente" nzBordered nzSize="small">
   <nz-descriptions-item nzTitle="Embarcador">
-    {{monitoringRequest?.data?.customer?.tradingName}}
+    {{monitoringRequest?.data?.customer?.tradingName ?? '-' }}
   </nz-descriptions-item>
   <nz-descriptions-item nzTitle="Transportador">
-    {{monitoringRequest?.data?.transporter?.tradingName}}
+    {{monitoringRequest?.data?.transporter?.tradingName ?? '-' }}
   </nz-descriptions-item>
 </nz-descriptions>
 

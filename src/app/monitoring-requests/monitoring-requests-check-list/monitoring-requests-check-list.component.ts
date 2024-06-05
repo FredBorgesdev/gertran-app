@@ -36,6 +36,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
   monitoringRequest: MonitoringRequest;
 
+  adHocMonitoringRequest = 'd591024e-f3c9-46aa-adfc-bc5423fd6184'
 
   lastReleasedMonitoringRequests = []
 
@@ -157,17 +158,19 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
       const {fromDate,toDate} = this.returnRange3Days()
 
-      const periodFielter: BasePeriodFilter = {
-        from:fromDate,
-        to:toDate,
-        customer:result.customer.id
-      }
+      if(result?.customer?.id != undefined){
+        const periodFielter: BasePeriodFilter = {
+          from:fromDate,
+          to:toDate,
+          customer:result.customer.id
+        }
 
-      this.reportsService.getVehiclesReleased(periodFielter)
-      .toPromise().then(releasedMonitoringRequests=>{
-        this.lastReleasedMonitoringRequests = releasedMonitoringRequests
-        .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
-      })
+        this.reportsService.getVehiclesReleased(periodFielter)
+        .toPromise().then(releasedMonitoringRequests=>{
+          this.lastReleasedMonitoringRequests = releasedMonitoringRequests
+          .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
+        })
+      }
 
       this.monitoringRequest = new MonitoringRequest(result);
       this.setPossibleStatus();

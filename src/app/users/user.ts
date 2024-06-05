@@ -8,7 +8,7 @@ export default class User extends AbstractUser {
   }
 
   hasPermission(permission: string): boolean {
-    if (this.isGertranStaff) {
+    if (this.isGertranStaff && this.permissions.includes(permission)) {
       return true;
     }
 
@@ -16,11 +16,11 @@ export default class User extends AbstractUser {
   }
 
   hasOneOfPermissions(oneOfPermissions: string[]): boolean {
-    if (this.isGertranStaff) {
+    if (this.isGertranStaff &&  oneOfPermissions.some(permission => this.permissions.includes(permission))) {
       return true;
     }
 
-    return oneOfPermissions.some(permission => this.permissions.includes(permission));
+    return  oneOfPermissions.some(permission => this.permissions.includes(permission));
   }
 
   isInsuranceCompany(): boolean {

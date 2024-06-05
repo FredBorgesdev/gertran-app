@@ -264,15 +264,19 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         const routeCoordinates = hasPoints && await this.directionsService.getCoordinates(points);
         const transporterId = this.authService.customerId || componentInstance.customer;
 
-        (this.service as MonitoringRequestsService).save({
-          route,
-          routeCoordinates,
-          customer: componentInstance.customer,
-          travelSteps: points,
-          transporter: transporterId as any,
-        }).subscribe((result) => {
-          this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
-        });
+        if (this.authService.customerId != null) {
+          (this.service as MonitoringRequestsService).save({
+            route,
+            routeCoordinates,
+            customer: componentInstance.customer,
+            travelSteps: points,
+            transporter: transporterId as any,
+          }).subscribe((result) => {
+            this.router.navigate(['monitoring-requests', 'monitoring-requests-edit', result.id]);
+          });
+        } else {
+          alert('Selecione o cliente')
+        }
       }
     });
   }

@@ -79,6 +79,9 @@ export class UsersFormComponent implements OnInit {
   }
 
   backToCustomerList(): void {
-      this.router.navigate(['customers', 'customers-edit', this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+    if(this.activatedRoute.snapshot.paramMap.get('customer_id') == 'users-list' )
+      this.router.navigate(['users', 'users-list']);
+    else
+      this.router.navigate(['customers', 'customers-edit',  this.activatedRoute.snapshot.paramMap.get('customer_id')]);
   }
 }

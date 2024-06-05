@@ -44,6 +44,18 @@
             </nz-select>
           </nz-form-control>
         </div>
+        <div nz-col nzSpan="12" *ngIf="this.authService.customerId == adHocMonitoringRequest">
+          <nz-form-label [nzSpan]="null" nzFor="adHocMonitoringRequest">Nome Transportadora</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <input
+              id="adHocMonitoringRequest"
+              nz-input
+              formControlName="adHocMonitoringRequest"
+              (blur)="saveDraft('adHocMonitoringRequest')"
+              [disabled]="disabled"
+            />
+          </nz-form-control>
+        </div>
       </div>
     </nz-form-item>
 

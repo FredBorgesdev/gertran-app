@@ -26,6 +26,8 @@ import {SharedOperationsItem, SharedOperationsService} from "../../customers/sha
   styleUrls: ['./monitoring-requests-form.component.css'],
 })
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
+  adHocMonitoringRequest = 'd591024e-f3c9-46aa-adfc-bc5423fd6184'
+  
   stops: Stop[] = [];
   drivers: Driver[] = [];
   surveyConductors: Choice[] = [];
@@ -124,6 +126,10 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       surveyConductedByOthers: [null, []],
       driver: [null, []],
       auxiliaryDriver: [null, []],
+      adHocMonitoringRequest: [null, ''],
+
+      
+
     });
 
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {

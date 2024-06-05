@@ -28,8 +28,14 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   }
 
   loadFormBuilder(): void {
+    const customerLoaded = [
+      this.authService.customerId, 
+      'users-list' != this.activatedRoute.snapshot.paramMap.get('customer_id') ? 
+      this.activatedRoute.snapshot.paramMap.get('customer_id'): 
+      ''
+    ]    
     this.validateForm = this.formBuilder.group({
-      customer: [[this.authService.customerId, this.activatedRoute.snapshot.paramMap.get('customer_id')], []],
+      customer: [customerLoaded, []],
       email: [null, [Validators.required, Validators.email]],
       cpf: [null, [Validators.required]],
       name: [null, [Validators.required]],
