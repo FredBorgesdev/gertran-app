@@ -15,7 +15,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
     service: UsersService,
     message: NzMessageService,
     activatedRoute: ActivatedRoute,
@@ -28,12 +28,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   }
 
   loadFormBuilder(): void {
-    const customerLoaded = [
-      this.authService.customerId, 
-      'users-list' != this.activatedRoute.snapshot.paramMap.get('customer_id') ? 
-      this.activatedRoute.snapshot.paramMap.get('customer_id'): 
-      ''
-    ]    
+    const customerLoaded = [this.authService.customerId, this.activatedRoute.snapshot.paramMap.get('customer_id')]
     this.validateForm = this.formBuilder.group({
       customer: [customerLoaded, []],
       email: [null, [Validators.required, Validators.email]],
@@ -66,17 +61,30 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   }
 
   updateField(field: string, value: any): void {
-    this.resource.customer = this.resource.customer.map(({ id }) => id) as any;
-    this.resource[field] = value;
-    this.service.update(this.resource.id, this.resource).subscribe(() => {
+    const resource = this.resource;
+    const newResource = Object.assign({}, resource);
+    newResource.customer = this.resource.customer.map(({ id }) => id) as any;
+    newResource[field] = value;
+
+    if(field == 'groups')
+      delete newResource['permissions']
+
+    if(field == 'permissions')
+      delete newResource['groups']
+    
+    this.service.update(this.resource.id, newResource).subscribe(() => {
       this.message.success('Campo salvo com sucesso!');
-    }, () => {
+      }, () => {
       this.message.error('Não foi possível salvar o campo. Tente novamente.');
     });
   }
 
   numbersToStrings(numbers?: number[]): string[] {
     return numbers?.map(String) ?? [];
+  }
+
+  numbersToStringsGroup(numbers?: number[]): string[] {
+    return numbers?.map(x=>x['id'].toString()) ?? [];
   }
 
   getValues(): AbstractUser {
@@ -94,6 +102,5 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
   handleSuccess(response?: any): void {
     this.message.success('Registro salvo com sucesso');
     this.isLoading = false
-    this.router.navigate(['users', 'users-edit', response.id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
-  }
+    }
 }

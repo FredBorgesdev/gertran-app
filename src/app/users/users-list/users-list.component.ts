@@ -53,11 +53,13 @@ export class UsersListComponent extends BaseCrudListComponent<AbstractUser> impl
   }
 
   create(){
-    this.router.navigate(['users', `users-create`, this.getCustomerUUID()]);
+    const userRouteResolve = this.getCustomerUUID() != 'users-list' ?this.getCustomerUUID():''
+    this.router.navigate(['users', `users-create`, userRouteResolve]);
   }
 
   edit(item){
-    this.router.navigate(['users', `users-edit`,item.id, this.getCustomerUUID()]);
+    const userRouteResolve = this.getCustomerUUID() != 'users-list' ?this.getCustomerUUID():''
+    this.router.navigate(['users', `users-edit`,item.id, userRouteResolve]);
   }
 
   getCustomerUUID(){

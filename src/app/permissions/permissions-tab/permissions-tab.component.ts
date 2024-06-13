@@ -24,7 +24,7 @@ export class PermissionsTabComponent implements OnInit {
     this.permissionService.getAll().subscribe(data => {
       this.list = data.results.map(item => {
         const isAllNumberStrings = this.targetKeys.every(item => typeof item === 'string' && /^\d+$/.test(item));
-
+        
         if (isAllNumberStrings) {
           return ({
             id: item.id,
@@ -48,6 +48,7 @@ export class PermissionsTabComponent implements OnInit {
 
 
       });
+      this.changeTransfer()
     });
   }
 

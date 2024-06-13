@@ -38,6 +38,10 @@ export class GroupsFormComponent extends BaseCrudFormComponent<Group> {
     this.router.navigate(['groups', 'groups-list']);
   }
 
+  numbersToStrings(numbers?: any){
+    return numbers?.map(x=>String(x.id)) ?? [];
+  }
+
   setPermissions(permissions: number[]): void {
     this.validateForm.controls.permissions.setValue(permissions);
   }

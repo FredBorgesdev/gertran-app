@@ -30,18 +30,18 @@
         ></app-users-form>
       </nz-tab>
 
-      <nz-tab nzTitle="Permissões de Acesso" [nzDisabled]="!resource">
+      <!-- <nz-tab nzTitle="Permissões de Acesso" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
         <app-permissions-tab
           *ngIf="resource"
           [targetKeys]="numbersToStrings(resource.permissions)"
           (save)="updateField('permissions', $event)"
         ></app-permissions-tab>
-      </nz-tab>
+      </nz-tab> -->
 
-      <nz-tab nzTitle="Grupos" [nzDisabled]="!resource">
+      <nz-tab nzTitle="Grupos" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
         <app-groups-tab
           *ngIf="resource"
-          [targetKeys]="numbersToStrings(resource.groups)"
+          [targetKeys]="numbersToStringsGroup(resource.groups)"
           (save)="updateField('groups', $event)"
         ></app-groups-tab>
       </nz-tab>

@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 export interface Group {
   id: string;
   name: string;
+  permissions: any;
 }
 
 @Injectable({

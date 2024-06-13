@@ -8,7 +8,7 @@
 
   <nz-form-item>
     <app-permissions-tab
-      [targetKeys]="[]"
+      [targetKeys]="numbersToStrings(resource.permissions) || []"
       [hideSubmit]="true"
       (change)="setPermissions($event)"
     ></app-permissions-tab>
