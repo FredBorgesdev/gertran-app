@@ -35,6 +35,15 @@ const routes: Routes = [
       headerDisplay: 'none',
       permission: Permissions.USERS_CHANGE_BASEUSER,
     }
+  },
+  {
+    path: 'users-edit/:id',
+    component: UsersUserComponent,
+    data: {
+      title: 'Editar Usuário ',
+      headerDisplay: 'none',
+      permission: Permissions.USERS_CHANGE_BASEUSER,
+    }
   }
 ];
 
