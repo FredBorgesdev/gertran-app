@@ -167,9 +167,9 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
 
     this.validateForm.patchValue({
       customers: customersDriversArray,
-      manufacturer: this.resource.vehicle.manufacturer.id,
-      vehicleModel: this.resource.vehicle.vehicleModel.id,
-      vehicleModelType: this.resource.vehicle.vehicleModelType.id,
+      manufacturer: this.resource.vehicle.manufacturer?.id ?? undefined,
+      vehicleModel: this.resource.vehicle.vehicleModel?.id ?? undefined,
+      vehicleModelType: this.resource.vehicle.vehicleModelType?.id ?? undefined,
       peripherals: this.resource.vehicle.peripherals,
       workingSituation: this.resource.vehicle.workingSituation,
       plate: this.resource.vehicle.plate,
