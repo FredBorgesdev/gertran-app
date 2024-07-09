@@ -144,13 +144,18 @@ export class DriversFormComponent implements OnInit {
     }
 
     this.driverChange.emit(driver);
-    this.selectableCustomerService.concatCustomers(driver.customers);
 
+    if(!driver.customers)
+      driver.customers = []
+      
+    this.selectableCustomerService.concatCustomers(driver.customers);
+    let concated = this.authService.customerId ? 
+    this.authService.customerId : 
+    this.activatedRoute.snapshot.paramMap.get('customer_id')
+    
     this.validateForm.patchValue({
       ...driver,
-      customers: driver.customers.map(
-        (customer) => customer.id
-      ).concat(this.authService.customerId ?this.authService.customerId : this.activatedRoute.snapshot.paramMap.get('customer_id')).filter(Boolean),
+      customers: driver.customers.map((customer) => customer.id).concat(concated).filter(Boolean),
     });
   }
 
