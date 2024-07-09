@@ -117,7 +117,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
-      
+
       this.waitingForStartResponse = result;
       this.isLoading = false;
     });
@@ -235,6 +235,15 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
     });
   }
 
+  filterByDate(data, hours) {
+    const dateToCheck = new Date();
+    dateToCheck.setHours(dateToCheck.getHours() - hours);
+    return data.filter(item => {
+      const itemDate = new Date(item.reviewedAt);
+      return itemDate >= dateToCheck;
+    });
+  }
+
   loadUnderReview(url?: string): void {
     this.isLoading = true;
     this.service.getAll(
@@ -244,9 +253,33 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         ...this.monitoringRequestFilters,
       }
     ).subscribe((result) => {
-      this.underReviewResponse = result;
-      this.isLoading = false;
+      result.results = result.results.map(x => {
+        let hours = 0; 
+        switch (x.customer.checklistExpirationPeriod) {
+            case 'twenty_four_hours':
+                hours = 24;
+                break;
+            case 'thirty_days':
+                hours = 30 * 24;
+                break;
+            case 'fifteen_days':
+                hours = 15 * 24;
+                break;
+            case 'seventy_two_hours':
+                hours = 72;
+                break;
+            default:
+                console.log(`Unknown expiration period: ${x.customer.checklistExpirationPeriod}`);
+                break;
+        }
+        const filteredData = this.filterByDate(x.checklistSet, hours)[0];
+        x.checklistReleased = filteredData
+        return x;
     });
+
+    this.underReviewResponse = result;
+    this.isLoading = false;
+});
   }
 
   create(): void {

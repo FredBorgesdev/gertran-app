@@ -29,7 +29,14 @@ export enum Status {
   IMPORTED_UNAVAILABLE = 'imported_unavailable',
 }
 
+export interface ChecklistSet{
+  reviewedAt: string;
+  status: string;
+}
+
 export interface MonitoringRequests {
+  checklistSet: ChecklistSet[];
+  checklistReleased: ChecklistSet;
   releasedAt: string;
   publishedAt: string;
   createdAt: string;

@@ -66,7 +66,9 @@ export class MonitoringRequestComponent implements OnInit {
           (error) => {
             let message = '';
             Object.values(error?.error?.extra?.fields ?? {})?.forEach(field => {
-              message += `${field}`;
+              // message += `${field}`;
+              this.message.error(`${field}`, {nzDuration: 7000});
+              // console.log(message)
             });
 
             if (message === '') {
@@ -74,7 +76,6 @@ export class MonitoringRequestComponent implements OnInit {
             }
 
             this.isLoading = false;
-            this.message.error(message, {nzDuration: 7000});
           });
       },
     });

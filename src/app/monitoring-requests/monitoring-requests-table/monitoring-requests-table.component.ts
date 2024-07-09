@@ -24,7 +24,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
   possibleStatus: PossibleStatus;
 
   monitoringRequestsColumns = [
-    {title: 'Avaliação de Monitoramento'},
+    {title: 'Avaliação de Monitoramento', width:'150px'},
     {title: 'Código'},
     {title: 'Placa'},
     {title: 'Carretas'},
@@ -49,6 +49,14 @@ export class MonitoringRequestsTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.possibleStatus = this.monitoringRequestService.possibleStatus;
+  }
+
+  getColumnWidth(column: any): string {
+    if (column.width) {
+      return column.width;
+    } else {
+      return '100px'; 
+    }
   }
 
   get page(): number {

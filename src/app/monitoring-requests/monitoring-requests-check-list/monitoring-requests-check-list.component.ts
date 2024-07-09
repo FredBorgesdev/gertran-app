@@ -323,6 +323,14 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.monitoringRequest?.data?.status
       ] || [];
   }
+
+
+  getLocalInstalaition(vehicleInstalation): String{
+    if(vehicleInstalation == 'truck')
+      return 'Cavalo'
+    if(vehicleInstalation=='wagon')
+      return 'Carreta'
+  }
   
   openIncidentsModal(): void {
     

@@ -16,7 +16,7 @@
     <th
       *ngFor="let column of monitoringRequestsColumns"
       [nzSortFn]="column.compare"
-      [nzWidth]="'100px'"
+      [nzWidth]="getColumnWidth(column)"
       style="white-space: nowrap; max-width: 100px; overflow: hidden; text-overflow: ellipsis;"
     >{{ column.title }}</th>
   </tr>
@@ -31,6 +31,16 @@
   >
   <td>
     <div class="d-flex">
+      <a
+      *ngIf="item.status == 'under_review' || item.status == 'waiting_for_start'"
+      class="m-r-5"
+      nz-button
+      nzShape="circle"
+      nz-tooltip
+      nzTooltipTitle="Aprovação de checklist"
+      [style.background-color]="item.checklistReleased != undefined && item.checklistReleased.status == 'approved' ? 'green' : 'red'"      >
+      &nbsp;
+      </a>
 
       <a
       *ngIf="item.status == 'under_review' || item.status == 'waiting_for_start'"
