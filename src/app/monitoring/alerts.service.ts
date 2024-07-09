@@ -27,6 +27,7 @@ export type AlertCount = {
 };
 
 export type Alert = {
+  lastEvent: string | null;
   id: string;
   message: string;
   monitoringRequest: number | null;

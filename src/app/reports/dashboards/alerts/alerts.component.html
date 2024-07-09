@@ -93,6 +93,7 @@
       <th  class="table-header text-center" style="width: 15%;">Origem</th>
       <th  class="table-header text-center" style="width: 15%;">Destino</th>
       <th  class="table-header text-center">Alerta</th>
+      <th  class="table-header text-center">Evento</th>
       <!-- <th  class="table-header text-center" style="width: 5%;">Tempo</th> -->
     </tr>
   </thead>
@@ -104,6 +105,7 @@
       <td class="text-center">{{item.position.positionInfo.originCity}} - {{item.position.positionInfo.originState}}</td>
       <td class="text-center">{{item.position.positionInfo.destinyCity}} - {{item.position.positionInfo.destinyState}}</td>
       <td class="text-center">{{item.message}} - {{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+      <td class="text-center">{{item.lastEvent}} </td>
       <!-- <td class="text-center max-width-cell">{{getRollingTimeInMinutes(item) }}</td> -->
     </tr>
   </tbody>
