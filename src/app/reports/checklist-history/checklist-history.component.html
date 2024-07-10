@@ -54,7 +54,7 @@
         <td>{{ data.requestedBy?.name }}</td>
         <td>{{ getStatusChecklistLocalized(data.status) }}</td>
         <td>{{ data.justification }}</td>
-        <td>{{ data.reviewedAt | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ data.reviewedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
         <td>{{ data.expirationDate | date: 'dd/MM/yyyy' }}</td>
         <td>{{ data.driver?.name }} / {{ data.driver?.phoneNumber }}</td>
         <td>{{ data.origin }}</td>
