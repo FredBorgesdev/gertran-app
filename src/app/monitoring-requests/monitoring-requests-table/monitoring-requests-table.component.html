@@ -32,7 +32,7 @@
   <td>
     <div class="d-flex">
       <a
-      *ngIf="item.status == 'under_review' || item.status == 'waiting_for_start'"
+      *ngIf="authService.user.isGertranStaff == true && item.status == 'under_review' || item.status == 'waiting_for_start'"
       class="m-r-5"
       nz-button
       nzShape="circle"
