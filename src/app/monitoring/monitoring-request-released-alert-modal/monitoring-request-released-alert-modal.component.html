@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Placa</th>
+      <th>Cliente</th>
       <th>Data/hora</th>
       <th>&nbsp;</th>
     </tr>
@@ -11,6 +12,7 @@
   <tbody>
     <tr *ngFor="let item of table.data">
       <td>{{ item.plate }}</td>
+      <td>{{ item.customerName }}</td>
       <td>{{(item.createdAt) | date: 'dd/MM/yyyy HH:mm'}}</td>
       <td><button nz-button nzType="primary" nzShape="circle" nz-tooltip (click)="readMonitoringRequestReleasedAlert(item.id)">ok</button>
       </td>

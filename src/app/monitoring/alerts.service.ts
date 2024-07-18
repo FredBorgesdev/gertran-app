@@ -30,6 +30,7 @@ export interface MonitoringRequestReleasedAlerts {
   id: string;
   plate: string;
   userReleasedMonitoring: string;
+  customerName: string;
 }
 
 export type Alert = {
