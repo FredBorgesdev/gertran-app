@@ -70,6 +70,9 @@
         <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-5" (click)="openAlertModal('danger')">
           ({{ alertsCount?.danger ?? 0 }}) Urgentes
         </button>
+        <button nzSize="small" nz-button nzType="success" class="m-r-5" (click)="openMonitoringRequestReleasedAlertModal()">
+          ({{ monitoringRequestReleasedAlertsCount }}) LIBERADOS
+        </button>
         <button nzSize="small" nz-button nzType="dashed">
           <span nz-icon nzType="car"></span>
           {{ plate }} - Placa

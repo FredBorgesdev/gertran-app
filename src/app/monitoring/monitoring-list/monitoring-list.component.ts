@@ -28,6 +28,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import User from '../../users/user';
 import {format} from "date-fns";
 import {MonitoringProtocolListComponent} from '../protocol-list/protocol-list.component';
+import { MonitoringRequestReleasedAlertModalComponent } from '../monitoring-request-released-alert-modal/monitoring-request-released-alert-modal.component';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 
@@ -73,6 +74,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Fim Horario permitido',width: '70px', gertranStaffOnly: true},
   ];
   validateForm: FormGroup;
+  monitoringRequestReleasedAlertsCount = 0
 
   stopMonitoring = new Subject();
   monitoringData$: Observable<GetAllResponse<Position>>;
@@ -121,7 +123,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
 
   refreshAlertCount = new EventEmitter();
-
+  refreshMonitoringRequestReleasedAlertCount = new EventEmitter();
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -156,6 +159,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.refreshAlertCount.subscribe(() => this.setAlertsCount());
     this.refreshPositions.subscribe(() => this.subscribeToMonitoringData());
 
+    this.refreshMonitoringRequestReleasedAlertCount.subscribe(()=>this.loadMonitoringRequestReleasedAlerts())
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
       terminal: [this.activatedRoute.snapshot.queryParams.terminal],
@@ -421,6 +425,20 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     });
   }
 
+  openMonitoringRequestReleasedAlertModal(): void {
+    this.modal.create({
+      nzTitle: `Placas liberadas para o terminal`,
+      nzContent: MonitoringRequestReleasedAlertModalComponent,
+      nzComponentParams: {
+        terminal: this.validateForm.get('terminal').value,
+      },
+      nzOkText: 'Fechar',
+      nzCancelText: null,
+      nzWidth: '70%',
+      nzAfterClose: this.refreshMonitoringRequestReleasedAlertCount,
+    });
+  }
+
   getLastEvent(item: Position): any {
     return item.events[item.events.length - 1];
   }
@@ -662,7 +680,24 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     );
   }
 
+
+  private loadMonitoringRequestReleasedAlerts():void{
+    try {
+      this.alertsService
+        .getMonitoringRequesReleasedtAlerts(
+          {},
+          {
+            terminal: this.validateForm.get('terminal').value,
+            read_alert:true
+          }
+        ).toPromise().then(x => this.monitoringRequestReleasedAlertsCount = x.count)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   private setAlertsCount(): void {
+    this.loadMonitoringRequestReleasedAlerts()
     this.alertsService.getAlertsCount(
       this.validateForm.value,
       AlertTypes.terminal

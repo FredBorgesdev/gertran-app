@@ -1,0 +1,18 @@
+<nz-table #table [nzData]="monitoringRequestReleasedAlerts?.results" [nzTotal]="monitoringRequestReleasedAlerts?.count"
+  [nzPageSize]="monitoringRequestReleasedAlerts?.limit" [nzPageIndex]="page" [nzFrontPagination]="false"
+  (nzQueryParams)="handleRoutesQueryParamsChange($event)" [nzLoading]="isLoading">
+  <thead>
+    <tr>
+      <th>Placa</th>
+      <th>Data/hora</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of table.data">
+      <td>{{ item.plate }}</td>
+      <td>{{(item.createdAt) | date: 'dd/MM/yyyy HH:mm'}}</td>
+      <td><button nz-button nzType="primary" nzShape="circle" nz-tooltip (click)="readMonitoringRequestReleasedAlert(item.id)">ok</button>
+      </td>
+    </tr>
+</nz-table>

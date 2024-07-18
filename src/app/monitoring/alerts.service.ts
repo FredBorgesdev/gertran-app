@@ -26,6 +26,12 @@ export type AlertCount = {
   [key in Severity]: number;
 };
 
+export interface MonitoringRequestReleasedAlerts {
+  id: string;
+  plate: string;
+  userReleasedMonitoring: string;
+}
+
 export type Alert = {
   lastEvent: string | null;
   id: string;
@@ -75,6 +81,36 @@ export type Alert = {
 })
 export class AlertsService {
   constructor(private http: HttpClient) {
+  }
+
+  markMonitoringRequestReleasedAlertAsRead(alertId: string): Observable<void> {
+    return this.http.patch<void>(`monitoring/monitoring-requests-released-alerts/read-released-alert`, { id: alertId });
+  }
+
+  getMonitoringRequesReleasedtAlerts(
+    pagination: Pagination,
+    filters: {
+      terminal?: string;
+      read_alert?: boolean
+    }
+  ): Observable<GetAllResponse<MonitoringRequestReleasedAlerts>> {  
+    const params: any = {
+      limit: pagination.limit || DEFAULT_LIMIT,
+    };
+    if (filters.terminal) {
+      params.terminal = filters.terminal;
+    }
+
+    if(filters.read_alert){
+      params.read_alert = filters.read_alert
+    }
+
+    if (pagination?.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+    return this.http.get<GetAllResponse<MonitoringRequestReleasedAlerts>>('monitoring/monitoring-requests-released-alerts', {params});
   }
 
   getAlerts(

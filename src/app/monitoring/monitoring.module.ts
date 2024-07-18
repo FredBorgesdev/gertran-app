@@ -21,6 +21,7 @@ import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
 import {NzDescriptionsModule} from 'ng-zorro-antd/descriptions';
 import {IncidentDetailsModalComponent} from './incident-details-modal/incident-details-modal.component';
 import {NgxPrintElementModule} from "ngx-print-element";
+import { MonitoringRequestReleasedAlertModalComponent } from './monitoring-request-released-alert-modal/monitoring-request-released-alert-modal.component';
 
 const antdModules = [];
 
@@ -36,6 +37,7 @@ const antdModules = [];
     IncidentsModalComponent,
     CreateIncidentModalComponent,
     IncidentDetailsModalComponent,
+    MonitoringRequestReleasedAlertModalComponent,
   ],
   imports: [
     SharedModule,
