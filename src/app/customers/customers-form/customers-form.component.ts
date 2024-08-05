@@ -73,6 +73,7 @@ export class CustomersFormComponent implements OnInit {
       closingDay: [this.customer?.closingDay, []],
       permissions: [this.customer?.permissions],
       hasApiIntegration: [this.customer?.hasApiIntegration, []],
+      isPamcary:[this.customer?.isPamcary, []],
       insuranceCompany: [
         (this.customer?.insuranceCompany as InsuranceCompany)?.id,
         []
