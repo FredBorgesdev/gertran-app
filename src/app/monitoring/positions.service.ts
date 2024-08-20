@@ -123,6 +123,10 @@ export class PositionsService implements ApiService<Position> {
     return this.http.get<GetAllResponse<Position>>('positions', {params});
   }
 
+  getPositionsByMonitoringRequest(id: string): Observable<any>{
+    return this.http.get<any>(`positions/positions-by-monitoring-request/${id}`);
+  }
+
   get(id: string): Observable<Position> {
     return this.http.get<Position>(`positions/${id}`);
   }

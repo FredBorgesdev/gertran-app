@@ -24,34 +24,50 @@
     [center]="driverLocation"
     [zoom]="[10]"
   >
-    <ng-container *ngIf="directionsGeoJson">
-      <mgl-layer
-        id="route"
-        type="line"
-        [source]="{ type: 'geojson', data: directionsGeoJson }"
-        [paint]="{
-          'line-color': '#93a7da',
-          'line-width': 5
-        }"
-        [layout]="{
-          'line-join': 'round',
-          'line-cap': 'round'
-        }"
-      ></mgl-layer>
+  <ng-container *ngIf="directionsGeoJson">
+    <mgl-layer
+      id="route"
+      type="line"
+      [source]="{ type: 'geojson', data: directionsGeoJson }"
+      [paint]="{
+        'line-color': '#93a7da',
+        'line-width': 5
+      }"
+      [layout]="{
+        'line-join': 'round',
+        'line-cap': 'round'
+      }"
+    ></mgl-layer>
 
-      <mgl-marker
-        *ngFor="let marker of markers; let i = index"
-        [lngLat]="marker"
-      >
-      <span
-        nz-icon
-        [nzType]="getIcon(i).type"
-        [nzTheme]="getIcon(i).theme"
-        [nzTwotoneColor]="getIcon(i).color"
-        [style]="'color:' + getIcon(i).color + '; font-size: 24px'"
-      ></span>
-      </mgl-marker>
-    </ng-container>
+    <mgl-marker
+      *ngFor="let marker of markers; let i = index"
+      [lngLat]="marker"
+    >
+    <span
+      nz-icon
+      [nzType]="getIcon(i).type"
+      [nzTheme]="getIcon(i).theme"
+      [nzTwotoneColor]="getIcon(i).color"
+      [style]="'color:' + getIcon(i).color + '; font-size: 24px'"
+    ></span>
+    </mgl-marker>
+  </ng-container>
+
+  <ng-container *ngIf="directionsTruckGeoJson">
+    <mgl-layer
+      id="routeTruck"
+      type="line"
+      [source]="{ type: 'geojson', data: directionsTruckGeoJson }"
+      [paint]="{
+        'line-color': '#000000',
+        'line-width': 2
+      }"
+      [layout]="{
+        'line-join': 'round',
+        'line-cap': 'round'
+      }"
+    ></mgl-layer>
+  </ng-container>
 
     <mgl-marker [lngLat]="driverLocation">
       <span

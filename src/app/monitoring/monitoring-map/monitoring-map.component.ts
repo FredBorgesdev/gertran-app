@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MonitoringMapData, MonitoringService} from '../monitoring.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MonitoringMapData, MonitoringService } from '../monitoring.service';
 import polyline from '@mapbox/polyline';
 import * as mapboxgl from 'mapbox-gl';
-import {Position} from '../positions.service';
-import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
-import {DirectionsService} from '../../shared/services/directions.service';
+import { Position, PositionsService } from '../positions.service';
+import { MonitoringRequestsService } from '../../monitoring-requests/monitoring-requests.service';
+import { DirectionsService } from '../../shared/services/directions.service';
 
 @Component({
   selector: 'app-monitoring-map',
@@ -18,6 +18,7 @@ export class MonitoringMapComponent implements OnInit {
 
   bounds = null;
   directionsGeoJson: any;
+  directionsTruckGeoJson: any;
   driverLocation = null;
   markers: [number, number][] = [];
 
@@ -25,16 +26,20 @@ export class MonitoringMapComponent implements OnInit {
     private service: MonitoringService,
     private monitoringRequestService: MonitoringRequestsService,
     private directionsService: DirectionsService,
+    private positionsService: PositionsService
   ) {
   }
 
   ngOnInit(): void {
     this.driverLocation = [this.item.longitude, this.item.latitude];
-
+    this.positionsService.getPositionsByMonitoringRequest(this.item.monitoringRequest.id).toPromise().then(arrayPositions=>{
+      this.directionsTruckGeoJson = this.mountGeoJson(arrayPositions);
+    })
+    
     this.monitoringRequestService.get(this.item.monitoringRequest.id).subscribe(async ({
-                                                                                         routeCoordinates,
-                                                                                         travelSteps
-                                                                                       }) => {
+      routeCoordinates,
+      travelSteps
+    }) => {
       this.markers = travelSteps.map(point => [point.longitude, point.latitude]);
 
       if (!routeCoordinates && travelSteps?.length > 0) {
@@ -110,10 +115,10 @@ export class MonitoringMapComponent implements OnInit {
   }
 
   openStreetView(): void {
-    const allLatLng = this.markers.map(([lng, lat]) => ({lng, lat}));
+    const allLatLng = this.markers.map(([lng, lat]) => ({ lng, lat }));
     const originLatLng = `${allLatLng[0].lat},${allLatLng[0].lng}`;
     const destinationLatLng = `${allLatLng[allLatLng.length - 1].lat},${allLatLng[allLatLng.length - 1].lng}`;
-    const waypointsLatLng = allLatLng.slice(1, allLatLng.length - 1).map(({lng, lat}) => `${lat},${lng}`).join('|');
+    const waypointsLatLng = allLatLng.slice(1, allLatLng.length - 1).map(({ lng, lat }) => `${lat},${lng}`).join('|');
 
     window.open(
       `https://www.google.com/maps/dir/?api=1&origin=${originLatLng}&destination=${destinationLatLng}&waypoints=${waypointsLatLng}&travelmode=driving&dir_action=navigate`,
