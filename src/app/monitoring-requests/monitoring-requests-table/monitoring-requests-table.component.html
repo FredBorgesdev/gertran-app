@@ -126,6 +126,9 @@
         height="25px"
       />
     </td>
+    <td>
+      {{getBaits(item)}}
+    </td>
     <td>{{getOcrNumber(item)}}</td>
     <td>{{item.customer?.tradingName ?? '-'}}</td>
     <td>{{item.shipper?.tradingName || item.transporter?.tradingName || '-'}}</td>

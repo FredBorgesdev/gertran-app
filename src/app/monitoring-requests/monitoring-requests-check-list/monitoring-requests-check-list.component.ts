@@ -330,6 +330,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       return 'Cavalo'
     if(vehicleInstalation=='wagon')
       return 'Carreta'
+    if(vehicleInstalation=='load')
+      return 'Carga'
   }
   
   openIncidentsModal(): void {

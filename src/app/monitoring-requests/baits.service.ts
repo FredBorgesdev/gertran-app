@@ -3,9 +3,13 @@ import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/s
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+interface Technology{
+  name: string
+}
+
 export interface Bait {
   id: string;
-  technology: string;
+  technology: Technology;
   installationLocation: string;
   serialNumber: string;
 }

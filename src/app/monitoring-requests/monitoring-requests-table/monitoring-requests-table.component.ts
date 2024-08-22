@@ -29,6 +29,7 @@ export class MonitoringRequestsTableComponent implements OnInit {
     {title: 'Placa'},
     {title: 'Carretas'},
     {title: 'Tecnologia'},
+    {title: 'Isca'},
     {title: 'Nº de ordem'},
     {title: 'Empresa'},
     {title: 'Embarcador'},
@@ -65,6 +66,11 @@ export class MonitoringRequestsTableComponent implements OnInit {
 
   getWagons(item: MonitoringRequests): string {
     return item.wagons?.map(wagon => wagon.vehicle.plate).join(', ');
+  }
+
+
+  getBaits(item: MonitoringRequests): string {
+    return item.baits?.map(baits => `${baits.serialNumber} ${baits.technology?.name}` ).join(', ');
   }
 
   getOcrNumber(item: MonitoringRequests): string {
