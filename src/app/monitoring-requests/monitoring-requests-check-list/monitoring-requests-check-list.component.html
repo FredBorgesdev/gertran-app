@@ -290,8 +290,8 @@
                 {{item.vehicle.plate}}
               </ng-container>
             </td>
-            <td style="border: 1px solid #000; "> {{item.travelSteps[0].address}} </td>
-            <td style="border: 1px solid #000; "> {{item.travelSteps[item.travelSteps.length - 1].address}} </td>
+            <td style="border: 1px solid #000; "> {{item.travelSteps[0]?.address}} </td>
+            <td style="border: 1px solid #000; "> {{item.travelSteps[item.travelSteps?.length - 1]?.address}} </td>
             <td style="border: 1px solid #000; "> {{item.operation.name}} </td>
             <td style="border: 1px solid #000; "> {{item.observations}} </td>
             <td style="border: 1px solid #000; "> {{item.status}} </td>
