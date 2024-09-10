@@ -148,6 +148,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       forbiddenLocation: [null],
       maximumPriceValueThirdParty: [null],
       minimumPriceValueThirdParty:[null],
+      valueVerificationEnabled: [false, [Validators.required]],
     });
   }
 
