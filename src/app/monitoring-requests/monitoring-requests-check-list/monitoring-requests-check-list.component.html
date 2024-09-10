@@ -6,8 +6,10 @@
       <td>{{monitoringRequest?.data?.customer?.tradingName ?? '-' }}</td>
       <th class="first-column">Transportador</th>
       <td>{{monitoringRequest?.data?.customer?.tradingName ?? '-' }}</td>
-      <th class="first-column" *ngIf="adHocMonitoringRequest == monitoringRequest?.data?.customer?.id">Nome Transportadora</th>
-      <td *ngIf="adHocMonitoringRequest == monitoringRequest?.data?.customer?.id">{{monitoringRequest?.data?.adHocMonitoringRequest ?? '-' }}</td>
+      <th class="first-column" *ngIf="adHocMonitoringRequest == monitoringRequest?.data?.customer?.id">Nome
+        Transportadora</th>
+      <td *ngIf="adHocMonitoringRequest == monitoringRequest?.data?.customer?.id">
+        {{monitoringRequest?.data?.adHocMonitoringRequest ?? '-' }}</td>
     </tr>
   </table>
   <br>
@@ -93,7 +95,11 @@
       <th>Ordem de carregamento / OCR</th>
       <td>{{monitoringRequest?.ocrNumber}}</td>
       <th>Pesquisa Cadastral Realizada por</th>
-      <td>{{monitoringRequest?.data?.surveyConductedByOthers}}</td>
+      <td>
+        {{ monitoringRequest?.data?.surveyConductedBy === 'others' 
+            ? '(Outros) ' + monitoringRequest?.data?.surveyConductedByOthers 
+            : monitoringRequest?.data?.surveyConductedBy }}
+      </td>
     </tr>
     <tr>
       <th>Produto</th>
@@ -131,52 +137,52 @@
 
 
 
-<div  *ngIf="monitoringRequest?.data?.armedGuards.length > 0"> 
+  <div *ngIf="monitoringRequest?.data?.armedGuards.length > 0">
 
-  <br>
-  <h2>Escolta</h2>
-  <table class="custom-bordered-table">
-    <tr>
-      <th>
-        Tecnologia
-      </th>
-      <th>N Serie</th>
-      <th>Placa</th>
-      <th>Contato</th>
-      <th>Agente 1</th>
-      <th>Agente 2</th>
-    </tr>
-    <tr *ngFor="let armedGuard of monitoringRequest?.data?.armedGuards ?? []">
-      <td>{{armedGuard.technology}}</td>
-      <td>{{armedGuard.serialNumber}}</td>
-      <td>{{armedGuard.plate}}</td>
-      <td>{{armedGuard.contact}}</td>
-      <td>{{armedGuard.firstAgent}}</td>
-      <td>{{armedGuard.secondAgent}}</td>
-    </tr>
+    <br>
+    <h2>Escolta</h2>
+    <table class="custom-bordered-table">
+      <tr>
+        <th>
+          Tecnologia
+        </th>
+        <th>N Serie</th>
+        <th>Placa</th>
+        <th>Contato</th>
+        <th>Agente 1</th>
+        <th>Agente 2</th>
+      </tr>
+      <tr *ngFor="let armedGuard of monitoringRequest?.data?.armedGuards ?? []">
+        <td>{{armedGuard.technology}}</td>
+        <td>{{armedGuard.serialNumber}}</td>
+        <td>{{armedGuard.plate}}</td>
+        <td>{{armedGuard.contact}}</td>
+        <td>{{armedGuard.firstAgent}}</td>
+        <td>{{armedGuard.secondAgent}}</td>
+      </tr>
 
-  </table>
-</div>
+    </table>
+  </div>
 
-  <div  *ngIf="monitoringRequest?.data?.baits.length > 0"> 
+  <div *ngIf="monitoringRequest?.data?.baits.length > 0">
 
-  <br>
-  <h2>Iscas</h2>
-  <table class="custom-bordered-table">
-    <tr>
-      <th>N Serie</th>
-      <th>Local de instalação</th>
-      <th>Tecnologia</th>
-    </tr>
-    <tr *ngFor="let bait of monitoringRequest?.data?.baits ?? []">
-      <td> {{bait.serialNumber}}</td>
-      <td>{{getLocalInstalaition(bait.installationLocation)}}</td>
-      <td>{{bait.technology?.name}}</td>
-    </tr>
+    <br>
+    <h2>Iscas</h2>
+    <table class="custom-bordered-table">
+      <tr>
+        <th>N Serie</th>
+        <th>Local de instalação</th>
+        <th>Tecnologia</th>
+      </tr>
+      <tr *ngFor="let bait of monitoringRequest?.data?.baits ?? []">
+        <td> {{bait.serialNumber}}</td>
+        <td>{{getLocalInstalaition(bait.installationLocation)}}</td>
+        <td>{{bait.technology?.name}}</td>
+      </tr>
 
-  </table>
+    </table>
 
-</div>
+  </div>
 
   <br>
   <h2>Pontos</h2>
@@ -205,7 +211,8 @@
             <nz-form-item>
               <nz-form-label></nz-form-label>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label nz-checkbox [nzDisabled]="readOnly" [formControlName]="item.value" class="text-bold">{{ item.label }}</label>
+                <label nz-checkbox [nzDisabled]="readOnly" [formControlName]="item.value" class="text-bold">{{
+                  item.label }}</label>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -241,7 +248,8 @@
 
         <nz-form-item>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label nz-checkbox formControlName="hasEmbeddedIntelligence" [nzDisabled]="readOnly" class="text-bold">Inteligência
+            <label nz-checkbox formControlName="hasEmbeddedIntelligence" [nzDisabled]="readOnly"
+              class="text-bold">Inteligência
               Embarcada</label>
           </nz-form-control>
         </nz-form-item>
@@ -314,21 +322,24 @@
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label nz-checkbox formControlName="positionChecked" [nzDisabled]="readOnly" class="text-bold">Posição</label>
+                <label nz-checkbox formControlName="positionChecked" [nzDisabled]="readOnly"
+                  class="text-bold">Posição</label>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label nz-checkbox formControlName="decouplingChecked" [nzDisabled]="readOnly" class="text-bold">Desacoplamento</label>
+                <label nz-checkbox formControlName="decouplingChecked" [nzDisabled]="readOnly"
+                  class="text-bold">Desacoplamento</label>
               </nz-form-control>
             </nz-form-item>
           </div>
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label nz-checkbox formControlName="positionFrequencyChecked" [nzDisabled]="readOnly" class="text-bold">Freq. de
+                <label nz-checkbox formControlName="positionFrequencyChecked" [nzDisabled]="readOnly"
+                  class="text-bold">Freq. de
                   posição</label>
               </nz-form-control>
             </nz-form-item>
@@ -336,7 +347,8 @@
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <label nz-checkbox formControlName="batteriesChecked" [nzDisabled]="readOnly" class="text-bold">Bateria</label>
+                <label nz-checkbox formControlName="batteriesChecked" [nzDisabled]="readOnly"
+                  class="text-bold">Bateria</label>
               </nz-form-control>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
                 <input nz-input formControlName="batteryLevel" />
@@ -346,7 +358,8 @@
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
-                <label nz-checkbox formControlName="timerChecked" [nzDisabled]="readOnly" class="text-bold">Temporizador</label>
+                <label nz-checkbox formControlName="timerChecked" [nzDisabled]="readOnly"
+                  class="text-bold">Temporizador</label>
               </nz-form-control>
               <nz-form-control [nzSpan]="6" [nzOffset]="null">
                 <input nz-input formControlName="timerIntervalInMinutes" [disabled]="readOnly" />
@@ -356,7 +369,8 @@
           <div nz-col [nzSpan]="8">
             <nz-form-item>
               <nz-form-control [nzSpan]="null" [nzOffset]="null">
-                <label nz-checkbox formControlName="jammingChecked" [nzDisabled]="readOnly" class="text-bold">Operação Jamming</label>
+                <label nz-checkbox formControlName="jammingChecked" [nzDisabled]="readOnly" class="text-bold">Operação
+                  Jamming</label>
               </nz-form-control>
             </nz-form-item>
           </div>
@@ -383,7 +397,8 @@
   </form>
 
 
-  <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-15" *ngIf="monitoringRequest?.data?.observations" class="text-bold">
+  <div nz-col nzSpan="24" class="ant-descriptions-title m-t-15 m-b-15" *ngIf="monitoringRequest?.data?.observations"
+    class="text-bold">
     Motivo do cancelamento: {{monitoringRequest?.data?.observations}}
   </div>
 
