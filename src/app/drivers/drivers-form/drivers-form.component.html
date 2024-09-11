@@ -1,47 +1,80 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <nz-form-item *ngIf="!authService.customerId">
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-      <nz-select
-        id="customers"
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Selecione uma empresa"
-        formControlName="customers"
-        nzMode="multiple"
-        nzServerSearch
-        (nzOnSearch)="selectableCustomerService.searchByName($event)"
-        (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-        [nzDropdownRender]="selectLoading"
-      >
-        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
-                   [nzValue]="customer.id"></nz-option>
-      </nz-select>
-    </nz-form-control>
+
+  <nz-form-item>
+    <div nz-row nzGutter="18" nzAlign="middle">
+      <div nz-col nzSpan="10">
+        <nz-form-item *ngIf="!authService.customerId">
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+            <nz-select id="customers" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa"
+              formControlName="customers" nzMode="multiple" nzServerSearch
+              (nzOnSearch)="selectableCustomerService.searchByName($event)"
+              (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()" [nzDropdownRender]="selectLoading">
+              <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                [nzValue]="customer.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col nzSpan="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="pkId">COD INTERNO</nz-form-label>
+          <nz-form-control [nzSpan]="null">
+            <input id="pkId" type="text" nz-input formControlName="pkId"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="6">
+        <nz-form-item>
+          <nz-form-label>Cliente Registro Ponto</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-select
+              formControlName="customerDriverWorkday"
+              nzAllowClear
+              nzServerSearch
+              nzShowSearch
+              nzPlaceHolder="Selecione um cliente"
+              (nzOnSearch)="selectableCustomerService.searchByName($event)"
+              (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+              [nzDropdownRender]="selectLoading"
+            >
+              <!-- <nz-option
+                *ngIf="filterByAllCustomers"
+                nzLabel="Todos os clientes"
+                nzValue="all"
+              ></nz-option> -->
+  
+              <nz-option
+                *ngFor="let customer of selectableCustomerService.customers"
+                [nzLabel]="customer.tradingName"
+                [nzValue]="customer.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
   </nz-form-item>
+
+
+
+
+
+
   <nz-form-item>
     <div nz-row nzGutter="16" nzAlign="middle">
       <div nz-col nzSpan="18">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">CPF</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CPF no formato 999.999.999-99">
-            <input
-              [textMask]="{ mask: cpfMask, guide: false }"
-              id="cpf"
-              type="text"
-              nz-input
-              formControlName="cpf"
-            />
+            <input [textMask]="{ mask: cpfMask, guide: false }" id="cpf" type="text" nz-input formControlName="cpf" />
           </nz-form-control>
         </nz-form-item>
       </div>
 
       <div nz-col nzSpan="6">
-        <button
-          nz-button
-          nzType="primary"
-          (click)="filterDriverByCpf()"
-        >Buscar
+        <button nz-button nzType="primary" (click)="filterDriverByCpf()">Buscar
         </button>
       </div>
     </div>
@@ -49,23 +82,16 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Opção inválida!">
-      <nz-select
-        id="workingSituation"
-        nzPlaceHolder="Selecione uma opção"
-        formControlName="workingSituation"
-      >
-        <nz-option
-          *ngFor="let workingSituation of workingSituations"
-          [nzLabel]="workingSituation.label"
-          [nzValue]="workingSituation.value"
-        ></nz-option>
+      <nz-select id="workingSituation" nzPlaceHolder="Selecione uma opção" formControlName="workingSituation">
+        <nz-option *ngFor="let workingSituation of workingSituations" [nzLabel]="workingSituation.label"
+          [nzValue]="workingSituation.value"></nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
-      <input id="name" type="text" nz-input formControlName="name"/>
+      <input id="name" type="text" nz-input formControlName="name" />
     </nz-form-control>
   </nz-form-item>
 
@@ -74,7 +100,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="rg">RG</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o RG no formato 99.999.999-99">
-          <input id="rg" type="text" nz-input formControlName="rg"/>
+          <input id="rg" type="text" nz-input formControlName="rg" />
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -82,13 +108,8 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="phoneNumber">Telefone</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <input
-            id="phoneNumber"
-            type="text"
-            nz-input
-            formControlName="phoneNumber"
-            [textMask]="{ mask: phoneNumberMask, guide: false }"
-          />
+          <input id="phoneNumber" type="text" nz-input formControlName="phoneNumber"
+            [textMask]="{ mask: phoneNumberMask, guide: false }" />
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -99,7 +120,7 @@
     </nz-form-label>
     <nz-form-control nzErrorTip="Data inválida!">
       <nz-date-picker style="width: 100%;" id="admissionDate" nzFormat="dd/MM/yyyy"
-                      formControlName="admissionDate"></nz-date-picker>
+        formControlName="admissionDate"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
   <div nz-row nzGutter="16">
@@ -107,7 +128,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhNumber">CNH</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
-          <input id="cnhNumber" type="text" formControlName="cnhNumber" nz-input/>
+          <input id="cnhNumber" type="text" formControlName="cnhNumber" nz-input />
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -134,7 +155,7 @@
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhValidity">CNH Validade</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
           <nz-date-picker style="width: 100%;" id="cnhValidity" nzFormat="dd/MM/yyyy"
-                          formControlName="cnhValidity"></nz-date-picker>
+            formControlName="cnhValidity"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -147,7 +168,7 @@
         <nz-form-label nzRequired nzFor="cnhEmission">CNH Emissão</nz-form-label>
         <nz-form-control nzErrorTip="Data inválida!">
           <nz-date-picker style="width: 100%;" id="cnhEmission" nzFormat="dd/MM/yyyy"
-                          formControlName="cnhEmission"></nz-date-picker>
+            formControlName="cnhEmission"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -157,7 +178,7 @@
         <nz-form-label nzRequired nzFor="cnhFirstIssue">CNH Primeira Emissão</nz-form-label>
         <nz-form-control nzErrorTip="Data inválida!">
           <nz-date-picker style="width: 100%;" id="cnhFirstIssue" nzFormat="dd/MM/yyyy"
-                          formControlName="cnhFirstIssue"></nz-date-picker>
+            formControlName="cnhFirstIssue"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
     </div>
@@ -166,30 +187,16 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzFor="cnhIssuerUf">CNH Orgão emissor UF</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
-          <nz-select
-            nzAllowClear
-            nzPlaceHolder="Selecione um estado"
-            nzShowSearch
-            formControlName="cnhIssuerUf"
-          >
-            <nz-option
-              *ngFor="let state of states"
-              [nzLabel]="state.name"
-              [nzValue]="state.abbreviation"
-            ></nz-option>
+          <nz-select nzAllowClear nzPlaceHolder="Selecione um estado" nzShowSearch formControlName="cnhIssuerUf">
+            <nz-option *ngFor="let state of states" [nzLabel]="state.name" [nzValue]="state.abbreviation"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
     </div>
   </div>
 
-    <a
-    nz-button
-    nzType="link"
-    class="m-b-50"
-    (click)="isChangePasswordModalVisible = true"
-    *ngIf="driver?.id"
-  >Trocar senha</a>
+  <a nz-button nzType="link" class="m-b-50" (click)="isChangePasswordModalVisible = true" *ngIf="driver?.id">Trocar
+    senha</a>
 
   <nz-form-item>
     <nz-form-control [nzOffset]="7" [nzSpan]="12">
@@ -197,11 +204,11 @@
         <i nz-icon nzType="save"></i>Salvar Motorista
       </button>
       <button type="button" (click)="backToCustomerList()" nz-button>
-        <div  *ngIf="!authService.customerId">
+        <div *ngIf="!authService.customerId">
           <i class="fas fa-arrow-left"></i> Voltar ao Cadastro
         </div>
 
-        <div  *ngIf="authService.customerId">
+        <div *ngIf="authService.customerId">
           <i nz-icon nzType="unordered-list"></i> Listar Motoristas
         </div>
       </button>
@@ -214,11 +221,8 @@
 
 
 
-<nz-modal
-  [(nzVisible)]="isChangePasswordModalVisible"
-  nzTitle="Trocar senha"
-  (nzOnCancel)="isChangePasswordModalVisible = false"
->
+<nz-modal [(nzVisible)]="isChangePasswordModalVisible" nzTitle="Trocar senha"
+  (nzOnCancel)="isChangePasswordModalVisible = false">
   <div *nzModalContent>
     <form nzLayout="vertical" nz-form [formGroup]="validatePasswordForm">
       <nz-form-item>
@@ -231,16 +235,8 @@
   </div>
 
   <div *nzModalFooter>
-    <button
-      nz-button
-      nzType="default"
-      (click)="isChangePasswordModalVisible = false"
-    >Fechar</button>
-    <button
-      nz-button
-      nzType="primary"
-      (click)="submitPassword()"
-    >Enviar</button>
+    <button nz-button nzType="default" (click)="isChangePasswordModalVisible = false">Fechar</button>
+    <button nz-button nzType="primary" (click)="submitPassword()">Enviar</button>
   </div>
 </nz-modal>
 

@@ -157,7 +157,7 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getRowBackgroundColor(status: string): string {
-    if (!this.user.isGertranStaff) {//##hmn
+    if (!this.user.isGertranStaff) {
       return ''
       // return this.travelStatus.find(item => {if(item.value == 'in_progress') return item.value === status; else return item.value !== 'vehicle_in_customer'})?.backgroundColorClass;
     }
@@ -250,14 +250,13 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
 
   private getPositionsWithFilters(): Observable<GetAllResponse<Position>> {
     return this.positionsService.getAll(
-      {limit: 100},//##hmn
+      {limit: 100},
       {
         customer:
           this.activatedRoute.snapshot.queryParams.customerId ||
           this.customerId ||
           this.authService.customerId,
         travelling: true,
-        // travelStatus: Status.IN_PROGRESS,//##hmn
       }
     );
   }
