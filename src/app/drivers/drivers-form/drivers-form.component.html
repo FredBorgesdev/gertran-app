@@ -25,7 +25,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col nzSpan="6">
+      <!-- <div nz-col nzSpan="6">
         <nz-form-item>
           <nz-form-label>Cliente Registro Ponto</nz-form-label>
           <nz-form-control nzErrorTip="Preencha o campo">
@@ -39,12 +39,7 @@
               (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
               [nzDropdownRender]="selectLoading"
             >
-              <!-- <nz-option
-                *ngIf="filterByAllCustomers"
-                nzLabel="Todos os clientes"
-                nzValue="all"
-              ></nz-option> -->
-  
+
               <nz-option
                 *ngFor="let customer of selectableCustomerService.customers"
                 [nzLabel]="customer.tradingName"
@@ -53,7 +48,7 @@
             </nz-select>
           </nz-form-control>
         </nz-form-item>
-      </div>
+      </div> -->
     </div>
   </nz-form-item>
 
