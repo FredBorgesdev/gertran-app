@@ -75,8 +75,6 @@ export class DriversFormComponent implements OnInit {
       cnhEmission: [this.driver?.cnhEmission, [Validators.required]],
       admissionDate: [this.driver?.admissionDate, []],
       phoneNumber: [this.driver?.phoneNumber, [Validators.required]],
-      pkId:[this.driver.pkId],
-      customerDriverWorkday: [this.driver?.customerDriverWorkday, [Validators.required]]
     });
 
 
