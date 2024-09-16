@@ -42,6 +42,7 @@ import { ControlTower3 } from './dashboards/tc3/tc3.component';
 import { ControlTower4 } from './dashboards/tc4/client.component';
 import { ControlTower5 } from './dashboards/tc5/client.component';
 import { ControlTowerGertran } from './dashboards/tc-gertran/tc-gertran.component';
+import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
 
 const routes: Routes = [
   {
@@ -163,6 +164,10 @@ const routes: Routes = [
   {
     path: 'workday',
     component: WorkdayComponent,
+  },
+  {
+    path: 'workday-employed',
+    component: WorkdayEmployedComponent,
   },
   {
     path: 'logisticreport',

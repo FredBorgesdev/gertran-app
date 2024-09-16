@@ -12,6 +12,7 @@ export class SelectableUsersService {
   isLoadingMoreData: boolean;
   usersNextUrl: string;
   searchUserSubject = new Subject<string>();
+  customer: string;
 
   constructor(
     private usersService: UsersService,
@@ -20,15 +21,17 @@ export class SelectableUsersService {
 
   init(): void {
     this.loadMoreUsers();
-    this.setupSearch();
+    // this.setupSearch();
   }
 
-  loadMoreUsers(): void {
+  loadMoreUsers(customer?: string): void {
+    if(customer == '' || customer == null) return
+    this.customer = customer
     this.isLoadingMoreData = true;
     this.usersService.getAll({
-      limit: 50,
-      url: this.usersNextUrl
-    }).subscribe((users) => {
+        limit: 50,
+        url: this.usersNextUrl
+      }, {customer}).subscribe((users) => {
       this.usersNextUrl = users.next;
       this.users = [...this.users, ...users.results];
       this.isLoadingMoreData = false;
@@ -40,16 +43,19 @@ export class SelectableUsersService {
       this.usersNextUrl = null;
       this.loadMoreUsers();
     } else {
-      this.searchUserSubject.next(name);
+      // this.searchUserSubject.next(name);
+      this.usersService.getAll(
+        { limit: 50, url: this.usersNextUrl|| '' },{name, customer:this.customer}  // Usa a URL de next ou uma string vazia se não houver
+      ).subscribe((users) => {
+        this.usersNextUrl = users.next; // Atualiza a URL da próxima página de resultados
+        this.users = users.results;
+        this.isLoadingMoreData = false;
+      }, (error) => {
+
+        this.message.error('Erro ao carregar os registros. Tente novamente.');
+        this.isLoadingMoreData = false;
+      });
     }
-  }
-
-  appendCustomer(user: AbstractUser): void {
-    this.users = [user, ...this.users];
-  }
-
-  concatCustomers(users: AbstractUser[]): void {
-    this.users = this.users.concat(users);
   }
 
   private setupSearch(): void {

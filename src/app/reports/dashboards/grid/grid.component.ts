@@ -257,6 +257,7 @@ export class GridComponent implements OnInit, OnDestroy, OnChanges {
           this.customerId ||
           this.authService.customerId,
         travelling: true,
+        // travelStatus: Status.IN_PROGRESS,//##hmn
       }
     );
   }

@@ -1,6 +1,6 @@
 <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
   <div nz-row nzGutter="16">
-    <div nz-col [nzSpan]="columnWidth" *ngIf="showCustomer">
+    <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
         <nz-form-label>Cliente</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -10,17 +10,19 @@
             nzServerSearch
             nzShowSearch
             nzPlaceHolder="Selecione um cliente"
-            (nzOnSearch)="searchCustomer($event)"
             (ngModelChange)="selectableUserService.loadMoreUsers($event)"
-            (nzScrollToBottom)="loadMoreCustomers()"
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
             [nzDropdownRender]="selectLoading"
           >
-            <nz-option *ngFor="let customer of customers" [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                       [nzValue]="customer.id"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="columnWidth">
+
+    <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
         <nz-form-label>Data inicial</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -33,7 +35,8 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="columnWidth">
+
+    <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
         <nz-form-label>Data final</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -46,7 +49,8 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="columnWidth">
+
+    <div nz-col nzSpan="6">
       <nz-form-item class="m-b-0">
         <nz-form-label>Usuário</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -61,10 +65,54 @@
             [nzDropdownRender]="selectLoading"
           >
             <nz-option
-              *ngFor="let user of selectableUserService.users"
-              [nzLabel]="user.name"
-              [nzValue]="user.id"
+              *ngFor="let driver of selectableUserService.users"
+              [nzLabel]="driver.name"
+              [nzValue]="driver.id"
             ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="16">
+    <div nz-col nzSpan="8" class="m-t-10">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="nightShiftStart">Inicio Horario Noturno</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
+          <input
+            id="nightShiftStart"
+            type="text"
+            nz-input
+            formControlName="nightShiftStart"
+            [textMask]="{ mask: hoursMask, guide: false }"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="8" class="m-t-10">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="nightShiftEnd">Fim Horario Noturno</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
+          <input
+            id="nightShiftEnd"
+            type="text"
+            nz-input
+            formControlName="nightShiftEnd"
+            [textMask]="{ mask: hoursMask, guide: false }"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="8" class="m-t-10">
+      <nz-form-item>
+        <nz-form-label>Formato de relatório</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select formControlName="reportFormat" nzAllowClear>
+            <nz-option nzLabel="Analítico" nzValue="analytic"></nz-option>
+            <nz-option nzLabel="Sintético" nzValue="synthetic"></nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
@@ -72,27 +120,34 @@
   </div>
 </form>
 
-<div nz-row nzGutter="16" *ngIf="!hideButtons" class="m-t-25">
+<div nz-row nzGutter="16" class="m-t-5">
   <div nz-col nzSpan="8">
     <button
       nz-button
       nzType="primary"
       style="width: 100%"
       (click)="emitGenerateReport()"
-    >Gerar relatório</button>
+    >Gerar relatório
+    </button>
   </div>
   <div nz-col nzSpan="8">
-    <button nz-button style="width: 100%">Gerar pdf</button>
+    <button
+      nz-button
+      style="width: 100%"
+      (click)="emitGeneratePDF2()"
+    >Gerar pdf
+    </button>
   </div>
   <div nz-col nzSpan="8">
     <button
       nz-button
       style="width: 100%"
       (click)="generateExcel()"
-    >Gerar planilha</button>
+    >Gerar planilha
+    </button>
   </div>
 </div>
 
 <ng-template #selectLoading>
-  <nz-spin *ngIf="isLoadingMoreData"></nz-spin>
+  <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
 </ng-template>

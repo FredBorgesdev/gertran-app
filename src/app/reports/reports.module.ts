@@ -30,6 +30,7 @@ import {AnalyticalReportComponent} from './analytical-report/analytical-report.c
 import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
 import {WorkdayComponent} from './workday/workday.component';
 import {BaseWorkdayFilterComponent} from './filters/base-workday-filter/base-workday-filter.component';
+import {BaseWorkdayEmployedFilterComponent} from './filters/base-workday-employed-filter/base-workday-employed-filter.component';
 import {TextMaskModule} from 'angular2-text-mask';
 import {WorkdayJustificationComponent} from './extra/workday-justification/workday-justification.component';
 import {LogisticReportComponent} from './logistic-report/logistic-report.component';
@@ -68,6 +69,7 @@ import {
 } from "./dashboards/client-monitoring-requests/client-monitoring-requests.component";
 import { InsuranceComponent } from './insurance/insurance.component';
 import { FixedButtonsComponent } from '../shared/fixed-buttons/fixed-buttons.component';
+import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,9 @@ import { FixedButtonsComponent } from '../shared/fixed-buttons/fixed-buttons.com
     AnalyticalReportComponent,
     ChecklistHistoryComponent,
     WorkdayComponent,
+    WorkdayEmployedComponent,
     BaseWorkdayFilterComponent,
+    BaseWorkdayEmployedFilterComponent,
     WorkdayJustificationComponent,
     LogisticReportComponent,
     SimpleHourPipe,

@@ -41,6 +41,12 @@ export interface BaseWorkdayFilter extends BasePeriodFilter {
   reportFormat: string;
 }
 
+
+export interface BaseWorkdayEmployedFilter extends BasePeriodFilter {
+  user: string;
+  reportFormat: string;
+}
+
 export interface BaseVehicleFilter extends BasePeriodFilter {
   plate: string;
 }
@@ -525,6 +531,19 @@ export class ReportsService {
     return this.http.get<Workday[]>('reports/workdays/analytical?1=1', {params});
   }
 
+  getWorkdayHistoryAnalytical2(form: BaseWorkdayEmployedFilter): Observable<Workday[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: form.from,
+        to_date: form.to,
+        customer: form.customer,
+        user: form.user,
+      }
+    });
+
+    return this.http.get<Workday[]>('reports/workdays-employed/analytical?1=1', {params});
+  }
+
   getWorkdayHistorySynthetic(form: BaseWorkdayFilter): Observable<Workday[]> {
     const params = new HttpParams({
       fromObject: {
@@ -536,6 +555,20 @@ export class ReportsService {
     });
 
     return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', {params});
+  }
+
+
+  getWorkdayHistorySynthetic2(form: BaseWorkdayEmployedFilter): Observable<Workday[]> {
+    const params = new HttpParams({
+      fromObject: {
+        from_date: form.from,
+        to_date: form.to,
+        customer: form.customer,
+        user: form.user,
+      }
+    });
+
+    return this.http.get<Workday[]>('reports/workdays-employed/synthetic?1=1', {params});
   }
 
   getLogisticReport(form: Partial<BasePeriodFilter>): Observable<LogisticReport> {

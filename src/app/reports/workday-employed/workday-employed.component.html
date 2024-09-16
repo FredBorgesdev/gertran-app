@@ -5,18 +5,18 @@
         <i nz-icon nzType="bar-chart"></i>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item>
-        <a><i nz-icon nzType="line-chart"></i><span>Jornada de trabalho</span></a>
+        <a><i nz-icon nzType="line-chart"></i><span>Jornada de trabalho funcionário</span></a>
       </nz-breadcrumb-item>
     </nz-breadcrumb>
 
-    <app-base-workday-filter
+    <app-base-workday-employed-filter
       (generateReport)="generateReport($event)"
-      (valueChanges)="valueChanges($event)"
       [rows]="workdayRows"
       [fileName]="'Jornada de trabalho'"
+      (valueChanges)="valueChanges($event)"
       (generatePDF2)="generatePDF($event)"
-
-    ></app-base-workday-filter>
+    ></app-base-workday-employed-filter>
+    
 
     <div *ngIf="reportFormat === 'analytic'">
       <nz-table class="m-t-50" #table [nzData]="workdayRows">
@@ -32,7 +32,7 @@
         <tr *ngFor="let data of table.data; index as i">
           <td>{{ data.startedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>{{ data.status }}</td>
-          <td>{{ data.positionEvent?.eventDescription }}</td>
+          <td>{{ data.message }}</td>
         </tr>
         </tbody>
       </nz-table>
@@ -54,7 +54,6 @@
           <th>Data</th>
           <th>Entrada</th>
           <th>Saida</th>
-          <!-- <th>Dia</th> -->
           <th>Jornada</th>
           <th>Direção</th>
           <th>Refeição</th>
@@ -72,14 +71,17 @@
             Dias apurados: {{data.evaluatedDays}}<br>
             Dias trabalhados: {{data.workingDays}}<br>
             Dias não trabalhados: {{data.nonWorkingDays}}<br>
-            Horas semanais (trabalhadas): {{data.weeklyWorkingHours.substring(0, 8)}}<br>
+            Horas semanais (trabalhadas): {{data.weeklyWorkingHours}}<br>
             Horas semanais: {{data.weeklyExtraHours}}
           </td> -->
+
+          <!-- formatDate(row.workdayTime),formatDate(row.endOfWorkday) -->
+
+
 
           <td>{{data.date | date: 'dd/MM/yyyy'}}</td>
           <td>{{data.workdayTime | date: 'dd/MM/yyyy HH:mm'}}</td>
           <td>{{data.endOfWorkday | date: 'dd/MM/yyyy HH:mm'}}</td>
-          <!-- <td>{{data.day}}</td> -->
           <td>{{data.workdayHours | simpleHour}}</td>
           <td>{{data.drivingHours | simpleHour}}</td>
           <td>{{data.lunchHours | simpleHour}}</td>
