@@ -118,7 +118,6 @@ export class ClientChecklistsComponent extends BaseCrudListComponent<Checklist> 
     }
   }
 
-  //#hmn***fitmap
   fitMap() {
     const sizeMapInnerHeight = window.innerHeight;
     const sizeMapInnerWidth = window.innerWidth;

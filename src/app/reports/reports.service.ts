@@ -37,6 +37,8 @@ export interface LabelValue {
 }
 
 export interface BaseWorkdayFilter extends BasePeriodFilter {
+  nightShiftEnd: any
+  nightShiftStart: any
   driver: string;
   reportFormat: string;
 }
@@ -551,6 +553,8 @@ export class ReportsService {
         to_date: form.to,
         customer: form.customer,
         driver: form.driver,
+        end_night_shift: form.nightShiftEnd,
+        start_night_shift: form.nightShiftStart
       }
     });
 
