@@ -128,6 +128,7 @@ export class PointsTabComponent implements OnInit {
 
   addPoint(markAsDirty = false): FormGroup {
     const chosenPoint = this.validateForm.get('chosenPoint').value;
+    const isFirstPoint = (this.getPointsControls().length === 0); // Verifica se é o primeiro ponto
     const formGroup = new FormGroup({
       id: new FormControl(null),
       pointId: new FormControl(null),
@@ -140,8 +141,11 @@ export class PointsTabComponent implements OnInit {
         Number(chosenPoint?.longitude || 0).toFixed(6),
         [Validators.required]
       ),
-      date: new FormControl(new Date(), [Validators.required]),
-      pointType: new FormControl(chosenPoint?.pointType, [Validators.required]),
+      date: new FormControl(new Date().setMinutes(new Date().getMinutes() + 15), [Validators.required]),
+      pointType: new FormControl(
+        isFirstPoint == true ? PointTypes.START : chosenPoint?.pointType, // Define "start" para o primeiro ponto
+        [Validators.required]
+      ),
       state: new FormControl(chosenPoint?.state, [Validators.required]),
       city: new FormControl(chosenPoint?.city, [Validators.required]),
       zipCode: new FormControl(chosenPoint?.zipCode, []),
@@ -228,16 +232,17 @@ export class PointsTabComponent implements OnInit {
     const firstPoint = pointControls.find(
       (formGroup) => formGroup.value.pointType === 'start'
     ) || pointControls[0];
-    const lastPoint = pointControls.find(
-      (formGroup) => formGroup.value.pointType === 'end'
-    ) || pointControls[pointControls.length - 1];
+    const lastPoint =  pointControls[pointControls.length - 1];
     const waypoints = pointControls.slice(1, pointControls.length - 1);
 
     firstPoint?.patchValue({pointType: PointTypes.START});
     waypoints?.forEach((point) => {
       point.patchValue({pointType: PointTypes.WAYPOINT});
     });
-    lastPoint?.patchValue({pointType: PointTypes.END});
+
+    if(pointControls.length > 1){
+      lastPoint?.patchValue({pointType: PointTypes.END});
+    }
 
     return {
       firstPoint,
@@ -247,34 +252,33 @@ export class PointsTabComponent implements OnInit {
   }
 
   async calculateEtaForAllPoints(): Promise<void> {
-    // TODO
-    return;
-
+    // // TODO
+    // return;
+    //#hmn*
     const points = this.getPointsControls();
-    points[0]?.patchValue({date: points[0]?.value.date || new Date()});
+    // points[0]?.patchValue({date: points[0]?.value.date || new Date()});
 
     for (let index = 1; index < points.length; index++) {
       const previousPoint = points[index - 1];
       const currentPoint = points[index];
-
-      if (!previousPoint || !currentPoint) {
-        return;
-      }
+      // if (!previousPoint || !currentPoint) {
+      //   return;
+      // }
 
       // TODO: double check
       // skip if current point is greater than previous point
-      if (currentPoint.value.date > previousPoint.value.date) {
-        continue;
-      }
+      // if (currentPoint.value.date > previousPoint.value.date) {
+      //   continue;
+      // }
 
       const eta = await this.calculateETA(
         {lat: previousPoint.value.latitude, lng: previousPoint.value.longitude},
         {lat: currentPoint.value.latitude, lng: currentPoint.value.longitude},
       );
 
-      if (!eta) {
-        return;
-      }
+      // if (!eta) {
+      //   return;
+      // }
 
       currentPoint.patchValue({
         date: addSeconds(previousPoint.value.date, eta),
@@ -351,6 +355,8 @@ export class PointsTabComponent implements OnInit {
       return this.service.save(payload, this.monitoringRequest.id);
     });
 
+    this.calculateEtaForAllPoints().then();
+
     if (operations.length === 0) {
       this.handleSuccess();
       return;
@@ -415,6 +421,7 @@ export class PointsTabComponent implements OnInit {
     this.isLoading = false;
     this.message.success('Pontos salvos com sucesso!');
     this.validateForm.markAsPristine();
+    this.showMap()
   }
 
   private handleError(): void {
