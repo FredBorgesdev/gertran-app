@@ -297,7 +297,7 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
         const routeCoordinates = hasPoints && await this.directionsService.getCoordinates(points);
         const transporterId = this.authService.customerId || componentInstance.customer;
 
-        if (this.authService.customerId != null) {
+        if (this.authService.customerId != null || componentInstance.customer != null) {
           (this.service as MonitoringRequestsService).save({
             route,
             routeCoordinates,
