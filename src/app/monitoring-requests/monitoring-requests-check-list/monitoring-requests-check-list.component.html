@@ -239,7 +239,7 @@
     </div>
 
     <div nz-row class="m-t-15 m-b-15">
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="18">
         <nz-form-item>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
             <label nz-checkbox formControlName="hasMacro" [nzDisabled]="readOnly" class="text-bold">Macro</label>
@@ -251,6 +251,20 @@
             <label nz-checkbox formControlName="hasEmbeddedIntelligence" [nzDisabled]="readOnly"
               class="text-bold">Inteligência
               Embarcada</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <label class="text-bold">Checklist feito em: {{monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy'}}</label>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control [nzSpan]="null" [nzOffset]="null">
+            <label class="text-bold">Checklist expira em: {{monitoringRequest?.data?.checklist.expirationDate | date: 'dd/MM/yyyy'}}</label>
           </nz-form-control>
         </nz-form-item>
       </div>
