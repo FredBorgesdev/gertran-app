@@ -6,7 +6,12 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class SimpleHourPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): unknown {
-    return value.toString().split('.')[0];
+    if (value){
+      return value.toString().split('.')[0];
+    }
+
+    return ''
+    
   }
 
 }

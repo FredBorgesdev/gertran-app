@@ -28,7 +28,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
   }
 
   loadFormBuilder(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   getId(): string {
@@ -62,7 +62,7 @@ export class BaseCrudFormComponent<T extends { id: string }> implements OnInit {
   }
 
   list(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
   performResourceChange(): void {

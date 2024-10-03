@@ -554,6 +554,14 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
+      // {
+      //   path: '/reports/workday-employed',
+      //   title: 'Relatório de jornada usuário',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // },
       {
         path: '/reports/logisticreport',
         title: 'Relatório logistico',
