@@ -1,0 +1,70 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Jornada de trabalho</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-workday-filter
+      [showExtraFields]="false"
+      (emitGetFilterSelectedDataDriverCustomer)="newWorkday2($event)"
+      (emitGetFilterSelectedDataDriverCustomerDate)="newWorkday3($event)"
+    ></app-base-workday-filter>
+
+    <nz-table class="m-t-50" #table [nzData]="workdayRows">
+      <thead>
+        <tr>
+          <!-- <th>Data</th> -->
+          <th>Horário</th>
+          <th>Status</th>
+          <th>Origem</th>
+          <th>Editado Por</th>
+          <th>observations</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- <ng-container *ngFor="let group of groupedWorkdayRows"> -->
+          <!-- <tr>
+            <td [attr.rowspan]="group.records.length"><strong>{{ group.date }}</strong></td>
+            <td>{{ group.records[0].startedAt | date: 'HH:mm' }}</td>
+            <td>{{ group.records[0].status }}</td>
+            <td>{{ group.records[0].positionEvent?.eventDescription ?  group.records[0].positionEvent?.eventDescription : 'Registrado pelo Sistema' }}</td>
+            <td>{{ group.records[0].justifiedBy?.name ? group.records[0].justifiedBy.name : ' ' }}</td>
+            <td>{{ group.records[0].observations ? group.records[0].observations : ' ' }}</td>
+
+            <td class="text-md-center">
+              <a (click)="edit(group.records[0])" class="m-r-5" nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Editar">
+                <i nz-icon nzType="edit" theme="outline"></i>
+              </a>
+              <a (click)="delete(group.records[0])" nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+                <i nz-icon nzType="delete" theme="outline"></i>
+              </a>
+            </td>
+          </tr> -->
+          <tr *ngFor="let record of table.data">
+            <td>{{ record.startedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ record.status }}</td>
+            <td>{{ record.positionEvent?.eventDescription ? record.positionEvent.eventDescription : "Registrado pelo Sistema" }}</td>
+            <td>{{ record.justifiedBy?.name ? record.justifiedBy.name : ' '  }}</td>
+            <td>{{ record.observations ? record.observations : ' ' }}</td>
+
+            <td class="text-md-center">
+              <a (click)="edit(record)" class="m-r-5" nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Editar">
+                <i nz-icon nzType="edit" theme="outline"></i>
+              </a>
+              <a (click)="delete(record)" nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Excluir">
+                <i nz-icon nzType="delete" theme="outline"></i>
+              </a>
+            </td>
+          </tr>
+        <!-- </ng-container> -->
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>

@@ -37,6 +37,7 @@ import {NzTabsModule} from 'ng-zorro-antd/tabs';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {NzUploadModule} from 'ng-zorro-antd/upload';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
+import {TextMaskModule} from 'angular2-text-mask';
 
 import {SearchPipe} from './pipes/search.pipe';
 import {TableService} from './services/table.service';
@@ -44,6 +45,7 @@ import {ThemeConstantService} from './services/theme-constant.service';
 import {IdPipe} from './pipes/id.pipe';
 import {ReaisPipe} from './pipes/reais.pipe';
 import {AddressSelectComponent} from './address-select/address-select.component';
+import { BaseWorkdayFilterComponent } from '../reports/filters/base-workday-filter/base-workday-filter.component';
 
 const antdModule = [
   NzIconModule,
@@ -71,7 +73,8 @@ const antdModule = [
   NzPaginationModule,
   NzDatePickerModule,
   NzCheckboxModule,
-  NzMessageModule
+  NzMessageModule,
+  TextMaskModule,
 ];
 
 @NgModule({
@@ -88,19 +91,22 @@ const antdModule = [
     ReaisPipe,
     ...antdModule,
     AddressSelectComponent,
+    BaseWorkdayFilterComponent,
   ],
   imports: [
     RouterModule,
     CommonModule,
     PerfectScrollbarModule,
     ReactiveFormsModule,
-    ...antdModule
+    ...antdModule,
+    TextMaskModule
   ],
   declarations: [
     SearchPipe,
     IdPipe,
     ReaisPipe,
-    AddressSelectComponent
+    AddressSelectComponent,
+    BaseWorkdayFilterComponent,
   ],
   providers: [
     ThemeConstantService,

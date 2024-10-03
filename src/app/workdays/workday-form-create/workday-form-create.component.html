@@ -1,0 +1,58 @@
+<nz-spin [nzSpinning]="isLoading">
+  <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzFor]="'status'">Status</nz-form-label>
+      <nz-form-control>
+        <nz-select formControlName="status">
+          <nz-option nzValue="none" nzLabel="Nenhum"></nz-option>
+          <nz-option nzValue="rest" nzLabel="Descanso"></nz-option>
+          <nz-option nzValue="workday" nzLabel="Jornada"></nz-option>
+          <nz-option nzValue="waiting" nzLabel="Espera"></nz-option>
+          <nz-option nzValue="interworkday" nzLabel="Interjornada"></nz-option>
+          <nz-option nzValue="weekly_rest" nzLabel="Descanso semanal"></nz-option>
+          <nz-option nzValue="driving" nzLabel="Direção"></nz-option>
+          <nz-option nzValue="lunch" nzLabel="Refeição"></nz-option>
+          <nz-option nzValue="end_of_workday" nzLabel="Fim de jornada"></nz-option>
+          <nz-option nzValue="dsr_justification" nzLabel="Justificativa DSR"></nz-option>
+          <nz-option nzValue="absence_justification" nzLabel="Justificativa Falta"></nz-option>
+          <nz-option nzValue="license_justification" nzLabel="Justificativa Licença"></nz-option>
+          <nz-option nzValue="leave_justification" nzLabel="Justificativa Folga"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Campo para editar o horário (started_at) -->
+    <nz-form-item>
+      <nz-form-label [nzFor]="'started_at'">Início da Jornada</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker 
+          formControlName="started_at" 
+          [nzShowTime]="{ nzFormat: 'HH:mm' }" 
+          nzFormat="dd/MM/yyyy HH:mm"
+          nzPlaceHolder="Selecione data e hora">
+        </nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Outros campos conforme necessário... -->
+
+
+
+    <!-- Campo para Observações -->
+  <nz-form-item>
+    <nz-form-label [nzFor]="'observations'">Observações</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input formControlName="observations" rows="3" nzPlaceHolder="Digite suas observações"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button nzType="primary" [disabled]="form.invalid">Salvar</button>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  </form>
+</nz-spin>

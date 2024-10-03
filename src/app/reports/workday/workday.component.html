@@ -19,21 +19,21 @@
     ></app-base-workday-filter>
 
     <div *ngIf="reportFormat === 'analytic'">
-      <nz-table class="m-t-50" #table [nzData]="workdayRows">
+      <nz-table   class="m-t-50" [nzData]="workdayRows" #table>
         <thead>
-        <tr>
-          <th>Horário</th>
-          <th>Status</th>
-          <th>Origem</th>
-        </tr>
+          <tr>
+            <th>Horário</th>
+            <th>Status</th>
+            <th>Origem</th>
+          </tr>
         </thead>
 
         <tbody>
-        <tr *ngFor="let data of table.data; index as i">
-          <td>{{ data.startedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ data.status }}</td>
-          <td>{{ data.positionEvent?.eventDescription }}</td>
-        </tr>
+          <tr *ngFor="let data of table.data; index as i">
+            <td>{{ data.startedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ data.status }}</td>
+            <td>{{ data.positionEvent?.eventDescription ? data.positionEvent.eventDescription : "Registrado pelo Sistema" }}</td>
+          </tr>
         </tbody>
       </nz-table>
 

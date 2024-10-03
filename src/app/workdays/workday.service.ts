@@ -20,8 +20,37 @@ export interface Workday {
   providedIn: 'root'
 })
 export class WorkdayService implements ApiService<Workday> {
+  getWorkday(workdayId: string):  Observable<any>{
+    return this.http.get<void>(`workdays/${workdayId}`);
+  }
+  updateWorkday(workdayId: string, value: any) :  Observable<any> {
+    return this.http.patch<void>(`workdays/${workdayId}/update`, value);
+  }
+  createWorkday(value: any) :  Observable<any>{
+    return this.http.post<void>(`workdays/create`, value);
+  }
 
   constructor(private http: HttpClient) {
+  }
+
+  getAllWorkdays(pagination: Pagination, customerId: string, driverId: string, from: string, to: string): Observable<GetAllResponse<Workday>> {
+    const params = {limit: pagination.limit || DEFAULT_LIMIT};
+    if (pagination?.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+
+    params['customer']=customerId
+    params['driver']=driverId
+    params['fromDate']=from
+    params['toDate']=to
+
+    return this.http.get<GetAllResponse<Workday>>(`workdays`, {params});
+  }
+
+  deleteWorkday(id: string): Observable<void> {
+    return this.http.delete<void>(`workdays/${id}/delete`);
   }
 
   get(id: string, customerId: string): Observable<Workday> {

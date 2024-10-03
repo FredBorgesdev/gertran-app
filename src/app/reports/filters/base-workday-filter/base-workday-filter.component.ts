@@ -15,6 +15,9 @@ import {format, subMonths} from 'date-fns';
 import {SelectableDriversService} from '../../../drivers/selectable-drivers.service';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
+import { SelectableTruckService } from 'src/app/trucks/selectable-truck.service';
+import { WorkdayService } from 'src/app/workdays/workday.service';
 
 @Component({
   selector: 'app-base-workday-filter',
@@ -26,10 +29,13 @@ export class BaseWorkdayFilterComponent implements OnInit {
   @Output() generateReport = new EventEmitter<BaseWorkdayFilter>();
   @Output() valueChanges = new EventEmitter<BaseWorkdayFilter>();
   @Output() generatePDF2 = new EventEmitter<any>();
+  @Output() emitGetFilterSelectedDataDriverCustomer = new EventEmitter<any>();
+  @Output() emitGetFilterSelectedDataDriverCustomerDate = new EventEmitter<any>();
   @Input() rows: any[];
   @Input() fileName = 'relatorio';
 
   validateForm: FormGroup;
+  @Input() showExtraFields: boolean = true;
 
   hoursMask = [/[0-2]/, /[0-9]/, ':', /[0-5]/, /[0-9]/];
   selectedDriverName: any|null;
@@ -41,6 +47,9 @@ export class BaseWorkdayFilterComponent implements OnInit {
     public selectableDriverService: SelectableDriversService,
     private xlsxExporterService: XlsxExporterService,
     private message: NzMessageService,
+    private authService: AuthenticationService,
+    public selectableTrucksService: SelectableTruckService,
+    public workdayService: WorkdayService,
   ) {
   }
 
@@ -83,23 +92,43 @@ export class BaseWorkdayFilterComponent implements OnInit {
       }
     });
 
+    if (this.authService.user.isGertranStaff) {
+      this.selectableCustomerService.init();
+    }
+
+    if (this.authService.user.customer) {
+      this.selectableCustomerService.concatCustomers(this.authService.user.customer);
+      this.loadVehicles(this.authService.customerId);
+    }
 
     this.i18n.setLocale(en_US);
   }
 
+  loadVehicles(customerId: string): void {
+    if (!customerId || customerId === 'all') {
+      return;
+    }
 
+    this.selectableTrucksService.loadMoreTrucks({customerId});
+  }
 
+  getFilterSelectedDataDriverCustomer():void{
+    this.emitGetFilterSelectedDataDriverCustomer.emit({
+      driver:this.validateForm.value.driver,
+      customer: this.validateForm.value.customer,
+    })
+  }
 
-
-
-
-
-
-
-
-
-
-  
+  getFilterSelectedDataCustomerDriverDate(): void {
+    const fromDate = format(this.validateForm.controls.from.value, 'yyyy-MM-dd');
+    const toDate = format(this.validateForm.controls.to.value, 'yyyy-MM-dd');
+    this.emitGetFilterSelectedDataDriverCustomerDate.emit({
+      driver:this.validateForm.value.driver,
+      customer: this.validateForm.value.customer,
+      fromDate: fromDate,
+      toDate: toDate,
+    })
+  }
 
   emitGenerateReport(): void {
     if (this.validateForm.valid) {
@@ -125,11 +154,8 @@ export class BaseWorkdayFilterComponent implements OnInit {
 
 
   emitGeneratePDF2(): void {
-
     const fromDate = format(this.validateForm.controls.from.value, 'dd/MM/yyyy');
     const toDate = format(this.validateForm.controls.to.value, 'dd/MM/yyyy');
-
-
 
     this.generatePDF2.emit({
       name: this.selectedDriverName, 
@@ -162,4 +188,12 @@ export class BaseWorkdayFilterComponent implements OnInit {
   get customerName(): string {
     return this.selectableCustomerService.customers.find((customer) => customer.id === this.validateForm.value.customer)?.tradingName;
   }
+
+  get selectedCustomerName(): string {
+    return this.selectableCustomerService.customers
+      .find(
+        (customer) => customer.id === this.validateForm.controls.customer.value
+      )?.tradingName;
+  }
+  
 }

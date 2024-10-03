@@ -29,9 +29,7 @@ import {BaseMacroFilterComponent} from './filters/base-macro-filter/base-macro-f
 import {AnalyticalReportComponent} from './analytical-report/analytical-report.component';
 import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
 import {WorkdayComponent} from './workday/workday.component';
-import {BaseWorkdayFilterComponent} from './filters/base-workday-filter/base-workday-filter.component';
 import {BaseWorkdayEmployedFilterComponent} from './filters/base-workday-employed-filter/base-workday-employed-filter.component';
-import {TextMaskModule} from 'angular2-text-mask';
 import {WorkdayJustificationComponent} from './extra/workday-justification/workday-justification.component';
 import {LogisticReportComponent} from './logistic-report/logistic-report.component';
 import {NgChartsModule} from 'ng2-charts';
@@ -102,7 +100,6 @@ import { WorkdayEmployedComponent } from './workday-employed/workday-employed.co
     ChecklistHistoryComponent,
     WorkdayComponent,
     WorkdayEmployedComponent,
-    BaseWorkdayFilterComponent,
     BaseWorkdayEmployedFilterComponent,
     WorkdayJustificationComponent,
     LogisticReportComponent,
@@ -139,7 +136,6 @@ import { WorkdayEmployedComponent } from './workday-employed/workday-employed.co
     SharedModule,
     CommonModule,
     ReportsRoutingModule,
-    TextMaskModule,
     NgChartsModule,
     NzStatisticModule,
     NgxMapboxGLModule.withConfig({
