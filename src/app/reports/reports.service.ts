@@ -8,6 +8,15 @@ import {Position} from '../monitoring/positions.service';
 import {Workday} from '../workdays/workday.service';
 import {Alert} from "../monitoring/alerts.service";
 
+export interface MobilePictures {
+  id: string;
+  latitude:string,
+  longitude: string,
+  monitoringRequest: any,
+  observation: string,
+  pictureUrl: string
+}
+
 export interface BaseFilter {
   customer: string;
 }
@@ -663,4 +672,29 @@ export class ReportsService {
   getEquipmentStatus(): Observable<EquipmentStatusReport[]> {
     return this.http.get<EquipmentStatusReport[]>('reports/technology/status?1=1');
   }
+
+  getMobilePictures(form: any): Observable<GetAllResponse<MobilePictures>>{
+    const fromObject: any = {
+      from_date: form.from,
+      to_date: form.to,
+    };
+    if (form.driver) {
+      fromObject.driver_id = form.driver;
+    }
+    if (form.customer) {
+      fromObject.customer_id = form.customer;
+    }
+    if (form.protocolType) {
+      fromObject.protocol_type = form.protocolType;
+    }
+    const params = new HttpParams({
+      fromObject
+    });
+
+    return this.http.get<GetAllResponse<MobilePictures>>('monitoring/monitoring-requests/mobile-pictures', {params})
+  }
+    closeProtocol(imageId: string, closeData: { close_reason: string }): Observable<any> {
+      const url = `monitoring/monitoring-requests/mobile-pictures/${imageId}/update`;
+      return this.http.patch(url, closeData);
+    }
 }

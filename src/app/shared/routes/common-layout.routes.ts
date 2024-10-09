@@ -99,5 +99,13 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'incidents',
     loadChildren: () => import('../../incidents/incidents.module').then(m => m.IncidentsModule)
-  }
+  },
+  {
+    path: 'mobile-protocol',
+    loadChildren: () => import('../../manage-mobile-pictures/manage-mobile.pictures.module').then(m => m.ManageMobilePicturesModule)
+  },
+  {
+    path: 'monitoring-request-history',
+    loadChildren: () => import('../../monitoring-request-history/monitoring-request-history.module').then(m => m.MonitoringRequestHistoryModule)
+  },
 ];

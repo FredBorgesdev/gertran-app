@@ -1,0 +1,25 @@
+.bordered-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .bordered-table th,
+  .bordered-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .bordered-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+
+  .table-cell-value {
+    width: 10%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

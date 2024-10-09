@@ -68,6 +68,7 @@ import {
 import { InsuranceComponent } from './insurance/insurance.component';
 import { FixedButtonsComponent } from '../shared/fixed-buttons/fixed-buttons.component';
 import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
+import { MobilePictureComponent } from './mobile-pictures/mobile-picture.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { WorkdayEmployedComponent } from './workday-employed/workday-employed.co
     ChecklistHistoryComponent,
     WorkdayComponent,
     WorkdayEmployedComponent,
+    MobilePictureComponent,
     BaseWorkdayEmployedFilterComponent,
     WorkdayJustificationComponent,
     LogisticReportComponent,

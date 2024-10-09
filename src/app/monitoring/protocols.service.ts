@@ -20,7 +20,11 @@ export class ProtocolsService {
   }
 
   get(id: string): Observable<GetAllResponse<Protocol>> {
-    return this.http.get<GetAllResponse<Protocol>>(`monitoring/monitoring-requests/${id}/mobile-pictures`);
+    return this.http.get<GetAllResponse<Protocol>>(`monitoring/monitoring-requests/mobile-pictures`,{ params:{
+      'monitoring_request_id':id
+      // 'customer_id':'1e720bda-169e-4e87-ac85-5ec56e8036ee'
+      // 'driver_id': '98909ecd-17d3-4338-8a09-c548d36938e1'
+    }});
   }
 
 }

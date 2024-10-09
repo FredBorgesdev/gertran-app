@@ -43,6 +43,7 @@ import { ControlTower4 } from './dashboards/tc4/client.component';
 import { ControlTower5 } from './dashboards/tc5/client.component';
 import { ControlTowerGertran } from './dashboards/tc-gertran/tc-gertran.component';
 import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
+import { MobilePictureComponent } from './mobile-pictures/mobile-picture.component';
 
 const routes: Routes = [
   {
@@ -244,6 +245,10 @@ const routes: Routes = [
   {
     path: 'grid',
     component: GridComponent
+  },
+  {
+    path: 'mobile-picture',
+    component: MobilePictureComponent
   }
 ];
 

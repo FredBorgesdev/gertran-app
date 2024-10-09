@@ -1,0 +1,95 @@
+<div>
+  <form [formGroup]="validateForm" (ngSubmit)="searchMonitoringRequestHistory()">
+    <label for="id">ID da Solicitação:</label>
+    <input id="id" formControlName="id" placeholder="Digite o ID" />
+    <button type="submit">Buscar</button>
+  </form>
+</div>
+
+<div *ngIf="!isLoading">
+  <div *ngIf="records.length > 0; else noRecordsTemplate">
+    <table class="bordered-table">
+      <thead>
+        <tr>
+          <th>ID do Histórico</th>
+          <th>Campo Alterado</th>
+          <th>Valor</th>
+          <th>Data da Alteração</th>
+          <th>Usuário</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let record of records">
+          <ng-container *ngFor="let field of getChangedFields(record.changes)">
+            <tr *ngIf="
+            field.name !== 'routeCoordinates' && 
+            field.name !== 'Usuário' && 
+            field.name !== 'publishedAt' && 
+            field.name !== 'plannedStartTravel' && 
+            field.name !== 'plannedEndTravel' && 
+            field.name !== 'quantityReleasedTravels' &&
+            field.name !== 'releasedAt' &&
+            field.name !== 'wasNotifiedDeviatedFromRoute' &&
+            field.name !== 'deviatedFromRouteAt' &&
+            field.name !== 'expirationDateResearch' &&
+            field.name !== 'protocolResearch'
+            ">
+              <td>{{ record.historyId }}</td>
+              <td>{{ field.name }}</td>
+              <td class="table-cell-value">
+
+                <ng-container *ngIf="field.name === 'Tipo Da Carga'">
+                  {{ getLoadTypeName(field.value) }}
+                </ng-container>
+
+                <ng-container *ngIf="field.name === 'Valor Carga'">
+                  {{ field.value | currency:'BRL':'symbol':'1.2-2' }}
+                </ng-container>
+
+                <ng-container *ngIf="field.name === 'Fonte Pesquisa Cadastral'">
+                  {{ getSurveySourceName(field.value) }}
+                </ng-container>
+
+                <ng-container *ngIf="field.name === 'Status Da Viagem'">
+                  {{ getTripStatusName(field.value) }}
+                </ng-container>
+                
+                <ng-container *ngIf="field.name === 'Status'">
+                  {{ getStatusName(field.value) }}
+                </ng-container>
+
+                <ng-container *ngIf="
+                field.name !== 'Tipo Da Carga' && 
+                field.name !== 'Fonte Pesquisa Cadastral' && 
+                field.name !== 'Valor Carga' &&
+                field.name !== 'Status' &&
+                field.name !== 'Status Da Viagem'
+                ">
+
+                  <ng-container *ngIf="isObject(field.value); else showValue">
+                    <ng-container *ngIf="field.name === 'Cavalo'">{{ field.value.vehicle.plate }}</ng-container>
+                    <ng-container *ngIf="field.name === 'Terminal'">{{ field.value.name }}</ng-container>
+                    <ng-container *ngIf="field.name === 'Motorista'">{{ field.value.name }}</ng-container>
+                    <ng-container *ngIf="field.name === 'Operação'">{{ field.value.name }}</ng-container>
+                    <ng-container *ngIf="field.name === 'Tecnologia de Rastreamento'">{{ field.value.name }}</ng-container>
+                  </ng-container>
+                  <ng-template #showValue>
+                    {{ field.value }} 
+                  </ng-template>
+
+              </ng-container>
+
+              </td>
+              <td>{{ record.historyDate | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+              <td>{{ record.userName }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noRecordsTemplate>
+    <p>Nenhum registro encontrado.</p>
+  </ng-template>
+</div>
+<div *ngIf="isLoading">Carregando...</div>

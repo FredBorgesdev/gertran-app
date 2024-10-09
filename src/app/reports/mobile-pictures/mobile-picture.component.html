@@ -1,0 +1,67 @@
+<nz-spin [nzSpinning]="isLoading">
+  <nz-card>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="bar-chart"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a><i nz-icon nzType="line-chart"></i><span>Imagens de protocolo</span></a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+
+    <app-base-workday-filter
+      (valueChanges)="valueChanges($event)"
+      [showExtraFields]="false"
+    ></app-base-workday-filter>
+
+    <div nz-row nzGutter="16" class="m-t-15">
+      <div nz-col nzSpan="8">
+        <button
+          nz-button
+          nzType="primary"
+          style="width: 100%"
+          (click)="getMobilePicturestoReport()"
+        >Buscar protocolos
+        </button>
+      </div>
+    </div>
+
+    <nz-table class="m-t-50" [nzData]="protocolImages" #table>
+      <thead>
+        <tr>
+          <th>Foto</th>
+          <th>Enviado Em</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Observação Baixa</th>
+          <th>Baixa Por</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of table.data; index as i">
+          <td>
+            <img [src]="'https://gertran.nyc3.digitaloceanspaces.com' + data.pictureUrl" alt="Foto" width="100" height="100" (click)="openImageModal(data.pictureUrl)" />
+          </td>
+          <td>{{ data.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ data.latitude }}</td>
+          <td>{{ data.longitude }}</td>
+          <td>{{ data.closeReason }}</td>
+          <td>{{ data.closedBy?.name }}</td>
+          <td>
+            <button nz-button nzType="link" (click)="openGoogleMaps(data.latitude, data.longitude)">
+              Ver no Google Maps
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <nz-modal nzTitle="Visualização da Imagem" [(nzVisible)]="isImageModalVisible" [nzFooter]="null" (nzOnCancel)="closeImageModal()">
+      <div *nzModalContent>
+        <img [src]="selectedImageUrl" alt="Foto em tamanho grande" style="width: 100%;" />
+      </div>
+    </nz-modal>
+
+  </nz-card>
+</nz-spin>
