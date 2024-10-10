@@ -12,9 +12,9 @@ export default class User extends AbstractUser {
     //   return true;
     // }
 
-    // if (this.isGertranStaff) {
-    //   return true;
-    // }
+    if (this.isGertranStaff) {
+      return true;
+    }
 
     return this.permissions.includes(permission);
   }
@@ -24,9 +24,9 @@ export default class User extends AbstractUser {
     //   return true;
     // }
 
-    // if (this.isGertranStaff) {
-    //   return true;
-    // }
+    if (this.isGertranStaff) {
+      return true;
+    }
 
     return  oneOfPermissions.some(permission => this.permissions.includes(permission));
   }
