@@ -94,6 +94,8 @@ export class IncidentsModalComponent implements OnInit {
   }
 
   openCreateIncidentModal(): void {
+    let isButtonDisabled = false; // Variável para controlar o estado do botão
+
     const modal = this.modal.create({
       nzTitle: 'Criar evento',
       nzContent: CreateIncidentModalComponent,
@@ -108,6 +110,8 @@ export class IncidentsModalComponent implements OnInit {
       nzWidth: '80%',
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',
+      nzOkDisabled: isButtonDisabled, // O botão começa habilitado
+
       nzOnOk: async (componentInstance) => {
         this.isLoading = true;
 
@@ -131,6 +135,20 @@ export class IncidentsModalComponent implements OnInit {
             this.message.error(message, {nzDuration: 7000});
           }
         });
+
+        // Desabilitar o botão por 5 segundos
+        isButtonDisabled = true;
+        modal.updateConfig({
+          nzOkDisabled: isButtonDisabled
+        });
+
+        setTimeout(() => {
+          isButtonDisabled = false;
+          modal.updateConfig({
+            nzOkDisabled: isButtonDisabled
+          });
+        }, 5000); // Reabilitar o botão após 5 segundos
+
 
         return false;
       },
