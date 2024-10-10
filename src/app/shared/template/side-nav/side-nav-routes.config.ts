@@ -620,14 +620,15 @@ export const ROUTES: SideNavInterface[] = [
       //   icon: 'line-chart',
       //   submenu: []
       // },
-      // {
-      //   path: '/reports/mobile-picture',
-      //   title: 'Relatório de Protocolos',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'line-chart',
-      //   submenu: []
-      // },
+      {
+        path: '/reports/mobile-picture',
+        title: 'Relatório de Protocolos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'line-chart',
+        submenu: [],
+        permission: Permissions.MOBILE_PICTURE_VIEW
+      },
       // {
       //   path: '/mobile-protocol/mobile-protocol-list',
       //   title: 'Gerenciar de Protocolos',
