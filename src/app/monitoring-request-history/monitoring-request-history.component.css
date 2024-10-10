@@ -15,11 +15,3 @@
     font-weight: bold;
   }
 
-
-  .table-cell-value {
-    width: 10%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
