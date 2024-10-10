@@ -54,6 +54,16 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'database',
         submenu: []
       },
+      // {
+      //   path: '/monitoring-request-history/monitoring-request-history',
+      //   title: 'Alterações Solicitação',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'database',
+      //   submenu: [],
+      //   gertranStaffOnly: true,
+      //   permission: Permissions.VIEW_DASHBOARD_TC1
+      // },
     ]
   },
   {
@@ -602,14 +612,30 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'line-chart',
         submenu: []
       },
-      {
-        path: '/reports/insurance',
-        title: 'Relatório para Seguradoras',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'line-chart',
-        submenu: []
-      },
+      // {
+      //   path: '/reports/insurance',
+      //   title: 'Relatório para Seguradoras',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/reports/mobile-picture',
+      //   title: 'Relatório de Protocolos',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // },
+      // {
+      //   path: '/mobile-protocol/mobile-protocol-list',
+      //   title: 'Gerenciar de Protocolos',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'line-chart',
+      //   submenu: []
+      // },
     ]
   },
   {
