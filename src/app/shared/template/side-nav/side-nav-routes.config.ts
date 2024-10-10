@@ -54,16 +54,16 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'database',
         submenu: []
       },
-      // {
-      //   path: '/monitoring-request-history/monitoring-request-history',
-      //   title: 'Alterações Solicitação',
-      //   iconType: 'nzIcon',
-      //   iconTheme: 'outline',
-      //   icon: 'database',
-      //   submenu: [],
-      //   gertranStaffOnly: true,
-      //   permission: Permissions.VIEW_DASHBOARD_TC1
-      // },
+      {
+        path: '/monitoring-request-history/monitoring-request-history',
+        title: 'Alterações Solicitação',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'database',
+        submenu: [],
+        gertranStaffOnly: true,
+        permission: Permissions.HISTORICAL_MONITORING_REQUEST_VIEW
+      },
     ]
   },
   {
@@ -702,6 +702,7 @@ export const ROUTES: SideNavInterface[] = [
     iconType: 'nzIcon',
     iconTheme: 'outline',
     icon: 'user',
+    permission: Permissions.PERSONAL_MONITORING_VIEW,
     gertranStaffOnly: true,
     submenu: [
       {

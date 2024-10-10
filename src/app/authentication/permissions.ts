@@ -319,5 +319,6 @@ export enum Permissions {
   VIEW_DASHBOARD_TC3 = 'reports.view_dashboard_tc3',
   VIEW_DASHBOARD_TC4 = 'reports.view_dashboard_tc4',
   VIEW_DASHBOARD_TC5 = 'reports.view_dashboard_tc5',
-  PERSONAL_MONITORING_VIEW = 'personal_monitoring.view_personalmonitoring'
+  PERSONAL_MONITORING_VIEW = 'personal_monitoring.view_personalmonitoring',
+  HISTORICAL_MONITORING_REQUEST_VIEW ='monitoring.view_historicalmonitoringrequest'
 }
