@@ -88,7 +88,10 @@ export class DriversDriverComponent implements OnInit {
   private handleSuccess(id?: string) {
     this.isLoading = false;
     this.messageService.success('Motorista salvo com sucesso');
-    this.router.navigate(['/drivers/driver-edit', id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+    if(this.activatedRoute.snapshot.paramMap.get('customer_id'))
+      this.router.navigate(['/drivers/driver-edit', id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+    else
+      this.router.navigate(['/drivers/driver-edit', id]);
   }
 
   private handleFailure(error) {

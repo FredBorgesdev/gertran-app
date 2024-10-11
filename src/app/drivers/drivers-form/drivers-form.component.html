@@ -1,24 +1,47 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <nz-form-item *ngIf="!authService.customerId">
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-      <nz-select
-        id="customers"
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Selecione uma empresa"
-        formControlName="customers"
-        nzMode="multiple"
-        nzServerSearch
-        (nzOnSearch)="selectableCustomerService.searchByName($event)"
-        (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-        [nzDropdownRender]="selectLoading"
-      >
-        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
-                   [nzValue]="customer.id"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+  <div nz-row nzGutter="18" nzAlign="middle">
+    <div nz-col nzSpan="10">
+      <nz-form-item *ngIf="!authService.customerId">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+          <nz-select id="customers" nzShowSearch nzAllowClear nzPlaceHolder="Selecione uma empresa"
+            formControlName="customers" nzMode="multiple" nzServerSearch
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()" [nzDropdownRender]="selectLoading">
+            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col nzSpan="6">
+      <nz-form-item *ngIf="!authService.customerId">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="pkId">COD INTERNO</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <input id="pkId" type="text" nz-input formControlName="pkId" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item *ngIf="!authService.customerId">
+        <nz-form-label>Cliente Registro Ponto</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select formControlName="customerDriverWorkday" nzAllowClear nzServerSearch nzShowSearch
+            nzPlaceHolder="Selecione um cliente" (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()" [nzDropdownRender]="selectLoading">
+
+            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"></nz-option>
+
+            <nz-option *ngIf="driver?.customerDriverWorkday" [nzLabel]="driver?.customerDriverWorkday?.tradingName"
+              [nzValue]="driver?.customerDriverWorkday?.id"></nz-option>
+
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <nz-form-item>
     <div nz-row nzGutter="16" nzAlign="middle">
       <div nz-col nzSpan="18">

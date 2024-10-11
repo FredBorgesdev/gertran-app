@@ -24,6 +24,14 @@ const routes: Routes = [
     }
   },
   {
+    path: 'driver-edit/:id',
+    component: DriversDriverComponent,
+    data: {
+      title: 'Editar Motorista ',
+      headerDisplay: 'none'
+    }
+  },
+  {
     path: 'driver-edit/:id/:customer_id',
     component: DriversDriverComponent,
     data: {
