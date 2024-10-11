@@ -79,6 +79,7 @@ export class CustomersFormComponent implements OnInit {
         []
       ],
       gertranApiKey: [this.customer?.gertranApiKey, []],
+      isActive: [this.customer?.id  == null ? true : this.customer?.isActive, []]
     });
     this.validateForm.valueChanges.subscribe(form => {
       this.update.emit(form);

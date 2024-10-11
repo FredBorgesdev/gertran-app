@@ -1,5 +1,11 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="isActive">
+      Ativo
+    </nz-form-label>
+    <nz-switch formControlName="isActive"></nz-switch>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="tradingName">Nome Fantasia</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
       <input id="tradingName" type="text" nz-input formControlName="tradingName"/>
