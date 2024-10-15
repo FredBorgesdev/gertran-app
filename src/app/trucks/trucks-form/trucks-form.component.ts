@@ -21,6 +21,7 @@ import {
 import {UtilsService} from '../../shared/services/utils.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {SelectableVehicleModelService} from "../../vehicles/selectable-vehicle-model.service";
+import { Choice } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-trucks-form',
@@ -30,6 +31,7 @@ import {SelectableVehicleModelService} from "../../vehicles/selectable-vehicle-m
 })
 export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements OnInit {
   @Input() truck: Truck;
+  workingSituations: Choice[] = [];
 
   constructor(
     private router: Router,
@@ -84,10 +86,13 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
     this.resource = this.truck;
 
     super.ngOnInit();
+    this.service.getWorkingSituations().subscribe((workingSituations) => {
+      this.workingSituations = workingSituations;
+    });
   }
 
   backToCustomerList(): void {
-    if(this.authService.customerId || this.activatedRoute.snapshot.paramMap.get('customer_id') == '')
+    if(this.authService.customerId || this.activatedRoute.snapshot.paramMap.get('customer_id') == '' || this.activatedRoute.snapshot.paramMap.get('customer_id') == null)
       this.router.navigate(['trucks', 'trucks-list']);
     else
       this.router.navigate(['customers', 'customers-edit',  this.activatedRoute.snapshot.paramMap.get('customer_id')]);
@@ -99,7 +104,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
 
   protected handleSuccess(response?: any): void {
     this.message.success('Registro salvo com sucesso');
-    this.router.navigate(['trucks', 'trucks-edit', response.id, this.activatedRoute.snapshot.paramMap.get('customer_id')]);
+    this.backToCustomerList()
     this.isLoading = false;
   }
 }

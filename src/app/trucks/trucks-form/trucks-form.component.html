@@ -45,6 +45,40 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+  <div nz-row nzGutter="12" nzAlign="middle">
+    <div nz-col nzSpan="12">
+      <nz-form-item *ngIf="!authService.customerId">
+        <nz-form-label>Cliente Frota Mensal</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select formControlName="customerMonthlyTruck" nzAllowClear nzServerSearch nzShowSearch
+            nzPlaceHolder="Selecione um cliente" (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()" [nzDropdownRender]="selectLoading">
+            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"></nz-option>
+            <nz-option *ngIf="resource.customerMonthlyTruck" [nzLabel]="resource.customerMonthlyTruck?.tradingName"
+              [nzValue]="resource.customerMonthlyTruck?.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      </div>
+      <div nz-col nzSpan="12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Opção inválida!">
+          <nz-select
+            id="workingSituation"
+            nzPlaceHolder="Selecione uma opção"
+            formControlName="workingSituation">
+              <nz-option
+                *ngFor="let workingSituation of workingSituations"
+                [nzLabel]="workingSituation.label"
+                [nzValue]="workingSituation.value"
+              ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="manufacturer">Montadora</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Montadora inválida!">

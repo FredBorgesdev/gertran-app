@@ -46,9 +46,12 @@ export interface Vehicle {
   description: string;
   trackers: Tracker[];
   terminals: Terminals[];
+  customerMonthlyTruck: any;
 }
 
 interface VehicleChild {
+  workingSituation: string;
+  customerMonthlyTruck: any;
   id: string;
   vehicle: Vehicle;
 }
@@ -143,6 +146,8 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       chassis: [null, [Validators.required]],
       renavam: [null, [Validators.required]],
       description: [null, []],
+      customerMonthlyTruck: [null,[]],
+      workingSituation: [null, []],
     });
 
     customProperties?.forEach(property => {
@@ -171,7 +176,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       vehicleModel: this.resource.vehicle.vehicleModel?.id ?? undefined,
       vehicleModelType: this.resource.vehicle.vehicleModelType?.id ?? undefined,
       peripherals: this.resource.vehicle.peripherals,
-      workingSituation: this.resource.vehicle.workingSituation,
+      workingSituation: this.resource.workingSituation,
       plate: this.resource.vehicle.plate,
       state: this.resource.vehicle.state,
       city: this.resource.vehicle.city,
@@ -180,6 +185,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       chassis: this.resource.vehicle.chassis,
       renavam: this.resource.vehicle.renavam,
       description: this.resource.vehicle.description,
+      customerMonthlyTruck: this.resource?.customerMonthlyTruck?.id ?? null,
     });
 
     if (this.resource.vehicle?.customers) {

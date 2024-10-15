@@ -34,7 +34,16 @@ const routes: Routes = [
       title: 'Editar Carreta ',
       headerDisplay: 'none',
       permission: Permissions.VEHICLES_CHANGE_TRUCK,
-    }
+    },
+  },
+  {
+    path: 'trucks-edit/:id',
+    component: TrucksTruckComponent,
+    data: {
+      title: 'Editar Carreta ',
+      headerDisplay: 'none',
+      permission: Permissions.VEHICLES_CHANGE_TRUCK,
+    },
   }
 ];
 
