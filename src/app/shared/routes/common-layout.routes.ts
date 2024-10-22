@@ -108,4 +108,8 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'monitoring-request-history',
     loadChildren: () => import('../../monitoring-request-history/monitoring-request-history.module').then(m => m.MonitoringRequestHistoryModule)
   },
+  {
+    path: 'closing-customers',
+    loadChildren: () => import('../../closing-customers/closing-customers.module').then(m => m.ClosingCustomersModule)
+  },
 ];
