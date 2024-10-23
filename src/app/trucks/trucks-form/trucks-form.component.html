@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <!-- <nz-form-item *ngIf="!authService.customerId">
+  <nz-form-item *ngIf="!authService.customerId">
     <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Clientes associados a este veiculo</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
       <nz-select
@@ -45,7 +45,7 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
-  <div nz-row nzGutter="12" nzAlign="middle">
+  <!-- <div nz-row nzGutter="12" nzAlign="middle">
     <div *ngIf="!authService.customerId" nz-col nzSpan="12">
       <nz-form-item>
         <nz-form-label>Cliente Frota Mensal</nz-form-label>
