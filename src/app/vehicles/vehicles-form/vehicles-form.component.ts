@@ -146,8 +146,8 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       chassis: [null, [Validators.required]],
       renavam: [null, [Validators.required]],
       description: [null, []],
-      customerMonthlyTruck: [null,[]],
-      workingSituation: [null, []],
+      // customerMonthlyTruck: [null,[]],
+      // workingSituation: [null, []],
     });
 
     customProperties?.forEach(property => {
@@ -185,7 +185,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       chassis: this.resource.vehicle.chassis,
       renavam: this.resource.vehicle.renavam,
       description: this.resource.vehicle.description,
-      customerMonthlyTruck: this.resource?.customerMonthlyTruck?.id ?? null,
+      // customerMonthlyTruck: this.resource?.customerMonthlyTruck?.id ?? null,
     });
 
     if (this.resource.vehicle?.customers) {
