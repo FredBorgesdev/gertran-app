@@ -301,64 +301,70 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return differenceInMinutes
   }
 
-  setColorRowInVehiclesWithLostTrack(data:any){
+  setColorRowInVehiclesWithLostTrack(data: any) {
     try {
       data.results.map(x => {
         if (this.diffMin(x.positionDate) > 30) {
-          if(x.monitoringRequest.travelStatus)
-            x.monitoringRequest.travelStatus='lost_track'
-        } 
-      })
+          if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
+            x.monitoringRequest.travelStatus = 'lost_track';
+          }
+        }
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  setColorRowInVehiclesWithLExceededStart(data: any){
+  setColorRowInVehiclesWithLExceededStart(data: any) {
     try {
       const now = new Date();
       const monitoringRequestsExceededStart = data.results.filter(viagem => {
+        if (viagem.monitoringRequest && viagem.monitoringRequest.plannedStartTravel) {
           const plannedStart = new Date(viagem.monitoringRequest.plannedStartTravel);
           plannedStart.setMinutes(plannedStart.getMinutes() + 30);
-          return plannedStart.getTime() <= now.getTime()  && viagem.monitoringRequest.travelStatus == 'waiting_for_start';
+          return plannedStart.getTime() <= now.getTime() && viagem.monitoringRequest.travelStatus === 'waiting_for_start';
+        }
+        return false;
       });
-
+  
       for (let index = 0; index < monitoringRequestsExceededStart.length; index++) {
         const element = monitoringRequestsExceededStart[index];
-        element.monitoringRequest.travelStatus = 'exceeded_start'
+        element.monitoringRequest.travelStatus = 'exceeded_start';
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  verifyMonitoringRequestsItsInTimeAllowed(element: any){
+  verifyMonitoringRequestsItsInTimeAllowed(element: any) {
     try {
-      if(element.monitoringRequest.operation.allowedTrafficStartTime == null) return
-      const hourStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(0,2)
-      const minuteStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(3,5)
+      if (
+        !element.monitoringRequest || 
+        !element.monitoringRequest.operation || 
+        element.monitoringRequest.operation.allowedTrafficStartTime == null || 
+        element.monitoringRequest.operation.allowedTrafficEndTime == null
+      ) {
+        return;
+      }
   
-      if(element.monitoringRequest.operation.allowedTrafficEndTime == null) return
-      const hourEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(0,2)
-      const minuteEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(3,5)
+      const hourStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(0, 2);
+      const minuteStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(3, 5);
+  
+      const hourEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(0, 2);
+      const minuteEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(3, 5);
   
       const now = new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' });
       const dateTimeNow = new Date(now);
   
       const dateTimeStart = new Date(dateTimeNow);
-      dateTimeStart.setHours(hourStart, minuteStart, 0, 0);
-    
+      dateTimeStart.setHours(parseInt(hourStart), parseInt(minuteStart), 0, 0);
+  
       const dateTimeEnd = new Date(dateTimeNow);
-      dateTimeEnd.setHours(hourEnd, minuteEnd, 0, 0); 
-    
-      if (dateTimeNow >= dateTimeStart && dateTimeNow <= dateTimeEnd) {
-        return false;
-      } 
-      else {
-        return true;
-      }
+      dateTimeEnd.setHours(parseInt(hourEnd), parseInt(minuteEnd), 0, 0);
+  
+      return dateTimeNow < dateTimeStart || dateTimeNow > dateTimeEnd;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
