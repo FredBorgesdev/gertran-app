@@ -120,7 +120,11 @@ export class WorkdayComponent implements OnInit {
   }
 
   generatePDF(event): void {
-   this.synteticReport(event)
+    try {
+      this.reportFormat === 'analytic' ? console.log(event) : this.synteticReport(event);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -359,11 +363,12 @@ export class WorkdayComponent implements OnInit {
   }
 
   valueChanges(params: BaseWorkdayFilter): void {
+    this.workdayRows = []
     this.reportFormat = params.reportFormat;
   }
 
   formatSyntheticReport(workdays: any[]): any[] {
-    workdays = workdays.map((workday) => ({
+    const _workdays = workdays.map((workday) => ({
       ...workday,
       workdayHours: this.adjustHours(workday.workdayHours),
       drivingHours: this.adjustHours(workday.drivingHours),
@@ -373,6 +378,6 @@ export class WorkdayComponent implements OnInit {
       extraHours: this.adjustHours(workday.extraHours),
       nightShiftHours: this.adjustHours(workday.nightShiftHours),
     }));
-    return workdays
+    return _workdays
   }
 }
