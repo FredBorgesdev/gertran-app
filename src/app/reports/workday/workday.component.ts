@@ -54,6 +54,10 @@ export class WorkdayComponent implements OnInit {
     return date.toLocaleDateString('pt-BR');
   }
 
+  formatTimeToBrazilian(date) {
+    return date.toLocaleString('pt-BR');
+  }
+
   adjustHours(hoursString: string): string {
     const parts = hoursString.split(' ');
     
@@ -165,9 +169,9 @@ export class WorkdayComponent implements OnInit {
 
     const groupedData = this.workdayRows.map(row => {
       return [
-          this.formatDateToBrazilian(new Date(row.startedAt)), 
+          this.formatTimeToBrazilian(new Date(row.startedAt)), 
           row.status,
-          row.position_event ? row.position_event : 'Registrado pelo Sistema'
+          row.positionEvent ? row.positionEvent.eventDescription : 'Registrado pelo Sistema'
       ]
     })
 
@@ -182,6 +186,14 @@ export class WorkdayComponent implements OnInit {
         lineWidth: 0.5
       },
       margin: { top: headerStartY + 30 },
+      willDrawCell: (data) => {
+        if (data.row.index === groupedData.length - 30) {
+          const remainingSpace = pageHeight - data.cell.y - data.cell.height;
+          if (remainingSpace < data.cell.height + 10) {
+            doc.addPage();
+          }
+        }
+      },
       didDrawPage: (data) => {
         header(data);
         const pageCount = doc.getNumberOfPages()
