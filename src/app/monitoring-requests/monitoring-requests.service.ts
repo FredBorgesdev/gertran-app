@@ -72,6 +72,9 @@ export interface MonitoringRequests {
     phoneNumber: string;
     cpf: string;
     cnhNumber: string;
+    rg: string;
+    cnhValidity:string;
+    cnhCategory: string;
   };
   auxiliaryDriver: {
     workingSituation: string;
@@ -115,6 +118,10 @@ export interface MonitoringRequests {
     id:any,
     name:any
   };
+  trackerTechnology: {
+    id: string;
+    name: string;
+  }
 }
 
 

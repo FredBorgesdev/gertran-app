@@ -305,7 +305,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     try {
       data.results.map(x => {
         if (this.diffMin(x.positionDate) > 30) {
-          x.monitoringRequest.travelStatus='lost_track'
+          if(x.monitoringRequest.travelStatus)
+            x.monitoringRequest.travelStatus='lost_track'
         } 
       })
     } catch (error) {
