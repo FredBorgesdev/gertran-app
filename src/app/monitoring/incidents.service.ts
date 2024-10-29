@@ -18,7 +18,9 @@ export interface IncidentType {
 }
 
 export interface Incident {
+  vehicleTrackers: any;
   id: string;
+  pkId: string;
   incidentType: IncidentType;
   solvedBy?: any;
   wasAddedByAutomation: boolean;
@@ -58,7 +60,7 @@ export class IncidentsService implements ApiService<Incident> {
 
   getAll(
     pagination: Pagination,
-    filters?: { monitoringRequest: string }
+    filters?: { monitoringRequest?: string; truck?: string }
   ): Observable<GetAllResponse<Incident>> {
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
@@ -68,6 +70,9 @@ export class IncidentsService implements ApiService<Incident> {
     }
     if (filters?.monitoringRequest) {
       params.monitoring_request = filters.monitoringRequest;
+    }
+    if (filters?.truck) {
+      params.truck = filters.truck;
     }
 
     return this.http.get<GetAllResponse<Incident>>('incidents', {params});

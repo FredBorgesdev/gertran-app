@@ -66,13 +66,11 @@ export class IncidentsModalComponent implements OnInit {
   loadIncidents(url?: string): void {
     this.isLoading = true;
 
-    if(!this.position.monitoringRequest)
-      return
-    
     this.service.getAll({
       url
     }, {
-      monitoringRequest: this.position.monitoringRequest.id
+      monitoringRequest: this.position.monitoringRequest ? this.position.monitoringRequest.id : null,
+      truck: !this.position?.monitoringRequest ? this.position?.truck.id : null
     }).subscribe(response => {
       this.incidents = response;
       this.isLoading = false;
