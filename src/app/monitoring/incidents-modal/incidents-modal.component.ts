@@ -65,6 +65,10 @@ export class IncidentsModalComponent implements OnInit {
 
   loadIncidents(url?: string): void {
     this.isLoading = true;
+
+    if(!this.position.monitoringRequest)
+      return
+    
     this.service.getAll({
       url
     }, {

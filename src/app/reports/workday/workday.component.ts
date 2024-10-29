@@ -121,7 +121,7 @@ export class WorkdayComponent implements OnInit {
 
   generatePDF(event): void {
     try {
-      this.reportFormat === 'analytic' ? console.log(event) : this.synteticReport(event);
+      this.reportFormat === 'analytic' ? this.alaliticalReport(event) : this.synteticReport(event);
     } catch (error) {
       console.log(error)
     }
@@ -164,18 +164,13 @@ export class WorkdayComponent implements OnInit {
 
 
     const groupedData = this.workdayRows.map(row => {
-      const dateRecords = row.records.map(record => {
-        return [
-          this.formatDateToBrazilian(new Date(record.startedAt)), 
-          record.status,
-          record.position_event ? record.position_event : 'Registrado pelo Sistema'
-        ];
-      });
-    
-      return dateRecords;
-    }).flat();
+      return [
+          this.formatDateToBrazilian(new Date(row.startedAt)), 
+          row.status,
+          row.position_event ? row.position_event : 'Registrado pelo Sistema'
+      ]
+    })
 
-    
     autoTable(doc, {
       head: headers,
       body: groupedData,
