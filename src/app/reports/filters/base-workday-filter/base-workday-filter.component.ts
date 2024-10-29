@@ -150,17 +150,22 @@ export class BaseWorkdayFilterComponent implements OnInit {
     const fileNameWithCustomer = `${this.fileName} - ${this.customerName}`;
 
     let dataToExcel = []
-    for (let i = 0; i < this.rows.length; i++) {
-      dataToExcel.push({
-        'id':this.rows[i].id,
-        'data/hora':this.rows[i].startedAt,
-        'status': this.rows[i].status ,
-        'origem': (this.rows[i].positionEvent ? this.rows[i].positionEvent.eventDescription : 'Registrado pelo Sistema').replace(/\n/g, ''),
-        'motorista': this.rows[i].driver.name,
-        'veículo': this.rows[i].vehicle.plate
-      })
+    if (this.validateForm.controls.reportFormat.value === 'analytic'){
+      for (let i = 0; i < this.rows.length; i++) {
+        dataToExcel.push({
+          'id':this.rows[i].id,
+          'data/hora':this.rows[i].startedAt,
+          'status': this.rows[i].status ,
+          'origem': (this.rows[i].positionEvent ? this.rows[i].positionEvent.eventDescription : 'Registrado pelo Sistema').replace(/\n/g, ''),
+          'motorista': this.rows[i].driver.name,
+          'veículo': this.rows[i].vehicle.plate
+        })
+      }
+      this.xlsxExporterService.generate(fileNameWithCustomer, dataToExcel);
+
+    }else{
+      this.xlsxExporterService.generate(fileNameWithCustomer, this.rows)
     }
-    this.xlsxExporterService.generate(fileNameWithCustomer, dataToExcel);
   }
 
 
