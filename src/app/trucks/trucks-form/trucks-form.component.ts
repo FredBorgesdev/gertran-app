@@ -32,6 +32,16 @@ import { Choice } from 'src/app/shared/services/api.service';
 export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements OnInit {
   @Input() truck: Truck;
   workingSituations: Choice[] = [];
+  chargingMethods: Choice[] = [
+    {
+      label:'Mensal',value:'monthly'
+      
+    },
+    {
+      label:'Avulso',value:'single'
+      
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -83,6 +93,9 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
   }
 
   ngOnInit(): void {
+    if (this.activatedRoute.snapshot.paramMap.get('customer_id') != '') {
+      this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('customer_id'));
+    }
     this.resource = this.truck;
 
     super.ngOnInit();

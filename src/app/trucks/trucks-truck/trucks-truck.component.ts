@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {TrucksService} from '../trucks.service';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
 
 @Component({
   selector: 'app-trucks-truck',
@@ -15,11 +16,15 @@ export class TrucksTruckComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private message: NzMessageService,
-    private service: TrucksService
+    private service: TrucksService,
+    public authService: AuthenticationService,
   ) { }
 
   ngOnInit(): void {
     if (this.activatedRoute.snapshot.paramMap.has('id')) {
+      if (this.activatedRoute.snapshot.paramMap.get('customer_id') != '') {
+        this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('customer_id'));
+      }
       this.loadTruck();
     }
   }
