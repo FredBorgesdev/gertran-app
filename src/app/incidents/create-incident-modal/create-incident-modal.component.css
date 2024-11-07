@@ -1,0 +1,59 @@
+@media print {
+    @page {
+      margin: 5mm;
+    }
+  }
+
+.moldura {
+    padding: 3px;
+    margin: 20px 0;
+}
+
+.custom-bordered-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: fixed; /* Define layout fixo para respeitar larguras */
+}
+
+.custom-bordered-table th,
+.custom-bordered-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    font-size: 12px;
+    text-align: left;
+    font-weight: bold;
+    width: 10%; /* Ajuste conforme necessário para distribuir o espaço */
+    overflow: hidden; /* Oculta conteúdo que exceda o tamanho da célula */
+    white-space: nowrap; /* Mantém o conteúdo em uma linha */
+}
+
+.custom-bordered-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.logo {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.table-header {
+    text-transform: uppercase; 
+    font-size: 18px !important; 
+    font-weight: bolder; 
+}
+
+.cell{
+    text-transform: uppercase;
+}
+
+
+
+.cell2 {
+    text-transform: uppercase;
+    word-wrap: break-word; /* Quebra palavras longas */
+    overflow-wrap: break-word; /* Para navegadores modernos */
+    white-space: normal; /* Permite quebra de linha normal */
+    min-width: 10%; /* Ajuste a largura máxima conforme necessário */
+}

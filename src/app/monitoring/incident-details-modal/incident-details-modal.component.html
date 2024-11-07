@@ -1,96 +1,281 @@
-<div id="printable">
-  <nz-descriptions nzTitle="Registro de ocorrência" nzBordered nzSize="small">
-    <nz-descriptions-item nzTitle="Cód. Ocorrência" [nzSpan]="2">
-      {{incident.id}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Data/hora do fato" [nzSpan]="2">
-      {{incident.datetime | date: 'dd/MM/yyyy HH:mm'}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Cliente" [nzSpan]="6">
-      {{incident.monitoringRequest.customer.tradingName}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Transportador" [nzSpan]="6">
-      {{incident.monitoringRequest.transporter.tradingName}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Motorista" [nzSpan]="6">
-      {{incident.driverName}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Tipo de ocorrência" [nzSpan]="6">
-      {{incident.incidentType.type}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Local do fato" [nzSpan]="6" *ngIf="!blank">
-      {{incident.incidentLocation}}
-    </nz-descriptions-item>
-  </nz-descriptions>
+<div id="printable2" #moldura>
+  <div style="display: flex; align-items: center; width: 100%;">
+    <div style="flex: 1;">
+      <h1 style="text-align: center; text-transform: uppercase;">
+        &nbsp;
+      </h1>
+      <br>
+    </div>
+    <div style="flex-shrink: 0; margin-left: auto;">
+      <img height="100px" src="https://web3.gertran.com.br/assets/images/logo/logogertran.png" alt="Logo"
+        class="logo" />
+    </div>
+  </div>
 
-  <nz-descriptions nzTitle="Dados do veiculo/viagem">
-    <nz-descriptions-item nzTitle="Sistema">
-      {{trackerTechnologyName}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Número">
-      {{trackerId}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Placa">
-      {{incident.monitoringRequest.truck.vehicle.plate}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Reboque 1">
-      {{firstWagonPlate}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Reboque 2">
-      {{secondWagonPlate}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Origem">
-      {{origin}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Destino">
-      {{destination}}
-    </nz-descriptions-item>
-  </nz-descriptions>
+  <div class="moldura" >
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="16" style="text-align: center;" class="table-header">
+          Registro de ocorrência
+        </th>
+        <!-- <th colspan="4" style="text-align: center;" class="table-header">
+          N° {{ incident.pkId }} #hmn*
+        </th> -->
+      </tr>
+    </table>
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="2" class="cell">Cliente</th>
+        <td colspan="6" class="cell">{{ incident.monitoringRequest.customer.tradingName || ' ' }}</td>
+        <th colspan="2" class="cell">Transportadora</th>
+        <td colspan="6" class="cell">{{ incident.monitoringRequest.transporter.tradingName || ' ' }}</td>
+      </tr>
+      <tr>
+        <th colspan="2" class="cell">Tipo</th>
+        <td colspan="14" class="cell">{{ incidentType || ' ' }}</td>
+      </tr>
+      <tr *ngIf="!blank">
+        <th colspan="1" class="cell">Local do fato</th>
+        <td colspan="11" class="cell">{{ incident.incidentLocation || ' ' }}</td>
+        <th colspan="1" class="cell">Data</th>
+        <td colspan="1" class="cell">{{ incident.incidentDatetime | date: 'dd/MM/yyyy' || ' ' }}</td>
+        <th colspan="1" class="cell">Hora</th>
+        <td colspan="1" class="cell">{{ incident.incidentDatetime | date: 'HH:mm' || ' ' }}</td>
+      </tr>
+      <tr>
+        <th colspan="1" class="cell">Tipo Operação</th>
+        <td colspan="8" class="cell">{{ incident.monitoringRequest.operation.name || ' ' }}</td>
+        <th colspan="1" class="cell">Produto</th>
+        <td colspan="3" class="cell">{{ incident.monitoringRequest.loadDescription || ' ' }}</td>
+        <th colspan="1" class="cell">Valor</th>
+        <td colspan="2" class="cell">{{ incident.monitoringRequest.loadValue | currency: 'R$ ' }}</td>
+      </tr>
+      <tr>
+        <th colspan="1" class="cell">Origem</th>
+        <td colspan="7" class="cell">{{ origin || ' ' }}</td>
+        <th colspan="1" class="cell">Destino</th>
+        <td colspan="7" class="cell">{{ destination || ' ' }}</td>
+      </tr>
+    </table>
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="16" class="table-header" style="text-align: center;">
+          Dados do motorista
+        </th>
+      </tr>
+      <tr>
+        <th colspan="1" class="cell">Nome</th>
+        <td colspan="11" class="cell">{{ incident.monitoringRequest.driver.name || ' ' }}</td>
+        <th colspan="1" class="cell">CPF</th>
+        <td colspan="1" class="cell">{{ incident.monitoringRequest.driver.cpf || ' ' }}</td>
+        <th colspan="1" class="cell">RG</th>
+        <td colspan="1" class="cell">{{ incident.monitoringRequest.driver.rg || ' ' }}</td>
+      </tr>
+      <tr>
+        <th colspan="4" class="cell">Situação funcional</th>
+        <td colspan="4" class="cell">{{ workingSituation(incident.monitoringRequest.driver?.workingSituation) || ' ' }}
+        </td>
+        <th colspan="2" class="cell">CNH°</th>
+        <td colspan="2" class="cell">{{ incident.monitoringRequest.driver?.cnhNumber || ' ' }}</td>
+        <th colspan="1" class="cell">Categoria</th>
+        <td colspan="1" class="cell">{{ incident.monitoringRequest.driver?.cnhCategory || ' ' }}</td>
+        <th colspan="1" class="cell">Validade</th>
+        <td colspan="1" class="cell">{{ incident.monitoringRequest.driver?.cnhValidity | date: 'dd/MM/yyyy' }}</td>
+      </tr>
+    </table>
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="16" class="table-header" style="text-align: center;">
+          Tecnologia de rastreamento
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2" class="cell">Marca</th>
+        <td colspan="3" class="cell">{{ trackerName || ' ' }}</td>
+        <th colspan="2" class="cell">Modelo</th>
+        <td colspan="3" class="cell">{{ trackerModel || ' ' }}</td>
+        <th colspan="1" class="cell">ID</th>
+        <td colspan="5" class="cell">{{ trackerId || ' ' }}</td>
+      </tr>
+    </table>
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="16" class="table-header" style="text-align: center;">
+          Veículo Transportador
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2" class="cell">Placa</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.plate || ' ' }}</td>
+        <th colspan="1" class="cell">Chassi</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.chassis || ' ' }}</td>
+        <th colspan="1" class="cell">Renavam</th>
+        <td colspan="4" class="cell">{{ trackerId || ' ' }}</td>
+      </tr>
+      <tr>
+        <th colspan="2" class="cell">Tipo</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.vehicleModelType?.name || ' ' }}</td>
+        <th colspan="1" class="cell">marca</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.vehicleModel?.manufacturer?.name || '
+          ' }}</td>
+        <th colspan="1" class="cell">Ano</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.modelYear || ' ' }}</td>
+      </tr>
+      <tr>
+        <th colspan="2" class="cell">Cor</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.color || ' ' }}</td>
+        <th colspan="1" class="cell">Cidade</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.city || ' ' }}</td>
+        <th colspan="1" class="cell">Estado</th>
+        <td colspan="4" class="cell">{{ incident.monitoringRequest.truck?.vehicle.state || ' ' }}</td>
+      </tr>
+    </table>
 
-  <nz-descriptions nzTitle="Descrição da ocorrência" class="m-t-30" nzSize="small">
-    <nz-descriptions-item nzTitle="Descrição">
-      {{incident.additionalInformation}}
-    </nz-descriptions-item>
-  </nz-descriptions>
 
-  <nz-descriptions nzTitle="Ações por parte da central operações - Gertran" class="m-t-30" nzSize="small" nzBordered *ngIf="!blank">
-    <nz-descriptions-item nzTitle="Foi necessário autorização pronta resposta" [nzSpan]="6">
-      {{incident.wasImmediateActionApproved ? 'Sim' : 'Não'}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Autorização pronta resposta - Nome" [nzSpan]="2">
-      {{incident.immediateActionResponsibleName}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Autorização pronta resposta - Data/hora" [nzSpan]="2">
-      <span *ngIf="incident.immediateActionTakenAt">
-        {{incident.immediateActionTakenAt | date: 'dd/MM/yyyy HH:mm'}}
-      </span>
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Foi realizado contato orgãos com públicos?" [nzSpan]="6">
-      {{incident.wasFederalPoliceActionNeeded ? 'Sim' : 'Não'}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Contato orgãos públicos - Nome" [nzSpan]="2">
-      {{incident.federalPoliceActionResponsibleName}}
-    </nz-descriptions-item>
-    <nz-descriptions-item nzTitle="Contato orgãos públicos - Data/hora" [nzSpan]="2">
-      <span *ngIf="incident.federalPoliceActionTakenAt">
-        {{incident.federalPoliceActionTakenAt | date: 'dd/MM/yyyy HH:mm'}}
-      </span>
-    </nz-descriptions-item>
-  </nz-descriptions>
 
-  <nz-descriptions nzTitle="Operador responsável" class="m-t-30" nzSize="small">
-    <nz-descriptions-item nzTitle="Nome">
-      {{incident.createdBy?.name}}
-    </nz-descriptions-item>
-  </nz-descriptions>
+    <div *ngIf="incident.monitoringRequest.filteredWagons.length > 0">
+
+
+      <div *ngFor="let wagon of incident.monitoringRequest.filteredWagons; let i = index">
+        <table class="custom-bordered-table">
+          <tr>
+            <th colspan="16" class="table-header" style="text-align: center;">
+              Reboque - {{ i + 1 }}
+            </th>
+          </tr>
+          <tr>
+            <th colspan="2" class="cell">Placa</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.plate || ' ' }}</td>
+            <th colspan="1" class="cell">Chassi</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.chassis || ' ' }}</td>
+            <th colspan="1" class="cell">Renavam</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.renavam || ' ' }}</td>
+          </tr>
+          <tr>
+            <th colspan="2" class="cell">Tipo</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.vehicleModelType?.name || ' ' }}</td>
+            <th colspan="1" class="cell">Marca</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.vehicleModel?.manufacturer?.name || ' ' }}</td>
+            <th colspan="1" class="cell">Ano</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.modelYear || ' ' }}</td>
+          </tr>
+          <tr>
+            <th colspan="2" class="cell">Cor</th>
+            <td colspan="4" class="cell">teste</td>
+            <th colspan="1" class="cell">Cidade</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.city || ' ' }}</td>
+            <th colspan="1" class="cell">Estado</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.state || ' ' }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div *ngIf="incident.monitoringRequest.filteredWagons.length < 1">
+
+
+      <div *ngFor="let wagon of incident.monitoringRequest.wagons; let i = index">
+        <table class="custom-bordered-table">
+          <tr>
+            <th colspan="16" class="table-header" style="text-align: center;">
+              Reboque - {{ i + 1 }}
+            </th>
+          </tr>
+          <tr>
+            <th colspan="2" class="cell">Placa</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.plate || ' ' }}</td>
+            <th colspan="1" class="cell">Chassi</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.chassis || ' ' }}</td>
+            <th colspan="1" class="cell">Renavam</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.renavam || ' ' }}</td>
+          </tr>
+          <tr>
+            <th colspan="2" class="cell">Tipo</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.vehicleModelType?.name || ' ' }}</td>
+            <th colspan="1" class="cell">Marca</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.vehicleModel?.manufacturer?.name || ' ' }}</td>
+            <th colspan="1" class="cell">Ano</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.modelYear || ' ' }}</td>
+          </tr>
+          <tr>
+            <th colspan="2" class="cell">Cor</th>
+            <td colspan="4" class="cell">teste</td>
+            <th colspan="1" class="cell">Cidade</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.city || ' ' }}</td>
+            <th colspan="1" class="cell">Estado</th>
+            <td colspan="4" class="cell">{{ wagon.vehicle.state || ' ' }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="16" class="table-header" style="text-align: center;">
+          Ações Gertran - (FLUXOGRAMA)
+        </th>
+      </tr>
+      <tr>
+        <td colspan="16">1- {{ procedure1String }} &nbsp; {{ incident.procedure1 }}</td>
+      </tr>
+      <tr>
+        <td colspan="16">2- {{ procedure2String }} &nbsp; {{ incident.procedure2 }}</td>
+      </tr>
+      <tr>
+        <td colspan="16">3- {{ procedure3String }} &nbsp; {{ incident.procedure3 }}</td>
+      </tr>
+      <tr>
+        <td colspan="16">4- {{ procedure4String }} &nbsp; {{ incident.procedure4 }}</td>
+      </tr>
+      <tr>
+        <td colspan="16">5- {{ procedure5String }} &nbsp; {{ incident.procedure5 }}</td>
+      </tr>
+      <tr>
+        <td colspan="16">6- {{ procedure6String }} &nbsp; {{ incident.procedure6 }}</td>
+      </tr>
+      <tr>
+        <td colspan="16">7- {{ procedure7String }} &nbsp; {{ incident.procedure7 }}</td>
+      </tr>
+    </table>
+
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="16" class="table-header" style="text-align: center;">
+          Observações
+        </th>
+      </tr>
+
+      <tr *ngFor="let line of getFormattedInformation()">
+        <td colspan="16" class="cell">{{ line }}</td>
+      </tr>
+
+
+      <tr *ngIf="getFormattedInformation().length < 2">
+        <td colspan="16" class="info-cell" style="color: white;"> &nbsp; </td>
+      </tr>
+
+      <tr *ngIf="getFormattedInformation().length < 1">
+        <td colspan="16" class="info-cell" style="color: white;"> &nbsp; </td>
+      </tr>
+    </table>
+
+    <table class="custom-bordered-table">
+      <tr>
+        <th colspan="2" class="cell">Operador responsável</th>
+        <td colspan="6" class="cell">{{ incident.createdBy?.name || ' ' }}</td>
+        <th colspan="2" class="cell">Data/Hora</th>
+        <td colspan="6" class="cell">
+          {{ incident.datetime | date: 'dd/MM/yyyy HH:mm' || ' ' }}
+
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
-
-<button
-  nz-button
-  [print]="['printable', printConfig]"
-  nzType="primary"
-  class="m-t-30"
->
+<button nz-button [print]="['printable2', printConfig]" nzType="primary" class="m-t-30">
   <i nz-icon nzType="printer" nzTheme="outline"></i>
   Imprimir
 </button>

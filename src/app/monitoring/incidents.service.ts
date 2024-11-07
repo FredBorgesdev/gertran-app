@@ -47,7 +47,14 @@ export interface Incident {
   createdBy: {
     id: string;
     name: string;
-  }
+  };
+  procedure1: string;
+  procedure2: string;
+  procedure3: string;
+  procedure4: string;
+  procedure5: string;
+  procedure6: string;
+  procedure7: string;
 }
 
 @Injectable({

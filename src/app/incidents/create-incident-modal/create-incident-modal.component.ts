@@ -29,6 +29,15 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
     phone: string;
   };
 
+
+  procedure1String: string;
+  procedure2String: string;
+  procedure3String: string;
+  procedure4String: string;
+  procedure5String: string;
+  procedure6String: string;
+  procedure7String: string;
+
   constructor(
     private formBuilder: FormBuilder,
     service: IncidentsService,
@@ -103,6 +112,13 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
         incidentLatitude: [null],
         incidentLongitude: [null],
         incidentDatetime: [null],
+        procedure1 :[null],
+        procedure2 :[null],
+        procedure3 :[null],
+        procedure4:[null],
+        procedure5 :[null],
+        procedure6 :[null],
+        procedure7 :[null],
       });
     }else{
       this.validateForm = this.formBuilder.group({
@@ -125,12 +141,131 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
         optionalEmail: [null],
         incidentLatitude: [0.0], 
         incidentLongitude: [0.0], 
-        incidentDatetime: [new Date()] 
+        incidentDatetime: [new Date()],
+        procedure1 :[null],
+        procedure2 :[null],
+        procedure3 :[null],
+        procedure4: [null],
+        procedure5 :[null],
+        procedure6 :[null],
+        procedure7 :[null],
       });
     }
     
+    this.validateForm.get('incidentType')?.valueChanges.subscribe(value => {
+      this.onIncidentTypeChange(value);
+    });
   }
+  
+  // Método que será chamado quando o tipo de incidente mudar
+// Método que será chamado quando o tipo de incidente mudar
+onIncidentTypeChange(type: any): void {
+  // const proceduresMap: Record<string, { procedure1: string; procedure2: string; procedure3: string; procedure4: string; procedure5: string; procedure6: string }> = {
+  //   panic_button: {
+  //     procedure1: 'Pedido de posição',
+  //     procedure2: 'Comando de bloqueio',
+  //     procedure3: 'Contato com o motorista',
+  //     procedure4: 'Contato com o transportador',
+  //     procedure5: 'Acionamento de PRF',
+  //     procedure6: 'Pronta resposta',
+  //   },
+  //   route_detour: {
+  //     procedure1: 'Pedido de posição',
+  //     procedure2: 'Contato com o motorista',
+  //     procedure3: 'Contato com o transportador',
+  //     procedure4: 'Acionamento PRF',
+  //     procedure5: 'Pronta resposta',
+  //     procedure6: 'Comando de bloqueio',
+  //   },
+  //   convoy_detour:{
+  //     procedure1: 'Pedido de posição',
+  //     procedure2: 'Contato com o motorista',
+  //     procedure3: 'Contato com o transportador',
+  //     procedure4: 'Acionamento PRF',
+  //     procedure5: 'Pronta resposta',
+  //     procedure6: 'Comando de bloqueio',
+  //   },
+  //   signal_loss: {
+  //     procedure1: 'Pedido de posição',
+  //     procedure2: 'Comando de bloqueio',
+  //     procedure3: 'Contato com o motorista',
+  //     procedure4: 'Contato com o transportador',
+  //     procedure5: 'Acionamento PRF',
+  //     procedure6: 'Pronta resposta',
+  //   },
+  //   sensor_violation_alert:{
+  //     procedure1: 'Pedido de posição',
+  //     procedure2: 'Comando de bloqueio',
+  //     procedure3: 'Contato com o motorista',
+  //     procedure4: 'Contato com o transportador',
+  //     procedure5: 'Acionamento PRF',
+  //     procedure6: 'Pronta resposta',
+  //   },
+  //   mechanical_issue: {
+  //     procedure1: 'Contato com o motorista para avaliação das condições do local, e informar o nome e contato da oficina mecânica',
+  //     procedure2: 'Avaliação das condições do local onde está sendo realizado o reparo para verificação do nível de segurança',
+  //     procedure3: 'Contato com transportador',
+  //     procedure4: 'Pronta resposta',
+  //     procedure5: null,
+  //     procedure6: null
+  //   },
+  //   vehicle_under_maintenance:{
+  //     procedure1: 'Contato com o motorista para avaliação das condições do local, e informar o nome e contato da oficina mecânica',
+  //     procedure2: 'Avaliação das condições do local aonde está sendo realizado o reparo para a verificação do nível de segurança',
+  //     procedure3: 'Contato com transportador',
+  //     procedure4: 'Pronta resposta',
+  //     procedure5: null,
+  //     procedure6: null
+  //   },
+  //   stop_without_notify:{
+  //     procedure1: 'Comando bloqueio',
+  //     procedure2: 'Contato com o motorista',
+  //     procedure3: 'Contato com transportador',
+  //     procedure4: 'Acionamento de PRF',
+  //     procedure5: 'Pronta resposta',
+  //     procedure6: null
+  //   },
+  //   restart_traveling_without_notify:{
+  //     procedure1: 'Contato com o motorista',
+  //     procedure2: 'Envio de mensagem de advertência',
+  //     procedure3: 'Comando de bloqueio (caso parado)',
+  //     procedure4: 'Contato com transportador',
+  //     procedure5: 'Autorização de início/ reinicio após envio de mensagem',
+  //     procedure6: null
+  //   },
+  //   technical_assistance:{
+  //     procedure1: 'Contato com o motorista informando para se dirigir a local seguro e informar parada',
+  //     procedure2: 'Envio de mensagem de advertência',
+  //     procedure3: 'Comando de bloqueio (caso parado)',
+  //     procedure4: 'Contato com transportador',
+  //     procedure5: 'Autorização de início/ reinicio após envio de mensagem',
+  //     procedure6: null
+  //   },
+  //   // Adicione mais tipos de incidentes e procedimentos aqui conforme necessário
+  // };
 
+  // // Recupera os procedimentos do mapa ou define como null se o tipo de incidente não estiver no mapa
+  // const selectedProcedures = proceduresMap[type] || {
+  //   procedure1: null,
+  //   procedure2: null,
+  //   procedure3: null,
+  //   procedure4: null,
+  //   procedure5: null,
+  //   procedure6: null,
+  // };
+
+  // // Atribui os valores aos procedimentos
+  this.procedure1String = "1° Tratativa";
+  this.procedure2String = "2° Tratativa";
+  this.procedure3String = "3° Tratativa";
+  this.procedure4String = "4° Tratativa";
+  this.procedure5String = "5° Tratativa";
+  this.procedure6String = "6° Tratativa";
+  this.procedure7String = "7° Tratativa";
+}
+
+
+  
   handleAddressChange(nominatimAddress: any): void {
     const latitude = Number(nominatimAddress.lat).toFixed(6);
     const longitude = Number(nominatimAddress.lon).toFixed(6);
