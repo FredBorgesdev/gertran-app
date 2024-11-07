@@ -92,6 +92,13 @@ export interface MonitoringRequests {
       plate: string;
     }
   }[];
+  filteredWagons: {
+    id: string;
+    vehicle: {
+      id: string;
+      plate: string;
+    }
+  }[];
   operation: {
     id: string;
     name: string;
