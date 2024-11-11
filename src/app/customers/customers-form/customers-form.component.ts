@@ -74,6 +74,7 @@ export class CustomersFormComponent implements OnInit {
       permissions: [this.customer?.permissions],
       hasApiIntegration: [this.customer?.hasApiIntegration, []],
       isPamcary:[this.customer?.isPamcary, []],
+      isAkad:[this.customer?.isAkad, []],
       insuranceCompany: [
         (this.customer?.insuranceCompany as InsuranceCompany)?.id,
         []

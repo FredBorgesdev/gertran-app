@@ -6,6 +6,7 @@ import {Workday} from '../workdays/workday.service';
 import {InsuranceCompany} from "../insurance-companies/insurance-companies.service";
 
 export interface Customer {
+  isAkad: boolean;
   isActive: boolean;
   isPamcary: boolean;
   gertranApiKey: string;

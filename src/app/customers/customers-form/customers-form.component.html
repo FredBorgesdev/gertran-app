@@ -68,6 +68,13 @@
   </nz-form-item>
 
   <nz-form-item>
+    <nz-form-label [nzSpan]="null" nzFor="isAkad">
+      AKAD API
+    </nz-form-label>
+    <nz-switch formControlName="isAkad"></nz-switch>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-label [nzSpan]="null" nzFor="insuranceCompany">Seguradora ou corretora?</nz-form-label>
     <nz-form-control [nzSpan]="null">
       <nz-select
