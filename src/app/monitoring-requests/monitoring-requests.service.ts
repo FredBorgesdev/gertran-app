@@ -128,7 +128,8 @@ export interface MonitoringRequests {
   trackerTechnology: {
     id: string;
     name: string;
-  }
+  };
+  operationType: string;
 }
 
 

@@ -127,9 +127,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
       driver: [null, []],
       auxiliaryDriver: [null, []],
       adHocMonitoringRequest: [null, ''],
-
-      
-
+      operationType: [null, []],
     });
 
     this.validateForm.get('transporter').valueChanges.subscribe((value) => {

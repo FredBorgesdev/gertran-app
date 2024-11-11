@@ -156,7 +156,7 @@
 
     <nz-form-item>
       <div nz-row nzGutter="6">
-        <div nz-col [nzSpan]="12">
+        <div nz-col [nzSpan]="8">
           <nz-form-label [nzSpan]="null" nzFor="operation">Operação</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
             <nz-select
@@ -174,7 +174,7 @@
             </nz-select>
           </nz-form-control>
         </div>
-        <div nz-col [nzSpan]="12">
+        <div nz-col [nzSpan]="8">
           <nz-form-label [nzSpan]="null" nzFor="sharedOperation">Operação Compartilhada</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
             <nz-select
@@ -190,6 +190,22 @@
               <nz-option *ngFor="let operation of sharedOperations"
                          [nzLabel]="operation.name + ' - ' + operation.email"
                          [nzValue]="operation.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+        <div nz-col nzSpan="8">
+          <nz-form-label [nzSpan]="null" nzFor="operationType">Tipo de operação</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+            <nz-select
+              id="operationType"
+              nzPlaceHolder="Selecione uma opção"
+              formControlName="operationType"
+              (ngModelChange)="saveDraft('operationType')"
+              [disabled]="disabled"
+            >
+              <nz-option nzLabel="Transferência" nzValue="transfer"></nz-option>
+              <nz-option nzLabel="Distribuição" nzValue="distribution"></nz-option>
+              <nz-option nzLabel="Coleta" nzValue="collection"></nz-option>
             </nz-select>
           </nz-form-control>
         </div>

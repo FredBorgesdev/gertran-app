@@ -116,7 +116,12 @@ export class IncidentsModalComponent implements OnInit {
 
       nzOnOk: async (componentInstance) => {
         this.isLoading = true;
-
+        // Desabilitar o botão por 5 segundos
+        isButtonDisabled = true;
+        modal.updateConfig({
+          nzOkDisabled: isButtonDisabled
+        });
+        
         await componentInstance.save({
           success: () => {
             this.loadIncidents();
@@ -138,18 +143,13 @@ export class IncidentsModalComponent implements OnInit {
           }
         });
 
-        // Desabilitar o botão por 5 segundos
-        isButtonDisabled = true;
-        modal.updateConfig({
-          nzOkDisabled: isButtonDisabled
-        });
 
         setTimeout(() => {
           isButtonDisabled = false;
           modal.updateConfig({
             nzOkDisabled: isButtonDisabled
           });
-        }, 5000); // Reabilitar o botão após 5 segundos
+        }, 15000); // Reabilitar o botão após 5 segundos
 
 
         return false;
