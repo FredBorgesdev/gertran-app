@@ -26,9 +26,6 @@ export class FixedButtonsComponent implements OnInit {
     this.btn2 = this.authService.user.permissions.filter(x => x.includes('reports.view_dashboard_tc2')).length > 0 || this.authService.user.isGertranStaff
     this.btn3 = this.authService.user.permissions.filter(x => x.includes('reports.view_dashboard_tc3')).length > 0 || this.authService.user.isGertranStaff
     this.btn4 = this.authService.user.permissions.filter(x => x.includes('reports.view_dashboard_tc4')).length > 0 || this.authService.user.isGertranStaff
-  
-    
-    console.log(this.authService)
   }
 
 

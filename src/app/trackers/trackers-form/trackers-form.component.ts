@@ -76,6 +76,9 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
         this.success.emit();
         this.validateForm.reset();
         this.isLoading = false;
+      },
+      error:(e)=>{
+        this.message.error(e.error.extra.fields)
       }
     });
   }
