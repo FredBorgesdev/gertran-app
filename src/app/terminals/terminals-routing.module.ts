@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {TerminalsListComponent} from './terminals-list/terminals-list.component';
 import {TerminalsFormComponent} from './terminals-form/terminals-form.component';
+import {Permissions} from '../authentication/permissions';
+
 
 const routes: Routes = [
   {
@@ -9,7 +11,8 @@ const routes: Routes = [
     component: TerminalsListComponent,
     data: {
       title: 'Terminais ',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: Permissions.SETTINGS_VIEW_TERMINAL,
     }
   },
   {
@@ -17,7 +20,8 @@ const routes: Routes = [
     component: TerminalsFormComponent,
     data: {
       title: 'Criar Terminal',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: Permissions.SETTINGS_ADD_TERMINAL
     }
   },
   {
@@ -25,7 +29,8 @@ const routes: Routes = [
     component: TerminalsFormComponent,
     data: {
       title: 'Editar Terminal',
-      headerDisplay: 'none'
+      headerDisplay: 'none',
+      permission: Permissions.SETTINGS_CHANGE_TERMINAL,
     }
   },
 ];

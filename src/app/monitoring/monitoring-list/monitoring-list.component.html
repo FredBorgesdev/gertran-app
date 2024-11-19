@@ -316,10 +316,10 @@
         <nz-badge *ngIf="!item.positionInfo?.hasBaits" nzStatus="error"></nz-badge>
       </td>
       <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
-      <td>{{ item.monitoringRequest?.plannedStartTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
-      <td>{{ item.monitoringRequest?.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
-      <td>{{ item.monitoringRequest?.operation?.allowedTrafficStartTime | slice:0:5 || '-' }}</td>
-      <td>{{ item.monitoringRequest?.operation?.allowedTrafficEndTime | slice:0:5 || '-' }}</td>
+      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedStartTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
+      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
+      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficStartTime | slice:0:5 || '-' }}</td>
+      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficEndTime | slice:0:5 || '-' }}</td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
