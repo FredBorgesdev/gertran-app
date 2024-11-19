@@ -128,11 +128,11 @@ export class AuthenticationService {
       //   this.logout();
       // }
 
-      if (window.location.pathname !== '/error/500') {
-        window.location.href = '/error/500';
-      } else {
-        window.location.href = '/';
-      }
+      // if (window.location.pathname !== '/error/500') {
+        // window.location.href = '/error/500';
+      // } else {
+        // window.location.href = '/';
+      // }
     }
   }
 
