@@ -54,6 +54,26 @@ export class LogisticReportComponent implements OnInit {
     this.loadReport();
   }
 
+
+  getFormattedValue(): string {
+    if (!this.data?.totalValue) return 'R$ 0,00';
+  
+    // Remover os separadores de milhares (pontos) e ajustar a vírgula para o formato decimal
+    const rawValue = this.data.totalValue;
+  
+    // Converter para número
+    const value = parseFloat(rawValue);
+  
+    // Verificar se é um número válido
+    if (isNaN(value)) return 'R$ 0,00';
+  
+    // Formatar no estilo brasileiro
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+  }
+  
+
+
+
   loadReport(): void {
     this.loading = true;
 
@@ -283,7 +303,7 @@ export class LogisticReportComponent implements OnInit {
 
   get shouldShowGertranLogo(): boolean {
     const pathname = window.location.pathname;
-
+    return true
     return this.authService.user?.isGertranStaff && pathname === '/dashboard/home';
   }
 }
