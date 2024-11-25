@@ -42,9 +42,9 @@ th, td {
   left: 0;
   right: 0;
   bottom: 0;
-  border: 5px solid #000; /* Espessura da moldura */
-  box-sizing: border-box; /* Garante que a largura/altura da moldura inclua a espessura da borda */
-  padding: 0; /* Removido o padding para que a moldura alcance as bordas */
+  /* border: 5px solid #000;  */
+  /* box-sizing: border-box;  */
+  padding: 0;
   height: 100%; /* Altura igual à altura da página */
   overflow: auto; /* Permite rolagem dentro da moldura quando necessário */
 }
