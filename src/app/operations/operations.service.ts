@@ -125,6 +125,7 @@ export class OperationsService implements ApiService<Operations> {
     if(operations.allowedTrafficEndTime!=null)
       operations.allowedTrafficEndTime = format(new Date(operations.allowedTrafficEndTime.toString()), 'HH:mm');
     
+    operations.policyEffectiveDate = format(new Date(operations.policyEffectiveDate), 'yyyy-MM-dd');
     return this.http.patch<Operations>(`settings/operations/${id}/update`, operations);
   }
 
