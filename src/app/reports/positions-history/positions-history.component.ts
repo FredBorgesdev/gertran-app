@@ -42,6 +42,7 @@ export class PositionsHistoryComponent implements OnInit {
       Localizacao: position.street,
       Ignição: position.ignition ? 'Ligada' : 'Desligada',
       'Velocidade (km/h)': position.speed,
+      Tecnologia: position.trackerTechnologyName
     }));
   }
 }
