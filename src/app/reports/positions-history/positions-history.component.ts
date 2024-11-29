@@ -12,6 +12,9 @@ import {format} from "date-fns";
 export class PositionsHistoryComponent implements OnInit {
   isLoading = false;
   positions: Position[] = [];
+  selectedTechnology: string | null = null;
+  filteredPositions: Position[] = [];
+  availableTechnologies: string[] = [];
 
   constructor(
     private reportsService: ReportsService,
@@ -22,10 +25,27 @@ export class PositionsHistoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  filterPositions(): void {
+    if (this.selectedTechnology) {
+      this.filteredPositions = this.positions.filter(
+        (position) =>
+          position.trackerTechnologyName == this.selectedTechnology
+      );
+    } else {
+      this.filteredPositions = [...this.positions];
+    }
+  }
+
   generateReport(form: BaseVehicleFilter): void {
     this.isLoading = true;
     this.reportsService.getTrackingPositionsHistory(form).subscribe((positions) => {
       this.positions = positions;
+
+      this.availableTechnologies = [
+        ...new Set(positions.map((position) => position.trackerTechnologyName)),
+      ];
+
+      this.filterPositions();
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
