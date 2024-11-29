@@ -11,7 +11,7 @@
 
     <app-base-vehicle-filter
       (generateReport)="generateReport($event)"
-      [rows]="positions"
+      [rows]="filteredPositions"
       [fileName]="'Posições do veiculo'"
       [xlsxValues]="xlsxValues"
     ></app-base-vehicle-filter>

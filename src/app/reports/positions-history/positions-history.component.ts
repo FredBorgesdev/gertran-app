@@ -54,7 +54,7 @@ export class PositionsHistoryComponent implements OnInit {
   }
 
   get xlsxValues(): any[] {
-    return this.positions.map((position) => ({
+    return this.filteredPositions.map((position) => ({
       Data: format(new Date(position.positionDate), 'dd/MM/yyyy HH:mm:ss'),
       Latitude: position.latitude,
       Longitude: position.longitude,
