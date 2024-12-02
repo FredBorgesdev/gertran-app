@@ -19,6 +19,15 @@ const routes: Routes = [
     }
   },
   {
+    path: 'trucks-create',
+    component: TrucksTruckComponent,
+    data: {
+      title: 'Adicionar Carreta ',
+      headerDisplay: 'none',
+      permission: Permissions.VEHICLES_ADD_TRUCK,
+    }
+  },
+  {
     path: 'trucks-create/:customer_id',
     component: TrucksTruckComponent,
     data: {
