@@ -148,8 +148,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       chassis: [null, [Validators.required]],
       renavam: [null, [Validators.required]],
       description: [null, []],
-      workingSituation: [null, []],
-      chargingMethod: [null, []]
+      workingSituation: [null, [Validators.required]],
     });
 
     customProperties?.forEach(property => {
@@ -179,7 +178,6 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       vehicleModelType: this.resource.vehicle.vehicleModelType?.id ?? undefined,
       peripherals: this.resource.vehicle.peripherals,
       workingSituation: this.authService.customerId ? this.resource.workingSituation : undefined,
-      chargingMethod: this.authService.customerId ? this.resource.chargingMethod : undefined,
       plate: this.resource.vehicle.plate,
       state: this.resource.vehicle.state,
       city: this.resource.vehicle.city,
