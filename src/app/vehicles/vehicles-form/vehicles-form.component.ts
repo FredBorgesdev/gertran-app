@@ -47,11 +47,11 @@ export interface Vehicle {
   trackers: Tracker[];
   terminals: Terminals[];
   customerMonthlyTruck: any;
-  chargingMethod: string;
+  // chargingMethod: string;
 }
 
 interface VehicleChild {
-  chargingMethod: string;
+  // chargingMethod: string;
   workingSituation: string;
   customerMonthlyTruck: any;
   id: string;
@@ -104,22 +104,26 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
   }
 
   async filterVehicleByPlate(): Promise<void> {
-    const plate = this.validateForm.controls.plate.value;
-    if (!plate) {
-      return;
+    try {
+      const plate = this.validateForm.controls.plate.value;
+      if (!plate) {
+        return;
+      }
+  
+      this.isLoading = true;
+      const vehicle = await this.getByPlate(plate);
+      if (!vehicle) {
+        return;
+      }
+  
+      this.resource = vehicle;
+      this.loadResource();
+      this.validateForm.patchValue({
+        customers: this.validateForm.controls.customers.value.concat( this.activatedRoute.snapshot.paramMap.get('customer_id')),
+      });
+    } catch (error) {
+      console.log(error)
     }
-
-    this.isLoading = true;
-    const vehicle = await this.getByPlate(plate);
-    if (!vehicle) {
-      return;
-    }
-
-    this.resource = vehicle;
-    this.loadResource();
-    this.validateForm.patchValue({
-      customers: this.validateForm.controls.customers.value.concat( this.activatedRoute.snapshot.paramMap.get('customer_id')),
-    });
     this.isLoading = false;
   }
 
@@ -148,7 +152,7 @@ export class VehiclesFormComponent<T extends VehicleChild> extends BaseCrudFormC
       chassis: [null, [Validators.required]],
       renavam: [null, [Validators.required]],
       description: [null, []],
-      workingSituation: [null, [Validators.required]],
+      workingSituation: [null, []],
     });
 
     customProperties?.forEach(property => {

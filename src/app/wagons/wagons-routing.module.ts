@@ -28,6 +28,15 @@ const routes: Routes = [
     }
   },
   {
+    path: 'wagons-create',
+    component: WagonsWagonComponent,
+    data: {
+      title: 'Adicionar Carreta ',
+      headerDisplay: 'none',
+      permission: Permissions.VEHICLES_ADD_WAGON,
+    }
+  },
+  {
     path: 'wagons-edit/:id/:customer_id',
     component: WagonsWagonComponent,
     data: {
