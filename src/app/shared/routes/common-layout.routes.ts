@@ -112,4 +112,8 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'closing-customers',
     loadChildren: () => import('../../closing-customers/closing-customers.module').then(m => m.ClosingCustomersModule)
   },
+  {
+    path: 'gertran-direct',
+    loadChildren: () => import('../../gertran-direct/gertran-direct.module').then(m=>m.GertranDirectModule)
+  }
 ];

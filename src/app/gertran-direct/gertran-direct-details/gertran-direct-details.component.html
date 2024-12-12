@@ -1,0 +1,85 @@
+<nz-spin [nzSpinning]="isLoading" nzTip="Carregando...">
+  <nz-card *ngIf="data" nzBordered>
+    <div class="details-header">
+      <h2>Venda direta</h2>
+    </div>
+
+    <table nz-table class="details-table">
+      <tbody>
+        <tr>
+          <th>CPF</th>
+          <td>{{ data.cpf }}</td>
+        </tr>
+        <tr>
+          <th>SENHA</th>
+          <td>{{ data.token }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table nz-table [nzBordered]="true" class="details-table">
+      <tbody>
+        <tr>
+          <th>Nome</th>
+          <td>{{ data.name }}</td>
+        </tr>
+        <tr>
+          <th>E-mail</th>
+          <td>{{ data.email || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Endereço</th>
+          <td>{{ data.address || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Cidade</th>
+          <td>{{ data.city || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Telefone</th>
+          <td>{{ data.phone || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>CNPJ</th>
+          <td>{{ data.cnpj || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Estado</th>
+          <td>{{ data.state || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>CEP</th>
+          <td>{{ data.zipCode || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Complemento</th>
+          <td>{{ data.complement || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Bairro</th>
+          <td>{{ data.neighborhood || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Número</th>
+          <td>{{ data.number || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Inscrição Estadual</th>
+          <td>{{ data.stateRegistration || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Razão Social</th>
+          <td>{{ data.corporateName || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Nome Fantasia</th>
+          <td>{{ data.tradingName || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="details-footer" style="text-align: right;">
+      <button *ngIf="data.status === 'pending' && !isApproved" nz-button nzType="primary" (click)="approveDetail()">Aprovar</button>
+    </div>
+  </nz-card>
+</nz-spin>

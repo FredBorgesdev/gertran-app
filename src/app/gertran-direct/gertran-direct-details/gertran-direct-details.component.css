@@ -1,0 +1,38 @@
+.details-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.details-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1d1d1d;
+}
+
+.details-table {
+  width: 100%;
+  margin: 16px 0;
+  font-size: 16px;
+  border-collapse: collapse;
+}
+
+.details-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+.details-table td {
+  padding: 8px;
+}
+
+.details-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+nz-card {
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
