@@ -44,8 +44,7 @@
       <nz-card>
         <nz-statistic
           [nzTitle]="'Valor acumulado (R$)'"
-          [nzValue]="(data?.totalValue ?? 0 | number: '1.0-0')"
-          [nzPrefix]="'R$'"
+          [nzValue]="getFormattedValue()"
           [nzValueStyle]="{ color: '#3f8600' }"
         ></nz-statistic>
       </nz-card>
