@@ -273,16 +273,18 @@
           </span>
         </div>
       </td>
-      <td>{{ item.speed }}km</td>
-      <td>{{ item.customer?.name }}</td>
-      <td *ngIf="user.isGertranStaff"
+      <td class="text-dark">{{ item.speed }}km</td>
+      <td class="text-dark">{{ item.monitoringRequest?.loadValue | currency: 'R$ ' }}</td>
+      <td class="text-dark">{{ item.customer?.name }}</td>
+      <td class="text-dark" *ngIf="user.isGertranStaff"
       data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
-      <td>{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td nzEllipsis nz-tooltip
+      <td  class="text-dark">{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td  class="text-dark" nzEllipsis nz-tooltip
           [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
-      <td>{{ getOrigin(item) }}</td>
-      <td>{{ getDestiny(item) }}</td>
+      <td class="text-dark">{{ getOrigin(item) }}</td>
+      <td class="text-dark">{{ getDestiny(item) }}</td>
       <td
+        class="text-dark"
         *ngIf="user.isGertranStaff"
         data-testid="td-gertran-only"
         nzEllipsis
@@ -295,13 +297,14 @@
         [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)"
         *ngIf="user.isGertranStaff"
         data-testid="td-gertran-only"
+        class="text-dark"
       >
         {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
  
-      <td>{{ item.positionInfo?.driverName || '-' }}</td>
-      <td>{{ item.positionInfo?.wagonsPlates || '-' }}</td>
-      <td *ngIf="user.isGertranStaff"
+      <td class="text-dark">{{ item.positionInfo?.driverName || '-' }}</td>
+      <td class="text-dark">{{ item.positionInfo?.wagonsPlates || '-' }}</td>
+      <td  class="text-dark" *ngIf="user.isGertranStaff"
           data-testid="td-gertran-only">{{ getCommunicationChannel(item.positionInfo?.communicationChannel) }}</td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <nz-badge *ngIf="item.positionInfo?.hasMacro" nzStatus="success"></nz-badge>
@@ -315,11 +318,11 @@
         <nz-badge *ngIf="item.positionInfo?.hasBaits" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.positionInfo?.hasBaits" nzStatus="error"></nz-badge>
       </td>
-      <td>{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
-      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedStartTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
-      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
-      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficStartTime | slice:0:5 || '-' }}</td>
-      <td *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficEndTime | slice:0:5 || '-' }}</td>
+      <td class="text-dark">{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
+      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedStartTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
+      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
+      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficStartTime | slice:0:5 || '-' }}</td>
+      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficEndTime | slice:0:5 || '-' }}</td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
