@@ -53,7 +53,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Mapa', width: '45px'},
     {title: '%', width: '50px'},
     {title: 'Vel', width: '50px'},
-    // {title: 'valor', width: '100px'},
     {title: 'Cliente', width: '110px'},
     {title: 'Obs.', width: '100px', gertranStaffOnly: true},
     {title: 'Data/Hora', width: '80px'},
@@ -62,6 +61,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Destino', width: '110px'},
     {title: 'Alertas', width: '80px', gertranStaffOnly: true},
     {title: 'Status V.', width: '80px', gertranStaffOnly: true},
+    {title: 'valor', width: '100px'},
     {title: 'Motorista', width: '110px'},
     {title: 'Carreta', width: '80px'},
     {title: 'Comunicação', width: '100px', gertranStaffOnly: true},
@@ -111,7 +111,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Alerta + 15 min.', value: 'alert15', backgroundColorClass:'danger-alert'},
     {title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass:'exceeded-start'},
     {title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass:'not-allowed-to-road'},
-    {title: 'Valor Alto', value: 'high_value', backgroundColorClass:'danger-alert'},
+    {title: 'Valor Alto', value: 'high_value', backgroundColorClass:'signal-loss'},
   ];
 
   filteredTravelStatus = this.travelStatus.filter
@@ -388,6 +388,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       data.results.map(x => {
         if (parseFloat(x.monitoringRequest.loadValue) > 600000.00) {
           if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
+            this.setIncidentStatus(x,'high_value')
           }
         }
       });
@@ -410,8 +411,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-    // this.setColorRowInSetHighValue(data)
     this.setColorRowInVehiclesWithLostTrack(data)
+    this.setColorRowInSetHighValue(data)
     this.setColorRowInVehiclesWithLExceededStart(data)
     this.setColorRowInVehiclesWithoutPermission(data)
 

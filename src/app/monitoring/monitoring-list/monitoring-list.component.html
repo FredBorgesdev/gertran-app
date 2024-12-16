@@ -274,7 +274,6 @@
         </div>
       </td>
       <td class="text-dark">{{ item.speed }}km</td>
-      <!-- <td class="text-dark">{{ item.monitoringRequest?.loadValue | currency: 'R$ ' }}</td> -->
       <td class="text-dark">{{ item.customer?.name }}</td>
       <td class="text-dark" *ngIf="user.isGertranStaff"
       data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
@@ -301,7 +300,7 @@
       >
         {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
       </td>
- 
+      <td class="text-dark">{{ item.monitoringRequest?.loadValue | currency: 'R$ ' }}</td>
       <td class="text-dark">{{ item.positionInfo?.driverName || '-' }}</td>
       <td class="text-dark">{{ item.positionInfo?.wagonsPlates || '-' }}</td>
       <td  class="text-dark" *ngIf="user.isGertranStaff"
