@@ -53,6 +53,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Mapa', width: '45px'},
     {title: '%', width: '50px'},
     {title: 'Vel', width: '50px'},
+    // {title: 'valor', width: '100px'},
     {title: 'Cliente', width: '110px'},
     {title: 'Obs.', width: '100px', gertranStaffOnly: true},
     {title: 'Data/Hora', width: '80px'},
@@ -95,21 +96,22 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {icon: 'car', color: 'blue', text: 'Parada abastecimento'},
   ];
   travelStatus = [
-    {title: 'Parado', value: 'stopped', backgroundColorClass: 'bg-info'},
+    {title: 'Parado', value: 'stopped', backgroundColorClass: 'danger-alert'},
     {title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success'},
-    {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-waiting-start'},
+    {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-info'},
     {title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'bg-warning'},
     {title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-overnight'},
-    {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-none'},
+    // {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-none'},
     {title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest'},
     {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
     {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
     {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
-    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'signal-loss'},
+    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'bg-waiting-start'},
     {title: 'Alerta + 10 min.', value: 'alert10', backgroundColorClass:'warning-alert'},
     {title: 'Alerta + 15 min.', value: 'alert15', backgroundColorClass:'danger-alert'},
     {title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass:'exceeded-start'},
     {title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass:'not-allowed-to-road'},
+    {title: 'Valor Alto', value: 'high_value', backgroundColorClass:'danger-alert'},
   ];
 
   filteredTravelStatus = this.travelStatus.filter
@@ -118,7 +120,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     status.value !== 'exceeded_start' &&
     status.value !== 'alert10' &&
     status.value !== 'alert15' &&
-    status.value !== 'lost_track'
+    status.value !== 'lost_track' &&
+    status.value !== 'high_value'
   );
 
 
@@ -266,8 +269,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
           monitoringRequestAlert.monitoringRequest.travelStatus = 'alert15'
 
       } catch (error) {
-        console.log(element.vehicle.plate)
-        console.log(monitoringRequestAlert)
+        // c/onsole.log(element.vehicle.plate)
+        // c/onsole.log(monitoringRequestAlert)
       }
     }
   }
@@ -306,12 +309,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       data.results.map(x => {
         if (this.diffMin(x.positionDate) > 30) {
           if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
-            x.monitoringRequest.travelStatus = 'lost_track';
+            this.setIncidentStatus(x,'lost_track')
           }
         }
       });
     } catch (error) {
-      console.log(error);
+      // c/onsole.log(error);
     }
   }
 
@@ -329,10 +332,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   
       for (let index = 0; index < monitoringRequestsExceededStart.length; index++) {
         const element = monitoringRequestsExceededStart[index];
-        element.monitoringRequest.travelStatus = 'exceeded_start';
+        this.setIncidentStatus(element,'exceeded_start')
       }
     } catch (error) {
-      console.log(error);
+      // c/onsole.log(error);
     }
   }
 
@@ -364,7 +367,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   
       return dateTimeNow < dateTimeStart || dateTimeNow > dateTimeEnd;
     } catch (error) {
-      console.log(error);
+      // c/onsole.log(error);
     }
   }
 
@@ -373,10 +376,23 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x=>this.verifyMonitoringRequestsItsInTimeAllowed(x) && x.monitoringRequest.travelStatus == 'in_progress')
       for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
         const element = monitoringRequestsFilteredIfAllowedToRoad[index];
-        element.monitoringRequest.travelStatus = 'not_allowed_to_road' 
+        this.setIncidentStatus(element,'not_allowed_to_road')
       }
     } catch (error) {
-      console.log(error)
+      // c/onsole.log(error)
+    }
+  }
+
+  setColorRowInSetHighValue(data: any) {
+    try {
+      data.results.map(x => {
+        if (parseFloat(x.monitoringRequest.loadValue) > 600000.00) {
+          if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
+          }
+        }
+      });
+    } catch (error) {
+      // c/onsole.log(error);
     }
   }
 
@@ -394,6 +410,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
+    // this.setColorRowInSetHighValue(data)
     this.setColorRowInVehiclesWithLostTrack(data)
     this.setColorRowInVehiclesWithLExceededStart(data)
     this.setColorRowInVehiclesWithoutPermission(data)
@@ -408,7 +425,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   
         this.updatePositionsPointReferences();
       } catch (error) {
-        console.log(error)
+        // c/onsole.log(error)
       }
     }, () => {
       this.isLoading = false;
@@ -428,7 +445,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzOkText: 'Fechar',
       nzCancelText: null,
       nzWidth: '70%',
-      nzAfterClose: this.refreshAlertCount,
+      // nzAfterClose: this.refreshAlertCount,
     });
   }
 
@@ -479,7 +496,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
-      nzAfterClose: this.refreshPositions,
+      // nzAfterClose: this.refreshPositions,
     });
   }
 
@@ -495,7 +512,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
-      nzAfterClose: this.refreshPositions,
+      // nzAfterClose: this.refreshPositions,
     });
   }
 
@@ -699,7 +716,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
           }
         ).toPromise().then(x => this.monitoringRequestReleasedAlertsCount = x.count)
     } catch (error) {
-      console.log(error)
+      // c/onsole.log(error)
     }
   }
 
@@ -770,5 +787,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     }));
 
     window.open(url, '_blank');
+  }
+
+  setIncidentStatus(item: any, item2: string){
+    item.monitoringRequest.travelStatus = item2;
   }
 }
