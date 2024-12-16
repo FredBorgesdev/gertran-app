@@ -215,15 +215,15 @@
       </td>
       <td nzLeft class="bg-gray text-dark">{{ item.vehiclePlate || '-' }}</td>
       <td>
-        <img width="16" src="assets/icons/key-orange.svg" alt="Orange Key" *ngIf="item.ignition">
+        <img width="16" src="assets/icons/key-orange.svg" style="filter: brightness(0) contrast(100%);" alt="Orange Key" *ngIf="item.ignition">
         <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <img width="16" src="assets/icons/green-alert.svg" alt="Grey siren" *ngIf="isSirenOn(item)">
+        <img width="16" src="assets/icons/green-alert.svg" style="filter: brightness(0) contrast(100%);" alt="Grey siren" *ngIf="isSirenOn(item)">
         <img width="16" src="assets/icons/grey-alert.svg" alt="Green siren" *ngIf="!isSirenOn(item)">
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <img width="16" src="assets/icons/green-lock.svg" alt="Grey lock" *ngIf="isLockOn(item)">
+        <img width="16" src="assets/icons/green-lock.svg" style="filter: brightness(0) contrast(100%);" alt="Grey lock" *ngIf="isLockOn(item)">
         <img width="16" src="assets/icons/grey-lock.svg" alt="Green lock" *ngIf="!isLockOn(item)">
       </td>
       <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
@@ -259,8 +259,8 @@
           alt="logo"
           width="25px"
           height="25px"
-          style="filter: invert(56%) sepia(97%) saturate(2141%) hue-rotate(155deg) brightness(87%) contrast(101%);"
-        />
+          style="filter: brightness(0) contrast(100%);"
+          />
       </td>
       <td [nzAlign]="'center'">
         <div class="progress-bar">
