@@ -1,4 +1,248 @@
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; align-items: center; width: 100%;">
+  <div style="flex: 1;">
+    <h1 style="text-align: center; text-transform: uppercase;">
+      &nbsp;
+    </h1>
+    <br>
+  </div>
+  <div style="flex-shrink: 0; margin-left: auto;">
+    <img height="100px" src="https://web3.gertran.com.br/assets/images/logo/logogertran.png" alt="Logo"
+      class="logo" />
+  </div>
+</div>
+
+
+<hr style="border-top: 3px double #000000">
+
+
+<h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+  Solicitação de Monitoramento
+</h2>
+
+<table class="custom-bordered-table">
+  <tr>
+    <th class="first-column">Embarcador</th>
+    <td>{{monitoringRequest?.data?.customer?.tradingName ?? '-' }}</td>
+    <th class="first-column">Transportador</th>
+    <td>{{monitoringRequest?.data?.customer?.tradingName ?? '-' }}</td>
+  </tr>
+</table>
+
+
+
+<h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+  Motoristas
+</h2>
+
+<table class="custom-bordered-table">
+  <tr>
+    <th class="first-column">Nome</th>
+    <td colspan="3">{{monitoringRequest?.data?.driver?.name}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">CPF</th>
+    <td>{{monitoringRequest?.data?.driver?.cpf}}</td>
+    <th class="first-column">CNH</th>
+    <td>{{monitoringRequest?.data?.driver?.cnhNumber}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">Telefone</th>
+    <td colspan="3">{{monitoringRequest?.data?.driver?.phoneNumber || 'N/a'}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">Tipo Motorista</th>
+    <td colspan="3">{{monitoringRequest?.driverWorkingSituation}}</td>
+  </tr>
+</table>
+
+
+<table class="custom-bordered-table" *ngIf="monitoringRequest?.data?.auxiliaryDriver">
+  <tr>
+    <th class="first-column">Nome motorista auxiliar</th>
+    <td colspan="3">{{monitoringRequest?.data?.auxiliaryDriver?.name}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">CPF motorista auxiliar</th>
+    <td>{{monitoringRequest?.data?.auxiliaryDriver?.cpf}}</td>
+    <th class="first-column">CNH motorista auxiliar</th>
+    <td>{{monitoringRequest?.data?.auxiliaryDriver?.cnhNumber}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">Telefone motorista auxiliar</th>
+    <td colspan="3">{{monitoringRequest?.data?.auxiliaryDriver?.phoneNumber || 'N/a'}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">Tipo Motorista</th>
+    <td colspan="3">{{monitoringRequest?.driverWorkingSituation}}</td>
+  </tr>
+</table>
+
+
+
+<h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+  Veiculo
+</h2>
+
+
+<table class="custom-bordered-table">
+  <tr>
+    <th class="first-column">Placa</th>
+    <td>{{monitoringRequest?.data?.truck?.vehicle?.plate}}</td>
+    <th class="first-column">Carretas</th>
+    <td>{{monitoringRequest?.wagonPlates}}</td>
+  </tr>
+</table>
+
+  
+
+<h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+  Rastreadores
+</h2>
+
+
+
+<table class="custom-bordered-table">
+  <tr>
+    <th class="first-column">Tecnologia</th>
+    <th class="first-column">Num de serie</th>
+  </tr>
+  <tr *ngFor="let tracker of monitoringRequest?.data.truck.vehicle.trackers ?? []">
+    <td>{{tracker.trackerModel.trackerTechnology.name}}</td>
+    <td>{{tracker.trackerId}}</td>
+  </tr>
+
+</table>
+
+<h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+  Viagem
+</h2>
+
+
+
+<table class="custom-bordered-table">
+  <tr>
+    <th>Operação</th>
+    <td>{{monitoringRequest?.data?.operation?.name}}</td>
+    <th>Operação Compartilhada</th>
+    <td>{{monitoringRequest?.data?.sharedOperation?.name}} - {{monitoringRequest?.data?.sharedOperation?.email}}</td>
+  </tr>
+  <tr>
+    <th>Ordem de carregamento / OCR</th>
+    <td>{{monitoringRequest?.ocrNumber}}</td>
+    <th>Pesquisa Cadastral Realizada por</th>
+    <td>
+      {{ monitoringRequest?.data?.surveyConductedBy === 'others' 
+          ? '(Outros) ' + monitoringRequest?.data?.surveyConductedByOthers 
+          : monitoringRequest?.data?.surveyConductedBy }}
+    </td>
+  </tr>
+  <tr>
+    <th>Produto</th>
+    <td>{{monitoringRequest?.data?.loadDescription}}</td>
+    <th>Tipo de Carga</th>
+    <td>{{monitoringRequest?.loadType}}</td>
+  </tr>
+  <tr>
+    <th>Preço da Carga</th>
+    <td colspan="3">{{monitoringRequest?.data?.loadValue | currency: 'R$ '}}</td>
+  </tr>
+  <tr>
+    <th>Observações</th>
+    <td colspan="3">{{monitoringRequest?.data?.observations}}</td>
+  </tr>
+</table>
+
+
+
+
+
+<!-- <small style="color: #a3a3a3" class="text-bold">* Escolta e isca irão aparecer caso a SM tenha configurado</small> -->
+
+
+
+<div *ngIf="monitoringRequest?.data?.armedGuards.length > 0">
+
+
+  <h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+    Escolta
+  </h2>
+
+  <table class="custom-bordered-table">
+    <tr>
+      <th>Tecnologia </th>
+      <th>N Serie</th>
+      <th>Placa</th>
+      <th>Contato</th>
+      <th>Agente 1</th>
+      <th>Agente 2</th>
+    </tr>
+    <tr *ngFor="let armedGuard of monitoringRequest?.data?.armedGuards ?? []">
+      <td>{{armedGuard.technology}}</td>
+      <td>{{armedGuard.serialNumber}}</td>
+      <td>{{armedGuard.plate}}</td>
+      <td>{{armedGuard.contact}}</td>
+      <td>{{armedGuard.firstAgent}}</td>
+      <td>{{armedGuard.secondAgent}}</td>
+    </tr>
+
+  </table>
+</div>
+
+<div *ngIf="monitoringRequest?.data?.baits.length > 0">
+
+  <h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+    Iscas
+  </h2>
+
+
+
+  <table class="custom-bordered-table">
+    <tr>
+      <th>N Serie</th>
+      <th>Local de instalação</th>
+      <th>Tecnologia</th>
+    </tr>
+    <tr *ngFor="let bait of monitoringRequest?.data?.baits ?? []">
+      <td> {{bait.serialNumber}}</td>
+      <td>{{getLocalInstalaition(bait.installationLocation)}}</td>
+      <td>{{bait.technology?.name}}</td>
+    </tr>
+
+  </table>
+
+</div>
+
+
+<h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
+  Pontos
+</h2>
+
+
+<table class="custom-bordered-table">
+  <tr>
+    <th>
+      Endereço
+    </th>
+    <th>
+      Cidade
+    </th>
+    <th>
+      Estado
+    </th>
+    <th>Data/hora</th>
+  </tr>
+  <tr *ngFor="let travelStep of monitoringRequest?.data?.travelSteps">
+    <td>{{travelStep.address}}</td>
+    <td>{{travelStep.city}}</td>
+    <td>{{travelStep.state}}</td>
+    <td>{{travelStep.date | date: 'dd/MM/yyyy'}}</td>
+  </tr>
+</table>
+
+
+
+
+<!-- <div style="display: flex; justify-content: center;">
   <div style="flex-grow: 10"></div>
   <div style="flex-grow: 1">
     <img height="100px" src="https://web3.gertran.com.br/assets/images/logo/logogertran.png" />
@@ -8,6 +252,7 @@
 <span class="text-center metadata-text">
   ID: {{monitoringRequest?.data?.id}} - {{currentDate}}
 </span>
+
 
 <nz-descriptions nzTitle="Cliente" nzBordered nzSize="small">
   <nz-descriptions-item nzTitle="Embarcador">
@@ -159,4 +404,4 @@
     </tr>
     </tbody>
   </nz-table>
-</div>
+</div> -->

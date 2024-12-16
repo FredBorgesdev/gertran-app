@@ -23,4 +23,13 @@ export class MonitoringRequestsCheckListPrintableComponent implements OnInit {
   get currentDate(): string {
     return format(new Date(), 'dd/MM/yyyy HH:mm:ss');
   }
+
+  getLocalInstalaition(vehicleInstalation): String{
+    if(vehicleInstalation == 'truck')
+      return 'Cavalo'
+    if(vehicleInstalation=='wagon')
+      return 'Carreta'
+    if(vehicleInstalation=='load')
+      return 'Carga'
+  }
 }

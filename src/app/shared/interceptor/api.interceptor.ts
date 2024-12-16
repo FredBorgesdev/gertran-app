@@ -94,6 +94,14 @@ export class ApiInterceptor implements HttpInterceptor {
     ) {
       headers['X-Customer-Key'] = Cookie.get(GERTRAN_CUSTOMER_ID);
     }
+  
+    // // Add ngrok-skip-browser-warning header to bypass warning
+    // // if (url && url.includes('ngrok.com')) {
+    //   headers['ngrok-skip-browser-warning'] = ' s';
+    // // }
+    // // Set a custom User-Agent to avoid triggering the warning page
+    // headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
+  
     return new HttpHeaders(headers);
   }
 
