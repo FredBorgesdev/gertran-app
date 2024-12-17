@@ -386,7 +386,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   setColorRowInSetHighValue(data: any) {
     try {
       data.results.map(x => {
-        if (parseFloat(x.monitoringRequest.loadValue) > 600000.00) {
+        if (parseFloat(x.monitoringRequest.loadValue) > 1000000.00) {
           if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
             this.setIncidentStatus(x,'high_value')
           }
