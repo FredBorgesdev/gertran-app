@@ -72,7 +72,13 @@ export class TravelRequestsComponent {
   }
 
   get xlsxValues(): any[] {
+    const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+
     return this.monitoringRequests.map((monitoringRequest) => {
+      const formattedLoadValue = currencyFormatter.format(monitoringRequest.loadValue || 0);
       return {
         'Data criacao': format(new Date(monitoringRequest.createdAt), 'dd/MM/yyyy'),
         Carga: monitoringRequest.loadValue,
@@ -84,7 +90,7 @@ export class TravelRequestsComponent {
         Tecnologia: this.getTechnology(monitoringRequest),
         Operacao: monitoringRequest.operation?.name,
         Status: monitoringRequest.status,
-        Valor: monitoringRequest.loadValue,
+        Valor: formattedLoadValue,
       };
     });
   }
