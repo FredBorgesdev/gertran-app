@@ -92,18 +92,18 @@
       >
         <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all">Todos</label>
         <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')"
-               class="border-ag-start">Ag. Inicio</label>
+               class="bg-info">Ag. Inicio</label>
         <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')"
-               class="border-contingency">Contigência</label>
+               class="bg-contingency">Contigência</label>
         <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')"
-               class="border-client">Cliente</label>
+               class="signal-loss">Cliente</label>
         <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')"
-               class="border-travelling">Em viagem</label>
-        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="border-standby">Parado</label>
+               class="bg-success">Em viagem</label>
+        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="danger-alert">Parado</label>
         <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')"
-               class="border-overnight">Pernoite</label>
-        <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
-               class="border-out-of-point">Fora do ponto</label>
+               class="bg-overnight">Pernoite</label>
+        <!-- <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
+               class="border-out-of-point">Fora do ponto</label> -->
       </nz-radio-group>
 
       <button nz-button nzSize="small" class="m-b-5" (click)="openFullScreenTable()">

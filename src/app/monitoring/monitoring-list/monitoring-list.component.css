@@ -170,12 +170,16 @@ nz-select,
   background-color: orange !important;
 }
 
+.high_value {
+  background-color: rgb(63, 139, 71) !important;
+}
+
 .warning-alert {
   background-color: yellow !important;
 }
 
 .danger-alert {
-  background-color: #ff6b6b !important;
+  background-color: #ff4d4f !important;
 }
 
 .exceeded-start{

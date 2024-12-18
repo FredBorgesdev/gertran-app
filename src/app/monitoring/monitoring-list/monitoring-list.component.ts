@@ -99,7 +99,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Parado', value: 'stopped', backgroundColorClass: 'danger-alert'},
     {title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success'},
     {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-info'},
-    {title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'bg-warning'},
+    {title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'signal-loss'},
     {title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-overnight'},
     // {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-none'},
     {title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest'},
@@ -111,7 +111,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Alerta + 15 min.', value: 'alert15', backgroundColorClass:'danger-alert'},
     {title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass:'exceeded-start'},
     {title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass:'not-allowed-to-road'},
-    {title: 'Valor Alto', value: 'high_value', backgroundColorClass:'signal-loss'},
+    {title: 'Valor Alto', value: 'high_value', backgroundColorClass:'high_value'},
   ];
 
   filteredTravelStatus = this.travelStatus.filter
@@ -411,8 +411,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-    this.setColorRowInVehiclesWithLostTrack(data)
     this.setColorRowInSetHighValue(data)
+    this.setColorRowInVehiclesWithLostTrack(data)
     this.setColorRowInVehiclesWithLExceededStart(data)
     this.setColorRowInVehiclesWithoutPermission(data)
 
