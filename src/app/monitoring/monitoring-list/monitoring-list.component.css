@@ -191,6 +191,11 @@ nz-select,
   background-color: #9ce7af !important;
 }
 
+.custom-label {
+  font-weight: bold;
+  color: black;
+}
+
 @keyframes pulse {
   from {
     opacity: 1;

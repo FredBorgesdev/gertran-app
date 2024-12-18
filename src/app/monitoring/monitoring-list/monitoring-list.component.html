@@ -70,9 +70,9 @@
         <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-5" (click)="openAlertModal('danger')">
           ({{ alertsCount?.danger ?? 0 }}) Urgentes
         </button>
-        <button nzSize="small" nz-button nzType="success" class="m-r-5" (click)="openMonitoringRequestReleasedAlertModal()">
+        <!-- <button nzSize="small" nz-button nzType="success" class="m-r-5" (click)="openMonitoringRequestReleasedAlertModal()">
           ({{ monitoringRequestReleasedAlertsCount }}) LIBERADOS
-        </button>
+        </button> -->
         <button nzSize="small" nz-button nzType="dashed">
           <span nz-icon nzType="car"></span>
           {{ plate }} - Placa
@@ -90,23 +90,31 @@
         nzButtonStyle="outline"
         nzSize="small"
       >
-        <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all">Todos</label>
+        <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all custom-label">Todos</label>
         <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')"
-               class="bg-info">Ag. Inicio</label>
+               class="bg-info custom-label">Ag. Inicio</label>
         <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')"
-               class="bg-contingency">Contigência</label>
+               class="bg-contingency custom-label">Contigência</label>
         <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')"
-               class="signal-loss">Cliente</label>
+               class="signal-loss custom-label">Cliente</label>
         <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')"
-               class="bg-success">Em viagem</label>
-        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="danger-alert">Parado</label>
-        <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')"
-               class="bg-overnight">Pernoite</label>
+               class="bg-success custom-label">Em viagem</label>
+        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="danger-alert custom-label">Parado</label>
+        <label nz-radio-button nzValue="driver_in_overnight custom-label" (click)="applyTravelStatusFilter('driver_in_overnight')"
+               class="bg-overnight custom-label">Pernoite</label>
+        <label nz-radio-button class="bg-waiting-start custom-label">Perda de sinal</label>
+
+        <label nz-radio-button class="bg-contingency custom-label">Contigência</label>
+
+        <label class="" nz-radio-button class="high_value custom-label">Valor Alto</label>
+
+
+
         <!-- <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
                class="border-out-of-point">Fora do ponto</label> -->
       </nz-radio-group>
 
-      <button nz-button nzSize="small" class="m-b-5" (click)="openFullScreenTable()">
+      <button nz-button nzSize="small" class="m-b-5 custom-label" (click)="openFullScreenTable()">
         <span nz-icon nzType="fullscreen"></span>
         Tela cheia
       </button>
@@ -146,8 +154,8 @@
       <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="border-standby">Parado</label>
       <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')"
              class="border-overnight">Pernoite</label>
-      <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
-             class="border-out-of-point">Fora do ponto</label>
+      <!-- <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
+             class="border-out-of-point">Fora do ponto</label> -->
     </nz-radio-group>
 
     <div *ngIf="!isTableFullscreen else monitoringDataTable"></div>
