@@ -110,13 +110,24 @@ export class BaseCustomerFilterComponent implements OnInit {
     autoTable(doc, {
       html: 'table',
       didDrawPage: (data) => {
-        doc.setFontSize(30);
-        doc.text(this.fileName.toUpperCase(), data.settings.margin.left, data.settings.margin.top - 60);
+        doc.setFontSize(24);
+        doc.setFont("helvetica", "bold"); // Define a fonte como negrito
+        // doc.setFont("helvetica", "normal"); // Helvetica (parecida com Arial)
+        doc.setTextColor(0, 0, 0); // Define a cor do texto como preto (RGB: 0, 0, 0)
+
+        // doc.text(this.fileName.toUpperCase(), data.settings.margin.left, data.settings.margin.top - 60);
+        
+        doc.text(
+          this.fileName.toUpperCase(),
+          data.settings.margin.left,
+          data.settings.margin.top - 60
+        );
+
         doc.addImage('assets/images/logo/logogertran.png', 'PNG', 650, 10, 100, 100);
 
         doc.setFontSize(10);
         doc.text(
-          `Filtros aplicados: ${this.selectedCustomerName} - ${format(this.validateForm.controls.from.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.to.value, 'dd/MM/yyyy')}`,
+          `CLIENTE: ${this.selectedCustomerName.toUpperCase()} - PERÍODO: ${format(this.validateForm.controls.from.value, 'dd/MM/yyyy')} - ${format(this.validateForm.controls.to.value, 'dd/MM/yyyy')}`,
           data.settings.margin.left,
           data.settings.margin.top - 30
         );
@@ -136,12 +147,19 @@ export class BaseCustomerFilterComponent implements OnInit {
       },
       margin: {top: 140},
       columnStyles: this.columnStyles,
+      // bodyStyles: {
+      //   fontSize: 7,
+      // }
+
       bodyStyles: {
         fontSize: 7,
-      }
+        font: "helvetica", // Fonte Helvetica
+        fontStyle: "bold", // Aplica negrito às células da tabela
+        textColor: [0, 0, 0], // Cor preta para o texto da tabela
+      },
     });
 
-    doc.save(`${this.fileName} - ${this.selectedCustomerName}.pdf`);
+    doc.save(`${this.fileName} - ${this.selectedCustomerName.toUpperCase()}.pdf`);
   }
 
   get isGertranStaff(): boolean {
