@@ -21,6 +21,10 @@
 
 <table class="custom-bordered-table">
   <tr>
+    <th class="first-column">Código Solicitação</th>
+    <td colspan="3">{{monitoringRequest?.data?.id ?? ' ' }}</td>
+  </tr>
+  <tr>
     <th class="first-column">Embarcador</th>
     <td>{{monitoringRequest?.data?.customer?.tradingName ?? '-' }}</td>
     <th class="first-column">Transportador</th>
@@ -124,7 +128,7 @@
     <th>Operação</th>
     <td>{{monitoringRequest?.data?.operation?.name}}</td>
     <th>Operação Compartilhada</th>
-    <td>{{monitoringRequest?.data?.sharedOperation?.name}} - {{monitoringRequest?.data?.sharedOperation?.email}}</td>
+    <td>{{monitoringRequest?.data?.sharedOperation?.name}}  {{monitoringRequest?.data?.sharedOperation?.email}}</td>
   </tr>
   <tr>
     <th>Ordem de carregamento / OCR</th>
@@ -235,7 +239,7 @@
     <td>{{travelStep.address}}</td>
     <td>{{travelStep.city}}</td>
     <td>{{travelStep.state}}</td>
-    <td>{{travelStep.date | date: 'dd/MM/yyyy'}}</td>
+    <td>{{travelStep.date | date: 'dd/MM/yyyy - hh:mm'}}</td>
   </tr>
 </table>
 
