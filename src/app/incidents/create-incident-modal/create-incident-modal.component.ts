@@ -69,7 +69,7 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
     {label: 'Furto parcial', value: 'partial_theft'},
     {label: 'Assistencia técnica', value: 'technical_assistance'},
     {label: 'Evento teste', value: 'incident_test'},
-    {label: 'Outro', value: 'others'},
+    // {label: 'Outro', value: 'others'},
     {label: 'Furto', value: 'theft'},
     // {label: 'Não condizente com as regras', value: 'non_compliance_with_rules'},
     {label: 'Sem solicitação de monitoramento', value: 'without_monitoring_request'},
