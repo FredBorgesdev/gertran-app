@@ -73,6 +73,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Previsão Fim',width: '70px', gertranStaffOnly: true},
     {title: 'Inicio Horario permitido',width: '70px', gertranStaffOnly: true},
     {title: 'Fim Horario permitido',width: '70px', gertranStaffOnly: true},
+    {title: 'Men. In.', width: '75px', gertranStaffOnly: true},
+    {title: 'Em mov.', width: '75px', gertranStaffOnly: true},
+    {title: 'Clie.', width: '75px', gertranStaffOnly: true},
   ];
   validateForm: FormGroup;
   monitoringRequestReleasedAlertsCount = 0

@@ -330,6 +330,18 @@
       <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
       <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficStartTime | slice:0:5 || '-' }}</td>
       <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficEndTime | slice:0:5 || '-' }}</td>
+      <td *ngIf="user.isGertranStaff" >
+        <img width="16" src="assets/icons/envelope.black.svg" style="filter: brightness(0) contrast(100%);" alt="Orange Key" *ngIf="item.monitoringRequest.hasInformedInitTrip">
+        <img width="16" src="assets/icons/envelope.white.svg" alt="Grey Key" *ngIf="!item.monitoringRequest.hasInformedInitTrip">
+      </td>
+      <td *ngIf="user.isGertranStaff" >
+        <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key" *ngIf="item.monitoringRequest.isVehicleMoving">
+        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest.isVehicleMoving">
+      </td>
+      <td *ngIf="user.isGertranStaff" >
+        <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key" *ngIf="item.monitoringRequest.isVehicleCustomer">
+        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest.isVehicleCustomer">
+      </td>
       <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
