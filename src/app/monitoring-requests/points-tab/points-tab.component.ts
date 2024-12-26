@@ -253,7 +253,7 @@ export class PointsTabComponent implements OnInit {
 
   async calculateEtaForAllPoints(): Promise<void> {
     // // TODO
-    return;
+    // return;
     //#hmn*
     const points = this.getPointsControls();
     // points[0]?.patchValue({date: points[0]?.value.date || new Date()});
