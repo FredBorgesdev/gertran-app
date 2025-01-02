@@ -8,6 +8,14 @@
   <span>Criar ocorrência</span>
 </button>
 
+<nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+  <div nz-col [nzSpan]="12">
+    <label nz-checkbox [(ngModel)]="isChecked" (ngModelChange)="onCheckboxChange()" >
+      <span>Gerado por automação</span>
+    </label>
+  </div>
+</nz-form-control>
+
 <nz-table
   #incidentsTable
   [nzData]="incidents?.results"

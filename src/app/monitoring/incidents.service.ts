@@ -67,7 +67,7 @@ export class IncidentsService implements ApiService<Incident> {
 
   getAll(
     pagination: Pagination,
-    filters?: { monitoringRequest?: string; truck?: string }
+    filters?: { monitoringRequest?: string; truck?: string, includes_by_automation?: boolean }
   ): Observable<GetAllResponse<Incident>> {
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
@@ -80,6 +80,9 @@ export class IncidentsService implements ApiService<Incident> {
     }
     if (filters?.truck) {
       params.truck = filters.truck;
+    }
+    if (filters?.includes_by_automation) {
+      params.includes_by_automation = filters.includes_by_automation;
     }
 
     return this.http.get<GetAllResponse<Incident>>('incidents', {params});

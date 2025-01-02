@@ -51,6 +51,7 @@ export class IncidentsModalComponent implements OnInit {
   ];
 
   incidents: GetAllResponse<Incident>;
+  isChecked = false;
 
   constructor(
     private service: IncidentsService,
@@ -63,6 +64,10 @@ export class IncidentsModalComponent implements OnInit {
     this.loadIncidents();
   }
 
+  onCheckboxChange(): void {
+    this.loadIncidents()
+  }
+
   loadIncidents(url?: string): void {
     this.isLoading = true;
 
@@ -70,7 +75,8 @@ export class IncidentsModalComponent implements OnInit {
       url
     }, {
       monitoringRequest: this.position.monitoringRequest ? this.position.monitoringRequest.id : null,
-      truck: !this.position?.monitoringRequest ? this.position?.truck.id : null
+      truck: !this.position?.monitoringRequest ? this.position?.truck.id : null,
+      includes_by_automation: this.isChecked
     }).subscribe(response => {
       this.incidents = response;
       this.isLoading = false;
