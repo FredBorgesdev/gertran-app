@@ -73,9 +73,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     {title: 'Previsão Fim',width: '70px', gertranStaffOnly: true},
     {title: 'Inicio Horario permitido',width: '70px', gertranStaffOnly: true},
     {title: 'Fim Horario permitido',width: '70px', gertranStaffOnly: true},
-    {title: 'Men. In.', width: '75px', gertranStaffOnly: true},
-    {title: 'Em mov.', width: '75px', gertranStaffOnly: true},
-    {title: 'Clie.', width: '75px', gertranStaffOnly: true},
+    {title: 'Informou Inicio de Viagem', width: '75px', gertranStaffOnly: true},
+    {title: 'Em movimento', width: '80px', gertranStaffOnly: true},
+    {title: 'Prox. Origem', width: '75px', gertranStaffOnly: true},
+    {title: 'Informou Macro parada', width: '75px', gertranStaffOnly: true},
+    {title: 'Informou Macro Pernoite', width: '75px', gertranStaffOnly: true},
+    {title: 'Hora Macro parada', width: '75px', gertranStaffOnly: true},
   ];
   validateForm: FormGroup;
   monitoringRequestReleasedAlertsCount = 0
