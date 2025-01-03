@@ -33,7 +33,6 @@ export class GertranDirectDetailsComponent implements OnInit {
     this.gertranDirectService.get(id).subscribe({
       next: (response) => {
         this.data = response;
-        this.fetchDetails(this.data.id);
         this.isLoading = false;
       },
       error: (error) => {
@@ -45,27 +44,23 @@ export class GertranDirectDetailsComponent implements OnInit {
   }
 
   approveDetail(): void {
-    this.isApproved = true;
-
     if (!this.data) {
       this.message.error('Nenhum dado disponível para aprovar.');
       return;
     }
 
+    this.isLoading = true;
     this.gertranDirectService.approve(this.data.id).subscribe({
       next: () => {
-        this.isLoading = true;
         this.message.success('Detalhe aprovado com sucesso!');
-        this.isApproved = false;
+        this.isApproved = true;
         this.isLoading = false;
-
       },
       error: (error) => {
         this.message.error('Erro ao aprovar o detalhe.');
         console.error(error);
-        this.isLoading = false;
         this.isApproved = false;
-
+        this.isLoading = false;
       }
     });
   }

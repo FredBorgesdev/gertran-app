@@ -4,7 +4,7 @@
       <h2>Venda direta</h2>
     </div>
 
-    <table nz-table class="details-table">
+    <table nz-table class="details-table" *ngIf="data?.status == 'approved'">
       <tbody>
         <tr>
           <th>CPF</th>
@@ -77,6 +77,53 @@
         </tr>
       </tbody>
     </table>
+
+
+
+    <nz-card *ngIf="data?.monitoringRequestGertranDirect" nzBordered>
+      <div class="details-header">
+        <h2>Detalhes da Solicitação de Monitoramento</h2>
+      </div>
+    
+      <table nz-table [nzBordered]="true" class="details-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+       <tr>
+            <th>ID</th>
+            <td>{{ data.monitoringRequestGertranDirect.id }}</td>
+          </tr>
+           <tr>
+            <th>Data de Criação</th>
+            <td>{{ data.monitoringRequestGertranDirect.createdAt | date: 'dd/MM/yyyy HH:mm' || '-'  }}</td>
+          </tr>
+         <tr>
+            <th>Descrição da Carga</th>
+            <td>{{ data.monitoringRequestGertranDirect.loadDescription || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Valor da Carga</th>
+            <td>{{ data.monitoringRequestGertranDirect.loadValue || 'N/A' }}</td>
+          </tr>
+          <!--<tr>
+            <th>Status</th>
+            <td>{{ data.monitoring_request.status || 'N/A' }}</td>
+          </tr>
+          <tr>
+            <th>Observações</th>
+            <td>{{ data.monitoring_request.observations || 'N/A' }}</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </nz-card>
+
+    
+
+
     
     <div class="details-footer" style="text-align: right;">
       <button *ngIf="data.status === 'pending' && !isApproved" nz-button nzType="primary" (click)="approveDetail()">Aprovar</button>
