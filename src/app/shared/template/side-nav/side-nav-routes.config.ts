@@ -64,6 +64,16 @@ export const ROUTES: SideNavInterface[] = [
         gertranStaffOnly: true,
         permission: Permissions.HISTORICAL_MONITORING_REQUEST_VIEW
       },
+      {
+        path: '/gertran-direct/approval',
+        title: 'Venda Avulsa',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'database',
+        submenu: [],
+        gertranStaffOnly: true,
+        permission: Permissions.HISTORICAL_MONITORING_REQUEST_VIEW
+      },
     ]
   },
   {
