@@ -233,13 +233,13 @@
     <th>
       Estado
     </th>
-    <th>Data/hora</th>
+    <th>Data/Hora</th>
   </tr>
   <tr *ngFor="let travelStep of monitoringRequest?.data?.travelSteps">
     <td>{{travelStep.address}}</td>
     <td>{{travelStep.city}}</td>
     <td>{{travelStep.state}}</td>
-    <td>{{travelStep.date | date: 'dd/MM/yyyy - hh:mm'}}</td>
+    <td>{{ travelStep.date + 'T' + travelStep.time | date: 'dd/MM/yyyy HH:mm' }}</td>
   </tr>
 </table>
 

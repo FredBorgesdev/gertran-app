@@ -197,13 +197,13 @@
       <th>
         Estado
       </th>
-      <th>Data/hora</th>
+      <th>Data/Hora</th>
     </tr>
     <tr *ngFor="let column of monitoringRequest?.data.travelSteps ?? []">
       <td>{{column.address}}</td>
       <td>{{column.city}}</td>
       <td>{{column.state}}</td>
-      <td>{{column.date | date: 'dd/MM/yyyy'}}</td>
+      <td>{{ column.date + 'T' + column.time | date: 'dd/MM/yyyy HH:mm' }}</td>
     </tr>
   </table>
 
