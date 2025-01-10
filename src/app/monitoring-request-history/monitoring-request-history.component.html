@@ -65,11 +65,44 @@
                     field.name !== 'wasNotifiedDeviatedFromRoute' &&
                     field.name !== 'deviatedFromRouteAt' &&
                     field.name !== 'expirationDateResearch' &&
-                    field.name !== 'protocolResearch'
+                    field.name !== 'protocolResearch' &&
+                    field.name !== 'macroStoppedAt'
                   ">
                     <td>{{ record.historyId }}</td>
                     <td>{{ field.name }}</td>
                     <td>
+
+
+                      <ng-container *ngIf="
+                      field.name === 'Informou macro de inicio de viagem'
+                      ">
+                        SIM
+                      </ng-container>
+
+
+                      <ng-container *ngIf="
+                      field.name === 'Parado' ||
+                      field.name === 'Movimento'
+                      ">
+                        SIM
+                      </ng-container>
+
+
+                      <ng-container *ngIf="
+                        field.name === 'INFORMOU PARADA' ||
+                        field.name === 'INFORMOU Reinicio' || 
+                        field.name === 'Macro de pernoite' || 
+                        field.name === 'INFORMOU Reinicio pernoite'">
+                        {{ field.value && field.value !== 'Invalid Date' ? (field.value | date: 'dd/MM/yyyy HH:mm:ss') : '' }}
+                      </ng-container>
+
+
+
+                      
+                      
+
+                      
+                      
                       <ng-container *ngIf="field.name === 'Tipo Da Carga'">
                         {{ getLoadTypeName(field.value) }}
                       </ng-container>
@@ -90,7 +123,14 @@
                         field.name !== 'Fonte Pesquisa Cadastral' && 
                         field.name !== 'Valor Carga' &&
                         field.name !== 'Status' &&
-                        field.name !== 'Status Da Viagem'
+                        field.name !== 'Status Da Viagem' &&
+                        field.name !== 'INFORMOU PARADA' &&
+                        field.name !== 'Informou macro de inicio de viagem' &&
+                        field.name !== 'INFORMOU Reinicio' &&
+                        field.name !== 'Parado' &&
+                        field.name !== 'Movimento' &&
+                        field.name !== 'Macro de pernoite' &&
+                        field.name !== 'INFORMOU Reinicio pernoite' 
                       ">
                         <ng-container *ngIf="isObject(field.value); else showValue">
                           <ng-container *ngIf="field.name === 'Cavalo'">{{ field.value.vehicle.plate }}</ng-container>

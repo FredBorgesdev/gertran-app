@@ -58,10 +58,57 @@ export class MonitoringRequestHistory implements OnInit {
       'observations': 'Observação',
       'travelStatus': 'Status Da Viagem',
       'loadType': 'Tipo Da Carga',
-      'status': 'Status'
+      'status': 'Status',
+      'isStoppedByMacroTrue': 'INFORMOU PARADA',
+      'isStoppedByMacroFalse': 'INFORMOU Reinicio',
+      'hasInformedInitTrip': 'Informou macro de inicio de viagem',
+      'isVehicleCustomer': 'Veiculo próximo a origem',
+      'isVehicleMovingTrue': 'Movimento',
+      'isVehicleMovingFalse': 'Parado',
+      'isStoppedByMacroForOvernightTrue': 'Macro de pernoite',
+      'isStoppedByMacroForOvernightFalse': 'INFORMOU Reinicio pernoite'
     };
 
-    for (const key in changes) {
+    for (let key in changes) {
+
+      if (key === 'isStoppedByMacroForOvernight') {
+        if (changes['isStoppedByMacroForOvernight'] === false) {
+          key = 'isStoppedByMacroForOvernightFalse';
+          changes[key] =  changes['macroStoppedAt']
+          delete changes['isStoppedByMacroForOvernight']
+        } else if (changes['isStoppedByMacroForOvernight'] === true) {
+          key = 'isStoppedByMacroForOvernightTrue';
+          changes[key] =  changes['macroStoppedAt']
+          delete changes['isStoppedByMacroForOvernight']
+        } 
+      }
+      
+
+      if (key === 'isStoppedByMacro') {
+        if (changes['isStoppedByMacro'] === false) {
+          key = 'isStoppedByMacroFalse';
+          changes[key] =  changes['macroStoppedAt']
+          delete changes['isStoppedByMacro']
+        } else if (changes['isStoppedByMacro'] === true) {
+          key = 'isStoppedByMacroTrue'
+          changes[key] =  changes['macroStoppedAt']
+          delete changes['isStoppedByMacro']
+        } 
+      }
+
+      if (key == 'isVehicleMoving'){
+        if (changes['isVehicleMoving'] === false) {
+          key = 'isVehicleMovingFalse';
+          changes[key] = changes['isVehicleMoving']
+          delete changes['isVehicleMoving']
+        } else if (changes['isVehicleMoving'] === true) {
+          key = 'isVehicleMovingTrue';
+          changes[key] = changes['isVehicleMoving']
+          delete changes['isVehicleMoving']
+        } 
+
+      }
+
       changedFields.push({ 
         name: fieldMappings[key] || key,
         value: changes[key] 
