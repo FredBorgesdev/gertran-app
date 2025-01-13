@@ -35,10 +35,22 @@ export class OperationsRulesByPriceValueService implements ApiService<OperationR
   }
 
   save(data: OperationRuleByPriceValue, operationId: string): Observable<OperationRuleByPriceValue> {
+    if(data.armedGuard == undefined)
+      data.armedGuard = false
+
+    if(data.rfBait == undefined)
+      data.rfBait = false
+
     return this.http.post<any>(`settings/operations/${operationId}/rules-by-price-value/create`, data);
   }
 
   update(id: string, data: OperationRuleByPriceValue, operationId: string): Observable<OperationRuleByPriceValue> {
+    if(data.armedGuard == undefined)
+      data.armedGuard = false
+
+    if(data.rfBait == undefined)
+      data.rfBait = false
+    
     return this.http.patch<any>(`settings/operations/${operationId}/rules-by-price-value/${id}/update`, data);
   }
 
