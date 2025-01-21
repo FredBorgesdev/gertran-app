@@ -197,10 +197,13 @@ export class PointsTabComponent implements OnInit {
       nominatimAddress.address.city ||
       nominatimAddress.address.town ||
       nominatimAddress.address.village ||
-      nominatimAddress.address.municipality;
-    const state = brazilianStates.find(
-      ({name}) => name === nominatimAddress.address.state
-    ).abbreviation;
+      nominatimAddress.address.municipality ||
+      nominatimAddress.address.state;
+      const stateObj = brazilianStates.find(
+        ({ name }) => name === nominatimAddress.address.state
+      );
+      const state = stateObj ? stateObj.abbreviation : 'XX'; // Valor padrão 'XX' caso não encontre o estado.
+
     const latitude = Number(nominatimAddress.lat).toFixed(6);
     const longitude = Number(nominatimAddress.lon).toFixed(6);
     const zipCode = nominatimAddress.address.postcode;
