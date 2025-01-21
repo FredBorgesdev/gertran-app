@@ -146,7 +146,7 @@ export class PointsTabComponent implements OnInit {
         isFirstPoint == true ? PointTypes.START : chosenPoint?.pointType, // Define "start" para o primeiro ponto
         [Validators.required]
       ),
-      state: new FormControl(chosenPoint?.state, [Validators.required]),
+      state: new FormControl(chosenPoint?.state, []),
       city: new FormControl(chosenPoint?.city, [Validators.required]),
       zipCode: new FormControl(chosenPoint?.zipCode, []),
     });
@@ -198,9 +198,9 @@ export class PointsTabComponent implements OnInit {
       nominatimAddress.address.town ||
       nominatimAddress.address.village ||
       nominatimAddress.address.municipality;
-    const state = brazilianStates.find(
-      ({name}) => name === nominatimAddress.address.state
-    ).abbreviation;
+    // const state = brazilianStates.find(
+    //   ({name}) => name === nominatimAddress.address.state
+    // ).abbreviation;
     const latitude = Number(nominatimAddress.lat).toFixed(6);
     const longitude = Number(nominatimAddress.lon).toFixed(6);
     const zipCode = nominatimAddress.address.postcode;
@@ -208,7 +208,7 @@ export class PointsTabComponent implements OnInit {
     formGroup.patchValue({
       latitude,
       longitude,
-      state,
+      // state,
       city,
       zipCode,
     });
