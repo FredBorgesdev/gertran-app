@@ -1,13 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './authentication/authentication.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html'
+  selector: 'app-root',
+  templateUrl: './app.component.html'
 })
-export class AppComponent {
-  constructor() {
-    // if (location.host === 'web3.gertran.com.br') {
-    //   location.href = 'http://web.gertran.com.br';
-    // }
+export class AppComponent implements OnInit {
+
+  constructor(private a :AuthenticationService) {
+  }
+  ngOnInit(): void {
+    console.log('Componente inicializado');
+    this.startInterval();
+  }
+
+  startInterval(): void {
+    setInterval(() => {
+      this.executeTask();
+    }, 3 * 60 * 1000); // 3 minutos em milissegundos
+  }
+
+  executeTask(): void {
+    console.log('Executando tarefa a cada 3 minutos');
+    this.a.refresh()
+    // Adicione aqui o código que deseja executar
   }
 }

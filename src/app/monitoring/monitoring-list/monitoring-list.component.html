@@ -2,72 +2,51 @@
   <form [formGroup]="validateForm">
     <div nz-row nzGutter="6" nzAlign="middle">
       <div nz-col nzSpan="4" *ngIf="authService.customerId">
-        <nz-select
-          nzPlaceHolder="Cliente"
-          formControlName="customer"
-        >
-          <nz-option
-            *ngFor="let customer of authService.user.customer"
-            [nzLabel]="customer.tradingName"
-            [nzValue]="customer.id"
-          ></nz-option>
+        <nz-select nzPlaceHolder="Cliente" formControlName="customer">
+          <nz-option *ngFor="let customer of authService.user.customer" [nzLabel]="customer.tradingName"
+            [nzValue]="customer.id"></nz-option>
         </nz-select>
       </div>
 
       <div nz-col nzSpan="4" *ngIf="!authService.customerId">
-        <nz-select
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Cliente"
-          formControlName="customer"
-          (ngModelChange)="loadPositions()"
-          nzServerSearch
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cliente" formControlName="customer"
+          (ngModelChange)="loadPositions()" nzServerSearch
           (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-          (nzOnSearch)="selectableCustomerService.searchByName($event)"
-          [nzDropdownRender]="selectLoading"
-          nzSize="small"
-        >
-          <nz-option
-            *ngFor="let customer of selectableCustomerService.customers"
-            [nzLabel]="customer.tradingName"
-            [nzValue]="customer.id"
-          ></nz-option>
+          (nzOnSearch)="selectableCustomerService.searchByName($event)" [nzDropdownRender]="selectLoading"
+          nzSize="small">
+          <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+            [nzValue]="customer.id"></nz-option>
         </nz-select>
       </div>
 
       <div nz-col nzSpan="4" *ngIf="!authService.customerId">
-        <nz-select
-          nzPlaceHolder="Terminais"
-          formControlName="terminal"
-          (ngModelChange)="loadPositions()"
-          nzSize="small"
-        >
+        <nz-select nzPlaceHolder="Terminais" formControlName="terminal" (ngModelChange)="loadPositions()"
+          nzSize="small">
           <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal.id"></nz-option>
         </nz-select>
       </div>
 
       <div nz-col nzSpan="4">
-        <label
+        <!-- <label
           nz-checkbox
           formControlName="hideOld"
           class="font-size-12"
-        >Ocultar antigos</label>
-        <label
-          nz-checkbox
-          formControlName="travelling"
-          (ngModelChange)="loadPositions()"
-          class="font-size-12 m-l-0"
-        >Em viagem</label>
+        >Ocultar antigos</label> -->
+        <label nz-checkbox formControlName="travelling" (ngModelChange)="loadPositions()" class="font-size-12 m-l-0">Em
+          viagem</label>
       </div>
 
       <div nz-col nzSpan="12" data-testid="alerts" class="alert-button-group">
-        <button nzSize="small" nz-button nzType="secondary" class="m-r-5" (click)="openAlertModal('info')">
+        <button nzSize="small" nz-button nzType="secondary" class="m-r-5" (click)="openAlertModal('info')"
+          *ngIf="user.isGertranStaff">
           ({{ alertsCount?.info ?? 0 }}) Mensagens
         </button>
-        <button nzSize="small" nz-button nzType="primary" class="m-r-5" (click)="openAlertModal('warning')">
+        <button nzSize="small" nz-button nzType="primary" class="m-r-5" (click)="openAlertModal('warning')"
+          *ngIf="user.isGertranStaff">
           ({{ alertsCount?.warning ?? 0 }}) Alertas
         </button>
-        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-5" (click)="openAlertModal('danger')">
+        <button nzSize="small" nz-button nzDanger nzType="primary" class="m-r-5" (click)="openAlertModal('danger')"
+          *ngIf="user.isGertranStaff">
           ({{ alertsCount?.danger ?? 0 }}) Urgentes
         </button>
         <!-- <button nzSize="small" nz-button nzType="success" class="m-r-5" (click)="openMonitoringRequestReleasedAlertModal()">
@@ -85,39 +64,37 @@
   <ng-container *ngIf="monitoringData">
     <div *ngIf="user.isGertranStaff">
 
-      <nz-radio-group
-        class="m-t-5 m-b-5"
-        nzButtonStyle="outline"
-        nzSize="small"
-      >
-        <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all custom-label">Todos</label>
+      <nz-radio-group class="m-t-5 m-b-5" nzButtonStyle="outline" nzSize="small">
+        <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')"
+          class="border-all custom-label">Todos</label>
         <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')"
-               class="bg-info custom-label">Ag. Inicio</label>
+          class="bg-info custom-label">Ag. Inicio</label>
         <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')"
-               class="bg-contingency custom-label">Contigência</label>
+          class="bg-contingency custom-label">Contigência</label>
         <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')"
-               class="signal-loss custom-label">Cliente</label>
+          class="signal-loss custom-label">Cliente</label>
         <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')"
-               class="bg-success custom-label">Em viagem</label>
-        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="danger-alert custom-label">Parado</label>
-        <label nz-radio-button nzValue="driver_in_overnight custom-label" (click)="applyTravelStatusFilter('driver_in_overnight')"
-               class="bg-overnight custom-label">Pernoite</label>
+          class="bg-success custom-label">Em viagem</label>
+        <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')"
+          class="danger-alert custom-label">Parado</label>
+        <label nz-radio-button nzValue="driver_in_overnight custom-label"
+          (click)="applyTravelStatusFilter('driver_in_overnight')" class="bg-overnight custom-label">Pernoite</label>
         <label nz-radio-button class="bg-waiting-start custom-label">Perda de sinal</label>
 
-        <label nz-radio-button class="high_value custom-label">Valor Alto</label>
+        <!-- <label nz-radio-button class="high_value custom-label">Valor Alto</label> -->
         <label nz-radio-button class="exceeded-start custom-label">Inicio Excedido</label>
         <!-- <label nz-radio-button class="not-allowed-to-road custom-label">Horário de Rodagem Não Permitido</label> -->
-        
+
 
 
         <!-- <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
                class="border-out-of-point">Fora do ponto</label> -->
       </nz-radio-group>
 
-      <button nz-button nzSize="small" class="m-b-5 custom-label" (click)="openFullScreenTable()">
+      <!-- <button nz-button nzSize="small" class="m-b-5 custom-label" (click)="openFullScreenTable()">
         <span nz-icon nzType="fullscreen"></span>
         Tela cheia
-      </button>
+      </button> -->
     </div>
 
     <div *ngIf="isTableFullscreen else monitoringDataTable"></div>
@@ -125,35 +102,24 @@
 
 </nz-spin>
 
-<nz-modal
-  nzTitle="Monitoramento"
-  [nzVisible]="isTableFullscreen"
-  (nzOnCancel)="closeFullScreenTable()"
-  (nzOnOk)="closeFullScreenTable()"
-  nzWidth="100%"
-  [nzBodyStyle]="{ height: '85vh' }"
-  [nzStyle]="{ top: '10px' }"
-  nzOkText="Fechar"
-  nzCancelText="Cancelar"
->
+<nz-modal nzTitle="Monitoramento" [nzVisible]="isTableFullscreen" (nzOnCancel)="closeFullScreenTable()"
+  (nzOnOk)="closeFullScreenTable()" nzWidth="100%" [nzBodyStyle]="{ height: '85vh' }" [nzStyle]="{ top: '10px' }"
+  nzOkText="Fechar" nzCancelText="Cancelar">
   <div *nzModalContent>
-    <nz-radio-group
-      class="m-t-15 m-b-15"
-      nzButtonStyle="outline"
-      nzSize="small"
-    >
+    <nz-radio-group class="m-t-15 m-b-15" nzButtonStyle="outline" nzSize="small">
       <label nz-radio-button nzValue="all" (click)="applyTravelStatusFilter('all')" class="border-all">Todos</label>
       <label nz-radio-button nzValue="waiting_for_start" (click)="applyTravelStatusFilter('waiting_for_start')"
-             class="border-ag-start">Ag. Inicio</label>
+        class="border-ag-start">Ag. Inicio</label>
       <label nz-radio-button nzValue="contingency" (click)="applyTravelStatusFilter('contingency')"
-             class="border-contingency">Contigência</label>
+        class="border-contingency">Contigência</label>
       <label nz-radio-button nzValue="vehicle_in_customer" (click)="applyTravelStatusFilter('vehicle_in_customer')"
-             class="border-client">Cliente</label>
+        class="border-client">Cliente</label>
       <label nz-radio-button nzValue="in_progress" (click)="applyTravelStatusFilter('in_progress')"
-             class="border-travelling">Em viagem</label>
-      <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')" class="border-standby">Parado</label>
+        class="border-travelling">Em viagem</label>
+      <label nz-radio-button nzValue="stopped" (click)="applyTravelStatusFilter('stopped')"
+        class="border-standby">Parado</label>
       <label nz-radio-button nzValue="driver_in_overnight" (click)="applyTravelStatusFilter('driver_in_overnight')"
-             class="border-overnight">Pernoite</label>
+        class="border-overnight">Pernoite</label>
       <!-- <label nz-radio-button nzValue="out_of_point" (click)="applyTravelStatusFilter('out_of_point')"
              class="border-out-of-point">Fora do ponto</label> -->
     </nz-radio-group>
@@ -161,80 +127,103 @@
     <div *ngIf="!isTableFullscreen else monitoringDataTable"></div>
   </div>
 </nz-modal>
+<!-- [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'auto' }" -->
 
 <ng-template #monitoringDataTable>
-  <nz-table
-    #table
-    [nzData]="monitoringData"
-    [nzFrontPagination]="false"
-    nzTableLayout="fixed"
-    nzSize="small"
-    [nzScroll]="{ y: isTableFullscreen ? '75vh' : 'auto' }"
-    [nzLoading]="isLoading"
-  >
+  <nz-table #table [nzData]="monitoringData" [nzFrontPagination]="false" nzTableLayout="fixed" nzSize="small"
+    [nzLoading]="isLoading">
     <thead>
-    <tr>
-      <th
-        *ngFor="let column of monitoringColumns"
-        [nzSortFn]="column.compare"
-        [nzLeft]="column.nzLeft"
-        [nzWidth]="column.width"
-        class="text-center"
-        [style]="column.style"
-      >{{ column.title }}</th>
-    </tr>
+      <tr>
+        <th *ngFor="let column of monitoringColumns" [nzSortFn]="column.compare" [nzLeft]="column.nzLeft"
+          [nzWidth]="column.width" class="text-center" [style]="column.style">{{ column.title }}</th>
+      </tr>
     </thead>
     <tbody>
-    <tr
-      *ngFor="let item of table.data; let i=index"
-      [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
-      (contextmenu)="openDropdown($event, moreActionsRight, item)"
-      (click)="setPlate(item?.vehiclePlate)"
-    >
-      <td nzLeft class="bg-gray">
-        <img
-          [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
-          alt="logo"
-          width="25px"
-          height="25px"
-        />
-      </td>
-      <td nzLeft class="bg-gray text-dark">{{ item.trackerSerialNumber || '-' }}</td>
-      <td
-        nzLeft
-        nz-tooltip
-        [nzTooltipTitle]="item.monitoringRequest?.id"
-        class="bg-gray"
-      >
-        <img
-          *ngIf="!['reproved', 'cancelled'].includes(item.monitoringRequest?.status)"
-          src="assets/icons/sm-aprovada.svg"
-          alt="SM aprovada"
-          width="20"
-          height="20"
+      <tr *ngFor="let item of table.data; let i=index"
+        [class]="getRowBackgroundColor(item.monitoringRequest?.travelStatus)"
+        (contextmenu)="openDropdown($event, moreActionsRight, item)" (click)="setPlate(item?.vehiclePlate)">
+
+        <td nzLeft class="bg-gray text-center">{{ i + 1 }}</td>
+
+        <td nzLeft class="bg-gray">
+          <img [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'" alt="logo"
+            width="25px" height="25px" />
+        </td>
+        <td nzLeft class="bg-gray text-dark">{{ item.trackerSerialNumber || '-' }}</td>
+        <td nzLeft nz-tooltip [nzTooltipTitle]="item.monitoringRequest?.id" class="bg-gray">
+          <img *ngIf="!['reproved', 'cancelled'].includes(item.monitoringRequest?.status)"
+            src="assets/icons/sm-aprovada.svg" alt="SM aprovada" width="20" height="20">
+          <img *ngIf="['reproved', 'cancelled'].includes(item.monitoringRequest?.status)"
+            src="assets/icons/sm-reprovada.svg" alt="SM reprovada" width="20" height="20">
+        </td>
+        <td nzLeft class="bg-gray text-dark">{{ item.vehiclePlate || '-' }}</td>
+        <!-- <td nzLeft class="bg-gray text-dark" *ngIf="user.isGertranStaff">{{item.monitoringRequest?.loadValue}}</td> -->
+        <!-- <td class="bg-gray text-dark" *ngIf="user.isGertranStaff">
+        <img 
+          width="16" 
+          src="assets/icons/key-orange.svg" 
+          style="filter: brightness(0) contrast(100%);" 
+          alt="Orange Key" 
+          *ngIf="user.isGertranStaff"
         >
-        <img
-          *ngIf="['reproved', 'cancelled'].includes(item.monitoringRequest?.status)"
-          src="assets/icons/sm-reprovada.svg"
-          alt="SM reprovada"
-          width="20"
-          height="20"
+        <img 
+          width="16" 
+          src="assets/icons/key-grey.svg" 
+          alt="Grey Key" 
+          *ngIf="false"
         >
-      </td>
-      <td nzLeft class="bg-gray text-dark">{{ item.vehiclePlate || '-' }}</td>
-      <td>
-        <img width="16" src="assets/icons/key-orange.svg" style="filter: brightness(0) contrast(100%);" alt="Orange Key" *ngIf="item.ignition">
-        <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
-      </td>
-      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <img width="16" src="assets/icons/green-alert.svg" style="filter: brightness(0) contrast(100%);" alt="Grey siren" *ngIf="isSirenOn(item)">
-        <img width="16" src="assets/icons/grey-alert.svg" alt="Green siren" *ngIf="!isSirenOn(item)">
-      </td>
-      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <img width="16" src="assets/icons/green-lock.svg" style="filter: brightness(0) contrast(100%);" alt="Grey lock" *ngIf="isLockOn(item)">
-        <img width="16" src="assets/icons/grey-lock.svg" alt="Green lock" *ngIf="!isLockOn(item)">
-      </td>
-      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+      </td> -->
+
+
+        <!-- <td class="bg-gray text-dark" *ngIf="user.isGertranStaff">
+        <ng-container *ngIf="item.monitoringRequest?.loadValue > 900000; else greyIcon">
+          <img 
+            width="16" 
+            src="assets/icons/key-orange.svg" 
+            style="filter: brightness(0) contrast(100%);" 
+            alt="Orange Key" 
+          >
+        </ng-container>
+        <ng-template #greyIcon>
+          <img 
+            width="16" 
+            src="assets/icons/key-grey.svg" 
+            alt="Grey Key" 
+          >
+        </ng-template>
+      </td> -->
+
+
+        <td class="bg-gray text-dark" *ngIf="user.isGertranStaff">
+          <ng-container *ngIf="item.monitoringRequest?.loadValue <= 500000">
+            <img width="16" src="assets/icons/up-arrow-green.png" alt="Green Key" >
+          </ng-container>
+          <ng-container
+            *ngIf="item.monitoringRequest?.loadValue > 500000 && item.monitoringRequest?.loadValue <= 900000">
+            <img width="16" src="assets/icons/up-arrow-yellow.png" alt="Yellow Key" >
+          </ng-container>
+          <ng-container *ngIf="item.monitoringRequest?.loadValue > 900000">
+            <img width="16" src="assets/icons/up-arrow-red.png" alt="Red Key" >
+          </ng-container>
+        </td>
+
+
+        <td>
+          <img width="16" src="assets/icons/key-orange.svg" style="filter: brightness(0) contrast(100%);"
+            alt="Orange Key" *ngIf="item.ignition">
+          <img width="16" src="assets/icons/key-grey.svg" alt="Grey Key" *ngIf="!item.ignition">
+        </td>
+        <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+          <img width="16" src="assets/icons/green-alert.svg" style="filter: brightness(0) contrast(100%);"
+            alt="Grey siren" *ngIf="isSirenOn(item)">
+          <img width="16" src="assets/icons/grey-alert.svg" alt="Green siren" *ngIf="!isSirenOn(item)">
+        </td>
+        <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+          <img width="16" src="assets/icons/green-lock.svg" style="filter: brightness(0) contrast(100%);"
+            alt="Grey lock" *ngIf="isLockOn(item)">
+          <img width="16" src="assets/icons/grey-lock.svg" alt="Green lock" *ngIf="!isLockOn(item)">
+        </td>
+        <!-- <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
         <span
           *ngIf="getLastEvent(item)"
           nz-tooltip
@@ -245,167 +234,161 @@
           [nzTwotoneColor]="getAlertIcon(item)?.color"
           style="font-size: 20px"
         ></span>
-      </td>
-      <td style="cursor: pointer" (click)="openAutomationModal(item)">
+      </td> -->
+        <!-- <td style="cursor: pointer" (click)="openAutomationModal(item)">
         <span
           nz-icon
           nzType="info-circle"
           nzTheme="fill"
           [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
         ></span>
-      </td>
-      <td (click)="goToMonitoringProtocols(item.monitoringRequest.id)" style="cursor: pointer"><img width="16"
+      </td> -->
+        <!-- <td (click)="goToMonitoringProtocols(item.monitoringRequest.id)" style="cursor: pointer"><img width="16"
                                                                                                     src="assets/icons/camera.png"
                                                                                                     alt="Grey lock">
-      </td>
-      <td
-        style="cursor: pointer"
-        (click)="openMap(item)"
-      >
-        <img
-          src="assets/images/others/map-icon.svg"
-          alt="logo"
-          width="25px"
-          height="25px"
-          style="filter: brightness(0) contrast(100%);"
-          />
-      </td>
-      <td [nzAlign]="'center'">
-        <div class="progress-bar">
-          <div
-            [style]="'--progress:' + item.positionInfo?.travelProgress + '%;'"
-            class="progress"
-          ></div>
-          <span class="progress-text">
-            {{ item.positionInfo?.travelProgress }}%
-          </span>
-        </div>
-      </td>
-      <td class="text-dark">{{ item.speed }}km</td>
-      <td class="text-dark">{{ item.customer?.name }}</td>
-      <td class="text-dark" *ngIf="user.isGertranStaff"
-      data-testid="td-gertran-only">{{ item.truck?.observations || '-' }}</td>
-      <td  class="text-dark">{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td  class="text-dark" nzEllipsis nz-tooltip
-          [nzTooltipTitle]="item.pointReference || item.street">{{ item.pointReference || item.street || '-' }}</td>
-      <td class="text-dark">{{ getOrigin(item) }}</td>
-      <td class="text-dark">{{ getDestiny(item) }}</td>
-      <td
+      </td> -->
+        <td style="cursor: pointer" (click)="openMap(item)">
+          <img src="assets/images/others/map-icon.svg" alt="logo" width="25px" height="25px"
+            style="filter: brightness(0) contrast(100%);" />
+        </td>
+        <td [nzAlign]="'center'">
+          <div class="progress-bar">
+            <div [style]="'--progress:' + item.positionInfo?.travelProgress + '%;'" class="progress"></div>
+            <span class="progress-text">
+              {{ item.positionInfo?.travelProgress }}%
+            </span>
+          </div>
+        </td>
+        <td class="text-dark">{{ item.speed }}km</td>
+        <td class="text-dark">{{ item.customer?.name }}</td>
+        <td class="text-dark" *ngIf="user.isGertranStaff" data-testid="td-gertran-only">{{ item.truck?.observations ||
+          '-' }}</td>
+        <td class="text-dark">{{ item.positionDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td class="text-dark" nzEllipsis nz-tooltip [nzTooltipTitle]="item.pointReference || item.street">{{
+          item.pointReference || item.street || '-' }}</td>
+        <td class="text-dark">{{ getOrigin(item) }}</td>
+        <td class="text-dark">{{ getDestiny(item) }}</td>
+        <td [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)" *ngIf="user.isGertranStaff"
+          class="text-dark">
+          {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
+        </td>
+        <!-- <td
         class="text-dark"
         *ngIf="user.isGertranStaff"
         data-testid="td-gertran-only"
         nzEllipsis
         nz-tooltip
         [nzTooltipTitle]="getAlerts(item)"
-      >{{ getAlerts(item) || '-' }}</td>
-      <td
-        nzEllipsis
-        nz-tooltip
-        [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)"
-        *ngIf="user.isGertranStaff"
-        data-testid="td-gertran-only"
-        class="text-dark"
-      >
-        {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
-      </td>
-      <td class="text-dark">{{ item.monitoringRequest?.loadValue | currency: 'R$ ' }}</td>
-      <td class="text-dark">{{ item.positionInfo?.driverName || '-' }}</td>
-      <td class="text-dark">{{ item.positionInfo?.wagonsPlates || '-' }}</td>
-      <td  class="text-dark" *ngIf="user.isGertranStaff"
-          data-testid="td-gertran-only">{{ getCommunicationChannel(item.positionInfo?.communicationChannel) }}</td>
-      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <nz-badge *ngIf="item.positionInfo?.hasMacro" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.positionInfo?.hasMacro" nzStatus="error"></nz-badge>
-      </td>
-      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <nz-badge *ngIf="item.positionInfo?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.positionInfo?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
-      </td>
-      <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
-        <nz-badge *ngIf="item.positionInfo?.hasBaits" nzStatus="success"></nz-badge>
-        <nz-badge *ngIf="!item.positionInfo?.hasBaits" nzStatus="error"></nz-badge>
-      </td>
-      <td class="text-dark">{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
-      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedStartTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
-      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.plannedEndTravel | date: 'dd/MM/yyyy HH:mm' || '-' }}</td>
-      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficStartTime | slice:0:5 || '-' }}</td>
-      <td class="text-dark" *ngIf="user.isGertranStaff" >{{ item.monitoringRequest?.operation?.allowedTrafficEndTime | slice:0:5 || '-' }}</td>
-      <!-- <td *ngIf="user.isGertranStaff" >
+      >{{ getAlerts(item) || '-' }}</td> -->
+        <td class="text-dark">{{ item.monitoringRequest?.loadValue | currency: 'R$ ' }}</td>
+        <td class="text-dark">{{ item.positionInfo?.driverName || '-' }}</td>
+        <td class="text-dark">{{ item.positionInfo?.wagonsPlates || '-' }}</td>
+        <td class="text-dark" *ngIf="user.isGertranStaff" data-testid="td-gertran-only">{{
+          getCommunicationChannel(item.positionInfo?.communicationChannel) }}</td>
+        <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+          <nz-badge *ngIf="item.positionInfo?.hasMacro" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.positionInfo?.hasMacro" nzStatus="error"></nz-badge>
+        </td>
+        <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+          <nz-badge *ngIf="item.positionInfo?.hasEmbeddedIntelligence" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.positionInfo?.hasEmbeddedIntelligence" nzStatus="error"></nz-badge>
+        </td>
+        <td *ngIf="user.isGertranStaff" data-testid="td-gertran-only">
+          <nz-badge *ngIf="item.positionInfo?.hasBaits" nzStatus="success"></nz-badge>
+          <nz-badge *ngIf="!item.positionInfo?.hasBaits" nzStatus="error"></nz-badge>
+        </td>
+        <td class="text-dark">{{ item.temperature ? item.temperature + '°C' : 'N/a' }}</td>
+        <td class="text-dark" *ngIf="user.isGertranStaff">{{ item.monitoringRequest?.plannedStartTravel | date:
+          'dd/MM/yyyy HH:mm' || '-' }}</td>
+        <td class="text-dark" *ngIf="user.isGertranStaff">{{ item.monitoringRequest?.plannedEndTravel | date:
+          'dd/MM/yyyy HH:mm' || '-' }}</td>
+        <td class="text-dark" *ngIf="user.isGertranStaff">{{ item.monitoringRequest?.operation?.allowedTrafficStartTime
+          | slice:0:5 || '-' }}</td>
+        <td class="text-dark" *ngIf="user.isGertranStaff">{{ item.monitoringRequest?.operation?.allowedTrafficEndTime |
+          slice:0:5 || '-' }}</td>
+        <!-- <td *ngIf="user.isGertranStaff" >
         <img width="16" src="assets/icons/envelope.black.svg" style="filter: brightness(0) contrast(100%);" alt="Orange Key" *ngIf="item.monitoringRequest?.hasInformedInitTrip">
         <img width="16" src="assets/icons/envelope.white.svg" alt="Grey Key" *ngIf="!item.monitoringRequest?.hasInformedInitTrip">
       </td> -->
-      <td *ngIf="user.isGertranStaff" >
-        <img width="16" src="assets/icons/circle-green.svg"  alt="Orange Key" *ngIf="item.monitoringRequest?.hasInformedInitTrip">
-        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest?.hasInformedInitTrip">
-      </td>
-      <td *ngIf="user.isGertranStaff" >
-        <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key" *ngIf="item.monitoringRequest?.isVehicleMoving">
-        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest?.isVehicleMoving">
-      </td>
-      <td *ngIf="user.isGertranStaff" >
-        <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key" *ngIf="item.monitoringRequest?.isVehicleCustomer">
-        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest?.isVehicleCustomer">
-      </td>
+        <td *ngIf="user.isGertranStaff">
+          <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key"
+            *ngIf="item.monitoringRequest?.hasInformedInitTrip">
+          <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key"
+            *ngIf="!item.monitoringRequest?.hasInformedInitTrip">
+        </td>
+        <td *ngIf="user.isGertranStaff">
+          <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key"
+            *ngIf="item.monitoringRequest?.isVehicleMoving">
+          <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key"
+            *ngIf="!item.monitoringRequest?.isVehicleMoving">
+        </td>
+        <td *ngIf="user.isGertranStaff">
+          <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key"
+            *ngIf="item.monitoringRequest?.isVehicleCustomer">
+          <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key"
+            *ngIf="!item.monitoringRequest?.isVehicleCustomer">
+        </td>
 
-      <td *ngIf="user.isGertranStaff" >
-        <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key" *ngIf="item.monitoringRequest?.isStoppedByMacro">
-        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest?.isStoppedByMacro">
-      </td>
+        <td *ngIf="user.isGertranStaff">
+          <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key"
+            *ngIf="item.monitoringRequest?.isStoppedByMacro">
+          <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key"
+            *ngIf="!item.monitoringRequest?.isStoppedByMacro">
+        </td>
 
 
-      <td *ngIf="user.isGertranStaff" >
-        <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key" *ngIf="item.monitoringRequest?.isStoppedByMacroForOvernight">
-        <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key" *ngIf="!item.monitoringRequest?.isStoppedByMacroForOvernight">
-      </td>
+        <td *ngIf="user.isGertranStaff">
+          <img width="16" src="assets/icons/circle-green.svg" alt="Orange Key"
+            *ngIf="item.monitoringRequest?.isStoppedByMacroForOvernight">
+          <img width="16" src="assets/icons/circle-red.svg" alt="Grey Key"
+            *ngIf="!item.monitoringRequest?.isStoppedByMacroForOvernight">
+        </td>
 
-      <td class="text-dark" *ngIf="user.isGertranStaff" >
-        
-        {{ 
-          item.monitoringRequest?.isStoppedByMacro || item.monitoringRequest?.isStoppedByMacroForOvernight 
-            ? (item.monitoringRequest?.macroStoppedAt | date: 'dd/MM/yyyy HH:mm') 
-            : '-' 
-        }}
-      </td>
+        <td class="text-dark" *ngIf="user.isGertranStaff">
 
-      
-      <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
-        <ul nz-menu>
-          <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento</li>
-          <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
-          <li nz-menu-item (click)="openIncidentsModal(item)">Ocorrências</li>
-          <li nz-submenu nzTitle="Relatórios">
-            <ul style="z-index: 999">
-              <li nz-menu-item (click)="goToReport('reports/commands-history', item)">
-                Histórico de comandos
-              </li>
-              <li nz-menu-item (click)="goToReport('reports/positions-history', item)">
-                Histórico de posições
-              </li>
-              <li nz-menu-item (click)="goToReport('reports/macro-vehicle', item)">
-                Histórico de mensagem
-              </li>
-              <li nz-menu-item (click)="goToReport('reports/alerts', item)">
-                Alertas
-              </li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Mudar status">
-            <ul style="z-index: 999">
-              <li
-                *ngFor="let status of filteredTravelStatus"
-                nz-menu-item
-                (click)="changeStatus(item, status.value)"
-              >
-                {{ status.title }}
-              </li>
-            </ul>
-          </li>
-          <li nz-menu-item (click)="openMessagesModal(item)">Mensagens</li>
-          <li nz-menu-divider></li>
-          <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>
-        </ul>
-      </nz-dropdown-menu>
-    </tr>
+          {{
+          item.monitoringRequest?.isStoppedByMacro || item.monitoringRequest?.isStoppedByMacroForOvernight
+          ? (item.monitoringRequest?.macroStoppedAt | date: 'dd/MM/yyyy HH:mm')
+          : '-'
+          }}
+        </td>
+
+
+        <nz-dropdown-menu #moreActionsRight="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="goToMonitoringRequest(item.monitoringRequest.id)">Solicitação de monitoramento
+            </li>
+            <li nz-menu-item (click)="openCommandsModal(item)">Comandos</li>
+            <li nz-menu-item (click)="openIncidentsModal(item)">Ocorrências</li>
+            <li nz-submenu nzTitle="Relatórios">
+              <ul style="z-index: 999">
+                <li nz-menu-item (click)="goToReport('reports/commands-history', item)">
+                  Histórico de comandos
+                </li>
+                <li nz-menu-item (click)="goToReport('reports/positions-history', item)">
+                  Histórico de posições
+                </li>
+                <li nz-menu-item (click)="goToReport('reports/macro-vehicle', item)">
+                  Histórico de mensagem
+                </li>
+                <li nz-menu-item (click)="goToReport('reports/alerts', item)">
+                  Alertas
+                </li>
+              </ul>
+            </li>
+            <li nz-submenu nzTitle="Mudar status">
+              <ul style="z-index: 999">
+                <li *ngFor="let status of filteredTravelStatus" nz-menu-item (click)="changeStatus(item, status.value)">
+                  {{ status.title }}
+                </li>
+              </ul>
+            </li>
+            <li nz-menu-item (click)="openMessagesModal(item)">Mensagens</li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="openUpdateObservationModal(item)">Observação</li>
+          </ul>
+        </nz-dropdown-menu>
+      </tr>
     </tbody>
   </nz-table>
 </ng-template>

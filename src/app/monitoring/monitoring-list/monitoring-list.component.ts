@@ -1,33 +1,33 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {MonitoringMapComponent} from '../monitoring-map/monitoring-map.component';
-import {Customer, CustomersService} from '../../customers/customers.service';
-import {Terminals, TerminalsService} from '../../terminals/terminals.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Position, PositionsService} from '../positions.service';
-import {Observable, Subject, timer} from 'rxjs';
-import {share, switchMap, takeUntil} from 'rxjs/operators';
-import {GetAllResponse} from '../../shared/services/api.service';
-import {MonitoringAlertModalComponent} from '../monitoring-alert-modal/monitoring-alert-modal.component';
-import {MonitoringEventModalComponent} from '../monitoring-event-modal/monitoring-event-modal.component';
-import {UpdateObservationsModalComponent} from '../update-observations-modal/update-observations-modal.component';
-import {prop} from 'ramda';
-import {NzContextMenuService, NzDropdownMenuComponent} from 'ng-zorro-antd/dropdown';
-import {CommandsModalComponent} from '../commands-modal/commands-modal.component';
-import {MonitoringRequestsService} from '../../monitoring-requests/monitoring-requests.service';
-import {MessagesModalComponent} from '../messages-modal/messages-modal.component';
-import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
-import {AlertCount, AlertsService, AlertTypes, Severity, SeverityFlat} from '../alerts.service';
+import { Component, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MonitoringMapComponent } from '../monitoring-map/monitoring-map.component';
+import { Customer, CustomersService } from '../../customers/customers.service';
+import { Terminals, TerminalsService } from '../../terminals/terminals.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Position, PositionsService } from '../positions.service';
+import { Observable, Subject, timer } from 'rxjs';
+import { share, switchMap, takeUntil } from 'rxjs/operators';
+import { GetAllResponse } from '../../shared/services/api.service';
+import { MonitoringAlertModalComponent } from '../monitoring-alert-modal/monitoring-alert-modal.component';
+import { MonitoringEventModalComponent } from '../monitoring-event-modal/monitoring-event-modal.component';
+import { UpdateObservationsModalComponent } from '../update-observations-modal/update-observations-modal.component';
+import { prop } from 'ramda';
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { CommandsModalComponent } from '../commands-modal/commands-modal.component';
+import { MonitoringRequestsService } from '../../monitoring-requests/monitoring-requests.service';
+import { MessagesModalComponent } from '../messages-modal/messages-modal.component';
+import { SelectableCustomerServiceService } from '../../customers/selectable-customer-service.service';
+import { AlertCount, AlertsService, AlertTypes, Severity, SeverityFlat } from '../alerts.service';
 import {
   MonitoringRequestsCheckListComponent
 } from '../../monitoring-requests/monitoring-requests-check-list/monitoring-requests-check-list.component';
-import {IncidentsModalComponent} from '../incidents-modal/incidents-modal.component';
-import {AuthenticationService} from '../../authentication/authentication.service';
+import { IncidentsModalComponent } from '../incidents-modal/incidents-modal.component';
+import { AuthenticationService } from '../../authentication/authentication.service';
 import User from '../../users/user';
-import {format} from "date-fns";
-import {MonitoringProtocolListComponent} from '../protocol-list/protocol-list.component';
+import { format } from "date-fns";
+import { MonitoringProtocolListComponent } from '../protocol-list/protocol-list.component';
 import { MonitoringRequestReleasedAlertModalComponent } from '../monitoring-request-released-alert-modal/monitoring-request-released-alert-modal.component';
 
 const PLATE_KEY = 'GERTRAN_LAST_PLATE';
@@ -40,45 +40,48 @@ const PLATE_KEY = 'GERTRAN_LAST_PLATE';
 export class MonitoringListComponent implements OnInit, OnDestroy {
   isLoading = false;
   monitoringColumns = [
-    {title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px'},
-    {title: 'Rastreador', nzLeft: true, style: 'z-index: 999', width: '90px'},
-    {title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '80px'},
-    {title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px'},
-    {title: 'Ign', width: '35px'},
-    {title: 'Sir', width: '35px', gertranStaffOnly: true},
-    {title: 'Blo', width: '35px', gertranStaffOnly: true},
-    {title: 'Ale', width: '35px', gertranStaffOnly: true},
-    {title: 'Aut', width: '37px'},
-    {title: 'Prot.', width: '50px'},
-    {title: 'Mapa', width: '45px'},
-    {title: '%', width: '50px'},
-    {title: 'Vel', width: '50px'},
-    {title: 'Cliente', width: '110px'},
-    {title: 'Obs.', width: '100px', gertranStaffOnly: true},
-    {title: 'Data/Hora', width: '80px'},
-    {title: 'Posição', width: '110px'},
-    {title: 'Origem', width: '110px'},
-    {title: 'Destino', width: '110px'},
-    {title: 'Alertas', width: '80px', gertranStaffOnly: true},
-    {title: 'Status V.', width: '80px', gertranStaffOnly: true},
-    {title: 'valor', width: '100px'},
-    {title: 'Motorista', width: '110px'},
-    {title: 'Carreta', width: '80px'},
-    {title: 'Comunicação', width: '100px', gertranStaffOnly: true},
-    {title: 'Macro', width: '55px', gertranStaffOnly: true},
-    {title: 'Int. Emb.', width: '50px', gertranStaffOnly: true},
-    {title: 'Isca', width: '50px', gertranStaffOnly: true},
-    {title: 'Temp.', width: '50px'},
-    {title: 'Previsão Inicio',width: '70px', gertranStaffOnly: true},
-    {title: 'Previsão Fim',width: '70px', gertranStaffOnly: true},
-    {title: 'Inicio Horario permitido',width: '70px', gertranStaffOnly: true},
-    {title: 'Fim Horario permitido',width: '70px', gertranStaffOnly: true},
-    {title: 'Informou Inicio de Viagem', width: '75px', gertranStaffOnly: true},
-    {title: 'Em movimento', width: '80px', gertranStaffOnly: true},
-    {title: 'Prox. Origem', width: '75px', gertranStaffOnly: true},
-    {title: 'Informou Macro parada', width: '75px', gertranStaffOnly: true},
-    {title: 'Informou Macro Pernoite', width: '75px', gertranStaffOnly: true},
-    {title: 'Hora Macro parada', width: '75px', gertranStaffOnly: true},
+    { title: ' ', nzLeft: true, style: 'z-index: 999', width: '40px' },
+
+    { title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px' },
+    { title: 'Rastreador', nzLeft: true, style: 'z-index: 999', width: '60px' },
+    { title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '60px' },
+    { title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px' },
+    { title: 'Prioridade', nzLeft: true, style: 'z-index: 999', width: '60px', gertranStaffOnly: true },
+    { title: 'Ign', width: '35px' },
+    { title: 'Sir', width: '35px', gertranStaffOnly: true },
+    { title: 'Blo', width: '35px', gertranStaffOnly: true },
+    // { title: 'Ale', width: '35px', gertranStaffOnly: true },
+    // { title: 'Aut', width: '37px' },
+    // { title: 'Prot.', width: '50px' },
+    { title: 'Mapa', width: '45px' },
+    { title: '%', width: '50px' },
+    { title: 'Vel', width: '50px' },
+    { title: 'Cliente', width: '110px' },
+    { title: 'Obs.', width: '100px', gertranStaffOnly: true },
+    { title: 'Data/Hora', width: '80px' },
+    { title: 'Posição', width: '110px' },
+    { title: 'Origem', width: '110px' },
+    { title: 'Destino', width: '110px' },
+    { title: 'Status V.', width: '120px', gertranStaffOnly: true },
+    // { title: 'Alertas', width: '80px', gertranStaffOnly: true },
+    { title: 'valor', width: '100px' },
+    { title: 'Motorista', width: '110px' },
+    { title: 'Carreta', width: '80px' },
+    { title: 'Comunicação', width: '100px', gertranStaffOnly: true },
+    { title: 'Macro', width: '55px', gertranStaffOnly: true },
+    { title: 'Int. Emb.', width: '50px', gertranStaffOnly: true },
+    { title: 'Isca', width: '50px', gertranStaffOnly: true },
+    { title: 'Temp.', width: '50px' },
+    { title: 'Previsão Inicio', width: '70px', gertranStaffOnly: true },
+    { title: 'Previsão Fim', width: '70px', gertranStaffOnly: true },
+    { title: 'Inicio Horario permitido', width: '70px', gertranStaffOnly: true },
+    { title: 'Fim Horario permitido', width: '70px', gertranStaffOnly: true },
+    { title: 'Informou Inicio de Viagem', width: '75px', gertranStaffOnly: true },
+    { title: 'Em movimento', width: '80px', gertranStaffOnly: true },
+    { title: 'Prox. Origem', width: '75px', gertranStaffOnly: true },
+    { title: 'Informou Macro parada', width: '75px', gertranStaffOnly: true },
+    { title: 'Informou Macro Pernoite', width: '75px', gertranStaffOnly: true },
+    { title: 'Hora Macro parada', width: '75px', gertranStaffOnly: true },
   ];
   validateForm: FormGroup;
   monitoringRequestReleasedAlertsCount = 0
@@ -96,44 +99,44 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   selectedTravelStatus: string;
 
   automations = [
-    {icon: 'check-circle', color: 'orane', text: 'Excesso de velocidade'},
-    {icon: 'eye', color: 'red', text: 'Desvio de rota'},
-    {icon: 'credit-card', color: 'blue', text: 'Parada prolongada'},
-    {icon: 'car', color: 'blue', text: 'Parada abastecimento'},
+    { icon: 'check-circle', color: 'orane', text: 'Excesso de velocidade' },
+    { icon: 'eye', color: 'red', text: 'Desvio de rota' },
+    { icon: 'credit-card', color: 'blue', text: 'Parada prolongada' },
+    { icon: 'car', color: 'blue', text: 'Parada abastecimento' },
   ];
   travelStatus = [
-    {title: 'Parado', value: 'stopped', backgroundColorClass: 'danger-alert'},
-    {title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success'},
-    {title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-info'},
-    {title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'signal-loss'},
-    {title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-overnight'},
+    { title: 'Parado', value: 'stopped', backgroundColorClass: 'danger-alert' },
+    { title: 'Em viagem', value: 'in_progress', backgroundColorClass: 'bg-success' },
+    { title: 'Ag. Início', value: 'waiting_for_start', backgroundColorClass: 'bg-info' },
+    { title: 'Cliente', value: 'vehicle_in_customer', backgroundColorClass: 'signal-loss' },
+    { title: 'Pernoite', value: 'driver_in_overnight', backgroundColorClass: 'bg-overnight' },
     // {title: 'Nenhum', value: 'none', backgroundColorClass: 'bg-none'},
-    {title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest'},
-    {title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest'},
-    {title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency'},
-    {title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end'},
-    {title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass:'bg-waiting-start'},
-    {title: 'Alerta + 10 min.', value: 'alert10', backgroundColorClass:'warning-alert'},
-    {title: 'Alerta + 15 min.', value: 'alert15', backgroundColorClass:'danger-alert'},
-    {title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass:'exceeded-start'},
-    {title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass:'not-allowed-to-road'},
-    {title: 'Valor Alto', value: 'high_value', backgroundColorClass:'high_value'},
+    { title: 'Gerenciamento logistico', value: 'logistic_management', backgroundColorClass: 'bg-gray-lightest' },
+    { title: 'Prioridade', value: 'priority', backgroundColorClass: 'bg-gray-lightest' },
+    { title: 'Contigência', value: 'contingency', backgroundColorClass: 'bg-contingency' },
+    { title: 'Fim de viagem', value: '', backgroundColorClass: 'bg-trip-end' },
+    { title: 'Perda de Sinal', value: 'lost_track', backgroundColorClass: 'bg-waiting-start' },
+    { title: 'Alerta + 10 min.', value: 'alert10', backgroundColorClass: 'warning-alert' },
+    { title: 'Alerta + 15 min.', value: 'alert15', backgroundColorClass: 'danger-alert' },
+    { title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass: 'exceeded-start' },
+    { title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass: 'not-allowed-to-road' },
+    { title: 'Valor Alto', value: 'high_value', backgroundColorClass: 'high_value' },
   ];
 
   filteredTravelStatus = this.travelStatus.filter
-  (status => 
-    status.value !== 'not_allowed_to_road' &&
-    status.value !== 'exceeded_start' &&
-    status.value !== 'alert10' &&
-    status.value !== 'alert15' &&
-    status.value !== 'lost_track' &&
-    status.value !== 'high_value'
-  );
+    (status =>
+      status.value !== 'not_allowed_to_road' &&
+      status.value !== 'exceeded_start' &&
+      status.value !== 'alert10' &&
+      status.value !== 'alert15' &&
+      status.value !== 'lost_track' &&
+      status.value !== 'high_value'
+    );
 
 
   refreshAlertCount = new EventEmitter();
   refreshMonitoringRequestReleasedAlertCount = new EventEmitter();
-  
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -168,7 +171,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.refreshAlertCount.subscribe(() => this.setAlertsCount());
     this.refreshPositions.subscribe(() => this.subscribeToMonitoringData());
 
-    this.refreshMonitoringRequestReleasedAlertCount.subscribe(()=>this.loadMonitoringRequestReleasedAlerts())
+    // this.refreshMonitoringRequestReleasedAlertCount.subscribe(() => this.loadMonitoringRequestReleasedAlerts())
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
       terminal: [this.activatedRoute.snapshot.queryParams.terminal],
@@ -192,12 +195,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     if (this.authService.customerId) {
       const customer = this.authService.user.customer.find(c => c.id === this.authService.customerId);
       this.customers = [customer];
-      this.validateForm.patchValue({customer: this.authService.customerId});
+      this.validateForm.patchValue({ customer: this.authService.customerId });
       return;
     }
 
     this.selectableCustomerService.init();
-    this.terminalsService.getAll({limit: 50}).subscribe(data => {
+    this.terminalsService.getAll({ limit: 50 }).subscribe(data => {
       this.terminals = data.results;
     });
   }
@@ -207,9 +210,25 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getRowBackgroundColor(status: string): string {
+    if (status == undefined) return ''
     if (!this.user.isGertranStaff) {
       return '';
     }
+
+
+
+    // if (status.includes('high_value')) {
+    //   return this.travelStatus.find(item => item.value === 'high_value')?.backgroundColorClass || '';
+    // }
+
+    if (status.includes('lost_track')) {
+      return this.travelStatus.find(item => item.value === 'lost_track')?.backgroundColorClass || '';
+    }
+
+    if (status.includes('exceeded_start')) {
+      return this.travelStatus.find(item => item.value === 'exceeded_start')?.backgroundColorClass || '';
+    }
+
     return this.travelStatus.find(item => item.value === status)?.backgroundColorClass;
   }
 
@@ -262,16 +281,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
     this.subscribeToMonitoringData();
   }
-  
-  setColorRowToPendentAlertsByTime(data: any){
+
+  setColorRowToPendentAlertsByTime(data: any) {
     for (let index = 0; index < data.results.length; index++) {
       const element = data.results[index];
-      const monitoringRequestAlert  = this.monitoringData.filter(x=>x.vehiclePlate == element.vehicle.plate)[0]
+      const monitoringRequestAlert = this.monitoringData.filter(x => x.vehiclePlate == element.vehicle.plate)[0]
       try {
-        if(this.diffMin(element.receivedAt.replace(/\.\d+Z$/, "Z"))>10)
+        if (this.diffMin(element.receivedAt.replace(/\.\d+Z$/, "Z")) > 10)
           monitoringRequestAlert.monitoringRequest.travelStatus = 'alert10'
 
-        if(this.diffMin(element.receivedAt.replace(/\.\d+Z$/, "Z"))>15)
+        if (this.diffMin(element.receivedAt.replace(/\.\d+Z$/, "Z")) > 15)
           monitoringRequestAlert.monitoringRequest.travelStatus = 'alert15'
 
       } catch (error) {
@@ -280,11 +299,11 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
+
   loadAlerts(severity: any, url?: string): void {
     this.alertsService
       .getAlerts(
-        {url},
+        { url },
         {
           alertType: AlertTypes.terminal,
           terminal: this.activatedRoute.snapshot.queryParams.terminal,
@@ -293,7 +312,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (data: any) => {
-          if(data.next != null){
+          if (data.next != null) {
             this.loadAlerts(severity, data.next)
           }
 
@@ -302,8 +321,8 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       );
   }
 
-  diffMin(time){
-    const currentDateTime:any = new Date();
+  diffMin(time) {
+    const currentDateTime: any = new Date();
     const currentDateTimeTracker: any = new Date(time);
     const differenceInMilliseconds = currentDateTime - currentDateTimeTracker;
     const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
@@ -315,7 +334,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       data.results.map(x => {
         if (this.diffMin(x.positionDate) > 30) {
           if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
-            this.setIncidentStatus(x,'lost_track')
+            this.setIncidentStatus(x, 'lost_track')
           }
         }
       });
@@ -335,10 +354,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         }
         return false;
       });
-  
+
       for (let index = 0; index < monitoringRequestsExceededStart.length; index++) {
         const element = monitoringRequestsExceededStart[index];
-        this.setIncidentStatus(element,'exceeded_start')
+        this.setIncidentStatus(element, 'exceeded_start')
       }
     } catch (error) {
       // c/onsole.log(error);
@@ -348,41 +367,41 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   verifyMonitoringRequestsItsInTimeAllowed(element: any) {
     try {
       if (
-        !element.monitoringRequest || 
-        !element.monitoringRequest.operation || 
-        element.monitoringRequest.operation.allowedTrafficStartTime == null || 
+        !element.monitoringRequest ||
+        !element.monitoringRequest.operation ||
+        element.monitoringRequest.operation.allowedTrafficStartTime == null ||
         element.monitoringRequest.operation.allowedTrafficEndTime == null
       ) {
         return;
       }
-  
+
       const hourStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(0, 2);
       const minuteStart = element.monitoringRequest.operation.allowedTrafficStartTime.slice(3, 5);
-  
+
       const hourEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(0, 2);
       const minuteEnd = element.monitoringRequest.operation.allowedTrafficEndTime.slice(3, 5);
-  
+
       const now = new Date().toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' });
       const dateTimeNow = new Date(now);
-  
+
       const dateTimeStart = new Date(dateTimeNow);
       dateTimeStart.setHours(parseInt(hourStart), parseInt(minuteStart), 0, 0);
-  
+
       const dateTimeEnd = new Date(dateTimeNow);
       dateTimeEnd.setHours(parseInt(hourEnd), parseInt(minuteEnd), 0, 0);
-  
+
       return dateTimeNow < dateTimeStart || dateTimeNow > dateTimeEnd;
     } catch (error) {
       // c/onsole.log(error);
     }
   }
 
-  setColorRowInVehiclesWithoutPermission(data: any){
+  setColorRowInVehiclesWithoutPermission(data: any) {
     try {
-      const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x=>this.verifyMonitoringRequestsItsInTimeAllowed(x) && x.monitoringRequest.travelStatus == 'in_progress')
+      const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x => this.verifyMonitoringRequestsItsInTimeAllowed(x) && x.monitoringRequest.travelStatus == 'in_progress')
       for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
         const element = monitoringRequestsFilteredIfAllowedToRoad[index];
-        this.setIncidentStatus(element,'not_allowed_to_road')
+        this.setIncidentStatus(element, 'not_allowed_to_road')
       }
     } catch (error) {
       // c/onsole.log(error)
@@ -392,9 +411,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   setColorRowInSetHighValue(data: any) {
     try {
       data.results.map(x => {
-        if (parseFloat(x.monitoringRequest.loadValue) > 1000000.00) {
+        if (parseFloat(x.monitoringRequest.loadValue) > 900000.00) {
           if (x.monitoringRequest && x.monitoringRequest.travelStatus != null) {
-            this.setIncidentStatus(x,'high_value')
+            // this.setIncidentStatus(x,'high_value')
           }
         }
       });
@@ -417,22 +436,42 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-    this.setColorRowInSetHighValue(data)
-    this.setColorRowInVehiclesWithLostTrack(data)
-    this.setColorRowInVehiclesWithLExceededStart(data)
-    this.setColorRowInVehiclesWithoutPermission(data)
+      this.setColorRowInSetHighValue(data)
+      this.setColorRowInVehiclesWithLostTrack(data)
+      this.setColorRowInVehiclesWithLExceededStart(data)
+      this.setColorRowInVehiclesWithoutPermission(data)
 
 
       try {
-        this.monitoringData = data.results;
+
+        const reproved = data.results.filter(x => x.monitoringRequest?.status?.includes('reproved'))
+
+
+        const smFilter = data.results.filter(x =>
+          !x.monitoringRequest?.travelStatus?.includes('lost_track') &&
+          !x.monitoringRequest?.travelStatus?.includes('contingency') &&
+          !x.monitoringRequest?.status?.includes('reproved')
+        )
+
+        const smFilterLostTrackandContingence = data.results.filter(x => (
+          x.monitoringRequest?.travelStatus?.includes('lost_track') ||
+          x.monitoringRequest?.travelStatus?.includes('contingency')) &&
+          !x.monitoringRequest?.status?.includes('reproved')
+        )
+        this.monitoringData = [...smFilterLostTrackandContingence, ...smFilter, ...reproved];
+
+
+
+
+        // const smFilterContingence = data.results.filter(x=>x.monitoringRequest.travelStatus.includes('contingency') && !x.monitoringRequest.status.includes('reproved'))
         // this.loadAlerts('warning')
         // this.loadAlerts('danger')
 
         this.isLoading = false;
-  
+
         this.updatePositionsPointReferences();
       } catch (error) {
-        // c/onsole.log(error)
+        console.log(error)
       }
     }, () => {
       this.isLoading = false;
@@ -452,7 +491,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzOkText: 'Fechar',
       nzCancelText: null,
       nzWidth: '70%',
-      // nzAfterClose: this.refreshAlertCount,
+      nzAfterClose: this.refreshAlertCount,
     });
   }
 
@@ -488,7 +527,15 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   getStatusTranslation(status: string): string {
-    return this.travelStatus.find(item => item.value === status)?.title;
+    if (status == undefined) return ''
+    if (status.includes('exceeded_start') && !status.includes('lost_track')) {
+      return this.travelStatus.find(item => item.value === 'exceeded_start')?.title || '';
+    }
+    const statuses = status.split(' '); // Divide a string de status por espaço
+    const translations = statuses
+      .map(st => this.travelStatus.find(item => item.value === st)?.title) // Procura a tradução de cada status
+      .filter(Boolean); // Remove valores indefinidos ou nulos
+    return translations.join(' + '); // Concatena as traduções com um espaço
   }
 
   goToMonitoringRequest(id: string): void {
@@ -503,7 +550,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
-      // nzAfterClose: this.refreshPositions,
+      nzAfterClose: this.refreshAlertCount,
     });
   }
 
@@ -519,7 +566,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzWidth: '90%',
       nzOkText: null,
       nzOnOk: null,
-      // nzAfterClose: this.refreshPositions,
+      nzAfterClose: this.refreshAlertCount,
     });
   }
 
@@ -528,7 +575,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzTitle: item.customer.name,
       nzContent: UpdateObservationsModalComponent,
       nzOnOk: (componentInstance) => componentInstance.save(),
-      nzComponentParams: {item},
+      nzComponentParams: { item },
       nzOkText: 'Salvar',
       nzCancelText: 'Cancelar',
     });
@@ -701,7 +748,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   private getPositionsWithFilters(): Observable<GetAllResponse<Position>> {
     return this.positionsService.getAll(
-      {limit: 999},
+      { limit: 999 },
       {
         customer: this.validateForm.get('customer').value,
         terminal: this.validateForm.get('terminal').value,
@@ -712,23 +759,23 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
 
-  private loadMonitoringRequestReleasedAlerts():void{
-    try {
-      this.alertsService
-        .getMonitoringRequesReleasedtAlerts(
-          {},
-          {
-            terminal: this.validateForm.get('terminal').value,
-            read_alert:true
-          }
-        ).toPromise().then(x => this.monitoringRequestReleasedAlertsCount = x.count)
-    } catch (error) {
-      // c/onsole.log(error)
-    }
-  }
+  // private loadMonitoringRequestReleasedAlerts(): void {
+  // try {
+  //   this.alertsService
+  //     .getMonitoringRequesReleasedtAlerts(
+  //       {},
+  //       {
+  //         terminal: this.validateForm.get('terminal').value,
+  //         read_alert: true
+  //       }
+  //     ).toPromise().then(x => this.monitoringRequestReleasedAlertsCount = x.count)
+  // } catch (error) {
+  //   // c/onsole.log(error)
+  // }
+  // }
 
   private setAlertsCount(): void {
-    this.loadMonitoringRequestReleasedAlerts()
+    // this.loadMonitoringRequestReleasedAlerts()
     this.alertsService.getAlertsCount(
       this.validateForm.value,
       AlertTypes.terminal
@@ -775,13 +822,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   isSirenOn(item: Position): boolean {
     return Boolean(
-      item.events.find(({eventDescription}) => eventDescription.toLowerCase().includes('sirene'))
+      item.events.find(({ eventDescription }) => eventDescription.toLowerCase().includes('sirene'))
     );
   }
 
   isLockOn(item: Position): boolean {
     return Boolean(
-      item.events.find(({eventDescription}) => eventDescription.toLowerCase().includes('bloqueio'))
+      item.events.find(({ eventDescription }) => eventDescription.toLowerCase().includes('bloqueio'))
     );
   }
 
@@ -796,7 +843,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     window.open(url, '_blank');
   }
 
-  setIncidentStatus(item: any, item2: string){
-    item.monitoringRequest.travelStatus = item2;
+  setIncidentStatus(item: any, item2: string) {
+    item.monitoringRequest.travelStatus = item.monitoringRequest.travelStatus + ' ' + item2;
   }
 }
