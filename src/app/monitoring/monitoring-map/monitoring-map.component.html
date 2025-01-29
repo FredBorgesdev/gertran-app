@@ -1,4 +1,4 @@
-<nz-tabset>
+<!-- <nz-tabset>
   <nz-tab nzTitle="Mapa">
     <nz-card [nzCover]="map">
       <button nz-button nzType="primary" (click)="openStreetView()">
@@ -6,17 +6,17 @@
         Street View
       </button>
     </nz-card>
-  </nz-tab>
-
+  </nz-tab> -->
+<!-- 
   <nz-tab nzTitle="Próxima viagem" nzDisabled>
   </nz-tab>
 
   <nz-tab nzTitle="Grade" nzDisabled>
     Nenhum registro encontrado
-  </nz-tab>
-</nz-tabset>
+  </nz-tab> -->
+<!-- </nz-tabset> -->
 
-<ng-template #map>
+<!-- <ng-template #map> -->
   <mgl-map
     [style]="'mapbox://styles/mapbox/streets-v9'"
     [fitBounds]="directionsGeoJson && driverLocation && bounds"
@@ -82,4 +82,4 @@
       </span>
     </mgl-marker>
   </mgl-map>
-</ng-template>
+<!-- </ng-template> -->

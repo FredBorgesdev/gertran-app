@@ -234,12 +234,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
   openMap(item: Position): void {
     this.modal.create({
-      nzTitle: 'Mapa',
-      nzContent: MonitoringMapComponent,
-      nzWidth: '900px',
+      nzTitle: 'Mapa', // Título do modal
+      nzContent: MonitoringMapComponent, // Componente que será exibido no modal
+      nzWidth: '900px', // Largura do modal
       nzComponentParams: {
-        item
-      }
+        item // Parâmetros passados para o componente
+      },
+      nzFooter: null // Remove o footer (e os botões "OK" e "Cancelar")
     });
   }
 
