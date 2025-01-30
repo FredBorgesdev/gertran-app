@@ -3,6 +3,7 @@ import {MonitoringRequests} from '../../monitoring-requests/monitoring-requests.
 import {BaseClosingFilter, ReportsResults, ReportsService} from '../reports.service';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ClosingFilter, ReportFormat} from "../filters/base-closing-filter/base-closing-filter.component";
+import {format} from "date-fns";
 
 @Component({
   selector: 'app-closing',
@@ -11,7 +12,7 @@ import {ClosingFilter, ReportFormat} from "../filters/base-closing-filter/base-c
 })
 export class ClosingComponent {
   isLoading = false;
-  monitoringRequests: ReportsResults;
+  monitoringRequests: ReportsResults = [];
   reportFormat: ReportFormat;
   syntheticReport: {
     customerName: string;
@@ -61,4 +62,18 @@ export class ClosingComponent {
       };
     });
   };
+  
+  get xlsxValues(): any[] {
+    return this.monitoringRequests.map(monitoringRequest=>({
+      'SM':monitoringRequest.id,
+      'Cliente': monitoringRequest.customer.tradingName.toUpperCase(),
+      'Data': format(new Date(monitoringRequest.sentAt), 'dd/MM/yyyy HH:mm:ss'),
+      'Veiculo': monitoringRequest.truck.vehicle.plate.toUpperCase(),
+      'Operação': monitoringRequest.operation.name.toUpperCase(),
+      'Origem': monitoringRequest.travelSteps.find(x => x.pointType === 'start')?.address.toUpperCase() || monitoringRequest.travelSteps[0]?.address.toUpperCase() || '',
+      'Destino': monitoringRequest.travelSteps.find(x => x.pointType === 'end')?.address.toUpperCase() || monitoringRequest.travelSteps[monitoringRequest.travelSteps.length - 1]?.address.toUpperCase() || '',
+      'Transportadora': monitoringRequest?.transporter?.tradingName.toUpperCase() || ''
+    }))
+  }
+  
 }

@@ -35,6 +35,7 @@ export interface ChecklistSet{
 }
 
 export interface MonitoringRequests {
+  sentAt: any;
   checklistSet: ChecklistSet[];
   checklistReleased: ChecklistSet;
   releasedAt: string;
