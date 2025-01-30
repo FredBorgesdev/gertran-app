@@ -60,6 +60,7 @@ export interface BaseWorkdayEmployedFilter extends BasePeriodFilter {
 
 export interface BaseVehicleFilter extends BasePeriodFilter {
   plate: string;
+  from_monitoring_request?: boolean;
 }
 
 export interface BaseMacroFilter extends BaseVehicleFilter {
@@ -518,9 +519,14 @@ export class ReportsService {
       from_date: form.from,
       to_date: form.to,
       customer: form.customer,
+      from_monitoring_request: form.from_monitoring_request
     };
     if (form.plate) {
       filtersParams.plate = form.plate;
+    }
+
+    if(form.from_monitoring_request){
+      filtersParams.from_monitoring_request = form.from_monitoring_request
     }
     const params = new HttpParams({
       fromObject: filtersParams

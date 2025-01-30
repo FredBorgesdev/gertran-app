@@ -16,6 +16,14 @@
       fileName="Histórico de Checklist"
     ></app-base-vehicle-filter>
 
+    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+      <div nz-col [nzSpan]="12">
+        <label nz-checkbox [(ngModel)]="isChecked">
+          <span>Gerado por solicitação de monitoramento</span>
+        </label>
+      </div>
+    </nz-form-control>
+
     <nz-table
       #table
       [nzData]="checklistHistory"

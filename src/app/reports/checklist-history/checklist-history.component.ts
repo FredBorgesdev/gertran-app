@@ -11,7 +11,7 @@ import {format} from "date-fns";
 export class ChecklistHistoryComponent implements OnInit {
   isLoading = false;
   checklistHistory: ChecklistHistory[] = [];
-
+  isChecked = false;
   constructor(
     private reportsService: ReportsService,
     private message: NzMessageService,
@@ -23,6 +23,7 @@ export class ChecklistHistoryComponent implements OnInit {
 
   generateReport(form: BaseVehicleFilter): void {
     this.isLoading = true;
+    form.from_monitoring_request = this.isChecked
 
     this.reportsService.getChecklistHistory(form).subscribe(response => {
       this.checklistHistory = response;
