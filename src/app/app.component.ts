@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   startInterval(): void {
     setInterval(() => {
       this.executeTask();
-    }, 3 * 60 * 1000); // 3 minutos em milissegundos
+    }, 10 * 60 * 1000); // 10 minutos em milissegundos
   }
 
   executeTask(): void {

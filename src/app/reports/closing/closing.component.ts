@@ -66,12 +66,12 @@ export class ClosingComponent {
   get xlsxValues(): any[] {
     return this.monitoringRequests.map(monitoringRequest=>({
       'SM':monitoringRequest.id,
-      'Cliente': monitoringRequest.customer.tradingName.toUpperCase(),
+      'Cliente': monitoringRequest.customer?.tradingName.toUpperCase(),
       'Data': format(new Date(monitoringRequest.sentAt), 'dd/MM/yyyy HH:mm:ss'),
-      'Veiculo': monitoringRequest.truck.vehicle.plate.toUpperCase(),
-      'Operação': monitoringRequest.operation.name.toUpperCase(),
-      'Origem': monitoringRequest.travelSteps.find(x => x.pointType === 'start')?.address.toUpperCase() || monitoringRequest.travelSteps[0]?.address.toUpperCase() || '',
-      'Destino': monitoringRequest.travelSteps.find(x => x.pointType === 'end')?.address.toUpperCase() || monitoringRequest.travelSteps[monitoringRequest.travelSteps.length - 1]?.address.toUpperCase() || '',
+      'Veiculo': monitoringRequest.truck?.vehicle?.plate.toUpperCase(),
+      'Operação': monitoringRequest.operation?.name.toUpperCase(),
+      'Origem': monitoringRequest.travelSteps?.find(x => x.pointType === 'start')?.address.toUpperCase() || monitoringRequest.travelSteps[0]?.address.toUpperCase() || '',
+      'Destino': monitoringRequest.travelSteps?.find(x => x.pointType === 'end')?.address.toUpperCase() || monitoringRequest.travelSteps[monitoringRequest.travelSteps.length - 1]?.address.toUpperCase() || '',
       'Transportadora': monitoringRequest?.transporter?.tradingName.toUpperCase() || ''
     }))
   }
