@@ -115,5 +115,9 @@ export const CommonLayout_ROUTES: Routes = [
   {
     path: 'gertran-direct',
     loadChildren: () => import('../../gertran-direct/gertran-direct.module').then(m=>m.GertranDirectModule)
-  }
+  },
+  {
+    path: 'plate-out-grid',
+    loadChildren: () => import('../../plates-out-grid/plate-out-grid.module').then(m=>m.PlateOutGridModule)
+  },
 ];

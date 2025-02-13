@@ -1,0 +1,14 @@
+<div *ngIf="isLoading" class="loading">Carregando...</div>
+
+<div *ngIf="!isLoading && data" class="terminal-container">
+  <div *ngFor="let terminal of data" class="terminal">
+    <h3>{{ terminal.terminal }}</h3>
+    <ul>
+      <li *ngFor="let plate of terminal.plates">{{ plate }}</li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!isLoading && !data" class="no-data">
+  Nenhum dado disponível.
+</div>
