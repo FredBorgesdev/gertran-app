@@ -45,6 +45,19 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+  <div nz-row nzGutter="12" nzAlign="middle" *ngIf="authService.customerId">
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
+        <nz-form-control nzErrorTip="Opção inválida!">
+          <nz-select id="workingSituation" nzPlaceHolder="Selecione uma opção" formControlName="workingSituation">
+            <nz-option *ngFor="let workingSituation of workingSituations" [nzLabel]="workingSituation.label"
+              [nzValue]="workingSituation.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
   <nz-form-item>
     <nz-form-label [nzSpan]="null" nzRequired nzFor="manufacturer">Montadora</nz-form-label>
     <nz-form-control [nzSpan]="null" nzErrorTip="Montadora inválida!">

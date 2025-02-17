@@ -14,6 +14,7 @@ import {
 import {UtilsService} from '../../shared/services/utils.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {SelectableVehicleModelService} from "../../vehicles/selectable-vehicle-model.service";
+import { Choice } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-wagons-form',
@@ -22,6 +23,7 @@ import {SelectableVehicleModelService} from "../../vehicles/selectable-vehicle-m
 })
 export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements OnInit {
   @Input() wagon: Wagon = null;
+  workingSituations: Choice[] = [];
 
   constructor(
     private router: Router,
@@ -58,6 +60,9 @@ export class WagonsFormComponent extends VehiclesFormComponent<Wagon> implements
     this.resource = this.wagon;
 
     super.ngOnInit();
+    this.service.getWorkingSituations().subscribe((workingSituations) => {
+      this.workingSituations = workingSituations;
+    });
   }
 
   backToCustomerList(): void {

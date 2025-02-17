@@ -105,7 +105,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
   }
 
   backToCustomerList(): void {
-    if(this.authService.customerId || this.activatedRoute.snapshot.paramMap.get('customer_id') == '' || this.activatedRoute.snapshot.paramMap.get('customer_id') == null)
+    if(!this.authService.customerId || this.activatedRoute.snapshot.paramMap.get('customer_id') == '' || this.activatedRoute.snapshot.paramMap.get('customer_id') == null)
       this.router.navigate(['trucks', 'trucks-list']);
     else
       this.router.navigate(['customers', 'customers-edit',  this.activatedRoute.snapshot.paramMap.get('customer_id')]);
