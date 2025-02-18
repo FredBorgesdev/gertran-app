@@ -392,8 +392,11 @@ export class ReportsService {
     const filtersParams: any = {
       from_date: filters.from,
       to_date: filters.to,
-      customer: filters.customer,
+      // customer: filters.customer,
     };
+    if (filters.customer){
+      filtersParams.customer = filters.customer
+    }
     if (filters.plate) {
       filtersParams.plate = filters.plate;
     }
@@ -407,8 +410,12 @@ export class ReportsService {
     const filtersParams: any = {
       from_date: filters.from,
       to_date: filters.to,
-      customer: filters.customer,
+      // customer: filters.customer,
     };
+
+    if (filters.customer){
+      filtersParams.customer = filters.customer
+    }
     if (filters.plate) {
       filtersParams.plate = filters.plate;
     }
