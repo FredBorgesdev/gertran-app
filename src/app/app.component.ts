@@ -11,13 +11,13 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log('Componente inicializado');
-    this.startInterval();
+    // this.startInterval();
   }
 
   startInterval(): void {
     setInterval(() => {
       this.executeTask();
-    }, 10 * 60 * 1000); // 10 minutos em milissegundos
+    }, 100 * 60 * 1000); // 10 minutos em milissegundos
   }
 
   executeTask(): void {
