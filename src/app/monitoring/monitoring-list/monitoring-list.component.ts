@@ -50,7 +50,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Ign', width: '35px' },
     { title: 'Sir', width: '35px', gertranStaffOnly: true },
     { title: 'Blo', width: '35px', gertranStaffOnly: true },
-    // { title: 'Ale', width: '35px', gertranStaffOnly: true },
+    // { title: 'Mensagem', width: '35px', gertranStaffOnly: true },
+    // { title: 'Alerta', width: '35px', gertranStaffOnly: true },
+    // { title: 'Urgente', width: '35px', gertranStaffOnly: true },
     // { title: 'Aut', width: '37px' },
     // { title: 'Prot.', width: '50px' },
     { title: 'Mapa', width: '45px' },
@@ -495,6 +497,25 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzAfterClose: this.refreshAlertCount,
     });
   }
+
+
+  openAlertModalByMonitoringRequest(severity: SeverityFlat, monitoring_request: string): void {
+    this.modal.create({
+      nzTitle: 'Alertas',
+      nzContent: MonitoringAlertModalComponent,
+      nzComponentParams: {
+        severity,
+        terminal: this.validateForm.get('terminal').value,
+        customer: this.validateForm.get('customer').value,
+        monitoring_request : monitoring_request
+      },
+      nzOkText: 'Fechar',
+      nzCancelText: null,
+      nzWidth: '70%',
+      nzAfterClose: this.refreshAlertCount,
+    });
+  }
+  
 
   openMonitoringRequestReleasedAlertModal(): void {
     this.modal.create({

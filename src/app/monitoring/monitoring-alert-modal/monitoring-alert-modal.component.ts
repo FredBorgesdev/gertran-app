@@ -22,6 +22,7 @@ export class MonitoringAlertModalComponent implements OnInit {
   @Input() severity: SeverityFlat;
   @Input() terminal?: string;
   @Input() customer?: string;
+  @Input() monitoring_request?: string
 
   currentAlert: Alert;
   isUrgentModalOpen = false;
@@ -64,6 +65,7 @@ export class MonitoringAlertModalComponent implements OnInit {
           severity: this.severity,
           terminal: this.terminal,
           customer: this.customer,
+          monitoring_request: this.monitoring_request,
         }
       )
       .subscribe(

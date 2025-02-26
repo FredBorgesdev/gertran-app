@@ -235,12 +235,30 @@
           style="font-size: 20px"
         ></span>
       </td> -->
-        <!-- <td style="cursor: pointer" (click)="openAutomationModal(item)">
+      <!-- <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('info', item.monitoringRequest?.id)">
+        <span
+          nz-icon
+          nzTheme="fill"
+          [style]="'font-size: 16px; color: black;'"
+        >2</span>
+      </td>
+
+      <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('warning', item.monitoringRequest?.id)">
         <span
           nz-icon
           nzType="info-circle"
           nzTheme="fill"
-          [style]="'font-size: 20px; color: ' + (item.positionInfo?.hasAutomations > 0 ? '#1890ff' : '#ccc')"
+          [style]="'font-size: 16px; color: black;'"
+        ></span>
+      </td>
+
+
+      <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('danger', item.monitoringRequest?.id)">
+        <span
+          nz-icon
+          nzType="info-circle"
+          nzTheme="fill"
+          [style]="'font-size: 16px; color: black;'"
         ></span>
       </td> -->
         <!-- <td (click)="goToMonitoringProtocols(item.monitoringRequest.id)" style="cursor: pointer"><img width="16"

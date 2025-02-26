@@ -120,6 +120,7 @@ export class AlertsService {
       alertType: AlertTypes;
       terminal?: string;
       customer?: string;
+      monitoring_request?: string;
       severity?: SeverityFlat;
       alertsOnly?: boolean;
     }
@@ -142,6 +143,9 @@ export class AlertsService {
     }
     if (filters?.alertsOnly) {
       params.alerts_only = filters.alertsOnly;
+    }
+    if (filters?.monitoring_request) {
+      params.monitoring_request = filters.monitoring_request;
     }
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
