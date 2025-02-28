@@ -24,6 +24,21 @@
     [center]="driverLocation"
     [zoom]="[10]"
   >
+  
+  <ng-container *ngIf="riskAreasGeoJson">
+    <mgl-layer
+      id="riskAreas"
+      type="circle"
+      [source]="{ type: 'geojson', data: riskAreasGeoJson }"
+      [paint]="{
+        'circle-radius': ['get', 'radius'],  
+        'circle-color': 'rgba(255, 0, 0, 0.4)', 
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#ff0000'
+      }"
+    ></mgl-layer>
+  </ng-container>
+
   <ng-container *ngIf="directionsGeoJson">
     <mgl-layer
       id="route"
