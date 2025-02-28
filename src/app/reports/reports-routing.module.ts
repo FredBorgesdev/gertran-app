@@ -44,6 +44,7 @@ import { ControlTower5 } from './dashboards/tc5/client.component';
 import { ControlTowerGertran } from './dashboards/tc-gertran/tc-gertran.component';
 import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
 import { MobilePictureComponent } from './mobile-pictures/mobile-picture.component';
+import { AutomationsReportComponent } from './automations/automations.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,13 @@ const routes: Routes = [
     data: {
       permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_REPORT
     }
+  },
+  {
+    path: 'automation',
+    component: AutomationsReportComponent,
+    // data: {
+    //   permission: Permissions.REPORTS_VIEW_LOAD_AND_UNLOAD_REPORT
+    // }
   },
   {
     path: 'load-unload-by-point',
