@@ -5,6 +5,8 @@ import * as mapboxgl from 'mapbox-gl';
 import { Position, PositionsService } from '../positions.service';
 import { MonitoringRequestsService } from '../../monitoring-requests/monitoring-requests.service';
 import { DirectionsService } from '../../shared/services/directions.service';
+import { RiskAreaService } from '../risk-area.service';
+import { AuthenticationService } from 'src/app/authentication/authentication.service';
 
 @Component({
   selector: 'app-monitoring-map',
@@ -15,27 +17,30 @@ export class MonitoringMapComponent implements OnInit {
   @Input() item: Position;
 
   details: MonitoringMapData;
-
   bounds = null;
   directionsGeoJson: any;
   directionsTruckGeoJson: any;
   driverLocation = null;
   markers: [number, number][] = [];
+  riskAreasGeoJson: any;
 
   constructor(
     private service: MonitoringService,
     private monitoringRequestService: MonitoringRequestsService,
     private directionsService: DirectionsService,
-    private positionsService: PositionsService
-  ) {
-  }
+    private positionsService: PositionsService,
+    private riskAreaService: RiskAreaService,
+    private authService: AuthenticationService,
+    
+  ) {}
 
   ngOnInit(): void {
     this.driverLocation = [this.item.longitude, this.item.latitude];
-    this.positionsService.getPositionsByMonitoringRequest(this.item.monitoringRequest.id).toPromise().then(arrayPositions=>{
+
+    this.positionsService.getPositionsByMonitoringRequest(this.item.monitoringRequest.id).toPromise().then(arrayPositions => {
       this.directionsTruckGeoJson = this.mountGeoJson(arrayPositions);
-    })
-    
+    });
+
     this.monitoringRequestService.get(this.item.monitoringRequest.id).subscribe(async ({
       routeCoordinates,
       travelSteps
@@ -44,24 +49,23 @@ export class MonitoringMapComponent implements OnInit {
 
       if (!routeCoordinates && travelSteps?.length > 0) {
         routeCoordinates = await this.getDirections(travelSteps);
-        this.monitoringRequestService.update(this.item.monitoringRequest.id, {
-          routeCoordinates
-        } as any).subscribe();
+        this.monitoringRequestService.update(this.item.monitoringRequest.id, { routeCoordinates } as any).subscribe();
       }
 
       if (!routeCoordinates && travelSteps?.length === 0) {
-        this.bounds = new mapboxgl.LngLatBounds(
-          this.driverLocation,
-          this.driverLocation,
-        );
+        this.bounds = new mapboxgl.LngLatBounds(this.driverLocation, this.driverLocation);
       } else {
         this.directionsGeoJson = this.mountGeoJson(routeCoordinates);
-        this.bounds = new mapboxgl.LngLatBounds(
-          routeCoordinates[0],
-          routeCoordinates[routeCoordinates.length - 1]
-        );
+        this.bounds = new mapboxgl.LngLatBounds(routeCoordinates[0], routeCoordinates[routeCoordinates.length - 1]);
       }
     });
+
+    // console.log(this.authService.user.cpf)
+    if(this.authService.user.cpf == '40644214856'){
+      this.riskAreaService.getAll({}).toPromise().then(riskAreas => {
+        this.riskAreasGeoJson = this.generateRiskAreasGeoJson(riskAreas.results);
+      });
+    }
   }
 
   async getDirections(travelSteps: any[]): Promise<[number, number][]> {
@@ -69,9 +73,7 @@ export class MonitoringMapComponent implements OnInit {
     if (!result.route?.[0]) {
       return;
     }
-
     const routes = polyline.toGeoJSON(result.route[0].geometry);
-
     return routes.coordinates;
   }
 
@@ -86,32 +88,28 @@ export class MonitoringMapComponent implements OnInit {
     };
   }
 
-  getIcon(i: number): {
-    theme: any;
-    color: string;
-    type: string;
-  } {
-    if (i === 0) {
-      return {
-        type: 'flag',
-        color: 'green',
-        theme: 'twotone'
-      };
-    }
-
-    if (i === this.markers.length - 1) {
-      return {
-        type: 'flag',
-        color: 'salmon',
-        theme: 'twotone'
-      };
-    }
-
+  generateRiskAreasGeoJson(riskAreas): any {
     return {
-      type: 'pushpin',
-      color: 'lightred',
-      theme: 'fill'
+      type: 'FeatureCollection',
+      features: riskAreas.map(area => ({
+        type: 'Feature',
+        properties: { radius: area.radiusRiskArea/1000 },
+        geometry: {
+          type: 'Point',
+          coordinates: [area.longitude, area.latitude]
+        }
+      }))
     };
+  }
+
+  getIcon(i: number): { theme: any; color: string; type: string; } {
+    if (i === 0) {
+      return { type: 'flag', color: 'green', theme: 'twotone' };
+    }
+    if (i === this.markers.length - 1) {
+      return { type: 'flag', color: 'salmon', theme: 'twotone' };
+    }
+    return { type: 'pushpin', color: 'lightred', theme: 'fill' };
   }
 
   openStreetView(): void {
