@@ -17,13 +17,19 @@
 <!-- </nz-tabset> -->
 
 <!-- <ng-template #map> -->
-  <mgl-map
-    [style]="'mapbox://styles/mapbox/streets-v9'"
-    [fitBounds]="directionsGeoJson && driverLocation && bounds"
-    [fitBoundsOptions]="{ padding: 50 }"
-    [center]="driverLocation"
-    [zoom]="[10]"
-  >
+
+  <div id="mapContainer" style="height: 500px;">
+
+
+
+  <!-- <mgl-map
+  [style]="'mapbox://styles/mapbox/streets-v9'"
+  [fitBounds]="directionsGeoJson && driverLocation && bounds"
+  [fitBoundsOptions]="{ padding: 50 }"
+  [center]="driverLocation"
+  [zoom]="[zoom]"
+  (zoomEnd)="onZoomChange($event)"
+>
   
   <ng-container *ngIf="riskAreasGeoJson">
     <mgl-layer
@@ -31,7 +37,7 @@
       type="circle"
       [source]="{ type: 'geojson', data: riskAreasGeoJson }"
       [paint]="{
-        'circle-radius': ['get', 'radius'],  
+        'circle-radius': ['get', 'radiusPixels'],
         'circle-color': 'rgba(255, 0, 0, 0.4)', 
         'circle-stroke-width': 1,
         'circle-stroke-color': '#ff0000'
@@ -97,4 +103,6 @@
       </span>
     </mgl-marker>
   </mgl-map>
+-->
+</div> 
 <!-- </ng-template> -->

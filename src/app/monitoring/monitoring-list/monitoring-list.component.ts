@@ -43,10 +43,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: ' ', nzLeft: true, style: 'z-index: 999', width: '40px' },
 
     { title: 'Tec', nzLeft: true, style: 'z-index: 999', width: '40px' },
-    { title: 'Rastreador', nzLeft: true, style: 'z-index: 999', width: '60px' },
+    { title: 'Rastreador', nzLeft: true, style: 'z-index: 999', width: '85px' },
     { title: 'Viagem', nzLeft: true, style: 'z-index: 999', width: '60px' },
     { title: 'Placa', nzLeft: true, style: 'z-index: 999', width: '60px' },
-    { title: 'Prioridade', nzLeft: true, style: 'z-index: 999', width: '60px', gertranStaffOnly: true },
+    { title: 'Prioridade', nzLeft: true, style: 'z-index: 999', width: '75px', gertranStaffOnly: true },
     { title: 'Ign', width: '35px' },
     { title: 'Sir', width: '35px', gertranStaffOnly: true },
     { title: 'Blo', width: '35px', gertranStaffOnly: true },
