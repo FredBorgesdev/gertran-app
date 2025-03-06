@@ -218,6 +218,9 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       return '';
     }
 
+    if (status.includes('panic_button')) {
+      return this.travelStatus.find(item => item.value === 'panic_button')?.backgroundColorClass || '';
+    }
 
     if (status.includes('lost_track')) {
       return this.travelStatus.find(item => item.value === 'lost_track')?.backgroundColorClass || '';
@@ -225,10 +228,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
     if (status.includes('exceeded_start')) {
       return this.travelStatus.find(item => item.value === 'exceeded_start')?.backgroundColorClass || '';
-    }
-
-    if (status.includes('panic_button')) {
-      return this.travelStatus.find(item => item.value === 'panic_button')?.backgroundColorClass || '';
     }
 
     return this.travelStatus.find(item => item.value === status)?.backgroundColorClass;
@@ -411,7 +410,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     }
   }
 
-  setColorRowInVehiclesWithoutPermission2(data: any) {
+  setColorRowInVehiclesWithPanicButtonAlert(data: any) {
     try {
       const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x => x.monitoringRequest.hasPanicButtonAlert == true)
       for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
@@ -452,11 +451,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.setAlertsCount();
 
     this.monitoringData$.subscribe(data => {
-      this.setColorRowInSetHighValue(data)
+      this.setColorRowInVehiclesWithPanicButtonAlert(data)
       this.setColorRowInVehiclesWithLostTrack(data)
       this.setColorRowInVehiclesWithLExceededStart(data)
       this.setColorRowInVehiclesWithoutPermission(data)
-      this.setColorRowInVehiclesWithoutPermission2(data)
 
 
       try {
