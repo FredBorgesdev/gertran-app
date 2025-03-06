@@ -49,6 +49,7 @@ interface Truck {
 }
 
 interface MonitoringRequest {
+  hasPanicButtonAlert: boolean;
   operation: any;
   travelStatus: string;
   id: string;

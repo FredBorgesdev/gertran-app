@@ -410,7 +410,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         operation: undefined,
         travelSteps: [],
         travelStatus: '',
-        status: ''
+        status: '',
+        hasPanicButtonAlert:false,
       },
       id: '',
       ignition: false,

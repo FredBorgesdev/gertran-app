@@ -123,6 +123,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     { title: 'Inicio Excedido', value: 'exceeded_start', backgroundColorClass: 'exceeded-start' },
     { title: 'Horário de Rodagem Não Permitido', value: 'not_allowed_to_road', backgroundColorClass: 'not-allowed-to-road' },
     { title: 'Valor Alto', value: 'high_value', backgroundColorClass: 'high_value' },
+    { title: 'Botão de Pânico', value: 'panic_button', backgroundColorClass: 'panic_button' },
   ];
 
   filteredTravelStatus = this.travelStatus.filter
@@ -218,17 +219,16 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     }
 
 
-
-    // if (status.includes('high_value')) {
-    //   return this.travelStatus.find(item => item.value === 'high_value')?.backgroundColorClass || '';
-    // }
-
     if (status.includes('lost_track')) {
       return this.travelStatus.find(item => item.value === 'lost_track')?.backgroundColorClass || '';
     }
 
     if (status.includes('exceeded_start')) {
       return this.travelStatus.find(item => item.value === 'exceeded_start')?.backgroundColorClass || '';
+    }
+
+    if (status.includes('panic_button')) {
+      return this.travelStatus.find(item => item.value === 'panic_button')?.backgroundColorClass || '';
     }
 
     return this.travelStatus.find(item => item.value === status)?.backgroundColorClass;
@@ -411,6 +411,19 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     }
   }
 
+  setColorRowInVehiclesWithoutPermission2(data: any) {
+    try {
+      const monitoringRequestsFilteredIfAllowedToRoad = data.results.filter(x => x.monitoringRequest.hasPanicButtonAlert == true)
+      for (let index = 0; index < monitoringRequestsFilteredIfAllowedToRoad.length; index++) {
+        const element = monitoringRequestsFilteredIfAllowedToRoad[index];
+        this.setIncidentStatus(element, 'panic_button')
+      }
+    } catch (error) {
+      // c/onsole.log(error)
+    }
+  }
+
+
   setColorRowInSetHighValue(data: any) {
     try {
       data.results.map(x => {
@@ -443,6 +456,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       this.setColorRowInVehiclesWithLostTrack(data)
       this.setColorRowInVehiclesWithLExceededStart(data)
       this.setColorRowInVehiclesWithoutPermission(data)
+      this.setColorRowInVehiclesWithoutPermission2(data)
 
 
       try {
@@ -461,7 +475,14 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
           x.monitoringRequest?.travelStatus?.includes('contingency')) &&
           !x.monitoringRequest?.status?.includes('reproved')
         )
-        this.monitoringData = [...smFilterLostTrackandContingence, ...smFilter, ...reproved];
+
+
+        const aaa = [...smFilterLostTrackandContingence, ...smFilter, ...reproved];
+        const withPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == true)
+        const withOutPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == false)
+        
+        
+        this.monitoringData = [...withPanic, ...withOutPanic]
 
 
 
