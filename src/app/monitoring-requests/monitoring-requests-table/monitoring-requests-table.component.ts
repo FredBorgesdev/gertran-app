@@ -65,7 +65,8 @@ export class MonitoringRequestsTableComponent implements OnInit {
   }
 
   getWagons(item: MonitoringRequests): string {
-    return item.wagons?.map(wagon => wagon.vehicle.plate).join(', ');
+    // return item.wagons?.map(wagon => wagon.vehicle.plate).join(', ');
+    return item.filteredWagons?.map(w => w.vehicle.plate).join(', ');
   }
 
 
@@ -101,16 +102,21 @@ export class MonitoringRequestsTableComponent implements OnInit {
   }
 
   getDepartureTime(item: MonitoringRequests): string {
-    const firstStep = item.travelSteps[0];
-    if (!firstStep) {
+    try {
+      const firstStep = item.travelSteps[0];
+      if (!firstStep) {
+        return '';
+      }
+  
+      const [year, month, day] = firstStep.date.split('-');
+      const date = `${day}/${month}/${year}`;
+      const time = firstStep.time;
+  
+      return `${date} ${time}`;
+    } catch (error) {
       return '';
+
     }
-
-    const [year, month, day] = firstStep.date.split('-');
-    const date = `${day}/${month}/${year}`;
-    const time = firstStep.time;
-
-    return `${date} ${time}`;
   }
 
   get statusIcons(): { [key: string]: string } {
