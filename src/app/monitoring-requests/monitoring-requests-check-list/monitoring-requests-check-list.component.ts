@@ -233,11 +233,12 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
           customer:result.customer.id
         }
 
-        this.reportsService.getVehiclesReleased(periodFielter)
-        .toPromise().then(releasedMonitoringRequests=>{
-          this.lastReleasedMonitoringRequests = releasedMonitoringRequests
-          .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
-        })
+        
+        // this.reportsService.getVehiclesReleased(periodFielter)
+        // .toPromise().then(releasedMonitoringRequests=>{
+        //   this.lastReleasedMonitoringRequests = releasedMonitoringRequests
+        //   .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
+        // })
       }
 
       this.monitoringRequest = new MonitoringRequest(result);
