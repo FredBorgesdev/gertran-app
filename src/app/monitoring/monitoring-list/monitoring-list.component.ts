@@ -491,7 +491,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
         this.isLoading = false;
 
-        this.updatePositionsPointReferences();
+        // this.updatePositionsPointReferences();
       } catch (error) {
         console.log(error)
       }
