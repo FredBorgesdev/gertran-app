@@ -97,7 +97,7 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
       new mapboxgl.Marker(truckEl).setLngLat(this.driverLocation).addTo(this.map);
     }
 
-    if (this.authService.user.cpf == '40644214856') {
+    if (this.authService.user.isGertranStaff) {
       const riskAreas = await this.riskAreaService.getAll({}).toPromise()
       this.riskAreasGeoJson = this.generateRiskAreasGeoJson(riskAreas.results);
 
