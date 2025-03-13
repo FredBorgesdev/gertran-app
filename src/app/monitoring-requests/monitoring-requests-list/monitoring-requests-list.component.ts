@@ -78,7 +78,8 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
   async ngOnInit(): Promise<void> {
     super.ngOnInit();
 
-    timer(0, 2 * 60 * 1000)
+    const timeTimer = this.authService.user.isGertranStaff ? 5 : 20
+    timer(0, timeTimer * 60 * 1000)
       .pipe(
         takeUntil(this.stopTimer)
       )
@@ -272,8 +273,12 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
                 console.log(`Unknown expiration period: ${x.customer.checklistExpirationPeriod}`);
                 break;
         }
-        const filteredData = this.filterByDate(x.checklistSet, hours)[0];
-        x.checklistReleased = filteredData
+        try {
+          const filteredData = this.filterByDate(x.checklistSet, hours)[0];
+          x.checklistReleased = filteredData
+        } catch (error) {
+          
+        }
         return x;
     });
 
