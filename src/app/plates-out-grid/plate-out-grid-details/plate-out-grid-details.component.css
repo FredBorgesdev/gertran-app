@@ -1,0 +1,80 @@
+/* Estilização geral da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  /* Criando um container flexível para centralizar tudo */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Estilização do conteúdo principal */
+  .terminal-container, .loading, .no-data {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto;
+  }
+  
+  /* Centralizar título */
+  .terminal-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Estilização dos terminais */
+  .terminal {
+    background: #eaeaea;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Estilização dos títulos dos terminais */
+  .terminal h3 {
+    margin: 0 0 10px;
+    color: #444;
+  }
+  
+  /* Lista de placas */
+  .terminal ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .terminal li {
+    background: white;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Mensagem de carregamento */
+  .loading {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  /* Mensagem de ausência de dados */
+  .no-data {
+    color: #888;
+    font-style: italic;
+  }
+  

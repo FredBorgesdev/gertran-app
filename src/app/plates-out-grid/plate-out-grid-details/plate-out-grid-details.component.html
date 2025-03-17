@@ -1,6 +1,10 @@
 <div *ngIf="isLoading" class="loading">Carregando...</div>
 
+
+
 <div *ngIf="!isLoading && data" class="terminal-container">
+
+  <h2>PLACAS FORA DO GRID</h2>
   <div *ngFor="let terminal of data" class="terminal">
     <h3>{{ terminal.terminal }}</h3>
     <ul>

@@ -47,6 +47,19 @@ export const ROUTES: SideNavInterface[] = [
         permission: Permissions.POSITIONS_VIEW_POSITION
       },
       {
+        path: '/plate-out-grid/details',
+        title: 'Placas fora do grid',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'eye',
+        gertranStaffOnly: true,
+        queryParams: {
+          'navbar-closed': true
+        },
+        submenu: [],
+        permission: Permissions.POSITIONS_VIEW_POSITION
+      },
+      {
         path: '/monitoring-requests/monitoring-requests-list',
         title: 'Solicitações',
         iconType: 'nzIcon',
