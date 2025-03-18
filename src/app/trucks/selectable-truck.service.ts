@@ -61,7 +61,7 @@ export class SelectableTruckService {
   }
 
   setupSearch(): void {
-    this.searchTruckSubject.pipe(debounceTime(500)).subscribe((filters) => {
+    this.searchTruckSubject.pipe(debounceTime(2000)).subscribe((filters) => {
       this.trucksService.getAll({limit: 50}, filters).subscribe((result) => {
         this.trucks = result.results;
       });

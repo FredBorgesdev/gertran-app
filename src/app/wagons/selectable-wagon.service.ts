@@ -58,7 +58,7 @@ export class SelectableWagonService {
   }
 
   setupSearch(): void {
-    this.searchTruckSubject.pipe(debounceTime(500)).subscribe((filters) => {
+    this.searchTruckSubject.pipe(debounceTime(2000)).subscribe((filters) => {
       this.wagonsService.getAll({ limit: 50 }, filters).subscribe((result) => {
         this.wagons = result.results;
       });

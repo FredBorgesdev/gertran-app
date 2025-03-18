@@ -56,7 +56,7 @@ export class SelectableCustomerServiceService {
   }
 
   private setupSearch(): void {
-    this.searchCustomerSubject.pipe(debounceTime(500)).subscribe((search) => {
+    this.searchCustomerSubject.pipe(debounceTime(2000)).subscribe((search) => {
       this.customersService.search({limit: 50}, search).subscribe((result) => {
         this.customers = result.results;
       });

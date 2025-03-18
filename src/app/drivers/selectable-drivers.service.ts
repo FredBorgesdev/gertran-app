@@ -45,7 +45,7 @@ export class SelectableDriversService {
   }
 
   private setupSearch(): void {
-    this.searchDriverSubject.pipe(debounceTime(500)).subscribe((search) => {
+    this.searchDriverSubject.pipe(debounceTime(2000)).subscribe((search) => {
       this.driversService.getAll({ limit: 50 }, { search }).subscribe((result) => {
         this.drivers = result.results;
       });

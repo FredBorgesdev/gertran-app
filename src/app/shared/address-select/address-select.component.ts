@@ -35,7 +35,7 @@ export class AddressSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchAddressSubject.pipe(debounceTime(500)).subscribe((search) => {
+    this.searchAddressSubject.pipe(debounceTime(2000)).subscribe((search) => {
       this.search(search);
     });
   }
