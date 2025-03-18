@@ -458,30 +458,31 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
 
 
       try {
+        if (this.user.isGertranStaff) {
 
-        const reproved = data.results.filter(x => x.monitoringRequest?.status?.includes('reproved'))
+          const reproved = data.results.filter(x => x.monitoringRequest?.status?.includes('reproved'))
 
+          const smFilter = data.results.filter(x =>
+            !x.monitoringRequest?.travelStatus?.includes('lost_track') &&
+            !x.monitoringRequest?.travelStatus?.includes('contingency') &&
+            !x.monitoringRequest?.status?.includes('reproved')
+          )
 
-        const smFilter = data.results.filter(x =>
-          !x.monitoringRequest?.travelStatus?.includes('lost_track') &&
-          !x.monitoringRequest?.travelStatus?.includes('contingency') &&
-          !x.monitoringRequest?.status?.includes('reproved')
-        )
+          const smFilterLostTrackandContingence = data.results.filter(x => (
+            x.monitoringRequest?.travelStatus?.includes('lost_track') ||
+            x.monitoringRequest?.travelStatus?.includes('contingency')) &&
+            !x.monitoringRequest?.status?.includes('reproved')
+          )
 
-        const smFilterLostTrackandContingence = data.results.filter(x => (
-          x.monitoringRequest?.travelStatus?.includes('lost_track') ||
-          x.monitoringRequest?.travelStatus?.includes('contingency')) &&
-          !x.monitoringRequest?.status?.includes('reproved')
-        )
+          const aaa = [...smFilterLostTrackandContingence, ...smFilter, ...reproved];
+          const withPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == true)
+          const withOutPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == false)
 
+          this.monitoringData = [...withPanic, ...withOutPanic]
 
-        const aaa = [...smFilterLostTrackandContingence, ...smFilter, ...reproved];
-        const withPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == true)
-        const withOutPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == false)
-        
-        
-        this.monitoringData = [...withPanic, ...withOutPanic]
-
+        }else{
+          this.monitoringData = data.results
+        }
 
 
 
