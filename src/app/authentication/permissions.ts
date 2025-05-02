@@ -322,4 +322,6 @@ export enum Permissions {
   PERSONAL_MONITORING_VIEW = 'personal_monitoring.view_personalmonitoring',
   HISTORICAL_MONITORING_REQUEST_VIEW = 'monitoring.view_historicalmonitoringrequest',
   MOBILE_PICTURE_VIEW = 'monitoring.view_monitoringrequestmobilepicture',
+  GERTRAN_DIRECT_VIEW_GERTRANDIRECT = 'gertran_direct.view_gertrandirect',
+  MONITORINGREQUESTPLATEOUTGRID_VIEW_GERTRANDIRECT = 'monitoring.view_monitoringrequestplateoutgrid'
 }
