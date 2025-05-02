@@ -39,11 +39,13 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.driverLocation = [this.item.longitude, this.item.latitude];
-    const arrayPositions = await this.positionsService.getPositionsByMonitoringRequest(this.item.monitoringRequest.id).toPromise()
-    this.directionsTruckGeoJson = this.mountGeoJson(arrayPositions);
-    const { routeCoordinates, travelSteps } = await this.monitoringRequestService.get(this.item.monitoringRequest.id).toPromise()
-    this.markers = travelSteps.map(point => [point.longitude, point.latitude]);
-    this.directionsGeoJson = this.mountGeoJson(routeCoordinates);
+    if(this.item?.monitoringRequest){
+      const arrayPositions = await this.positionsService.getPositionsByMonitoringRequest(this.item.monitoringRequest.id).toPromise()
+      this.directionsTruckGeoJson = this.mountGeoJson(arrayPositions);
+      const { routeCoordinates, travelSteps } = await this.monitoringRequestService.get(this.item.monitoringRequest.id).toPromise()
+      this.markers = travelSteps.map(point => [point.longitude, point.latitude]);
+      this.directionsGeoJson = this.mountGeoJson(routeCoordinates);
+    }
 
     if (this.directionsTruckGeoJson) {
       this.map.addLayer({
