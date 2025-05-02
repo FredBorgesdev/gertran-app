@@ -111,7 +111,7 @@ export class IncidentDetailsModalComponent {
     {label: 'Tombamento', value: 'overturning'},
     {label: 'Furto parcial', value: 'partial_theft'},
     {label: 'Assistencia técnica', value: 'technical_assistance'},
-    {label: 'Evento teste', value: 'incident_test'},
+    // {label: 'Evento teste', value: 'incident_test'},
     // {label: 'Outro', value: 'others'},
     {label: 'Furto', value: 'theft'},
     // {label: 'Não condizente com as regras', value: 'non_compliance_with_rules'},
