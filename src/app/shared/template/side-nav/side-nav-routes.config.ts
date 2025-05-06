@@ -44,7 +44,7 @@ export const ROUTES: SideNavInterface[] = [
           'navbar-closed': true
         },
         submenu: [],
-        permission: Permissions.POSITIONS_VIEW_POSITION
+        // permission: Permissions.POSITIONS_VIEW_POSITION
       },
       {
         path: '/plate-out-grid/details',
