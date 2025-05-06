@@ -38,13 +38,13 @@
         ></app-permissions-tab>
       </nz-tab> -->
 
-      <nz-tab nzTitle="Grupos" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
+      <!-- <nz-tab nzTitle="Grupos" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
         <app-groups-tab
           *ngIf="resource"
           [targetKeys]="numbersToStringsGroup(resource.groups)"
           (save)="updateField('groups', $event)"
         ></app-groups-tab>
-      </nz-tab>
+      </nz-tab> -->
     </nz-tabset>
   </nz-card>
 </nz-spin>
