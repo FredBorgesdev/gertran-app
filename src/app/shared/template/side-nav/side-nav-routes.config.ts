@@ -460,7 +460,7 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
+            // permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
           {
             path: '/reports/alerts',
@@ -498,8 +498,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'line-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
+            // gertranStaffOnly: true,
+            // permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
           {
             path: '/reports/fatiguereport',
@@ -570,8 +570,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_CAN_VIEW_MONITORING_REQUEST_REPORT
+            // gertranStaffOnly: true,
+            // permission: Permissions.REPORTS_CAN_VIEW_MONITORING_REQUEST_REPORT
           },
           {
             path: '/reports/available-vehicles',
@@ -593,8 +593,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_TRAVEL_START_REPORT
+            // gertranStaffOnly: true,
+            // permission: Permissions.REPORTS_VIEW_TRAVEL_START_REPORT
           },
           {
             path: '/reports/travel-end',
@@ -603,8 +603,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_TRAVEL_END_REPORT
+            // gertranStaffOnly: true,
+            // permission: Permissions.REPORTS_VIEW_TRAVEL_END_REPORT
           },
           {
             path: '/reports/closing',
@@ -632,8 +632,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_MACRO_VEHICLE_REPORT
+            // gertranStaffOnly: true,
+            // permission: Permissions.REPORTS_VIEW_MACRO_VEHICLE_REPORT
           },
           {
             path: '/reports/positions-history',
@@ -642,8 +642,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
+            // gertranStaffOnly: true,
+            // permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
         ],
       },
