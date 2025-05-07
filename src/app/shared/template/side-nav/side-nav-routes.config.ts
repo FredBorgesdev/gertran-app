@@ -614,7 +614,7 @@ export const ROUTES: SideNavInterface[] = [
             icon: 'bar-chart',
             submenu: [],
             gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
+            permission: Permissions.REPORTS_CAN_VIEW_CLOSURE_REPORT,
           },
         ]
       },
