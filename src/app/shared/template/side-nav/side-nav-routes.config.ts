@@ -220,8 +220,6 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
-            permission: Permissions.VIEW_DASHBOARD_ALERT,
-            gertranStaffOnly: true,
           },
           {
             path: 'reports/dashboards/client',
@@ -468,8 +466,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'line-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
           {
             path: '/reports/incidents',
