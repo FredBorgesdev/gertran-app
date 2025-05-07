@@ -155,7 +155,7 @@ export enum Permissions {
   REPORTS_CAN_VIEW_TRAVEL_START_REPORT = 'reports.can_view_travel_start_report',
   REPORTS_CAN_VIEW_TRAVEL_END_REPORT = 'reports.can_view_travel_end_report',
   REPORTS_CAN_VIEW_PANIC_HISTORY_REPORT = 'reports.can_view_panic_history_report',
-  REPORTS_CAN_VIEW_MONITORING_REQUEST_REPORT = 'reports.can_view_monitoring_request_report',
+  REPORTS_CAN_VIEW_MONITORING_REQUEST_REPORT = 'reports.view_monitoring_request_report',
   REPORTS_CAN_VIEW_MONITORING_REQUEST_CLOSURE_REPORT = 'reports.can_view_monitoring_request_closure_report',
   REPORTS_CAN_VIEW_MESSAGES_OPERATIONAL_AUDIT_HISTORY_REPORT = 'reports.can_view_messages_operational_audit_history_report',
   REPORTS_CAN_VIEW_MACRO_VEHICLE_REPORT = 'reports.can_view_macro_vehicle_report',
