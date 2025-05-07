@@ -460,7 +460,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            // permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
           {
             path: '/reports/alerts',
@@ -479,8 +478,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'line-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
           },
         ]
       },
@@ -498,8 +495,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'line-chart',
             submenu: [],
-            // gertranStaffOnly: true,
-            // permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
           {
             path: '/reports/fatiguereport',
@@ -508,8 +503,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'line-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
           {
             path: '/reports/panic-history',
@@ -518,8 +511,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'line-chart',
             submenu: [],
-            gertranStaffOnly: true,
-            permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
           {
             path: '/reports/mobile-picture',
@@ -541,6 +532,14 @@ export const ROUTES: SideNavInterface[] = [
             gertranStaffOnly: true,
             permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
+          // {
+          //   path: '/reports/logisticreport',
+          //   title: 'Relatório logistico',
+          //   iconType: 'nzIcon',
+          //   iconTheme: 'outline',
+          //   icon: 'line-chart',
+          //   submenu: []
+          // },
         ]
       },
       {
@@ -593,8 +592,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            // gertranStaffOnly: true,
-            // permission: Permissions.REPORTS_VIEW_TRAVEL_START_REPORT
+            gertranStaffOnly: true,
+            permission: Permissions.REPORTS_VIEW_TRAVEL_START_REPORT
           },
           {
             path: '/reports/travel-end',
@@ -603,8 +602,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            // gertranStaffOnly: true,
-            // permission: Permissions.REPORTS_VIEW_TRAVEL_END_REPORT
+            gertranStaffOnly: true,
+            permission: Permissions.REPORTS_VIEW_TRAVEL_END_REPORT
           },
           {
             path: '/reports/closing',
@@ -642,8 +641,6 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            // gertranStaffOnly: true,
-            // permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT,
           },
         ],
       },
