@@ -632,8 +632,8 @@ export const ROUTES: SideNavInterface[] = [
             iconTheme: 'outline',
             icon: 'bar-chart',
             submenu: [],
-            // gertranStaffOnly: true,
-            // permission: Permissions.REPORTS_VIEW_MACRO_VEHICLE_REPORT
+            gertranStaffOnly: true,
+            permission: Permissions.REPORTS_VIEW_MACRO_VEHICLE_REPORT
           },
           {
             path: '/reports/positions-history',
