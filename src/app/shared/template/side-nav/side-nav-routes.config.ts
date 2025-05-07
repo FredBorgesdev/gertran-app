@@ -48,16 +48,6 @@ export const ROUTES: SideNavInterface[] = [
         permission: Permissions.MONITORING_VIEW_CHECKLIST
       },
       {
-        path: '/operations/operations-list',
-        title: 'Operações',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'control',
-        submenu: [],
-        gertranStaffOnly: true,
-        permission: Permissions.SETTINGS_VIEW_OPERATION
-      },
-      {
         path: '',
         title: 'Monitoramento Pessoal',
         iconType: 'nzIcon',
@@ -305,6 +295,16 @@ export const ROUTES: SideNavInterface[] = [
         permission: Permissions.CUSTOMERS_VIEW_CUSTOMER
       },
       {
+        path: '/operations/operations-list',
+        title: 'Operações',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'control',
+        submenu: [],
+        gertranStaffOnly: true,
+        permission: Permissions.SETTINGS_VIEW_OPERATION
+      },
+      {
         path: '/gertran-direct/approval',
         title: 'Venda Direta',
         iconType: 'nzIcon',
@@ -313,16 +313,6 @@ export const ROUTES: SideNavInterface[] = [
         submenu: [],
         gertranStaffOnly: true,
         permission: Permissions.GERTRAN_DIRECT_VIEW_GERTRANDIRECT
-      },
-      {
-        path: '/automations/automations-list',
-        title: 'Automações',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'robot',
-        submenu: [],
-        gertranStaffOnly: true,
-        permission: Permissions.SETTINGS_VIEW_AUTOMATION,
       },
       {
         path: '/plate-out-grid/details',
@@ -346,6 +336,16 @@ export const ROUTES: SideNavInterface[] = [
         submenu: [],
         gertranStaffOnly: true,
         permission: Permissions.HISTORICAL_MONITORING_REQUEST_VIEW
+      },
+      {
+        path: '/automations/automations-list',
+        title: 'Automações',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'robot',
+        submenu: [],
+        gertranStaffOnly: true,
+        permission: Permissions.SETTINGS_VIEW_AUTOMATION,
       },
       {
         path: '',

@@ -56,7 +56,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     // { title: 'Aut', width: '37px' },
     // { title: 'Prot.', width: '50px' },
     { title: 'Mapa', width: '45px' },
-    { title: '%', width: '50px' },
+    // { title: '%', width: '50px' },
     { title: 'Vel', width: '50px' },
     { title: 'Cliente', width: '110px' },
     { title: 'Obs.', width: '100px', gertranStaffOnly: true },

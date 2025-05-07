@@ -269,14 +269,14 @@
           <img src="assets/images/others/map-icon.svg" alt="logo" width="25px" height="25px"
             style="filter: brightness(0) contrast(100%);" />
         </td>
-        <td [nzAlign]="'center'">
+        <!-- <td [nzAlign]="'center'">
           <div class="progress-bar">
             <div [style]="'--progress:' + item.positionInfo?.travelProgress + '%;'" class="progress"></div>
             <span class="progress-text">
               {{ item.positionInfo?.travelProgress }}%
             </span>
           </div>
-        </td>
+        </td> -->
         <td class="text-dark">{{ item.speed }}km</td>
         <td class="text-dark">{{ item.customer?.name }}</td>
         <td class="text-dark" *ngIf="user.isGertranStaff" data-testid="td-gertran-only">{{ item.truck?.observations ||
