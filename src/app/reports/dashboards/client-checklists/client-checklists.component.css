@@ -1,5 +1,5 @@
 h1.header-small {
-  font-size: 2.0em;
+  font-size: 1.5em;
 }
 
 h3.header-small {
@@ -7,6 +7,10 @@ h3.header-small {
   margin-bottom: 10px !important;
 }
 
+/* .scrollable-card {
+  height: 500px;
+  overflow-y: scroll;
+} */
 
 .square {
   height: 16px;
@@ -23,46 +27,21 @@ h3.header-small {
   right: 20px;
 }
 
-th.table-header {
-  background: #187bff;
-  color: #fff;
-  font-weight: bold;
-}
 
+.square:not(:first-of-type) {
+  margin-left: 10px;
+}
 
 .bg-alert {
   background: yellow;
-  margin-left: 10px;
-  font-weight: bold;
 }
 
 .bg-default {
-  background: white;
-  margin-left: 10px;
+  background: green;
 }
 
 .bg-danger {
   background: red;
-  font-weight: bold;
-  color: #fff;
-  /* color: black; */
-}
-
-.custom-table th,
-.custom-table td {
-  border: 1px solid black;
-  max-width: '95%';
-}
-
-th, td {
-  font-weight: bold;
-  font-size: 16px;
 }
 
 
-.max-width-cell {
-  max-width: 50px; /* Set your desired maximum width */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

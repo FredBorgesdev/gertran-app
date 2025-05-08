@@ -39,20 +39,24 @@
 
     &:after {
         background-color: $radio-theme-color;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-top: -12px;
+        margin-left: -12px;
     }
 }
 
 .ant-radio-checked {
 
     .ant-radio-inner {
-        border-color: $radio-theme-color;
+        border-color: $gray-dark;
     }
 }
 
 
 .ant-radio-focused {
     .ant-radio-inner {
-        border-color: $radio-theme-color;
+        border-color: $gray-dark;
     }
 }
 
@@ -266,4 +270,3 @@
         }
     }
 }
-

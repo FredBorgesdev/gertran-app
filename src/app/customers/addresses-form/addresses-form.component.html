@@ -1,71 +1,92 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="zipCode">CEP</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CEP no formato 99999-999">
-      <input
-        id="zipCode"
-        type="text"
-        nz-input
-        formControlName="zipCode"
-        [textMask]="{ mask: cepMask, guide: false }"
-      />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="street">Rua</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a rua">
-      <input id="street" type="text" nz-input formControlName="street" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="number">Número</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o número">
-      <input id="number" type="number" nz-input formControlName="number" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="complement">Complemento</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Insira o complemento">
-      <input id="complement" type="text" nz-input formControlName="complement" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="neighborhood">Bairro</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o bairro">
-      <input id="neighborhood" type="text" nz-input formControlName="neighborhood" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="city">Cidade</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
-      <input id="city" type="text" nz-input formControlName="city" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="state">Estado</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
-      <nz-select
-        nzAllowClear
-        nzPlaceHolder="Selecione um estado"
-        nzShowSearch
-        formControlName="state"
-      >
-        <nz-option
-          *ngFor="let state of states"
-          [nzLabel]="state.name"
-          [nzValue]="state.abbreviation"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="row m-b-10">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="zipCode">CEP</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CEP no formato 99999-999">
+          <input
+            id="zipCode"
+            type="text"
+            nz-input
+            formControlName="zipCode"
+            [textMask]="{ mask: cepMask, guide: false }"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-8 col-md-6 col-sm-12"></div>
+  </div>
+  <div class="row m-b-10">
+    <div class="col-lg-4 col-md-12 col-sm-12">    
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="street">Rua</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a rua">
+          <input id="street" type="text" nz-input formControlName="street" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6  col-sm-6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="number">Número</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o número">
+          <input id="number" type="number" nz-input formControlName="number" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="complement">Complemento</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Insira o complemento">
+          <input id="complement" type="text" nz-input formControlName="complement" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-12 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="neighborhood">Bairro</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o bairro">
+          <input id="neighborhood" type="text" nz-input formControlName="neighborhood" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="city">Cidade</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
+          <input id="city" type="text" nz-input formControlName="city" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="state">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
+          <nz-select
+            nzAllowClear
+            nzPlaceHolder="Selecione um estado"
+            nzShowSearch
+            formControlName="state"
+          >
+            <nz-option
+              *ngFor="let state of states"
+              [nzLabel]="state.name"
+              [nzValue]="state.abbreviation"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>  
 
   <nz-divider></nz-divider>
 
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="save()" nz-button nzType="primary">
-        <i nz-icon nzType="save"></i>Salvar Cliente
-      </button>
+  <nz-form-item class=" m-b-0">
+    <nz-form-control>
+      <div class="page-buttons">
+        <button type="button" (click)="save()" nz-button nzType="primary">
+          <i nz-icon nzType="save"></i>Salvar Cliente
+        </button>
+    </div>
     </nz-form-control>
   </nz-form-item>
 </form>

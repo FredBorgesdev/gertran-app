@@ -1,24 +1,32 @@
-<nz-form-item class="m-b-15" *ngIf="!authService.customerId">
-  <nz-form-label nzRequired>Cliente</nz-form-label>
-  <nz-form-control nzErrorTip="Preencha o campo">
-    <nz-select
-      nzAllowClear
-      nzPlaceHolder="Selecione um cliente"
-      nzServerSearch
-      nzShowSearch
-      (nzOnSearch)="selectableCustomerService.searchByName($event)"
-      (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-      [nzDropdownRender]="selectLoading"
-      [(ngModel)]="customer"
-      (ngModelChange)="loadRoutes()"
-    >
-      <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
-                 [nzValue]="customer.id"></nz-option>
-    </nz-select>
-  </nz-form-control>
-</nz-form-item>
+<div class="row">
+  <div class="col-lg-8 col-md-8 col-sm-12">
+    <nz-form-item class="m-b-15" *ngIf="!authService.customerId">
+      <nz-form-label nzRequired>Cliente</nz-form-label>
+      <nz-form-control nzErrorTip="Preencha o campo">
+        <nz-select
+          nzAllowClear
+          nzPlaceHolder="Selecione um cliente"
+          nzServerSearch
+          nzShowSearch
+          (nzOnSearch)="selectableCustomerService.searchByName($event)"
+          (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+          [nzDropdownRender]="selectLoading"
+          [(ngModel)]="customer"
+          (ngModelChange)="loadRoutes()"
+        >
+          <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                     [nzValue]="customer.id"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-12">
+    <button nz-button (click)="descriptionFilterVisible = true">Filtrar descrição</button>
+  </div>
+</div>
 
-<button nz-button nzSize="small" (click)="descriptionFilterVisible = true">Filtrar descrição</button>
+
+
 
 <nz-table
   #rowSelectionTable
@@ -68,10 +76,10 @@
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box p-15">
-      <input type="text" nz-input placeholder="Descrição" class="m-b-5" [(ngModel)]="searchDescriptionValue"/>
-      <button nz-button nzSize="small" nzType="primary" class="m-r-10" (click)="search()" class="search-button">Buscar
-      </button>
-      <button nz-button nzSize="small" (click)="reset()">Resetar</button>
+      <input type="text" nz-input placeholder="Descrição" class="m-b-10" [(ngModel)]="searchDescriptionValue"/>
+          <button nz-button nzSize="small" class="m-r-10" (click)="reset()">Resetar</button>
+          <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Buscar</button>
+      
     </div>
   </div>
 </nz-dropdown-menu>

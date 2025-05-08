@@ -5,6 +5,7 @@
     color: $body-color;
     text-align: center;
     background: $avatar-bg;
+    border: 1px solid $avatar-bg;
     color: $white;
     white-space: nowrap;
     position: relative;
@@ -16,7 +17,10 @@
     border-radius: $border-radius-circle; 
 
     &.ant-avatar-icon {
-        font-size: $avatar-icon;
+        .anticon {
+            font-size: $avatar-icon-md;
+            color: $gray-dark;
+        }
     }
 }
 

@@ -1,141 +1,144 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
 
-  <nz-card>
-
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="setting"></i>
-        Definições
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        Automações
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-8">
-        <form nz-form class="d-flex" (submit)="search()">
-          <nz-form-item>
-            <nz-form-control>
-              <nz-input-group nzPrefixIcon="search">
-                <input
-                  type="text"
-                  nz-input
-                  placeholder="Evento da automação"
-                  name="search"
-                  [(ngModel)]="searchInput"
-                >
-              </nz-input-group>
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item>
-            <nz-form-control [nzOffset]="3">
-              <button type="submit" nz-button nzType="primary">
-                Buscar
-              </button>
-            </nz-form-control>
-          </nz-form-item>
-        </form>
-      </div>
-
-      <div class="col-lg-4 text-right">
-        <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Automação</span>
-        </button>
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="setting"></i>
+      Definições
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      Automações
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+<div class="pages-header">  
+  <div class="row m-b-10">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Automações</h2>
+        </div>
       </div>
     </div>
-    <nz-table
-      #automationsListTable
-      [nzData]="resources?.results"
-      [nzTotal]="resources?.count"
-      [nzPageSize]="resources?.limit"
-      [nzPageIndex]="page"
-      [nzFrontPagination]="false"
-      (nzQueryParams)="handleQueryParamsChange($event)"
+    <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+      <button
+      (click)="create()"
+      nz-button
+      nzType="primary"
     >
-      <thead>
-      <tr>
-        <th *ngFor="let column of automationColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of automationsListTable.data;  let i=index">
-        <td>{{item.id | id}}</td>
-        <td>
-          <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
-          </div>
-        </td>
-        <td>{{item.event}}</td>
-        <td>{{item.action}}</td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.hasTravelSm" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.hasTravelSm" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.vehicleMessage" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.vehicleMessage" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.timeAction" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.timeAction" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.velocity" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.velocity" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.hasIgnition" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.hasIgnition" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <nz-badge *ngIf="item.command" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.command" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <a
-            (click)="edit(item)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Editar"
-          >
-            <i nz-icon nzType="edit" theme="outline"></i>
-          </a>
-          <a
-            (click)="delete(item)"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
-          >
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+      <i nz-icon nzType="plus" theme="outline"></i>
+      <span>Adicionar Automação</span>
+    </button>
+    </div>
+  </div>
+</div>
+<nz-card>
+  <div class="row m-b-20">
+    <div class="col-lg-12">
+      <form nz-form class="d-flex" (submit)="search()">
+        <nz-form-item class="m-b-0">
+          <nz-form-control>
+            <nz-input-group nzPrefixIcon="search">
+              <input
+                type="text"
+                nz-input
+                placeholder="Evento da automação"
+                name="search"
+                [(ngModel)]="searchInput"
+              >
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="m-b-0">
+          <nz-form-control [nzOffset]="3">
+            <button type="submit" nz-button nzType="primary">
+              Buscar
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+  <nz-table
+    #automationsListTable
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th *ngFor="let column of automationColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of automationsListTable.data;  let i=index">
+      <td>{{item.id | id}}</td>
+      <td>
+        <div class="d-flex align-items-center">
+          <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
+        </div>
+      </td>
+      <td>{{item.event}}</td>
+      <td>{{item.action}}</td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.hasTravelSm" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.hasTravelSm" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.vehicleMessage" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.vehicleMessage" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.timeAction" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.timeAction" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.velocity" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.velocity" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.hasIgnition" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.hasIgnition" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center">
+        <nz-badge *ngIf="item.command" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.command" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center" style="white-space: nowrap;">
+        <button
+          (click)="edit(item)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+        >
+          <i nz-icon nzType="edit" theme="outline"></i> Editar
+        </button>
+        <button
+          (click)="delete(item)"
+          nz-button
+          nzDanger
+          nzType="default"
+        >
+          <i nz-icon nzType="delete" theme="outline"></i> Excluir
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
 
-  <ng-template #newAutomationContent>
-    <app-automations-form></app-automations-form>
-  </ng-template>
+<ng-template #newAutomationContent>
+  <app-automations-form></app-automations-form>
+</ng-template>
 
-  <ng-template #editAutomationContent>
-    <app-automations-form></app-automations-form>
-  </ng-template>
+<ng-template #editAutomationContent>
+  <app-automations-form></app-automations-form>
+</ng-template>
 
 </nz-spin>

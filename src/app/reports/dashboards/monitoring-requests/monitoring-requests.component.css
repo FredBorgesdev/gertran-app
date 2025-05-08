@@ -1,3 +1,48 @@
+.dash-header {
+  display: flex;
+  align-items: center;
+  background: #ededed;
+  border-bottom: 1px solid #72849a;
+  margin: -25px -15px 30px -15px;
+  padding: 10px 10px 10px 130px;
+}
+
+.dash-header h3 {
+  margin: 0;
+  text-align: left;
+}
+
+.dash-header .logo {
+  background-color: #fff;
+  width: auto;
+  height: 70px;
+  margin-left: 20px;
+  border: 1px solid #72849a;
+  border-top: 0px;
+  border-radius: 0pxx;
+  padding: 5px;
+  box-shadow: 0px 0px 5px #72849a;
+  position: absolute;
+  top: 0px;
+  left: -3px;
+}
+
+.dash-header .logo img {
+  height: 60px !important;
+  width: auto !important;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content h4 {
+  margin: 0;
+  text-align: left;
+}
+
+
 .scrollable-card {
   height: 500px;
   overflow-y: scroll;
@@ -24,14 +69,6 @@
 
 .bg-danger {
   background: red;
-}
-
-.logo {
-  width: 80px;
-  height: 80px;
-  position: absolute;
-  top: 10px;
-  right: 20px;
 }
 
 h3.header-small {

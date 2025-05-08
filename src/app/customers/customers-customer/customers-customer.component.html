@@ -1,136 +1,148 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
+  
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="star"></i><span>Clientes</span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="customer?.id">
+      Editar Cliente ({{customer.tradingName}})
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="!customer?.id">
+      Adicionar Cliente
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+  
+<div class="pages-header">
+  <div class="row m-b-10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2 *ngIf="customer?.id">Editar Cliente - {{customer.tradingName}}</h2>
+          <h2 *ngIf="!customer?.id">Adicionar Cliente</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<nz-card>
+  <nz-tabset>
+    <nz-tab nzTitle="Dados da Matriz">
+      <ng-template nz-tab>
+        <app-customers-form
+          *ngIf="customer"
+          [customer]="customer"
+          (save)="onSubmit()"
+          (update)="onChangeCustomer($event)"
+        ></app-customers-form>
+      </ng-template>
+    </nz-tab>
 
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="star"></i><span>Clientes</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="customer?.id">
-        Editar Cliente ({{customer.tradingName}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!customer?.id">
-        Adicionar Cliente
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
+    <nz-tab nzTitle="Endereço">
+      <ng-template nz-tab>
+        <app-addresses-form
+          *ngIf="customer"
+          [customer]="customer"
+          (onSave)="onSubmit()"
+          (onChange)="onChangeCustomer($event)"
+        ></app-addresses-form>
+      </ng-template>
+    </nz-tab>
+    <nz-tab nzTitle="Usuarios" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-users-list [showHeader]="false" *ngIf="customer?.id"></app-users-list>
+      </ng-template>
+    </nz-tab> 
 
-    <nz-divider></nz-divider>
+    <nz-tab nzTitle="Motoristas" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-drivers-list [showHeader]="false" *ngIf="customer?.id"></app-drivers-list>
+      </ng-template>
+    </nz-tab> 
 
-    <nz-tabset>
-      <nz-tab nzTitle="Dados da Matriz">
-        <ng-template nz-tab>
-          <app-customers-form
-            *ngIf="customer"
-            [customer]="customer"
-            (save)="onSubmit()"
-            (update)="onChangeCustomer($event)"
-          ></app-customers-form>
-        </ng-template>
-      </nz-tab>
+    <nz-tab nzTitle="Cavalos" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-trucks-list [showHeader]="false" *ngIf="customer?.id"></app-trucks-list>
+      </ng-template>
+    </nz-tab> 
 
-      <nz-tab nzTitle="Endereço">
-        <ng-template nz-tab>
-          <app-addresses-form
-            *ngIf="customer"
-            [customer]="customer"
-            (onSave)="onSubmit()"
-            (onChange)="onChangeCustomer($event)"
-          ></app-addresses-form>
-        </ng-template>
-      </nz-tab>
-      <nz-tab nzTitle="Usuarios" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-users-list *ngIf="customer?.id"></app-users-list>
-        </ng-template>
-      </nz-tab> 
+    <nz-tab nzTitle="Carretas" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-wagons-list [showHeader]="false" *ngIf="customer?.id"></app-wagons-list>
+      </ng-template>
+    </nz-tab> 
 
-      <nz-tab nzTitle="Motoristas" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-drivers-list *ngIf="customer?.id"></app-drivers-list>
-        </ng-template>
-      </nz-tab> 
+    <nz-tab nzTitle="Operações" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-operations-list [showHeader]="false" *ngIf="customer?.id"></app-operations-list>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Cavalos" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-trucks-list *ngIf="customer?.id"></app-trucks-list>
-        </ng-template>
-      </nz-tab> 
+    <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-branch-office-tab *ngIf="customer?.id" [customer]="customer"></app-branch-office-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Carretas" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-wagons-list *ngIf="customer?.id"></app-wagons-list>
-        </ng-template>
-      </nz-tab> 
+    <nz-tab nzTitle="Emails" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-emails-tab *ngIf="customer?.id" [customer]="customer"> </app-emails-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Operações" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-operations-list *ngIf="customer?.id"></app-operations-list>
-        </ng-template>
-      </nz-tab>
+    <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-contacts-tab *ngIf="customer?.id" [customer]="customer"></app-contacts-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Filiais" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-branch-office-tab *ngIf="customer?.id" [customer]="customer"></app-branch-office-tab>
-        </ng-template>
-      </nz-tab>
+    <nz-tab nzTitle="Operações compartilhadas" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-shared-operations-tab *ngIf="customer?.id" [customer]="customer"></app-shared-operations-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Emails" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-emails-tab *ngIf="customer?.id" [customer]="customer"> </app-emails-tab>
-        </ng-template>
-      </nz-tab>
+    <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-documents-tab
+          *ngIf="customer?.id"
+          resource="customers"
+          [resourceId]="customer?.id"
+        ></app-documents-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Contatos" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-contacts-tab *ngIf="customer?.id" [customer]="customer"></app-contacts-tab>
-        </ng-template>
-      </nz-tab>
+    <nz-tab nzTitle="Permissões" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-permissions-tab
+          *ngIf="customer?.id"
+          [targetKeys]="numbersToStrings(customer?.permissions)"
+          (save)="savePermission($event)"
+        ></app-permissions-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Operações compartilhadas" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-shared-operations-tab *ngIf="customer?.id" [customer]="customer"></app-shared-operations-tab>
-        </ng-template>
-      </nz-tab>
+    <nz-tab nzTitle="Jornada de trabalho" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-workday-tab
+          *ngIf="customer?.id"
+          [customer]="customer"
+        ></app-workday-tab>
+      </ng-template>
+    </nz-tab>
 
-      <nz-tab nzTitle="Documentos" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-documents-tab
-            *ngIf="customer?.id"
-            resource="customers"
-            [resourceId]="customer?.id"
-          ></app-documents-tab>
-        </ng-template>
-      </nz-tab>
-
-      <nz-tab nzTitle="Permissões" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-permissions-tab
-            *ngIf="customer?.id"
-            [targetKeys]="numbersToStrings(customer?.permissions)"
-            (save)="savePermission($event)"
-          ></app-permissions-tab>
-        </ng-template>
-      </nz-tab>
-
-      <nz-tab nzTitle="Jornada de trabalho" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-workday-tab
-            *ngIf="customer?.id"
-            [customer]="customer"
-          ></app-workday-tab>
-        </ng-template>
-      </nz-tab>
-
-      <nz-tab nzTitle="Ações por macro" [nzDisabled]="!customer?.id">
-        <ng-template nz-tab>
-          <app-workday-automations-tab
-            *ngIf="customer?.id"
-            [customer]="customer"
-          ></app-workday-automations-tab>
-        </ng-template>
-      </nz-tab>
-    </nz-tabset>
-  </nz-card>
+    <nz-tab nzTitle="Ações por macro" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-workday-automations-tab
+          *ngIf="customer?.id"
+          [customer]="customer"
+        ></app-workday-automations-tab>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>
 </nz-spin>

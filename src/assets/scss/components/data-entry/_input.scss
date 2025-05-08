@@ -1,5 +1,6 @@
 .ant-input {
     padding: $input-padding-y $input-padding-x;
+    font-size: $font-size-base;
     line-height: $input-line-height;
     color: $input-color;
     height: auto;
@@ -91,6 +92,13 @@
 
     &:hover {
         border-color: $input-theme-color;
+    }
+
+    .anticon {
+        opacity: 1;
+        color: $gray-dark;
+        font-size: $font-size-xl;
+        margin-right: 6px;
     }
 
     &:focus, 
@@ -312,4 +320,3 @@ textarea {
         color: $input-error-color;
     }
 }
-

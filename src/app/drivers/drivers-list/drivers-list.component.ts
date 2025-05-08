@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -14,6 +14,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
   styleUrls: [ './drivers-list.component.css' ]
 })
 export class DriversListComponent extends BaseCrudListComponent<Driver> {
+  @Input() showHeader = true
 
   isLoading = false;
   searchInput: string;

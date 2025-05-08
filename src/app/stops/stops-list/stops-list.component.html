@@ -1,7 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-
-  <nz-card>
-
+    <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -10,43 +8,47 @@
         Pontos
       </nz-breadcrumb-item>
     </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-8">
-        <div class="d-md-flex">
-          <div class="m-b-10 m-r-20">
-            <nz-input-group [nzPrefix]="prefixTemplate">
-              <input
-                type="text"
-                nz-input
-                placeholder="Buscar Ponto por nome"
-                [(ngModel)]="searchInput"
-                (ngModelChange)="search()"
-              >
-            </nz-input-group>
-            <ng-template #prefixTemplate>
-              <i nz-icon nzType="search" class="opacity-05"></i>
-            </ng-template>
+    -->
+    <div class="pages-header">  
+      <div class="row m-b-10">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="d-md-flex">
+            <div class="m-r-20">
+              <h2>Pontos</h2>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div
-        class="col-lg-4 text-right"
-        *ngIf="authService.user.hasPermission('settings.add_point')"
-      >
-        <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Pontos</span>
-        </button>
+        <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button" *ngIf="authService.user.hasPermission('settings.add_point')">
+          <button
+            (click)="create()"
+            nz-button
+            nzType="primary"
+          >
+            <i nz-icon nzType="plus" theme="outline"></i>
+            <span>Adicionar Pontos</span>
+          </button>
+        </div>
       </div>
     </div>
+    <nz-card>
+
+    <div class="row m-b-20">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <nz-input-group [nzPrefix]="prefixTemplate">
+          <input
+            type="text"
+            nz-input
+            placeholder="Buscar Ponto por nome"
+            [(ngModel)]="searchInput"
+            (ngModelChange)="search()"
+          >
+        </nz-input-group>
+        <ng-template #prefixTemplate>
+          <i nz-icon nzType="search" class="opacity-05"></i>
+        </ng-template>
+      </div>
+    </div>
+    
 
     <nz-table
       #stopsListTable
@@ -69,30 +71,25 @@
         <td>{{item.description}}</td>
         <td>{{item.address}}</td>
         <td>{{item.radius}}</td>
-        <td class="text-md-center">
-          <a
+        <td class="text-md-center" style="white-space: nowrap;">
+          <button
             (click)="edit(item)"
             class="m-r-5"
             nz-button
             nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Editar"
             *ngIf="authService.user.hasPermission('settings.change_point')"
           >
-            <i nz-icon nzType="edit" theme="outline"></i>
-          </a>
-          <a
+            <i nz-icon nzType="edit" theme="outline"></i> Editar
+          </button>
+          <button
             nz-button
+            nzDanger
             nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
             (click)="delete(item)"
             *ngIf="authService.user.hasPermission('settings.delete_point')"
           >
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </a>
+            <i nz-icon nzType="delete" theme="outline"></i> Excluir
+          </button>
         </td>
       </tr>
       </tbody>

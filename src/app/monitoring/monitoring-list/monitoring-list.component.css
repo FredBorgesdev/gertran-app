@@ -3,11 +3,13 @@ tr {
   line-height: 1;
 }
 
-td {
+th, td {
   text-align: center;
   padding: 2px !important;
   border-right: 1px solid #d9d9d9;
-  font-weight: bold; 
+  font-weight: bold !important;
+  font-size: 10px !important; 
+  font-family: 'Poppins', Helvetica, Arial, sans-serif;
 }
 
 .bg-alert {
@@ -25,6 +27,7 @@ td {
 .bg-warning {
   background-color: #ffd371 !important;
 }
+
 
 .bg-danger {
   background-color: #ffdfdf !important;
@@ -160,9 +163,16 @@ nz-select,
   font-weight: bold;
 }
 
+.alert-button-group {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 @media only screen and (max-width: 1280px) {
   .alert-button-group {
-    margin-left: -55px;
+    margin-left: 0px;
   }
 }
 
@@ -208,4 +218,8 @@ nz-select,
   to {
     opacity: 0.5;
   }
+}
+
+.no-scroll-table .ant-table-content {
+  overflow-x: inherit !important;
 }

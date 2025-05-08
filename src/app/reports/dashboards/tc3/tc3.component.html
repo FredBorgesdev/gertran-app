@@ -1,29 +1,19 @@
 <div class="moldura">
-  <div style="margin: 2%;">
-
-    <h1 class="text-center m-b-1">
-      TORRE DE CONTROLE 3
-    </h1>
-
-    <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
-    <br>
-
-    <div style="display: flex; ">
-
-      <div style="display: flex; flex-direction: column; height: 100px;">
-        <div style="flex: 0.3;">
-          <app-client-checklists [hideHeader]="true"></app-client-checklists>
-        </div>
-        <div style="flex: 0.7;">
-          <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
-        </div>
+  <div class="dash-header">
+    <div class="logo">
+      <img src="assets/images/logo/logogertran.png" alt="Gertran">
+    </div>
+    <h3>TORRE DE CONTROLE 3</h3>
+  </div>
+  <nz-card>  
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 m-b-20">
+        <app-client-checklists [hideHeader]="true"></app-client-checklists>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <app-client-monitoring-requests [hideHeader]="true"></app-client-monitoring-requests>
       </div>
     </div>
-
-
-
-  </div>
-
+  </nz-card>
   <app-fixed-buttons></app-fixed-buttons>
-
 </div>

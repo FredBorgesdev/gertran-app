@@ -1,157 +1,110 @@
 <!-- <nz-spin style="position: absolute;top:50%;left: 50%;"></nz-spin> -->
 
-
 <div class="moldura">
-  <div style="margin: 2%;">
-
-    <h1 class="text-center m-b-1">
-      TORRE DE CONTROLE 4
-    </h1>
-
-    <img src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
-    <br>
-
-    <div style="display: flex;flex-direction: column;max-width: 100%;">
-
-      <div style="flex:6;">
-        <div style="flex-direction: row;display: flex;">
-
-          <div style="flex:7;margin-right: 5px;">
-            <h2 class="text-center m-b-1">VEÍCULO MONITORADOS</h2>
-            <nz-card style="background-color: ghostwhite; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
-              <div style="flex:3;flex-direction: row;display: flex;">
-
-
-                <div
-                  style="display: flex; flex: 3; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: bold;">
-                  <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                    <span style="font-weight: bold;">OPERAÇÕES VIAGENS MONITORADAS</span>
-                    <canvas id="operationsPositionsChart"></canvas>
-
-                    <h5>TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}</h5>
-
-                    <div *ngFor="let group of splitLabels(operationsPositionsData.labels, 3)"
-                      style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
-                      <div *ngFor="let label of group; let i = index" style="margin: 5px;">
-                        <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                          [style.background-color]="label.color"></span>
-                        <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                      </div>
-                    </div>
+  <div class="dash-header">
+    <div class="logo">
+      <img src="assets/images/logo/logogertran.png" alt="Gertran">
+    </div>
+    <h3>TORRE DE CONTROLE 4</h3>
+  </div>
+  <nz-card>    
+    <div class="row">
+      <div class="col-lg-8 col-md-9 col-sm-12">
+        <h2 class="text-center m-b-1">VEÍCULO MONITORADOS</h2>
+        <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-weight: bold;">OPERAÇÕES VIAGENS MONITORADAS</span>
+                <canvas id="operationsPositionsChart"></canvas>
+                <h5>TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}</h5>
+                <div *ngFor="let group of splitLabels(operationsPositionsData.labels, 3)"
+                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                  <div *ngFor="let label of group; let i = index" style="margin: 5px;">
+                    <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
+                      [style.background-color]="label.color"></span>
+                    <span> {{ label.status }}: {{ getPositionData(label) }}</span>
                   </div>
                 </div>
-
-
-                <div
-                  style="display: flex; flex: 3; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-weight: bold;">
-                  <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                    <span style="font-weight: bold;">VIAGENS MONITORADAS</span>
-                    <canvas id="positonsChart"></canvas>
-
-                    <h5>TOTAL: {{ positionsData.totalPositionsMonitoring }}</h5>
-
-                    <div *ngFor="let group of splitLabels(positionsData.labels, 3)"
-                      style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
-                      <div *ngFor="let label of group; let i = index" style="margin: 5px;">
-                        <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                          [style.background-color]="label.color"></span>
-                        <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                      </div>
-                    </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-weight: bold;">VIAGENS MONITORADAS</span>
+                <canvas id="positonsChart"></canvas>
+                <h5>TOTAL: {{ positionsData.totalPositionsMonitoring }}</h5>
+                <div *ngFor="let group of splitLabels(positionsData.labels, 3)"
+                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
+                  <div *ngFor="let label of group; let i = index" style="margin: 5px;">
+                    <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
+                      [style.background-color]="label.color"></span>
+                    <span> {{ label.status }}: {{ getPositionData(label) }}</span>
                   </div>
                 </div>
-
+              </div>
+            </div>
+          </div>
+        </nz-card>
+        <h2 class="text-center m-b-1">RESUMO 7 DIAS</h2>
+        <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-weight: bold;">CHECKLISTS</span>
+                <canvas id="checkListChart"></canvas>
+                <h5>TOTAL: {{checkListsData.totalCheckLists}}</h5>
+                <div *ngFor="let group of splitLabels(checkListsData.labels, 2)"
+                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
+                  <div *ngFor="let label of group; let i = index">
+                    <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
+                      [style.background-color]="label.color"></span>
+                    <span> {{ label.status }}: {{ getPositionData(label) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-weight: bold;">
+                  SOLICITAÇÕES MONITORAMENTO
+                </span>
+                <canvas id="myChart2"></canvas>
+                <h5>TOTAL: {{monitoringRequestsData.totalMonitoringRequests }}</h5>
+                <div *ngFor="let group of splitLabels(monitoringRequestsData.labels, 2)"
+                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
+                  <div *ngFor="let label of group; let i = index">
+                    <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
+                      [style.background-color]="label.color"></span>
+                    <span> {{ label.status }}: {{ getPositionData(label) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
+                <span style="font-weight: bold;">
+                  VIAGENS POR OPERAÇÃO
+                </span>
+                <canvas id="myChart4"></canvas>
+                <h5>TOTAL: {{operationsData.totalOperations }}</h5>
+              </div>
+              <div *ngFor="let group of splitLabels(operationsData.labels, 2)"
+                style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
+                <div *ngFor="let label of group; let i = index">
+                  <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
+                    [style.background-color]="label.color"></span>
+                  <span> {{ label.status }}: {{ getPositionData(label) }}</span>
+                </div>
 
               </div>
-            </nz-card>
-
-            <h2 class="text-center m-b-1">RESUMO 7 DIAS</h2>
-            <nz-card style="background-color: ghostwhite; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
-              <div style="flex:3;flex-direction: row;display: flex; margin-top: 30px;">
-
-
-                <div style="flex: 3;font-weight: bold;">
-                  <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                    <span style="font-weight: bold;">CHECKLISTS</span>
-                    <canvas id="checkListChart"></canvas>
-                    <h5>TOTAL: {{checkListsData.totalCheckLists}}</h5>
-                    <div *ngFor="let group of splitLabels(checkListsData.labels, 2)"
-                      style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
-                      <div *ngFor="let label of group; let i = index">
-                        <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                          [style.background-color]="label.color"></span>
-                        <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div style="flex: 3;font-weight: bold;">
-                  <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                    <span style="font-weight: bold;">
-                      SOLICITAÇÕES MONITORAMENTO
-                    </span>
-                    <canvas id="myChart2"></canvas>
-
-
-                    <h5>TOTAL: {{monitoringRequestsData.totalMonitoringRequests }}</h5>
-
-
-                    <div *ngFor="let group of splitLabels(monitoringRequestsData.labels, 2)"
-                      style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
-                      <div *ngFor="let label of group; let i = index">
-                        <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                          [style.background-color]="label.color"></span>
-                        <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-
-                <div style="flex: 3;font-weight: bold;">
-                  <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                    <span style="font-weight: bold;">
-                      VIAGENS POR OPERAÇÃO
-                    </span>
-                    <canvas id="myChart4"></canvas>
-
-
-                    <h5>TOTAL: {{operationsData.totalOperations }}</h5>
-                  </div>
-
-                  <div *ngFor="let group of splitLabels(operationsData.labels, 2)"
-                    style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
-                    <div *ngFor="let label of group; let i = index">
-                      <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                        [style.background-color]="label.color"></span>
-                      <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                    </div>
-
-                  </div>
-                </div>
-
-
-
-              </div>
-            </nz-card>
+            </div>
           </div>
-
-          <div style="flex:3;">
-            <app-maps mapClassHeight="tower-control"></app-maps>
-          </div>
-
-        </div>
+        </nz-card>
+      </div>
+      <div class="col-lg-4 col-md-3 col-sm-12">
+        <app-maps mapClassHeight="tower-control"></app-maps>
       </div>
     </div>
-
-  </div>
-
-
-
+  </nz-card>    
   <app-fixed-buttons></app-fixed-buttons>
-
 </div>
-

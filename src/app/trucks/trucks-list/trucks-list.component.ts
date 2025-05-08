@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {TableService} from '../../shared/services/table.service';
@@ -14,6 +14,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
   styleUrls: ['./trucks-list.component.css']
 })
 export class TrucksListComponent extends BaseCrudListComponent<Truck> implements OnInit {
+  @Input() showHeader = true
   searchInput: string;
 
   truckColumns = [

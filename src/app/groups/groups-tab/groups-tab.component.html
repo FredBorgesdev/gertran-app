@@ -6,10 +6,12 @@
     (nzChange)="change($event)"
   >
   </nz-transfer>
-
-  <nz-form-item class="m-t-55">
-    <nz-form-control>
-      <button nz-button nzType="primary" (click)="saveGroups()">Salvar grupos</button>
-    </nz-form-control>
-  </nz-form-item>
+  <nz-divider></nz-divider>
+  <div class="page-buttons">
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" (click)="saveGroups()">Salvar grupos</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
 </form>

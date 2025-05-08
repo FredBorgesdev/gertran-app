@@ -1,83 +1,81 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
 
-  <nz-card>
-
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        Perifericos
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-8">
-        <div class="d-md-flex">
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      Perifericos
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+-->
+<div class="pages-header">  
+  <div class="row m-b-10">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Perifericos</h2>
         </div>
       </div>
-      <div class="col-lg-4 text-right">
-        <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Perifericos</span>
-        </button>
-      </div>
     </div>
-    <nz-table
-      #table
-      [nzData]="resources?.results"
-      [nzTotal]="resources?.count"
-      [nzPageSize]="resources?.limit"
-      [nzPageIndex]="page"
-      [nzFrontPagination]="false"
-      (nzQueryParams)="handleQueryParamsChange($event)"
-    >
-      <thead>
-      <tr>
-        <th *ngFor="let column of vehiclePeripheralsColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+    <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+      <button
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Perifericos</span>
+      </button>
+    </div>
+  </div>
+</div>
+<nz-card>
+  <nz-table
+    #table
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th *ngFor="let column of vehiclePeripheralsColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of table.data; let i=index">
+        <td>{{item.id | id}}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
+          </div>
+        </td>
+        <td>{{getPeripheralType(item.peripheralType)}}</td>
+        <td class="text-md-center" style="white-space: nowrap;">
+          <button
+            (click)="edit(item)"
+            nz-button
+            nzType="default"
+          >
+            <i nz-icon nzType="edit" theme="outline"></i> Editar
+          </button>
+          <button
+            nz-button
+            nzType="default"
+            nzDanger
+            class="m-l-10"
+            (click)="delete(item)"
+          >
+            <i nz-icon nzType="delete" theme="outline"></i> Excluir
+          </button>
+        </td>
       </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of table.data; let i=index">
-          <td>{{item.id | id}}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
-            </div>
-          </td>
-          <td>{{getPeripheralType(item.peripheralType)}}</td>
-          <td class="text-md-center">
-            <a
-              (click)="edit(item)"
-              class="m-r-5"
-              nz-button
-              nzType="default"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Editar"
-            >
-              <i nz-icon nzType="edit" theme="outline"></i>
-            </a>
-            <button
-              nz-button
-              nzType="default"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Excluir"
-              (click)="delete(item)"
-            >
-              <i nz-icon nzType="delete" theme="outline"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+    </tbody>
+  </nz-table>
+</nz-card>
 
 </nz-spin>

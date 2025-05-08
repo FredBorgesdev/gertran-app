@@ -1,5 +1,6 @@
 .ant-collapse {
-    font-family: $font-family-sans-serif;
+    font-family: $font-family-base;
+    font-weight: $font-weight-bold;
     font-size: $font-size-base;
     line-height: $line-height-base;
     color: $body-color;
@@ -16,6 +17,12 @@
             padding: $collapse-header-spacing;
             color: $collapse-header-color;
             position: relative;
+
+            .ant-collapse-extra {
+                .anticon {
+                    font-size: 20px;
+                }
+            }
         }
     }
 

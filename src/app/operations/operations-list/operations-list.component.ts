@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -12,6 +12,8 @@ import {AuthenticationService} from '../../authentication/authentication.service
   styleUrls: ['./operations-list.component.css'],
 })
 export class OperationsListComponent extends BaseCrudListComponent<Operations> {
+  @Input() showHeader = true
+  
   operationsColumns = [
     { title: 'Id' },
     { title: 'Nome' },

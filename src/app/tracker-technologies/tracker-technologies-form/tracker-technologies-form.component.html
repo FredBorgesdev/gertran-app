@@ -1,55 +1,71 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="idcard"></i><span>Tecnologias</span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="trackerTechnology?.id">
+      Editar Tecnologias ({{trackerTechnology.name}})
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="!trackerTechnology?.id">
+      Adicionar Tecnologias
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+  <div class="pages-header">
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2 *ngIf="trackerTechnology?.id">Editar Tecnologias - {{trackerTechnology.name}}</h2>
+            <h2 *ngIf="!trackerTechnology?.id">Adicionar Tecnologias</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <nz-card>
+  <nz-tabset>
+    <nz-tab nzTitle="Tecnologia">
+      <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+                <input id="name" type="text" nz-input formControlName="name" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>    
+        
+        <nz-divider></nz-divider>
 
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Tecnologias</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="trackerTechnology?.id">
-        Editar Tecnologias ({{trackerTechnology.name}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!trackerTechnology?.id">
-        Adicionar Tecnologias
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <nz-tabset>
-      <nz-tab nzTitle="Tecnologia">
-        <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
-              <input id="name" type="text" nz-input formControlName="name" />
-            </nz-form-control>
-          </nz-form-item>
-          
-          <nz-divider></nz-divider>
-
-          <nz-form-item>
-            <nz-form-control [nzOffset]="7" [nzSpan]="12">
-              <button type="button" (click)="save()" nz-button nzType="primary">
-                <i nz-icon nzType="save"></i>Salvar Tecnologias
-              </button>
+        <nz-form-item>
+          <nz-form-control>
+            <div class="page-buttons">
               <button type="button" (click)="list()" nz-button>
                 <i nz-icon nzType="unordered-list"></i>Listar Tecnologias
               </button>
-            </nz-form-control>
-          </nz-form-item>
-        </form>
-      </nz-tab>
+              <button type="button" (click)="save()" nz-button nzType="primary">
+                <i nz-icon nzType="save"></i>Salvar Tecnologias
+              </button>
+            </div>  
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-tab>
 
-      <nz-tab nzTitle="Modelos" [nzDisabled]="!trackerTechnology?.id">
-        <app-tracker-technologies-models-list
-          *ngIf="trackerTechnology"
-          [trackerTechnology]="trackerTechnology"
-        ></app-tracker-technologies-models-list>
-      </nz-tab>
+    <nz-tab nzTitle="Modelos" [nzDisabled]="!trackerTechnology?.id">
+      <app-tracker-technologies-models-list
+        *ngIf="trackerTechnology"
+        [trackerTechnology]="trackerTechnology"
+      ></app-tracker-technologies-models-list>
+    </nz-tab>
 
-    </nz-tabset>
-  </nz-card>
+  </nz-tabset>
+</nz-card>
 </nz-spin>

@@ -6,10 +6,14 @@
     (nzChange)="changeTransfer()"
   >
   </nz-transfer>
-
-  <nz-form-item class="m-t-55" *ngIf="!hideSubmit">
-    <nz-form-control>
-      <button nz-button nzType="primary" (click)="savePermissions()">Salvar permissões</button>
-    </nz-form-control>
-  </nz-form-item>
+  
+  <nz-divider></nz-divider>
+  
+  <div class="page-buttons">
+    <nz-form-item *ngIf="!hideSubmit">
+      <nz-form-control>
+        <button nz-button nzType="primary" (click)="savePermissions()">Salvar permissões</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
 </form>

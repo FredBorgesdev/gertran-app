@@ -1,99 +1,114 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <nz-form-item>
-    <nz-form-control [nzSpan]="null" [nzOffset]="null">
-      <label nz-checkbox formControlName="isMain">É a principal?</label>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngIf="authService.user?.isGertranStaff">
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-      <nz-select
-        id="customer"
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Selecione uma empresa"
-        formControlName="customer"
-        nzServerSearch
-        (nzOnSearch)="selectableCustomerService.searchByName($event)"
-        (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-        [nzDropdownRender]="selectLoading"
-      >
-        <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
-                   [nzValue]="customer.id"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
-      <input id="name" type="text" nz-input formControlName="name"/>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
-      <input id="description" type="text" nz-input formControlName="description"/>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-control>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="address">Endereço</nz-form-label>
-      <app-address-select
-        [formGroup]="validateForm"
-        formControlName="address"
-        (handleAddressChange)="handleAddressChange($event)"
-      ></app-address-select>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
-      <input id="state" nz-input formControlName="state"/>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
-      <input id="city" nz-input formControlName="city"/>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="radius">Raio</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o raio">
-      <input id="radius" type="number" nz-input formControlName="radius"/>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="pointType">Tipo</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o tipo">
-      <nz-radio-group formControlName="pointType">
-        <label
-          nz-radio
-          *ngFor="let type of stopTypes"
-          [nzValue]="type.value"
-        >{{type.label}}</label>
-      </nz-radio-group>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="save()" nz-button nzType="primary">
-        <i nz-icon nzType="save"></i>Salvar Ponto
-      </button>
-      <button type="button" (click)="list()" nz-button>
-        <i nz-icon nzType="unordered-list"></i>Listar Pontos
-      </button>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label>É a principal?</nz-form-label>
+        <nz-form-control [nzSpan]="null" [nzOffset]="null">
+          <label nz-checkbox formControlName="isMain">Sim</label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item *ngIf="authService.user?.isGertranStaff">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+          <nz-select
+            id="customer"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma empresa"
+            formControlName="customer"
+            nzServerSearch
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+            [nzDropdownRender]="selectLoading"
+          >
+            <nz-option *ngFor="let customer of selectableCustomerService.customers" [nzLabel]="customer.tradingName"
+                       [nzValue]="customer.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
+          <input id="name" type="text" nz-input formControlName="name"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
+          <input id="description" type="text" nz-input formControlName="description"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="address">Endereço</nz-form-label>
+          <app-address-select
+            [formGroup]="validateForm"
+            formControlName="address"
+            (handleAddressChange)="handleAddressChange($event)"
+          ></app-address-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
+          <input id="state" nz-input formControlName="state"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
+          <input id="city" nz-input formControlName="city"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="radius">Raio</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o raio">
+          <input id="radius" type="number" nz-input formControlName="radius"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="pointType">Tipo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o tipo">
+          <nz-radio-group formControlName="pointType">
+            <label
+              nz-radio
+              *ngFor="let type of stopTypes"
+              [nzValue]="type.value"
+            >{{type.label}}</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+    <div class="page-buttons">
+      <nz-form-item>
+        <nz-form-control>
+          <button type="button" (click)="list()" nz-button>
+            <i nz-icon nzType="unordered-list"></i>Listar Pontos
+          </button>
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Ponto
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
 </form>
 
 <ng-template #selectLoading>

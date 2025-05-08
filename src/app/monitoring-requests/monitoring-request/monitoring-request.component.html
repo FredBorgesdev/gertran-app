@@ -1,6 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
-
+  <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -15,9 +14,20 @@
         Adicionar Solicitações de monitoramento
       </nz-breadcrumb-item>
     </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
+  -->
+  <div class="pages-header">
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2 *ngIf="resource?.id">Editar Solicitações de monitoramento</h2>
+            <h2 *ngIf="!resource?.id">Adicionar Solicitações de monitoramento</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nz-card>
     <nz-tabset [nzTabBarExtraContent]="sendButton">
       <nz-tab nzTitle="Solicitação de monitoramento">
         <ng-template nz-tab>

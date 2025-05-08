@@ -1,20 +1,40 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
 
-  <nz-card>
-    <div *ngIf="authService.customerId">
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>
-          <i nz-icon nzType="dashboard"></i>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-          Operações
-        </nz-breadcrumb-item>
-      </nz-breadcrumb>
-  
-      <nz-divider></nz-divider>
+  <div *ngIf="authService.customerId">
+    <!--
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Operações
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+    -->
+  </div>
+  <div class="pages-header" *ngIf="showHeader">  
+    <div class="row m-b-10">
+      <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Operações</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+        <button
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Operações</span>
+      </button>
+      </div>
     </div>
-
-    <div class="row m-b-30">
+  </div>
+  <nz-card>  
+    <div class="row m-b-10">
       <div class="col-lg-8">
         <div class="d-md-flex">
           <div class="m-b-10 m-r-20">
@@ -33,16 +53,15 @@
           </div>
         </div>
       </div>
-
-      <div class="col-lg-4 text-right">
+      <div class="col-lg-4 text-right" *ngIf="!showHeader">
         <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Operações</span>
-        </button>
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Operações</span>
+      </button>        
       </div>
     </div>
 
@@ -74,27 +93,22 @@
             <nz-badge *ngIf="item.isMain" nzStatus="success"></nz-badge>
             <nz-badge *ngIf="!item.isMain" nzStatus="error"></nz-badge>
           </td>
-          <td class="text-md-center">
-            <a
+          <td class="text-md-center" style="white-space: nowrap;">
+            <button
               (click)="edit(item)"
-              class="m-r-5"
               nz-button
               nzType="default"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Editar"
             >
-              <i nz-icon nzType="edit" theme="outline"></i>
-            </a>
+              <i nz-icon nzType="edit" theme="outline"></i> Editar
+            </button>
             <button
               nz-button
+              nzDanger
               nzType="default"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Excluir"
+              class="m-l-10"
               (click)="delete(item)"
             >
-              <i nz-icon nzType="delete" theme="outline"></i>
+              <i nz-icon nzType="delete" theme="outline"></i> Excluir
             </button>
           </td>
         </tr>

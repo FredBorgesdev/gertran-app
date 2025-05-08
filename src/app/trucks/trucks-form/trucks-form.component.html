@@ -1,7 +1,7 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <div nz-row nzGutter="16" nzAlign="middle">
-    <div nz-col nzSpan="18">
-      <nz-form-item>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10" style="display: flex; flex-direction: row;">
+      <nz-form-item style="width: 100%;">
         <nz-form-label [nzSpan]="null" nzRequired nzFor="plate">Placa</nz-form-label>
         <nz-form-control
           [nzSpan]="null"
@@ -10,43 +10,44 @@
           <input id="plate" type="text" nz-input formControlName="plate"/>
         </nz-form-control>
       </nz-form-item>
-    </div>
-
-    <div nz-col nzSpan="6">
       <button
         nz-button
         nzType="primary"
+        class="m-t-28 m-l-5"
         (click)="filterVehicleByPlate()"
       >Buscar
       </button>
     </div>
   </div>
-
-  <nz-form-item *ngIf="!authService.customerId">
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Clientes associados a este veiculo</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-      <nz-select
-        id="customers"
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Selecione uma empresa"
-        formControlName="customers"
-        nzMode="multiple"
-        nzServerSearch
-        (nzOnSearch)="selectableCustomerService.searchByName($event)"
-        (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-        [nzDropdownRender]="selectLoading"
-      >
-        <nz-option
-          *ngFor="let customer of selectableCustomerService.customers"
-          [nzLabel]="customer.tradingName"
-          [nzValue]="customer.id"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <div nz-row nzGutter="12" nzAlign="middle" *ngIf="authService.customerId">
-    <div nz-col [nzSpan]="24">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item *ngIf="!authService.customerId">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Clientes associados a este veiculo</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+          <nz-select
+            id="customers"
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Selecione uma empresa"
+            formControlName="customers"
+            nzMode="multiple"
+            nzServerSearch
+            (nzOnSearch)="selectableCustomerService.searchByName($event)"
+            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+            [nzDropdownRender]="selectLoading"
+          >
+            <nz-option
+              *ngFor="let customer of selectableCustomerService.customers"
+              [nzLabel]="customer.tradingName"
+              [nzValue]="customer.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>    
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10" *ngIf="authService.customerId">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
         <nz-form-control nzErrorTip="Opção inválida!">
@@ -57,31 +58,29 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-  </div>
-  
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="manufacturer">Montadora</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Montadora inválida!">
-      <nz-select
-        (ngModelChange)="loadModels()"
-        id="manufacturer"
-        nzAllowClear
-        nzShowSearch
-        nzServerSearch
-        nzPlaceHolder="Selecione uma montadora"
-        formControlName="manufacturer"
-        (nzScrollToBottom)="selectableVehicleManufacturersService.loadMoreManufacturers()"
-        [nzDropdownRender]="selectLoading"
-        (nzOnSearch)="selectableVehicleManufacturersService.searchByName($event)"
-      >
-        <nz-option *ngFor="let manufacturer of selectableVehicleManufacturersService.manufacturers"
-                   [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="manufacturer">Montadora</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Montadora inválida!">
+          <nz-select
+            (ngModelChange)="loadModels()"
+            id="manufacturer"
+            nzAllowClear
+            nzShowSearch
+            nzServerSearch
+            nzPlaceHolder="Selecione uma montadora"
+            formControlName="manufacturer"
+            (nzScrollToBottom)="selectableVehicleManufacturersService.loadMoreManufacturers()"
+            [nzDropdownRender]="selectLoading"
+            (nzOnSearch)="selectableVehicleManufacturersService.searchByName($event)"
+          >
+            <nz-option *ngFor="let manufacturer of selectableVehicleManufacturersService.manufacturers"
+                      [nzLabel]="manufacturer.name" [nzValue]="manufacturer.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>  
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="vehicleModel">Modelo</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Modelo inválido!">
@@ -107,7 +106,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="vehicleModelType">Tipo</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Tipo inválido!">
@@ -125,9 +124,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="state">Estado</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado. Apenas UF. (MG, SP, etc)">
@@ -135,7 +132,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="city">Cidade</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cidade">
@@ -143,9 +140,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="color">Cor</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a cor">
@@ -153,7 +148,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="modelYear">Ano modelo</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o ano modelo">
@@ -161,9 +156,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="chassis">Chassi</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o chassi">
@@ -171,7 +164,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="renavam">Renavam</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o renavam">
@@ -179,9 +172,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="numberOfAxles">Eixos</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
@@ -191,7 +182,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cubage">Cubagem</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
@@ -201,10 +192,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-
-  <div nz-row nzGutter="24">
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
       <nz-form-item>
         <nz-form-label></nz-form-label>
         <nz-form-control [nzSpan]="null" [nzOffset]="null">
@@ -215,7 +203,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12" *ngIf="validateForm.value.hasFatigueCamera">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10" *ngIf="validateForm.value.hasFatigueCamera">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzFor="cameraSerialNumber">Número Serial da Câmera</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
@@ -226,31 +214,34 @@
       </nz-form-item>
     </div>
   </div>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzFor="description">Descrição</nz-form-label>
-    <nz-form-control [nzSpan]="null">
-      <textarea rows="4" id="description" type="text" nz-input formControlName="description"></textarea>
-    </nz-form-control>
-  </nz-form-item>
-
+  <div class="row">
+    <div class="col-lg-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzFor="description">Descrição</nz-form-label>
+        <nz-form-control [nzSpan]="null">
+          <textarea rows="4" id="description" type="text" nz-input formControlName="description"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>  
   <nz-divider></nz-divider>
-
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="saveWithErrorHandling()" nz-button nzType="primary">
-        <i nz-icon nzType="save"></i>Salvar Cavalo
-      </button>
-      <button type="button" (click)="backToCustomerList()" nz-button>
-        <div  *ngIf="!authService.customerId">
-          <i class="fas fa-arrow-left"></i> Voltar ao Cadastro
-        </div>
-
-        <div  *ngIf="authService.customerId">
-          <i nz-icon nzType="unordered-list"></i> Listar Cavalos
-        </div>
-      </button>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="page-buttons">
+    <nz-form-item>
+      <nz-form-control>
+        <button type="button" (click)="backToCustomerList()" nz-button>
+          <div  *ngIf="!authService.customerId">
+            <i class="fas fa-arrow-left m-r-5"></i> Voltar ao Cadastro
+          </div>
+          <div *ngIf="authService.customerId">
+            <i nz-icon nzType="unordered-list" class="m-r-5"></i> Listar Cavalos
+          </div>
+        </button>
+        <button type="button" (click)="saveWithErrorHandling()" nz-button nzType="primary">
+          <i nz-icon nzType="save"></i> Salvar Cavalo
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
 </form>
 
 <ng-template #selectLoading>

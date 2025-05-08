@@ -19,6 +19,12 @@
                 color: $input-color-placeholder;
             }
         }
+
+        .ant-picker-clear,
+        .ant-picker-suffix {
+            color: $gray-dark;
+            font-size: $font-size-lg;
+        }
     }
 
     &.ant-picker-disabled {

@@ -9,15 +9,16 @@
 
 .bg-danger {
   background: red;
-  color: #fff;
-  /* color: black;  */
   font-weight: bold;
 }
 
 th.table-header {
-  background: #187bff;
-  color: #fff;
+  color: #2a2a2a;
+  font-size: 0.75rem;
   font-weight: bold;
+  background: #ededed;
+  border: 1px solid #2a2a2a;
+  border-collapse: collapse;
 }
 
 

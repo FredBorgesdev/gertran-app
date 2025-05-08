@@ -36,7 +36,6 @@
         nz-button
         nzType="default"
         nzSize="small"
-        nzShape="round"
         class="m-r-10"
       >
         <span nz-icon nzType="send"></span>
@@ -48,7 +47,6 @@
         nz-button
         nzType="default"
         nzSize="small"
-        nzShape="round"
         class="m-r-10"
       >
         <span nz-icon nzType="send"></span>
@@ -60,7 +58,6 @@
         nz-dropdown
         nzType="default"
         nzSize="small"
-        nzShape="round"
         class="m-r-10"
         [nzDropdownMenu]="statusMenu"
       >
@@ -85,23 +82,23 @@
         nz-button
         nzType="default"
         nzSize="small"
-        nzShape="round"
         class="m-r-10"
       >
         Observações
       </button>
 
-      <a
+      <button
         (click)="markAsSolved(item)"
         nz-button
-        nzType="primary"
-        nzShape="circle"
+        nzSize="small"
+        nzType="default"
+        nzShape="square"
         nz-tooltip
         [disabled]="item.solvedAt"
         [nzTooltipTitle]="isUrgent ? 'Resolver' : 'Marcar como lida'"
       >
         <i nz-icon [nzType]="isUrgent ? 'check' : 'check-circle'"></i>
-      </a>
+      </button>
     </td>
   </tr>
   </tbody>

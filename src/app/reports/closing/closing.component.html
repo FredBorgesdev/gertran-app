@@ -1,80 +1,90 @@
 <nz-spin [nzSpinning]="isLoading">
-  <nz-card>
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="bar-chart"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="line-chart"></i><span>Fechamento</span></a>
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="bar-chart"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="line-chart"></i><span>Fechamento</span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+-->
+<div class="pages-header">  
+  <div class="row m-b-10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Fechamento</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+<nz-card>
+<app-base-closing-filter
+    (generateReport)="generateReport($event)"
+    (valueChanges)="changeValue($event)"
+    [rows]="monitoringRequests"
+    [fileName]="'Relatório de Fechamento'"
+  ></app-base-closing-filter>
 
-    <app-base-closing-filter
-      (generateReport)="generateReport($event)"
-      (valueChanges)="changeValue($event)"
-      [rows]="monitoringRequests"
-      [fileName]="'Relatório de Fechamento'"
-      [xlsxValues]="xlsxValues"
-    ></app-base-closing-filter>
+  <nz-table
+    #table
+    [nzData]="monitoringRequests"
+    nzBordered
+    class="m-t-50"
+    [nzFrontPagination]="false"
+    nzSize="small"
+    *ngIf="reportFormat === 'analytic' || reportFormat === 'all'"
+  >
+    <thead>
+    <tr>
+      <th>SM</th>
+      <th>Cliente</th>
+      <th>Data</th>
+      <th>Veiculo</th>
+      <th>Operação</th>
+      <th>Saída</th>
+      <th>Transportadora</th>
+    </tr>
+    </thead>
 
-    <nz-table
-      #table
-      [nzData]="monitoringRequests"
-      nzBordered
-      class="m-t-50"
-      [nzFrontPagination]="false"
-      nzTableLayout="fixed"
-      nzSize="small"
-      *ngIf="reportFormat === 'analytic' || reportFormat === 'all'"
-    >
-      <thead>
-      <tr>
-        <th>SM</th>
-        <th>Cliente</th>
-        <th>Data</th>
-        <th>Veiculo</th>
-        <th>Operação</th>
-        <th>Saída</th>
-        <th>Transportadora</th>
-      </tr>
-      </thead>
+    <tbody>
+    <tr *ngFor="let data of table.data; index as i">
+      <td>{{ data.id | id }}</td>
+      <td>{{ data.customer.tradingName }}</td>
+      <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ data.truck?.vehicle?.plate }}</td>
+      <td>{{ data.operation?.name ?? '-' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
+      <td>{{ data.transporter?.tradingName ?? '-' }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
 
-      <tbody>
-      <tr *ngFor="let data of table.data; index as i">
-        <td>{{ data.id | id }}</td>
-        <td>{{ data.customer.tradingName }}</td>
-        <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-        <td>{{ data.truck?.vehicle?.plate }}</td>
-        <td>{{ data.operation?.name ?? '-' }}</td>
-        <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
-        <td>{{ data.transporter?.tradingName ?? '-' }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
+  <nz-table
+    #table
+    [nzData]="syntheticReport"
+    nzBordered
+    class="m-t-50"
+    [nzFrontPagination]="false"
+    nzTableLayout="fixed"
+    nzSize="small"
+    *ngIf="reportFormat === 'synthetic' || reportFormat === 'all'"
+  >
+    <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Qtd. SM</th>
+    </tr>
+    </thead>
 
-    <nz-table
-      #table
-      [nzData]="syntheticReport"
-      nzBordered
-      class="m-t-50"
-      [nzFrontPagination]="false"
-      nzTableLayout="fixed"
-      nzSize="small"
-      *ngIf="reportFormat === 'synthetic' || reportFormat === 'all'"
-    >
-      <thead>
-      <tr>
-        <th>Cliente</th>
-        <th>Qtd. SM</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <tr *ngFor="let data of table.data; index as i">
-        <td>{{ data.customerName }}</td>
-        <td>{{ data.monitoringRequestCount }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+    <tbody>
+    <tr *ngFor="let data of table.data; index as i">
+      <td>{{ data.customerName }}</td>
+      <td>{{ data.monitoringRequestCount }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
 </nz-spin>

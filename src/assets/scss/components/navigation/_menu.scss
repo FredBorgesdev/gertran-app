@@ -10,6 +10,7 @@
 
             a {
                 color: $brand-primary;
+                font-weight: $font-weight-bold;
             }
         }
     }
@@ -26,17 +27,66 @@
             &:hover {
                 color: $brand-primary;
             }
+            .anticon {
+                font-size: $font-size-xl;
+            }
         }
     }
 
     &.ant-menu-dark {
         a {
             color: $menu-dark-text;
+            .anticon {
+                font-size: $font-size-xl;
+            }
         }
 
         .ant-menu-item-selected {
             background-color: transparent;
             color: $white;
+        }
+    }
+
+    .ant-menu-item {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        border-bottom: 1px solid $gray-light;
+        >a {
+            color: $menu-text;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+        }
+        &:hover {
+            background-color: $gray-lightest;
+            font-weight: $font-weight-bold;
+            >a {
+                color: $gray-dark;
+            }
+        }
+    }
+
+    .ant-menu-submenu {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        border-bottom: 1px solid $gray-light;
+        >a {
+            color: $menu-text;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+        }
+        &:hover {
+            background-color: $gray-lightest;
+            font-weight: $font-weight-bold;
+            >a {
+                color: $gray-dark;
+            }
+        }
+        .ant-menu-sub {
+            .ant-menu-item {
+                margin-top: 0px !important;
+                margin-bottom: 0px !important;
+                border-bottom: 0px;
+            }    
         }
     }
 }
@@ -102,12 +152,6 @@
 .ant-menu-inline .ant-menu-submenu-title {
     line-height: $menu-spacing-y;
     height: $menu-spacing-y;
-}
-
-.ant-menu-item {
-    >a {
-        color: $menu-text;
-    }
 }
 
 .ant-menu-item-group-title {

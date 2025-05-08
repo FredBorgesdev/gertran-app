@@ -19,7 +19,7 @@
     }
 
     &.ant-upload-drag {
-        border: 2px dashed $border-color;
+        border: 2px dashed $gray-light;
         border-radius: $border-radius;
         padding: 50px;
         background: $upload-picture-bg;
@@ -39,12 +39,14 @@
         
         p.ant-upload-text {
             color: $gray-dark;
-            font-size: 18px;
+            font-size: 14px;
             margin-bottom: 15px;
+            font-weight: $font-weight-bold;
         }
 
         p.ant-upload-hint {
             color: $gray-light;
+            font-size: $font-size-base;
         }
     }
 }

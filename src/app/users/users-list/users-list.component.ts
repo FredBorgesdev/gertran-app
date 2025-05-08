@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TableService } from '../../shared/services/table.service';
@@ -16,6 +16,7 @@ import {AuthenticationService} from '../../authentication/authentication.service
 export class UsersListComponent extends BaseCrudListComponent<AbstractUser> implements OnInit {
   searchInput: string;
   customer: string;
+  @Input() showHeader = true
 
   userColumn = [
     { title: 'ID' },

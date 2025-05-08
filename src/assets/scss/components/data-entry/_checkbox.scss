@@ -27,7 +27,7 @@
 .ant-checkbox-inner {
     width: $checkbox-width-height;
     height: $checkbox-width-height;
-    border: 1px solid $gray-medium;
+    border: 1px solid $gray-dark;
     border-radius: $border-radius;
     background-color: transparent;
 
@@ -41,7 +41,7 @@
 
     .ant-checkbox-inner {
         background-color: $checkbox-theme-color;
-        border-color: $checkbox-theme-color;
+        border-color: $gray-dark;
     }
 
     &:after {

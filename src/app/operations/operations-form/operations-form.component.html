@@ -22,121 +22,125 @@
         </nz-select>
       </nz-form-control>
     </nz-form-item> -->
-
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome da operação</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
-        <input id="name" type="text" nz-input formControlName="name"/>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTrackerModels">Modelo de rastreadores permitidos
-      </nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
-        <nz-select
-          id="allowedTrackerModels"
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Selecione uma tecnologia"
-          formControlName="allowedTrackerModels"
-          nzMode="multiple"
-          (ngModelChange)="selectAllTrackerModels($event)"
-        >
-          <nz-option-group
-            *ngFor="let group of trackerTechnologiesWithModels"
-            [nzLabel]="group.name"
-          >
-            <nz-option
-              [nzLabel]="group.name + '(TODOS)'"
-              [nzValue]="'group_'+group.id"
-            ></nz-option>
-            <nz-option *ngFor="let option of group.models" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
-          </nz-option-group>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTruckTypes">Tipos de cavalo permitidos</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
-        <nz-select
-          id="allowedTruckTypes"
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Selecione uma tecnologia"
-          formControlName="allowedTruckTypes"
-          nzMode="multiple"
-          (ngModelChange)="selectAll($event, 'allowedTruckTypes', truckTypes)"
-        >
-          <nz-option
-            nzLabel="TODOS"
-            nzValue="all"
-            *ngIf="truckTypes.length > 0"
-          ></nz-option>
-          <nz-option
-            *ngFor="let truckType of truckTypes"
-            [nzLabel]="truckType.name"
-            [nzValue]="truckType.id"
-          ></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedWagonTypes">Tipos de carreta permitidos</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
-        <nz-select
-          id="allowedWagonTypes"
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Selecione uma tecnologia"
-          formControlName="allowedWagonTypes"
-          nzMode="multiple"
-          (ngModelChange)="selectAll($event, 'allowedWagonTypes', wagonTypes)"
-        >
-          <nz-option
-            nzLabel="TODOS"
-            nzValue="all"
-            *ngIf="wagonTypes.length > 0"
-          ></nz-option>
-          <nz-option
-            *ngFor="let wagonType of wagonTypes"
-            [nzLabel]="wagonType.name"
-            [nzValue]="wagonType.id"
-          ></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="requiredPeripherals">Periféricos obrigatórios</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Preencha os periféricos">
-        <nz-select
-          id="requiredPeripherals"
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Selecione uma tecnologia"
-          formControlName="requiredPeripherals"
-          nzMode="multiple"
-          (ngModelChange)="selectAll($event, 'requiredPeripherals', vehiclePeripherals)"
-        >
-          <nz-option
-            nzLabel="TODOS"
-            nzValue="all"
-            *ngIf="vehiclePeripherals.length > 0"
-          ></nz-option>
-          <nz-option
-            *ngFor="let peripheral of vehiclePeripherals"
-            [nzLabel]="peripheral.name"
-            [nzValue]="peripheral.id"
-          ></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="12">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome da operação</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Insira o nome!">
+            <input id="name" type="text" nz-input formControlName="name"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTrackerModels">Modelo de rastreadores permitidos
+          </nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
+            <nz-select
+              id="allowedTrackerModels"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma tecnologia"
+              formControlName="allowedTrackerModels"
+              nzMode="multiple"
+              (ngModelChange)="selectAllTrackerModels($event)"
+            >
+              <nz-option-group
+                *ngFor="let group of trackerTechnologiesWithModels"
+                [nzLabel]="group.name"
+              >
+                <nz-option
+                  [nzLabel]="group.name + '(TODOS)'"
+                  [nzValue]="'group_'+group.id"
+                ></nz-option>
+                <nz-option *ngFor="let option of group.models" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+              </nz-option-group>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedTruckTypes">Tipos de cavalo permitidos</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
+            <nz-select
+              id="allowedTruckTypes"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma tecnologia"
+              formControlName="allowedTruckTypes"
+              nzMode="multiple"
+              (ngModelChange)="selectAll($event, 'allowedTruckTypes', truckTypes)"
+            >
+              <nz-option
+                nzLabel="TODOS"
+                nzValue="all"
+                *ngIf="truckTypes.length > 0"
+              ></nz-option>
+              <nz-option
+                *ngFor="let truckType of truckTypes"
+                [nzLabel]="truckType.name"
+                [nzValue]="truckType.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">    
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="allowedWagonTypes">Tipos de carreta permitidos</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o modelo">
+            <nz-select
+              id="allowedWagonTypes"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma tecnologia"
+              formControlName="allowedWagonTypes"
+              nzMode="multiple"
+              (ngModelChange)="selectAll($event, 'allowedWagonTypes', wagonTypes)"
+            >
+              <nz-option
+                nzLabel="TODOS"
+                nzValue="all"
+                *ngIf="wagonTypes.length > 0"
+              ></nz-option>
+              <nz-option
+                *ngFor="let wagonType of wagonTypes"
+                [nzLabel]="wagonType.name"
+                [nzValue]="wagonType.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="requiredPeripherals">Periféricos obrigatórios</nz-form-label>
+          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha os periféricos">
+            <nz-select
+              id="requiredPeripherals"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione uma tecnologia"
+              formControlName="requiredPeripherals"
+              nzMode="multiple"
+              (ngModelChange)="selectAll($event, 'requiredPeripherals', vehiclePeripherals)"
+            >
+              <nz-option
+                nzLabel="TODOS"
+                nzValue="all"
+                *ngIf="vehiclePeripherals.length > 0"
+              ></nz-option>
+              <nz-option
+                *ngFor="let peripheral of vehiclePeripherals"
+                [nzLabel]="peripheral.name"
+                [nzValue]="peripheral.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="insuranceCompany">Seguradora</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a seguradora">
@@ -153,8 +157,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="12">
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
         <nz-form-item>
           <nz-form-label nzRequired nzFor="policyEffectiveDate">Vigência da apólice</nz-form-label>
           <nz-form-control nzErrorTip="Data inválida!">
@@ -167,65 +170,66 @@
             ></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
-      </div>
-    </div>
-
-    <nz-form-item>
-      <div nz-row>
-        <div nz-col nzSpan="12">
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="authorizeAutomaticMonitoring">
-                <span>Monitoramento automático?</span>
-              </label>
-            </div>
-          </nz-form-control>
-
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="followMonitoring">
-                <span>Acompanhar monitoramento?</span>
-              </label>
-            </div>
-          </nz-form-control>
-        </div>
-
-        <div nz-col nzSpan="12">
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="isMain">
-                <span>É o principal?</span>
-              </label>
-            </div>
-          </nz-form-control>
-
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="followMonitoring">
-                <span>DDR</span>
-              </label>
-            </div>
-          </nz-form-control>
-        </div>
-
-        <div nz-col nzSpan="12">
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="valueVerificationEnabled">
-                <span>Ativar verificação valor</span>
-              </label>
-            </div>
-          </nz-form-control>
-
-        </div>
-      </div>
-    </nz-form-item>
-
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="12">
+      </div>  
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="operationType">Tipo de operação</nz-form-label>
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <label nz-checkbox formControlName="authorizeAutomaticMonitoring">
+              <span>Monitoramento automático?</span>
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <label nz-checkbox formControlName="followMonitoring">
+              <span>Acompanhar monitoramento?</span>
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <label nz-checkbox formControlName="isMain">
+              <span>É o principal?</span>
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <label nz-checkbox formControlName="followMonitoring">
+              <span>DDR</span>
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <label nz-checkbox formControlName="valueVerificationEnabled">
+              <span>Ativar verificação valor</span>
+            </label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>    
+   
+    
+
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="operationType">Tipo de operação</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
             <nz-select
               id="operationType"
               nzShowSearch
@@ -242,12 +246,11 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="12">
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="radiusToActivateRouteDeviation">Raio de ativação
+          <nz-form-label nzRequired nzFor="radiusToActivateRouteDeviation">Raio de ativação
           </nz-form-label>
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+          <nz-form-control nzErrorTip="Preencha o campo">
             <input
               id="radiusToActivateRouteDeviation"
               type="number"
@@ -257,23 +260,25 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-    </div>
-
-    <nz-form-item>
-      <nz-form-label [nzSpan]="null" nzRequired nzFor="insuranceCompany">Corretora</nz-form-label>
-      <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a corretora">
-        <nz-select
-          id="broker"
-          nzShowSearch
-          nzAllowClear
-          nzPlaceHolder="Selecione a corretora"
-          formControlName="broker"
-        >
-          <nz-option *ngFor="let insuranceCompany of brokerInsuranceCompanies" [nzLabel]="insuranceCompany.name"
-                     [nzValue]="insuranceCompany.id"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="insuranceCompany">Corretora</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha a corretora">
+            <nz-select
+              id="broker"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione a corretora"
+              formControlName="broker"
+            >
+              <nz-option *ngFor="let insuranceCompany of brokerInsuranceCompanies" [nzLabel]="insuranceCompany.name"
+                        [nzValue]="insuranceCompany.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>  
+    
 
     <!--    <div nz-row nzGutter="16">-->
     <!--      <div nz-col nzSpan="8">-->
@@ -306,8 +311,8 @@
 
 
 
-    <div style="display: flex; margin-top: 15px;">
-      <div style="flex:1;width:99% ">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
         <nz-form-item>
           <nz-form-label nzFor="minimumPriceValueThirdParty">Inicio de horário de tráfego permitido</nz-form-label>
           <nz-form-control nzErrorTip="Preencha o campo">
@@ -315,8 +320,7 @@
         </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div style="flex:1;margin-left: 1%;width:99% ">
+      <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
         <nz-form-item>
           <nz-form-label nzFor="minimumPriceValueThirdParty">Término de horário de tráfego permitido</nz-form-label>
           <nz-form-control nzErrorTip="Preencha o campo">
@@ -326,152 +330,151 @@
       </div>
     </div>
 
-
-    <div style="display: flex;">
-      <div style="flex: 1;">
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <div nz-col [nzSpan]="12">
-            <label nz-checkbox formControlName="driverWorkingSituationFleet">
-              <span>Permitir Motorista Empregado</span>
-            </label>
-          </div>
-        </nz-form-control>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <div nz-col>
+              <label nz-checkbox formControlName="driverWorkingSituationFleet">
+                <span>Permitir Motorista Empregado</span>
+              </label>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
       </div>
-
-      <div style="flex: 1;">
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <div nz-col [nzSpan]="12">
-            <label nz-checkbox formControlName="driverWorkingSituationAggregate">
-              <span>Permitir Motorista Agregado</span>
-            </label>
-          </div>
-        </nz-form-control>
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <div nz-col>
+              <label nz-checkbox formControlName="driverWorkingSituationAggregate">
+                <span>Permitir Motorista Agregado</span>
+              </label>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
       </div>
-
-      <div style="flex: 1;">
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-          <div nz-col [nzSpan]="12" (click)="checkboxClicked()">
-            <label nz-checkbox formControlName="driverWorkingSituationThirdParty">
-              <span>Permitir Motorista Terceiro</span>
-            </label>
-          </div>
-        </nz-form-control>
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label></nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <div nz-col (click)="checkboxClicked()">
+              <label nz-checkbox formControlName="driverWorkingSituationThirdParty">
+                <span>Permitir Motorista Terceiro</span>
+              </label>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
       </div>
     </div>
 
-    <div *ngIf="ThirdPartyDriver">
-      <hr>
-      <br>
-      <div style="width: 100%;text-align: center;">
+    <div class="row" *ngIf="ThirdPartyDriver">
+      <div class="col-lg-12m-b-10">
+        <nz-divider></nz-divider>
         <h3>REGRAS PARA TERCEIRO</h3>
-      </div>
-      <div style="display: flex; margin-top: 40px;">
-        <div style="flex:1;width:98%;">
-          <nz-form-item>
-            <nz-form-label nzFor="minimumPriceValueThirdParty">Quantidade de viagens</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-            <input
-              id="quantityReleasedTravelsThirdParty"
-              type="number"
-              nz-input
-              formControlName="quantityReleasedTravelsThirdParty"
-            />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-
-        <div style="flex:1;width:98%; margin-left: 1%;">
-          <nz-form-item>
-            <nz-form-label nzFor="minimumPriceValueThirdParty">Valor minimo permitido para terceiro</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label nzFor="minimumPriceValueThirdParty">Quantidade de viagens</nz-form-label>
+              <nz-form-control nzErrorTip="Preencha o campo">
               <input
-                id="minimumPriceValueThirdParty"
-                type="text"
+                id="quantityReleasedTravelsThirdParty"
+                type="number"
                 nz-input
-                formControlName="minimumPriceValueThirdParty"
-                [textMask]="{ mask: reaisMask }"
+                formControlName="quantityReleasedTravelsThirdParty"
               />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-        <div style="flex:1;width:98%;margin-left: 1%; ">
-          <nz-form-item>
-            <nz-form-label nzFor="maximumPriceValueThirdParty">Valor máximo permitido para terceiro</nz-form-label>
-            <nz-form-control nzErrorTip="Preencha o campo">
-              <input
-                id="maximumPriceValueThirdParty"
-                type="text"
-                nz-input
-                formControlName="maximumPriceValueThirdParty"
-                [textMask]="{ mask: reaisMask }"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-
-      <div style="display: flex;width: 98%;">
-        <div style="flex: 4;">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">Restrição de localidade</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
-              <app-address-select
-                [formGroup]="validateForm"
-                [showMap]="false"
-                formControlName="forbiddenLocation"
-                (handleAddressChange)="handleAddressChange($event)"
-              ></app-address-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-        <div style="flex: 4;width: 98%;margin-left: 1%;">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">ESTADO SELECIONADA</nz-form-label>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label nzFor="minimumPriceValueThirdParty">Valor minimo permitido para terceiro</nz-form-label>
+              <nz-form-control nzErrorTip="Preencha o campo">
+                <input
+                  id="minimumPriceValueThirdParty"
+                  type="text"
+                  nz-input
+                  formControlName="minimumPriceValueThirdParty"
+                  [textMask]="{ mask: reaisMask }"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label nzFor="maximumPriceValueThirdParty">Valor máximo permitido para terceiro</nz-form-label>
+              <nz-form-control nzErrorTip="Preencha o campo">
+                <input
+                  id="maximumPriceValueThirdParty"
+                  type="text"
+                  nz-input
+                  formControlName="maximumPriceValueThirdParty"
+                  [textMask]="{ mask: reaisMask }"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">Restrição de localidade</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o endereço">
+                <app-address-select
+                  [formGroup]="validateForm"
+                  [showMap]="false"
+                  formControlName="forbiddenLocation"
+                  (handleAddressChange)="handleAddressChange($event)"
+                ></app-address-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">ESTADO SELECIONADA</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                <input
+                  id="forbiddenStateDriverThirdParty"
+                  nz-input
+                  formControlName="forbiddenStateDriverThirdParty"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">CIDADE SELECIONADA</nz-form-label>
+              <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
+                <input
+                  id="forbiddenCityDriverThirdParty"
+                  nz-input
+                  formControlName="forbiddenCityDriverThirdParty"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+            <nz-form-label [nzSpan]="null"  nzFor="btn"><span style="color: white;">-</span></nz-form-label>
             <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input
-                id="forbiddenStateDriverThirdParty"
-                nz-input
-                formControlName="forbiddenStateDriverThirdParty"
-              />
+              <input type="button" id="btn" (click)="cleanForbiddenCityAndStateDriverThirdParty()" value="REMOVER LOCALIDADE" class="btn btn-secondary"/>
             </nz-form-control>
-          </nz-form-item>
+          </div>
         </div>
 
-        <div style="flex: 4; width: 98%;margin-left: 1%;">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="null"  nzFor="forbiddenLocation">CIDADE SELECIONADA</nz-form-label>
-            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-              <input
-                id="forbiddenCityDriverThirdParty"
-                nz-input
-                formControlName="forbiddenCityDriverThirdParty"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-        <div style="flex: 1;margin-left: 1%;">
-          <nz-form-label [nzSpan]="null"  nzFor="btn"><span style="color: white;">-</span></nz-form-label>
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-            <input type="button" id="btn" (click)="cleanForbiddenCityAndStateDriverThirdParty()" value="REMOVER LOCALIDADE" class="btn btn-secondary"/>
-          </nz-form-control>
-        </div>
       </div>
     </div>
     
     <nz-divider></nz-divider>
 
     <nz-form-item>
-      <nz-form-control [nzOffset]="7" [nzSpan]="12">
-        <button type="button" (click)="save()" nz-button nzType="primary">
-          <i nz-icon nzType="save"></i>Salvar Operações
-        </button>
-        <button type="button" (click)="backToCustomerList()" nz-button>
-          <i class="fas fa-arrow-left"></i> Voltar
-        </button>
+      <nz-form-control>
+        <div class="page-buttons">
+          <button type="button" (click)="backToCustomerList()" nz-button>
+            <i class="fas fa-arrow-left m-r-10"></i> Voltar
+          </button>
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Operações
+          </button>
+        </div>
       </nz-form-control>
     </nz-form-item>
   </form>

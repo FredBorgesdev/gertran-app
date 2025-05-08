@@ -1,7 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-
-  <nz-card>
-
+  <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -10,15 +8,17 @@
         Seguradoras
       </nz-breadcrumb-item>
     </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-8">
+  -->  
+  <div class="pages-header">
+    <div class="row m-b-10">
+      <div class="col-lg-8 col-md-8 col-sm-12">
         <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Seguradoras</h2>
+          </div>
         </div>
       </div>
-      <div class="col-lg-4 text-right">
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
         <button
           (click)="create()"
           nz-button
@@ -29,6 +29,10 @@
         </button>
       </div>
     </div>
+  </div>
+  <nz-card>
+
+    
     <nz-table #insuranceCompaniesListTable [nzData]="insuranceCompanies" >
       <thead>
       <tr>
@@ -46,26 +50,21 @@
         <td>{{item.email || '-'}}</td>
         <td>{{item.website || '-'}}</td>
         <td class="text-md-center">
-          <a
+          <button
             (click)="edit(item)"
-            class="m-r-5"
             nz-button
             nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Editar"
           >
-            <i nz-icon nzType="edit" theme="outline"></i>
-          </a>
+            <i nz-icon nzType="edit" theme="outline"></i> Editar
+          </button>
           <button
             nz-button
             nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
+            nzDanger
             (click)="delete(item)"
+            class="m-l-10"
           >
-            <i nz-icon nzType="delete" theme="outline"></i>
+            <i nz-icon nzType="delete" theme="outline"></i> Excluir
           </button>
         </td>
       </tr>

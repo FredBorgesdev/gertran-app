@@ -1,35 +1,33 @@
-<mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [center]="mapCenter" [zoom]="[3]" [class]="mapClassHeight"
+<!-- <div class="dash-header">
+  <div class="logo">
+    <img src="assets/images/logo/logogertran.png" alt="Gertran">
+  </div>
+  <h3 class="text-center m-b-0">
+    Mapa  
+  </h3>
+</div> -->
+<nz-card>
+  <mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [center]="mapCenter" [zoom]="[3]" [class]="mapClassHeight"
   (mapLoad)="mapLoaded($event)">
   <mgl-marker *ngFor="let marker of markers; let i = index" [lngLat]="marker">
-
     <span nz-icon (mouseover)="showPopup(marker)" *ngIf="marker.travelStatus==='contingency'">
       <img src="assets/images/logo/truck_in_progress.svg" alt="Caminhão" width="25px" height="25px" />
     </span>
-
     <span nz-icon (mouseover)="showPopup(marker)" *ngIf="marker.travelStatus==='in_progress'">
       <img src="assets/images/logo/truck_in_progress.svg" alt="Caminhão" width="25px" height="25px" />
     </span>
-
-
     <span nz-icon (mouseover)="showPopup(marker)" *ngIf="marker.travelStatus==='stopped'">
       <img src="assets/images/logo/truck_stopped.svg" alt="Caminhão" width="25px" height="25px" />
     </span>
-
     <span nz-icon (mouseover)="showPopup(marker)" *ngIf="marker.travelStatus==='driver_in_overnight'">
       <img src="assets/images/logo/truck_driver_in_overnight.svg" alt="Caminhão" width="25px" height="25px" />
     </span>
-
-
     <span nz-icon (mouseover)="showPopup(marker)" *ngIf="marker.travelStatus==='vehicle_in_customer'">
       <img src="assets/images/logo/truck_vehicle_in_customer.svg" alt="Caminhão" width="25px" height="25px" />
     </span>
-
-
-
     <span nz-icon (mouseover)="showPopup(marker)" *ngIf="marker.travelStatus==='waiting_for_start'">
       <img src="assets/images/logo/truck_waiting_for_start.svg" alt="Caminhão" width="25px" height="25px" />
     </span>
-
   </mgl-marker>
 </mgl-map>
 
@@ -63,3 +61,4 @@
 <!--    <a (click)="expandMap()">Expandir</a>-->
 <!--  </ng-template>-->
 <!--</div>-->
+</nz-card>

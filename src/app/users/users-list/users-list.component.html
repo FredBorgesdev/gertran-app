@@ -1,22 +1,42 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
-    <div *ngIf="authService.customerId">
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>
-          <i nz-icon nzType="dashboard"></i>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-          Usuários
-        </nz-breadcrumb-item>
-      </nz-breadcrumb>
-  
-      <nz-divider></nz-divider>
+  <div *ngIf="authService.customerId">
+    <!--
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Usuários
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+    -->
+  </div>
+  <div class="pages-header" *ngIf="showHeader">
+    <div class="row m-b-10">
+      <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Usuários</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+        <button
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Usuário</span>
+      </button>
+      </div>
     </div>
-
-    <div class="row m-b-30">
+  </div>
+  <nz-card>
+    <div class="row m-b-10">
       <div class="col-lg-8">
         <div class="d-md-flex">
-          <div class="m-b-10 m-r-20">
+          <div class="m-b-10">
             <nz-input-group [nzPrefix]="prefixTemplate" class="w-100">
               <input
                 type="text"
@@ -33,81 +53,73 @@
           </div>
         </div>
       </div>
-
-      <div
-        class="col-lg-4 text-right"
-        *ngIf="authService.user.hasPermission('users.add_baseuser')"
-      >
+      <div class="col-lg-4 text-right" *ngIf="authService.user.hasPermission('users.add_baseuser') && !showHeader">
         <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Usuário</span>
-        </button>
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Usuário</span>
+      </button>
       </div>
     </div>
-    <nz-table
-      #usersListTable
-      [nzData]="resources?.results"
-      [nzTotal]="resources?.count"
-      [nzPageSize]="resources?.limit"
-      [nzPageIndex]="page"
-      [nzFrontPagination]="false"
-      (nzQueryParams)="handleQueryParamsChange($event)"
-    >
-      <thead>
-      <tr>
-        <th *ngFor="let column of userColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of usersListTable.data;  let i=index">
-        <td>{{item.id | id}}</td>
-        <td>
-          <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
-          </div>
-        </td>
-        <td>{{item.email}}</td>
-        <td>{{item.legacyLogin}}</td>
-        <td>{{(item.lastLogin | date: 'dd/MM/yyyy') || '-'}}</td>
-        <td>
-          <nz-badge *ngIf="item.isActive" nzStatus="success"></nz-badge>
-          <nz-badge *ngIf="!item.isActive" nzStatus="error"></nz-badge>
-        </td>
-        <td class="text-md-center">
-          <a
-            (click)="edit(item)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Editar"
-            *ngIf="authService.user.hasPermission('users.change_baseuser')"
-          >
-            <i nz-icon nzType="edit" theme="outline"></i>
-          </a>
-          <a
-            (click)="delete(item)"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
-            *ngIf="authService.user.hasPermission('users.delete_baseuser')"
-          >
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+  
+  <nz-table
+    #usersListTable
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th *ngFor="let column of userColumn" [nzSortFn]="column.compare">{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of usersListTable.data;  let i=index">
+      <td>{{item.id | id}}</td>
+      <td>
+        <div class="d-flex align-items-center">
+          <h6 class="m-l-10 m-b-0">{{item.name}}</h6>
+        </div>
+      </td>
+      <td>{{item.email}}</td>
+      <td>{{item.legacyLogin}}</td>
+      <td>{{(item.lastLogin | date: 'dd/MM/yyyy') || '-'}}</td>
+      <td>
+        <nz-badge *ngIf="item.isActive" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.isActive" nzStatus="error"></nz-badge>
+      </td>
+      <td class="text-md-center" style="white-space: nowrap;">
+        <button
+          (click)="edit(item)"
+          nz-button
+          nzType="default"
+          *ngIf="authService.user.hasPermission('users.change_baseuser')"
+        >
+          <i nz-icon nzType="edit" theme="outline"></i> Editar
+        </button>
+        <button
+          (click)="delete(item)"
+          nz-button
+          nzType="default"
+          nzDanger
+          class="m-l-10"
+          *ngIf="authService.user.hasPermission('users.delete_baseuser')"
+        >
+          <i nz-icon nzType="delete" theme="outline"></i> Excluir
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
 </nz-spin>
 
 <ng-template #selectLoading>
-  <nz-spin *ngIf="selectableCustomersService.isLoadingMoreData"></nz-spin>
+<nz-spin *ngIf="selectableCustomersService.isLoadingMoreData"></nz-spin>
 </ng-template>

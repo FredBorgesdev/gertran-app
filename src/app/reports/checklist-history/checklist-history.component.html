@@ -1,74 +1,89 @@
 <nz-spin [nzSpinning]="isLoading">
-  <nz-card>
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="bar-chart"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="line-chart"></i><span>Histórico de Checklist</span></a>
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="bar-chart"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="line-chart"></i><span>Histórico de Checklist</span></a>
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+-->
+<div class="pages-header">  
+  <div class="row m-b-10">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Histórico de Checklist</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+<nz-card>
+  <app-base-vehicle-filter
+    (generateReport)="generateReport($event)"
+    [rows]="checklistHistory"
+    [xlsxValues]="xlsxValues"
+    fileName="Histórico de Checklist"
+  ></app-base-vehicle-filter>
 
-    <app-base-vehicle-filter
-      (generateReport)="generateReport($event)"
-      [rows]="checklistHistory"
-      [xlsxValues]="xlsxValues"
-      fileName="Histórico de Checklist"
-    ></app-base-vehicle-filter>
-
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
-      <div nz-col [nzSpan]="12">
+  <div class="row m-t-20">
+    <div class="col-lg-12">
+      <nz-form-control nzErrorTip="Preencha o campo">
         <label nz-checkbox [(ngModel)]="isChecked">
           <span>Gerado por solicitação de monitoramento</span>
         </label>
-      </div>
-    </nz-form-control>
+      </nz-form-control>
+    </div>
+  </div>
+<!-- #hmn* -->
 
-    <nz-table
-      #table
-      [nzData]="checklistHistory"
-      nzBordered
-      class="m-t-50"
-      [nzFrontPagination]="false"
-      nzTableLayout="fixed"
-    >
-      <thead>
-      <tr>
-        <th nzWidth="110px">Empresa</th>
-        <th nzWidth="110px">Placa</th>
-        <th nzWidth="110px">Tipo</th>
-        <th nzWidth="110px">Tecnologia</th>
-        <th nzWidth="110px">Solicitante</th>
-        <th nzWidth="110px">Status checklist</th>
-        <th nzWidth="110px">Motivo</th>
-        <th nzWidth="110px">Data liberação</th>
-        <th nzWidth="110px">Data expiração</th>
-        <th nzWidth="110px">Motorista</th>
-        <th nzWidth="110px">Origem</th>
-        <th nzWidth="110px">Destino</th>
-        <th nzWidth="110px">Operador</th>
-      </tr>
-      </thead>
+  <nz-table
+    #table
+    [nzData]="checklistHistory"
+    nzBordered
+    class="m-t-20"
+    [nzFrontPagination]="false"
+    nzTableLayout="fixed"
+  >
+    <thead>
+    <tr>
+      <th nzWidth="110px">Empresa</th>
+      <th nzWidth="110px">Placa</th>
+      <th nzWidth="110px">Tipo</th>
+      <th nzWidth="110px">Tecnologia</th>
+      <th nzWidth="110px">Solicitante</th>
+      <th nzWidth="110px">Status checklist</th>
+      <th nzWidth="110px">Motivo</th>
+      <th nzWidth="110px">Data liberação</th>
+      <th nzWidth="110px">Data expiração</th>
+      <th nzWidth="110px">Motorista</th>
+      <th nzWidth="110px">Origem</th>
+      <th nzWidth="110px">Destino</th>
+      <th nzWidth="110px">Operador</th>
+    </tr>
+    </thead>
 
-      <tbody>
-      <tr *ngFor="let data of table.data; index as i">
-        <td>
-          {{ data.customer.tradingName }}
-        </td>
-        <td>{{ data.vehicle.plate }}</td>
-        <td>{{ data.workingSituation }}</td>
-        <td>{{ data.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</td>
-        <td>{{ data.requestedBy?.name }}</td>
-        <td>{{ getStatusChecklistLocalized(data.status) }}</td>
-        <td>{{ data.justification }}</td>
-        <td>{{ data.reviewedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-        <td>{{ data.expirationDate | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ data.driver?.name }} / {{ data.driver?.phoneNumber }}</td>
-        <td>{{ data.origin }}</td>
-        <td>{{ data.destiny }}</td>
-        <td>{{ data.reviewedBy?.name }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+    <tbody>
+    <tr *ngFor="let data of table.data; index as i">
+      <td>
+        {{ data.customer.tradingName }}
+      </td>
+      <td>{{ data.vehicle.plate }}</td>
+      <td>{{ data.workingSituation }}</td>
+      <td>{{ data.vehicle.trackers?.[0]?.trackerModel.trackerTechnology.name }}</td>
+      <td>{{ data.requestedBy?.name }}</td>
+      <td>{{ getStatusChecklistLocalized(data.status) }}</td>
+      <td>{{ data.justification }}</td>
+      <td>{{ data.reviewedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+      <td>{{ data.expirationDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ data.driver?.name }} / {{ data.driver?.phoneNumber }}</td>
+      <td>{{ data.origin }}</td>
+      <td>{{ data.destiny }}</td>
+      <td>{{ data.reviewedBy?.name }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
 </nz-spin>

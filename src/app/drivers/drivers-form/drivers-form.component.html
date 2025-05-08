@@ -1,8 +1,6 @@
 <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-  <div nz-row nzGutter="18" nzAlign="middle">
-
-
-    <div nz-col nzSpan="6">
+  <div class="row m-b-10">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="pkId">COD INTERNO</nz-form-label>
         <nz-form-control [nzSpan]="null">
@@ -10,9 +8,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-
-    <div nz-col nzSpan="10">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item *ngIf="!authService.customerId">
         <nz-form-label [nzSpan]="null" nzRequired nzFor="customers">Empresas</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
@@ -26,9 +22,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    
-    <div nz-col nzSpan="6">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item *ngIf="!authService.customerId">
         <nz-form-label>Cliente Registro Ponto</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -47,58 +41,59 @@
       </nz-form-item>
     </div>
   </div>
-  <nz-form-item>
-    <div nz-row nzGutter="16" nzAlign="middle">
-      <div nz-col nzSpan="18">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">CPF</nz-form-label>
-          <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CPF no formato 999.999.999-99">
-            <input
-              [textMask]="{ mask: cpfMask, guide: false }"
-              id="cpf"
-              type="text"
-              nz-input
-              formControlName="cpf"
-            />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-
-      <div nz-col nzSpan="6">
-        <button
-          nz-button
-          nzType="primary"
-          (click)="filterDriverByCpf()"
-        >Buscar
-        </button>
-      </div>
+  <div class="row m-b-10">
+    <div class="col-lg-4 col-md-6 col-sm-12" style="display: flex; flex-direction: row;">
+      <nz-form-item style="width:100%;">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="cpf">CPF</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o CPF no formato 999.999.999-99">
+          <input
+            [textMask]="{ mask: cpfMask, guide: false }"
+            id="cpf"
+            type="text"
+            nz-input
+            formControlName="cpf"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <button
+            nz-button
+            nzType="primary"
+            class="m-t-28 m-l-5"
+            (click)="filterDriverByCpf()"
+          >Buscar
+          </button>
     </div>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Opção inválida!">
-      <nz-select
-        id="workingSituation"
-        nzPlaceHolder="Selecione uma opção"
-        formControlName="workingSituation"
-      >
-        <nz-option
-          *ngFor="let workingSituation of workingSituations"
-          [nzLabel]="workingSituation.label"
-          [nzValue]="workingSituation.value"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-    <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
-      <input id="name" type="text" nz-input formControlName="name"/>
-    </nz-form-control>
-  </nz-form-item>
-
-  <div nz-row nzGutter="16">
-    <div nz-col nzSpan="12">
+  </div>
+  <div class="row m-b-10">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="workingSituation">Situação funcional</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Opção inválida!">
+          <nz-select
+            id="workingSituation"
+            nzPlaceHolder="Selecione uma opção"
+            formControlName="workingSituation"
+          >
+            <nz-option
+              *ngFor="let workingSituation of workingSituations"
+              [nzLabel]="workingSituation.label"
+              [nzValue]="workingSituation.value"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-8 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
+          <input id="name" type="text" nz-input formControlName="name"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>  
+  </div>  
+  <div class="row m-b-10">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="rg">RG</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o RG no formato 99.999.999-99">
@@ -106,7 +101,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col nzSpan="12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="phoneNumber">Telefone</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
@@ -120,18 +115,18 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-  </div>
-  <nz-form-item>
-    <nz-form-label [nzRequired]="validateForm.value.workingSituation === 'working'" nzFor="admissionDate">Data de
-      admissão
-    </nz-form-label>
-    <nz-form-control nzErrorTip="Data inválida!">
-      <nz-date-picker style="width: 100%;" id="admissionDate" nzFormat="dd/MM/yyyy"
-                      formControlName="admissionDate"></nz-date-picker>
-    </nz-form-control>
-  </nz-form-item>
-  <div nz-row nzGutter="16">
-    <div nz-col nzSpan="8">
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <nz-form-item>
+        <nz-form-label [nzRequired]="validateForm.value.workingSituation === 'working'" nzFor="admissionDate">Data de
+          admissão
+        </nz-form-label>
+        <nz-form-control nzErrorTip="Data inválida!">
+          <nz-date-picker style="width: 100%;" id="admissionDate" nzFormat="dd/MM/yyyy"
+                          formControlName="admissionDate"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhNumber">CNH</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
@@ -139,8 +134,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="8">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhCategory">CNH Categoria</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
@@ -156,8 +150,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="8">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired nzFor="cnhValidity">CNH Validade</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="inválido!">
@@ -165,12 +158,8 @@
                           formControlName="cnhValidity"></nz-date-picker>
         </nz-form-control>
       </nz-form-item>
-    </div>
-  </div>
-
-
-  <div nz-row nzGutter="16">
-    <div nz-col nzSpan="8">
+    </div> 
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="cnhEmission">CNH Emissão</nz-form-label>
         <nz-form-control nzErrorTip="Data inválida!">
@@ -179,8 +168,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="8">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label nzRequired nzFor="cnhFirstIssue">CNH Primeira Emissão</nz-form-label>
         <nz-form-control nzErrorTip="Data inválida!">
@@ -189,8 +177,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="8">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzFor="cnhIssuerUf">CNH Orgão emissor UF</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o estado">
@@ -210,31 +197,31 @@
       </nz-form-item>
     </div>
   </div>
-
-    <a
-    nz-button
-    nzType="link"
-    class="m-b-50"
-    (click)="isChangePasswordModalVisible = true"
-    *ngIf="driver?.id"
-  >Trocar senha</a>
-
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <button type="button" (click)="save()" nz-button nzType="primary">
-        <i nz-icon nzType="save"></i>Salvar Motorista
-      </button>
-      <button type="button" (click)="backToCustomerList()" nz-button>
-        <div  *ngIf="!authService.customerId">
-          <i class="fas fa-arrow-left"></i> Voltar ao Cadastro
-        </div>
-
-        <div  *ngIf="authService.customerId">
-          <i nz-icon nzType="unordered-list"></i> Listar Motoristas
-        </div>
-      </button>
+  
+  <nz-divider></nz-divider>
+    
+  
+  <nz-form-item class="m-b-0">
+    <nz-form-control>
+      <div class="page-buttons">
+        <button type="button" (click)="backToCustomerList()" nz-button>
+          <div  *ngIf="!authService.customerId">
+            <i nz-icon nzType="arrow-left" class="m-r-5"></i> Voltar ao Cadastro
+          </div>
+          <div  *ngIf="authService.customerId">
+            <i nz-icon nzType="unordered-list" class="m-r-5"></i> Listar Motoristas
+          </div>
+        </button>
+        <button nz-button (click)="isChangePasswordModalVisible = true" *ngIf="driver?.id">
+          <i nz-icon nzType="lock"></i> Trocar senha
+        </button>
+        <button type="button" (click)="save()" nz-button nzType="primary">
+          <i nz-icon nzType="save"></i> Salvar Motorista
+        </button>
+      </div>
     </nz-form-control>
   </nz-form-item>
+     
 </form>
 
 

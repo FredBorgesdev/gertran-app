@@ -1,34 +1,47 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="idcard"></i><span>Operações</span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="operation?.id">
+      Editar Operações ({{operation.name}})
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="!operation?.id">
+      Adicionar Operações
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+  <div class="pages-header">
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2 *ngIf="operation?.id">Editar Operações - {{operation.name}}</h2>
+            <h2 *ngIf="!operation?.id">Adicionar Operações</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <nz-card>
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Operações</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="operation?.id">
-        Editar Operações ({{operation.name}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!operation?.id">
-        Adicionar Operações
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
+  <nz-tabset>
+    <nz-tab nzTitle="Operação">
+      <app-operations-form
+        *ngIf="!isLoading"
+        [operation]="operation"
+      ></app-operations-form>
+    </nz-tab>
 
-    <nz-tabset>
-      <nz-tab nzTitle="Operação">
-        <app-operations-form
-          *ngIf="!isLoading"
-          [operation]="operation"
-        ></app-operations-form>
-      </nz-tab>
-
-      <nz-tab nzTitle="Regras por valor" [nzDisabled]="!operation">
-        <app-operations-rules-by-value-tab
-          *ngIf="!isLoading && operation?.id"
-          [operationId]="operation.id"
-        ></app-operations-rules-by-value-tab>
-      </nz-tab>
-    </nz-tabset>
-  </nz-card>
+    <nz-tab nzTitle="Regras por valor" [nzDisabled]="!operation">
+      <app-operations-rules-by-value-tab
+        *ngIf="!isLoading && operation?.id"
+        [operationId]="operation.id"
+      ></app-operations-rules-by-value-tab>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>
 </nz-spin>

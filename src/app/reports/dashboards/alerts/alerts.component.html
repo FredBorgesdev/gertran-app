@@ -1,4 +1,8 @@
 <div class="dash-header">
+  <div class="logo"  *ngIf="showTitle">
+    <img src="assets/images/logo/logogertran.png" alt="Gertran">
+  </div>
+  
   <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
 
   <h1 class="dash-header-title" *ngIf="showTitle">
@@ -15,30 +19,24 @@
 </div>
 
 <h4 *ngIf="isLoading">Carregando...</h4>
-
-<img *ngIf="showTitle" src="assets/images/logo/logogertran.png" alt="Gertran" class="logo">
-
-<h3 class="dash-title">
-  {{ currentTerminal?.name }}
-
-  <!-- <span *ngIf="currentAlerts?.length === 0">
-    sem alertas
-  </span> -->
-</h3>
-
-
-
-
-
-<div class="d-flex justify-content-between">
-  <div></div>
-
-  <span>
-    <div class="square bg-danger"></div> Acima de 15 minutos
-    <div class="square bg-alert"></div> Acima de 10 minutos
-    <div class="square bg-default"></div> No prazo
-  </span>
+<nz-card>
+<div class="content">
+  <h3 class="dash-title">
+    {{ currentTerminal?.name }}
+  
+    <!-- <span *ngIf="currentAlerts?.length === 0">
+      sem alertas
+    </span> -->
+  </h3>
+  <div class="d-flex justify-content-between m-b-10" style="align-items: center;">
+    <span>
+      <div class="square bg-danger m-r-5"></div> Acima de 15 minutos
+      <div class="square bg-alert m-r-5"></div> Acima de 10 minutos
+      <div class="square bg-default m-r-5"></div> No prazo
+    </span>
+  </div>
 </div>
+  
 
 
 <!-- <ul class="dash-list">
@@ -71,11 +69,6 @@
     </div>
   </li>
 </ul> -->
-
-
-
-
-
 <nz-table #table 
   [nzData]="currentAlerts" 
   [nzFrontPagination]="true" 
@@ -110,3 +103,4 @@
     </tr>
   </tbody>
 </nz-table>
+</nz-card>

@@ -34,10 +34,19 @@
 
 .ant-modal-header {
     padding: $modal-header-padding;
-    border-radius: $modal-border-radius $modal-border-radius 0 0;
-    background: $modal-content-bg;
+    border-radius: 0;
     color: $gray-dark;
-    border-bottom: 1px solid $border-color;
+    margin: 0px;
+    background-color: $gray-lighter;
+    border: 0;
+    border-bottom: 1px solid $gray-light;
+    padding: 20px;
+
+    .ant-modal-title {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+        line-height: $font-size-lg;
+    }
 }
 
 .ant-modal-body {

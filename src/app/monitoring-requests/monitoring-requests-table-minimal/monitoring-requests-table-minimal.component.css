@@ -1,3 +1,32 @@
+.dash-header {
+  display: flex;
+  align-items: center;
+  background: #ededed;
+  border-bottom: 1px solid #72849a;
+  margin: -25px -15px 10px -15px;
+  padding: 10px 10px 10px 130px;
+}
+
+.logo {
+  background-color: #fff;
+  width: auto;
+  height: 70px;
+  margin-left: 20px;
+  border: 1px solid #72849a;
+  border-top: 0px;
+  border-radius: 0pxx;
+  padding: 5px;
+  box-shadow: 0px 0px 5px #72849a;
+  position: absolute;
+  top: 0px;
+  left: -3px;
+}
+
+.logo img {
+  height: 60px !important;
+  width: auto !important;
+}
+
 .bg-alert {
   background: yellow;
   font-weight: bold;
@@ -8,16 +37,19 @@
 }
 
 .bg-danger {
-  background: red;
-  color: #fff;
+  background: #eb5a5a;
   font-weight: bold;
 }
 
 th.table-header {
-  background: #187bff;
-  color: #fff;
+  color: #2a2a2a;
+  font-size: 0.75rem;
   font-weight: bold;
+  background: #ededed;
+  border: 1px solid #2a2a2a;
+  border-collapse: collapse;
 }
+
 .max-width-cell {
   max-width: 200px; /* Set your desired maximum width */
   overflow: hidden;
@@ -34,5 +66,4 @@ th.table-header {
 
 th, td {
   font-weight: bold;
-  font-size: 18px;
 }

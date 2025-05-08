@@ -1,5 +1,5 @@
 h1.header-small {
-  font-size: 2.0em;
+  font-size: 1.5em;
 }
 
 h3.header-small {
@@ -43,6 +43,5 @@ h3.header-small {
 .bg-danger {
   background: red;
 }
-
 
 

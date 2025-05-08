@@ -1,4 +1,10 @@
 <div class="header">
+  <div class="logo logo-dark">
+    <a href="">
+      <img src="assets/images/logo/logogertran.png" alt="Logo">
+      <img class="logo-fold" src="assets/images/logo/logogertran.png" alt="Logo">
+    </a>
+  </div>
   <div class="nav-wrap">
     <ul class="nav-left">
       <li class="desktop-toggle">
@@ -46,7 +52,12 @@
     </ul>
     <ul class="nav-right">
       <li class="m-r-25">{{ user?.name || 'Usuário' }}</li>
-
+      <!--
+      <li nz-menu-item (click)="logout()">
+        <span nz-icon nzType="logout" nzTheme="outline"></span>
+        Sair
+      </li>
+      -->
       <li>
         <a (click)="quickViewToggle()">
           <i

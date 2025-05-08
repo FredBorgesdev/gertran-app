@@ -1,177 +1,183 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
+  
+  <!--
     <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        Solicitações de monitoramento
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      Solicitações de monitoramento
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
 
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-4">
-        <div class="d-md-flex">
-          <div class="m-b-10">
-            <nz-input-group [nzPrefix]="prefixTemplate" class="w-100">
-              <input
-                type="text"
-                nz-input
-                placeholder="Buscar por placa"
-                [(ngModel)]="search"
-                (ngModelChange)="filterByPlate()"
-                class="w-100"
-              >
-            </nz-input-group>
-            <ng-template #prefixTemplate>
-              <i nz-icon nzType="search" class="opacity-05"></i>
-            </ng-template>
-          </div>
+<div class="pages-header">
+  <div class="row m-b-10">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Solicitações de Monitoramento</h2>
         </div>
       </div>
-      <div class="col-lg-8 text-right">
-        <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Solicitações de monitoramento</span>
-        </button>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+      <button
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Solicitações de monitoramento</span>
+      </button>
+    </div>
+  </div>
+</div>
+<nz-card>  
+  <div class="row m-b-10">
+    <div class="col-lg-6">
+      <div class="d-md-flex">
+        <div class="m-b-10">
+          <nz-input-group [nzPrefix]="prefixTemplate" class="m-t-30">
+            <input
+              type="text"
+              nz-input
+              placeholder="Buscar por placa"
+              [(ngModel)]="search"
+              (ngModelChange)="filterByPlate()"
+            >
+          </nz-input-group>
+          <ng-template #prefixTemplate>
+            <i nz-icon nzType="search" class="opacity-05"></i>
+          </ng-template>
+        </div>
       </div>
     </div>
+    <div class="col-lg-6 text-right">
+      <app-monitoring-requests-filter
+    (filterData)="filterData($event)"
+  ></app-monitoring-requests-filter>
+    </div>
+  </div>
+</nz-card>
 
-    <app-monitoring-requests-filter
-      (filterData)="filterData($event)"
-    ></app-monitoring-requests-filter>
-  </nz-card>
+<nz-card
+  class="data-card"
+  [nzTitle]="'Rascunho' + ' (' + draftResponse?.count + ')'"
+  *ngIf="authService.customerId"
+  data-testid="table-draft"
+  [nzBodyStyle]="{ 'padding': '0px' }"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="draftResponse"
+    [rowColor]="'#ffffff'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeDraft($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 
-  <nz-card
-    class="data-card"
-    [nzTitle]="'Rascunho' + ' (' + draftResponse?.count + ')'"
-    *ngIf="authService.customerId"
-    data-testid="table-draft"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="draftResponse"
-      [rowColor]="'#ffffff'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeDraft($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
-
-  <nz-card
-    [nzTitle]="'Em análise' + ' (' + underReviewResponse?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="underReviewResponse"
-      [rowColor]="'#4473c5'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeUnderReview($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
-  <div *ngIf="waitingForStartResponse?.count > 0">
-  <nz-card
-    [nzTitle]="'Aguardando inicio' + ' (' + waitingForStartResponse?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="waitingForStartResponse"
-      [rowColor]="'#70ad46'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeWaitingForStart($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
+<nz-card
+  [nzTitle]="'Em análise' + ' (' + underReviewResponse?.count + ')'"
+  class="text-bold m-b-0"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="underReviewResponse"
+    [rowColor]="'#4473c5'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeUnderReview($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
+<div *ngIf="waitingForStartResponse?.count > 0">
+<nz-card
+  [nzTitle]="'Aguardando inicio' + ' (' + waitingForStartResponse?.count + ')'"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="waitingForStartResponse"
+    [rowColor]="'#70ad46'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeWaitingForStart($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 </div>
-  <nz-card
-    [nzTitle]="'Em viagem' + ' (' + inProgressResponse?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="inProgressResponse"
-      [rowColor]="'#91aaff'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeInProgress($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
+<nz-card
+  [nzTitle]="'Em viagem' + ' (' + inProgressResponse?.count + ')'"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="inProgressResponse"
+    [rowColor]="'#91aaff'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeInProgress($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 
-  <nz-card
-    [nzTitle]="'Reprovado' + ' (' + reprovedResponse?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="reprovedResponse"
-      [rowColor]="'#fe0000'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeReproved($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
+<nz-card
+  [nzTitle]="'Reprovado' + ' (' + reprovedResponse?.count + ')'"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="reprovedResponse"
+    [rowColor]="'#fe0000'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeReproved($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 
 <div *ngIf="reprovedDisapprovedResponse?.count > 0">
 
-    <nz-card
-    [nzTitle]="'Finalizado Reprovado ' + ' (' + reprovedDisapprovedResponse?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="reprovedDisapprovedResponse"
-      [rowColor]="'#fe0000'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeReprovedDisapproved($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
+  <nz-card
+  [nzTitle]="'Reprovado ' + ' (' + reprovedDisapprovedResponse?.count + ')'" class="page-subtitle"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="reprovedDisapprovedResponse"
+    [rowColor]="'#fe0000'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeReprovedDisapproved($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 
 </div>
 
-  <nz-card
-    [nzTitle]="'Cancelado' + ' (' + resources?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="resources"
-      [rowColor]="'#7030a0'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChange($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
+<nz-card
+  [nzTitle]="'Cancelado' + ' (' + resources?.count + ')'"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="resources"
+    [rowColor]="'#7030a0'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChange($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 
-  <nz-card
-    [nzTitle]="'Finalizado' + ' (' + finishedResponse?.count + ')'"
-    [nzBodyStyle]="{ 'padding': '0px' }"
-  >
-    <app-monitoring-requests-table
-      [monitoringRequests]="finishedResponse"
-      [rowColor]="'#7f7f7f'"
-      (view)="view($event)"
-      (edit)="edit($event)"
-      (delete)="delete($event)"
-      (handleQueryParamsChange)="handleQueryParamsChangeFinished($event)"
-      (refreshAll)="loadAllResources()"
-    ></app-monitoring-requests-table>
-  </nz-card>
+<nz-card
+  [nzTitle]="'Finalizado' + ' (' + finishedResponse?.count + ')'"
+>
+  <app-monitoring-requests-table
+    [monitoringRequests]="finishedResponse"
+    [rowColor]="'#7f7f7f'"
+    (view)="view($event)"
+    (edit)="edit($event)"
+    (delete)="delete($event)"
+    (handleQueryParamsChange)="handleQueryParamsChangeFinished($event)"
+    (refreshAll)="loadAllResources()"
+  ></app-monitoring-requests-table>
+</nz-card>
 </nz-spin>

@@ -1,21 +1,40 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
 
-  <nz-card>
-    
-    <div *ngIf="authService.customerId">
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>
-          <i nz-icon nzType="dashboard"></i>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>
-          Carretas
-        </nz-breadcrumb-item>
-      </nz-breadcrumb>
-  
-      <nz-divider></nz-divider>
+  <!--
+  <div *ngIf="authService.customerId">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <i nz-icon nzType="dashboard"></i>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        Carretas
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  -->
+  <div class="pages-header" *ngIf="showHeader">
+    <div class="row m-b-10">
+      <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Carretas</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+        <button
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Carreta</span>
+      </button>
+      </div>
     </div>
-
-    <div class="row m-b-30">
+  </div>
+  <nz-card>
+    <div class="row m-b-10">
       <div class="col-lg-8">
         <div class="d-md-flex">
           <div class="m-b-10 m-r-20">
@@ -28,84 +47,75 @@
           </div>
         </div>
       </div>
-
-      <div
-        class="col-lg-4 text-right"
-        *ngIf="authService.user.hasPermission('vehicles.add_wagon')"
-      >
+      <div class="col-lg-4 text-right" *ngIf="authService.user.hasPermission('vehicles.add_wagon') && !showHeader">
         <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Carreta</span>
-        </button>
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Carreta</span>
+      </button>        
       </div>
     </div>
-    <nz-table
-      #wagonsListTable
-      [nzData]="resources?.results"
-      [nzTotal]="resources?.count"
-      [nzPageSize]="resources?.limit"
-      [nzPageIndex]="page"
-      [nzFrontPagination]="false"
-      (nzQueryParams)="handleQueryParamsChange($event)"
-      [nzScroll]="{ y: '768px' }"
-    >
-      <thead>
-        <tr>
-          <th
-            *ngFor="let column of wagonColumn"
-            [nzSortFn]="column.compare"
-            nzWidth="150px"
-          >{{ column.title }}</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of wagonsListTable.data;  let i=index">
-        <td>{{item.id | id}}</td>
-        <td>
-          <div class="d-flex align-items-center">
-            <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel?.name || ''}}</h6>
-          </div>
-        </td>
-        <td>{{getCustomerNames(item)}}</td>
-        <td>{{item.vehicle.vehicleModelType?.name || ''}}</td>
-        <td>{{item.vehicle.plate}}</td>
-        <td>{{getCityState(item)}}</td>
-        <td>{{item.vehicle.color}}</td>
-        <td>{{item.vehicle.year}}</td>
-        <td>{{item.vehicle.chassis}}</td>
-        <td>{{item.vehicle.renavam}}</td>
-        <td class="text-md-center">
-          <a
-            (click)="edit(item)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Editar"
-            *ngIf="authService.user.hasPermission('vehicles.change_wagon')"
-          >
-            <i nz-icon nzType="edit" theme="outline"></i>
-          </a>
-          <a
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
-            (click)="delete(item)"
-            *ngIf="authService.user.hasPermission('vehicles.delete_wagon')"
-          >
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </a>
-        </td>
+  <nz-table
+    #wagonsListTable
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+    
+  >
+    <thead>
+      <tr>
+        <th
+          *ngFor="let column of wagonColumn"
+          [nzSortFn]="column.compare"
+          nzWidth="150px"
+        >{{ column.title }}</th>
       </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of wagonsListTable.data;  let i=index">
+      <td>{{item.id | id}}</td>
+      <td>
+        <div class="d-flex align-items-center">
+          <h6 class="m-l-10 m-b-0">{{item.vehicle.vehicleModel?.name || ''}}</h6>
+        </div>
+      </td>
+      <td>{{getCustomerNames(item)}}</td>
+      <td>{{item.vehicle.vehicleModelType?.name || ''}}</td>
+      <td>{{item.vehicle.plate}}</td>
+      <td>{{getCityState(item)}}</td>
+      <td>{{item.vehicle.color}}</td>
+      <td>{{item.vehicle.year}}</td>
+      <td>{{item.vehicle.chassis}}</td>
+      <td>{{item.vehicle.renavam}}</td>
+      <td class="text-md-center d-flex" style="white-space: nowrap;">
+        <button
+          (click)="edit(item)"
+          nz-button
+          nzType="default"
+          *ngIf="authService.user.hasPermission('vehicles.change_wagon')"
+        >
+          <i nz-icon nzType="edit" theme="outline"></i> Editar
+        </button>
+        <button
+          nz-button
+          nzType="default"
+          nzDanger
+          class="m-l-10"
+          (click)="delete(item)"
+          *ngIf="authService.user.hasPermission('vehicles.delete_wagon')"
+        >
+          <i nz-icon nzType="delete" theme="outline"></i> Excluir
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
 
 </nz-spin>

@@ -1,4 +1,20 @@
 @import url('./assets/lib/hljs/styles/atom-one-light.css');
 @import url('../node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css');
 @import url('../node_modules/@fortawesome/fontawesome-free/css/all.min.css');
-@import './assets/scss/app.scss'
+@import './assets/scss/app.scss';
+
+
+/* Ajuste de posição vertical da mensagem */
+.ant-message {
+    top: 80px !important; /* Aumente conforme necessário */
+  }
+  
+  .ant-message-notice {
+      padding: 4px 12px !important;
+    }
+    
+    .ant-message-notice-content {
+      font-size: 12px !important;
+      line-height: 1.2 !important;
+      min-height: 24px !important;
+    }

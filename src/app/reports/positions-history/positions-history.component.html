@@ -1,5 +1,5 @@
 <nz-spin [nzSpinning]="isLoading">
-  <nz-card>
+  <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="bar-chart"></i>
@@ -8,15 +8,28 @@
         <a><i nz-icon nzType="line-chart"></i><span>Posições do veiculo</span></a>
       </nz-breadcrumb-item>
     </nz-breadcrumb>
-
+  -->
+  <div class="pages-header">  
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Posições do veiculo</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <nz-card>
     <app-base-vehicle-filter
       (generateReport)="generateReport($event)"
       [rows]="filteredPositions"
       [fileName]="'Posições do veiculo'"
       [xlsxValues]="xlsxValues"
     ></app-base-vehicle-filter>
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="6">
+    <nz-divider></nz-divider>
+    <div class="row m-b-10">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item class="m-b-0">
           <nz-form-label>Filtrar por tecnologia</nz-form-label>
           <nz-form-control nzErrorTip="Preencha o campo">
@@ -32,14 +45,12 @@
         </nz-form-item>
       </div>
     </div>
-
     <nz-table
       #table
       [nzData]="filteredPositions"
       nzBordered
-      class="m-t-50"
+      class="m-t-0"
       [nzFrontPagination]="false"
-      nzTableLayout="fixed"
     >
       <thead>
       <tr>

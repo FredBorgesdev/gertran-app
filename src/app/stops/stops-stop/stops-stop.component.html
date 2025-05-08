@@ -1,5 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
+    <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -14,8 +14,20 @@
         Adicionar Ponto
       </nz-breadcrumb-item>
     </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
+    -->
+    <div class="pages-header">  
+      <div class="row m-b-10">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="d-md-flex">
+            <div class="m-r-20">
+              <h2 *ngIf="stop?.id">Editar Ponto - {{stop?.name}}</h2>
+              <h2 *ngIf="!stop?.id">Adicionar Ponto</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-card>
 
     <nz-tabset>
       <nz-tab nzTitle="Ponto">

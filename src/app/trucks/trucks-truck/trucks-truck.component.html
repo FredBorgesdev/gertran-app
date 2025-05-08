@@ -1,34 +1,45 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="idcard"></i><span>Cavalos</span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="truck?.id">
+      Editar Cavalo ({{truck?.vehicle.plate}})
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="!truck?.id">
+      Adicionar Cavalo
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+  <div class="pages-header m-b-25">
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2 *ngIf="truck?.id">Editar Cavalo - {{truck?.vehicle.plate}}</h2>
+            <h2 *ngIf="!truck?.id">Adicionar Cavalo</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <nz-card>
+  <nz-tabset>
+    <nz-tab nzTitle="Dados do cavalo">
+      <app-trucks-form *ngIf="!isLoading" [truck]="truck"></app-trucks-form>
+    </nz-tab>
 
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Cavalos</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="truck?.id">
-        Editar Cavalo ({{truck?.vehicle.plate}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!truck?.id">
-        Adicionar Cavalo
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <nz-tabset>
-      <nz-tab nzTitle="Dados do cavalo">
-        <app-trucks-form *ngIf="!isLoading" [truck]="truck"></app-trucks-form>
-      </nz-tab>
-
-      <nz-tab nzTitle="Rastreadores" [nzDisabled]="!truck?.id">
-        <app-trackers-tab
-          *ngIf="truck?.id"
-          [vehicleId]="truck?.vehicle.id"
-        ></app-trackers-tab>
-      </nz-tab>
-    </nz-tabset>
-  </nz-card>
+    <nz-tab nzTitle="Rastreadores" [nzDisabled]="!truck?.id">
+      <app-trackers-tab
+        *ngIf="truck?.id"
+        [vehicleId]="truck?.vehicle.id"
+      ></app-trackers-tab>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>
 </nz-spin>

@@ -35,14 +35,23 @@
 
 .ant-pagination-item {
     font-family: $font-family-base;
-    background-color: transparent;
-    min-width: $pagination-size;
-    height: $pagination-size;
-    border: 1px solid transparent;
-    border-radius: $border-radius-circle;
+    font-size: $font-size-base;
+    background-color: $white;
+    min-width: $pagination-size !important;
+    height: $pagination-size !important;
+    line-height: $pagination-size !important;
+    margin: 0px 2px !important;
+    border: 0;
+    border-radius: 0;
 
     a {
         color: $gray-light;
+        min-width: $pagination-size;
+        height: $pagination-size;
+        line-height: $pagination-size;
+        background-color: $gray-lightest;
+        border: 1px solid $gray-light;
+        border-radius: $border-radius;
     }
 
     &:hover,
@@ -55,13 +64,35 @@
     }
 }
 
+.ant-pagination-jump-next {
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    background-color: $white;
+    min-width: $pagination-size !important;
+    height: $pagination-size !important;
+    line-height: $pagination-size !important;
+    border: 0;
+    border-radius: 0;
+    
+    a {
+        color: $gray-light;
+        min-width: $pagination-size;
+        height: $pagination-size;
+        line-height: $pagination-size;
+        background-color: $gray-lightest;
+        border-radius: $border-radius;
+    }
+}
+
 .ant-pagination-item-active {
-    border-color: $pagination-theme-color;
+    border: 0;
     font-weight: $font-weight-normal;
     background-color: $pagination-theme-color;
 
     a {
         color: $white;
+        background-color: $gray-dark;
+        border-color: $gray-dark;
     }
 
     &:hover,
@@ -79,7 +110,9 @@
 
     .ant-pagination-item-link {
         border-color: $border-color; 
-        border-radius: $border-radius-circle;
+        border-radius: $border-radius;
+        min-width: $pagination-size;
+        height: $pagination-size;
         cursor: pointer;
     }
 
@@ -99,7 +132,7 @@
 
 .ant-pagination-disabled {
     .ant-pagination-item-link {
-        border-color: $border-color;
+        border: 0;
         color: $gray;
         cursor: not-allowed;
         opacity: 0.5;

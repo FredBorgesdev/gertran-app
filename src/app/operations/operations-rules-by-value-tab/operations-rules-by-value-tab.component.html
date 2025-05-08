@@ -39,27 +39,22 @@
         <nz-badge *ngIf="item.rfBait" nzStatus="success"></nz-badge>
         <nz-badge *ngIf="!item.rfBait" nzStatus="error"></nz-badge>
       </td>
-      <td class="text-md-center">
-        <a
+      <td class="text-md-center" style="white-space: nowrap;">
+        <button
           (click)="edit(item)"
           class="m-r-5"
           nz-button
           nzType="default"
-          nzShape="circle"
-          nz-tooltip
-          nzTooltipTitle="Editar"
         >
-          <i nz-icon nzType="edit" theme="outline"></i>
-        </a>
+          <i nz-icon nzType="edit" theme="outline"></i> Editar
+        </button>
         <button
           nz-button
+          nzDanger
           nzType="default"
-          nzShape="circle"
-          nz-tooltip
-          nzTooltipTitle="Excluir"
           (click)="delete(item)"
         >
-          <i nz-icon nzType="delete" theme="outline"></i>
+          <i nz-icon nzType="delete" theme="outline"></i> Excluir
         </button>
       </td>
     </tr>

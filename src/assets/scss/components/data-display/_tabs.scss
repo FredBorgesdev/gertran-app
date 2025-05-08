@@ -26,12 +26,29 @@
             }
 
             .ant-tabs-tab {
-                margin: 0 -1px 0 0;
-                border: 1px solid $tabs-border;
-                border-radius: 0;
-                background: $tabs-card-toggler-bg;
-                padding: 0 $tabs-toggler-padding-x;
-                line-height: calc(#{$tabs-card-height} - 2px);
+                // margin: 0 -1px 0 0;
+                // border: 1px solid $tabs-border;
+                // border-radius: 0;
+                // background: $tabs-card-toggler-bg;
+                // padding: 0 $tabs-toggler-padding-x;
+                // font-size: $font-size-base;
+                // line-height: calc(#{$tabs-card-height} - 2px);
+                display: inline-block;
+                height: 100%;
+                margin: 0 0.25rem;
+                padding: $tabs-toggler-padding-y $tabs-toggler-padding-x;
+                box-sizing: border-box;
+                position: relative;
+                color: $gray-light;
+                background-color: $gray-lightest;
+                font-weight: $font-weight-bold;
+                border: 1px solid $gray-lighter;
+                border-bottom: 0px;
+
+                &:hover {
+                    color: $body-color;
+                    background-color: $gray-lighter;
+                }
             }  
             
             .ant-tabs-tab-active { 
@@ -111,30 +128,42 @@
     .ant-tabs-tab {
         display: inline-block;
         height: 100%;
-        margin-right: $tabs-gap;
+        margin: 0 0.25rem;
         padding: $tabs-toggler-padding-y $tabs-toggler-padding-x;
         box-sizing: border-box;
         position: relative;
-        color: $tabs-toggler-color;
+        color: $gray-light;
+        background-color: $gray-lightest;
+        font-weight: $font-weight-bold;
+        border: 1px solid $gray-lighter;
+        border-bottom: 0px;
 
         &:hover {
             color: $body-color;
+            background-color: $gray-lighter;
         }
     }
 
     .ant-tabs-tab-active {
-        color: $body-color;
-        font-weight: 500;
+        color: $gray-dark;
+        font-weight: $font-weight-bold;
+        background-color: $white;
+        border: 1px solid $gray-dark;
+        border-bottom: 1px solid $white;
+        border-radius: 0px;
     }
 
     .ant-tabs-tab-disabled {
-        color: rgba($body-color, 0.25);
+        color: $gray-light;
+        font-weight: $font-weight-bold;
+        background-color: $gray-lightest;
+        border: 1px solid $gray-lighter;
     }
 }
 
 .ant-tabs-ink-bar {
-    height: 2px;
-    background: $tabs-theme-color;
+    height: 0px;
+    background: $white;
 }    
 
 .ant-tabs-large {
@@ -150,10 +179,11 @@
 }
 
 .ant-tabs-tab {
+    font-size: $font-size-base;
     &.ant-tabs-tab-active {
         .ant-tabs-tab-btn {
-            color: $tabs-theme-color;
-            font-weight: $font-weight-semibold;
+            color: $gray-dark;
+            font-weight: $font-weight-bold;
         }
     }
 }

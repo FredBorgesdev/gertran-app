@@ -1,6 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <nz-card>
-
+    <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -15,77 +14,98 @@
         Adicionar Rota
       </nz-breadcrumb-item>
     </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
+    -->
+    <div class="pages-header">  
+      <div class="row m-b-10">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="d-md-flex">
+            <div class="m-r-20">
+              <h2 *ngIf="resource?.id">Editar Rota - {{resource.name}}</h2>
+              <h2 *ngIf="!resource?.id">Adicionar Rota</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-card>
 
     <form nzLayout="vertical" nz-form [formGroup]="validateForm">
-      <nz-form-item *ngIf="!authService.customerId">
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
-          <nz-select
-            id="customer"
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="Selecione uma empresa"
-            formControlName="customer"
-            nzServerSearch
-            (nzOnSearch)="selectableCustomerService.searchByName($event)"
-            (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
-            [nzDropdownRender]="selectLoading"
-            (ngModelChange)="loadPointsFromCustomer()"
-          >
-            <nz-option
-              *ngFor="let customer of selectableCustomerService.customers"
-              [nzLabel]="customer.tradingName"
-              [nzValue]="customer.id"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
-          <input id="name" type="text" nz-input formControlName="name"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="code">Código</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o código">
-          <input id="code" type="text" nz-input formControlName="code"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
-          <input id="description" type="text" nz-input formControlName="description"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="distance">Distância (km)</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a distância">
-          <input id="distance" type="text" nz-input formControlName="distance"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="averageSpeed">Velocidade média</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a velocidade">
-          <input id="averageSpeed" type="text" nz-input formControlName="averageSpeed"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired nzFor="durationInMinutes">Duração (minutos)</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a velocidade">
-          <input id="durationInMinutes" type="number" nz-input formControlName="durationInMinutes"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-transfer
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item *ngIf="!authService.customerId">
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="customer">Empresa</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Empresa inválida!">
+              <nz-select
+                id="customer"
+                nzShowSearch
+                nzAllowClear
+                nzPlaceHolder="Selecione uma empresa"
+                formControlName="customer"
+                nzServerSearch
+                (nzOnSearch)="selectableCustomerService.searchByName($event)"
+                (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+                [nzDropdownRender]="selectLoading"
+                (ngModelChange)="loadPointsFromCustomer()"
+              >
+                <nz-option
+                  *ngFor="let customer of selectableCustomerService.customers"
+                  [nzLabel]="customer.tradingName"
+                  [nzValue]="customer.id"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="name">Nome</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome">
+              <input id="name" type="text" nz-input formControlName="name"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="code">Código</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o código">
+              <input id="code" type="text" nz-input formControlName="code"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="description">Descrição</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a descrição">
+              <input id="description" type="text" nz-input formControlName="description"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="distance">Distância (km)</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a distância">
+              <input id="distance" type="text" nz-input formControlName="distance"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="averageSpeed">Velocidade média</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a velocidade">
+              <input id="averageSpeed" type="text" nz-input formControlName="averageSpeed"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="null" nzRequired nzFor="durationInMinutes">Duração (minutos)</nz-form-label>
+            <nz-form-control [nzSpan]="null" nzErrorTip="Preencha a velocidade">
+              <input id="durationInMinutes" type="number" nz-input formControlName="durationInMinutes"/>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <nz-transfer
         [nzDataSource]="points"
         [nzShowSearch]="true"
         [nzShowSelectAll]="false"
@@ -187,28 +207,34 @@
         </ng-template>
 
       </nz-transfer>
+        </div>
+      </div>
     </form>
 
     <nz-collapse>
       <nz-collapse-panel nzHeader="Ver mapa" *ngIf="selectedPoints.length > 0">
         <app-stops-map
           *ngIf="selectedPoints.length > 0"
-          [points]="selectedPoints"
+          [points]="selectedPoints" 
         ></app-stops-map>
       </nz-collapse-panel>
     </nz-collapse>
 
-    <nz-form-item class="m-t-50">
-      <nz-form-control>
-        <button type="button" (click)="save()" nz-button nzType="primary">
-          <i nz-icon nzType="save"></i>Salvar Rota
-        </button>
-
-        <button type="button" (click)="list()" nz-button>
-          <i nz-icon nzType="unordered-list"></i>Listar Rotas
-        </button>
-      </nz-form-control>
-    </nz-form-item>
+    <nz-divider></nz-divider>
+    
+    <div class="page-buttons">
+      <nz-form-item>
+        <nz-form-control>
+          <button type="button" (click)="list()" nz-button>
+            <i nz-icon nzType="unordered-list"></i>Listar Rotas
+          </button>
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Rota
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    
   </nz-card>
 </nz-spin>
 

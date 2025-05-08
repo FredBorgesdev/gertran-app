@@ -1,7 +1,7 @@
 <nz-spin [nzSpinning]="isLoading">
   <form nz-form nzLayout="vertical" [formGroup]="validateForm">
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="8">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumWorkdayPeriod">Horas máximas da jornada total</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -15,8 +15,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursContinuousDriving">Horas máximas de direção por dia</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -30,8 +29,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursPerWeek">Horas máximas de jornada semanal</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -45,10 +43,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-    </div>
-
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="minimumContinuousRestPeriod">Horas mínimas de descanso continuo</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -62,8 +57,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumContinuousRestPeriod">Horas máximas de descanso continuo</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -77,8 +71,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursDailyDriving">Horas máximas de direção continua</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -92,10 +85,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-    </div>
-
-    <div nz-row nzGutter="16">
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="restPeriodToBreakContinuousDriving">Descanso para quebra de direção contínua</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -109,8 +99,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="minimumLunchRestPeriod">Horas mínimas de refeição</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -124,8 +113,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-
-      <div nz-col nzSpan="8">
+      <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired nzFor="restPeriodBetweenWorkingDays">Horas de descanso entre jornadas</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
@@ -140,29 +128,30 @@
         </nz-form-item>
       </div>
     </div>
-
-    <nz-form-item>
-      <nz-form-control>
-        <button
-          type="button"
-          (click)="save()"
-          nz-button
-          nzType="primary"
-          class="m-r-10"
-        >
-          <i nz-icon nzType="save"></i>Salvar
-        </button>
-
-        <button
-          type="button"
-          (click)="delete()"
-          nz-button
-          nzType="primary"
-          nzDanger
-        >
-          <i nz-icon nzType="delete"></i>Remover
-        </button>
-      </nz-form-control>
-    </nz-form-item>
+    <nz-divider></nz-divider>
+    <div class="page-buttons">
+      <nz-form-item>
+        <nz-form-control>
+          <button
+            type="button"
+            (click)="delete()"
+            nz-button
+            nzType="primary"
+            nzDanger
+          >
+            <i nz-icon nzType="delete"></i> Remover
+          </button>
+          <button
+            type="button"
+            (click)="save()"
+            class="m-l-10"
+            nz-button
+            nzType="primary"
+          >
+            <i nz-icon nzType="save"></i> Salvar
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
   </form>
 </nz-spin>

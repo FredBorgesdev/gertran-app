@@ -1,7 +1,7 @@
 .header {
   background: $tone-blue;
   height: $header-height;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid #1c5fc5;
   position: fixed;
   top: 0px;
   width: 100%;
@@ -9,12 +9,19 @@
   display: flex;
   color: #fff !important;
   font-weight: 500;
+  box-shadow: 0px 0px 5px #114799;
+  z-index: 9999;
 
   .logo {
     background-color: #fff;
-
-    width: 120px;
-    height: 120px;
+    width: auto;
+    height: 70px;
+    margin-left: 20px;
+    border: 1px solid #1c5fc5;
+    border-top: 0px;
+    border-radius: 0pxx;
+    padding: 5px;
+    box-shadow: 0px 0px 5px #114799;
 
     //border-right: 1px solid $border-color;
     @include transition(all 0.2s ease);
@@ -30,6 +37,12 @@
     > a {
       display: block;
       text-align: center;
+
+      img {
+        height: 60px !important;
+        width: auto !important;
+      }
+
     }
 
     .logo-fold {
@@ -59,7 +72,7 @@
 
         > a,
         nz-dropdown > a {
-          padding: 5px 15px;
+          padding: 5px 10px;
           font-size: 18px;
           color: $body-color;
           display: block;
@@ -118,6 +131,42 @@
 
     .logo {
       width: $side-nav-folded;
+    }
+  }
+}
+
+.pages-header {
+  margin: 0px;
+  background-color: $gray-lighter;
+  border: 0;
+  border-bottom: 1px solid $gray-light;
+  padding: 20px 25px 5px 25px;
+
+  div {
+    width: 100%;
+  }
+
+  h2 {
+    display: flex;
+    align-content: center;
+    margin: 0;
+    @include screen-mobile {
+      align-content: center;
+      margin: 0 auto 10px auto;
+    }
+  }
+
+  .row {
+    div:first-child {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .pages-header-button {
+    text-align: right;
+    @include screen-mobile {
+      text-align: center;
     }
   }
 }

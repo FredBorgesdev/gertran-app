@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TableService } from '../../shared/services/table.service';
@@ -15,6 +15,8 @@ import {Truck} from '../../trucks/trucks.service';
   styleUrls: ['./wagons-list.component.css']
 })
 export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
+  @Input() showHeader = true
+
   searchInput: string;
 
   wagonColumn = [
@@ -28,6 +30,7 @@ export class WagonsListComponent extends BaseCrudListComponent<Wagon> {
     { title: 'Ano' },
     { title: 'Chassi' },
     { title: 'Renavam' },
+    { title: '' },
   ];
 
   constructor(

@@ -1,6 +1,6 @@
 <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
-  <div nz-row nzGutter="16">
-    <div nz-col nzSpan="6">
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
       <nz-form-item class="m-b-0">
         <nz-form-label>Cliente</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -20,8 +20,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="6">
+    <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
       <nz-form-item class="m-b-0">
         <nz-form-label>Data inicial</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -34,8 +33,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="6">
+    <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
       <nz-form-item class="m-b-0">
         <nz-form-label>Data final</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -48,8 +46,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="6">
+    <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
       <nz-form-item class="m-b-0">
         <nz-form-label>Motorista</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
@@ -73,10 +70,9 @@
       </nz-form-item>
     </div>
   </div>
-
-  <div nz-row nzGutter="16" *ngIf="showExtraFields" >
-    <div nz-col nzSpan="8" class="m-t-10">
-      <nz-form-item>
+  <div class="row" *ngIf="showExtraFields" >
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
         <nz-form-label [nzSpan]="null" nzFor="nightShiftStart">Inicio Horario Noturno</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
           <input
@@ -89,9 +85,8 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="8" class="m-t-10">
-      <nz-form-item>
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
         <nz-form-label [nzSpan]="null" nzFor="nightShiftEnd">Fim Horario Noturno</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
           <input
@@ -104,9 +99,8 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-
-    <div nz-col nzSpan="8" class="m-t-10">
-      <nz-form-item>
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
         <nz-form-label>Formato de relatório</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <nz-select formControlName="reportFormat" nzAllowClear>
@@ -119,57 +113,38 @@
   </div>
 </form>
 
-<div nz-row nzGutter="16" class="m-t-15" *ngIf="!showExtraFields" >
-  <div nz-col nzSpan="8">
-    <button
-      nz-button
-      nzType="primary"
-      style="width: 100%"
-      (click)="getFilterSelectedDataCustomerDriverDate()"
-    >Buscar pontos
-    </button>
-  </div>
-
-  <div nz-col nzSpan="8">
-  </div>
-  
-  <div nz-col nzSpan="8">
-    <button
-      nz-button
-      nzType="primary"
-      style="width: 100%"
-      (click)="getFilterSelectedDataDriverCustomer()"
-    >Adicionar registro
-    </button>
-  </div>
+<div class="page-buttons m-t-10 m-b-20" *ngIf="!showExtraFields" >
+  <button
+    nz-button
+    (click)="getFilterSelectedDataCustomerDriverDate()"
+  >Buscar pontos
+  </button>
+  <button
+    nz-button
+    nzType="primary"
+    (click)="getFilterSelectedDataDriverCustomer()"
+  >Adicionar registro
+  </button>
 </div>
 
-<div nz-row nzGutter="16" class="m-t-5" *ngIf="showExtraFields" >
-  <div nz-col nzSpan="8">
-    <button
-      nz-button
-      nzType="primary"
-      style="width: 100%"
-      (click)="emitGenerateReport()"
-    >Gerar relatório
-    </button>
-  </div>
-  <div nz-col nzSpan="8">
-    <button
-      nz-button
-      style="width: 100%"
-      (click)="emitGeneratePDF2()"
-    >Gerar pdf
-    </button>
-  </div>
-  <div nz-col nzSpan="8">
-    <button
-      nz-button
-      style="width: 100%"
-      (click)="generateExcel()"
-    >Gerar planilha
-    </button>
-  </div>
+<div class="page-buttons m-t-10" *ngIf="showExtraFields" >
+ 
+  <button
+    nz-button
+    (click)="emitGeneratePDF2()"
+  >Gerar pdf
+  </button>
+  <button
+    nz-button
+    (click)="generateExcel()"
+  >Gerar planilha
+  </button>
+  <button
+  nz-button
+  nzType="primary"
+  (click)="emitGenerateReport()"
+>Gerar relatório
+</button>
 </div>
 
 <ng-template #selectLoading>

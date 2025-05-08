@@ -1,7 +1,6 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
 
-  <nz-card>
-
+    <!--
     <nz-breadcrumb>
       <nz-breadcrumb-item>
         <i nz-icon nzType="dashboard"></i>
@@ -10,11 +9,32 @@
         Rotas
       </nz-breadcrumb-item>
     </nz-breadcrumb>
+  -->
+  <div class="pages-header">  
+    <div class="row m-b-10">
+      <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Rotas</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button" *ngIf="authService.user.hasPermission('settings.add_point')">
+        <button
+          (click)="create()"
+          nz-button
+          nzType="primary"
+        >
+          <i nz-icon nzType="plus" theme="outline"></i>
+          <span>Adicionar Rota</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <nz-card>
 
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-8">
+    <div class="row m-b-20">
+      <div class="col-lg-12">
         <div class="d-md-flex">
           <!-- <div class="m-b-10 m-r-20"> -->
           <!--   <nz-input-group [nzPrefix]="prefixTemplate"> -->
@@ -25,19 +45,6 @@
           <!--   </ng-template> -->
           <!-- </div> -->
         </div>
-      </div>
-
-      <div
-        class="col-lg-4 text-right"
-      >
-        <button
-          (click)="create()"
-          nz-button
-          nzType="primary"
-        >
-          <i nz-icon nzType="plus" theme="outline"></i>
-          <span>Adicionar Rota</span>
-        </button>
       </div>
     </div>
 
@@ -65,29 +72,24 @@
         <td>{{item.distance}}</td>
         <td>{{item.averageSpeed}}</td>
         <td>{{item.durationInMinutes}}</td>
-        <td class="d-flex">
-          <a
+        <td class="d-flex" style="white-space: nowrap;">
+          <button
             (click)="edit(item)"
             class="m-r-5"
             nz-button
             nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Editar"
-          >
-            <i nz-icon nzType="edit" theme="outline"></i>
-          </a>
-          <a
+            >
+            <i nz-icon nzType="edit" theme="outline"></i> Editar
+          </button>
+          <button
             nz-button
             nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Excluir"
+            nzDanger
             (click)="delete(item)"
             *ngIf="authService.user.hasPermission('route.delete_route')"
           >
-            <i nz-icon nzType="delete" theme="outline"></i>
-          </a>
+            <i nz-icon nzType="delete" theme="outline"></i> Excluir
+          </button>
         </td>
       </tr>
       </tbody>

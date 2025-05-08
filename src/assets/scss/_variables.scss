@@ -11,6 +11,7 @@ $orange: #fa8c16 !default;
 $gold: #ffc107 !default;
 $green: #52c41a !default;
 $blue: #3f87f5 !default;
+$darkblue: #1c5fc5 !default;
 $cyan: #00c9a7 !default;
 $purple: #886cff !default;
 $magenta: #eb2f96 !default;
@@ -82,22 +83,23 @@ $brand-secondary: $purple !default;
 $brand-success: $cyan !default;
 $brand-info: $blue !default;
 $brand-warning: $gold !default;
-$brand-danger: $red !default;
+$brand-danger: #eb5a5a !default;
 $brand-default: $gray-dark !default;
 
 
 // Body
 //
 // Settings for the `<body>` element.
-$body-bg: #f9fbfd !default;
-$body-color: $gray !default;
+$body-bg: $white !default;
+//$body-color: $gray !default;
+$body-color: $gray-dark !default;
 
 
 // Template
 //
 // Configuration of template
-$header-height: 55px;
-$side-nav-width: 530px;
+$header-height: 60px;
+$side-nav-width: 450px;
 $side-nav-width-laptop: 400px;
 $side-nav-folded: 80px;
 $layout-content-gutter: 15px;
@@ -194,7 +196,8 @@ $spacers: map-merge(
 // Fonts
 //
 // Font-weight, line-height, font-size
-$font-family-sans-serif: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+//$font-family-sans-serif: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: Arial, sans-serif;
 $font-family-base: $font-family-sans-serif !default;
 
 $font-weight-light: 300 !default;
@@ -205,7 +208,7 @@ $font-weight-base: $font-weight-normal !default;
 
 $line-height-base: 1.5 !default;
 
-$font-size-base: .875rem !default;
+$font-size-base: .750rem !default;
 $font-size-xl: 1.25rem !default;
 $font-size-lg: 1rem !default;
 $font-size-sm: .75rem !default;
@@ -234,8 +237,9 @@ $text-muted: rgba($gray-light, 0.7) !default;
 // Border
 //
 // Define border properties
-$border-color: #edf2f9 !default;
-$border-radius: .25rem !default;
+$border-color: $gray-dark !default;
+//$border-color: #edf2f9 !default;
+$border-radius: 0 !default;
 $border-radius-lg: .3rem !default;
 $border-radius-sm: .2rem !default;
 $border-radius-xs: .125rem !default;
@@ -258,7 +262,7 @@ $btn-active-box-shadow: inset 0 3px 5px rgba($black, .125) !default;
 
 $btn-primary-color: $white !default;
 $btn-primary-bg: $brand-primary !default;
-$btn-primary-border: $btn-primary-bg !default;
+$btn-primary-border: $darkblue !default;
 
 $btn-danger-color: $white !default;
 $btn-danger-bg: $brand-danger !default;
@@ -299,8 +303,9 @@ $table-cell-padding: .75rem !default;
 $table-sm-cell-padding: .3rem !default;
 $table-bg: transparent !default;
 $table-color: $body-color;
-$table-head-bg: $white !default;
+$table-head-bg: $gray-lighter !default;
 $table-head-color: $gray-dark !default;
+$table-head-border: $gray-dark !default;
 $table-foot-bg: transparent !default;
 $table-foot-color: $gray-dark !default;
 $table-border-color: $gray-lighter !default;
@@ -309,7 +314,8 @@ $table-spacing-sm: 0.9375rem !default;
 $table-spacing-lg: 0.9375rem !default;
 $table-hover: #fcfcfc !default;
 $table-selected: rgba($brand-primary, 0.1) !default;
-$table-has-action-hover-bg: darken(#f2f2f2, 2%) !default;
+$table-has-action-hover-bg: darken($gray-lighter, 15%) !default;
+$table-has-action-selected-bg: darken($gray-lighter, 15%) !default;
 $table-column-sort-bg: $table-hover !default;
 $table-border: $border-color !default;
 $table-border-radius: 4px !default;
@@ -371,7 +377,7 @@ $input-height-lg: (($font-size-base * $input-line-height) + ($input-padding-y-lg
 $input-bg: $white !default;
 $input-bg-disabled: $gray-lighter !default;
 
-$input-color: $gray !default;
+$input-color: $gray-dark !default;
 $input-border-color: $border-color !default;
 $input-btn-border-width: $border-width !default; // For form controls and buttons
 $input-box-shadow: inset 0 1px 1px rgba($black, .075) !default;
@@ -383,9 +389,10 @@ $input-border-radius-sm: $border-radius-sm !default;
 $input-bg-focus: $input-bg !default;
 $input-border-focus: lighten($brand-primary, 25%) !default;
 $input-box-shadow-focus: $input-box-shadow, rgba($input-border-focus, .6) !default;
-$input-color-focus: $input-color !default;
+$input-color-focus: $gray-dark !default;
 
-$input-color-placeholder: rgba(#72849a, 0.4) !default;
+//$input-color-placeholder: rgba(#72849a, 0.4) !default;
+$input-color-placeholder: $gray !default;
 
 $input-error-color: $state-danger-text !default;
 $input-warning-color: $state-warning-text !default;
@@ -393,7 +400,7 @@ $input-success-color: $state-success-text !default;
 
 $textarea-min-height: 32px !default;
 
-$checkbox-theme-color: $brand-primary !default;
+$checkbox-theme-color: $gray-dark !default;
 $checkbox-width-height: 1.25rem !default;
 $checkbox-line-height: 1 !default;
 $checkbox-top-adjust: -.09em !default;
@@ -401,8 +408,8 @@ $checkbox-position-left: 0.325rem !default;
 $checkbox-position-top: 0.535rem !default;
 $checkbox-disable-bg: $gray-lighter !default;
 
-$radio-theme-color: $brand-primary !default;
-$radio-width-height: 1.25rem !default;
+$radio-theme-color: $gray-dark !default;
+$radio-width-height: 1.5rem !default;
 $radio-gutter: 0.625rem !default;
 $radio-dot-size: 0.625rem !default;
 $radio-position-left: 0.1875rem !default;
@@ -457,7 +464,7 @@ $cascader-menu-item-spacing-y: 7px !default;
 $cascader-menu-item-spacing-x: 12px !default;
 $cascader-menu-item-line-height: 1.375rem !default;
 
-$transfer-theme-color: $brand-primary !default;
+$transfer-theme-color: $gray-lighter !default;
 $transfer-width: 15rem !default;
 $transfer-height: 17.1875rem !default;
 
@@ -474,10 +481,12 @@ $progress-bar-bg: $brand-primary !default;
 
 
 // Cards
-$card-spacer-x: 1.5rem !default;
-$card-spacer-y: 1.5rem !default;
+$card-spacer-x: 1.25rem !default;
+$card-spacer-y: 1.25rem !default;
+$card-spacer-content-x: 0.25rem !default;
+$card-spacer-content-y: 0 !default;
 $card-border-radius: $border-radius !default;
-$card-border-color: $border-color !default;
+$card-border-color: $white !default;
 $card-head-bg: $white !default;
 $card-bg: $white !default;
 $card-head-min-height: 3rem !default;
@@ -572,16 +581,16 @@ $dropdown-shadow: 0 2px 8px rgba(0, 0, 0, .15) !default;
 // Menu
 //
 // Define colors theme color for menu
-$menu-spacing-y: 45px;
-$menu-text: rgba($gray-dark, 0.75) !default;
+$menu-spacing-y: 48px;
+$menu-text: $gray-dark !default;
 $menu-dark-bg: #223143 !default;
 $menu-dark-bg-sub: #181f29 !default;
 $menu-dark-text: #99abb4 !default;
 
 
 //Pagination
-$pagination-theme-color: $brand-primary !default;
-$pagination-size: 2rem !default;
+$pagination-theme-color: $gray-dark !default;
+$pagination-size: 40px !default;
 $pagination-size-sm: 1.5rem !default;
 
 
@@ -635,10 +644,10 @@ $tooltip-bg: #404040 !default;
 // Padding applied to the modal body
 $modal-content-bg: $white !default;
 $modal-content-shadow: 0 4px 12px rgba($black, 0.15) !default;
-$modal-header-padding: 1rem 1.5rem !default;
+$modal-header-padding: 1.25rem !default;
 $modal-border-radius: $border-radius !default;
-$modal-body-padding: 1.5rem !default;
-$modal-footer-padding: 0.625rem 1rem !default;
+$modal-body-padding: 1.25rem !default;
+$modal-footer-padding: 1.25rem !default;
 
 
 // Notification
@@ -650,12 +659,13 @@ $notification-width: 385px !default;
 // Avatar
 //
 // Define avatar size & default background
-$avatar-bg: $gray-lightest !default;
+$avatar-bg: $gray-lighter !default;
 $avatar-size: 2.5rem !default;
 $avatar-size-sm: 1.5rem !default;
 $avatar-size-lg: 3rem !default;
 $avatar-icon: 1rem !default;
 $avatar-icon-sm: 0.875rem !default;
+$avatar-icon-md: 1.25rem !default;
 $avatar-icon-lg: 1.5rem !default;
 
 
@@ -671,7 +681,7 @@ $loading-color: $brand-primary !default;
 $badge-count-bg: #f5222d !default;
 $badge-count-height: 1.25rem !default;
 $badge-count-font-size: $font-size-base !default;
-$badge-dot-size: 0.4375rem !default;
+$badge-dot-size: 1rem !default;
 $badge-dot-processing-bg: $brand-info !default;
 
 

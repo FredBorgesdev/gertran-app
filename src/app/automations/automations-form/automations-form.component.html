@@ -1,246 +1,273 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a><i nz-icon nzType="idcard"></i><span>Automações</span></a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="resource?.id">
+      Editar automação ({{resource.name}})
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item *ngIf="!resource?.id">
+      Adicionar automação
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+  <div class="pages-header">
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2 *ngIf="resource?.id">Editar automação - {{resource.name}}</h2>
+            <h2 *ngIf="!resource?.id">Adicionar automação</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <nz-card>
-
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        <a><i nz-icon nzType="idcard"></i><span>Automações</span></a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="resource?.id">
-        Editar automação ({{resource.name}})
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="!resource?.id">
-        Adicionar automação
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
+  
+  <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+    <nz-form-item>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+          <nz-form-label nzFor="action" nzRequired>Nome</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo!">
+            <input nz-input formControlName="name" id="name" placeholder="Nome" />
+          </nz-form-control>
+        </div>  
+        <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+          <nz-form-label nzFor="eventType" nzRequired>Evento</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo!">
+            <nz-select
+              id="eventType"
+              nzPlaceHolder="Selecione o tipo de evento"
+              formControlName="event"
+            >
+              <nz-option
+                *ngFor="let event of events"
+                [nzLabel]="event.label"
+                [nzValue]="event.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">  
+          <nz-form-label nzFor="action" nzRequired>Ação</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="action">
+              <label *ngFor="let action of actions" nz-radio-button [nzValue]="action.value">
+                {{action.label}}
+              </label>
+            </nz-radio-group>
+          </nz-form-control>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">  
+          <nz-form-label nzFor="action" nzRequired>Está ativo?</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="isActive">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </div>
+      </div>  
+    </nz-form-item>
 
     <nz-divider></nz-divider>
+    
+    <div class="row">
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>SM - Viagem</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasTravelSm">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+        <nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>MSG - Veículo</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasVehicleMessage">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
 
-    <form nz-form nzLayout="horizontal" [formGroup]="validateForm">
-      <nz-form-item>
-        <nz-form-label nzFor="action" nzRequired>Nome</nz-form-label>
-        <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo!">
-          <input nz-input formControlName="name" id="name" placeholder="Nome" />
-        </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input nz-input formControlName="vehicleMessage" />
+          </nz-form-control>
 
-        <nz-form-label nzOffset="1" nzFor="eventType" nzRequired>Evento</nz-form-label>
-        <nz-form-control nzErrorTip="Preencha o campo!" nzSpan="3">
-          <nz-select
-            id="eventType"
-            nzPlaceHolder="Selecione o tipo de evento"
-            formControlName="event"
-          >
-            <nz-option
-              *ngFor="let event of events"
-              [nzLabel]="event.label"
-              [nzValue]="event.value"
-            ></nz-option>
-          </nz-select>
-        </nz-form-control>
+          <nz-form-label nzFor="action" nzRequired>MSG Envio</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasSendMessage">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
 
-        <nz-form-label nzOffset="1" nzFor="action" nzRequired>Ação</nz-form-label>
-        <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="action">
-            <label *ngFor="let action of actions" nz-radio-button [nzValue]="action.value">
-              {{action.label}}
-            </label>
-          </nz-radio-group>
-        </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input
+              nz-input
+              formControlName="sendMessage"
+            >
+          </nz-form-control>
+        </nz-form-item>
+      </div>  
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>Tempo de Ação</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasTimeAction">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input type="text" nz-input placeholder="" formControlName="timeAction">
+          </nz-form-control>
 
-        <nz-form-label nzOffset="1" nzFor="action" nzRequired>Está ativo?</nz-form-label>
-        <nz-form-control nzSpan="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="isActive">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-      </nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>Alerta Operador</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasAlertOperator">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input type="text" nz-input placeholder="" formControlName="alertOperatorMessage">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>Velocidade</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid"  formControlName="hasVelocity">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input type="text" nz-input placeholder="" formControlName="velocity">
+          </nz-form-control>
 
-      <nz-divider></nz-divider>
+          <nz-form-label nzFor="action" nzRequired>Ocorrência</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasOccurrence">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input type="text" nz-input formControlName="occurrenceMessage">
+          </nz-form-control>
+        </nz-form-item>
+      </div>  
+      <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">   
+        <nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>Ignição</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group nzButtonStyle="solid" formControlName="hasIgnition">
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <input type="text" nz-input formControlName="ignitionMessage">
+          </nz-form-control>
+          
+          <nz-form-label nzFor="action" nzRequired>Todos os clientes?</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <nz-radio-group
+              nzButtonStyle="solid"
+              (ngModelChange)="onAllCustomersChange()"
+              formControlName="isForAllCustomers"
+            >
+              <label nz-radio-button [nzValue]="true">Sim</label>
+              <label nz-radio-button [nzValue]="false">Não</label>
+            </nz-radio-group>
+          </nz-form-control>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>SM - Viagem</nz-form-label>
-        <nz-form-control [nzSpan]="8" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasTravelSm">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-      </nz-form-item>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <button
+              nz-button
+              nzType="primary"
+              (click)="showCustomersModal()"
+              [disabled]="this.validateForm.get('isForAllCustomers').value"
+            >Selecionar Clientes</button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>  
+      <div class="col-lg-12 col-md-12 col-sm-12 m-b-10">  
+        <nz-form-item>
+          <nz-form-label nzFor="action" nzRequired>Motivo</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o campo">
+            <textarea nz-input formControlName="reason"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>    
+    <p>Lista de comandos</p>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>MSG - Veículo</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasVehicleMessage">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input nz-input formControlName="vehicleMessage" />
-        </nz-form-control>
-
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>MSG Envio</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasSendMessage">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input
-            nz-input
-            formControlName="sendMessage"
-          >
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Tempo de Ação</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasTimeAction">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input type="text" nz-input placeholder="" formControlName="timeAction">
-        </nz-form-control>
-
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Alerta Operador</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasAlertOperator">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input type="text" nz-input placeholder="" formControlName="alertOperatorMessage">
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Velocidade</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid"  formControlName="hasVelocity">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input type="text" nz-input placeholder="" formControlName="velocity">
-        </nz-form-control>
-
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Ocorrência</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasOccurrence">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input type="text" nz-input formControlName="occurrenceMessage">
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Ignição</nz-form-label>
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group nzButtonStyle="solid" formControlName="hasIgnition">
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <input type="text" nz-input formControlName="ignitionMessage">
-        </nz-form-control>
-
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Todos os clientes?</nz-form-label>
-
-        <nz-form-control [nzSpan]="3" nzErrorTip="Preencha o campo">
-          <nz-radio-group
-            nzButtonStyle="solid"
-            (ngModelChange)="onAllCustomersChange()"
-            formControlName="isForAllCustomers"
-          >
-            <label nz-radio-button [nzValue]="true">Sim</label>
-            <label nz-radio-button [nzValue]="false">Não</label>
-          </nz-radio-group>
-        </nz-form-control>
-
-        <nz-form-control [nzSpan]="5" nzErrorTip="Preencha o campo">
-          <button
-            nz-button
-            nzType="primary"
-            (click)="showCustomersModal()"
-            [disabled]="this.validateForm.get('isForAllCustomers').value"
-          >Selecionar Clientes</button>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="3" nzFor="action" nzRequired>Motivo</nz-form-label>
-        <nz-form-control [nzSpan]="19" nzErrorTip="Preencha o campo">
-          <textarea nz-input formControlName="reason"></textarea>
-        </nz-form-control>
-      </nz-form-item>
-
-      <p>Lista de comandos</p>
-
-      <nz-transfer
-        [nzDataSource]="commands"
-        [nzListStyle]="{ width: '100%' }"
-        [nzRenderList]="[renderList, renderList]"
-        (nzChange)="onTransferChange($event)"
-        class="m-b-25"
+    <nz-transfer
+      [nzDataSource]="commands"
+      [nzListStyle]="{ width: '100%' }"
+      [nzRenderList]="[renderList, renderList]"
+      (nzChange)="onTransferChange($event)"
+      class="m-b-25"
+    >
+      <ng-template
+        #renderList
+        let-items
+        let-direction="direction"
+        let-stat="stat"
+        let-onItemSelectAll="onItemSelectAll"
+        let-onItemSelect="onItemSelect"
       >
-        <ng-template
-          #renderList
-          let-items
-          let-direction="direction"
-          let-stat="stat"
-          let-onItemSelectAll="onItemSelectAll"
-          let-onItemSelect="onItemSelect"
-        >
-          <nz-table #table [nzData]="items" nzSize="small" [nzShowPagination]="false">
-            <thead>
-              <tr>
-                <th
-                  [nzChecked]="stat.checkAll"
-                  [nzIndeterminate]="stat.checkHalf"
-                  (nzCheckedChange)="onItemSelectAll($event)"
-                ></th>
-                <th>Comando</th>
-              </tr>
-            </thead>
-            <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-              <tr *ngFor="let item of table.data" (click)="onItemSelect(item)" cdkDrag [cdkDragDisabled]="direction === 'left'">
-                <td
-                  [nzChecked]="!!item.checked"
-                  (nzCheckedChange)="onItemSelect(item)"
-                ></td>
-                <td>{{ item.title }}</td>
-              </tr>
-            </tbody>
-          </nz-table>
-        </ng-template>
-      </nz-transfer>
-
-      <nz-form-item>
-        <nz-form-control [nzOffset]="7" [nzSpan]="12">
-          <button type="button" (click)="save()" nz-button nzType="primary">
-            <i nz-icon nzType="save"></i>Salvar Automação
-          </button>
+        <nz-table #table [nzData]="items" nzSize="small" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th
+                [nzChecked]="stat.checkAll"
+                [nzIndeterminate]="stat.checkHalf"
+                (nzCheckedChange)="onItemSelectAll($event)"
+              ></th>
+              <th>Comando</th>
+            </tr>
+          </thead>
+          <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+            <tr *ngFor="let item of table.data" (click)="onItemSelect(item)" cdkDrag [cdkDragDisabled]="direction === 'left'">
+              <td
+                [nzChecked]="!!item.checked"
+                (nzCheckedChange)="onItemSelect(item)"
+              ></td>
+              <td>{{ item.title }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </ng-template>
+    </nz-transfer>
+    <nz-divider></nz-divider>
+    <nz-form-item>
+      <nz-form-control>
+        <div class="page-buttons">
           <button type="button" (click)="list()" nz-button>
             <i nz-icon nzType="unordered-list"></i>Listar Automações
           </button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </nz-card>
+          <button type="button" (click)="save()" nz-button nzType="primary">
+            <i nz-icon nzType="save"></i>Salvar Automação
+          </button>
+      </div>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>
 </nz-spin>
 >

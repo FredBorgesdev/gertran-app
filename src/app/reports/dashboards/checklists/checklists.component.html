@@ -1,32 +1,34 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
-    Check-list por veículo
-  </h3>
-  <h4 [class]="(hideHeader && 'header-small') + ' text-center m-b-15'">
-    Tempo: {{ currentTime }}
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    Total - {{resources?.count ?? '0'}}
-  </h4>
-
-  <img
-    *ngIf="!hideHeader"
-    src="assets/images/logo/logogertran.png"
-    alt="Gertran"
-    class="logo"
-  >
-
-  <div class="d-flex justify-content-between" *ngIf="!hideHeader">
-    <div></div>
-
-    <span>
-      <div class="square bg-danger"></div> Acima de 15 minutos
-      <div class="square bg-alert"></div> Acima de 10 minutos
-      <div class="square bg-default"></div> No prazo
-    </span>
+  <div class="dash-header">
+    <div class="logo">
+      <img
+        *ngIf="!hideHeader"
+        src="assets/images/logo/logogertran.png"
+        alt="Gertran"
+      >
+    </div>
+    <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
+      Check-list por veículo
+    </h3>
   </div>
-
+  
+<nz-card>
+  <div class="content">
+    <h4 [class]="(hideHeader && 'header-small') + ' text-center m-b-15'">
+      Tempo: {{ currentTime }}
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      Total - {{resources?.count ?? '0'}}
+    </h4>
+    <div class="d-flex justify-content-between" *ngIf="!hideHeader">
+      <span class="d-flex m-b-10" style="align-items: center;">
+        <div class="square bg-danger m-r-5"></div> Acima de 15 minutos
+        <div class="square bg-alert m-r-5"></div> Acima de 10 minutos
+        <div class="square bg-default m-r-5"></div> No prazo
+      </span>
+    </div>
+  </div>
   <nz-table
     #checklistTable
     [nzData]="resources?.results"
@@ -64,4 +66,5 @@
     </tr>
     </tbody>
   </nz-table>
+</nz-card>
 </nz-spin>

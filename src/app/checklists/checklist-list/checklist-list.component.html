@@ -1,92 +1,94 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-
-  <nz-card>
-
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>
-        <i nz-icon nzType="dashboard"></i>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>
-        Checklists
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-
-    <nz-divider></nz-divider>
-
-    <div class="row m-b-30">
-      <div class="col-lg-7">
-        <div class="d-md-flex">
+  
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      Checklists
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  -->
+  
+<div class="pages-header">  
+  <div class="row m-b-10">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Checklists</h2>
         </div>
       </div>
-      <div class="col-lg-5 text-right">
-        <nz-button-group nzSize="large" class="m-b-2">
-          <button
-            (click)="goToApplyedCheckLists()"
-            nz-button
-            nzType="primary"
-            style="margin-right: 26px;"
-          >
-            <span nz-icon nzType="history" nzTheme="outline"></span>
-            <span>HISTORICO CHECKLIST </span>
-          </button>
-      
-          <button
-            (click)="create()"
-            nz-button
-            nzType="primary"
-          >
-            <i nz-icon nzType="plus" theme="outline"></i>
-            <span>Solicitar checklist</span>
-          </button>
-        </nz-button-group>
-      </div>
     </div>
-    <nz-table
-      #checklistTable
-      [nzData]="resources?.results"
-      [nzTotal]="resources?.count"
-      [nzPageSize]="resources?.limit"
-      [nzPageIndex]="page"
-      [nzFrontPagination]="false"
-      (nzQueryParams)="handleQueryParamsChange($event)"
-    >
-      <thead>
-      <tr>
-        <th class="text-center" *ngFor="let column of checklistColumns">{{ column.title }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of checklistTable.data;  let i=index">
-        <td class="text-center">{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-        <td>
-          <h6 class="text-center">{{item.vehicle.plate}}</h6>
-        </td>
-        <td class="text-center">
-          {{item.vehicle?.trackers?.[0]?.trackerModel.name}}
-        </td>
-        <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
-        <td class="text-center">{{item.driver?.name }} / {{ item.driver?.phoneNumber }}</td>
-        <td class="text-center">{{item.origin }}</td>
-        <td class="text-center">{{item.destiny }}</td>
-        <td
-          class="text-md-center"
-          *ngIf="authService.user.isGertranStaff"
+    <div class="col-lg-6 col-md-6 col-sm-12 pages-header-button">
+      <nz-button-group nzSize="large" class="m-b-2">
+        <button
+          (click)="goToApplyedCheckLists()"
+          nz-button
+          nzType="default"
+          class="m-r-10"
         >
-          <a
-            (click)="edit(item)"
-            class="m-r-5"
-            nz-button
-            nzType="default"
-            nzShape="circle"
-            nz-tooltip
-            nzTooltipTitle="Avaliar"
-          >
-            <i nz-icon nzType="check-circle" theme="outline"></i>
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </nz-card>
+          <span nz-icon nzType="history" nzTheme="outline"></span>
+          <span>HISTORICO CHECKLIST </span>
+        </button>
+    
+        <button
+          (click)="create()"
+          nz-button
+          nzType="primary"
+        >
+          <i nz-icon nzType="plus" theme="outline"></i>
+          <span>Solicitar checklist</span>
+        </button>
+      </nz-button-group>
+    </div>
+  </div>
+</div>
+
+<nz-card>  
+  <nz-table
+    #checklistTable
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th class="text-center" *ngFor="let column of checklistColumns">{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of checklistTable.data;  let i=index">
+      <td class="text-center">{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>
+        <h6 class="text-center">{{item.vehicle.plate}}</h6>
+      </td>
+      <td class="text-center">
+        {{item.vehicle?.trackers?.[0]?.trackerModel.name}}
+      </td>
+      <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
+      <td class="text-center">{{item.driver?.name }} / {{ item.driver?.phoneNumber }}</td>
+      <td class="text-center">{{item.origin }}</td>
+      <td class="text-center">{{item.destiny }}</td>
+      <td
+        class="text-md-center"
+        *ngIf="authService.user.isGertranStaff"
+      >
+        <button
+          (click)="edit(item)"
+          class="m-r-5"
+          nz-button
+          nzType="default"
+        >
+          <i nz-icon nzType="check-circle" theme="outline"></i> Avaliar
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
 
 </nz-spin>
