@@ -1,0 +1,38 @@
+FROM ubuntu:22.04
+
+
+
+# Dependências básicas para asdf e Node.js
+RUN apt-get update && apt-get install -y \
+  curl git gnupg unzip dirmngr \
+  build-essential libssl-dev \
+  ca-certificates
+
+# Instala o asdf
+ENV ASDF_DIR=/root/.asdf
+RUN git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR --branch v0.13.1 && \
+    echo ". $ASDF_DIR/asdf.sh" >> ~/.bashrc && \
+    echo ". $ASDF_DIR/completions/asdf.bash" >> ~/.bashrc
+
+
+# Define variável de ambiente para o asdf funcionar no RUN
+ENV PATH="${ASDF_DIR}/bin:${ASDF_DIR}/shims:$PATH"
+
+# Instala o plugin do Node.js e a versão especificada
+RUN bash -c ". $ASDF_DIR/asdf.sh && \
+    asdf plugin add nodejs && \
+    asdf install nodejs 16.13.0  && \
+    asdf global nodejs 16.13.0"
+
+# Confirma que o node e npm estão disponíveis
+RUN node -v && npm -v
+RUN chmod +x $ASDF_DIR/installs/nodejs/*/bin/node
+
+# Copia arquivos do projeto
+WORKDIR /app
+COPY package.json /app
+COPY package-lock.json /app
+RUN npm install
+COPY . /app
+EXPOSE 4200
+ENTRYPOINT ["/bin/bash", "-c", ". /root/.asdf/asdf.sh && exec \"$@\"", "--"]
