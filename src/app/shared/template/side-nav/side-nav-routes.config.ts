@@ -220,6 +220,7 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
+            permission: Permissions.VIEW_DASHBOARD_ALERT,
           },
           {
             path: 'reports/dashboards/client',
