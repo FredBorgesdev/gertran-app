@@ -24,7 +24,7 @@ const routes: Routes = [
     data: {
       title: 'Adicionar Carreta ',
       headerDisplay: 'none',
-      permission: Permissions.VEHICLES_ADD_TRUCK,
+      // permission: Permissions.VEHICLES_ADD_TRUCK,
     }
   },
   {
@@ -42,7 +42,7 @@ const routes: Routes = [
     data: {
       title: 'Editar Carreta ',
       headerDisplay: 'none',
-      permission: Permissions.VEHICLES_CHANGE_TRUCK,
+      // permission: Permissions.VEHICLES_CHANGE_TRUCK,
     },
   },
   {
