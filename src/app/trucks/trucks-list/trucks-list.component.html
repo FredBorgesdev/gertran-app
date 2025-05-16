@@ -104,7 +104,7 @@
         (click)="edit(item)"
         nz-button
         nzType="default"
-        *ngIf="authService.user.hasPermission('vehicles.change_truck')"
+        *ngIf="authService.user.hasPermission('vehicles.view_truck')"
       >
         <i nz-icon nzType="edit" theme="outline"></i> Editar
       </button>

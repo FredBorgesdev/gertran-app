@@ -236,7 +236,7 @@
             <i nz-icon nzType="unordered-list" class="m-r-5"></i> Listar Cavalos
           </div>
         </button>
-        <button type="button" (click)="saveWithErrorHandling()" nz-button nzType="primary">
+        <button type="button" (click)="saveWithErrorHandling()" nz-button nzType="primary" *ngIf="authService.user.hasOneOfPermissions(['vehicles.change_truck'])">
           <i nz-icon nzType="save"></i> Salvar Cavalo
         </button>
       </nz-form-control>
