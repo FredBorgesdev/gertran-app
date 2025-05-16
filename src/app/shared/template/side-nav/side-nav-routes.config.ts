@@ -94,7 +94,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: '/trucks/trucks-list',
-            title: 'Cadastro de Cavalos',
+            title: 'Cadastro de Veículos/Cavalos',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'car',
@@ -103,7 +103,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: '/wagons/wagons-list',
-            title: 'Cadastro de Carretas',
+            title: 'Cadastro de Reboques/Carretas',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'group',
