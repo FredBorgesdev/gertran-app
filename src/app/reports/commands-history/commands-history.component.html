@@ -37,8 +37,8 @@
       <tbody>
         <tr *ngFor="let data of table.data; index as i">
           <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ data.code + '-' + data.observations }}</td>
-          <td>{{ data.sentByUser?.name }}</td>
+          <td>{{ data.commandParams.message}}</td>
+          <td>{{data.sentByUser?.name || 'Automação'}}</td>
         </tr>
       </tbody>
     </nz-table>
