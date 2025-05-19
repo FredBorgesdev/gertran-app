@@ -38,6 +38,7 @@ export class OperationsRulesByValueTabComponent extends BaseCrudListComponent<an
     {title: 'Redundância Mínima'},
     {title: 'Guarda Armada'},
     {title: 'Isca'},
+    {title: ''},
   ];
 
   constructor(
