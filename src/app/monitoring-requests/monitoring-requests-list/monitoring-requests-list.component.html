@@ -65,7 +65,6 @@
   [nzTitle]="'Rascunho' + ' (' + draftResponse?.count + ')'"
   *ngIf="authService.customerId"
   data-testid="table-draft"
-  [nzBodyStyle]="{ 'padding': '0px' }"
 >
   <app-monitoring-requests-table
     [monitoringRequests]="draftResponse"
