@@ -70,6 +70,12 @@
       </ng-template>
     </nz-tab> 
 
+    <nz-tab nzTitle="Tipo cobrança" [nzDisabled]="!customer?.id">
+      <ng-template nz-tab>
+        <app-vehicles-charging-tab [showHeader]="false" *ngIf="customer?.id"></app-vehicles-charging-tab>
+      </ng-template>
+    </nz-tab> 
+
     <nz-tab nzTitle="Carretas" [nzDisabled]="!customer?.id">
       <ng-template nz-tab>
         <app-wagons-list [showHeader]="false" *ngIf="customer?.id"></app-wagons-list>

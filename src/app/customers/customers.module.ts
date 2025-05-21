@@ -29,6 +29,7 @@ import { UsersListComponent } from '../users/users-list/users-list.component'
 import { TrucksListComponent } from '../trucks/trucks-list/trucks-list.component'
 import { WagonsListComponent } from '../wagons/wagons-list/wagons-list.component'
 import { DriversListComponent } from '../drivers/drivers-list/drivers-list.component'
+import { VehiclesChargingTab } from './vehicles-charging-tab/vehicles-charging-tab.component';
 
 const antdModule = [
   NzTransferModule,
@@ -57,7 +58,8 @@ const antdModule = [
     UsersListComponent,
     TrucksListComponent,
     WagonsListComponent,
-    DriversListComponent
+    DriversListComponent,
+    VehiclesChargingTab,
   ],
   imports: [
     SharedModule,

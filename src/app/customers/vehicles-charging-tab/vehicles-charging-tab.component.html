@@ -1,0 +1,17 @@
+<form nz-form nzLayout="vertical">
+  <nz-transfer
+    [nzDataSource]="list"
+    [nzShowSelectAll]="true"
+    [nzListStyle]="{ 'width': '50%', 'height.px': '700' }"
+    (nzChange)="change($event)"
+  >
+  </nz-transfer>
+  <nz-divider></nz-divider>
+  <div class="page-buttons">
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" (click)="saveGroups()">Salvar grupos</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
