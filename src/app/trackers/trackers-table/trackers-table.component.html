@@ -25,7 +25,7 @@
       <nz-badge *ngIf="item.isMain" nzStatus="success"></nz-badge>
       <nz-badge *ngIf="!item.isMain" nzStatus="error"></nz-badge>
     </td>
-    <td class="text-md-center">
+    <td class="text-md-center d-flex" style="white-space: nowrap;">
 <!--      <a-->
 <!--        *ngIf="!item.main"-->
 <!--        (click)="edit()"-->
@@ -42,20 +42,13 @@
 <!--          theme="outline"-->
 <!--        ></i>-->
 <!--      </a>-->
-      <button
-        (click)="edit(item)"
-        nz-button
-        nzType="default"
-      >
+      <button (click)="edit(item)" nz-button nzType="default">
         <i nz-icon nzType="edit" theme="outline"></i> Editar
-      </button><a
-      (click)="delete(item)"
-      nz-button
-      nzType="default"
-      nzDanger
-    >
+      </button>
+
+      <button (click)="delete(item)" nz-button nzType="default" nzDanger class="m-l-10">
       <i nz-icon nzType="delete" theme="outline"></i> Excluir
-    </a>
+    </button>
     </td>
   </tr>
   </tbody>
