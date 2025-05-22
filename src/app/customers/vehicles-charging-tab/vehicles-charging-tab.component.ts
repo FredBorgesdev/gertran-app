@@ -14,7 +14,6 @@ export class VehiclesChargingTab implements OnInit {
   list: TransferItem[] = [];
   selectedPermissions: number[] = [];
 
-  @Input() targetKeys: string[] = [];
   @Output() save: EventEmitter<number[]> = new EventEmitter<number[]>();
   @Input() customer: Customer;
 
@@ -34,14 +33,12 @@ export class VehiclesChargingTab implements OnInit {
         this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
 
 
-        this.truckService.getAll({limit:1000}).subscribe(data => {
+        this.truckService.getAllChargingMethod({limit:1}).subscribe(data => {
         this.list = data.results.map(item => ({
-          // id: item.id,
+          id: item.id,
           title: item.vehicle.plate,
-          // direction: this.targetKeys.includes(item.id.toString()) ? 'right' : 'left',
+          direction: item.chargingMethod === 'monthly' ? 'right' : 'left'
         }));
-
-        console.log(this.list)
       });    
 
       

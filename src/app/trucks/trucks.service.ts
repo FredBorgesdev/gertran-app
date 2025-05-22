@@ -20,6 +20,23 @@ export class TrucksService extends VehiclesService<Truck> {
   constructor(http: HttpClient) {
     super(http);
   }
+   getAllChargingMethod(
+    pagination: Pagination,
+    filters?: { customerId?: string, plate?: string },
+  ): Observable<GetAllResponse<Truck>> {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    
+    if(window.location.pathname.includes('customers/customers')
+    ){
+      const currentUrl = window.location.href;
+      const urlParts = currentUrl.split('/');
+      const uuid = urlParts[urlParts.length - 1];
+      params.customer = uuid;
+    }
+    
+    return this.http.get<GetAllResponse<Truck>>('vehicles/trucks/truck-charging-method', { params });
+  }
+
 
   getAll(
     pagination: Pagination,
@@ -44,7 +61,7 @@ export class TrucksService extends VehiclesService<Truck> {
       const uuid = urlParts[urlParts.length - 1];
       params.customer = uuid;
     }
-
+    
     return this.http.get<GetAllResponse<Truck>>('vehicles/trucks', { params });
   }
 
