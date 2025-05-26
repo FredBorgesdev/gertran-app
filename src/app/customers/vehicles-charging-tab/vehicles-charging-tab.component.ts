@@ -27,21 +27,25 @@ export class VehiclesChargingTab implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // if (!this.activatedRoute.snapshot.paramMap.has('id')) 
-    //   return
-    // if (this.activatedRoute.snapshot.paramMap.get('id') == '' 
-    // || this.activatedRoute.snapshot.paramMap.get('id') == null) 
-    //   return
 
-    // this.customer = this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
+    if (!this.authService.user.isGertranStaff) 
+      return
+    
+    if (!this.activatedRoute.snapshot.paramMap.has('id')) 
+      return
+    if (this.activatedRoute.snapshot.paramMap.get('id') == '' 
+    || this.activatedRoute.snapshot.paramMap.get('id') == null) 
+      return
 
-    // this.truckService.getAllChargingMethod({limit:100000}).subscribe(data => {
-    //   this.list = data.results.map(item => ({
-    //       id: item.id,
-    //       title: item.vehicle.plate,
-    //       direction: item.chargingMethod === 'monthly' ? 'right' : 'left'
-    //   }));
-    // });
+    this.customer = this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
+
+    this.truckService.getAllChargingMethod({limit:100000}).subscribe(data => {
+      this.list = data.results.map(item => ({
+          id: item.id,
+          title: item.vehicle.plate,
+          direction: item.chargingMethod === 'monthly' ? 'right' : 'left'
+      }));
+    });
   }
 
   change(transferChange: TransferChange): void {
