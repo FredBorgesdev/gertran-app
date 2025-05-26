@@ -12,6 +12,12 @@ export interface Truck extends Vehicle {
   vehicle: Vehicle;
 }
 
+export interface TrucksChargingMethod {
+  monthly: string[];
+  single: string[];
+  customer: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,6 +43,9 @@ export class TrucksService extends VehiclesService<Truck> {
     return this.http.get<GetAllResponse<Truck>>('vehicles/trucks/truck-charging-method', { params });
   }
 
+  setChargingMethod(data: TrucksChargingMethod): Observable<void>{
+    return this.http.patch<void>(`vehicles/trucks/truck-set-charging-method`, data);  
+  }
 
   getAll(
     pagination: Pagination,

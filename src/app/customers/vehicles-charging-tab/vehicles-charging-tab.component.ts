@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TransferChange, TransferItem} from 'ng-zorro-antd/transfer';
-import { TrucksService } from 'src/app/trucks/trucks.service';
+import { TrucksChargingMethod, TrucksService } from 'src/app/trucks/trucks.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { Customer } from '../customers.service';
@@ -14,9 +14,9 @@ export class VehiclesChargingTab implements OnInit {
   list: TransferItem[] = [];
   selectedPermissions: number[] = [];
 
-  @Output() save: EventEmitter<number[]> = new EventEmitter<number[]>();
-  @Input() customer: Customer;
-
+  monthlyVehicles: any;
+  singleVehicles: any;
+  customer: any;
   constructor(
     private truckService: TrucksService,
     private activatedRoute: ActivatedRoute,
@@ -25,39 +25,37 @@ export class VehiclesChargingTab implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (!this.activatedRoute.snapshot.paramMap.has('id')) 
+      return
+    if (this.activatedRoute.snapshot.paramMap.get('id') == '' 
+    || this.activatedRoute.snapshot.paramMap.get('id') == null) 
+      return
 
-    console.log(this.activatedRoute.snapshot.paramMap.get('id'))
+    this.customer = this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
 
-    if (this.activatedRoute.snapshot.paramMap.has('id')) {
-      if (this.activatedRoute.snapshot.paramMap.get('customer_id') != '' || this.activatedRoute.snapshot.paramMap.get('customer_id') != null) {
-        this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
-
-
-        this.truckService.getAllChargingMethod({limit: 10000}).subscribe(data => {
-        this.list = data.results.map(item => ({
+    this.truckService.getAllChargingMethod({limit:100000}).subscribe(data => {
+      this.list = data.results.map(item => ({
           id: item.id,
           title: item.vehicle.plate,
           direction: item.chargingMethod === 'monthly' ? 'right' : 'left'
-        }));
-      });    
-
-      
-      }
-
-    }
-
-
-
+      }));
+    });
   }
 
   change(transferChange: TransferChange): void {
-    // this.selectedPermissions = transferChange.list
-    //   .filter(item => item.direction === 'right')
-    //   .map(item => item.id);
+    this.monthlyVehicles = transferChange.list
+      .filter(item => item.direction === 'right')
+      .map(item => item.id);
+
+    this.singleVehicles = transferChange.list
+      .filter(item => item.direction === 'left')
+      .map(item => item.id);
   }
 
   saveGroups(): void {
-    // this.save.emit(this.selectedPermissions);
+    const monthly = this.list.filter(item => item.direction === 'right').map(item => item.id);
+    const single = this.list.filter(item => item.direction === 'left').map(item => item.id);
+    const payLoad : TrucksChargingMethod = { monthly, single, customer: this.activatedRoute.snapshot.paramMap.get('id') }
+    this.truckService.setChargingMethod(payLoad).subscribe(data=>console.log(data))
   }
-
 }
