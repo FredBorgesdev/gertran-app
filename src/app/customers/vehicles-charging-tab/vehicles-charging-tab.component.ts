@@ -4,6 +4,7 @@ import { TrucksChargingMethod, TrucksService } from 'src/app/trucks/trucks.servi
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { Customer } from '../customers.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-vehicles-charging-tab',
@@ -17,11 +18,12 @@ export class VehiclesChargingTab implements OnInit {
   monthlyVehicles: any;
   singleVehicles: any;
   customer: any;
+  isLoading: boolean;
   constructor(
     private truckService: TrucksService,
     private activatedRoute: ActivatedRoute,
     public authService: AuthenticationService,
-
+    private message: NzMessageService,
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +58,19 @@ export class VehiclesChargingTab implements OnInit {
     const monthly = this.list.filter(item => item.direction === 'right').map(item => item.id);
     const single = this.list.filter(item => item.direction === 'left').map(item => item.id);
     const payLoad : TrucksChargingMethod = { monthly, single, customer: this.activatedRoute.snapshot.paramMap.get('id') }
-    this.truckService.setChargingMethod(payLoad).subscribe(data=>console.log(data))
+    this.truckService.setChargingMethod(payLoad).subscribe(
+      () => this.handleSuccess(),
+      () => this.handleFailure()
+    )
+  }
+
+  private handleSuccess() {
+    this.message.success('Salvo com sucesso');
+    this.isLoading = false;
+  }
+
+  private handleFailure() {
+    this.message.error('Ocorreu um erro ao salvar');
+    this.isLoading = false;
   }
 }
