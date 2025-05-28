@@ -32,12 +32,8 @@ export class TrucksService extends VehiclesService<Truck> {
   ): Observable<GetAllResponse<Truck>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     
-    if(window.location.pathname.includes('customers/customers')
-    ){
-      const currentUrl = window.location.href;
-      const urlParts = currentUrl.split('/');
-      const uuid = urlParts[urlParts.length - 1];
-      params.customer = uuid;
+    if (filters?.customerId) {
+      params.customer = filters.customerId;
     }
     
     return this.http.get<GetAllResponse<Truck>>('vehicles/trucks/truck-charging-method', { params });

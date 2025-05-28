@@ -4,6 +4,7 @@ import {BaseClosingFilter, ReportsResults, ReportsService} from '../reports.serv
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {ClosingFilter, ReportFormat} from "../filters/base-closing-filter/base-closing-filter.component";
 import {format} from "date-fns";
+import { TrucksService } from 'src/app/trucks/trucks.service';
 
 @Component({
   selector: 'app-closing',
@@ -18,10 +19,13 @@ export class ClosingComponent {
     customerName: string;
     monitoringRequestCount: number;
   }[] = [];
+  filteredData = [];
+  placasUnicasMonthly = [];
 
   constructor(
     private reportsService: ReportsService,
     private message: NzMessageService,
+    private truckService: TrucksService,
   ) {
   }
 
@@ -29,6 +33,10 @@ export class ClosingComponent {
     this.isLoading = true;
     this.reportsService.getClosure(form).subscribe((monitoringRequests) => {
       this.monitoringRequests = monitoringRequests;
+      this.filteredData = monitoringRequests.filter(x => x.truck?.chargingMethod === 'single');
+        this.truckService.getAllChargingMethod({limit:100000},{customerId:form.customer}).subscribe(data => {
+          this.placasUnicasMonthly = data.results.filter(x=>x.chargingMethod == 'monthly')
+        });
       this.calculateSyntheticReport()
       this.isLoading = false;
     }, () => {
@@ -38,7 +46,11 @@ export class ClosingComponent {
   }
 
   getInitialTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps[0]?.address;
+    return data.travelSteps?.find(x => x.pointType === 'start')?.address.toUpperCase() || data.travelSteps[0]?.address.toUpperCase() || ''
+  }
+
+  getEndTravelStep(data: MonitoringRequests): string {
+    return data.travelSteps?.find(x => x.pointType === 'end')?.address.toUpperCase() || data.travelSteps[data.travelSteps.length - 1]?.address.toUpperCase() || ''
   }
 
   changeValue(filters: ClosingFilter): void {
@@ -63,17 +75,27 @@ export class ClosingComponent {
     });
   };
   
-  get xlsxValues(): any[] {
-    return this.monitoringRequests.map(monitoringRequest=>({
-      'SM':monitoringRequest.id,
-      'Cliente': monitoringRequest.customer?.tradingName.toUpperCase(),
-      'Data': format(new Date(monitoringRequest.sentAt), 'dd/MM/yyyy HH:mm:ss'),
-      'Veiculo': monitoringRequest.truck?.vehicle?.plate.toUpperCase(),
-      'Operação': monitoringRequest.operation?.name.toUpperCase(),
-      'Origem': monitoringRequest.travelSteps?.find(x => x.pointType === 'start')?.address.toUpperCase() || monitoringRequest.travelSteps[0]?.address.toUpperCase() || '',
-      'Destino': monitoringRequest.travelSteps?.find(x => x.pointType === 'end')?.address.toUpperCase() || monitoringRequest.travelSteps[monitoringRequest.travelSteps.length - 1]?.address.toUpperCase() || '',
-      'Transportadora': monitoringRequest?.transporter?.tradingName.toUpperCase() || ''
+  get xlsxValues1(): any[] {
+    return this.placasUnicasMonthly .map(pl=>({
+      'Tracker':pl.tracker,
+      'Placa': pl.vehicle?.plate.toUpperCase(),
+
     }))
   }
+
+
+    get xlsxValues2(): any[] {
+      return this.filteredData.map(fl=>({
+        // 'SM':fl.id,
+        // 'Cliente': fl.customer?.tradingName.toUpperCase(),
+        'Data': format(new Date(fl.createdAt), 'dd/MM/yyyy HH:mm:ss'),
+        'Placa': fl.truck?.vehicle?.plate.toUpperCase(),
+        // 'Operação': fl.operation?.name.toUpperCase(),
+        'Origem': fl.travelSteps?.find(x => x.pointType === 'start')?.address.toUpperCase() || fl.travelSteps[0]?.address.toUpperCase() || '',
+        'Destino': fl.travelSteps?.find(x => x.pointType === 'end')?.address.toUpperCase() || fl.travelSteps[fl.travelSteps.length - 1]?.address.toUpperCase() || '',
+        // 'Transportadora': fl?.transporter?.tradingName.toUpperCase() || ''
+      }))
+  }
+
   
 }

@@ -37,9 +37,9 @@ export class VehiclesChargingTab implements OnInit {
     || this.activatedRoute.snapshot.paramMap.get('id') == null) 
       return
 
-    this.customer = this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
+    // this.customer = this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
 
-    this.truckService.getAllChargingMethod({limit:100000}).subscribe(data => {
+    this.truckService.getAllChargingMethod({limit:100000},{customerId:this.activatedRoute.snapshot.paramMap.get('id')}).subscribe(data => {
       this.list = data.results.map(item => ({
           id: item.id,
           title: item.vehicle.plate,

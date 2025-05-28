@@ -24,7 +24,8 @@
 <app-base-closing-filter
     (generateReport)="generateReport($event)"
     (valueChanges)="changeValue($event)"
-    [rows]="monitoringRequests"
+    [xlsxValues1]="xlsxValues1"
+    [xlsxValues2]="xlsxValues2"
     [fileName]="'Relatório de Fechamento'"
   ></app-base-closing-filter>
 
@@ -39,25 +40,52 @@
   >
     <thead>
     <tr>
-      <th>SM</th>
-      <th>Cliente</th>
-      <th>Data</th>
+      <th>Tecnlogia</th>
       <th>Veiculo</th>
-      <th>Operação</th>
-      <th>Saída</th>
-      <th>Transportadora</th>
     </tr>
     </thead>
 
     <tbody>
-    <tr *ngFor="let data of table.data; index as i">
-      <td>{{ data.id | id }}</td>
-      <td>{{ data.customer.tradingName }}</td>
+    <tr *ngFor="let data of placasUnicasMonthly; index as i">
+      <td>{{ data.tracker}}</td>
+      <td>{{ data.vehicle.plate}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+    <nz-table
+    #table
+    [nzData]="monitoringRequests"
+    nzBordered
+    class="m-t-50"
+    [nzFrontPagination]="false"
+    nzSize="small"
+    *ngIf="reportFormat === 'analytic' || reportFormat === 'all'"
+  >
+    <thead>
+    <tr>
+      <!-- <th>SM</th> -->
+      <!-- <th>Cliente</th> -->
+      <th>Data</th>
+      <th>Placa</th>
+      <!-- <th>Cobrança</th> -->
+      <th>Origem</th>
+      <th>Destino</th>
+      <!-- <th>Transportadora</th> -->
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let data of filteredData; index as i">
+      <!-- <td>{{ data.id | id }}</td> -->
+      <!-- <td>{{ data.customer.tradingName }}</td> -->
       <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td>{{ data.truck?.vehicle?.plate }}</td>
-      <td>{{ data.operation?.name ?? '-' }}</td>
+      <!-- <td>{{ data.truck?.chargingMethod }}</td> -->
+      <!-- <td>{{ data.operation?.name ?? '-' }}</td> -->
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getInitialTravelStep(data) }}</td>
-      <td>{{ data.transporter?.tradingName ?? '-' }}</td>
+      <td nzEllipsis nz-tooltip [nzTooltipTitle]="data.address">{{ getEndTravelStep(data) }}</td>
+      <!-- <td>{{ data.transporter?.tradingName ?? '-' }}</td> -->
     </tr>
     </tbody>
   </nz-table>

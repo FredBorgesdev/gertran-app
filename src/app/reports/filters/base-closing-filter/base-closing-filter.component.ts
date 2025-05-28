@@ -35,6 +35,8 @@ export class BaseClosingFilterComponent implements OnInit {
   @Input() fileName = 'Report.xlsx';
   @Input() columnStyles = {};
   @Input() xlsxValues = [];
+  @Input() xlsxValues1 = [];
+  @Input() xlsxValues2 = [];
   @Input() filterByAllCustomers = false;
 
   validateForm: FormGroup;
@@ -46,6 +48,7 @@ export class BaseClosingFilterComponent implements OnInit {
     private message: NzMessageService,
     private xlsxExporterService: XlsxExporterService,
     private authService: AuthenticationService,
+    public selectableCustomerService: SelectableCustomerServiceService,
   ) {
   }
 
@@ -54,7 +57,8 @@ export class BaseClosingFilterComponent implements OnInit {
     const oneWeekFromNow = subWeeks(today, 1);
 
     this.validateForm = this.formBuilder.group({
-      closingDay: [null, [Validators.required]],
+      customer: [null, []],
+      closingDay: [null, []],
       from: [oneWeekFromNow, [Validators.required]],
       to: [today, [Validators.required]],
       reportFormat: [ReportFormat.ANALYTIC, [Validators.required]],
@@ -67,6 +71,8 @@ export class BaseClosingFilterComponent implements OnInit {
       this.valueChanges.emit(this.validateForm.value);
     });
 
+    this.selectableCustomerService.init();
+
     this.i18n.setLocale(en_US);
   }
 
@@ -78,18 +84,42 @@ export class BaseClosingFilterComponent implements OnInit {
         ...this.validateForm.value,
         from: fromDate,
         to: toDate,
+        customer: this.validateForm.controls.customer.value,
       });
     }
   }
 
   generateExcel(): void {
-    if (!this.rows || this.rows.length === 0) {
+    if ((!this.xlsxValues1 || this.xlsxValues1.length === 0) && (!this.xlsxValues2 || this.xlsxValues2.length === 0)) {
       this.message.error('Nenhum dado encontrado para exportar');
       return;
     }
+
     const fileNameWithCustomer = `${this.fileName} - Fechamento`;
 
-    const values = this.xlsxValues.length > 0 ? this.xlsxValues : this.rows;
+    const rows1 = this.xlsxValues1 || [];
+    const rows2 = this.xlsxValues2 || [];
+
+    // Cabeçalhos do bloco 1
+    const rows1Headers = rows1.length > 0 ? Object.keys(rows1[0]) : [];
+    const rows1AsArrays = rows1.map(obj => rows1Headers.map(header => obj[header]));
+
+    // Cabeçalhos do bloco 2
+    const rows2Headers = rows2.length > 0 ? Object.keys(rows2[0]) : [];
+    const rows2AsArrays = rows2.map(obj => rows2Headers.map(header => obj[header]));
+
+    const combinedValues = [
+      ['RELAÇÃO DE VEÍCULOS FIXOS (MENSAIS)'],
+      rows1Headers,
+      ...rows1AsArrays,
+      [],
+      ['RELAÇÃO DE VIAGENS AVULSAS'],
+      rows2Headers,
+      ...rows2AsArrays
+    ];
+
+    const values = this.xlsxValues.length > 0 ? this.xlsxValues : combinedValues;
+
     this.xlsxExporterService.generate(fileNameWithCustomer, values);
   }
 

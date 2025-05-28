@@ -30,6 +30,7 @@ export interface BaseClosingFilter {
   from: string;
   to: string;
   closingDay: number;
+  customer: string  ;
 }
 
 export interface BaseUserFilter extends BasePeriodFilter {
@@ -382,7 +383,8 @@ export class ReportsService {
       fromObject: {
         from_date: filters.from,
         to_date: filters.to,
-        closing_day: filters.closingDay,
+        // closing_day: filters.closingDay,
+        customer: filters.customer,
       }
     });
     return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', {params});
