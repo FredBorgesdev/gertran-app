@@ -1,18 +1,20 @@
-<form nz-form nzLayout="vertical">
-  <nz-transfer
-    [nzDataSource]="list"
-    [nzShowSelectAll]="true"
-    [nzListStyle]="{ 'width': '50%', 'height.px': '700' }"
-    (nzChange)="change($event)"
-    [nzTitles]="['Avulso', 'Mensal']"
-  >
-  </nz-transfer>
-  <nz-divider></nz-divider>
-  <div class="page-buttons">
-    <nz-form-item>
-      <nz-form-control>
-        <button nz-button nzType="primary" (click)="saveGroups()">Salvar cobrança placas</button>
-      </nz-form-control>
-    </nz-form-item>
-  </div>
-</form>
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <form nz-form nzLayout="vertical">
+    <nz-transfer
+      [nzDataSource]="list"
+      [nzShowSelectAll]="true"
+      [nzListStyle]="{ 'width': '50%', 'height.px': '700' }"
+      (nzChange)="change($event)"
+      [nzTitles]="['Avulso', 'Mensal']"
+    >
+    </nz-transfer>
+    <nz-divider></nz-divider>
+    <div class="page-buttons">
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" (click)="saveGroups()">Salvar cobrança placas</button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+</nz-spin>

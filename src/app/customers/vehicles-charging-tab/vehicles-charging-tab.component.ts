@@ -38,8 +38,9 @@ export class VehiclesChargingTab implements OnInit {
       return
 
     // this.customer = this.authService.setCustomer(this.activatedRoute.snapshot.paramMap.get('id'));
-
+    this.isLoading = true
     this.truckService.getAllChargingMethod({limit:100000},{customerId:this.activatedRoute.snapshot.paramMap.get('id')}).subscribe(data => {
+      this.isLoading = false
       this.list = data.results.map(item => ({
           id: item.id,
           title: item.vehicle.plate,
@@ -59,6 +60,7 @@ export class VehiclesChargingTab implements OnInit {
   }
 
   saveGroups(): void {
+    this.isLoading = true
     const monthly = this.list.filter(item => item.direction === 'right').map(item => item.id);
     const single = this.list.filter(item => item.direction === 'left').map(item => item.id);
     const payLoad : TrucksChargingMethod = { monthly, single, customer: this.activatedRoute.snapshot.paramMap.get('id') }
