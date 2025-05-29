@@ -28,7 +28,8 @@
     [xlsxValues2]="xlsxValues2"
     [fileName]="'Relatório de Fechamento'"
   ></app-base-closing-filter>
-
+<div *ngIf="monitoringRequests?.length > 0 && (reportFormat === 'analytic' || reportFormat === 'all')" class="m-t-30">
+  <h2>RELAÇÃO DE VEÍCULOS FIXOS (MENSAIS)</h2>
   <nz-table
     #table
     [nzData]="monitoringRequests"
@@ -40,6 +41,7 @@
   >
     <thead>
     <tr>
+      <th>Cliente</th>
       <th>Tecnlogia</th>
       <th>Veiculo</th>
     </tr>
@@ -47,11 +49,17 @@
 
     <tbody>
     <tr *ngFor="let data of placasUnicasMonthly; index as i">
+      <td>{{ data.customerName }}</td>
       <td>{{ data.tracker}}</td>
       <td>{{ data.vehicle.plate}}</td>
     </tr>
     </tbody>
   </nz-table>
+  <h3>Total {{ placasUnicasMonthly.length }}</h3>
+</div>
+<nz-divider></nz-divider>
+<div *ngIf="monitoringRequests?.length > 0   && (reportFormat === 'analytic' || reportFormat === 'all')" class="m-t-30">
+  <h2>RELAÇÃO DE VIAGENS AVULSAS</h2>
 
     <nz-table
     #table
@@ -65,7 +73,7 @@
     <thead>
     <tr>
       <!-- <th>SM</th> -->
-      <!-- <th>Cliente</th> -->
+      <th>Cliente</th>
       <th>Data</th>
       <th>Placa</th>
       <!-- <th>Cobrança</th> -->
@@ -78,7 +86,7 @@
     <tbody>
     <tr *ngFor="let data of filteredData; index as i">
       <!-- <td>{{ data.id | id }}</td> -->
-      <!-- <td>{{ data.customer.tradingName }}</td> -->
+      <td>{{ data.customer.tradingName }}</td>
       <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td>{{ data.truck?.vehicle?.plate }}</td>
       <!-- <td>{{ data.truck?.chargingMethod }}</td> -->
@@ -89,6 +97,8 @@
     </tr>
     </tbody>
   </nz-table>
+  <h3>Total {{ filteredData.length }}</h3>
+</div>
 
   <nz-table
     #table
