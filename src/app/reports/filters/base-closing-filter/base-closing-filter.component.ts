@@ -109,19 +109,20 @@ export class BaseClosingFilterComponent implements OnInit {
     const rows2AsArrays = rows2.map(obj => rows2Headers.map(header => obj[header]));
 
     const combinedValues = [
-      ['', '', 'RELAÇÃO DE VEÍCULOS FIXOS (MENSAIS)', ''], // Ocupa colunas 3 e 4
+      ['', 'RELAÇÃO DE VEÍCULOS FIXOS (MENSAIS)', '', ''], // Ocupa colunas 3 e 4
       [],
       rows1Headers,
       ...rows1AsArrays,
       [],
-      [[''], ['TOTAL VEÍCULOS'], [rows1AsArrays.length]],
+      [['TOTAL VEÍCULOS '+rows1AsArrays.length], [''], ['']],
       [],
-      ['', '', 'RELAÇÃO DE VIAGENS AVULSAS', ''], // Ocupa colunas 3 e 4
+      [],
+      ['', 'RELAÇÃO DE VIAGENS AVULSAS', '', ''], // Ocupa colunas 3 e 4
       [],
       rows2Headers,
       ...rows2AsArrays,
       [],
-      [[''], [''], ['TOTAL VIAGENS'], [rows2AsArrays.length]],
+      [['TOTAL VIAGENS '+rows2AsArrays.length], [''], [''], ['']],
     ];
 
     const values = this.xlsxValues.length > 0 ? this.xlsxValues : combinedValues;

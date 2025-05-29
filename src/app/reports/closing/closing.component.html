@@ -113,14 +113,16 @@
     <thead>
     <tr>
       <th>Cliente</th>
-      <th>Qtd. SM</th>
+      <th>Quantidade de viagens avulsas</th>
+      <th>Quantidade de veículos mensais</th>
     </tr>
     </thead>
 
     <tbody>
     <tr *ngFor="let data of table.data; index as i">
       <td>{{ data.customerName }}</td>
-      <td>{{ data.monitoringRequestCount }}</td>
+      <td>{{ filteredData.length }}</td>
+      <td>{{ placasUnicasMonthly.length }}</td>
     </tr>
     </tbody>
   </nz-table>

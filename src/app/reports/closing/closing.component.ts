@@ -100,7 +100,8 @@ export class ClosingComponent {
   
   get xlsxValues1(): any[] {
     return this.placasUnicasMonthly .map(pl=>({
-      'RASTREADOR':pl.tracker.toUpperCase(),
+      'CLIENTE': pl.customerName.toUpperCase(),
+      'TECNOLOGIA':pl.tracker.toUpperCase(),
       'PLACA': pl.vehicle?.plate.toUpperCase(),
 
     }))
@@ -110,7 +111,7 @@ export class ClosingComponent {
     get xlsxValues2(): any[] {
       return this.filteredData.map(fl=>({
         // 'SM':fl.id,
-        // 'Cliente': fl.customer?.tradingName.toUpperCase(),
+        'CLIENTE': fl.customer.tradingName?.toUpperCase(),
         'DATA': format(new Date(fl.createdAt), 'dd/MM/yyyy HH:mm:ss'),
         'PLACA': fl.truck?.vehicle?.plate.toUpperCase(),
         // 'Operação': fl.operation?.name.toUpperCase(),
