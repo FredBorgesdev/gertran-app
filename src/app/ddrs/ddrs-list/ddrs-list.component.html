@@ -1,0 +1,111 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+
+  <!--
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>
+      <i nz-icon nzType="dashboard"></i>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      Seguradoras
+    </nz-breadcrumb-item>
+  </nz-breadcrumb>
+-->
+<div class="pages-header">
+  <div class="row m-b-10">
+    <div class="col-lg-8 col-md-8 col-sm-12">
+      <div class="d-md-flex">
+        <div class="m-r-20">
+          <h2>Ddrs</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+      <button
+        (click)="create()"
+        nz-button
+        nzType="primary"
+      >
+        <i nz-icon nzType="plus" theme="outline"></i>
+        <span>Adicionar Ddr</span>
+      </button>
+    </div>
+  </div>
+</div>
+<nz-card>  
+
+
+        <div class="col-lg-8">
+        <div class="d-md-flex">
+          <div class="m-b-10 m-r-20">
+            <nz-input-group [nzPrefix]="prefixTemplate">
+              <input
+                type="text"
+                nz-input
+                placeholder="Razão social"
+                [(ngModel)]="searchInput"
+                (ngModelChange)="searchByName(searchInput)"
+              >
+            </nz-input-group>
+            <ng-template #prefixTemplate>
+              <i nz-icon nzType="search" class="opacity-05"></i>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      
+  <nz-table
+    #insuranceCompaniesListTable
+    [nzData]="resources?.results"
+    [nzTotal]="resources?.count"
+    [nzPageSize]="resources?.limit"
+    [nzPageIndex]="page"
+    [nzFrontPagination]="false"
+    (nzQueryParams)="handleQueryParamsChange($event)"
+  >
+    <thead>
+    <tr>
+      <th *ngFor="let column of insuranceCompaniesColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of insuranceCompaniesListTable.data;  let i=index">
+      <!-- <td>{{item.tradingName | id}}</td> -->
+      <td>
+        <div class="d-flex align-items-center">
+          <h6 class="m-l-10 m-b-0">{{item.tradingName}}</h6>
+        </div>
+      </td>
+      <td>{{item.cnpj || '-'}}</td>
+      <td>{{item.startCoverage || '-'}}</td>
+      <td>{{item.endCoverage || '-'}}</td>
+      <td>{{item.broker || '-'}}</td>
+      
+      <!-- <td>
+        <nz-badge *ngIf="item.isBroker" nzStatus="success"></nz-badge>
+        <nz-badge *ngIf="!item.isBroker" nzStatus="error"></nz-badge>
+      </td> -->
+      <td class="text-md-center" style="white-space: nowrap;">
+        <button
+          (click)="edit(item)"
+          nz-button
+          nzType="default"
+        >
+          <i nz-icon nzType="edit" theme="outline"></i> Editar
+        </button>
+        <button
+          nz-button
+          nzType="default"
+          nzDanger
+          class="m-l-10"
+          (click)="delete(item)"
+        >
+          <i nz-icon nzType="delete" theme="outline"></i> Excluir
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+</nz-spin>

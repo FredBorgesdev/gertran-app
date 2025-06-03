@@ -120,4 +120,8 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'plate-out-grid',
     loadChildren: () => import('../../plates-out-grid/plate-out-grid.module').then(m=>m.PlateOutGridModule)
   },
+  {
+    path: 'ddrs',
+    loadChildren: () => import('../../ddrs/ddrs.module').then(m=>m.DdrsModule)
+  },
 ];
