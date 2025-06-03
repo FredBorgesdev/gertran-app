@@ -41,23 +41,23 @@ export class TravelRequestsComponent {
   }
 
   getWagons(data: MonitoringRequests): string {
-    return data.wagons.map((wagon) => wagon.vehicle.plate).join(', ');
+    return data.wagons.map((wagon) => wagon.vehicle.plate.toUpperCase()).join(', ');
   }
 
   getInitialTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps?.[0]?.address;
+    return data.travelSteps?.[0]?.address.toUpperCase();
   }
 
   getFinalTravelStep(data: MonitoringRequests): string {
-    return data.travelSteps?.[data.travelSteps.length - 1]?.address;
+    return data.travelSteps?.[data.travelSteps.length - 1]?.address.toUpperCase();
   }
 
   getInvoices(data: MonitoringRequests): string {
-    return data.invoices?.map((invoice) => invoice.invoiceNumber).join(', ');
+    return data.invoices?.map((invoice) => invoice.invoiceNumber.toUpperCase()).join(', ');
   }
 
   getTechnology(data: MonitoringRequests): string {
-    return data.truck?.vehicle.trackers?.[0]?.trackerModel?.trackerTechnology?.name;
+    return data.truck?.vehicle.trackers?.[0]?.trackerModel?.trackerTechnology?.name.toUpperCase();
   }
 
   private calculateSyntheticReport(monitoringRequests: ReportsResults): void {
@@ -80,17 +80,17 @@ export class TravelRequestsComponent {
     return this.monitoringRequests.map((monitoringRequest) => {
       const formattedLoadValue = currencyFormatter.format(monitoringRequest.loadValue || 0);
       return {
-        'Data criacao': format(new Date(monitoringRequest.createdAt), 'dd/MM/yyyy'),
-        Carga: monitoringRequest.loadValue,
-        Cavalo: monitoringRequest.truck?.vehicle.plate,
-        Carretas: this.getWagons(monitoringRequest),
-        Origem: this.getInitialTravelStep(monitoringRequest),
-        Destino: this.getFinalTravelStep(monitoringRequest),
+        'DATA CRIAÇÃO': format(new Date(monitoringRequest.createdAt), 'dd/MM/yyyy'),
+        CARGA: monitoringRequest.loadValue,
+        CAVALO: monitoringRequest.truck?.vehicle.plate.toUpperCase(),
+        CARRETAS: this.getWagons(monitoringRequest),
+        ORIGEM: this.getInitialTravelStep(monitoringRequest),
+        DESTINO: this.getFinalTravelStep(monitoringRequest),
         NF: this.getInvoices(monitoringRequest),
-        Tecnologia: this.getTechnology(monitoringRequest),
-        Operacao: monitoringRequest.operation?.name,
-        Status: monitoringRequest.status,
-        Valor: formattedLoadValue,
+        TECNOLOGIA: this.getTechnology(monitoringRequest),
+        OPERAÇÃO: monitoringRequest.operation?.name.toUpperCase(),
+        STATUS: monitoringRequest.status.toUpperCase(),
+        VALOR: formattedLoadValue,
       };
     });
   }
