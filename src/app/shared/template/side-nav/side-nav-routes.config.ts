@@ -284,6 +284,15 @@ export const ROUTES: SideNavInterface[] = [
         permission: Permissions.USERS_VIEW_BASEUSER
       },
       {
+        path: '/groups/groups-list',
+        title: 'Grupos',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'lock',
+        submenu: [],
+        permission: Permissions.AUTH_VIEW_GROUP
+      },
+      {
         path: '/customers/customers-list',
         title: 'Clientes',
         iconType: 'nzIcon',
