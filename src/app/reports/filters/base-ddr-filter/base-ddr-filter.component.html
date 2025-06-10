@@ -1,0 +1,84 @@
+<form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-25">
+  <div class="row">
+    <div class="col-lg-3 col-md-12 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
+        <nz-form-label>DDR</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select
+            formControlName="ddr"
+            nzAllowClear
+            nzServerSearch
+            nzShowSearch
+            nzPlaceHolder="Selecione um DDR"
+            (nzOnSearch)="selectableDdrService.searchByName($event)"
+            (nzScrollToBottom)="selectableDdrService.loadMoreDdrs()"
+            [nzDropdownRender]="selectLoading"
+          >
+            <nz-option
+              *ngIf="filterByAllDdrs"
+              nzLabel="Todos os DDRs"
+              nzValue="all"
+            ></nz-option>
+
+            <nz-option
+              *ngFor="let ddr of selectableDdrService.ddrs"
+              [nzLabel]="ddr.tradingName"
+              [nzValue]="ddr.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
+        <!-- <nz-form-label>Data inicial</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-date-picker
+            style="width: 100%;"
+            nzFormat="dd/MM/yyyy"
+            formControlName="from"
+            nzPlaceHolder="Selecione uma data"
+          ></nz-date-picker>
+        </nz-form-control> -->
+      </nz-form-item>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
+        <!-- <nz-form-label>Data final</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-date-picker
+            style="width: 100%;"
+            nzFormat="dd/MM/yyyy"
+            formControlName="to"
+            nzPlaceHolder="Selecione uma data"
+          ></nz-date-picker>
+        </nz-form-control> -->
+      </nz-form-item>
+    </div>
+
+    <div class="col-lg-3 col-md-12 col-sm-12 m-b-10">
+      <nz-form-item class="m-b-0">
+        <!-- <nz-form-label>Formato de relatório</nz-form-label>
+        <nz-form-control nzErrorTip="Preencha o campo">
+          <nz-select formControlName="reportFormat" nzAllowClear>
+            <nz-option nzLabel="Analítico" nzValue="analytic"></nz-option>
+            <nz-option nzLabel="Sintético" nzValue="synthetic"></nz-option>
+            <nz-option nzLabel="Ambos" nzValue="all"></nz-option>
+          </nz-select>
+        </nz-form-control> -->
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<div class="page-buttons m-t-10" *ngIf="!hideButtons">
+  <button nz-button>Gerar pdf</button>
+  <button nz-button (click)="generateExcel()">Gerar planilha</button>
+  <button nz-button nzType="primary" (click)="emitGenerateReport()">Gerar relatório</button>
+</div>
+
+<ng-template #selectLoading>
+  <nz-spin *ngIf="selectableDdrService.isLoadingMoreData"></nz-spin>
+</ng-template>

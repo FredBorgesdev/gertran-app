@@ -8,6 +8,10 @@ import {Position} from '../monitoring/positions.service';
 import {Workday} from '../workdays/workday.service';
 import {Alert} from "../monitoring/alerts.service";
 
+export interface BaseDdrFilter {
+  ddr: string;
+}
+
 export interface MobilePictures {
   id: string;
   latitude:string,
@@ -109,6 +113,13 @@ export type PositionEvent = {
     }
   }
 };
+
+export type Ddr = {
+  id,
+  name,
+  customer: {tradingName},
+
+}
 
 export type MonitoringRequestBait = MonitoringRequests & {
   installationLocation: string;
@@ -708,8 +719,29 @@ export class ReportsService {
 
     return this.http.get<GetAllResponse<MobilePictures>>('monitoring/monitoring-requests/mobile-pictures', {params})
   }
-    closeProtocol(imageId: string, closeData: { close_reason: string }): Observable<any> {
-      const url = `monitoring/monitoring-requests/mobile-pictures/${imageId}/update`;
-      return this.http.patch(url, closeData);
+  closeProtocol(imageId: string, closeData: { close_reason: string }): Observable<any> {
+    const url = `monitoring/monitoring-requests/mobile-pictures/${imageId}/update`;
+    return this.http.patch(url, closeData);
+  }
+
+
+  getDdrs(filters?: BaseDdrFilter): Observable<GetAllResponse<Ddr[]>> {
+    const filtersParams: any = {
+      // from_date: filters.from,
+      // to_date: filters.to,
+      // customer: filters.customer,
+      // id: filters.plate
+    };
+
+    // if (filters.customer){
+    //   filtersParams.customer = filters.customer
+    // }
+    if (filters.ddr) {
+      filtersParams.id = filters.ddr;
     }
+    const params = new HttpParams({
+      fromObject: filtersParams
+    });
+    return this.http.get<GetAllResponse<Ddr[]>>('reports/settings/ddrs?1=1', {params});
+  }
 }

@@ -69,6 +69,8 @@ import { InsuranceComponent } from './insurance/insurance.component';
 import { FixedButtonsComponent } from '../shared/fixed-buttons/fixed-buttons.component';
 import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
 import { MobilePictureComponent } from './mobile-pictures/mobile-picture.component';
+import { BaseDdrFilterComponent } from './filters/base-ddr-filter/base-ddr-filter.component';
+import { DdrReportComponent } from './ddrs/ddrs-report.component';
 
 @NgModule({
   declarations: [
@@ -129,10 +131,12 @@ import { MobilePictureComponent } from './mobile-pictures/mobile-picture.compone
     ClientMonitoringRequestsComponent,
     InsuranceComponent,
     ControlTowerGertran,
-    FixedButtonsComponent
+    FixedButtonsComponent,
+    BaseDdrFilterComponent,
+    DdrReportComponent,
   ],
   exports: [
-    WorkdayComponent
+    WorkdayComponent,
   ],
   imports: [
     SharedModule,

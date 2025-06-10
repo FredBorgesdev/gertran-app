@@ -2,7 +2,6 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
 import {Observable} from 'rxjs';
-import {Customer} from "../customers/customers.service";
 
 export interface Ddr {
       id: string,
@@ -47,38 +46,43 @@ export class DdrsService implements ApiService<Ddr> {
     return this.http.get<Ddr>(`settings/ddrs/${id}`);
   }
 
-  save(insuranceCompany: Omit<Ddr, 'id'>): Observable<Ddr> {
-    // TODO: remove when backend is ready
-    // delete insuranceCompany.logo;
+  save(ddr: Omit<Ddr, 'id'>): Observable<Ddr> {
+    ddr.startCoverage  = ddr.startCoverage.toISOString().split('T')[0]
+    ddr.endCoverage  = ddr.endCoverage.toISOString().split('T')[0]
+    console.log(ddr)
 
-    insuranceCompany.startCoverage  = insuranceCompany.startCoverage.toISOString().split('T')[0]
-    insuranceCompany.endCoverage  = insuranceCompany.endCoverage.toISOString().split('T')[0]
-
-    // insuranceCompany.insuranceCompany = "60994039-874c-4018-99bc-f0784b9cf670"
-    console.log(insuranceCompany)
-
-    return this.http.post<Ddr>('settings/ddrs/create', insuranceCompany);
+    return this.http.post<Ddr>('settings/ddrs/create', ddr);
   }
 
   update(
     id: string,
-    insuranceCompany: Omit<Ddr, 'id'>
+    ddr: Omit<Ddr, 'id'>
   ): Observable<Ddr> {
-    // TODO: remove when backend is ready
-    // delete insuranceCompany.logo;
-
-    return this.http.patch<Ddr>(`settings/ddrs/${id}/update`, insuranceCompany);
+    return this.http.patch<Ddr>(`settings/ddrs/${id}/update`, ddr);
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`settings/ddrs/${id}/delete`);
   }
 
-  // getCustomers(): Observable<GetAllResponse<Customer>> {
-  //   return this.http.get<GetAllResponse<Customer>>('ddrs/customers', {
-  //     params: {
-  //       limit: 999
-  //     }
-  //   });
-  // }
+
+  search(pagination: Pagination, search?: string): Observable<GetAllResponse<Ddr>> {
+    const params = this.getAllParams(pagination, { search });
+    return this.http.get<GetAllResponse<Ddr>>('settings/ddrs/search', { params });
+  }
+
+
+  private getAllParams(pagination: Pagination, filters?: { search?: string }): any {
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+    if (filters?.search) {
+      params.search = filters.search;
+    }
+    return params;
+  }
+
 }

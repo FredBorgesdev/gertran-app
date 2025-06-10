@@ -52,6 +52,10 @@ export interface Operations {
   allowedTrafficEndTime: String;
   maximumPriceValueThirdParty: String;
   minimumPriceValueThirdParty: String;
+  ddrs: {
+    id: string;
+    tradingName: string;
+  }[];
 }
 
 @Injectable({

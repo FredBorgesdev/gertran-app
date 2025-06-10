@@ -15,7 +15,7 @@ export class DdrsListComponent extends BaseCrudListComponent<Ddr> {
   insuranceCompaniesColumns = [
     // {title: 'ID'},
     {
-      title: 'NOME',
+      title: 'Razão social',
       // compare: (
       //   a: Ddr,
       //   b: Ddr

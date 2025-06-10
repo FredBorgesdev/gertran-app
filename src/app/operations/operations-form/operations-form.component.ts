@@ -19,6 +19,7 @@ import {SelectableCustomerServiceService} from '../../customers/selectable-custo
 import {find, propEq, pluck} from 'ramda';
 import brazilianStates from 'src/app/shared/data/brazilian-states';
 import {createNumberMask} from 'text-mask-addons';
+import { Ddr, DdrsService } from 'src/app/ddrs/ddrs.service';
 
 type TrackerTechnologiesWithModels = TrackerTechnologies & { models?: TrackerTechnologiesModels[] }
 
@@ -41,6 +42,12 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   ThirdPartyDriver: boolean;
   incidentLocation: any
 
+  DdrSelected: boolean; 
+  ddrsAvailable: Ddr[]= [];
+  ShowDdrField = false;
+  ddrsSelecteds: any = [];
+  selectedDDR: string | null = null;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -51,6 +58,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     private vehicleModelTypesService: VehicleModelTypesService,
     private vehiclePeripheralsService: VehiclePeripheralsService,
     private insuranceCompaniesService: InsuranceCompaniesService,
+    private ddrsService: DdrsService,
     public selectableCustomerService: SelectableCustomerServiceService,
     activatedRoute: ActivatedRoute,
     service: OperationsService,
@@ -75,6 +83,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       return;
     }
 
+    this.ddrsSelecteds = this.operation.ddrs
     this.resource = this.operation;
     this.performResourceChange();
     this.performFormGroupSetValues();
@@ -83,6 +92,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
   ngOnInit(): void {
     super.ngOnInit();
     this.checkboxClicked();
+    this.checkboxClickedDDR();
 
     this.i18n.setLocale(en_US);
 
@@ -112,6 +122,9 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
         company => company.isBroker
       );
     });
+    this.ddrsService.getAll({limit: 999}).subscribe(ddrs => {
+      this.ddrsAvailable = ddrs.results
+    });
     (this.service as OperationsService).getOperationTypes().subscribe(data => {
       this.operationTypes = data;
     });
@@ -125,6 +138,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       allowedTruckTypes: [[], [Validators.required]],
       allowedWagonTypes: [[], [Validators.required]],
       requiredPeripherals: [[], [Validators.required]],
+      ddrs: [[]],
       insuranceCompany: [null, [Validators.required]],
       authorizeAutomaticMonitoring: [false, [Validators.required]],
       followMonitoring: [false, [Validators.required]],
@@ -162,6 +176,7 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
       requiredPeripherals: this.resource.requiredPeripherals?.map(({id}) => id),
       insuranceCompany: this.resource.insuranceCompany?.id,
       broker: this.resource.broker?.id,
+      ddrs: this.resource.ddrs?.map(({id})=>id),
     });
   }
 
@@ -181,6 +196,10 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     });
   }
   
+  checkboxClickedDDR(): void {
+    this.DdrSelected = this.validateForm.value.isDdr
+  }
+
   checkboxClicked(): void {
     this.ThirdPartyDriver = this.validateForm.value.driverWorkingSituationThirdParty
   }
@@ -281,5 +300,30 @@ export class OperationsFormComponent extends BaseCrudFormComponent<Operations> i
     }
 
     return body;
+  }
+
+  removeDdr(item: any): void {
+    this.ddrsSelecteds = this.ddrsSelecteds.filter(d => d.id !== item.id);
+    this.validateForm.patchValue({
+      ddrs: this.ddrsSelecteds.map(({id})=>id)
+    });
+  }
+
+  showField() {
+    this.ShowDdrField = true;
+  }
+
+  addDdr(ddrId) {
+    const ddrSelecionado = this.ddrsAvailable.find(d => d.id === ddrId);
+    if (ddrSelecionado && !this.ddrsSelecteds.some(d => d.id === ddrId)) {
+      this.ddrsSelecteds = [...this.ddrsSelecteds , ddrSelecionado]
+      this.validateForm.patchValue({
+        ddrs: this.ddrsSelecteds.map(({id})=>id)
+      });
+    }
+
+    setTimeout(() => {
+      this.ShowDdrField = false;
+    });
   }
 }

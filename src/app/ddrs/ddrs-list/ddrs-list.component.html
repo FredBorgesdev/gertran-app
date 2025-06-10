@@ -77,8 +77,8 @@
         </div>
       </td>
       <td>{{item.cnpj || '-'}}</td>
-      <td>{{item.startCoverage || '-'}}</td>
-      <td>{{item.endCoverage || '-'}}</td>
+      <td>{{item.startCoverage | date: 'dd/MM/yyyy'}}</td>
+      <td>{{item.endCoverage | date: 'dd/MM/yyyy'}}</td>
       <td>{{item.broker || '-'}}</td>
       
       <!-- <td>

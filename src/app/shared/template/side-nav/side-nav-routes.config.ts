@@ -384,6 +384,16 @@ export const ROUTES: SideNavInterface[] = [
             permission: Permissions.INSURANCE_COMPANIES_VIEW_INSURANCECOMPANY
           },
           {
+            path: '/ddrs/ddrs-list',
+            title: 'Ddrs',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'heart',
+            submenu: [],
+            gertranStaffOnly: true,
+            permission: Permissions.INSURANCE_COMPANIES_VIEW_INSURANCECOMPANY
+          },
+          {
             path: '/document-types/document-types-list',
             title: 'Tipos de Documentos',
             iconType: 'nzIcon',

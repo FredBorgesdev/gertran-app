@@ -202,12 +202,14 @@
         </nz-form-item>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12 m-b-10">  
-        <nz-form-item>
+        <nz-form-item  (click)="checkboxClickedDDR()">
           <nz-form-label></nz-form-label>
           <nz-form-control nzErrorTip="Preencha o campo">
-            <label nz-checkbox formControlName="followMonitoring">
-              <span>DDR</span>
-            </label>
+            <div nz-col>
+              <label nz-checkbox formControlName="isDdr">
+                <span>DDR</span>
+              </label>
+            </div>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -223,6 +225,85 @@
       </div>
     </div>    
    
+    <hr/>
+    <h3 *ngIf="DdrSelected">Dados DDR</h3>
+    <br>
+    <nz-table
+      #table
+      *ngIf="DdrSelected"
+      [nzData]="ddrsSelecteds"
+      [nzBordered]="true"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '1000px' }"
+      [nzFrontPagination]="false"
+    >
+      <thead>
+        <tr>
+          <th>Nome Fantasia</th>
+          <th>CNPJ</th>
+          <th>Corretora</th>
+          <th>Início da Cobertura</th>
+          <th>Fim da Cobertura</th>
+          <th></th> <!-- nova coluna -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ddrsSelecteds">
+          <td>{{ item.tradingName }}</td>
+          <td>{{ item.cnpj }}</td>
+          <td>{{ item.broker }}</td>
+          <td>{{ item.startCoverage | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ item.endCoverage | date: 'dd/MM/yyyy' }}</td>
+          <td  class="text-center">
+            <button
+              nz-button
+              nzType="default"
+              nzDanger
+              nzSize="small"
+              (click)="removeDdr(item)"
+            >
+              Remover
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <br *ngIf="DdrSelected">
+    <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 m-b-10 ml-auto" *ngIf="DdrSelected">
+      <button nz-button nzType="primary" class="w-100" (click)="showField()" *ngIf="!ShowDdrField">
+        + Adicionar DDR
+      </button>
+
+      <div *ngIf="ShowDdrField">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="ddrs">DDR</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Selecione a DDR"
+              (ngModelChange)="addDdr($event)"
+              [(ngModel)]="selectedDDR"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <nz-option
+                *ngFor="let d of ddrsAvailable"
+                [nzLabel]="d.tradingName"
+                [nzValue]="d.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- <br *ngIf="DdrSelected"> -->
+    <hr *ngIf="DdrSelected"/>
+    <!-- <br *ngIf="DdrSelected"> -->
+
     
 
     <div class="row">
@@ -456,6 +537,10 @@
               <input type="button" id="btn" (click)="cleanForbiddenCityAndStateDriverThirdParty()" value="REMOVER LOCALIDADE" class="btn btn-secondary"/>
             </nz-form-control>
           </div>
+
+              <br>
+    <br>
+
 
     </div>
     

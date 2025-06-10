@@ -45,6 +45,7 @@ import { ControlTowerGertran } from './dashboards/tc-gertran/tc-gertran.componen
 import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
 import { MobilePictureComponent } from './mobile-pictures/mobile-picture.component';
 import { AutomationsReportComponent } from './automations/automations.component';
+import { DdrReportComponent } from './ddrs/ddrs-report.component';
 
 const routes: Routes = [
   {
@@ -257,7 +258,11 @@ const routes: Routes = [
   {
     path: 'mobile-picture',
     component: MobilePictureComponent
-  }
+  },
+  {
+    path: 'ddr',
+    component: DdrReportComponent
+  },
 ];
 
 @NgModule({
