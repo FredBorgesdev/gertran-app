@@ -18,6 +18,7 @@ export interface Checklist {
   sirenChecked: boolean;
   blockChecked: boolean;
   trunkLockChecked: boolean;
+  panicButtonChecked: boolean;
   hasMacro: boolean;
   hasEmbeddedIntelligence: boolean;
   approved: boolean;
@@ -129,7 +130,11 @@ export class ChecklistsService implements ApiService<Checklist> {
       {
         label: 'Trava de Bau',
         value: 'trunkLockChecked',
-      }
+      },
+      {
+        label: 'Botão de pânico',
+        value: 'panicButtonChecked',
+      },
     ];
   }
 }

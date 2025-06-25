@@ -165,6 +165,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       sirenChecked: [false, []],
       blockChecked: [false, []],
       trunkLockChecked: [false, []],
+      panicButtonChecked: [false, []],
     });
     this.checklistForm.get('status').valueChanges.subscribe(value => {
       if (value === 'reproved') {
@@ -277,7 +278,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         trunkChecked:true,
         sirenChecked: true,
         blockChecked: true,
-        trunkLockChecked: true
+        trunkLockChecked: true,
+        panicButtonChecked: true,
       })
     }
   }

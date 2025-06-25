@@ -70,8 +70,8 @@
           <!-- <h5 style="font-weight: bold; font-size: x-small;">
             {{ checklistItems[i+1].label }}:
           </h5> -->
-          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">{{ checklistItems[i+1].label }}: SIM</h5>
-          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i+1].value]">{{ checklistItems[i+1].label }}: NÃO</h5>
+          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="monitoringRequest?.data?.checklist?.[checklistItems[i].value]">{{ checklistItems[i].label }}: SIM</h5>
+          <h5 style="font-weight: bold; font-size: x-small;" *ngIf="!monitoringRequest?.data?.checklist?.[checklistItems[i].value]">{{ checklistItems[i].label }}: NÃO</h5>
         </td>
       </tr>
     </ng-container>

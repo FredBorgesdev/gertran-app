@@ -23,6 +23,7 @@ export class ChecklistsReviewComponent implements OnInit {
     { label: 'Sirene', value: 'sirenChecked' },
     { label: 'Bloqueio', value: 'blockChecked' },
     { label: 'Trava de Bau', value: 'trunkLockChecked' },
+    { label: 'Botão de Pânico', value: 'panicButtonChecked' },
     { label: 'Macro', value: 'hasMacro' },
     { label: 'Inteligência Embarcada', value: 'hasEmbeddedIntelligence' },
   ];

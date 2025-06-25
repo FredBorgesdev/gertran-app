@@ -211,6 +211,7 @@ export type ChecklistHistory = {
   sirenChecked: boolean;
   blockChecked: boolean;
   trunkLockChecked: boolean;
+  panicButtonChecked: boolean;
   justification: string;
   allowedTravel: boolean;
   generalJustification?: any;
