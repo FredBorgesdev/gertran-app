@@ -15,6 +15,7 @@ export interface Tracker {
     }
   };
   isMain: boolean;
+  sascarDigit: string;
 }
 
 @Injectable({

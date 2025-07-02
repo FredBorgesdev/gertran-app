@@ -58,6 +58,7 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
       trackerModel: [null, Validators.required],
       trackerId: [null, Validators.required],
       isMain: [false, Validators.required],
+      sascarDigit: [null],
     });
   }
 
@@ -88,5 +89,11 @@ export class TrackersFormComponent extends BaseCrudFormComponent<Tracker> implem
     this.validateForm.controls.trackerModel.setValue(this.resource.trackerModel.id);
     this.validateForm.controls.trackerId.setValue(this.resource.trackerId);
     this.validateForm.controls.isMain.setValue(this.resource.isMain);
+    this.validateForm.controls.sascarDigit.setValue(this.resource.sascarDigit);
+  }
+
+  getTechnologyName(id: string): string {
+    const tech = this.trackerTechnologies.find(t => t.id === id);
+    return tech ? tech.name : 'Tecnologia não encontrada';
   }
 }

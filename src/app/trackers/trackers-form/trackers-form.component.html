@@ -46,6 +46,13 @@
         </nz-form-control>
       </nz-form-item>
 
+      <nz-form-item *ngIf="getTechnologyName(validateForm.get('technology').value) === 'Sascar'">
+        <nz-form-label [nzSpan]="null" nzRequired nzFor="sascarDigit">digito</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Campo obrigatório">
+          <input id="sascarDigit" type="text" nz-input formControlName="sascarDigit" />
+        </nz-form-control>
+      </nz-form-item>
+
       <nz-form-item>
         <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o campo">
           <div nz-col [nzSpan]="12">
