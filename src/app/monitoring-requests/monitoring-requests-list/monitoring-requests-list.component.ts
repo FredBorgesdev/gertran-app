@@ -260,6 +260,9 @@ export class MonitoringRequestsListComponent extends BaseCrudListComponent<Monit
             case 'twenty_four_hours':
                 hours = 24;
                 break;
+            case 'sixty_days':
+                hours = 60 * 24;
+                break;
             case 'thirty_days':
                 hours = 30 * 24;
                 break;
