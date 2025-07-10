@@ -124,4 +124,8 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'ddrs',
     loadChildren: () => import('../../ddrs/ddrs.module').then(m=>m.DdrsModule)
   },
+  {
+    path: 'mobile-access',
+    loadChildren: () => import('../../mobile-access/mobile-access.module').then(m=>m.MobileAccessModule)
+  },
 ];

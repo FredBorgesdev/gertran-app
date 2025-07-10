@@ -57,6 +57,13 @@
           (save)="updateField('groups', $event)"
         ></app-groups-tab>
       </nz-tab>
+
+      <!-- <nz-tab nzTitle="Filiais" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
+        <app-user-customer-branch-office-tab
+
+        ></app-user-customer-branch-office-tab>
+      </nz-tab> -->
+
     </nz-tabset>
   </nz-card>
 </nz-spin>
