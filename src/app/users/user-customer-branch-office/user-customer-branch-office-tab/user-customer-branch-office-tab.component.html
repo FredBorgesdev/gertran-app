@@ -1,0 +1,25 @@
+<div class="row m-b-10">
+  <div class="col-lg-12 text-right">
+    <button (click)="isCreating = true; selected = null;" nz-button nzType="primary">
+      <i nz-icon nzType="plus"></i>
+      <span>Adicionar Filial</span>
+    </button>
+  </div>
+</div>
+
+<app-user-customer-branch-office-table
+  [items]="items"
+  (onEdit)="edit($event)"
+  (onDelete)="delete($event)"
+  (onPaginate)="load($event)"
+></app-user-customer-branch-office-table>
+
+<app-user-customer-branch-office-form
+  *ngIf="isCreating"
+  [userCustomerBranchOffice]="selected"
+  [isVisible]="isCreating"
+  (onClose)="isCreating = false"
+  (onSubmit)="save($event)"
+  [customerLoaded]="hasCustomerLoaded"
+  [userLoaded]="hasUserLoaded"
+></app-user-customer-branch-office-form>

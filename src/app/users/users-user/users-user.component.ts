@@ -12,6 +12,8 @@ import {AuthenticationService} from '../../authentication/authentication.service
   styleUrls: ['./users-user.component.css']
 })
 export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
+  customerLoadedTab = []
+  userLoadedTab = null
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -29,6 +31,7 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
 
   loadFormBuilder(): void {
     const customerLoaded = [this.authService.customerId, this.activatedRoute.snapshot.paramMap.get('customer_id')]
+    this.customerLoadedTab = customerLoaded
     this.validateForm = this.formBuilder.group({
       customer: [customerLoaded, []],
       email: [null, [Validators.required, Validators.email]],
@@ -50,6 +53,9 @@ export class UsersUserComponent extends BaseCrudFormComponent<AbstractUser> {
     this.validateForm.patchValue({
       customer: this.resource.customer?.map(c => c.id),
     });
+    try {
+      this.userLoadedTab = this.resource.id
+    } catch (error) {}
   }
 
   changePassword(password: string): void {

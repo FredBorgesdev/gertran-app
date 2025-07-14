@@ -1,0 +1,45 @@
+<nz-modal 
+[(nzVisible)]="isVisible" 
+nzTitle="Editar vínculo" 
+nzWidth="600px" 
+(nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+  >
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical" [formGroup]="validateForm">
+      <nz-form-item *ngIf="!this.customerLoaded">
+        <nz-form-label nzRequired>Cliente</nz-form-label>
+        <nz-form-control nzErrorTip="Campo obrigatório">
+          <app-customer-select  
+            [initialCustomerId]="userCustomerBranchOffice?.customer.id"
+            [filterByAll]="false"
+            (customerSelected)="onCustomerChange($event)">
+          </app-customer-select>
+          <input type="hidden" nz-input formControlName="customer" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item *ngIf="!this.userLoaded">
+        <nz-form-label nzRequired>Usuário</nz-form-label>
+        <nz-form-control nzErrorTip="Campo obrigatório">
+          <app-user-select
+            [filterByAll]="false"
+            (userSelected)="onUserSelected($event)">
+          </app-user-select>
+          <input type="hidden" nz-input formControlName="user" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzRequired>Filial</nz-form-label>
+        <nz-form-control nzErrorTip="Campo obrigatório">
+          <app-branch-office-select
+            [initialCustomerId]="userCustomerBranchOffice?.branchOffice.id"  
+            [filterByAll]="false"
+            (customerSelected)="onBranchOfficeChange($event)">
+          </app-branch-office-select>
+          <input type="hidden" nz-input formControlName="branch_office" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+</nz-modal>

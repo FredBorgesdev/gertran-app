@@ -71,6 +71,15 @@ export class CustomersService implements ApiService<Customer> {
     return this.http.get<GetAllResponse<Customer>>(`customers/search`, {params});
   }
 
+  searchBranchOffices(pagination: Pagination, search?: string, filters?:{branch: string}): Observable<GetAllResponse<Customer>> {
+    const params = this.getAllParams(pagination, {search});
+    // console.log(filters)
+    // if(filters.branch){
+    //   params.branch = filters.branch
+    // }
+    return this.http.get<GetAllResponse<Customer>>(`customers/search-branch-offices`, {params});
+  }
+
   get(id: string): Observable<Customer> {
     return this.http.get<Customer>(`customers/${id}`);
   }

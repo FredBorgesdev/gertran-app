@@ -58,11 +58,13 @@
         ></app-groups-tab>
       </nz-tab>
 
-      <!-- <nz-tab nzTitle="Filiais" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
+      <nz-tab nzTitle="Filiais" [nzDisabled]="!resource" *ngIf="this.authService.user.isGertranStaff">
         <app-user-customer-branch-office-tab
-
+        *ngIf="this.userLoadedTab"
+        [userLoaded]="this.userLoadedTab"
+        [customerLoaded]="this.customerLoadedTab"
         ></app-user-customer-branch-office-tab>
-      </nz-tab> -->
+      </nz-tab>
 
     </nz-tabset>
   </nz-card>

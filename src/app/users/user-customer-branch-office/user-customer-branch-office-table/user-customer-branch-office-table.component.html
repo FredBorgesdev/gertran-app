@@ -1,0 +1,35 @@
+<nz-table
+  #table
+  [nzData]="items?.results"
+  [nzTotal]="items?.count"
+  [nzPageSize]="items?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Usuário</th>
+      <th>Cliente</th>
+      <th>Filial</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of table.data">
+      <td>{{item.id}}</td>
+      <td>{{item.user?.name}}</td>
+      <td>{{item.customer?.tradingName}}</td>
+      <td>{{item.branchOffice?.tradingName}}</td>
+      <td>
+        <button (click)="edit(item)" nz-button nzType="default">
+          <i nz-icon nzType="edit"></i> Editar
+        </button>
+        <button (click)="delete(item)" nz-button nzType="default" nzDanger class="m-l-10">
+          <i nz-icon nzType="delete"></i> Excluir
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
