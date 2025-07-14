@@ -21,7 +21,7 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
 
   loadingOrdersColumns = [
     { title: 'Id' },
-    { title: 'OCR' },
+    { title: 'Número' },
     { title: 'Ações' },
   ];
 
