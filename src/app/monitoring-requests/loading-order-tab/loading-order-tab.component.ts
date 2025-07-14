@@ -17,6 +17,7 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
   validateForm: FormGroup;
   isCreating = false;
   loadingOrderId: string = null;
+  ocrNumberMask = [/\d/, /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/];
 
   loadingOrdersColumns = [
     { title: 'Id' },
@@ -45,11 +46,17 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
     super.ngOnInit();
 
     this.validateForm = this.formBuilder.group({
-      ocrNumber: [null, [Validators.required]],
+      ocrNumber: [null,[Validators.required,Validators.pattern(/^\d{4}\/\d{6}-\d$/)]],
     });
   }
 
   save(): void {
+    if (this.validateForm.invalid) {
+      this.validateForm.markAllAsTouched();
+      this.message.warning('Preencha corretamente o campo Número.');
+      return;
+    }
+
     this.isLoading = true;
     if (this.loadingOrderId) {
       this.service.update(this.loadingOrderId, this.validateForm.value, this.monitoringRequestId).subscribe(

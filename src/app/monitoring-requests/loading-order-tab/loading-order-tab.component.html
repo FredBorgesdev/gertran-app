@@ -70,13 +70,14 @@
   <ng-container *nzModalContent>
     <form [formGroup]="validateForm">
       <nz-form-item>
-        <nz-form-label nzRequired nzFor="ocrNumber">OCR</nz-form-label>
+        <nz-form-label nzRequired nzFor="ocrNumber">Número</nz-form-label>
         <nz-form-control nzErrorTip="Preencha o campo">
           <input
             nz-input
             formControlName="ocrNumber"
             id="ocrNumber"
-            placeholder="Insira o número"
+            placeholder="2025/123456-1"
+            [textMask]="{ mask: ocrNumberMask, guide: true }"
           />
         </nz-form-control>
       </nz-form-item>
