@@ -117,7 +117,7 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
 
   protected handleSuccess(response?: any): void {
     this.message.success('Registro salvo com sucesso');
-    this.backToCustomerList()
+    // this.backToCustomerList()
     this.isLoading = false;
   }
 }
