@@ -22,6 +22,7 @@ import {UtilsService} from '../../shared/services/utils.service';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {SelectableVehicleModelService} from "../../vehicles/selectable-vehicle-model.service";
 import { Choice } from 'src/app/shared/services/api.service';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-trucks-form',
@@ -31,6 +32,8 @@ import { Choice } from 'src/app/shared/services/api.service';
 })
 export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements OnInit {
   @Input() truck: Truck;
+  @Output() saved = new EventEmitter<Truck>();
+  
   workingSituations: Choice[] = [];
   chargingMethods: Choice[] = [
     {
@@ -116,8 +119,8 @@ export class TrucksFormComponent extends VehiclesFormComponent<Truck> implements
   }
 
   protected handleSuccess(response?: any): void {
+    this.saved.emit(response);
     this.message.success('Registro salvo com sucesso');
-    // this.backToCustomerList()
     this.isLoading = false;
   }
 }

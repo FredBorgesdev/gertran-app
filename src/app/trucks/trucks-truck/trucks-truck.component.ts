@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {TrucksService} from '../trucks.service';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-trucks-truck',
@@ -18,6 +19,7 @@ export class TrucksTruckComponent implements OnInit {
     private message: NzMessageService,
     private service: TrucksService,
     public authService: AuthenticationService,
+    public cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
@@ -39,5 +41,11 @@ export class TrucksTruckComponent implements OnInit {
         this.isLoading = false;
         this.message.error('Erro ao carregar o registro. Tente novamente.');
       });
+  }
+
+  onTruckSaved(updatedTruck: any) {
+    console.log(updatedTruck)
+    this.truck = updatedTruck;
+    this.cdr.detectChanges();
   }
 }

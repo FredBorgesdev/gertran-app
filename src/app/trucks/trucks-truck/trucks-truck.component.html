@@ -31,13 +31,13 @@
   <nz-card>
   <nz-tabset>
     <nz-tab nzTitle="Dados do cavalo">
-      <app-trucks-form *ngIf="!isLoading" [truck]="truck"></app-trucks-form>
+      <app-trucks-form *ngIf="!isLoading" [truck]="truck" (saved)="onTruckSaved($event)"></app-trucks-form>
     </nz-tab>
 
     <nz-tab nzTitle="Rastreadores" [nzDisabled]="!truck?.id">
       <app-trackers-tab
         *ngIf="truck?.id"
-        [vehicleId]="truck?.vehicle.id"
+        [vehicleId]="truck?.vehicle?.id"
       ></app-trackers-tab>
     </nz-tab>
   </nz-tabset>
