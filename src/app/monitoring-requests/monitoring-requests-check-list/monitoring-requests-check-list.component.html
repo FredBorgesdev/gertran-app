@@ -109,7 +109,9 @@
     </tr>
     <tr>
       <th>Preço da Carga</th>
-      <td colspan="3">{{monitoringRequest?.data?.loadValue | currency: 'R$ '}}</td>
+      <td>{{monitoringRequest?.data?.loadValue | currency: 'R$ '}}</td>
+      <th>Tipo de operação</th>
+      <td>{{ translateOperationType(monitoringRequest?.data?.operationType) }}</td>
     </tr>
     <tr>
       <th>Observações</th>

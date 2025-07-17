@@ -466,4 +466,20 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       },
     });
   }
+
+  translateOperationType(value: string | null | undefined): string {
+    switch (value) {
+      case 'transfer':
+        return 'Transferência';
+      case 'distribution':
+        return 'Distribuição';
+      case 'collection':
+        return 'Coleta';
+      case null:
+      case undefined:
+        return 'N/A';
+      default:
+        return value;
+    }
+  }
 }
