@@ -39,6 +39,27 @@ export class ChecklistsService implements ApiService<Checklist> {
   constructor(private http: HttpClient) {
   }
 
+  getExp(pagination: Pagination, filters?: {
+    fromDate?: string;
+    toDate?: string;
+    customer?: string;
+  }){
+   
+    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
+    if (pagination.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+
+    if (filters?.customer) {
+      params.customer = filters.customer;
+    }
+    
+    return this.http.get<GetAllResponse<Checklist>>('monitoring/checklists/get-expiration-checklist', {params});
+
+  }
+
   getAll(pagination: Pagination, filters?: {
     fromDate?: string;
     toDate?: string;
