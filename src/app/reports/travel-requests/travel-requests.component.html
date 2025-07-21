@@ -50,6 +50,7 @@
       <th>Filial</th>
       <th>Data</th>
       <th>Notas</th>
+      <th>Ordens de Carregamento</th>
       <th>Placa</th>
       <th>Reboques</th>
       <th>Saída</th>
@@ -68,6 +69,7 @@
       <td>{{ data.branchOffice?.tradingName || ' ' }}</td>
       <td>{{ data.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
       <td>{{ getInvoices(data) }}</td>
+      <td>{{ getLoadingOrders(data) }}</td>
       <td>{{ data.truck?.vehicle?.plate }}</td>
       <td>{{ getWagons(data) }}</td>
       <td nzEllipsis nz-tooltip [nzTooltipTitle]="data?.address">{{ getInitialTravelStep(data) }}</td>

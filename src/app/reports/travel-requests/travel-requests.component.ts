@@ -56,6 +56,10 @@ export class TravelRequestsComponent {
     return data.invoices?.map((invoice) => invoice.invoiceNumber.toUpperCase()).join(', ');
   }
 
+  getLoadingOrders(data: MonitoringRequests): string {
+    return data.loadingOrders?.map((invoice) => invoice.ocrNumber.toUpperCase()).join(', ');
+  }
+
   getTechnology(data: MonitoringRequests): string {
     return data.truck?.vehicle.trackers?.[0]?.trackerModel?.trackerTechnology?.name.toUpperCase();
   }
@@ -81,12 +85,14 @@ export class TravelRequestsComponent {
       const formattedLoadValue = currencyFormatter.format(monitoringRequest.loadValue || 0);
       return {
         'DATA CRIAÇÃO': format(new Date(monitoringRequest.createdAt), 'dd/MM/yyyy'),
+        FILIAL: monitoringRequest.branchOffice?.tradingName,
         CARGA: monitoringRequest.loadValue,
         CAVALO: monitoringRequest.truck?.vehicle.plate.toUpperCase(),
         CARRETAS: this.getWagons(monitoringRequest),
         ORIGEM: this.getInitialTravelStep(monitoringRequest),
         DESTINO: this.getFinalTravelStep(monitoringRequest),
         NF: this.getInvoices(monitoringRequest),
+        'ORDENS DE CARREGAMENTO': this.getLoadingOrders(monitoringRequest),
         TECNOLOGIA: this.getTechnology(monitoringRequest),
         OPERAÇÃO: monitoringRequest.operation?.name.toUpperCase(),
         STATUS: monitoringRequest.status.toUpperCase(),

@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {LoadingOrders, LoadingOrdersService} from '../loading-orders.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {BaseCrudListComponent} from '../../base-crud/base-crud-list/base-crud-list.component';
-import {NzModalService} from 'ng-zorro-antd/modal';
+import { Component, Input, OnInit } from '@angular/core';
+import { LoadingOrders, LoadingOrdersService } from '../loading-orders.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { BaseCrudListComponent } from '../../base-crud/base-crud-list/base-crud-list.component';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-loading-order-tab',
@@ -17,7 +17,11 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
   validateForm: FormGroup;
   isCreating = false;
   loadingOrderId: string = null;
-  ocrNumberMask = [/\d/, /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/];
+  ocrNumberMask = [
+    /\d/, /\d/, /\d/, /\d/, '/',
+    /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, '-',
+    /\d/, /\d/
+  ];
 
   loadingOrdersColumns = [
     { title: 'Id' },
@@ -42,15 +46,26 @@ export class LoadingOrderTabComponent extends BaseCrudListComponent<LoadingOrder
     );
   }
 
+  ocrNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return { required: true };
+    const pattern = /^\d{4}\/\d{6}-\d{1,2}$/;
+    return pattern.test(value) ? null : { pattern: true };
+  }
+
   ngOnInit(): void {
     super.ngOnInit();
 
     this.validateForm = this.formBuilder.group({
-      ocrNumber: [null,[Validators.required,Validators.pattern(/^\d{4}\/\d{6}-\d$/)]],
+      ocrNumber: [null, [Validators.required, this.ocrNumberValidator.bind(this)]],
     });
   }
 
   save(): void {
+    const rawValue = this.validateForm.get('ocrNumber').value;
+    const cleanedValue = rawValue ? rawValue.replace(/_/g, '') : null;
+    this.validateForm.get('ocrNumber').setValue(cleanedValue);
+
     if (this.validateForm.invalid) {
       this.validateForm.markAllAsTouched();
       this.message.warning('Preencha corretamente o campo Número.');

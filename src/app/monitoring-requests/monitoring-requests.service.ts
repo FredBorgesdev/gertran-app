@@ -131,6 +131,7 @@ export interface MonitoringRequests {
     name: string;
   };
   operationType: string;
+  branchOffice?: {tradingName:string};
 }
 
 
