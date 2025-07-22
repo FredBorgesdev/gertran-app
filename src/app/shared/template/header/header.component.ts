@@ -6,6 +6,15 @@ import {AuthenticationService} from '../../../authentication/authentication.serv
 import User from '../../../users/user';
 import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
 
+
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ChecklistsService } from 'src/app/checklists/checklists.service';
+import { ChecklistExpirationModalComponent } from './checklist-expiration-modal.component';
+// import { ChecklistExpirationModalComponent } from '../../modals/checklist-expiration-modal/checklist-expiration-modal.component'; // ajuste o caminho se necessário
+
+
+
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -16,12 +25,14 @@ import {SelectableCustomerServiceService} from '../../../customers/selectable-cu
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private themeService: ThemeConstantService,
-    private authService: AuthenticationService,
-    public selectableCustomerService: SelectableCustomerServiceService,
-    private customerService: CustomersService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
+  private themeService: ThemeConstantService,
+  public authService: AuthenticationService,
+  public selectableCustomerService: SelectableCustomerServiceService,
+  private customerService: CustomersService,
+  private router: Router,
+  private activatedRoute: ActivatedRoute,
+  private modal: NzModalService,
+  private checklistsService: ChecklistsService
   ) {
   }
 
@@ -31,6 +42,7 @@ export class HeaderComponent implements OnInit {
   isExpand: boolean;
   selectedCustomer: string;
   user: User;
+  countExpiringChecklists = 0;
 
   ngOnInit(): void {
     this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
@@ -40,6 +52,28 @@ export class HeaderComponent implements OnInit {
     if (this.user?.isGertranStaff) {
       this.selectableCustomerService.init();
     }
+    this.loadExpiringChecklistCount();
+  }
+
+  loadExpiringChecklistCount(): void {
+    this.checklistsService.getExp({ limit: 1 }, { customer: this.selectedCustomer })
+      .subscribe({
+        next: (res) => {
+          this.countExpiringChecklists = res.count;
+        },
+        error: () => {
+          this.countExpiringChecklists = 0;
+        }
+      });
+  }
+
+  openExpiringChecklistModal(): void {
+    this.modal.create({
+      nzTitle: 'Checklists próximos do vencimento',
+      nzContent: ChecklistExpirationModalComponent,
+      nzFooter: null,
+      nzWidth: 800
+    });
   }
 
   toggleFold(): void {

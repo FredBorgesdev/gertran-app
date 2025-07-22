@@ -50,6 +50,25 @@
         </nz-select>
       </li>
     </ul>
+    <ul class="nav-right" *ngIf="authService.customerId">
+      <li>
+        <button
+          nz-button
+          nzType="default"
+          nzShape="circle"
+          nzSize="small"
+          class="position-relative"
+          (click)="openExpiringChecklistModal()"
+          title="Checklists próximos do vencimento"
+        >
+          <i nz-icon nzType="alert" nzTheme="outline"></i>
+          <sup *ngIf="countExpiringChecklists > 0" class="badge badge-danger"
+              style="position: absolute; top: -4px; right: -4px;">
+            {{ countExpiringChecklists }}
+          </sup>
+        </button>
+      </li>
+    </ul>
     <ul class="nav-right">
       <li class="m-r-25">{{ user?.name || 'Usuário' }}</li>
       <!--

@@ -1,0 +1,25 @@
+<nz-spin [nzSpinning]="isLoading">
+  <!-- <h3>Checklists próximos do vencimento</h3> -->
+  <nz-table
+    [nzData]="checklists"
+    [nzSize]="'small'"
+    [nzFrontPagination]="false"
+    [nzScroll]="{ y: '400px' }"
+    [nzBordered]="true"
+  >
+    <thead>
+      <tr>
+        <th>Placa</th>
+        <th>Avaliado em</th>
+        <th>Expira em</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of checklists">
+        <td>{{ item?.vehicle?.plate || 'N/A' }}</td>
+        <td>{{ item.reviewedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ item.expirationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>

@@ -22,6 +22,7 @@ import { FooterComponent } from './footer/footer.component';
 
 import { SideNavDirective } from '../directives/side-nav.directive';
 import { ThemeConstantService } from '../services/theme-constant.service';
+import { ChecklistExpirationModalComponent } from './header/checklist-expiration-modal.component';
 
 const antdModule = [
     NzAvatarModule,
@@ -58,7 +59,8 @@ const antdModule = [
         QuickViewComponent,
         SideNavComponent,
         SideNavDirective,
-        FooterComponent
+        FooterComponent,
+        ChecklistExpirationModalComponent,
     ],
     providers: [
         ThemeConstantService
