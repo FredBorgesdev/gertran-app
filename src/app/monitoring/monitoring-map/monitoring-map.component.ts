@@ -39,7 +39,7 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.driverLocation = [this.item.longitude, this.item.latitude];
-    if(this.item?.monitoringRequest){
+    if (this.item?.monitoringRequest) {
       const arrayPositions = await this.positionsService.getPositionsByMonitoringRequest(this.item.monitoringRequest.id).toPromise()
       this.directionsTruckGeoJson = this.mountGeoJson(arrayPositions);
       const { routeCoordinates, travelSteps } = await this.monitoringRequestService.get(this.item.monitoringRequest.id).toPromise()
@@ -100,7 +100,7 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
     }
 
     if (this.authService.user.isGertranStaff) {
-      const riskAreas = await this.riskAreaService.getAll({}).toPromise()
+      const riskAreas = await this.riskAreaService.getAll({}, { customer: this.item.customer.id }).toPromise()
       this.riskAreasGeoJson = this.generateRiskAreasGeoJson(riskAreas.results);
 
       this.map.addSource('riskAreas', {
@@ -119,8 +119,17 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
 
       });
 
+      riskAreas.results.forEach(area => {
+        if (area.pointType == 'allowed-point') {
+          const el = document.createElement('span');
+          el.innerHTML = `<img src="assets/icons/gas-station.png" alt="risco" width="24px" height="24px"/>`;
 
-      
+          new mapboxgl.Marker(el)
+            .setLngLat([area.longitude, area.latitude])
+            .setPopup(new mapboxgl.Popup().setText(area.name)) // popup com nome da área (opcional)
+            .addTo(this.map);
+        }
+      });
     }
   }
 
@@ -130,26 +139,26 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
       const lat = area.latitude;
       const lon = area.longitude;
       const radiusInKm = area.radiusRiskArea / 1000; // Convertendo metros para quilômetros
-  
+
       // Gerando pontos ao redor do centro para o buffer (exemplo simples de círculo)
       const numPoints = 30; // Número de pontos no círculo
       const points = [];
-  
+
       for (let i = 0; i < numPoints; i++) {
         const angle = (i / numPoints) * (2 * Math.PI); // Distribuição dos pontos em um círculo
         const latOffset = radiusInKm * Math.sin(angle);
         const lonOffset = radiusInKm * Math.cos(angle);
-  
+
         // Calcular nova latitude e longitude
         const newLat = lat + (latOffset / 111.32); // 1 grau de latitude é aproximadamente 111.32 km
         const newLon = lon + (lonOffset / (111.32 * Math.cos(lat * Math.PI / 180))); // Ajuste da longitude com a latitude
-  
+
         points.push([newLon, newLat]);
       }
-  
+
       // Fechar o círculo unindo o primeiro ponto com o último
       points.push(points[0]);
-  
+
       return {
         type: 'Feature',
         properties: {
@@ -162,7 +171,7 @@ export class MonitoringMapComponent implements OnInit, AfterViewInit {
         }
       };
     });
-  
+
     return {
       type: 'FeatureCollection',
       features: features

@@ -10,6 +10,7 @@ export interface RiskArea {
   longitude: number;
   radius_risk_area: number;
   customer: any;
+  pointType: string;
 }
 
 @Injectable({
@@ -32,13 +33,17 @@ export class RiskAreaService implements ApiService<RiskArea> {
     throw new Error('Method not implemented.');
   }
 
-  getAll(pagination: Pagination): Observable<GetAllResponse<RiskArea>> {
+  getAll(pagination: Pagination, filters?:{customer:string}): Observable<GetAllResponse<RiskArea>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
+    }
+
+    if(filters.customer != undefined){
+      params.customer = filters.customer
     }
 
     return this.http.get<GetAllResponse<RiskArea>>(this.endpoint, { params });
