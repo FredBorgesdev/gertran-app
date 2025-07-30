@@ -27,21 +27,66 @@ export class GertranDirectFormComponent extends BaseCrudFormComponent<GertranDir
     ) {
         super(gertranDirectService, message, activatedRoute)
     }
-    ngOnInit(): void {
-        this.validateForm = this.formBuilder.group({
-            cnpj: ['', [Validators.required, Validators.pattern(/^\d{14}$/)]],
-            name: ['', [Validators.required, Validators.maxLength(50)]],
-            email: ['', [Validators.required, Validators.email]],
-            stateRegistration: ['', [Validators.required]],
-            cpf: ['', [Validators.required]],
-            phone: ['', [Validators.required]],
-        });
+isFisica = false;
+isJuridica = true;
 
-        this.id = this.activatedRoute.snapshot.paramMap.get('id');
-        if (this.id) {
-            this.loadFormData(this.id);
-        }
-    }
+
+
+onPersonTypeChange(type: string): void {
+  this.isFisica = type === 'fisica';
+  this.isJuridica = type === 'juridica';
+
+  const cnpj = this.validateForm.get('cnpj');
+  const name = this.validateForm.get('name');
+  const stateRegistration = this.validateForm.get('stateRegistration');
+  const cpf = this.validateForm.get('cpf');
+
+  if (this.isJuridica) {
+    cnpj?.setValidators([Validators.required, Validators.pattern(/^\d{14}$/)]);
+    name?.setValidators([Validators.required, Validators.maxLength(50)]);
+    stateRegistration?.setValidators([Validators.required]);
+    cpf?.clearValidators();
+  } else {
+    cpf?.setValidators([Validators.required, Validators.pattern(/^\d{11}$/)]);
+    cnpj?.clearValidators();
+    name?.clearValidators();
+    stateRegistration?.clearValidators();
+  }
+
+  // Atualiza validações
+  cnpj?.updateValueAndValidity();
+  name?.updateValueAndValidity();
+  stateRegistration?.updateValueAndValidity();
+  cpf?.updateValueAndValidity();
+}
+
+
+ngOnInit(): void {
+  this.validateForm = this.formBuilder.group({
+    personType: ['juridica', [Validators.required]],
+    cnpj: [''],
+    name: [''],
+    email: ['', [Validators.required, Validators.email]],
+    stateRegistration: [''],
+    cpf: [''],
+    phone: ['', [Validators.required]],
+  });
+
+  // Atualiza campos conforme o tipo inicial
+  this.onPersonTypeChange(this.validateForm.value.personType);
+
+  // Observa mudanças no tipo
+  this.validateForm.get('personType')?.valueChanges.subscribe((value) => {
+    this.onPersonTypeChange(value);
+  });
+
+  this.id = this.activatedRoute.snapshot.paramMap.get('id');
+  if (this.id) {
+    this.loadFormData(this.id);
+  }
+}
+
+
 
     loadFormData(id: string): void {
         this.isLoading = true;

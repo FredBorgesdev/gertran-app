@@ -6,6 +6,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForbiddenErrorComponent } from './forbidden/forbidden-error.component';
 import { Error2Component } from './error-2/error-2.component';
 import {FirstAccessComponent} from './first-access/first-access.component';
+import { MagicLoginComponent } from './magic-login/magic-login.component';
 
 const routes: Routes = [
   {
@@ -42,7 +43,10 @@ const routes: Routes = [
     data: {
       title: 'Error 2'
     }
-  }
+  },
+  { path: 'magic-login', 
+    component: MagicLoginComponent 
+  },
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-    <!--
+  <!--
       <nz-breadcrumb>
         <nz-breadcrumb-item>
           <i nz-icon nzType="dashboard"></i>
@@ -9,100 +9,84 @@
         </nz-breadcrumb-item>
       </nz-breadcrumb>
       -->
-      <div class="pages-header">
-        <div class="row m-b-10">
-          <div class="col-lg-8 col-md-8 col-sm-12">
-            <div class="d-md-flex">
-              <div class="m-r-20">
-                <h2>Venda direta</h2>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
-            <button 
-            nz-button 
-            nzType="primary" 
-            (click)="goToCreate()"
-          >
-            <i nz-icon nzType="plus"></i> Nova venda direta
-          </button>
+  <div class="pages-header">
+    <div class="row m-b-10">
+      <div class="col-lg-8 col-md-8 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Venda direta</h2>
           </div>
         </div>
       </div>
-      <nz-card>      
-  
-      <div class="row m-b-25">
-        <div class="col-lg-8">
-          <div class="d-md-flex">
-            <div class="m-b-10 m-r-20">
-              <nz-input-group [nzPrefix]="prefixTemplate">
-                <input
-                  type="text"
-                  nz-input
-                  placeholder="Buscar venda direta"
-                  [(ngModel)]="searchInput"
-                  (ngModelChange)="search()"
-                >
-              </nz-input-group>
-              <ng-template #prefixTemplate>
-                <i nz-icon nzType="search" class="opacity-05"></i>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 text-right">
-          
-        </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button">
+        <button nz-button nzType="primary" (click)="goToCreate()">
+          <i nz-icon nzType="plus"></i> Nova venda direta
+        </button>
       </div>
+    </div>
+  </div>
+  <nz-card>
+    <div class="row m-b-25">
+      <div class="col-lg-4 m-b-10">
+        <nz-date-picker [(ngModel)]="fromDate" [nzFormat]="'dd/MM/yyyy'" style="width: 100%;"
+          nzPlaceHolder="Data inicial"></nz-date-picker>
+      </div>
+      <div class="col-lg-4 m-b-10">
+        <nz-date-picker [(ngModel)]="toDate" [nzFormat]="'dd/MM/yyyy'" style="width: 100%;"
+          nzPlaceHolder="Data final"></nz-date-picker>
+      </div>
+      <div class="col-lg-4 m-b-10 text-right">
+        <button nz-button nzType="primary" (click)="loadResources()">Pesquisar</button>
+      </div>
+    </div>
 
-      <nz-table
-        #personalMonitoringListTable
-        [nzData]="resources?.results"
-        [nzTotal]="resources?.count"
-        [nzPageSize]="resources?.limit"
-        [nzPageIndex]="page"
-        [nzFrontPagination]="false"
-        (nzQueryParams)="handleQueryParamsChange($event)"
-      >
-        <thead>
+    <!-- <div class="row m-b-25">
+      <div class="col-lg-8">
+        <div class="d-md-flex">
+          <div class="m-b-10 m-r-20">
+            <nz-input-group [nzPrefix]="prefixTemplate">
+              <input type="text" nz-input placeholder="Buscar venda direta" [(ngModel)]="searchInput"
+                (ngModelChange)="search()">
+            </nz-input-group>
+            <ng-template #prefixTemplate>
+              <i nz-icon nzType="search" class="opacity-05"></i>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 text-right">
+
+      </div>
+    </div> -->
+
+    <nz-table #personalMonitoringListTable [nzData]="resources?.results" [nzTotal]="resources?.count"
+      [nzPageSize]="resources?.limit" [nzPageIndex]="page" [nzFrontPagination]="false"
+      (nzQueryParams)="handleQueryParamsChange($event)">
+      <thead>
         <tr>
           <th *ngFor="let column of personalMonitoringColumns" [nzSortFn]="column.compare">{{ column.title }}</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr *ngFor="let item of personalMonitoringListTable.data;  let i=index">
           <td>{{ item?.name || ' ' }}</td>
           <td>{{item.corporateName || ' '}}</td>
           <td class="text-md-center" style="white-space: nowrap;">
             <ng-container *ngIf="item.status === 'pending'">
-              <button
-                (click)="edit(item)"
-                class="m-r-5"
-                nz-button
-                nzType="default"
-              >
+              <button (click)="edit(item)" class="m-r-5" nz-button nzType="default">
                 <i nz-icon nzType="edit" theme="outline"></i> Editar
               </button>
-              <button
-                nz-button
-                nzDanger
-                nzType="default"
-                (click)="delete(item)"
-              >
+              <button nz-button nzDanger nzType="default" (click)="delete(item)">
                 <i nz-icon nzType="delete" theme="outline"></i> Excluir
               </button>
             </ng-container>
-            <button
-              nz-button
-              nzType="default"
-              (click)="viewDetails(item)"
-            >
+            <button nz-button nzType="default" (click)="viewDetails(item)">
               <i nz-icon nzType="info-circle" theme="outline"></i> Visualizar Detalhes
             </button>
           </td>
-          
+
         </tr>
-        </tbody>
-      </nz-table>
-    </nz-card>
-  </nz-spin>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-spin>

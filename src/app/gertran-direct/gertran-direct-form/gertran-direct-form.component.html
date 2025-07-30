@@ -1,90 +1,111 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-    <!--
-        <nz-breadcrumb>
-            <nz-breadcrumb-item>
-                <i nz-icon nzType="dashboard"></i>
-            </nz-breadcrumb-item>
-            <nz-breadcrumb-item>
-                <a><i nz-icon nzType="idcard"></i><span>Área Restrita</span></a>
-            </nz-breadcrumb-item>
-            <nz-breadcrumb-item>Venda Direta</nz-breadcrumb-item>
-        </nz-breadcrumb>
-    -->
-    <div class="pages-header m-b-25">
-        <div class="row m-b-10">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="d-md-flex">
-              <div class="m-r-20">
-                <h2>Venda Direta</h2>
-              </div>
-            </div>
+  <div class="pages-header m-b-25">
+    <div class="row m-b-10">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="d-md-flex">
+          <div class="m-r-20">
+            <h2>Venda Direta</h2>
           </div>
         </div>
       </div>
-      <nz-card>
-        <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzFor="cnpj">CNPJ</nz-form-label>
-                        <nz-form-control nzErrorTip="Preencha o CNPJ com 14 dígitos">
-                            <input id="cnpj" type="text" nz-input formControlName="cnpj" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
+    </div>
+  </div>
 
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzFor="stateRegistration">Inscrição Estadual</nz-form-label>
-                        <nz-form-control nzErrorTip="Preencha a inscrição estadual">
-                            <input id="stateRegistration" type="text" nz-input formControlName="stateRegistration" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzFor="name">Nome</nz-form-label>
-                        <nz-form-control nzErrorTip="Preencha o nome">
-                            <input id="name" type="text" nz-input formControlName="name" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
+<nz-card>
 
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzFor="cpf">CPF</nz-form-label>
-                        <nz-form-control nzErrorTip="Preencha o CPF com 14 dígitos">
-                            <input id="cpf" type="text" nz-input formControlName="cpf" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-            
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
-                        <nz-form-control nzErrorTip="Preencha um e-mail válido">
-                            <input id="email" type="email" nz-input formControlName="email" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
+<h1>
+  VENDA DIRETA
+  <span *ngIf="isJuridica">&nbsp;PJ</span>
+  <span *ngIf="!isJuridica">&nbsp;PF</span>
+</h1>
 
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <nz-form-item>
-                        <nz-form-label nzRequired nzFor="phone">Telefone</nz-form-label>
-                        <nz-form-control nzErrorTip="Preencha o telefone">
-                            <input id="phone" type="text" nz-input formControlName="phone" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
+  <h2>MONITORAMENTO</h2>
+  <br>
+  <br>
+  <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div class="row">
 
-            </div>
-            <nz-divider></nz-divider>
-            <div class="page-buttons">
-                <button nz-button nzType="primary" [disabled]="isLoading" type="submit">
-                    SALVAR VENDA DIRETA
-                </button>
-            </div>
-        </form>
-    </nz-card>
+      <!-- Tipo de Pessoa -->
+      <!-- <div class="col-md-6">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="personType">Tipo de Pessoa</nz-form-label>
+          <nz-form-control>
+            <nz-select formControlName="personType">
+              <nz-option nzValue="juridica" nzLabel="Pessoa Jurídica"></nz-option>
+              <nz-option nzValue="fisica" nzLabel="Pessoa Física"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div> -->
+
+      <!-- Razão Social -->
+      <div class="col-12" *ngIf="isJuridica">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="name">Razão Social</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha a razão social">
+            <input id="name" type="text" nz-input formControlName="name" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <!-- CNPJ e IE -->
+      <div class="col-md-6" *ngIf="isJuridica">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="cnpj">CNPJ</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o CNPJ com 14 dígitos">
+            <input id="cnpj" type="text" nz-input formControlName="cnpj" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="col-md-6" *ngIf="isJuridica">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="stateRegistration">Inscrição Estadual</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha a inscrição estadual">
+            <input id="stateRegistration" type="text" nz-input formControlName="stateRegistration" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <!-- CPF -->
+      <div class="col-md-6" *ngIf="isFisica">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="cpf">CPF</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o CPF com 11 dígitos">
+            <input id="cpf" type="text" nz-input formControlName="cpf" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <!-- Email -->
+      <div class="col-md-6">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha um e-mail válido">
+            <input id="email" type="email" nz-input formControlName="email" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <!-- Telefone -->
+      <div class="col-md-6">
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="phone">Telefone</nz-form-label>
+          <nz-form-control nzErrorTip="Preencha o telefone">
+            <input id="phone" type="text" nz-input formControlName="phone" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <nz-divider></nz-divider>
+
+    <div class="page-buttons">
+      <button nz-button nzType="primary" [disabled]="isLoading" type="submit">
+        ADICIONAR VENDA DIRETA
+      </button>
+    </div>
+  </form>
+</nz-card>
+
 </nz-spin>

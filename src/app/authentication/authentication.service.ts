@@ -100,7 +100,9 @@ export class AuthenticationService {
     const jwt = Cookies.get(GERTRAN_WEB_TOKEN);
     if (!jwt) {
       if (window.location.pathname !== '/authentication/login') {
-        window.location.href = '/authentication/login';
+        if(window.location.pathname !== '/authentication/magic-login/'){
+          window.location.href = '/authentication/login';
+        }
       }
       return null;
     }

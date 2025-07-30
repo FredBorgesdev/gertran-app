@@ -128,4 +128,8 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'mobile-access',
     loadChildren: () => import('../../mobile-access/mobile-access.module').then(m=>m.MobileAccessModule)
   },
+  {
+    path: 'risk-area',
+    loadChildren: () => import('../../risk-area/risk-area.module').then(m=>m.RiskAreaModule)
+  },
 ];

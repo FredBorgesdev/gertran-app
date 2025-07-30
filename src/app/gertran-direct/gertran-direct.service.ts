@@ -30,13 +30,19 @@ export class GertranDirectService implements ApiService<GertranDirect> {
   get(id: string, ...params: any): Observable<GertranDirect> {
     return this.http.get<GertranDirect>(`gertran-direct/${id}`);
   }
-  getAll(pagination: Pagination): Observable<GetAllResponse<GertranDirect>> {
+  getAll(pagination: Pagination, filters: any = {}): Observable<GetAllResponse<GertranDirect>> {
     const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
     }
+    
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        params[key] = value;
+      }
+    });
     return this.http.get<GetAllResponse<GertranDirect>>('gertran-direct', { params });
 
   }

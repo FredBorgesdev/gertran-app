@@ -75,7 +75,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
     this.service.delete(id, ...this.additionalParams()).subscribe(() => {
       this.loadResources();
       this.message.success('Registro excluído com sucesso');
-      this.isLoading = false;
+      // this.isLoading = false;
     }, () => {
       this.message.error('Erro ao excluir registro');
       this.isLoading = false;
@@ -133,7 +133,7 @@ export class BaseCrudListComponent<T extends { id: string }> implements OnInit {
   }
 
   protected setupSearch(): void {
-    this.searchSubject.pipe(debounceTime(500)).subscribe((value) => {
+    this.searchSubject.pipe(debounceTime(1500)).subscribe((value) => {
       this.isLoading = true;
 
       this.performSearch(value);

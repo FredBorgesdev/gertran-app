@@ -17,6 +17,7 @@ import { Error2Component } from './error-2/error-2.component';
 import {TextMaskModule} from 'angular2-text-mask';
 import { FirstAccessComponent } from './first-access/first-access.component';
 import {PasswordStrengthMeterModule} from 'angular-password-strength-meter';
+import { MagicLoginComponent } from './magic-login/magic-login.component';
 
 const antdModule = [
   NzFormModule,
@@ -41,7 +42,8 @@ const antdModule = [
     SignUpComponent,
     ForbiddenErrorComponent,
     Error2Component,
-    FirstAccessComponent
+    FirstAccessComponent,
+    MagicLoginComponent,
   ]
 })
 

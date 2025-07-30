@@ -1,0 +1,5 @@
+<div class="magic-login-container">
+  <p *ngIf="status === 'loading'">Validando link de acesso...</p>
+  <p *ngIf="status === 'success'" style="color: green;">{{ message }}</p>
+  <p *ngIf="status === 'error'" style="color: red;">{{ message }}</p>
+</div>
