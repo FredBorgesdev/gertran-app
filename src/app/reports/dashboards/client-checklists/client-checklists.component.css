@@ -28,6 +28,12 @@ h3.header-small {
 }
 
 
+
+.content h4 {
+  margin: 0;
+  text-align: left;
+}
+
 .square:not(:first-of-type) {
   margin-left: 10px;
 }
@@ -37,7 +43,7 @@ h3.header-small {
 }
 
 .bg-default {
-  background: green;
+  background: rgb(255, 255, 255);
 }
 
 .bg-danger {

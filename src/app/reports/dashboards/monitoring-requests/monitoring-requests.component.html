@@ -1,9 +1,17 @@
 
 <nz-card>  
+
+
+  <h3>Controle Liberação</h3>
   <div class="content">
-    <h4 [class]="(hideHeader && 'header-small') + ' text-center m-b-15'">
+    <!-- <h4 [class]="(hideHeader && 'header-small') + ' text-center m-b-15'">
       Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
-    </h4>
+    </h4> -->
+
+
+    <!-- <h4>
+      Liberação
+    </h4> -->
     <div class="d-flex justify-content-between" *ngIf="!hideHeader">
       <span class="d-flex m-b-10" style="align-items: center;">
         <div class="square bg-danger m-r-5"></div> Acima de 15 minutos
