@@ -28,6 +28,10 @@ h3.header-small {
 }
 
 
+th, td {
+  font-weight: bold;
+}
+
 
 .content h4 {
   margin: 0;
