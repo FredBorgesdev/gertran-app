@@ -56,6 +56,7 @@ export class HeaderComponent implements OnInit {
   }
 
   loadExpiringChecklistCount(): void {
+    if (!this.user?.isGertranStaff) {
     this.checklistsService.getExp({ limit: 1 }, { customer: this.selectedCustomer })
       .subscribe({
         next: (res) => {
@@ -65,6 +66,7 @@ export class HeaderComponent implements OnInit {
           this.countExpiringChecklists = 0;
         }
       });
+    }
   }
 
   openExpiringChecklistModal(): void {

@@ -22,7 +22,6 @@ export class CheckListExpirationComponent implements OnInit {
   fetchData(): void {
     this.isLoading = true;
     const offset = (this.page - 1) * this.limit;
-    console.log('ok')
 
     this.checklistService.getExp({ limit: this.limit })
       .subscribe({

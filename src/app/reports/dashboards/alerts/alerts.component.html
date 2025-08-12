@@ -23,10 +23,6 @@
 <div class="content">
   <h3 class="dash-title">
     {{ currentTerminal?.name }}
-  
-    <!-- <span *ngIf="currentAlerts?.length === 0">
-      sem alertas
-    </span> -->
   </h3>
   <div class="d-flex justify-content-between m-b-10" style="align-items: center;">
     <span>
@@ -38,37 +34,6 @@
 </div>
   
 
-
-<!-- <ul class="dash-list">
-  <li
-    *ngFor="let alert of currentAlerts"
-    [class]="getClass(alert) + ' d-flex justify-content-between'"
-
-    nzBordered
-
-  >
-    {{alert.vehicle.plate}}
-
-    <div>
-      {{alert.customer.tradingName}}
-    </div>
-
-    <div>
-      {{alert.position.positionInfo.destinyCity}} -
-      {{alert.position.positionInfo.destinyState}}
-
-      {{alert.position.positionInfo.originCity}} -
-      {{alert.position.positionInfo.originState}}
-
-      {{alert.message}}
-    </div>
-
-    <div>
-      {{ getRollingTimeInMinutes(alert) }} -
-      {{ alert.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}
-    </div>
-  </li>
-</ul> -->
 <nz-table #table 
   [nzData]="currentAlerts" 
   [nzFrontPagination]="true" 
@@ -86,8 +51,6 @@
       <th  class="table-header text-center" style="width: 15%;">Origem</th>
       <th  class="table-header text-center" style="width: 15%;">Destino</th>
       <th  class="table-header text-center">Alerta</th>
-      <th  class="table-header text-center">Evento</th>
-      <!-- <th  class="table-header text-center" style="width: 5%;">Tempo</th> -->
     </tr>
   </thead>
   <tbody>
@@ -98,8 +61,6 @@
       <td class="text-center">{{item.position.positionInfo.originCity}} - {{item.position.positionInfo.originState}}</td>
       <td class="text-center">{{item.position.positionInfo.destinyCity}} - {{item.position.positionInfo.destinyState}}</td>
       <td class="text-center">{{item.message}} - {{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-      <td class="text-center">{{item.lastEvent}} </td>
-      <!-- <td class="text-center max-width-cell">{{getRollingTimeInMinutes(item) }}</td> -->
     </tr>
   </tbody>
 </nz-table>

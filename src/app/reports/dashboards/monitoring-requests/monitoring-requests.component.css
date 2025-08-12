@@ -3,7 +3,8 @@
   align-items: center;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-  margin: -25px -15px 30px -15px;
+  margin-top: -25px;
+  margin-bottom: 10px;
   padding: 10px 10px 10px 130px;
 }
 

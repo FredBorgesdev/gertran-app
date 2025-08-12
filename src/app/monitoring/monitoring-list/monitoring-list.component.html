@@ -284,7 +284,10 @@
         <td class="text-dark">{{ getDestiny(item) }}</td>
         <td [nzTooltipTitle]="getStatusTranslation(item.monitoringRequest?.travelStatus)" *ngIf="user.isGertranStaff"
           class="text-dark">
-          {{getStatusTranslation(item.monitoringRequest?.travelStatus)}}
+          {{ getStatusTranslation(item.monitoringRequest?.travelStatus) }}
+          <span *ngIf="user.isGertranStaff && item.monitoringRequest?.isStoppedInRiskZone" style="color: red;">
+            + Em área de risco
+          </span>
         </td>
         <!-- <td
         class="text-dark"
