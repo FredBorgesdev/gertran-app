@@ -26,9 +26,9 @@
         </span>
       </div>
 
-      <nz-table #checklistTable [nzData]="resources?.results" [nzTotal]="resources?.count"
-        [nzPageSize]="resources?.limit" [nzPageIndex]="page" [nzFrontPagination]="false" nzSize="small"
-        style="table-layout: fixed !important;" class="custom-table" (nzQueryParams)="handleQueryParamsChange($event)">
+      <nz-table #checklistTable [nzData]="resources?.results" 
+        [nzFrontPagination]="false" nzSize="small"
+        style="table-layout: fixed !important;" class="custom-table">
         <thead>
           <tr>
             <th class="text-center table-header" *ngFor="let column of checklistColumns" [nzWidth]="column.width">{{

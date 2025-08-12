@@ -33,10 +33,6 @@
   width: auto !important;
 }
 
-.content {
-  display: flex;
-  justify-content: space-between;
-}
 
 .content h4 {
   margin: 0;
