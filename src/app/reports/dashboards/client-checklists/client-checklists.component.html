@@ -1,7 +1,9 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+  <nz-card>  
+  <div class="content">
+
+
   <div style="max-width: 100%;">
-
-
 
   <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-2'">
     Check-list por veículo
@@ -14,12 +16,6 @@
     Total - {{resources?.count ?? '0'}}
   </h3> -->
 
-  <img
-    *ngIf="!hideHeader"
-    src="assets/images/logo/logogertran.png"
-    alt="Gertran"
-    class="logo"
-  >
 
   <div class="d-flex m-b-10 justify-content-between" style="align-items: center;" *ngIf="!hideHeader">
     <span>
@@ -68,4 +64,6 @@
     </tbody>
   </nz-table>
 </div>
+</div>
+</nz-card>
 </nz-spin>
