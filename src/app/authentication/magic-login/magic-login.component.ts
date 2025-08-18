@@ -45,9 +45,9 @@ export class MagicLoginComponent implements OnInit {
   ngOnInit(): void {
     const uid = this.route.snapshot.queryParamMap.get('uid');
     const token = this.route.snapshot.queryParamMap.get('token');
-
+    const customer = this.route.snapshot.queryParamMap.get('customer')
     if (uid && token) {
-      this.http.get<any>(`http://0.0.0.0:8033/v1/auth/magic-login/?uid=${uid}&token=${token}`).subscribe({
+      this.http.get<any>(`auth/magic-login/?uid=${uid}&token=${token}`).subscribe({
         next: (res) => {
           localStorage.setItem('access_token', res.access);
           localStorage.setItem('refresh_token', res.refresh);
@@ -56,7 +56,7 @@ export class MagicLoginComponent implements OnInit {
           Cookies.set(GERTRAN_WEB_TOKEN, res.access);
           Cookies.set(GERTRAN_REFRESH_TOKEN, res.refresh);
           console.log(res)
-          setTimeout(() => window.location.href = '/dashboard/home', 2000); // ajuste para a rota desejada
+          setTimeout(() => window.location.href = '/dashboard/home/?customer='+customer, 2000); // ajuste para a rota desejada
         },
         error: (err) => {
           this.status = 'error';

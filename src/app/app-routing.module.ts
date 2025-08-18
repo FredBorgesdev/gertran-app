@@ -24,6 +24,13 @@ const appRoutes: Routes = [
     canActivateChild: [PermissionGuard],
   },
   {
+    path: 'magic-link',
+    component: FullLayoutComponent,
+    children: FullLayout_ROUTES,
+    canActivate: [AuthGuard],
+    canActivateChild: [PermissionGuard],
+  },
+  {
     path: '',
     component: FullLayoutComponent,
     children: FullLayout_ROUTES

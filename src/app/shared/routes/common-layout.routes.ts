@@ -132,4 +132,8 @@ export const CommonLayout_ROUTES: Routes = [
     path: 'risk-area',
     loadChildren: () => import('../../risk-area/risk-area.module').then(m=>m.RiskAreaModule)
   },
+  {
+    path: 'monthly-report',
+    loadChildren: () => import('../../monthly_report/monthly_report.module').then(m=>m.MonthlyReportModule)
+  },
 ];

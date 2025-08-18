@@ -1,0 +1,164 @@
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.chart-card {
+  flex: 1 1 300px;
+  max-width: 400px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+
+
+
+.chart-card.nc_incident {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card .nc_incident canvas {
+  width: 100% !important;
+  height: 250px !important;
+}
+
+
+
+.chart-card.nc_incident_list {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card .nc_incident_list canvas {
+  width: 100% !important;
+  height: 250px !important;
+}
+
+
+
+
+
+
+
+.chart-card.tecnologia {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.tecnologia canvas {
+  height: 250px !important; 
+  width: 100% !important;
+
+}
+
+
+
+.chart-card.tipo_carga {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.tipo_carga canvas {
+  height: 300px !important; 
+  width: 100% !important;
+}
+
+
+
+
+
+
+
+.chart-card.total_nc_mes {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.total_nc_mes canvas {
+  height: 250px !important; 
+  width: 100% !important;
+}
+
+
+
+
+.chart-card.lista_origem {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.lista_origem canvas {
+  height: 550px !important; 
+  width: 100% !important;
+}
+
+
+
+
+.chart-card.lista_destino {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.lista_destino canvas {
+  height: 550px !important; 
+  width: 100% !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chart-card.total_operacao {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.total_operacao canvas {
+  height: 250px !important; 
+  width: 100% !important;
+}
+
+
+
+.chart-card.tipo_operacao {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.tipo_operacao canvas {
+  height: 250px !important; 
+  width: 100% !important;
+}
+
+
+
+
+.chart-card.total_sm_mes {
+  flex: 1 1 100%;
+  max-width: 30%;
+}
+
+.chart-card.total_sm_mes canvas {
+  height: 250px !important; 
+  width: 100% !important;
+}

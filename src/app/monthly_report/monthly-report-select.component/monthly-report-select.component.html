@@ -1,0 +1,197 @@
+<div style="max-width: 1250px; margin: 40px auto; padding: 20px;">
+  <h2 style="margin-bottom: 20px; text-align:center;">Relatório por Ano/Mês</h2>
+  <label for="yearMonthSelect" style="display: block; margin-bottom: 8px; font-weight: 600; text-align:center;">
+    Selecione Ano/Mês:
+  </label>
+  <select id="yearMonthSelect" [(ngModel)]="selectedOption" name="yearMonthSelect" (change)="onYearMonthChange()"
+    style="padding: 6px 10px; font-size: 16px; margin: 0 auto 30px; display:block; width: 200px;">
+    <option *ngFor="let option of yearMonthOptions" [ngValue]="option">
+      {{ option.month | number: '2.0' }} / {{ option.year }}
+    </option>
+  </select>
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+      <div class="chart-card tipo_operacao">
+        <h3>SM por Operação</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'pie'"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card total_operacao">
+        <h3>SM por Operação total</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smPerOperationsList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.label }}</strong><br>
+              Total: {{ item.total }} <br>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+
+
+      <div class="chart-card total_sm_mes">
+        <h3>Total SM por Mês</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+      <div class="chart-card lista_origem">
+        <h3>SM por Origem de Rota</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smRouteOriginList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.label }}</strong><br>
+              Total: {{ item.total }} <br>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="chart-card lista_destino">
+        <h3>SM por Destino de Rota</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smRouteDestinyList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.label }}</strong><br>
+              Total: {{ item.total }} <br>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+
+      <div class="chart-card tecnologia">
+        <h3>Total SM por Tecnologia (%)</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="smPerTechnologyBarData" [options]="smPerTechnologyBarOptions" [type]="'bar'">
+          </canvas>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+      <div class="chart-card tipo_carga">
+        <h3>SM por Tipo de Carga</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+      <div class="chart-card nc_incident">
+        <h3>Percentual de NC por Incidente</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="ncIncidentPieData" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+        </div>
+      </div>
+
+
+      <div class="chart-card">
+        <h3>Incidentes por Total</h3>
+        <div class="chart-content nc_incident_list" style="text-align:left;font-size: 10px;">
+
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of ncIncidentList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.label }}</strong><br>
+              Total: {{ item.total }} <br>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+
+
+          <div class="chart-card total_nc_mes">
+            <h3>Total NC por Mês</h3>
+            <div class="chart-content">
+              <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions" [type]="'line'">
+              </canvas>
+            </div>
+          </div>
+
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <div class="charts-container">
+
+      <div class="chart-card">
+        <h3>SM por Motorista</h3>
+        <div class="chart-content">
+          <table style="width:100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background-color:#007BFF; color:#fff;">
+                <th style="padding:8px; border: 1px solid #ddd;">Motorista</th>
+                <th style="padding:8px; border: 1px solid #ddd;">Veículo</th>
+                <th style="padding:8px; border: 1px solid #ddd;">Quantidade de Viagens</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of smDriverList" style="border-bottom: 1px solid #ddd;">
+                <td style="padding:8px;">{{ item.Motorista }}</td>
+                <td style="padding:8px;">{{ item.VeiculoAutomotor }}</td>
+                <td style="padding:8px; text-align:right;">{{ item.QuantidadeDeViagens }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+
+    </div> -->

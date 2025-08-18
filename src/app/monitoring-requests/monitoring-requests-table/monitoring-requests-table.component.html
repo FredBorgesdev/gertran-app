@@ -116,8 +116,8 @@
     <td>{{getWagons(item)}}</td>
     <td>
       <img
-        *ngIf="item.lastPosition?.trackerTechnologyName"
-        [src]="'assets/images/brand/200x200/' + item.lastPosition?.trackerTechnologyName?.toLowerCase() + '.png'"
+        *ngIf="item.trackerTechnology?.name"
+        [src]="'assets/images/brand/200x200/' + item.trackerTechnology?.name.toLowerCase() + '.png'"
         alt="logo"
         width="25px"
         height="25px"
