@@ -36,12 +36,9 @@
 
 <nz-table #table 
   [nzData]="currentAlerts" 
-  [nzFrontPagination]="true" 
+  [nzFrontPagination]="false" 
   nzSize="small" 
   class="custom-table"  
-  (nzQueryParams)="handleQueryParamsChange($event)"     
-  [nzTotal]="currentCount"
-  [nzPageSize]="currentLimit"
 > 
   <thead>
     <tr>

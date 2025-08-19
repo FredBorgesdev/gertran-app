@@ -70,7 +70,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
     }
 
-    this.alertsService.getAlerts({limit: 15}, {
+    this.alertsService.getAlerts({limit: 12}, {
       terminal: nextTerminal.id,
       alertType: AlertTypes.terminal,
       alertsOnly: true,
@@ -86,7 +86,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
   }
 
 
-  handleQueryParamsChange(params: NzTableQueryParams): void {
+  // handleQueryParamsChange(params: NzTableQueryParams): void {
     // if (params.pageIndex < this.page) {
     //   const url = this.replaceOffsetWithPage(this.resources.previous, params.pageIndex);
     //   this.loadResources(url);
@@ -94,7 +94,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
     //   const url = this.replaceOffsetWithPage(this.resources.next, params.pageIndex);
     //   this.loadResources(url);
     // }
-  }
+  // }
 
   // replaceOffsetWithPage(url: string, page: number): string {
   //   const limit = +url.match(/limit=\d+/)[0].split('=')[1];
