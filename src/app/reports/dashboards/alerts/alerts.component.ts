@@ -70,7 +70,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
     }
 
-    this.alertsService.getAlerts({limit: 999}, {
+    this.alertsService.getAlerts({limit: 15}, {
       terminal: nextTerminal.id,
       alertType: AlertTypes.terminal,
       alertsOnly: true,
