@@ -57,7 +57,7 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
   loadUnderReview(url?: string): void {
     this.monitoringRequestService.getAll({
       url,
-      limit: 20
+      limit: 5
     }, {
       ...this.filters,
       status: Status.UNDER_REVIEW,
