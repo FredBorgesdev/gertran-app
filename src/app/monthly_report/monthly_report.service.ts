@@ -4,6 +4,7 @@ import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared
 import { Observable } from 'rxjs';
 
 export interface MonthlyReport {
+  totalNc: number;
   totalSmPerPlate: string;
   totalSmPerDriver: string;
   totalSmPerRouteDestiny: string;
@@ -12,7 +13,7 @@ export interface MonthlyReport {
   totalSmPerMonth: string;
   totalSmPerLoadTypePercent: string;
   totalSmPerOperationsPercent: string;
-  totalSm: string;
+  totalSm: Number;
   id: string;
   tradingName?: string;
   cnpj?: string;

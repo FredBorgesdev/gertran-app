@@ -15,9 +15,11 @@ import { SmDriverListHelper } from '../chart-helpers/total-sm-driver-list-helper
 import { SmPerOperationsListHelper } from '../chart-helpers/total-sm-per-operations-list-helper';
 import { TotalSmPerRouteOriginPercentHelper } from '../chart-helpers/total-sm-route-origin-percent';
 import { TotalSmPerRouteDestinyPercentHelper } from '../chart-helpers/total-sm-per-route-destiny-percent.helper';
-// import { Chart, registerables } from 'chart.js';
-// import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Chart, registerables } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { SmPerLoadTypeListHelper } from '../chart-helpers/total-sm-per-load-type-list.helper';
 
+Chart.register(...registerables, ChartDataLabels);
 
 @Component({
   selector: 'app-monthly-report-select',
@@ -37,6 +39,7 @@ export class MonthlyReportSelectComponent implements OnInit {
   smRouteOriginList: { label: string; total: number; percentage: number }[] = [];
   smRouteDestinyList: { label: string; total: number; percentage: number }[] = [];
   smDriverList: { Motorista: string; VeiculoAutomotor: string; QuantidadeDeViagens: number }[] = [];
+  smPerLoadTypeList: { label: string; total: number; percentage: number; color: string }[] = [];
 
   // cada gráfico com seu data/options
   barChartData: any;
@@ -67,6 +70,10 @@ export class MonthlyReportSelectComponent implements OnInit {
   smRouteDestinyPieData: any;
   smRouteDestinyPieOptions: any;
 
+
+  totalSm: Number = 0;
+  totalNc: number = 0;
+
   constructor(
     private monthlyReportService: MonthlyReportService,
     private smOperationsHelper: TotalSmPerOperationsPercentHelper,
@@ -83,6 +90,7 @@ export class MonthlyReportSelectComponent implements OnInit {
     private smPerOperationsListHelper: SmPerOperationsListHelper,
     private totalSmPerRouteOriginPercentHelper: TotalSmPerRouteOriginPercentHelper,
     private totalSmPerRouteDestinyPercentHelper: TotalSmPerRouteDestinyPercentHelper,
+    private smPerLoadTypeListHelper: SmPerLoadTypeListHelper,
   ) { }
 
   ngOnInit() {
@@ -114,6 +122,10 @@ export class MonthlyReportSelectComponent implements OnInit {
       next: (response: GetAllResponse<MonthlyReport>) => {
         this.reports = response.results;
         const report = this.reports[0] || {} as MonthlyReport;
+
+        this.totalSm = report.totalSm || 0;
+        this.totalNc = report.totalNc || 0;
+
 
         this.barChartData = this.smOperationsHelper.build(report);
         this.barChartOptions = this.smOperationsHelper.chartOptions;
@@ -155,6 +167,9 @@ export class MonthlyReportSelectComponent implements OnInit {
 
         this.smRouteDestinyPieData = this.totalSmPerRouteDestinyPercentHelper.build(report);
         this.smRouteDestinyPieOptions = this.totalSmPerRouteDestinyPercentHelper.chartOptions;
+      
+        this.smPerLoadTypeList = this.smPerLoadTypeListHelper.build(report);
+
       }
     });
   }

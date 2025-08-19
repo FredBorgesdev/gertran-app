@@ -8,39 +8,61 @@ export class TotalNcPerMonthLineHelper {
 
   chartOptions: ChartOptions<'line'> = {
     responsive: true,
-    plugins: {
-      legend: { display: false, position: 'top' },
-      tooltip: {
-        mode: 'index',
-        intersect: false,
+    maintainAspectRatio: true,
+    layout: {
+      padding: {
+        top: 10,
+        bottom: 10,
       },
     },
+    plugins: {
+      legend: { display: false },
+      tooltip: { mode: 'index', intersect: false },
+    },
     scales: {
-      x: { title: { display: true, text: 'Mês' } },
-      y: { title: { display: true, text: 'Total NC' }, beginAtZero: true },
+      x: {
+        display: true,
+        title: { display: true, text: 'Mês' },
+      },
+      y: {
+        display: true,
+        title: { display: false, text: 'Total NC' },
+        beginAtZero: false,
+        ticks: { padding: 10 },
+      },
     },
   };
 
-  build(report: any) {
-    let dataParsed;
+  build(report: any): ChartConfiguration<'line'>['data'] {
+    let dataParsed: Record<string, number> = {};
     try {
       dataParsed = JSON.parse(report.totalNcPerMonth || '{}');
     } catch {
       dataParsed = {};
     }
-    const labels = Object.keys(dataParsed).sort();
-    const data = labels.map(label => dataParsed[label]);
+
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 
+                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+    const keys = Object.keys(dataParsed).sort(); // ['2025-01', '2025-02', ...]
+    const labels = keys.map(key => {
+      const monthIndex = parseInt(key.split('-')[1], 10) - 1;
+      return monthNames[monthIndex] || key;
+    });
+
+    const valores = keys.map(key => dataParsed[key] || 0);
+    const total = valores.reduce((acc, val) => acc + val, 0);
 
     return {
       labels,
       datasets: [
         {
-          label: 'NC por Mês',
-          data,
+          label: `Total NC por Mês (${total.toLocaleString()})`,
+          data: valores,
           fill: false,
           borderColor: '#FF6384',
           backgroundColor: '#FF6384',
-          tension: 0.1,
+          tension: 0.3,
         },
       ],
     };

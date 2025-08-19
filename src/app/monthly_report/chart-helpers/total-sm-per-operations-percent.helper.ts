@@ -1,76 +1,114 @@
+import { Chart, ChartConfiguration, ChartOptions, Plugin } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Injectable } from '@angular/core';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { MonthlyReport } from '../monthly_report.service';
+
+// registra plugins
+Chart.register(ChartDataLabels);
+
+const pieLinesPlugin: Plugin<'pie'> = {
+  id: 'pieLines',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+
+    chart.data.datasets.forEach((dataset, datasetIndex) => {
+      const meta = chart.getDatasetMeta(datasetIndex);
+
+      meta.data.forEach((arc, index) => {
+        const value = dataset.data[index] as number;
+
+        // ⚡ usa a mesma regra de display do datalabels
+        if (value < 3) return; 
+
+        const arcElem = arc as any; // força TS aceitar propriedades internas
+        const pos = arcElem.tooltipPosition();
+        const angle = (arcElem.startAngle + arcElem.endAngle) / 2;
+        const radius = arcElem.outerRadius + 20;
+        const x = arcElem.x + radius * Math.cos(angle);
+        const y = arcElem.y + radius * Math.sin(angle);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+      });
+
+    });
+  }
+};
+
+Chart.register(pieLinesPlugin);
+
 
 @Injectable({ providedIn: 'root' })
 export class TotalSmPerOperationsPercentHelper {
-  rawData: any;
-
   chartOptions: ChartOptions<'pie'> = {
-    // responsive: true,
-    // maintainAspectRatio: false,
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: 55 },
     plugins: {
-      legend: {
-        // position: 'center',
-        // align: 'center',
-        labels: {
-          // boxWidth: 20,
-          padding: 0,
-          font: {
-            weight: 'bold',
-            size: 12 // tamanho da letra
-          }
-        }
+      legend: { display: false },
+      datalabels: {
+        color: '#000',
+        formatter: (value: unknown, ctx) => {
+          const numericValue = Number(value);
+          const total = (ctx.chart.data.datasets[0].data as number[])
+            .reduce((sum, val) => sum + Number(val), 0);
+          return ((numericValue / total) * 100).toFixed(1) + '%';
+        },
+        anchor: 'end',
+        align: 'end',
+        clamp: true,
+        offset: 20,
+        display: (ctx) => {
+          const value = ctx.dataset.data[ctx.dataIndex] as number;
+          return value >= 3;
+        },
+        textAlign: 'center',
+        font: { weight: 'bold', size: 12 },
       },
-      // tooltip: {
-      //   callbacks: {
-      //     label: (context) => {
-      //       const label = context.label || '';
-      //       return `${label}`; // não mostra valor nem porcentagem
-      //     }
-      //   }
-      // }
     },
-    layout: {
-      // padding: {
-      //   top: 0,
-      //   right: 0,
-      //   bottom: 0,
-      //   left: 0
-      // }
-    }
   };
 
   build(report: MonthlyReport): ChartConfiguration<'pie'>['data'] {
     try {
       const data = JSON.parse(report.totalSmPerOperationsPercent || '{}');
-      this.rawData = Object.values(data); // guarda para usar no tooltip se quiser
 
-      const labels = Object.keys(data);
-      const valores = labels.map(label => data[label]['Porcentagem (%)']);
-      const backgroundColors = labels.map((_, i) => this.getColor(i));
+      // transforma em array [{ label, value }]
+      const entries = Object.keys(data).map(label => ({
+        label,
+        value: Number(data[label]['Porcentagem (%)'])
+      }));
 
-      // Labels com porcentagem formatada
-      const labelsWithPercent = labels.map((label, i) => `${label}: ${valores[i].toFixed(2)}%`);
+      // pega os 5 primeiros e soma o resto
+      const top5 = entries.slice(0, 5);
+      const others = entries.slice(5);
+      const othersValue = others.reduce((sum, item) => sum + item.value, 0);
+
+      const finalData = [...top5];
+      if (others.length > 0) {
+        finalData.push({ label: 'Outros', value: othersValue });
+      }
+
+      const labels = finalData.map(item => item.label);
+      const valores = finalData.map(item => item.value);
+      const backgroundColors = finalData.map((_, i) => this.getColor(i));
 
       return {
-        // labels: labelsWithPercent,
+        labels,
         datasets: [{
           label: 'Porcentagem (%)',
           data: valores,
           backgroundColor: backgroundColors,
-          hoverOffset: 30
-        }]
+          hoverOffset: 30,
+        }],
       };
     } catch {
-      return {
-        labels: [],
-        datasets: [{
-          label: 'Porcentagem (%)',
-          data: [],
-          backgroundColor: []
-        }]
-      };
+      return { labels: [], datasets: [{ label: 'Porcentagem (%)', data: [], backgroundColor: [] }] };
     }
   }
 

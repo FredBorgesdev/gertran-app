@@ -12,19 +12,27 @@ export interface SmPerOperationsItem {
 })
 export class SmPerOperationsListHelper {
 
+  private colors = [
+    '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC',
+    '#EC407A', '#26C6DA', '#FF7043', '#9CCC65',
+    '#5C6BC0', '#D4E157', '#26A69A', '#FFCA28',
+    '#8D6E63', '#78909C', '#EF5350'
+  ];
+
   constructor() {}
 
-  build(report: MonthlyReport): SmPerOperationsItem[] {
+  build(report: MonthlyReport): (SmPerOperationsItem & { color: string })[] {
     try {
       const data = JSON.parse(report.totalSmPerOperationsPercent || '{}');
 
-      const list: SmPerOperationsItem[] = Object.entries(data).map(([label, obj]: [string, any]) => ({
+      const list: (SmPerOperationsItem & { color: string })[] = Object.entries(data).map(([label, obj]: [string, any], index) => ({
         label,
         total: obj.Total || 0,
-        percentage: obj['Porcentagem (%)'] || 0
+        percentage: obj['Porcentagem (%)'] || 0,
+        color: this.colors[index % this.colors.length]  // adiciona a cor
       }));
 
-      // Ordenar decrescente pelo total e limitar a 15 itens
+      // Ordenar decrescente pelo total e limitar a 5 itens
       return list.sort((a, b) => b.total - a.total).slice(0, 5);
     } catch {
       return [];

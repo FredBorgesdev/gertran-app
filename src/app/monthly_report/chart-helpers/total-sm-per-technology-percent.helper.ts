@@ -7,9 +7,9 @@ export class TotalSmPerTechnologyPercentHelper {
   chartOptions = {
     responsive: true,
     plugins: {
-      legend: { display: false },
+      legend: { display: true },
       title: {
-        display: true,
+        display: false,
         text: 'Total SM por Tecnologia (%)',
       },
     },

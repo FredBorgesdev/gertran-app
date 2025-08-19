@@ -1,40 +1,117 @@
 // chart-helpers/total-sm-per-load-type-percent.helper.ts
 import { Injectable } from '@angular/core';
-import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { Chart, ChartConfiguration, ChartOptions, Plugin } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { MonthlyReport } from '../monthly_report.service';
+
+// registra plugins globais
+Chart.register(ChartDataLabels);
+
+const pieLinesPlugin: Plugin<'pie'> = {
+  id: 'pieLines',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    chart.data.datasets.forEach((dataset, datasetIndex) => {
+      const meta = chart.getDatasetMeta(datasetIndex);
+      meta.data.forEach((arc) => {
+        const arcElem = arc as any;
+        const pos = arcElem.tooltipPosition();
+        const angle = (arcElem.startAngle + arcElem.endAngle) / 2;
+        const radius = arcElem.outerRadius + 20;
+        const x = arcElem.x + radius * Math.cos(angle);
+        const y = arcElem.y + radius * Math.sin(angle);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.restore();
+      });
+    });
+  }
+};
+
+Chart.register(pieLinesPlugin);
 
 @Injectable({ providedIn: 'root' })
 export class TotalSmPerLoadTypePercentHelper {
-  chartOptions: ChartOptions = {
+  chartOptions: ChartOptions<'pie'> = {
     responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: 55 },
     plugins: {
-      legend: { position: 'bottom' }
-    }
+      legend: { display: false },
+      datalabels: {
+        color: '#000',
+        formatter: (value: unknown, ctx) => {
+          const numericValue = Number(value);
+          const total = (ctx.chart.data.datasets[0].data as number[])
+            .reduce((sum, val) => sum + Number(val), 0);
+          return ((numericValue / total) * 100).toFixed(1) + '%';
+        },
+        anchor: 'end',       // aponta para fora do arco
+        align: 'end',        // posiciona fora (na direção da linha)
+        clamp: true,
+        offset: 30,          // distancia maior para sair do gráfico
+        display: (ctx) => {
+          const value = ctx.dataset.data[ctx.dataIndex] as number;
+          return value >= 2; // não mostra valores muito pequenos
+        },
+        textAlign: 'center',
+        font: { weight: 'bold', size: 12 },
+      },
+
+    },
   };
 
   build(report: MonthlyReport): ChartConfiguration<'pie'>['data'] {
     try {
       const data = JSON.parse(report.totalSmPerLoadTypePercent || '{}');
 
-      const labels = Object.keys(data).map(label =>
-        `${label} (${data[label]['Total']} / ${data[label]['Porcentagem (%)'].toFixed(2)}%)`
-      );
+      const entries = Object.keys(data).map(label => ({
+        label,
+        value: Number(data[label]['Porcentagem (%)']),
+      }));
 
-      const valores = Object.keys(data).map(label => data[label]['Porcentagem (%)']);
+      // pega os 5 primeiros e soma os outros
+      const top5 = entries.slice(0, 5);
+      const others = entries.slice(5);
+      const othersValue = others.reduce((sum, item) => sum + item.value, 0);
+
+      const finalData = [...top5];
+      if (others.length > 0) {
+        finalData.push({ label: 'Outros', value: othersValue });
+      }
+
+      const labels = finalData.map(item => item.label);
+      const valores = finalData.map(item => item.value);
+      const backgroundColors = finalData.map((_, i) => this.getColor(i));
 
       return {
         labels,
         datasets: [{
           label: 'Porcentagem (%)',
           data: valores,
-          backgroundColor: [
-            '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC', '#EC407A'
-          ],
-        }]
+          backgroundColor: backgroundColors,
+          hoverOffset: 30,
+        }],
       };
     } catch (err) {
       console.error('Erro ao montar gráfico totalSmPerLoadTypePercent:', err);
-      return { labels: [], datasets: [{ data: [], label: 'Porcentagem (%)', backgroundColor: [] }] };
+      return { labels: [], datasets: [{ label: 'Porcentagem (%)', data: [], backgroundColor: [] }] };
     }
+  }
+
+  private getColor(index: number): string {
+    const colors = [
+      '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC',
+      '#EC407A', '#26C6DA', '#FF7043', '#9CCC65',
+      '#5C6BC0', '#D4E157', '#26A69A', '#FFCA28',
+      '#8D6E63', '#78909C', '#EF5350'
+    ];
+    return colors[index % colors.length];
   }
 }

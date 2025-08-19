@@ -1,7 +1,6 @@
 <div style="max-width: 1250px; margin: 40px auto; padding: 20px;">
-  <h2 style="margin-bottom: 20px; text-align:center;">Relatório por Ano/Mês</h2>
+  <h2 style="margin-bottom: 20px; text-align:center;">GESTÃO E CONTROLE OPERACIONAL</h2>
   <label for="yearMonthSelect" style="display: block; margin-bottom: 8px; font-weight: 600; text-align:center;">
-    Selecione Ano/Mês:
   </label>
   <select id="yearMonthSelect" [(ngModel)]="selectedOption" name="yearMonthSelect" (change)="onYearMonthChange()"
     style="padding: 6px 10px; font-size: 16px; margin: 0 auto 30px; display:block; width: 200px;">
@@ -9,6 +8,28 @@
       {{ option.month | number: '2.0' }} / {{ option.year }}
     </option>
   </select>
+
+
+
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+      <div class="chart-card total_sm_mes">
+        <div class="chart-content">
+          <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
+            Total SM: {{ totalSm }}
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <br>
+  <br>
 
   <div class="charts-section">
     <div class="charts-container">
@@ -25,11 +46,20 @@
         <div class="chart-content" style="text-align:left;font-size: 10px;">
           <ul style="list-style: none; padding: 0;">
             <li *ngFor="let item of smPerOperationsList"
-              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
-              <strong>{{ item.label }}</strong><br>
-              Total: {{ item.total }} <br>
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+              </div>
+
             </li>
           </ul>
+
+
         </div>
       </div>
 
@@ -114,6 +144,28 @@
         </div>
       </div>
 
+
+      <div class="chart-card total_tipo_carga">
+        <h3>SM por Tipo de Carga total</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smPerLoadTypeList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+                <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -121,6 +173,28 @@
   <br>
   <br>
   <br>
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+
+      <div class="chart-card total_nc_mes">
+        <div class="chart-content">
+          <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
+            Total NC: {{ totalNc }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+
+
+
 
   <div class="charts-section">
     <div class="charts-container">
@@ -136,27 +210,33 @@
       <div class="chart-card">
         <h3>Incidentes por Total</h3>
         <div class="chart-content nc_incident_list" style="text-align:left;font-size: 10px;">
-
           <ul style="list-style: none; padding: 0;">
             <li *ngFor="let item of ncIncidentList"
-              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
-              <strong>{{ item.label }}</strong><br>
-              Total: {{ item.total }} <br>
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+              </div>
+
             </li>
           </ul>
-
         </div>
       </div>
 
 
 
-          <div class="chart-card total_nc_mes">
-            <h3>Total NC por Mês</h3>
-            <div class="chart-content">
-              <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions" [type]="'line'">
-              </canvas>
-            </div>
-          </div>
+
+      <div class="chart-card total_nc_mes">
+        <h3>Total NC por Mês</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions" [type]="'line'">
+          </canvas>
+        </div>
+      </div>
 
 
 
