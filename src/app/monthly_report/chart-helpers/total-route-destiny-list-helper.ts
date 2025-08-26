@@ -14,9 +14,9 @@ export class SmRouteDestinyListHelper {
 
   constructor() {}
 
-  build(report: MonthlyReport): SmRouteDestinyItem[] {
+  build(totalSmPerRouteDestiny): SmRouteDestinyItem[] {
     try {
-      const data = JSON.parse(report.totalSmPerRouteDestiny || '{}');
+      const data = JSON.parse(totalSmPerRouteDestiny || '{}');
       const list: SmRouteDestinyItem[] = Object.entries(data).map(([label, obj]: [string, any]) => ({
         label,
         total: obj.Total || 0,

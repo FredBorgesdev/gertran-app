@@ -21,9 +21,9 @@ export class NcIncidentListHelper {
 
   constructor() {}
 
-  build(report: MonthlyReport): NcIncidentItem[] {
+  build(totalNcPerIncidentPercent): NcIncidentItem[] {
     try {
-      const data = JSON.parse(report.totalNcPerIncidentPercent || '{}');
+      const data = JSON.parse(totalNcPerIncidentPercent || '{}');
       const list: NcIncidentItem[] = Object.entries(data).map(([label, obj]: [string, any], index) => ({
         label,
         total: obj.Total || 0,

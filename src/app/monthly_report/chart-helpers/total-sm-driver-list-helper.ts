@@ -14,14 +14,14 @@ export class SmDriverListHelper {
 
   constructor() {}
 
-  build(report: MonthlyReport): SmDriverItem[] {
+  build(totalSmPerDriver): SmDriverItem[] {
     try {
-      const data = JSON.parse(report.totalSmPerDriver || '[]');
+      const data = JSON.parse(totalSmPerDriver || '[]');
       return data.map((item: any) => ({
         Motorista: item.Motorista,
         VeiculoAutomotor: item['Veiculo Automotor'],
         QuantidadeDeViagens: item['Quantidade de Viagens']
-      })).slice(0, 10);
+      })).slice(0, 5);
     } catch {
       return [];
     }

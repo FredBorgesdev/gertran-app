@@ -1,5 +1,15 @@
-<div style="max-width: 1250px; margin: 40px auto; padding: 20px;">
-  <h2 style="margin-bottom: 20px; text-align:center;">GESTÃO E CONTROLE OPERACIONAL</h2>
+<div class="dash-header">
+  <div class="logo">
+    <img src="assets/images/logo/logogertran.png" alt="Gertran">
+  </div>
+
+</div>
+
+<div style="margin: 20px auto; padding: 20px;">
+  <h2 style="margin-bottom: 20px; text-align:center;">
+    GESTÃO E CONTROLE OPERACIONAL
+  </h2>
+
   <label for="yearMonthSelect" style="display: block; margin-bottom: 8px; font-weight: 600; text-align:center;">
   </label>
   <select id="yearMonthSelect" [(ngModel)]="selectedOption" name="yearMonthSelect" (change)="onYearMonthChange()"
@@ -12,10 +22,25 @@
 
 
 
+  <h1>Informações referente ao ano de 2025</h1>
+
+  <h1>{{ customerName }}</h1>
+  <br>
+  <br>
+
+
+  <h3>Todas as informações aqui são obtidas junto as Solicitações de Monitoramento (SM) enviadas via sistema GertranWeb
+    3.0, bem como
+    ocorrências de não conformidades geradas no decorrer do monitoramento enquanto a SM consta em viagem.</h3>
+
+
+  <br>
+  <br>
+
   <div class="charts-section">
     <div class="charts-container">
 
-      <div class="chart-card total_sm_mes">
+      <div class="chart-card card_tela sm" style="background-color: #007bff; color: white;padding-top: 20px;">
         <div class="chart-content">
           <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
             Total SM: {{ totalSm }}
@@ -23,25 +48,31 @@
         </div>
       </div>
 
-
+      <div class="chart-card card_tela" style="background-color: #8b002e; color: white;padding-top: 20px;">
+        <div class="chart-content">
+          <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
+            Total NC: {{ totalNc }}
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
 
   <br>
-  <br>
 
   <div class="charts-section">
     <div class="charts-container">
 
-      <div class="chart-card tipo_operacao">
+      <div class="chart-card card_tela sm">
         <h3>SM por Operação</h3>
         <div class="chart-content">
-          <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'pie'"></canvas>
+          <canvas baseChart [data]="smPerOperationsPiePercent" [options]="smPerOperationsPiePercentChartOptions"
+            [type]="'pie'"></canvas>
         </div>
       </div>
 
-      <div class="chart-card total_operacao">
+      <div class="chart-card card_tela sm">
         <h3>SM por Operação total</h3>
         <div class="chart-content" style="text-align:left;font-size: 10px;">
           <ul style="list-style: none; padding: 0;">
@@ -63,29 +94,14 @@
         </div>
       </div>
 
-
-
-
-      <div class="chart-card total_sm_mes">
+      <div class="chart-card card_tela sm">
         <h3>Total SM por Mês</h3>
         <div class="chart-content">
-          <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
+          <canvas baseChart [data]="smPerMonthline" [options]="smPerMonthlineChartOptions" [type]="'line'"></canvas>
         </div>
       </div>
 
-
-    </div>
-  </div>
-
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="charts-section">
-    <div class="charts-container">
-
-      <div class="chart-card lista_origem">
+      <div class="chart-card card_tela sm">
         <h3>SM por Origem de Rota</h3>
         <div class="chart-content" style="text-align:left;font-size: 10px;">
           <ul style="list-style: none; padding: 0;">
@@ -98,8 +114,7 @@
         </div>
       </div>
 
-
-      <div class="chart-card lista_destino">
+      <div class="chart-card card_tela sm">
         <h3>SM por Destino de Rota</h3>
         <div class="chart-content" style="text-align:left;font-size: 10px;">
           <ul style="list-style: none; padding: 0;">
@@ -112,40 +127,22 @@
         </div>
       </div>
 
-
-
-      <div class="chart-card tecnologia">
+      <div class="chart-card card_tela sm">
         <h3>Total SM por Tecnologia (%)</h3>
         <div class="chart-content">
-          <canvas baseChart [data]="smPerTechnologyBarData" [options]="smPerTechnologyBarOptions" [type]="'bar'">
+          <canvas baseChart [data]="smPerTechnologyBar" [options]="smPerTechnologyBarOptions" [type]="'bar'">
           </canvas>
         </div>
       </div>
 
-
-
-
-    </div>
-  </div>
-
-
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="charts-section">
-    <div class="charts-container">
-
-      <div class="chart-card tipo_carga">
+      <div class="chart-card card_tela sm">
         <h3>SM por Tipo de Carga</h3>
         <div class="chart-content">
           <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
         </div>
       </div>
 
-
-      <div class="chart-card total_tipo_carga">
+      <div class="chart-card card_tela sm">
         <h3>SM por Tipo de Carga total</h3>
         <div class="chart-content" style="text-align:left;font-size: 10px;">
           <ul style="list-style: none; padding: 0;">
@@ -154,11 +151,10 @@
 
               <span [style.background]="item.color"
                 style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
-
               <div>
                 <strong>{{ item.label }}</strong>
                 <div style="margin-top: 2px;">Total: {{ item.total }}</div>
-                <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div>
+                <!-- <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div> -->
               </div>
 
             </li>
@@ -166,48 +162,40 @@
         </div>
       </div>
 
-    </div>
-  </div>
+      <div class="chart-card card_tela sm">
+        <h3>SM por Motorista</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smDriverList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; flex-direction:column; gap: 4px;">
+              <strong>Motorista: {{ item.Motorista }}</strong>
 
-  <br>
-  <br>
-  <br>
-  <br>
+              <div style="display:flex; justify-content: space-between; font-size: 10px;">
+                <span>Veículo: {{ item.VeiculoAutomotor }}</span>
+                <span>Quantidade de Viagens: {{ item.QuantidadeDeViagens }}</span>
+              </div>
 
-  <div class="charts-section">
-    <div class="charts-container">
-
-
-      <div class="chart-card total_nc_mes">
-        <div class="chart-content">
-          <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
-            Total NC: {{ totalNc }}
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
 
-    </div>
-  </div>
+      <div class="chart-card card_tela sm">
+        <h3>Total de Veículos por Mês</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="vehiclesPerMonthLineData" [options]="vehiclesPerMonthLineOptions" [type]="'line'">
+          </canvas>
+        </div>
+      </div>
 
-  <br>
-  <br>
-
-
-
-
-
-  <div class="charts-section">
-    <div class="charts-container">
-
-      <div class="chart-card nc_incident">
+      <div class="chart-card card_tela nc">
         <h3>Percentual de NC por Incidente</h3>
         <div class="chart-content">
-          <canvas baseChart [data]="ncIncidentPieData" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+          <canvas baseChart [data]="ncIncidentPiePercent" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
         </div>
       </div>
 
-
-      <div class="chart-card">
+      <div class="chart-card card_tela nc">
         <h3>Incidentes por Total</h3>
         <div class="chart-content nc_incident_list" style="text-align:left;font-size: 10px;">
           <ul style="list-style: none; padding: 0;">
@@ -227,10 +215,7 @@
         </div>
       </div>
 
-
-
-
-      <div class="chart-card total_nc_mes">
+      <div class="chart-card card_tela nc">
         <h3>Total NC por Mês</h3>
         <div class="chart-content">
           <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions" [type]="'line'">
@@ -238,40 +223,406 @@
         </div>
       </div>
 
+      <div class="chart-card card_tela nc">
+        <h3>NC por Motorista</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of ncPerDriverList"
+              style="margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
 
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong>{{ item.motorista }}</strong>
+                <span>Total NC: {{ item.total }}</span>
+              </div>
 
+              <!-- <div style="margin-top:4px;">
+                <strong>Detalhes:</strong>
+                <ul style="margin:4px 0 0 12px; padding:0; list-style: disc;">
+                  <li *ngFor="let nc of item.detalhes | keyvalue">
+                    {{ nc.key }}: {{ nc.value }}
+                  </li>
+                </ul>
+              </div> -->
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Tipo de Pesquisa</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="searchPieData" [options]="searchPieOptions" [type]="'pie'">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Total tipo Pesquisas</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of searchList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+                <!-- <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Situação funcional Pesquisa</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchPieOptions" [type]="'pie'">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Total situação funcional Pesquisa</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of searchWorkerList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+                <!-- <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <br>
+  <!-- <div class="page-break"></div> Força próxima página -->
+
+  <h1>INFORMAÇÕES REFERENTE AO MÊS DE {{ currentMonthName }}</h1>
+
+  <br>
+  <br>
+
+  <div class="charts-section">
+    <div class="charts-container">
+
+      <div class="chart-card card_tela" style="background-color: #007bff; color: white;padding-top: 20px;">
+        <div class="chart-content">
+          <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
+            Total SM: {{ totalSmCurrentMonth }}
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela" style="background-color: #8b002e; color: white;padding-top: 20px;">
+        <div class="chart-content">
+          <div style="text-align:center; font-size:16px; font-weight:bold; margin-bottom:10px;">
+            Total NC: {{ totalNcCurrentMonth }}
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
 
+  <br>
+  <br>
 
+  <div class="charts-section">
+    <div class="charts-container">
 
-
-
-  <!-- <div class="charts-container">
-
-      <div class="chart-card">
-        <h3>SM por Motorista</h3>
+      <div class="chart-card card_tela sm">
+        <h3>SM por Operação</h3>
         <div class="chart-content">
-          <table style="width:100%; border-collapse: collapse;">
-            <thead>
-              <tr style="background-color:#007BFF; color:#fff;">
-                <th style="padding:8px; border: 1px solid #ddd;">Motorista</th>
-                <th style="padding:8px; border: 1px solid #ddd;">Veículo</th>
-                <th style="padding:8px; border: 1px solid #ddd;">Quantidade de Viagens</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of smDriverList" style="border-bottom: 1px solid #ddd;">
-                <td style="padding:8px;">{{ item.Motorista }}</td>
-                <td style="padding:8px;">{{ item.VeiculoAutomotor }}</td>
-                <td style="padding:8px; text-align:right;">{{ item.QuantidadeDeViagens }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <canvas baseChart [data]="smPerOperationsPiePercentCurrentMonth"
+            [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela sm">
+        <h3>SM por Operação total</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smPerOperationsPiePercentCurrentMonthList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+              </div>
+
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+
+      <div class="chart-card card_tela sm">
+        <h3>Total SM por Tecnologia (%)</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="smPerTechnologyBarCurrentMonth" [options]="smPerTechnologyBarOptions"
+            [type]="'bar'">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela sm">
+        <h3>SM por Motorista</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smDriverCurrentMonthList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; flex-direction:column; gap: 4px;">
+              <strong>Motorista: {{ item.Motorista }}</strong>
+
+              <div style="display:flex; justify-content: space-between; font-size: 10px;">
+                <span>Veículo: {{ item.VeiculoAutomotor }}</span>
+                <span>Quantidade de Viagens: {{ item.QuantidadeDeViagens }}</span>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela sm">
+        <h3>SM por Origem de Rota</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smRouteOriginCurrentMonthList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.label }}</strong><br>
+              Total: {{ item.total }} <br>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela sm">
+        <h3>SM por Destino de Rota</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smRouteDestinyCurrentMonthList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.label }}</strong><br>
+              Total: {{ item.total }} <br>
+            </li>
+          </ul>
         </div>
       </div>
 
 
+      <div class="chart-card card_tela nc">
+        <h3>Percentual de NC por Incidente</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="ncIncidentPiePercentCurrentMonth" [options]="ncIncidentPieOptions"
+            [type]="'pie'"></canvas>
+        </div>
+      </div>
 
-    </div> -->
+      <div class="chart-card card_tela nc">
+        <h3>Incidentes por Total</h3>
+        <div class="chart-content card_tela" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of ncIncidentCurrentMonthList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela nc">
+        <h3>NC por Motorista</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of ncPerDriverCurrentMonthList"
+              style="margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong>{{ item.motorista }}</strong>
+                <span>Total NC: {{ item.total }}</span>
+              </div>
+
+              <!-- <div style="margin-top:4px;">
+                <strong>Detalhes:</strong>
+                <ul style="margin:4px 0 0 12px; padding:0; list-style: disc;">
+                  <li *ngFor="let nc of item.detalhes | keyvalue">
+                    {{ nc.key }}: {{ nc.value }}
+                  </li>
+                </ul>
+              </div> -->
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela nc">
+        <h3>NC de Excesso de Velocidade</h3>
+        <div class="chart-content" style="text-align:left; font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of ncOverSpeedDriverList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+              <strong>{{ item.motorista }}</strong>
+              <div style="margin-top: 2px;">Excessos: {{ item.total }}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Tipo de Pesquisa</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="searchCurrentMonthPieData" [options]="searchPieOptions" [type]="'pie'">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Total tipo Pesquisas</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of searchCurrentMonthList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+                <!-- <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Situação funcional Pesquisas</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchPieOptions" [type]="'pie'">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card card_tela pes">
+        <h3>Total situação funcional Pesquisas</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of searchWorkerList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+                <!-- <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<!-- <div class="chart-card card_tela">
+        <h3>SM por Placa</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smPerPlatesPercentList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; justify-content:space-between;">
+              <strong>{{ item.placa }}</strong>
+              <span>Total: {{ item.total }}</span>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+
+
+
+<!-- <div class="chart-card card_tela">
+        <h3>NC por Placa</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of ncPerPlatesList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:center; gap: 10px;">
+              <strong>{{ item.label }}</strong>
+              <div>Total: {{ item.total }}</div>
+            </li>
+
+          </ul>
+        </div>
+      </div> -->
+
+
+
+
+
+
+
+<!-- 
+      <div class="chart-card card_tela">
+        <h3>SM por Tipo de Carga</h3>
+        <div class="chart-content">
+          <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+        </div>
+      </div> -->
+
+<!-- <div class="chart-card card_tela">
+        <h3>SM por Tipo de Carga total</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smPerLoadTypeList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; align-items:flex-start;">
+
+              <span [style.background]="item.color"
+                style="width: 12px; height: 12px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+              <div>
+                <strong>{{ item.label }}</strong>
+                <div style="margin-top: 2px;">Total: {{ item.total }}</div>
+                <div style="margin-top: 2px;">{{ item.percentage.toFixed(2) }}%</div>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div> -->
+
+
+
+<!-- <div class="chart-card card_tela">
+        <h3>SM por Placa</h3>
+        <div class="chart-content" style="text-align:left;font-size: 10px;">
+          <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let item of smPerPlatesPercentList"
+              style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 8px; display:flex; justify-content:space-between;">
+              <strong>{{ item.placa }}</strong>
+              <span>Total: {{ item.total }}</span>
+            </li>
+          </ul>
+        </div>
+      </div> -->

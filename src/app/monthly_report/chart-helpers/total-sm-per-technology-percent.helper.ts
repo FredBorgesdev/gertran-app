@@ -25,10 +25,10 @@ export class TotalSmPerTechnologyPercentHelper {
     },
   };
 
-  build(report: any) {
+  build(totalSmPerTechnologyPercent) {
     let dataParsed;
     try {
-      dataParsed = JSON.parse(report.totalSmPerTechnologyPercent || '[]');
+      dataParsed = JSON.parse(totalSmPerTechnologyPercent || '[]');
     } catch {
       dataParsed = [];
     }

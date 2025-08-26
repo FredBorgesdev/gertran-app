@@ -72,9 +72,9 @@ export class TotalNcPerIncidentPercentHelper {
     },
   };
 
-  build(report: MonthlyReport): ChartConfiguration<'pie'>['data'] {
+  build(totalNcPerIncidentPercent): ChartConfiguration<'pie'>['data'] {
     try {
-      const data = JSON.parse(report.totalNcPerIncidentPercent || '{}');
+      const data = JSON.parse(totalNcPerIncidentPercent || '{}');
 
       // transforma em array [{ label, value }]
       const entries = Object.keys(data).map(label => ({

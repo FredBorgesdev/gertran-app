@@ -74,9 +74,9 @@ export class TotalSmPerOperationsPercentHelper {
     },
   };
 
-  build(report: MonthlyReport): ChartConfiguration<'pie'>['data'] {
+  build(totalSmPerOperationsPercent): ChartConfiguration<'pie'>['data'] {
     try {
-      const data = JSON.parse(report.totalSmPerOperationsPercent || '{}');
+      const data = JSON.parse(totalSmPerOperationsPercent || '{}');
 
       // transforma em array [{ label, value }]
       const entries = Object.keys(data).map(label => ({

@@ -14,9 +14,9 @@ export class SmRouteOriginListHelper {
 
   constructor() {}
 
-  build(report: MonthlyReport): SmRouteOriginItem[] {
+  build(totalSmPerRouteOrigin): SmRouteOriginItem[] {
     try {
-      const data = JSON.parse(report.totalSmPerRouteOrigin || '{}');
+      const data = JSON.parse(totalSmPerRouteOrigin || '{}');
       const list: SmRouteOriginItem[] = Object.entries(data).map(([label, obj]: [string, any]) => ({
         label,
         total: obj.Total || 0,

@@ -4,6 +4,23 @@ import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared
 import { Observable } from 'rxjs';
 
 export interface MonthlyReport {
+  customer: any;
+  totalSearchCurrentMonthPercent: any;
+  totalSearchPercent: string;
+  totalVehiclesPerMonth: any;
+  totalNcCurrentMonthPerDrivers: any;
+  totalNcCurrentMonthPerIncidentPercent: any;
+  totalNcCurrentMonth: number;
+  totalSmCurrentMonthPerRouteDestiny: any;
+  totalSmCurrentMonthPerRouteOrigin: any;
+  totalSmCurrentMonthPerDriver: any;
+  totalSmCurrentMonthPerTechnologyPercent: any;
+  totalSmPerTechnologyPercent: any;
+  totalSmCurrentMonthPerOperationsPercent: any;
+  totalSmCurrentMonth: number;
+  totalSmPerPlatesPercent: any;
+  totalNcPerDrivers: string;
+  totalNcPerPlatesPercent: string;
   totalNc: number;
   totalSmPerPlate: string;
   totalSmPerDriver: string;

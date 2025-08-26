@@ -21,9 +21,9 @@ export class SmPerOperationsListHelper {
 
   constructor() {}
 
-  build(report: MonthlyReport): (SmPerOperationsItem & { color: string })[] {
+  build(totalSmPerOperationsPercent): (SmPerOperationsItem & { color: string })[] {
     try {
-      const data = JSON.parse(report.totalSmPerOperationsPercent || '{}');
+      const data = JSON.parse(totalSmPerOperationsPercent || '{}');
 
       const list: (SmPerOperationsItem & { color: string })[] = Object.entries(data).map(([label, obj]: [string, any], index) => ({
         label,
