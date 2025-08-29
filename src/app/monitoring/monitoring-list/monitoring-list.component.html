@@ -288,6 +288,9 @@
           <span *ngIf="user.isGertranStaff && item.monitoringRequest?.isStoppedInRiskZone" style="color: red;">
             + Em área de risco
           </span>
+          <span *ngIf="user.isGertranStaff && item.monitoringRequest?.hasInformedEndTrip" style="color: rgb(10, 12, 145);">
+            + FIM DE VIAGEM NO DESTINO
+          </span>
         </td>
         <!-- <td
         class="text-dark"
