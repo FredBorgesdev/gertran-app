@@ -224,7 +224,7 @@ export class IncidentDetailsModalComponent {
 
   // get trackerId(): string {
   //   return this.incident.monitoringRequest.truck.vehicle.trackers?.[0]?.trackerId ?? '';
-  // } #hmn*
+  // } 
 
   get firstWagonPlate(): string {
     return this.incident.monitoringRequest.wagons[0]?.vehicle.plate ?? '';

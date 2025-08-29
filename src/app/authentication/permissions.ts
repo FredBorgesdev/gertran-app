@@ -325,4 +325,5 @@ export enum Permissions {
   GERTRAN_DIRECT_VIEW_GERTRANDIRECT = 'gertran_direct.view_gertrandirect',
   MONITORINGREQUESTPLATEOUTGRID_VIEW_GERTRANDIRECT = 'monitoring.view_monitoringrequestplateoutgrid',
   REPORTS_CAN_VIEW_CLOSURE_REPORT = 'reports.view_monitoring_request_closure_report',
+  MONTHLY_REPORT_CAN_VIEW_MONTHLY_REPORT = 'monthly_report.view_monthlyreport',
 }

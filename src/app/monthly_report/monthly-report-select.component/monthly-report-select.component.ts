@@ -118,14 +118,15 @@ export class MonthlyReportSelectComponent implements OnInit {
   searchPieData: any;
   searchList: { label: string; total: number; percentage: number; color: string }[] = [];
 
-
   searchCurrentMonthPieData: any;
   searchCurrentMonthList: { label: string; total: number; percentage: number; color: string }[] = [];
 
-
-
   searchWorkerPercentPieData: any
   searchWorkerList: { label: string; total: number; percentage: number; color: string }[] = [];
+  
+  searchWorkerCurrentMonthPercentPieData: any
+  searchWorkerCurrentMonthList: { label: string; total: number; percentage: number; color: string }[] = [];
+  
   customerName: string = '';
 
 
@@ -190,10 +191,6 @@ export class MonthlyReportSelectComponent implements OnInit {
     }
   }
 
-
-
-
-
   sumSearchPercent(data: any[]): any {
     return data.reduce((acc, item) => {
       for (const key in item) {
@@ -208,20 +205,11 @@ export class MonthlyReportSelectComponent implements OnInit {
   loadReports(year: number, month: number) {
     this.monthlyReportService.getByYearMonth(year, month, this.pagination).subscribe({
       next: (response: GetAllResponse<MonthlyReport>) => {
-
-
         this.currentMonthName = this.monthNames[month - 1]; // month vem de 1 a 12
-
         this.reports = response.results;
 
-
-
         const report = this.reports[0] || {} as MonthlyReport;
-
-
-        console.log(report)
         this.customerName = report.customer?.tradingName
-
 
         this.totalSm = report.totalSm || 0;
         this.totalSmCurrentMonth = report.totalSmCurrentMonth || 0;
@@ -235,7 +223,6 @@ export class MonthlyReportSelectComponent implements OnInit {
         this.ncIncidentPieOptions = this.ncIncidentHelper.chartOptions;
         this.vehiclesPerMonthLineOptions = this.vehiclesPerMonthLineHelper.chartOptions;
 
-
         // do começo do ano
         this.smPerMonthline = this.smPerMonthHelper.build(report);
         this.smPerOperationsPiePercent = this.smOperationsHelper.build(report.totalSmPerOperationsPercent);
@@ -246,11 +233,9 @@ export class MonthlyReportSelectComponent implements OnInit {
         this.smRouteDestinyList = this.smRouteDestinyHelper.build(report.totalSmPerRouteDestiny);
         this.vehiclesPerMonthLineData = this.vehiclesPerMonthLineHelper.build(report.totalVehiclesPerMonth);
 
-
         this.ncIncidentPiePercent = this.ncIncidentHelper.build(report.totalNcPerIncidentPercent);
         this.ncIncidentList = this.ncIncidentHelperList.build(report.totalNcPerIncidentPercent);
         this.ncPerDriverList = this.ncPerDriverListHelper.build(report.totalNcPerDrivers);
-
 
         //mes atual
         this.smPerOperationsPiePercentCurrentMonth = this.smOperationsHelper.build(report.totalSmCurrentMonthPerOperationsPercent)
@@ -264,13 +249,8 @@ export class MonthlyReportSelectComponent implements OnInit {
         this.ncIncidentCurrentMonthList = this.ncIncidentHelperList.build(report.totalNcCurrentMonthPerIncidentPercent);
         this.ncPerDriverCurrentMonthList = this.ncPerDriverListHelper.build(report.totalNcCurrentMonthPerDrivers);
 
-
-
         this.pieChartData = this.loadTypeHelper.build(report);
         this.pieChartOptions = this.loadTypeHelper.chartOptions;
-
-
-
 
         this.ncPerMonthLineData = this.ncPerMonthLineHelper.build(report);
         this.ncPerMonthLineOptions = this.ncPerMonthLineHelper.chartOptions;
@@ -289,20 +269,12 @@ export class MonthlyReportSelectComponent implements OnInit {
 
         this.ncOverSpeedDriverList = this.ncOverSpeedDriverListHelper.build(report.totalNcPerDrivers);
 
-
         const summedSearch = this.sumSearchPercent(JSON.parse(report.totalSearchPercent));
-
 
         this.searchPieOptions = this.searchHelper.chartOptions;
 
-
-
-
-
-
         this.searchPieData = this.searchHelper.build(summedSearch);
         this.searchList = this.searchListHelper.build(summedSearch)
-
 
         this.searchCurrentMonthPieData = this.searchHelper.build(JSON.parse(report.totalSearchCurrentMonthPercent)[0]);
         this.searchCurrentMonthList = this.searchListHelper.build(JSON.parse(report.totalSearchCurrentMonthPercent)[0]);
@@ -310,8 +282,8 @@ export class MonthlyReportSelectComponent implements OnInit {
         this.searchWorkerPercentPieData = this.searchWorkerPercentHelper.build(summedSearch)
         this.searchWorkerList = this.searchWorkerListHelper.build(summedSearch)
 
-
-
+        this.searchWorkerCurrentMonthPercentPieData = this.searchWorkerPercentHelper.build(JSON.parse(report.totalSearchCurrentMonthPercent)[0])
+        this.searchWorkerCurrentMonthList = this.searchWorkerListHelper.build(JSON.parse(report.totalSearchCurrentMonthPercent)[0])
       }
     });
   }

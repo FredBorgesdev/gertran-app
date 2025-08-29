@@ -346,6 +346,16 @@ export const ROUTES: SideNavInterface[] = [
         permission: Permissions.HISTORICAL_MONITORING_REQUEST_VIEW
       },
       {
+        path: '/monthly-report/monthly_report',
+        title: 'Relatório gráfico',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'bar-chart',
+        submenu: [],
+        gertranStaffOnly: true,
+        permission: Permissions.MONTHLY_REPORT_CAN_VIEW_MONTHLY_REPORT
+      },
+      {
         path: '/automations/automations-list',
         title: 'Automações',
         iconType: 'nzIcon',
