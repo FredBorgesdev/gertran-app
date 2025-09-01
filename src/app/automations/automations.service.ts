@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import ApiService, { Choice, DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface Automation {
   id: string;
@@ -42,14 +42,14 @@ export class AutomationsService implements ApiService<Automation> {
   }
 
   getAll(pagination: Pagination): Observable<GetAllResponse<Automation>> {
-    const params = {limit: pagination.limit || DEFAULT_LIMIT};
+    const params = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination?.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
       });
     }
 
-    return this.http.get<GetAllResponse<Automation>>('settings/automations', {params});
+    return this.http.get<GetAllResponse<Automation>>('settings/automations', { params });
   }
 
   get(id: string): Observable<Automation> {
@@ -80,12 +80,19 @@ export class AutomationsService implements ApiService<Automation> {
     return this.http.get<Choice[]>('settings/automations/commands');
   }
 
-  getAutomationsByPlate(plate: string): Observable<GetAllResponse<Automation>> {
-    return this.http.get<GetAllResponse<Automation>>(`settings/automations/history`, {
-      params: {
-        plate,
-        limit: 999
-      }
-    });
+  getAutomationsByPlate(plate: string, terminal: string, pagination?: Pagination): Observable<GetAllResponse<Automation>> {
+    const params: any = { terminal, limit: pagination?.limit || DEFAULT_LIMIT };
+
+    if (plate) {
+      params.plate = plate;
+    }
+
+    if (pagination?.url) {
+      new URL(pagination.url).searchParams.forEach((value, key) => {
+        params[key] = value;
+      });
+    }
+
+    return this.http.get<GetAllResponse<Automation>>(`settings/automations/history`, { params });
   }
 }

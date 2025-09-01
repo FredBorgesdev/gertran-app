@@ -1,21 +1,27 @@
 <nz-table
   #table
-  [nzData]="automations"
+  nzSize="small"
+  [nzData]="automations?.results"
+  [nzTotal]="automations?.count"
+  [nzPageSize]="automations?.limit"
+  [nzPageIndex]="page"
+  [nzFrontPagination]="false"
+  (nzQueryParams)="handleQueryParamsChange($event)"
+  [nzLoading]="isLoading"
 >
   <thead>
     <tr>
       <th>Data</th>
-      <th>Automação</th>
       <th>Descrição</th>
-      <th>Comandos enviados</th>
+      <th>Placa</th>
     </tr>
   </thead>
 
   <tbody>
     <tr *ngFor="let item of table.data">
       <td>{{ item.sentAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-      <td>{{ getAutomationType(item.automationType) }}</td>
       <td>{{ item.description }}</td>
-      <td>{{ getCommandsSent(item.commandSentHistory) }}</td>
+      <td>{{ item.plate }}</td>
     </tr>
+  </tbody>
 </nz-table>

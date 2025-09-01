@@ -22,7 +22,9 @@ export class UpdateObservationsModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.observation = this.item?.truck.observations ?? this.currentObservation;
+    if (this.item?.truck.observations) {
+      this.observation = this.item?.truck.observations
+    }
   }
 
   save(): void {

@@ -555,12 +555,13 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     return item.events[item.events.length - 1];
   }
 
-  openAutomationModal(position: Position): void {
+  openAutomationModal(position?: Position): void {
     this.modal.create({
       nzTitle: 'Automação',
       nzContent: MonitoringEventModalComponent,
       nzComponentParams: {
-        plate: position.vehiclePlate,
+        terminal: this.validateForm.get('terminal').value,
+        plate: position?.vehiclePlate,
       },
       nzWidth: '90%',
       nzOkText: 'Fechar',

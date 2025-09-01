@@ -1,6 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Position} from '../positions.service';
-import {Automation, AutomationsService} from '../../automations/automations.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { GetAllResponse, getCurrentPage } from '../../shared/services/api.service';
+import { Position } from '../positions.service';
+import { Automation, AutomationsService } from '../../automations/automations.service';
 
 @Component({
   selector: 'app-monitoring-event-modal',
@@ -8,19 +10,54 @@ import {Automation, AutomationsService} from '../../automations/automations.serv
   styleUrls: ['./monitoring-event-modal.component.css']
 })
 export class MonitoringEventModalComponent implements OnInit {
-  @Input() plate: Position['vehiclePlate'];
+  @Input() terminal: string;
+  @Input() plate: string;
 
-  automations: Automation[] = [];
+  automations: GetAllResponse<Automation>;
+  isLoading = false;
 
-  constructor(
-    private automationsService: AutomationsService,
-  ) {
-  }
+  constructor(private automationsService: AutomationsService) {}
 
   ngOnInit(): void {
-    this.automationsService.getAutomationsByPlate(this.plate).subscribe(automations => {
-      this.automations = automations.results;
-    });
+    this.loadAutomations();
+  }
+
+  loadAutomations(url?: string): void {
+    this.isLoading = true;
+    this.automationsService
+      .getAutomationsByPlate (this.plate, this.terminal, { url })
+      .subscribe(
+        (data) => {
+          this.automations = data;
+          this.isLoading = false;
+        },
+        () => (this.isLoading = false)
+      );
+  }
+
+  get page(): number {
+    return getCurrentPage(this.automations);
+  }
+
+  handleQueryParamsChange(params: NzTableQueryParams): void {
+    if (params.pageIndex < this.page) {
+      const url = this.replaceOffsetWithPage(
+        this.automations.previous,
+        params.pageIndex
+      );
+      this.loadAutomations(url);
+    } else if (params.pageIndex > this.page) {
+      const url = this.replaceOffsetWithPage(
+        this.automations.next,
+        params.pageIndex
+      );
+      this.loadAutomations(url);
+    }
+  }
+
+  replaceOffsetWithPage(url: string, page: number): string {
+    const limit = +url.match(/limit=\d+/)[0].split('=')[1];
+    return url.replace(/offset=\d+/, `offset=${limit * page - limit}`);
   }
 
   getAutomationType(automation: string): string {
@@ -45,6 +82,6 @@ export class MonitoringEventModalComponent implements OnInit {
   }
 
   getCommandsSent(commandSentHistory: any): string {
-    return commandSentHistory.map(command => command.code).join(', ');
+    return commandSentHistory.map((command) => command.code).join(', ');
   }
 }

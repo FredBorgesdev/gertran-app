@@ -30,10 +30,14 @@
             formControlName="hideOld"
             class="font-size-12"
           >Ocultar antigos</label> -->
-          <label nz-checkbox formControlName="travelling" (ngModelChange)="loadPositions()" class="font-size-12 m-l-0">Em
-            viagem</label>
+          <label nz-checkbox formControlName="travelling" (ngModelChange)="loadPositions()" class="font-size-12 m-l-0">Em viagem</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 m-b-10" data-testid="alerts" class="alert-button-group">
+          <!-- <button nzSize="small" nz-button nzType="secondary" class="m-r-5" (click)="openAutomationModal()"
+            *ngIf="user.isGertranStaff">
+            Automações
+          </button> -->
+
           <button nzSize="small" nz-button nzType="secondary" class="m-r-5" (click)="openAlertModal('info')"
             *ngIf="user.isGertranStaff">
             ({{ alertsCount?.info ?? 0 }}) Mensagens
@@ -192,14 +196,14 @@
 
         <td class="bg-gray text-dark" *ngIf="user.isGertranStaff">
           <ng-container *ngIf="item.monitoringRequest?.loadValue <= 500000">
-            <img width="16" src="assets/icons/up-arrow-green.png" alt="Green Key" >
+            <img width="16" src="assets/icons/up-arrow-green.png" alt="Green Key">
           </ng-container>
           <ng-container
             *ngIf="item.monitoringRequest?.loadValue > 500000 && item.monitoringRequest?.loadValue <= 900000">
-            <img width="16" src="assets/icons/up-arrow-yellow.png" alt="Yellow Key" >
+            <img width="16" src="assets/icons/up-arrow-yellow.png" alt="Yellow Key">
           </ng-container>
           <ng-container *ngIf="item.monitoringRequest?.loadValue > 900000">
-            <img width="16" src="assets/icons/up-arrow-red.png" alt="Red Key" >
+            <img width="16" src="assets/icons/up-arrow-red.png" alt="Red Key">
           </ng-container>
         </td>
 
@@ -231,7 +235,7 @@
           style="font-size: 20px"
         ></span>
       </td> -->
-      <!-- <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('info', item.monitoringRequest?.id)">
+        <!-- <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('info', item.monitoringRequest?.id)">
         <span
           nz-icon
           nzTheme="fill"
@@ -239,7 +243,7 @@
         >2</span>
       </td>
 
-      <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('warning', item.monitoringRequest?.id)">
+      <td style="cursor: pointer" (click)="openAutomationModal(item)">
         <span
           nz-icon
           nzType="info-circle"
@@ -248,6 +252,14 @@
         ></span>
       </td>
 
+      <td style="cursor: pointer" (click)="openAutomationModal(item)">
+        <span
+          nz-icon
+          nzType="info-circle"
+          nzTheme="fill"
+          [style]="'font-size: 16px; color: black;'"
+        ></span>
+      </td>
 
       <td style="cursor: pointer" (click)="openAlertModalByMonitoringRequest('danger', item.monitoringRequest?.id)">
         <span
