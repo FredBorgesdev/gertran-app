@@ -353,7 +353,7 @@ export const ROUTES: SideNavInterface[] = [
         icon: 'bar-chart',
         submenu: [],
         gertranStaffOnly: true,
-        permission: Permissions.MONTHLY_REPORT_CAN_VIEW_MONTHLY_REPORT
+        // permission: Permissions.MONTHLY_REPORT_CAN_VIEW_MONTHLY_REPORT
       },
       {
         path: '/automations/automations-list',
