@@ -124,15 +124,33 @@ export class BaseVehicleFilterComponent implements OnInit {
     this.selectableTrucksService.loadMoreTrucks({customerId});
   }
 
+  // generateExcel(): void {
+  //   if (!this.rows || this.rows.length === 0) {
+  //     this.message.error('Não há dados para exportar');
+  //     return;
+  //   }
+  //   const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
+  //   console.log(this.xlsxValues);
+  //   const values = this.xlsxValues.length > 0 ? this.xlsxValues : this.rows;
+  //   // this.xlsxExporterService.generate(fileNameWithPlate, values);
+  // }
+
+
   generateExcel(): void {
     if (!this.rows || this.rows.length === 0) {
       this.message.error('Não há dados para exportar');
       return;
     }
-    const fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
 
-    const values = this.xlsxValues.length > 0 ? this.xlsxValues : this.rows;
-    this.xlsxExporterService.generate(fileNameWithPlate, values);
+    let fileNameWithPlate = ''
+    if(this.validateForm.value.plate == undefined){
+      fileNameWithPlate = `${this.fileName}`;
+
+    }else{
+      fileNameWithPlate = `${this.fileName} - ${this.validateForm.value.plate}`;
+    }
+
+    this.xlsxExporterService.generate(fileNameWithPlate, this.rows);
   }
 
   get selectedCustomerName(): string {
