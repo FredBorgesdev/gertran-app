@@ -3,17 +3,17 @@
   [nzData]="monitoringRequests"
   class="custom-table"
   [nzFrontPagination]="true"
+  [nzPageSize]="10"
   nzSize="small"
   nzTableLayout="fixed"
 >
   <thead>
   <tr>
-    <th class="text-center table-header" style="width: 4%;">SM</th>
+    <th class="text-center table-header" style="width: 10%;">DATA/HORA</th>
     <th class="text-center table-header" style="width: 9%;">Placa</th>
-    <th class="text-center table-header" style="width: 9%;">Tec</th>
-    <th class="text-center table-header" style="width: 10%;">Origem</th>
-    <th class="text-center table-header" style="width: 10%;">Destino</th>
-    <th class="text-center table-header" style="width: 10%;">Status</th>
+    <th class="text-center table-header" style="width: 9%;">Tecnologia</th>
+    <th class="text-center table-header" style="width: 15%;">CLIENTE</th>
+    <th class="text-center table-header" style="width: 12%;">ATUALIZAÇÃO</th>
   </tr>
   </thead>
 
@@ -22,12 +22,15 @@
     *ngFor="let data of table.data; index as i"
     [class]="getRowName(data)"
   >
-    <td class="text-center max-width-cell" nzEllipsis nz-tooltip [nzTooltipTitle]="data.id | id">{{ data.id | id }}</td>
-    <td class="text-center">{{ data.truck.vehicle.plate }}</td>
-    <td class="text-center">{{ data.trackerTechnology !== null ? data.trackerTechnology.name : '' }}</td>
-    <td class="text-center max-width-cell" nzEllipsis nz-tooltip [nzTooltipTitle]="getOrigin(data)">{{ getOrigin(data) }}</td>
-    <td class="text-center max-width-cell" nzEllipsis nz-tooltip [nzTooltipTitle]="getDestination(data)">{{ getDestination(data) }}</td>
-    <td class="text-center">{{ getLocalizedStatus(data.status) }}</td>
+    <td class="text-center">{{ data.createdAt | date:'dd/MM HH:mm' }}</td>
+    
+    <td class="text-center">{{ data.truck?.vehicle?.plate ?? '-' }}</td>
+    
+    <td class="text-center">{{ data.trackerTechnology?.name ?? '-' }}</td>
+    
+    <td class="text-center">{{ data.customer.tradingName }}</td>
+    
+    <td class=" text-center">{{ getUpdateDiff(data) }}</td>
   </tr>
   </tbody>
 </nz-table>

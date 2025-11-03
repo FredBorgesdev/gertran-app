@@ -71,7 +71,7 @@ export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy, OnC
       limit: 20
     }, {
       ...this.filters,
-      status: Status.UNDER_REVIEW,
+    status: Status.UNDER_REVIEW,
     }).subscribe(response => {
       this.underReviewResponse = response;
     });

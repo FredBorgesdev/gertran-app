@@ -85,7 +85,8 @@ export class CreateIncidentModalComponent extends BaseCrudFormComponent<Incident
     {label: 'Falha no espelhamento', value: 'mirror_failure'},
     {label: 'Interferencia no monitoramento', value: 'monitoring_interference'},
     {label: 'Não parou no ponto de apoio', value: 'did_not_stop_at_the_support_point'},
-    {label: 'Parada em área de risco não autorizada', value: 'unauthorized_risk_stop'}
+    {label: 'Parada em área de risco não autorizada', value: 'unauthorized_risk_stop'},
+    {label: 'Fim de viagem fora do destino', value: 'finish_travel_out_of_destination'}
   ];
   validateForm: FormGroup;
 
