@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {CustomerFilter} from '../filters/base-customer-filter/base-customer-filter.component';
 import {MonitoringRequestBait, ReportsService} from '../reports.service';
 
@@ -12,7 +12,8 @@ export class BaitsComponent implements OnInit {
   monitoringRequestsBaits: MonitoringRequestBait[] = [];
 
   constructor(
-    private reportService: ReportsService
+    private reportService: ReportsService,
+    private cdRef: ChangeDetectorRef
   ) {
   }
 
@@ -25,10 +26,20 @@ export class BaitsComponent implements OnInit {
       next: (monitoringRequestBaits) => {
         this.monitoringRequestsBaits = monitoringRequestBaits;
         this.isLoading = false;
+        
+        // setTimeout(0) para garantir que o CD rode DEPOIS que a função subscribe() terminar
+        setTimeout(() => {
+             this.cdRef.detectChanges();
+        }, 0); 
       },
       error: (err) => {
         console.error('Erro ao gerar relatório de iscas:', err);
         this.isLoading = false;
+        
+        // Garante que o spinner de erro pare também
+        setTimeout(() => {
+             this.cdRef.detectChanges();
+        }, 0);
       }
     });
   }
