@@ -21,9 +21,15 @@ export class BaitsComponent implements OnInit {
 
   generateReport(form: CustomerFilter): void {
     this.isLoading = true;
-    this.reportService.getBaits(form).subscribe((monitoringRequestBaits) => {
-      this.monitoringRequestsBaits = monitoringRequestBaits;
-      this.isLoading = false;
+    this.reportService.getBaits(form).subscribe({
+      next: (monitoringRequestBaits) => {
+        this.monitoringRequestsBaits = monitoringRequestBaits;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Erro ao gerar relatório de iscas:', err);
+        this.isLoading = false;
+      }
     });
   }
 }

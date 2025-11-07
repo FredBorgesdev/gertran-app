@@ -125,6 +125,10 @@ export type MonitoringRequestBait = MonitoringRequests & {
   installationLocation: string;
   technology: string;
   serialNumber: string;
+  truckPlate: string;
+  travelStartDate: string;
+  origin: string;
+  destiny: string;
 };
 
 export type MacroVehicleReport = {

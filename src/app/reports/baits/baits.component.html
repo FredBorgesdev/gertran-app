@@ -38,6 +38,10 @@
     <thead>
     <tr>
       <th>Código</th>
+      <th>Placa Cavalo</th>
+      <th>Data</th>
+      <th>Origem</th>
+      <th>Destino</th>
       <th>Local de instalação</th>
       <th>Tecnologia</th>
       <th>Número de série</th>
@@ -47,6 +51,10 @@
     <tbody>
     <tr *ngFor="let data of table.data; index as i">
       <td>{{ data.id | id }}</td>
+      <td>{{ data.truckPlate }}</td>
+      <td>{{ data.travelStartDate | date: 'dd/MM/yyyy'}}</td> 
+      <td>{{ data.origin }}</td>
+      <td>{{ data.destiny }}</td>
       <td>{{ data.installationLocation }}</td>
       <td>{{ data.technology?.name }}</td>
       <td>{{ data.serialNumber }}</td>
