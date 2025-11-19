@@ -68,7 +68,7 @@ export class ClientMonitoringRequestsComponent implements OnInit, OnDestroy, OnC
   loadUnderReview(url?: string): void {
     this.monitoringRequestService.getAll({
       url,
-      limit: 20
+      limit: 100
     }, {
       ...this.filters,
     status: Status.UNDER_REVIEW,

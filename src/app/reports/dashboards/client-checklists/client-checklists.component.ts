@@ -56,6 +56,7 @@ export class ClientChecklistsComponent extends BaseCrudListComponent<Checklist> 
       takeUntil(this.stopRefreshing)
     ).subscribe(() => {
       this.loadResources();
+      
     });
 
     this.currentTimeInterval = setInterval(() => {
@@ -80,6 +81,15 @@ export class ClientChecklistsComponent extends BaseCrudListComponent<Checklist> 
         return 0;
       }
     );
+  }
+
+  loadResources(): void {
+    this.service.getAll({
+      limit: 10
+    }).subscribe(response => {
+      this.resources = response;
+      this.performPostLoadActions();
+    });
   }
 
   ngOnDestroy(): void {

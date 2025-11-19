@@ -21,6 +21,11 @@
   </span>
 </div>
 
+<!-- <div style="border: 2px solid red; padding: 10px; margin-bottom: 10px; background: #ffe6e6;">
+  <strong>DEBUG DO PAI:</strong> <br>
+  Total de itens (results) recebidos da API: **{{ underReviewResponse?.results?.length ?? 'Carregando...' }}**
+</div> -->
+
 <app-monitoring-requests-table-client
   [underReview]="underReviewResponse"
   (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"

@@ -163,10 +163,10 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     window.location.pathname == '/reports/dashboards/client' ||
     window.location.pathname == '/reports/dashboards/tc-gertran' 
     )
-      pagination.limit = 3
+      pagination.limit = 10
 
     if(window.location.pathname == '/reports/dashboards/tc3')
-      pagination.limit = 5
+      pagination.limit = 10
 
     const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
     if (pagination.url) {
