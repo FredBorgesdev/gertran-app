@@ -204,8 +204,10 @@ export class PointsTabComponent implements OnInit {
       );
       const state = stateObj ? stateObj.abbreviation : 'XX'; // Valor padrão 'XX' caso não encontre o estado.
 
-    const latitude = Number(nominatimAddress.lat).toFixed(6);
-    const longitude = Number(nominatimAddress.lon).toFixed(6);
+    const latValue = nominatimAddress.lat ?? nominatimAddress.latitude;
+    const lonValue = nominatimAddress.lon ?? nominatimAddress.longitude;
+    const latitude = Number(latValue).toFixed(6);
+    const longitude = Number(lonValue).toFixed(6);
     const zipCode = nominatimAddress.address.postcode;
 
     formGroup.patchValue({
@@ -346,7 +348,10 @@ export class PointsTabComponent implements OnInit {
     this._routeCoordinates = routeCoordinates.coordinates;
 
     const operations = pointsWithOrder.map((point) => {
-      const address = point.address instanceof Object ? point.address.displayName : point.address;
+      // Nominatim uses `display_name`; keep compatibility with possible `displayName`
+      const address = point.address instanceof Object
+        ? (point.address.displayName ?? point.address.display_name)
+        : point.address;
       const payload = {
         ...point,
         address: AddressSelectComponent.enhanceOutputAddress(address)

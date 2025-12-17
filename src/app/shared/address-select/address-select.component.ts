@@ -61,10 +61,14 @@ export class AddressSelectComponent implements OnInit {
     this.isLoading = true;
     this.nominatimService.query(query).subscribe(
       (data: any[]) => {
-        this.options = data.map((item: any) => ({
-          label: AddressSelectComponent.enhanceOutputAddress(item.displayName, this.houseNumber),
-          value: item,
-        }));
+        this.options = data.map((item: any) => {
+          // Nominatim typically returns `display_name`; keep backward compatibility with `displayName`
+          const display = item?.displayName ?? item?.display_name ?? '';
+          return {
+            label: AddressSelectComponent.enhanceOutputAddress(display, this.houseNumber),
+            value: item,
+          };
+        });
         this.isLoading = false;
       },
       () => {
@@ -94,7 +98,13 @@ export class AddressSelectComponent implements OnInit {
     this.handleAddressChange?.emit(item);
 
     if (this.showMap) {
-      this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.google.com/maps/embed/v1/place?key=AIzaSyAR18OijZ4fIbE01qRtOKyNzJyHZx9bqt8&q=${item.lat},${item.lon}`);
+      const lat = item?.lat ?? item?.latitude;
+      const lon = item?.lon ?? item?.longitude;
+      if (lat && lon) {
+        this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://www.google.com/maps/embed/v1/place?key=AIzaSyAR18OijZ4fIbE01qRtOKyNzJyHZx9bqt8&q=${lat},${lon}`
+        );
+      }
     }
   }
 }
