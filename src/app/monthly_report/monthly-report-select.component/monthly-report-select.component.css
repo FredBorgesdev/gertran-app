@@ -20,15 +20,20 @@
   font-weight: bold;
 }
 
-/* Layout em tela */
+
 .chart-card.card_tela {
   flex: 1 1 30%;
   max-width: 30%;
 }
 
 .chart-card.card_tela canvas {
-  height: 250px !important;
+  height: 330px !important;
   width: 100% !important;
+}
+
+.chart-card.card_tela ul {
+  height: 330px;
+  overflow-y: auto;
 }
 
 /* ---------- Estilos por categoria ---------- */
@@ -49,7 +54,7 @@
 
 
 
-    /* @page:first {
+  /* @page:first {
     background: url('fundo-capa.png') no-repeat center center;
     background-size: cover;
   }
@@ -67,9 +72,12 @@
 
 
   body {
-    background: #855151 !important; /* cor de fundo */
-    -webkit-print-color-adjust: exact; /* Chrome/Safari */
-    print-color-adjust: exact;         /* Firefox */
+    background: #855151 !important;
+    /* cor de fundo */
+    -webkit-print-color-adjust: exact;
+    /* Chrome/Safari */
+    print-color-adjust: exact;
+    /* Firefox */
   }
 
   /* força quebra sempre depois do elemento com a classe */
@@ -85,7 +93,7 @@
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-    
+
   }
 
   .chart-card {
@@ -109,7 +117,8 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     color: white !important;
-    border-bottom: 1px solid #72849a; /* dá destaque no título também */
+    border-bottom: 1px solid #72849a;
+    /* dá destaque no título também */
   }
 
   /* garante cor de fundo no print */
