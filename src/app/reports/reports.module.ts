@@ -56,6 +56,7 @@ import {ControlTower2} from './dashboards/tc2/tc2.component';
 import {ControlTowerGertran} from './dashboards/tc-gertran/tc-gertran.component';
 import {ControlTower3} from './dashboards/tc3/tc3.component';
 import {ControlTower4} from './dashboards/tc4/client.component';
+import {ControlTower4Ops} from './dashboards/tc4/ops.component';
 import {ControlTower5} from './dashboards/tc5/client.component';
 import {TechnologiesComponent} from './technologies/technologies.component';
 import {GridComponent} from "./dashboards/grid/grid.component";
@@ -122,6 +123,7 @@ import { DdrReportComponent } from './ddrs/ddrs-report.component';
     ControlTower2,
     ControlTower3,
     ControlTower4,
+    ControlTower4Ops,
     ControlTower5,
     TechnologiesComponent,
     GridComponent,

@@ -40,6 +40,7 @@ import { ControlTower1 } from './dashboards/tc1/tc1.component';
 import { ControlTower2 } from './dashboards/tc2/tc2.component';
 import { ControlTower3 } from './dashboards/tc3/tc3.component';
 import { ControlTower4 } from './dashboards/tc4/client.component';
+import { ControlTower4Ops } from './dashboards/tc4/ops.component';
 import { ControlTower5 } from './dashboards/tc5/client.component';
 import { ControlTowerGertran } from './dashboards/tc-gertran/tc-gertran.component';
 import { WorkdayEmployedComponent } from './workday-employed/workday-employed.component';
@@ -230,6 +231,17 @@ const routes: Routes = [
   {
     path: 'dashboards/tc4',
     component: ControlTower4,
+    data: {
+      permission: Permissions.VIEW_DASHBOARD_TC4
+    }
+  },
+  {
+    path: 'dashboards/tc4-ops',
+    component: ControlTower4Ops,
+    data: {
+      // Permissão mais restritiva para acesso somente da operação
+      permission: Permissions.REPORTS_VIEW_MONITORING_REQUEST_REPORT
+    }
   },
   {
     path: 'panic-history',

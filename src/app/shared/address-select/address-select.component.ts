@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NominatimService} from '../nominatim.service';
-import {Subject} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
-import {FormGroup} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NominatimService } from '../nominatim.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-address-select',

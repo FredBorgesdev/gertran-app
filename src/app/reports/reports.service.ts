@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {GetAllResponse} from '../shared/services/api.service';
-import {MonitoringRequests} from '../monitoring-requests/monitoring-requests.service';
-import {AbstractUser} from '../users/users.service';
-import {Position} from '../monitoring/positions.service';
-import {Workday} from '../workdays/workday.service';
-import {Alert} from "../monitoring/alerts.service";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { GetAllResponse } from '../shared/services/api.service';
+import { MonitoringRequests } from '../monitoring-requests/monitoring-requests.service';
+import { AbstractUser } from '../users/users.service';
+import { Position } from '../monitoring/positions.service';
+import { Workday } from '../workdays/workday.service';
+import { Alert } from "../monitoring/alerts.service";
 
 export interface BaseDdrFilter {
   ddr: string;
@@ -14,7 +14,7 @@ export interface BaseDdrFilter {
 
 export interface MobilePictures {
   id: string;
-  latitude:string,
+  latitude: string,
   longitude: string,
   monitoringRequest: any,
   observation: string,
@@ -34,7 +34,7 @@ export interface BaseClosingFilter {
   from: string;
   to: string;
   closingDay: number;
-  customer: string  ;
+  customer: string;
 }
 
 export interface BaseUserFilter extends BasePeriodFilter {
@@ -117,7 +117,7 @@ export type PositionEvent = {
 export type Ddr = {
   id,
   name,
-  customer: {tradingName},
+  customer: { tradingName },
 
 }
 
@@ -232,6 +232,7 @@ export type ChecklistHistory = {
   reviewedBy?: any;
 };
 
+
 export type LogisticReport = {
   totalValue: string
   countByStatus: {
@@ -339,6 +340,34 @@ export type EquipmentStatusReport = {
   positionDate: string;
 };
 
+export type TerminalSummaryItem = {
+  label: string;
+  count: number;
+};
+
+export type ChecklistSummary = {
+  requested: number;
+  approved: number;
+  reproved: number;
+  total: number;
+};
+
+export type MonitoringTravelStatusSummary = {
+  viagem: number;
+  pernoite: number;
+  parado: number;
+  aguardando_inicio: number;
+  cliente: number;
+  total: number;
+};
+
+export type MonitoringStatusSummary = {
+  analise: number;
+  aprovado: number;
+  reprovado: number;
+  total: number;
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -355,7 +384,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/loadunloadbypoint?1=1', {params});
+    return this.http.get<ReportsResults>('reports/monitoring/loadunloadbypoint?1=1', { params });
   }
 
   getDelayedTripes(filters: DelayedTripFilter): Observable<ReportsResults> {
@@ -368,7 +397,7 @@ export class ReportsService {
         invoice: filters.invoice,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/delayedtrips?1=1', {params});
+    return this.http.get<ReportsResults>('reports/monitoring/delayedtrips?1=1', { params });
   }
 
   getMonitoringRequests(filters: BasePeriodFilter): Observable<ReportsResults> {
@@ -379,8 +408,8 @@ export class ReportsService {
     if (filters.customer) {
       fromObject.customer = filters.customer;
     }
-    const params = new HttpParams({fromObject});
-    return this.http.get<ReportsResults>('reports/monitoring/requests?1=1', {params});
+    const params = new HttpParams({ fromObject });
+    return this.http.get<ReportsResults>('reports/monitoring/requests?1=1', { params });
   }
 
   getVehiclesReleased(filters: BasePeriodFilter): Observable<ReportsResults> {
@@ -391,7 +420,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/vehiclesreleased?1=1', {params});
+    return this.http.get<ReportsResults>('reports/monitoring/vehiclesreleased?1=1', { params });
   }
 
   getClosure(filters: BaseClosingFilter): Observable<ReportsResults> {
@@ -403,7 +432,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', {params});
+    return this.http.get<ReportsResults>('reports/monitoring/closure?1=1', { params });
   }
 
   getTravelStart(filters: BaseVehicleFilter): Observable<PositionEvent[]> {
@@ -412,7 +441,7 @@ export class ReportsService {
       to_date: filters.to,
       // customer: filters.customer,
     };
-    if (filters.customer){
+    if (filters.customer) {
       filtersParams.customer = filters.customer
     }
     if (filters.plate) {
@@ -421,7 +450,7 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<PositionEvent[]>('reports/monitoring/travelstart?1=1', {params});
+    return this.http.get<PositionEvent[]>('reports/monitoring/travelstart?1=1', { params });
   }
 
   getTravelEnd(filters: BaseVehicleFilter): Observable<PositionEvent[]> {
@@ -431,7 +460,7 @@ export class ReportsService {
       // customer: filters.customer,
     };
 
-    if (filters.customer){
+    if (filters.customer) {
       filtersParams.customer = filters.customer
     }
     if (filters.plate) {
@@ -440,7 +469,7 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<PositionEvent[]>('reports/monitoring/travelend?1=1', {params});
+    return this.http.get<PositionEvent[]>('reports/monitoring/travelend?1=1', { params });
   }
 
   getTrackingCommandsHistory(filters: BaseVehicleFilter): Observable<CommandSentHistory[]> {
@@ -452,7 +481,7 @@ export class ReportsService {
         plate: filters.plate
       }
     });
-    return this.http.get<CommandSentHistory[]>('reports/tracking/commandshistory?1=1', {params});
+    return this.http.get<CommandSentHistory[]>('reports/tracking/commandshistory?1=1', { params });
   }
 
   getTrackingPositionsHistory(filters: BaseVehicleFilter): Observable<Position[]> {
@@ -464,7 +493,7 @@ export class ReportsService {
         plate: filters.plate || 'AOU0G63'
       }
     });
-    return this.http.get<Position[]>('reports/tracking/positionshistory?1=1', {params});
+    return this.http.get<Position[]>('reports/tracking/positionshistory?1=1', { params });
   }
 
   getBaits(filters: BasePeriodFilter): Observable<MonitoringRequestBait[]> {
@@ -475,7 +504,7 @@ export class ReportsService {
         customer: filters.customer,
       }
     });
-    return this.http.get<MonitoringRequestBait[]>('reports/events/bait?1=1', {params});
+    return this.http.get<MonitoringRequestBait[]>('reports/events/bait?1=1', { params });
   }
 
   getOperationalAuditCommands(filters: BaseUserFilter): Observable<CommandSentHistory[]> {
@@ -487,7 +516,7 @@ export class ReportsService {
         user: filters.user,
       }
     });
-    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditcommands?1=1', {params});
+    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditcommands?1=1', { params });
   }
 
   getOperationalAuditMessages(filters: BaseUserFilter): Observable<CommandSentHistory[]> {
@@ -501,7 +530,7 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditmessages?1=1', {params});
+    return this.http.get<CommandSentHistory[]>('reports/events/operationalauditmessages?1=1', { params });
   }
 
   getMacroVehicleReport(form: BaseMacroFilter): Observable<MacroVehicleReport[]> {
@@ -520,7 +549,7 @@ export class ReportsService {
       fromObject: filtersParams
     });
 
-    return this.http.get<MacroVehicleReport[]>('reports/tracking/macrovehicle?1=1', {params});
+    return this.http.get<MacroVehicleReport[]>('reports/tracking/macrovehicle?1=1', { params });
   }
 
   getAnalyticalReport(form: BaseVehicleFilter): Observable<MacroVehicleReport[]> {
@@ -536,29 +565,23 @@ export class ReportsService {
       fromObject: filtersParams
     });
 
-    return this.http.get<MacroVehicleReport[]>('reports/events/analytical?1=1', {params});
+    return this.http.get<MacroVehicleReport[]>('reports/events/analytical?1=1', { params });
   }
 
   getChecklistHistory(form: BaseVehicleFilter): Observable<ChecklistHistory[]> {
-    const filtersParams: any = {
-      from_date: form.from,
-      to_date: form.to,
-      customer: form.customer,
-      from_monitoring_request: form.from_monitoring_request
-    };
-    if (form.plate) {
-      filtersParams.plate = form.plate;
+    const filtersParams: any = {};
+    if (form.from) filtersParams.from_date = form.from;
+    if (form.to) filtersParams.to_date = form.to;
+    if (form.customer) filtersParams.customer = form.customer;
+    if (form.plate) filtersParams.plate = form.plate;
+    if (form.from_monitoring_request !== undefined && form.from_monitoring_request !== null) {
+      filtersParams.from_monitoring_request = form.from_monitoring_request;
     }
+    const params = new HttpParams({ fromObject: filtersParams });
 
-    if(form.from_monitoring_request){
-      filtersParams.from_monitoring_request = form.from_monitoring_request
-    }
-    const params = new HttpParams({
-      fromObject: filtersParams
-    });
-
-    return this.http.get<ChecklistHistory[]>('reports/tracking/checklisthistory?1=1', {params});
+    return this.http.get<ChecklistHistory[]>('reports/tracking/checklisthistory?1=1', { params });
   }
+
 
   getWorkdayHistoryAnalytical(form: BaseWorkdayFilter): Observable<Workday[]> {
     const params = new HttpParams({
@@ -570,7 +593,7 @@ export class ReportsService {
       }
     });
 
-    return this.http.get<Workday[]>('reports/workdays/analytical?1=1', {params});
+    return this.http.get<Workday[]>('reports/workdays/analytical?1=1', { params });
   }
 
   getWorkdayHistoryAnalytical2(form: BaseWorkdayEmployedFilter): Observable<Workday[]> {
@@ -583,7 +606,7 @@ export class ReportsService {
       }
     });
 
-    return this.http.get<Workday[]>('reports/workdays-employed/analytical?1=1', {params});
+    return this.http.get<Workday[]>('reports/workdays-employed/analytical?1=1', { params });
   }
 
   getWorkdayHistorySynthetic(form: BaseWorkdayFilter): Observable<Workday[]> {
@@ -598,7 +621,7 @@ export class ReportsService {
       }
     });
 
-    return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', {params});
+    return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', { params });
   }
 
 
@@ -612,7 +635,7 @@ export class ReportsService {
       }
     });
 
-    return this.http.get<Workday[]>('reports/workdays-employed/synthetic?1=1', {params});
+    return this.http.get<Workday[]>('reports/workdays-employed/synthetic?1=1', { params });
   }
 
   getLogisticReport(form: Partial<BasePeriodFilter>): Observable<LogisticReport> {
@@ -628,7 +651,46 @@ export class ReportsService {
       fromObject: filtersParams
     });
 
-    return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', {params});
+    return this.http.get<LogisticReport>('reports/monitoring/logisticssummary?1=1', { params });
+  }
+
+  getTerminalsSummary(form: Partial<BasePeriodFilter>): Observable<TerminalSummaryItem[]> {
+    const filtersParams: any = {};
+    if (form.from) filtersParams.from_date = form.from;
+    if (form.to) filtersParams.to_date = form.to;
+    if (form.customer) filtersParams.customer = form.customer;
+    const params = new HttpParams({ fromObject: filtersParams });
+    return this.http.get<TerminalSummaryItem[]>('reports/monitoring/terminalssummary?1=1', { params });
+  }
+
+  getChecklistSummary(form: Partial<BasePeriodFilter>): Observable<ChecklistSummary> {
+    const filtersParams: any = {};
+    if (form.from) filtersParams.from_date = form.from;
+    if (form.to) filtersParams.to_date = form.to;
+    if (form.customer) filtersParams.customer = form.customer;
+    const params = new HttpParams({ fromObject: filtersParams });
+    console.log('[ReportsService] GET reports/tracking/checklistsummary', filtersParams);
+    return this.http.get<ChecklistSummary>('reports/tracking/checklistsummary?1=1', { params });
+  }
+
+  getMonitoringTravelStatusSummary(form: Partial<BasePeriodFilter>): Observable<MonitoringTravelStatusSummary> {
+    const filtersParams: any = {};
+    if (form.from) filtersParams.from_date = form.from;
+    if (form.to) filtersParams.to_date = form.to;
+    if (form.customer) filtersParams.customer = form.customer;
+    const params = new HttpParams({ fromObject: filtersParams });
+    console.log('[ReportsService] GET reports/monitoring/travelstatussummary', filtersParams);
+    return this.http.get<MonitoringTravelStatusSummary>('reports/monitoring/travelstatussummary?1=1', { params });
+  }
+
+  getMonitoringStatusSummary(form: Partial<BasePeriodFilter>): Observable<MonitoringStatusSummary> {
+    const filtersParams: any = {};
+    if (form.from) filtersParams.from_date = form.from;
+    if (form.to) filtersParams.to_date = form.to;
+    if (form.customer) filtersParams.customer = form.customer;
+    const params = new HttpParams({ fromObject: filtersParams });
+    console.log('[ReportsService] GET reports/monitoring/requeststatussummary', filtersParams);
+    return this.http.get<MonitoringStatusSummary>('reports/monitoring/requeststatussummary?1=1', { params });
   }
 
   getFatigueReport(form: BaseVehicleFilter): Observable<FatigueReport[]> {
@@ -640,7 +702,7 @@ export class ReportsService {
       }
     });
 
-    return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', {params});
+    return this.http.get<FatigueReport[]>('reports/events/positiondriver?1=1', { params });
   }
 
   getIncidentsReport(form: IncidentsFilter): Observable<IncidentReport[]> {
@@ -661,7 +723,7 @@ export class ReportsService {
       fromObject
     });
 
-    return this.http.get<IncidentReport[]>('reports/events/incidents?1=1', {params});
+    return this.http.get<IncidentReport[]>('reports/events/incidents?1=1', { params });
   }
 
   getPanicHistory(form: IncidentsFilter): Observable<IncidentReport[]> {
@@ -679,7 +741,7 @@ export class ReportsService {
       fromObject
     });
 
-    return this.http.get<IncidentReport[]>('reports/events/panichistory?1=1', {params});
+    return this.http.get<IncidentReport[]>('reports/events/panichistory?1=1', { params });
   }
 
   getAlerts(form: IncidentsFilter): Observable<AlertReport[]> {
@@ -697,14 +759,14 @@ export class ReportsService {
       fromObject
     });
 
-    return this.http.get<AlertReport[]>('reports/tracking/alerts?1=1', {params});
+    return this.http.get<AlertReport[]>('reports/tracking/alerts?1=1', { params });
   }
 
   getEquipmentStatus(): Observable<EquipmentStatusReport[]> {
     return this.http.get<EquipmentStatusReport[]>('reports/technology/status?1=1');
   }
 
-  getMobilePictures(form: any): Observable<GetAllResponse<MobilePictures>>{
+  getMobilePictures(form: any): Observable<GetAllResponse<MobilePictures>> {
     const fromObject: any = {
       from_date: form.from,
       to_date: form.to,
@@ -722,7 +784,7 @@ export class ReportsService {
       fromObject
     });
 
-    return this.http.get<GetAllResponse<MobilePictures>>('monitoring/monitoring-requests/mobile-pictures', {params})
+    return this.http.get<GetAllResponse<MobilePictures>>('monitoring/monitoring-requests/mobile-pictures', { params })
   }
   closeProtocol(imageId: string, closeData: { close_reason: string }): Observable<any> {
     const url = `monitoring/monitoring-requests/mobile-pictures/${imageId}/update`;
@@ -747,6 +809,6 @@ export class ReportsService {
     const params = new HttpParams({
       fromObject: filtersParams
     });
-    return this.http.get<GetAllResponse<Ddr[]>>('reports/settings/ddrs?1=1', {params});
+    return this.http.get<GetAllResponse<Ddr[]>>('reports/settings/ddrs?1=1', { params });
   }
 }

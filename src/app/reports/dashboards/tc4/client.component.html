@@ -7,15 +7,15 @@
     </div>
     <h3>TORRE DE CONTROLE 4</h3>
   </div>
-  <nz-card>    
+  <nz-card>
     <div class="row">
-      <div class="col-lg-8 col-md-9 col-sm-12">
-        <h2 class="text-center m-b-1">VEÍCULO MONITORADOS</h2>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <h2 class="text-center m-b-1">VEÍCULOS MONITORADOS</h2>
         <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-weight: bold;">OPERAÇÕES VIAGENS MONITORADAS</span>
+                <span style="font-weight: bold;">TERMINAIS BH - VIAGENS MONITORADAS (últimos 7 dias)</span>
                 <canvas id="operationsPositionsChart"></canvas>
                 <h5>TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}</h5>
                 <div *ngFor="let group of splitLabels(operationsPositionsData.labels, 3)"
@@ -30,7 +30,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-weight: bold;">VIAGENS MONITORADAS</span>
+                <span style="font-weight: bold;">VIAGENS MONITORADAS (últimos 7 dias)</span>
                 <canvas id="positonsChart"></canvas>
                 <h5>TOTAL: {{ positionsData.totalPositionsMonitoring }}</h5>
                 <div *ngFor="let group of splitLabels(positionsData.labels, 3)"
@@ -48,7 +48,7 @@
         <h2 class="text-center m-b-1">RESUMO 7 DIAS</h2>
         <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
           <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
                 <span style="font-weight: bold;">CHECKLISTS</span>
                 <canvas id="checkListChart"></canvas>
@@ -63,10 +63,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
                 <span style="font-weight: bold;">
-                  SOLICITAÇÕES MONITORAMENTO
+                  SOLICITAÇÕES MONITORAMENTO (últimos 7 dias)
                 </span>
                 <canvas id="myChart2"></canvas>
                 <h5>TOTAL: {{monitoringRequestsData.totalMonitoringRequests }}</h5>
@@ -80,31 +80,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-weight: bold;">
-                  VIAGENS POR OPERAÇÃO
-                </span>
-                <canvas id="myChart4"></canvas>
-                <h5>TOTAL: {{operationsData.totalOperations }}</h5>
-              </div>
-              <div *ngFor="let group of splitLabels(operationsData.labels, 2)"
-                style="display: inline-flex; flex-direction: row; flex-wrap: wrap;">
-                <div *ngFor="let label of group; let i = index">
-                  <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                    [style.background-color]="label.color"></span>
-                  <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                </div>
-
-              </div>
-            </div>
           </div>
         </nz-card>
       </div>
-      <div class="col-lg-4 col-md-3 col-sm-12">
-        <app-maps mapClassHeight="tower-control"></app-maps>
-      </div>
+
     </div>
-  </nz-card>    
+  </nz-card>
   <app-fixed-buttons></app-fixed-buttons>
 </div>

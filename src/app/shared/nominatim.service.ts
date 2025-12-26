@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {catchError, switchMap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable, of } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { catchError, switchMap } from 'rxjs/operators';
 
 // const BASE_URL = 'http://localhost:8033/v1/settings/points/get-lat-lng/?address=';
 const BASE_URL = 'https://api2.gertran.zayit.com.br/v1/settings/points/get-lat-lng/?address=';

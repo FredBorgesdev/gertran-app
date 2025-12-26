@@ -97,6 +97,7 @@ export class PositionsService implements ApiService<Position> {
       groupBy?: string;
       travelStatus?: string;
       travelling?: boolean;
+      allowGlobal?: boolean;
     }
   ): Observable<GetAllResponse<Position>> {
     if(window.location.pathname == '/reports/dashboards/client')
@@ -119,6 +120,9 @@ export class PositionsService implements ApiService<Position> {
     }
     if (filters?.travelling) {
       params.travelling = filters.travelling;
+    }
+    if (filters?.allowGlobal) {
+      params.allow_global = filters.allowGlobal;
     }
 
     return this.http.get<GetAllResponse<Position>>('positions', {params});
