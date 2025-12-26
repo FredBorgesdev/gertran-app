@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import ApiService, {
   DEFAULT_LIMIT,
   GetAllResponse,
   Pagination,
 } from '../shared/services/api.service';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {TravelStep} from "../monitoring-requests/travel-step.service";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TravelStep } from "../monitoring-requests/travel-step.service";
 
 interface PositionInfo {
   id: string;
@@ -100,10 +100,10 @@ export class PositionsService implements ApiService<Position> {
       allowGlobal?: boolean;
     }
   ): Observable<GetAllResponse<Position>> {
-    if(window.location.pathname == '/reports/dashboards/client')
+    if (window.location.pathname == '/reports/dashboards/client')
       pagination.limit = 50
 
-    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -125,10 +125,10 @@ export class PositionsService implements ApiService<Position> {
       params.allow_global = filters.allowGlobal;
     }
 
-    return this.http.get<GetAllResponse<Position>>('positions', {params});
+    return this.http.get<GetAllResponse<Position>>('positions', { params });
   }
 
-  getPositionsByMonitoringRequest(id: string): Observable<any>{
+  getPositionsByMonitoringRequest(id: string): Observable<any> {
     return this.http.get<any>(`positions/positions-by-monitoring-request/${id}`);
   }
 

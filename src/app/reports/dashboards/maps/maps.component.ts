@@ -1,11 +1,11 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {DatePipe} from '@angular/common';
-import {AuthenticationService} from '../../../authentication/authentication.service';
-import {PositionsService} from '../../../monitoring/positions.service';
-import {Status} from '../../../monitoring-requests/monitoring-requests.service';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {MapMarkersModalComponent} from '../../extra/map-markers-modal/map-markers-modal.component';
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { AuthenticationService } from '../../../authentication/authentication.service';
+import { PositionsService } from '../../../monitoring/positions.service';
+import { Status } from '../../../monitoring-requests/monitoring-requests.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MapMarkersModalComponent } from '../../extra/map-markers-modal/map-markers-modal.component';
+import { ActivatedRoute, Route, Router } from "@angular/router";
 import * as mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -67,7 +67,7 @@ export class DashboardMapsComponent implements OnInit, OnChanges, OnDestroy {
     const filters: any = {
       travelling: true,
     };
-    
+
     if (customer) {
       filters.customer = customer;
     } else {
@@ -80,11 +80,11 @@ export class DashboardMapsComponent implements OnInit, OnChanges, OnDestroy {
     this.positionService.getAll({ limit: 500 }, filters).subscribe((data) => {
       this.mapLoading = false;
       console.log('[MAPA] Resposta da API:', data);
-      
+
       // Alguns serviços retornam paginação; se houver "results" use, senão trate como lista
       const list = Array.isArray(data?.results) ? data.results : (Array.isArray(data) ? data : []);
       console.log('[MAPA] Lista de posições:', list.length);
-      
+
       this.markers = list
         .filter((position) => position.latitude && position.longitude) // Filtra posições válidas
         .map((position) => {
@@ -96,7 +96,7 @@ export class DashboardMapsComponent implements OnInit, OnChanges, OnDestroy {
           marker.travelStatus = position.monitoringRequest?.travelStatus || 'in_progress';
           return marker;
         });
-      
+
       console.log('[MAPA] Veículos carregados:', this.markers.length);
       if (this.markers.length > 0) {
         console.log('[MAPA] Primeiro marker:', this.markers[0]);
