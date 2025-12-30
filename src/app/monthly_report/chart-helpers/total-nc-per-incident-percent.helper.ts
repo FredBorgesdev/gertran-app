@@ -3,7 +3,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Injectable } from '@angular/core';
 import { MonthlyReport } from '../monthly_report.service';
 
-// registra plugins
 Chart.register(ChartDataLabels);
 
 const pieLinesPlugin: Plugin<'pie'> = {
@@ -15,12 +14,12 @@ const pieLinesPlugin: Plugin<'pie'> = {
       const meta = chart.getDatasetMeta(datasetIndex);
 
       meta.data.forEach((arc, index) => {
-        const value = dataset.data[index] as number;
+        const datasetData = dataset.data as number[];
+        const value = datasetData[index];
 
-        // ⚡ usa a mesma regra de display do datalabels
-        if (value < 2) return; 
+        if (value < 2) return;
 
-        const arcElem = arc as any; // força TS aceitar propriedades internas
+        const arcElem = arc as any;
         const pos = arcElem.tooltipPosition();
         const angle = (arcElem.startAngle + arcElem.endAngle) / 2;
         const radius = arcElem.outerRadius + 20;
@@ -52,11 +51,14 @@ export class TotalNcPerIncidentPercentHelper {
       legend: { display: false },
       datalabels: {
         color: '#000',
-        formatter: (value: unknown, ctx) => {
+        formatter: (value: any, ctx: any) => {
           const numericValue = Number(value);
-          const total = (ctx.chart.data.datasets[0].data as number[])
-            .reduce((sum, val) => sum + Number(val), 0);
-          return ((numericValue / total) * 100).toFixed(1) + '%';
+          const dataIndex = ctx.dataIndex;
+          const dataset = ctx.dataset as any;
+
+          const totalBruto = dataset.totaisBrutos ? dataset.totaisBrutos[dataIndex] : 0;
+
+          return `${numericValue.toFixed(1)}% (${totalBruto})`;
         },
         anchor: 'end',
         align: 'end',
@@ -76,37 +78,42 @@ export class TotalNcPerIncidentPercentHelper {
     try {
       const data = JSON.parse(totalNcPerIncidentPercent || '{}');
 
-      // transforma em array [{ label, value }]
       const entries = Object.keys(data).map(label => ({
         label,
-        value: Number(data[label]['Porcentagem (%)'])
+        percentage: Number(data[label]['Porcentagem (%)'] || 0),
+        total: Number(data[label]['Total'] || data[label]['total'] || data[label]['Quantidade'] || 0)
       }));
 
       // pega os 5 primeiros e soma o resto
       const top5 = entries.slice(0, 5);
       const others = entries.slice(5);
-      const othersValue = others.reduce((sum, item) => sum + item.value, 0);
+
+      const othersPercentage = others.reduce((sum, item) => sum + item.percentage, 0);
+      const othersTotal = others.reduce((sum, item) => sum + item.total, 0);
 
       const finalData = [...top5];
       if (others.length > 0) {
-        finalData.push({ label: 'Outros', value: othersValue });
+        finalData.push({ label: 'Outros', percentage: othersPercentage, total: othersTotal });
       }
 
       const labels = finalData.map(item => item.label);
-      const valores = finalData.map(item => item.value);
+      const porcentagens = finalData.map(item => item.percentage);
+      const totais = finalData.map(item => item.total);
       const backgroundColors = finalData.map((_, i) => this.getColor(i));
 
       return {
         labels,
         datasets: [{
           label: 'Percentual de NC por Incidente',
-          data: valores,
+          data: porcentagens,
+          totaisBrutos: totais,
           backgroundColor: backgroundColors,
           hoverOffset: 30,
-        }],
+        } as any],
       };
-    } catch {
-      return { labels: [], datasets: [{ label: 'Percentual de NC por Incidente', data: [], backgroundColor: [] }] };
+    } catch (e) {
+      console.error('Erro ao montar gráfico totalNcPerIncidentPercent:', e);
+      return { labels: [], datasets: [{ label: 'Percentual de NC por Incidente', data: [], backgroundColor: [] }] } as any;
     }
   }
 

@@ -7,7 +7,7 @@
 
 .chart-card {
   background: #fff;
-  padding: 0 15px 15px 15px;
+  padding: 0 5px 0px 15px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -16,7 +16,7 @@
   color: white;
   padding: 8px 12px;
   border-radius: 4px 4px 0 0;
-  margin: 0 -15px 10px -15px;
+  margin: 0 -5px 10px -15px;
   font-weight: bold;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .chart-card.card_tela ul {
-  height: 330px;
+  height: 280px;
   overflow-y: auto;
 }
 

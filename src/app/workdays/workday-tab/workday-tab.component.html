@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumWorkdayPeriod">Horas máximas da jornada total</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumWorkdayPeriod">Jornada padrão (máx antes de extras)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="maximumWorkdayPeriod"
@@ -12,12 +12,13 @@
               formControlName="maximumWorkdayPeriod"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 08:00 (8h). Acima disso vai para Hora Extra.</small>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursContinuousDriving">Horas máximas de direção por dia</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursContinuousDriving">Tempo máximo de direção (ininterrupta)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="maximumHoursContinuousDriving"
@@ -26,6 +27,7 @@
               formControlName="maximumHoursContinuousDriving"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 05:30 (5h30). Após isso, exigir pausa.</small>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -40,12 +42,13 @@
               formControlName="maximumHoursPerWeek"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 44:00 (base legal). Pode acordar maior (ex.: 66:00).</small>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="minimumContinuousRestPeriod">Horas mínimas de descanso continuo</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="minimumContinuousRestPeriod">Descanso contínuo (mínimo)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="minimumContinuousRestPeriod"
@@ -59,7 +62,7 @@
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumContinuousRestPeriod">Horas máximas de descanso continuo</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumContinuousRestPeriod">Descanso contínuo (máximo)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="maximumContinuousRestPeriod"
@@ -73,7 +76,7 @@
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursDailyDriving">Horas máximas de direção continua</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="maximumHoursDailyDriving">Direção diária (máximo por dia)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="maximumHoursDailyDriving"
@@ -82,12 +85,13 @@
               formControlName="maximumHoursDailyDriving"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 09:00, se aplicável.</small>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="restPeriodToBreakContinuousDriving">Descanso para quebra de direção contínua</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="restPeriodToBreakContinuousDriving">Descanso de direção (pausa mínima)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="restPeriodToBreakContinuousDriving"
@@ -96,12 +100,13 @@
               formControlName="restPeriodToBreakContinuousDriving"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 00:30 (30 min).</small>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="minimumLunchRestPeriod">Horas mínimas de refeição</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="minimumLunchRestPeriod">Refeição (mínimo)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="minimumLunchRestPeriod"
@@ -110,12 +115,13 @@
               formControlName="minimumLunchRestPeriod"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 01:00 (1h), ou maior por acordo.</small>
           </nz-form-control>
         </nz-form-item>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12">
         <nz-form-item>
-          <nz-form-label [nzSpan]="null" nzRequired nzFor="restPeriodBetweenWorkingDays">Horas de descanso entre jornadas</nz-form-label>
+          <nz-form-label [nzSpan]="null" nzRequired nzFor="restPeriodBetweenWorkingDays">Interjornada (mínimo)</nz-form-label>
           <nz-form-control [nzSpan]="null" nzErrorTip="Preencha o nome fantasia!">
             <input
               id="restPeriodBetweenWorkingDays"
@@ -124,6 +130,7 @@
               formControlName="restPeriodBetweenWorkingDays"
               [textMask]="{ mask: hoursMask, guide: false }"
             />
+            <small>Ex.: 11:00 (11h mínimo).</small>
           </nz-form-control>
         </nz-form-item>
       </div>

@@ -3,7 +3,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Injectable } from '@angular/core';
 import { MonthlyReport } from '../monthly_report.service';
 
-// registra plugins
 Chart.register(ChartDataLabels);
 
 const pieLinesPlugin: Plugin<'pie'> = {
@@ -18,7 +17,7 @@ const pieLinesPlugin: Plugin<'pie'> = {
         const value = dataset.data[index] as number;
 
         // ⚡ usa a mesma regra de display do datalabels
-        if (value < 3) return; 
+        if (value < 3) return;
 
         const arcElem = arc as any; // força TS aceitar propriedades internas
         const pos = arcElem.tooltipPosition();
@@ -54,11 +53,16 @@ export class TotalSmPerOperationsPercentHelper {
       legend: { display: false },
       datalabels: {
         color: '#000',
-        formatter: (value: unknown, ctx) => {
+        formatter: (value: any, ctx) => {
+
           const numericValue = Number(value);
-          const total = (ctx.chart.data.datasets[0].data as number[])
-            .reduce((sum, val) => sum + Number(val), 0);
-          return ((numericValue / total) * 100).toFixed(1) + '%';
+          const dataIndex = ctx.dataIndex;
+
+
+          const dataset = ctx.dataset as any;
+          const totalViagens = dataset.totaisBrutos ? dataset.totaisBrutos[dataIndex] : 0;
+
+          return `${numericValue.toFixed(1)}% (${totalViagens})`;
         },
         anchor: 'end',
         align: 'end',
@@ -78,36 +82,42 @@ export class TotalSmPerOperationsPercentHelper {
     try {
       const data = JSON.parse(totalSmPerOperationsPercent || '{}');
 
-      // transforma em array [{ label, value }]
       const entries = Object.keys(data).map(label => ({
         label,
-        value: Number(data[label]['Porcentagem (%)'])
+        percentage: Number(data[label]['Porcentagem (%)'] || 0),
+        total: Number(data[label]['Total'] || data[label]['total'] || data[label]['Quantidade'] || 0)
       }));
 
-      // pega os 5 primeiros e soma o resto
       const top5 = entries.slice(0, 5);
       const others = entries.slice(5);
-      const othersValue = others.reduce((sum, item) => sum + item.value, 0);
 
       const finalData = [...top5];
+
       if (others.length > 0) {
-        finalData.push({ label: 'Outros', value: othersValue });
+        const othersPercentage = others.reduce((sum, item) => sum + item.percentage, 0);
+        const othersTotal = others.reduce((sum, item) => sum + item.total, 0);
+        finalData.push({ label: 'Outros', percentage: othersPercentage, total: othersTotal });
       }
 
       const labels = finalData.map(item => item.label);
-      const valores = finalData.map(item => item.value);
+      const porcentagens = finalData.map(item => item.percentage);
+      const quantidades = finalData.map(item => item.total);
       const backgroundColors = finalData.map((_, i) => this.getColor(i));
 
       return {
         labels,
-        datasets: [{
-          label: 'Porcentagem (%)',
-          data: valores,
-          backgroundColor: backgroundColors,
-          hoverOffset: 30,
-        }],
+        datasets: [
+          {
+            label: 'Porcentagem (%)',
+            data: porcentagens,
+            backgroundColor: backgroundColors,
+            hoverOffset: 30,
+            totaisBrutos: quantidades, // Agora quantidades terá números reais, não NaN
+          } as any
+        ],
       };
-    } catch {
+    } catch (e) {
+      console.error("Erro ao processar dados do gráfico:", e);
       return { labels: [], datasets: [{ label: 'Porcentagem (%)', data: [], backgroundColor: [] }] };
     }
   }

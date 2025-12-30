@@ -9,73 +9,79 @@ export class TotalSmPerRouteOriginPercentHelper {
   chartOptions: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: 55
+    },
     plugins: {
       legend: {
-        position: 'center',
-        align: 'center',
-        labels: {
-          boxWidth: 20,
-          padding: 10,
-          font: {
-            weight: 'bold',
-            size: 12
-          }
-        }
+        display: false
       },
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const label = context.label || '';
-            return `${label}`;
-          }
+      datalabels: {
+        color: '#000',
+        formatter: (value: any, ctx: any) => {
+          const numericValue = Number(value);
+          const dataIndex = ctx.dataIndex;
+          const dataset = ctx.dataset as any;
+
+          const totalBruto = dataset.totaisBrutos ? dataset.totaisBrutos[dataIndex] : 0;
+
+          return `${numericValue.toFixed(1)}% (${totalBruto})`;
+        },
+        anchor: 'end',
+        align: 'end',
+        offset: 10,
+        font: {
+          weight: 'bold',
+          size: 11
+        },
+        display: (ctx) => {
+          const value = ctx.dataset.data[ctx.dataIndex] as number;
+          return value >= 0.5;
         }
-      }
-    },
-    layout: {
-      padding: {
-        // top: 100,
-        right: 0,
-        bottom: 0,
-        left: 0
       }
     }
   };
 
-build(report: MonthlyReport): ChartConfiguration<'pie'>['data'] {
-  try {
-    const data = JSON.parse(report.totalSmPerRouteOrigin || '{}');
-    this.rawData = Object.values(data);
+  build(report: MonthlyReport): ChartConfiguration<'pie'>['data'] {
+    try {
+      const data = JSON.parse(report.totalSmPerRouteOrigin || '{}');
+      this.rawData = Object.values(data);
 
-    const entries = Object.entries(data)
-      .filter(([_, value]) => value['Porcentagem (%)'] > 0.5); // <-- filtro > 0,5%
+      const entries = Object.entries(data)
+        .filter(([_, value]: [string, any]) => value['Porcentagem (%)'] > 0.5)
+        .map(([label, value]: [string, any]) => ({
+          label,
+          percentage: Number(value['Porcentagem (%)']),
+          total: Number(value['Total'] || value['total'] || value['Quantidade'] || 0)
+        }));
 
-    const labels = entries.map(([label]) => label);
-    const valores = entries.map(([_, value]) => value['Porcentagem (%)']);
-    const backgroundColors = labels.map((_, i) => this.getColor(i));
+      const labels = entries.map(e => e.label);
+      const porcentagens = entries.map(e => e.percentage);
+      const quantidades = entries.map(e => e.total);
+      const backgroundColors = labels.map((_, i) => this.getColor(i));
 
-    const labelsWithPercent = labels.map((label, i) => `${label}: ${valores[i].toFixed(2)}%`);
-
-    return {
-      // labels: labelsWithPercent,
-      datasets: [{
-        label: 'Porcentagem (%)',
-        data: valores,
-        backgroundColor: backgroundColors,
-        hoverOffset: 30
-      }]
-    };
-  } catch {
-    return {
-      labels: [],
-      datasets: [{
-        label: 'Porcentagem (%)',
-        data: [],
-        backgroundColor: []
-      }]
-    };
+      return {
+        labels,
+        datasets: [{
+          label: 'Porcentagem (%)',
+          data: porcentagens,
+          totaisBrutos: quantidades,
+          backgroundColor: backgroundColors,
+          hoverOffset: 30
+        } as any]
+      };
+    } catch (err) {
+      console.error('Erro ao montar gráfico totalSmPerRouteOrigin:', err);
+      return {
+        labels: [],
+        datasets: [{
+          label: 'Porcentagem (%)',
+          data: [],
+          backgroundColor: []
+        }]
+      } as any;
+    }
   }
-}
-
 
   private getColor(index: number): string {
     const colors = [

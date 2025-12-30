@@ -20,11 +20,15 @@ export class SearchWorkerPercentHelper {
       legend: { display: false },
       datalabels: {
         color: '#000',
-        formatter: (value: unknown, ctx) => {
+        formatter: (value: any, ctx: any) => {
           const numericValue = Number(value);
-          const total = (ctx.chart.data.datasets[0].data as number[])
-            .reduce((sum, val) => sum + Number(val), 0);
-          return ((numericValue / total) * 100).toFixed(1) + '%';
+
+          const datasetData = ctx.chart.data.datasets[0].data as number[];
+          const totalGeral = datasetData.reduce((sum, val) => sum + Number(val), 0);
+
+          const percentage = totalGeral > 0 ? (numericValue / totalGeral * 100).toFixed(1) : '0.0';
+
+          return `${percentage}% (${numericValue})`;
         },
         anchor: 'end',
         align: 'end',
@@ -32,7 +36,7 @@ export class SearchWorkerPercentHelper {
         offset: 20,
         display: (ctx) => {
           const value = ctx.dataset.data[ctx.dataIndex] as number;
-          return value >= 3;
+          return value > 0;
         },
         font: { weight: 'bold', size: 12 },
       },

@@ -1,10 +1,8 @@
-// chart-helpers/total-sm-per-load-type-percent.helper.ts
 import { Injectable } from '@angular/core';
 import { Chart, ChartConfiguration, ChartOptions, Plugin } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { MonthlyReport } from '../monthly_report.service';
 
-// registra plugins globais
 Chart.register(ChartDataLabels);
 
 const pieLinesPlugin: Plugin<'pie'> = {
@@ -13,7 +11,11 @@ const pieLinesPlugin: Plugin<'pie'> = {
     const { ctx } = chart;
     chart.data.datasets.forEach((dataset, datasetIndex) => {
       const meta = chart.getDatasetMeta(datasetIndex);
-      meta.data.forEach((arc) => {
+      meta.data.forEach((arc, index) => {
+        const datasetData = dataset.data as number[];
+        const value = datasetData[index];
+        if (value < 2) return;
+
         const arcElem = arc as any;
         const pos = arcElem.tooltipPosition();
         const angle = (arcElem.startAngle + arcElem.endAngle) / 2;
@@ -46,24 +48,27 @@ export class TotalSmPerLoadTypePercentHelper {
       legend: { display: false },
       datalabels: {
         color: '#000',
-        formatter: (value: unknown, ctx) => {
+        formatter: (value: any, ctx: any) => {
           const numericValue = Number(value);
-          const total = (ctx.chart.data.datasets[0].data as number[])
-            .reduce((sum, val) => sum + Number(val), 0);
-          return ((numericValue / total) * 100).toFixed(1) + '%';
+          const dataIndex = ctx.dataIndex;
+          const dataset = ctx.dataset as any;
+
+          // Busca o valor bruto injetado no build
+          const totalBruto = dataset.totaisBrutos ? dataset.totaisBrutos[dataIndex] : 0;
+
+          return `${numericValue.toFixed(1)}% (${totalBruto})`;
         },
-        anchor: 'end',       // aponta para fora do arco
-        align: 'end',        // posiciona fora (na direção da linha)
+        anchor: 'end',
+        align: 'end',
         clamp: true,
-        offset: 30,          // distancia maior para sair do gráfico
+        offset: 30,
         display: (ctx) => {
           const value = ctx.dataset.data[ctx.dataIndex] as number;
-          return value >= 2; // não mostra valores muito pequenos
+          return value >= 2;
         },
         textAlign: 'center',
         font: { weight: 'bold', size: 12 },
       },
-
     },
   };
 
@@ -73,21 +78,24 @@ export class TotalSmPerLoadTypePercentHelper {
 
       const entries = Object.keys(data).map(label => ({
         label,
-        value: Number(data[label]['Porcentagem (%)']),
+        value: Number(data[label]['Porcentagem (%)'] || 0),
+        total: Number(data[label]['Total'] || data[label]['total'] || data[label]['Quantidade'] || 0)
       }));
 
-      // pega os 5 primeiros e soma os outros
       const top5 = entries.slice(0, 5);
       const others = entries.slice(5);
+
       const othersValue = others.reduce((sum, item) => sum + item.value, 0);
+      const othersTotal = others.reduce((sum, item) => sum + item.total, 0);
 
       const finalData = [...top5];
       if (others.length > 0) {
-        finalData.push({ label: 'Outros', value: othersValue });
+        finalData.push({ label: 'Outros', value: othersValue, total: othersTotal });
       }
 
       const labels = finalData.map(item => item.label);
       const valores = finalData.map(item => item.value);
+      const totais = finalData.map(item => item.total);
       const backgroundColors = finalData.map((_, i) => this.getColor(i));
 
       return {
@@ -95,13 +103,14 @@ export class TotalSmPerLoadTypePercentHelper {
         datasets: [{
           label: 'Porcentagem (%)',
           data: valores,
+          totaisBrutos: totais, // ⚡ Injetando os valores brutos para o formatter usar
           backgroundColor: backgroundColors,
           hoverOffset: 30,
-        }],
+        } as any], // ⚡ Cast para any evita erro de propriedade desconhecida
       };
     } catch (err) {
       console.error('Erro ao montar gráfico totalSmPerLoadTypePercent:', err);
-      return { labels: [], datasets: [{ label: 'Porcentagem (%)', data: [], backgroundColor: [] }] };
+      return { labels: [], datasets: [{ label: 'Porcentagem (%)', data: [], backgroundColor: [] }] } as any;
     }
   }
 

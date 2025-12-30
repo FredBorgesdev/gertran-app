@@ -54,7 +54,7 @@ export class WorkdayService implements ApiService<Workday> {
   }
 
   get(id: string, customerId: string): Observable<Workday> {
-    return this.http.get<Workday>(`customers/${customerId}/workday_settings/${id}`);
+  return this.http.get<Workday>(`customers/${customerId}/workday_settings/${id}`);
   }
 
   getAll(pagination: Pagination, customerId: string): Observable<GetAllResponse<Workday>> {
@@ -65,19 +65,46 @@ export class WorkdayService implements ApiService<Workday> {
       });
     }
 
-    return this.http.get<GetAllResponse<Workday>>(`customers/${customerId}/workday_settings`, {params});
+  return this.http.get<GetAllResponse<Workday>>(`customers/${customerId}/workday_settings`, {params});
   }
 
   save(data: Workday, customerId: string): Observable<Workday> {
-    return this.http.post<Workday>(`customers/${customerId}/workday_settings/create`, data);
+    const payload: any = {
+      maximum_workday_period: data.maximumWorkdayPeriod,
+      maximum_hours_continuous_driving: data.maximumHoursContinuousDriving,
+      rest_period_to_break_continuous_driving: data.restPeriodToBreakContinuousDriving,
+      maximum_hours_daily_driving: data.maximumHoursDailyDriving,
+      minimum_continuous_rest_period: data.minimumContinuousRestPeriod,
+      minimum_lunch_rest_period: data.minimumLunchRestPeriod,
+      rest_period_between_working_days: data.restPeriodBetweenWorkingDays,
+      maximum_hours_per_week: data.maximumHoursPerWeek,
+      maximum_continuous_rest_period: data.maximumContinuousRestPeriod,
+    };
+    // Remove undefined/null to evitar validação com campos vazios
+    Object.keys(payload).forEach(k => (payload[k] == null) && delete payload[k]);
+    console.log('[WorkdaySettings] POST payload', payload, 'customerId=', customerId);
+  return this.http.post<Workday>(`customers/${customerId}/workday_settings/create`, payload);
   }
 
   update(id: string, data: Workday, customerId: string): Observable<Workday> {
-    return this.http.patch<Workday>(`customers/${customerId}/workday_settings/${id}/update`, data);
+    const payload: any = {
+      maximum_workday_period: data.maximumWorkdayPeriod,
+      maximum_hours_continuous_driving: data.maximumHoursContinuousDriving,
+      rest_period_to_break_continuous_driving: data.restPeriodToBreakContinuousDriving,
+      maximum_hours_daily_driving: data.maximumHoursDailyDriving,
+      minimum_continuous_rest_period: data.minimumContinuousRestPeriod,
+      minimum_lunch_rest_period: data.minimumLunchRestPeriod,
+      rest_period_between_working_days: data.restPeriodBetweenWorkingDays,
+      maximum_hours_per_week: data.maximumHoursPerWeek,
+      maximum_continuous_rest_period: data.maximumContinuousRestPeriod,
+    };
+    Object.keys(payload).forEach(k => (payload[k] == null) && delete payload[k]);
+    console.log('[WorkdaySettings] PATCH payload', payload, 'id=', id, 'customerId=', customerId);
+  return this.http.patch<Workday>(`customers/${customerId}/workday_settings/${id}/update`, payload);
   }
 
   delete(id: string, customerId: string): Observable<void> {
-    return this.http.delete<void>(`customers/${customerId}/workday_settings/${id}/delete`);
+  return this.http.delete<void>(`customers/${customerId}/workday_settings/${id}/delete`);
   }
 
   getWorkdayStatus(justificationOnly = false): Observable<Choice[]> {
