@@ -46,30 +46,29 @@ export class TotalNcPerIncidentPercentHelper {
   chartOptions: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
-    layout: { padding: 55 },
+    layout: { padding: 75 },
     plugins: {
       legend: { display: false },
       datalabels: {
         color: '#000',
         formatter: (value: any, ctx: any) => {
-          const numericValue = Number(value);
+          const percentual = Number(value);
           const dataIndex = ctx.dataIndex;
           const dataset = ctx.dataset as any;
-
           const totalBruto = dataset.totaisBrutos ? dataset.totaisBrutos[dataIndex] : 0;
-
-          return `${numericValue.toFixed(1)}% (${totalBruto})`;
+          // Quebra em duas linhas para reduzir largura e evitar corte
+          return `${percentual.toFixed(1)}%\n(${totalBruto})`;
         },
         anchor: 'end',
         align: 'end',
         clamp: true,
-        offset: 20,
+        offset: 12,
         display: (ctx) => {
           const value = ctx.dataset.data[ctx.dataIndex] as number;
           return value >= 3;
         },
         textAlign: 'center',
-        font: { weight: 'bold', size: 12 },
+        font: { weight: 'bold', size: 11 },
       },
     },
   };

@@ -1,3 +1,4 @@
+/* ---------- ESTRUTURA WEB (VISUALIZAÇÃO NO NAVEGADOR) ---------- */
 .charts-container {
   display: flex;
   flex-wrap: wrap;
@@ -20,7 +21,7 @@
   font-weight: bold;
 }
 
-
+/* Tamanho padrão dos cards menores */
 .chart-card.card_tela {
   flex: 1 1 30%;
   max-width: 30%;
@@ -31,12 +32,33 @@
   width: 100% !important;
 }
 
+/* Listas com scroll na web para não ocupar a tela toda */
 .chart-card.card_tela ul {
   height: 280px;
   overflow-y: auto;
 }
 
-/* ---------- Estilos por categoria ---------- */
+.chart-card.card_tela ul.no-scroll {
+  height: auto;
+  overflow: visible;
+}
+
+/* Badge do Cliente */
+.customer-badge {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin: -10px auto 20px auto;
+  padding: 8px 14px;
+  width: fit-content;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Cores das Categorias */
 .sm h3 {
   background-color: #007bff;
 }
@@ -49,119 +71,10 @@
   background-color: #1f7904;
 }
 
-/* ---------- Impressão ---------- */
-@media print {
-
-
-
-  /* @page:first {
-    background: url('fundo-capa.png') no-repeat center center;
-    background-size: cover;
-  }
-
-  @page:left {
-    background: url('fundo-esquerda.png') no-repeat center center;
-    background-size: cover;
-  }
-
-  @page:right {
-    background: url('fundo-direita.png') no-repeat center center;
-    background-size: cover;
-  } */
-
-
-
-  body {
-    background: #855151 !important;
-    /* cor de fundo */
-    -webkit-print-color-adjust: exact;
-    /* Chrome/Safari */
-    print-color-adjust: exact;
-    /* Firefox */
-  }
-
-  /* força quebra sempre depois do elemento com a classe */
-  .page-break {
-    page-break-before: always;
-    /* força ir pra próxima página */
-    break-before: page;
-    /* padrão moderno */
-  }
-
-  .charts-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-
-  }
-
-  .chart-card {
-    flex: 0 1 45%;
-    max-width: 45%;
-    margin: 10px auto;
-    page-break-inside: avoid;
-
-    /* força a borda aparecer na impressão */
-    border: 1px solid #72849a !important;
-
-    /* alguns navegadores ignoram sombras na impressão, 
-       então o melhor é trocar por uma borda */
-    box-shadow: none !important;
-
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .chart-card h3 {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    color: white !important;
-    border-bottom: 1px solid #72849a;
-    /* dá destaque no título também */
-  }
-
-  /* garante cor de fundo no print */
-  .sm h3 {
-    background-color: #007bff !important;
-  }
-
-  .nc h3 {
-    background-color: #8b002e !important;
-  }
-
-  .pes h3 {
-    background-color: #1f7904 !important;
-  }
-
-  /* Remove itens desnecessários */
-  body,
-  .charts-section {
-    margin: 0;
-    padding: 0;
-  }
-
-  h2,
-  select {
-    display: none !important;
-  }
-
-  canvas {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-}
-
-/* ---------- Header com logo ---------- */
+/* Header e Logo */
 .dash-header {
   position: relative;
   height: 70px;
-}
-
-.dash-header h3 {
-  margin: 0;
-  text-align: center;
-  line-height: 70px;
 }
 
 .dash-header .logo {
@@ -180,4 +93,93 @@
 .dash-header .logo img {
   width: 100%;
   height: auto;
+}
+
+@media print {
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  @page {
+    margin: 0.5cm;
+  }
+
+  body {
+    background: white !important;
+  }
+
+
+  .charts-container {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .chart-card {
+    display: inline-block !important;
+    vertical-align: top;
+    width: 48% !important;
+    margin: 1% !important;
+    box-shadow: none !important;
+    border: 1px solid #eee !important;
+    page-break-inside: avoid;
+    height: auto !important;
+  }
+
+  .chart-card[style*="max-width: 61%"],
+  .chart-card[style*="max-width: 62%"],
+  .chart-card[style*="max-width: 45%"] {
+    width: 98% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+  .chart-card.card_tela ul {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .chart-card.card_tela canvas {
+    max-height: 250px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  h1 {
+    font-size: 16pt !important;
+    margin: 15px 0 !important;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 10pt !important;
+  }
+
+  h2,
+  select,
+  .no-print,
+  #yearMonthSelect,
+  label {
+    display: none !important;
+  }
+
+  .dash-header {
+    margin-bottom: 10px;
+  }
+
+
+  /* Forçar quebra de página antes de seções principais se necessário */
+  h1 {
+    page-break-before: always;
+    margin-top: 30px !important;
+  }
+
+  /* Primeira página não precisa de quebra antes do primeiro H1 */
+  h1:first-of-type {
+    page-break-before: auto;
+  }
 }

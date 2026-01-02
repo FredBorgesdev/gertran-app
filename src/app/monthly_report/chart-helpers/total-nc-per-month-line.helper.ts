@@ -5,19 +5,24 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
   providedIn: 'root',
 })
 export class TotalNcPerMonthLineHelper {
-
-  chartOptions: ChartOptions<'line'> = {
+  chartOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: true,
-    layout: {
-      padding: {
-        top: 10,
-        bottom: 10,
-      },
-    },
+    layout: { padding: { top: 12, bottom: 12, left: 8, right: 8 } },
     plugins: {
       legend: { display: false },
       tooltip: { mode: 'index', intersect: false },
+      datalabels: {
+        color: '#000',
+        anchor: 'end',
+        align: 'end',
+        clamp: true,
+        formatter: (value: any) => {
+          const n = Number(value) || 0;
+          return n.toLocaleString();
+        },
+        font: { weight: 'bold', size: 10 },
+      },
     },
     scales: {
       x: {
@@ -27,13 +32,13 @@ export class TotalNcPerMonthLineHelper {
       y: {
         display: true,
         title: { display: false, text: 'Total NC' },
-        beginAtZero: false,
+        beginAtZero: true,
         ticks: { padding: 10 },
       },
     },
   };
 
-  build(report: any): ChartConfiguration<'line'>['data'] {
+  build(report: any): ChartConfiguration<'bar'>['data'] {
     let dataParsed: Record<string, number> = {};
     try {
       dataParsed = JSON.parse(report.totalNcPerMonth || '{}');
@@ -41,8 +46,8 @@ export class TotalNcPerMonthLineHelper {
       dataParsed = {};
     }
 
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 
-                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun',
+      'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
     const keys = Object.keys(dataParsed).sort(); // ['2025-01', '2025-02', ...]
     const labels = keys.map(key => {
@@ -59,10 +64,9 @@ export class TotalNcPerMonthLineHelper {
         {
           label: `Total NC por Mês (${total.toLocaleString()})`,
           data: valores,
-          fill: false,
-          borderColor: '#FF6384',
           backgroundColor: '#FF6384',
-          tension: 0.3,
+          borderColor: '#C62828',
+          borderWidth: 1,
         },
       ],
     };

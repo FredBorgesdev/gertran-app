@@ -114,6 +114,7 @@ export class MonthlyReportSelectComponent implements OnInit {
   ncOverSpeedDriverList: NcOverSpeedDriverItem[] = [];
 
   searchPieOptions: any;
+  searchWorkerPieOptions: any;
 
   searchPieData: any;
   searchList: { label: string; total: number; percentage: number; color: string }[] = [];
@@ -123,10 +124,10 @@ export class MonthlyReportSelectComponent implements OnInit {
 
   searchWorkerPercentPieData: any
   searchWorkerList: { label: string; total: number; percentage: number; color: string }[] = [];
-  
+
   searchWorkerCurrentMonthPercentPieData: any
   searchWorkerCurrentMonthList: { label: string; total: number; percentage: number; color: string }[] = [];
-  
+
   customerName: string = '';
 
 
@@ -272,6 +273,7 @@ export class MonthlyReportSelectComponent implements OnInit {
         const summedSearch = this.sumSearchPercent(JSON.parse(report.totalSearchPercent));
 
         this.searchPieOptions = this.searchHelper.chartOptions;
+        this.searchWorkerPieOptions = this.searchWorkerPercentHelper.chartOptions;
 
         this.searchPieData = this.searchHelper.build(summedSearch);
         this.searchList = this.searchListHelper.build(summedSearch)

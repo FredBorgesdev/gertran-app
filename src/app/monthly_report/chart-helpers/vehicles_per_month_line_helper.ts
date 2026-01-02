@@ -5,18 +5,24 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
   providedIn: 'root',
 })
 export class VehiclesPerMonthLineHelper {
-  chartOptions: ChartOptions<'line'> = {
+  chartOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: true,
-    layout: {
-      padding: {
-        top: 10,
-        bottom: 10,
-      },
-    },
+    layout: { padding: { top: 12, bottom: 12, left: 8, right: 8 } },
     plugins: {
       legend: { display: false },
       tooltip: { mode: 'index', intersect: false },
+      datalabels: {
+        color: '#000',
+        anchor: 'end',
+        align: 'end',
+        clamp: true,
+        formatter: (value: any) => {
+          const n = Number(value) || 0;
+          return n.toLocaleString();
+        },
+        font: { weight: 'bold', size: 10 },
+      },
     },
     scales: {
       x: {
@@ -26,13 +32,13 @@ export class VehiclesPerMonthLineHelper {
       y: {
         display: true,
         title: { display: false, text: 'Quantidade de Veículos' },
-        beginAtZero: false,
+        beginAtZero: true,
         ticks: { padding: 10 },
       },
     },
   };
 
-  build(totalVehiclesPerMonth): ChartConfiguration<'line'>['data'] {
+  build(totalVehiclesPerMonth): ChartConfiguration<'bar'>['data'] {
     let dataParsed: Record<string, number> = {};
     try {
       dataParsed = JSON.parse(totalVehiclesPerMonth || '{}');
@@ -41,7 +47,7 @@ export class VehiclesPerMonthLineHelper {
     }
 
     const monthNames = ['Jan', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun',
-                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
     const keys = Object.keys(dataParsed).sort(); // ['2025-01', '2025-02', ...]
     const labels = keys.map(key => {
@@ -58,10 +64,9 @@ export class VehiclesPerMonthLineHelper {
         {
           label: `Veículos por Mês (${total.toLocaleString()})`,
           data: valores,
-          fill: false,
-          borderColor: '#36A2EB',
           backgroundColor: '#36A2EB',
-          tension: 0.3,
+          borderColor: '#1E88E5',
+          borderWidth: 1,
         },
       ],
     };

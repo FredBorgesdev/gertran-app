@@ -4,51 +4,53 @@ import { MonthlyReport } from '../monthly_report.service';
 
 @Injectable({ providedIn: 'root' })
 export class TotalSmPerMonthLineHelper {
-chartOptions: ChartOptions<'line'> = {
-  responsive: true,
-  maintainAspectRatio: true, // permite o gráfico se ajustar ao container
-  layout: {
-    padding: {
-      top: 10,
-      bottom: 10, // diminui o espaço vertical
-    }
-  },
-  plugins: {
-    legend: { display: false },
-    tooltip: { mode: 'index', intersect: false },
-  },
-  scales: {
-    x: {
-      display: true,
-      title: { display: true, text: 'Mês' },
+  chartOptions: ChartOptions<'bar'> = {
+    responsive: true,
+    maintainAspectRatio: true,
+    layout: {
+      padding: { top: 12, bottom: 12, left: 8, right: 8 }
     },
-    y: {
-      display: true,
-      title: { display: false, text: 'Total SM' },
-      beginAtZero: false,
-          ticks: {
-      padding: 10 // aumenta a distância entre os números do eixo Y e o gráfico
-    }
+    plugins: {
+      legend: { display: false },
+      tooltip: { mode: 'index', intersect: false },
+      datalabels: {
+        color: '#000',
+        anchor: 'end',
+        align: 'end',
+        clamp: true,
+        formatter: (value: any) => {
+          const n = Number(value) || 0;
+          return n.toLocaleString();
+        },
+        font: { weight: 'bold', size: 10 },
+      },
     },
-  },
-  // define altura em pixels diretamente (quando maintainAspectRatio: false)
-  // isso funciona se você estiver usando o Chart dentro de um componente Angular que respeite options
-  // se o gráfico ainda não respeitar, pode-se limitar o container via CSS
-  // ex: canvas { height: 200px !important; }
-};
+    scales: {
+      x: {
+        display: true,
+        title: { display: true, text: 'Mês' },
+      },
+      y: {
+        display: true,
+        title: { display: false, text: 'Total SM' },
+        beginAtZero: true,
+        ticks: { padding: 10 },
+      },
+    },
+  };
 
-  build(report: MonthlyReport): ChartConfiguration<'line'>['data'] {
+  build(report: MonthlyReport): ChartConfiguration<'bar'>['data'] {
     try {
       const data = JSON.parse(report.totalSmPerMonth || '{}');
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun', 
-                          'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Abr', 'Mai', 'Jun',
+        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
       const keys = Object.keys(data); // ['2025-01', '2025-02', ...]
       const labels = keys.map(key => {
         const monthIndex = parseInt(key.split('-')[1], 10) - 1;
         return monthNames[monthIndex] || key;
       });
-      const valores = keys.map(key => data[key]); 
+      const valores = keys.map(key => data[key]);
 
       // Soma total para exibir na legenda
       const total = valores.reduce((acc, val) => acc + val, 0);
@@ -59,10 +61,9 @@ chartOptions: ChartOptions<'line'> = {
           {
             label: `Total SM por Mês (${total.toLocaleString()})`,
             data: valores,
-            fill: false,
-            borderColor: '#42A5F5',
             backgroundColor: '#42A5F5',
-            tension: 0.3,
+            borderColor: '#1E88E5',
+            borderWidth: 1,
           }
         ]
       };
@@ -72,10 +73,9 @@ chartOptions: ChartOptions<'line'> = {
         datasets: [{
           label: 'Total SM por Mês (0)',
           data: [],
-          fill: false,
-          borderColor: '#42A5F5',
           backgroundColor: '#42A5F5',
-          tension: 0.3,
+          borderColor: '#1E88E5',
+          borderWidth: 1,
         }]
       };
     }

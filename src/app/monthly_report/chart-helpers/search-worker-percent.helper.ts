@@ -20,15 +20,9 @@ export class SearchWorkerPercentHelper {
       legend: { display: false },
       datalabels: {
         color: '#000',
-        formatter: (value: any, ctx: any) => {
-          const numericValue = Number(value);
-
-          const datasetData = ctx.chart.data.datasets[0].data as number[];
-          const totalGeral = datasetData.reduce((sum, val) => sum + Number(val), 0);
-
-          const percentage = totalGeral > 0 ? (numericValue / totalGeral * 100).toFixed(1) : '0.0';
-
-          return `${percentage}% (${numericValue})`;
+        formatter: (value: any) => {
+          const numericValue = Number(value) || 0;
+          return numericValue.toLocaleString();
         },
         anchor: 'end',
         align: 'end',
