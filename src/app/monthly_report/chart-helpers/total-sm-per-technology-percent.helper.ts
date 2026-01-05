@@ -10,7 +10,15 @@ export class TotalSmPerTechnologyPercentHelper {
       legend: { display: true },
       title: {
         display: false,
-        text: 'Total SM por Tecnologia (%)',
+        text: 'Total SM por Tecnologia (Quantidade)',
+      },
+      datalabels: {
+        color: '#000',
+        anchor: 'end',
+        align: 'end',
+        formatter: (value: number) => `${value}`,
+        font: { weight: 'bold', size: 12 },
+        clamp: true,
       },
     },
     scales: {
@@ -19,8 +27,7 @@ export class TotalSmPerTechnologyPercentHelper {
       },
       y: {
         beginAtZero: true,
-        max: 100,
-        title: { display: true, text: 'Porcentagem (%)' },
+        title: { display: true, text: 'Quantidade' },
       },
     },
   };
@@ -34,14 +41,17 @@ export class TotalSmPerTechnologyPercentHelper {
     }
 
     const labels = dataParsed.map((item: any) => item.Tecnologia);
-    const percentages = dataParsed.map((item: any) => item['Porcentagem (%)']);
+    const quantities = dataParsed.map((item: any) => {
+      const total = item['Total'] ?? item['Quantidade'] ?? item['total'];
+      return typeof total === 'number' ? total : 0;
+    });
 
     return {
       labels,
       datasets: [
         {
-          label: 'Porcentagem (%)',
-          data: percentages,
+          label: 'Quantidade',
+          data: quantities,
           backgroundColor: '#42A5F5', // azul, pode trocar
           borderColor: '#1E88E5',
           borderWidth: 1,

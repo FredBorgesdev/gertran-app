@@ -1,4 +1,3 @@
-/* ---------- ESTRUTURA WEB (VISUALIZAÇÃO NO NAVEGADOR) ---------- */
 .charts-container {
   display: flex;
   flex-wrap: wrap;
@@ -21,7 +20,6 @@
   font-weight: bold;
 }
 
-/* Tamanho padrão dos cards menores */
 .chart-card.card_tela {
   flex: 1 1 30%;
   max-width: 30%;
@@ -32,7 +30,6 @@
   width: 100% !important;
 }
 
-/* Listas com scroll na web para não ocupar a tela toda */
 .chart-card.card_tela ul {
   height: 280px;
   overflow-y: auto;
@@ -43,7 +40,6 @@
   overflow: visible;
 }
 
-/* Badge do Cliente */
 .customer-badge {
   text-align: center;
   font-size: 16px;
@@ -58,7 +54,6 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* Cores das Categorias */
 .sm h3 {
   background-color: #007bff;
 }
@@ -71,7 +66,6 @@
   background-color: #1f7904;
 }
 
-/* Header e Logo */
 .dash-header {
   position: relative;
   height: 70px;
@@ -93,6 +87,11 @@
 .dash-header .logo img {
   width: 100%;
   height: auto;
+}
+
+.chart-card.pes ul {
+  height: auto !important;
+  overflow: visible !important;
 }
 
 @media print {
