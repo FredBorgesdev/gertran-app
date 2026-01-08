@@ -183,19 +183,20 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
-            permission: Permissions.VIEW_DASHBOARD_TC4
+            permission: Permissions.VIEW_DASHBOARD_TC4,
+            gertranStaffOnly: true,  // Apenas staff Gertran
           },
           {
             path: 'reports/dashboards/maps',
             title: 'Mapa',
             iconType: 'nzIcon',
             iconTheme: 'outline',
-            icon: 'bar-chart',
+            icon: 'environment',  // Ícone de mapa
             queryParams: {
               fullscreen: true
             },
             submenu: [],
-            permission: Permissions.VIEW_DASHBOARD_MAPS,
+            gertranStaffOnly: true,  // Apenas staff Gertran - oculto para clientes
           },
           {
             path: 'reports/dashboards/monitoring-requests',

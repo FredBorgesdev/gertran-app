@@ -31,6 +31,7 @@ export class DashboardMapsComponent implements OnInit, OnChanges, OnDestroy {
     private modalService: NzModalService,
     private authService: AuthenticationService,
     private positionService: PositionsService,
+    private router: Router,
   ) {
   }
 
@@ -41,6 +42,14 @@ export class DashboardMapsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Verificar se é cliente - se for, redirecionar
+    // Esta tela é apenas para staff Gertran (central de monitoramento)
+    if (!this.authService.user?.isGertranStaff && this.authService.user?.customer) {
+      console.warn('[MAPA] Acesso negado: esta tela é exclusiva para staff Gertran');
+      this.router.navigate(['/reports/dashboards/client']);
+      return;
+    }
+    
     this.load();
     // Atualiza a cada 2 minutos para dashboard de operação
     this.refreshInterval = setInterval(() => this.load(), 2 * 60 * 1000);
@@ -62,22 +71,31 @@ export class DashboardMapsComponent implements OnInit, OnChanges, OnDestroy {
 
     // Debug: ver o que está sendo usado como customer
     console.log('[MAPA] Customer ID:', customer);
+    console.log('[MAPA] É staff Gertran?', this.authService.user?.isGertranStaff);
 
     // Monta os filtros - se não tem customer, usa allowGlobal para ver todos
     const filters: any = {
       travelling: true,
     };
 
-    if (customer) {
+    if (customer && !this.authService.user?.isGertranStaff) {
+      // Cliente comum: filtra por seu customer
       filters.customer = customer;
-    } else {
+      console.log('[MAPA] Modo cliente - filtrando por customer:', customer);
+    } else if (this.authService.user?.isGertranStaff && customer) {
+      // Staff Gertran com customer selecionado: filtra por esse customer
+      filters.customer = customer;
+      console.log('[MAPA] Modo staff com filtro - customer:', customer);
+    } else if (this.authService.user?.isGertranStaff && !customer) {
       // Staff Gertran sem customer selecionado - ver todos os veículos
       filters.allowGlobal = true;
       console.log('[MAPA] Modo global ativado - exibindo todos os veículos');
     }
 
+    console.log('[MAPA] Filtros finais:', filters);
+
     // Buscar todos os veículos em viagem (limit alto para pegar todos)
-    this.positionService.getAll({ limit: 500 }, filters).subscribe((data) => {
+    this.positionService.getAll({ limit: 1000 }, filters).subscribe((data) => {
       this.mapLoading = false;
       console.log('[MAPA] Resposta da API:', data);
 

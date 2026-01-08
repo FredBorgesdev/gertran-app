@@ -79,14 +79,27 @@ export class ControlTower4 implements OnInit {
   updateCharts() {
     this.loadPositions();
     this.loadMonitoringRequests();
-    this.loadCheckLists();
+
+    // Checklist REMOVIDO - não será carregado na central de monitoramento
+    // this.loadCheckLists();
   }
 
   ngOnInit() {
     console.log('[TC4] ngOnInit start');
+
+    // Verificar se o usuário é staff Gertran
+    // Se não for, redirecionar para dashboard do cliente
+    if (!this.authService.user?.isGertranStaff) {
+      console.warn('[TC4] Acesso negado: usuário não é staff Gertran');
+      this.router.navigate(['/reports/dashboards/client']);
+      return;
+    }
+
     this.loadPositions();
-    this.loadMonitoringRequests()
-    this.loadCheckLists()
+    this.loadMonitoringRequests();
+
+    // Checklist REMOVIDO - não será carregado na central de monitoramento
+    // this.loadCheckLists();
 
     setInterval(() => {
       console.log('[TC4] updateCharts interval tick');
@@ -364,8 +377,8 @@ export class ControlTower4 implements OnInit {
     const queryParams = new URLSearchParams(window.location.search);
 
     const { fromDate, toDate } = this.returnRange7Days()
-  let customer = queryParams.get('customerId') || this.customerId || this.authService.customerId;
-  if (this.authService.user?.isGertranStaff) customer = undefined as any;
+    let customer = queryParams.get('customerId') || this.customerId || this.authService.customerId;
+    if (this.authService.user?.isGertranStaff) customer = undefined as any;
     if (customer === 'undefined' || customer === 'null') customer = undefined as any;
     const filters: any = { from: fromDate, to: toDate };
     if (customer) filters.customer = customer;
