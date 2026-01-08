@@ -61,20 +61,37 @@
   border: 1px solid black;
 }
 
-th, td {
+th,
+td {
   font-weight: bold;
   font-size: 18px;
 }
 
 .moldura {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* border: 10px solid #000;  */
-  /* box-sizing: border-box;  */
-  padding: 0; /* Removido o padding para que a moldura alcance as bordas */
-  height: 100%; /* Altura igual à altura da página */
-  overflow: auto; /* Permite rolagem dentro da moldura quando necessário */
+  position: relative;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+:host ::ng-deep .moldura {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 1920px) {
+  .moldura {
+    padding: 20px;
+  }
+
+  .dash-header {
+    padding: 15px 15px 15px 150px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .dash-header {
+    padding: 10px 10px 10px 100px;
+  }
 }

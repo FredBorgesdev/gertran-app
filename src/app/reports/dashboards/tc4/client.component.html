@@ -7,72 +7,114 @@
     </div>
     <h3>TORRE DE CONTROLE 4</h3>
   </div>
-  <nz-card>
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <h2 class="text-center m-b-1">VEÍCULOS MONITORADOS</h2>
-        <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-weight: bold;">TERMINAIS BH - VIAGENS MONITORADAS (últimos 7 dias)</span>
-                <canvas id="operationsPositionsChart"></canvas>
-                <h5>TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}</h5>
-                <div *ngFor="let group of splitLabels(operationsPositionsData.labels, 3)"
-                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
-                  <div *ngFor="let label of group; let i = index" style="margin: 5px;">
-                    <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                      [style.background-color]="label.color"></span>
-                    <span> {{ label.status }}: {{ getPositionData(label) }}</span>
+  <div class="container-fluid" style="max-width: 1800px; margin: 0 auto; padding: 0 15px;">
+    <nz-card>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="text-center m-b-1">VEÍCULOS MONITORADOS</h2>
+          <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="m-b-1">
+                  <span
+                    style="font-weight: bold; display: block; text-align: center; margin-bottom: 20px; font-size: 16px;">
+                    TERMINAIS BH - VIAGENS MONITORADAS<br>(últimos 7 dias)
+                  </span>
+                  <div class="row align-items-center">
+                    <div class="col-xl-5 col-lg-12 d-flex justify-content-center mb-3">
+                      <canvas id="operationsPositionsChart"
+                        style="width: 280px; height: 280px; max-width: 100%;"></canvas>
+                    </div>
+                    <div class="col-xl-7 col-lg-12">
+                      <div style="text-align: left; padding-left: 15px;">
+                        <h5 style="font-weight: bold; margin-bottom: 15px; font-size: 18px;">
+                          TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}
+                        </h5>
+                        <div *ngFor="let label of operationsPositionsData.labels"
+                          style="margin-bottom: 10px; display: flex; align-items: center; flex-wrap: nowrap;">
+                          <span
+                            style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;"
+                            [style.background-color]="label.color"></span>
+                          <span style="margin-left: 10px; font-size: 14px; line-height: 1.4; word-break: break-word;">
+                            {{ label.status }}: <strong>{{ getPositionData(label) }}</strong>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                <div class="m-b-1">
+                  <span
+                    style="font-weight: bold; display: block; text-align: center; margin-bottom: 20px; font-size: 16px;">
+                    VIAGENS MONITORADAS<br>(últimos 7 dias)
+                  </span>
+                  <div class="row align-items-center">
+                    <div class="col-xl-5 col-lg-12 d-flex justify-content-center mb-3">
+                      <canvas id="positonsChart" style="width: 280px; height: 280px; max-width: 100%;"></canvas>
+                    </div>
+                    <div class="col-xl-7 col-lg-12">
+                      <div style="text-align: left; padding-left: 15px;">
+                        <h5 style="font-weight: bold; margin-bottom: 15px; font-size: 18px;">
+                          TOTAL: {{ positionsData.totalPositionsMonitoring }}
+                        </h5>
+                        <div *ngFor="let label of positionsData.labels"
+                          style="margin-bottom: 10px; display: flex; align-items: center;">
+                          <span
+                            style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;"
+                            [style.background-color]="label.color"></span>
+                          <span style="margin-left: 10px; font-size: 14px;">
+                            {{ label.status }}: <strong>{{ getPositionData(label) }}</strong>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-weight: bold;">VIAGENS MONITORADAS (últimos 7 dias)</span>
-                <canvas id="positonsChart"></canvas>
-                <h5>TOTAL: {{ positionsData.totalPositionsMonitoring }}</h5>
-                <div *ngFor="let group of splitLabels(positionsData.labels, 3)"
-                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center;">
-                  <div *ngFor="let label of group; let i = index" style="margin: 5px;">
-                    <span style="display: inline-block; width: 15px; height: 15px; border-radius: 50%;"
-                      [style.background-color]="label.color"></span>
-                    <span> {{ label.status }}: {{ getPositionData(label) }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nz-card>
-        <h2 class="text-center m-b-1">RESUMO 7 DIAS</h2>
-        <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
-          <div class="row justify-content-center">
-            <!-- Checklist REMOVIDO - não será exibido na central de monitoramento -->
-            <div class="col-lg-8 col-md-10 col-sm-12">
-              <div class="text-center m-b-1" style="display: flex; flex-direction: column; align-items: center;">
-                <span style="font-weight: bold; font-size: 18px;">
-                  SOLICITAÇÕES MONITORAMENTO (últimos 7 dias)
-                </span>
-                <canvas id="myChart2" style="max-width: 400px; max-height: 400px;"></canvas>
-                <h5 style="font-size: 20px; margin-top: 15px;">TOTAL: {{monitoringRequestsData.totalMonitoringRequests
-                  }}</h5>
-                <div *ngFor="let group of splitLabels(monitoringRequestsData.labels, 2)"
-                  style="display: inline-flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
-                  <div *ngFor="let label of group; let i = index" style="margin: 5px 15px;">
-                    <span style="display: inline-block; width: 20px; height: 20px; border-radius: 50%;"
-                      [style.background-color]="label.color"></span>
-                    <span style="font-size: 16px; margin-left: 8px;"> {{ label.status }}: {{ getPositionData(label)
-                      }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nz-card>
-      </div>
+          </nz-card>
+          <h2 class="text-center m-b-1">RESUMO 7 DIAS</h2>
+          <nz-card class="m-b-20" style="background-color:#ededed; border: 1px solid #72849a">
+            <div class="row justify-content-center">
+              <div class="col-lg-10 col-md-12 col-sm-12">
+                <div class="text-center m-b-1">
+                  <span style="font-weight: bold; font-size: 18px; display: block; margin-bottom: 25px;">
+                    SOLICITAÇÕES MONITORAMENTO (últimos 7 dias)
+                  </span>
 
-    </div>
-  </nz-card>
+
+                  <div class="row align-items-center justify-content-center">
+
+                    <div class="col-lg-5 col-md-6 col-sm-12 d-flex justify-content-center mb-3">
+                      <canvas id="myChart2" style="width: 320px; height: 320px; max-width: 100%;"></canvas>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+                      <div style="text-align: left; display: inline-block; padding-left: 20px;">
+                        <h5 style="font-size: 22px; margin-bottom: 20px; font-weight: bold;">
+                          TOTAL: {{monitoringRequestsData.totalMonitoringRequests}}
+                        </h5>
+                        <div *ngFor="let label of monitoringRequestsData.labels"
+                          style="margin-bottom: 15px; display: flex; align-items: center;">
+                          <span
+                            style="display: inline-block; width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;"
+                            [style.background-color]="label.color"></span>
+                          <span style="font-size: 18px; margin-left: 15px;">
+                            {{ label.status }}: <strong>{{ getPositionData(label) }}</strong>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+
+      </div>
+    </nz-card>
+  </div>
   <app-fixed-buttons></app-fixed-buttons>
 </div>
