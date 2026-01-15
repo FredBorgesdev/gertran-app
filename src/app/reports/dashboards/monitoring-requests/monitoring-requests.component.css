@@ -3,9 +3,22 @@
   align-items: center;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-  margin-top: -25px;
-  margin-bottom: 30px;
+  margin: 0px 0px 30px 0px;
   padding: 10px 10px 10px 130px;
+}
+
+.dash-header-title {
+  background: #72849a;
+  border-radius: 3px;
+  padding: 8px 40px 3px;
+  font-size: 17px;
+  color: #fff;
+  margin: 0 10px;
+  height: 40px;
+}
+
+.dash-header .anticon {
+  font-size: 24px;
 }
 
 .dash-header h3 {
@@ -13,7 +26,17 @@
   text-align: left;
 }
 
-.dash-header .logo {
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content h3 {
+  margin: 0;
+  text-align: left;
+}
+
+.logo {
   background-color: #fff;
   width: auto;
   height: 70px;
@@ -28,21 +51,28 @@
   left: -3px;
 }
 
-.dash-header .logo img {
+.logo img {
   height: 60px !important;
   width: auto !important;
 }
 
-
-.content h4 {
-  margin: 0;
-  text-align: left;
+.custom-table th,
+.custom-table td {
+  border: 1px solid black;
 }
 
+th,
+td {
+  font-weight: bold;
+  font-size: 18px;
+}
 
-.scrollable-card {
-  height: 500px;
-  overflow-y: scroll;
+.moldura {
+  position: relative;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .square {
@@ -68,11 +98,83 @@
   background: red;
 }
 
-h3.header-small {
-  font-size: 1.5em;
+/* Melhorias para visualização à distância em telas grandes */
+:host ::ng-deep {
+
+  /* Títulos e headers maiores */
+  .dash-header h3 {
+    font-size: 32px !important;
+    font-weight: bold !important;
+  }
+
+  /* Tabelas mais legíveis */
+  nz-table {
+    font-size: 18px !important;
+  }
+
+  nz-table thead th {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    padding: 16px !important;
+    background-color: #1890ff !important;
+    color: white !important;
+  }
+
+  nz-table tbody td {
+    font-size: 18px !important;
+    padding: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  /* Linhas da tabela mais altas */
+  nz-table tr {
+    height: 60px !important;
+  }
+
+  /* Status badges maiores */
+  nz-tag,
+  nz-badge {
+    font-size: 16px !important;
+    padding: 6px 12px !important;
+  }
+
+  /* Cards com mais espaçamento */
+  nz-card {
+    font-size: 18px !important;
+  }
+
+  nz-card-head {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    padding: 20px !important;
+  }
+
+  /* Botões maiores */
+  button {
+    font-size: 18px !important;
+    min-height: 45px !important;
+  }
 }
 
-h4.header-small {
-  font-size: 1.2em;
-  margin-bottom: 10px !important;
+/* Responsividade para telas muito grandes (6 monitores) */
+@media (min-width: 1920px) {
+  :host ::ng-deep {
+    nz-table thead th {
+      font-size: 24px !important;
+      padding: 20px !important;
+    }
+
+    nz-table tbody td {
+      font-size: 22px !important;
+      padding: 18px !important;
+    }
+
+    nz-table tr {
+      height: 70px !important;
+    }
+
+    .dash-header h3 {
+      font-size: 40px !important;
+    }
+  }
 }

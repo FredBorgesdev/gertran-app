@@ -1,3 +1,4 @@
+/* Cores das linhas de alerta - AMARELO PURO igual ao checklist */
 .bg-alert {
   background: yellow;
   font-weight: bold;
@@ -12,30 +13,58 @@
   font-weight: bold;
 }
 
+/* Cabeçalho azul igual ao checklist */
 th.table-header {
-  color: #2a2a2a;
-  font-size: 0.75rem;
+  color: #ffffff;
+  font-size: 1.1rem;
   font-weight: bold;
-  background: #ededed;
-  border: 1px solid #2a2a2a;
-  border-collapse: collapse;
+  background: #1890ff;
+  border: 1px solid #000000;
+  padding: 12px 8px;
+  text-transform: uppercase;
 }
 
-
 .max-width-cell {
-  max-width: 200px; /* Set your desired maximum width */
+  max-width: 400px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-
-.custom-table th,
-.custom-table td {
-  border: 1px solid black;
+.custom-table {
+  width: 100%;
+  table-layout: fixed;
 }
 
-th, td {
+/* Bordas pretas igual ao checklist */
+.custom-table th,
+.custom-table td {
+  border: 1px solid #000000;
+}
+
+/* Fonte grande para telas grandes */
+th,
+td {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
+  padding: 14px 8px;
+}
+
+/* Responsividade: permitir quebra de texto em telas menores */
+@media (max-width: 992px) {
+  .max-width-cell {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  th.table-header {
+    font-size: 0.95rem;
+    padding: 8px 6px;
+  }
+
+  th,
+  td {
+    font-size: 14px;
+    padding: 8px 6px;
+  }
 }

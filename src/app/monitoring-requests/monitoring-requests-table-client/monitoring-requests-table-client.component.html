@@ -1,37 +1,29 @@
-<nz-table
-  #table
-  [nzData]="monitoringRequests"
-  class="custom-table"
-  [nzFrontPagination]="true"
-  [nzPageSize]="10"
-  nzSize="small"
-  nzTableLayout="fixed"
->
+<nz-table #table [nzData]="monitoringRequests" class="custom-table control-table" [nzFrontPagination]="true"
+  [nzPageSize]="15" nzSize="small" nzTableLayout="fixed">
   <thead>
-  <tr>
-    <th class="text-center table-header" style="width: 10%;">DATA/HORA</th>
-    <th class="text-center table-header" style="width: 9%;">Placa</th>
-    <th class="text-center table-header" style="width: 9%;">Tecnologia</th>
-    <th class="text-center table-header" style="width: 15%;">CLIENTE</th>
-    <th class="text-center table-header" style="width: 12%;">ATUALIZAÇÃO</th>
-  </tr>
+    <tr>
+      <th class="text-center table-header" style="width: 18%;">DATA/HORA</th>
+      <th class="text-center table-header" style="width: 14%;">PLACA</th>
+      <th class="text-center table-header" style="width: 18%;">TECNOLOGIA</th>
+      <th class="text-center table-header max-width-cell" style="width: 36%;">CLIENTE</th>
+      <th class="text-center table-header" style="width: 14%;">ATUALIZAÇÃO</th>
+    </tr>
   </thead>
 
   <tbody>
-  <tr
-    *ngFor="let data of table.data; index as i"
-    [class]="getRowName(data)"
-  >
-    <td class="text-center">{{ data.createdAt | date:'dd/MM HH:mm' }}</td>
-    
-    <td class="text-center">{{ data.truck?.vehicle?.plate ?? '-' }}</td>
-    
-    <td class="text-center">{{ data.trackerTechnology?.name ?? '-' }}</td>
-    
-    <td class="text-center">{{ data.customer.tradingName }}</td>
-    
-    <td class=" text-center">{{ getUpdateDiff(data) }}</td>
-  </tr>
+    <tr *ngFor="let data of table.data; index as i" [class]="getRowName(data)">
+      <td class="text-center"><strong>{{ data.createdAt | date:'dd/MM HH:mm' }}</strong></td>
+
+      <td class="text-center"><strong>{{ data.truck?.vehicle?.plate ?? data.vehicle?.plate ?? '-' }}</strong></td>
+
+      <td class="text-center"><strong>{{ data.trackerTechnology?.name ??
+          data.vehicle?.trackers?.[0]?.trackerModel?.trackerTechnology?.name ?? '-' }}</strong></td>
+
+      <td class="text-center max-width-cell" nz-tooltip [nzTooltipTitle]="data.customer?.tradingName"><strong>{{
+          data.customer?.tradingName ?? '-' }}</strong></td>
+
+      <td class="text-center"><strong>{{ getUpdateDiff(data) }}</strong></td>
+    </tr>
   </tbody>
 </nz-table>
 
