@@ -58,23 +58,160 @@
 
 .custom-table th,
 .custom-table td {
-  border: 1px solid black;
+  border: 1px solid #000000;
 }
 
-th, td {
+/* Cabeçalho azul igual às outras torres */
+th.table-header {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background: #1890ff;
+  border: 1px solid #000000;
+  padding: 12px 8px;
+  text-transform: uppercase;
+}
+
+th,
+td {
   font-weight: bold;
   font-size: 18px;
+  padding: 14px 8px;
 }
 
 .moldura {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* border: 5px solid #000;  */
-  /* box-sizing: border-box;  */
+  position: relative;
+  min-height: 100vh;
   padding: 0;
-  height: 100%; /* Altura igual à altura da página */
-  overflow: auto; /* Permite rolagem dentro da moldura quando necessário */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Melhorias para visualização à distância em telas grandes */
+:host ::ng-deep {
+
+  /* Títulos e headers maiores */
+  .dash-header h3 {
+    font-size: 32px !important;
+    font-weight: bold !important;
+  }
+
+  /* Tabelas de solicitações de monitoramento */
+  nz-table {
+    font-size: 18px !important;
+  }
+
+  nz-table thead th {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    padding: 18px !important;
+    background-color: #1890ff !important;
+    color: white !important;
+    text-align: center !important;
+  }
+
+  nz-table tbody td {
+    font-size: 18px !important;
+    padding: 16px !important;
+    font-weight: 500 !important;
+  }
+
+  /* Linhas da tabela mais altas */
+  nz-table tr {
+    height: 60px !important;
+  }
+
+  /* Status badges maiores */
+  nz-tag {
+    font-size: 16px !important;
+    padding: 8px 16px !important;
+    font-weight: bold !important;
+  }
+
+  /* Cards com mais espaçamento */
+  nz-card {
+    font-size: 18px !important;
+  }
+
+  nz-card-head {
+    font-size: 22px !important;
+    font-weight: bold !important;
+    padding: 18px !important;
+  }
+
+  /* Botões maiores */
+  button {
+    font-size: 18px !important;
+    min-height: 45px !important;
+    padding: 8px 20px !important;
+  }
+
+  /* Inputs e selects maiores */
+  input,
+  nz-select,
+  nz-date-picker {
+    font-size: 18px !important;
+    min-height: 45px !important;
+  }
+
+  /* Paginação maior */
+  nz-pagination {
+    font-size: 18px !important;
+  }
+
+  nz-pagination li {
+    font-size: 18px !important;
+    min-width: 45px !important;
+    min-height: 45px !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  :host ::ng-deep {
+    .dash-header h3 {
+      font-size: 40px !important;
+    }
+
+    nz-table thead th {
+      font-size: 24px !important;
+      padding: 22px !important;
+    }
+
+    nz-table tbody td {
+      font-size: 22px !important;
+      padding: 20px !important;
+    }
+
+    nz-table tr {
+      height: 70px !important;
+    }
+
+    nz-tag {
+      font-size: 20px !important;
+      padding: 12px 20px !important;
+    }
+
+    nz-card-head {
+      font-size: 26px !important;
+      padding: 22px !important;
+    }
+
+    button {
+      font-size: 20px !important;
+      min-height: 50px !important;
+    }
+
+    input,
+    nz-select,
+    nz-date-picker {
+      font-size: 20px !important;
+      min-height: 50px !important;
+    }
+
+    nz-pagination li {
+      font-size: 20px !important;
+      min-width: 50px !important;
+      min-height: 50px !important;
+    }
+  }
 }

@@ -61,20 +61,98 @@
   border: 1px solid black;
 }
 
-th, td {
+th,
+td {
   font-weight: bold;
   font-size: 18px;
 }
 
 .moldura {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* border: 5px solid #000;  */
-  /* box-sizing: border-box;  */
-  padding: 0; 
-  height: 100%; 
-  overflow: auto;
+  /* Alinha com TC1/TC3: ocupa a altura mínima da viewport e permite scroll interno */
+  position: relative;
+  min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Ajustes visuais para telas grandes - manter mesma aparência do TC1/TC3 */
+:host ::ng-deep {
+
+  /* Títulos e headers maiores */
+  .dash-header h3 {
+    font-size: 32px !important;
+    font-weight: bold !important;
+  }
+
+  /* Tabelas mais legíveis */
+  nz-table {
+    font-size: 18px !important;
+  }
+
+  nz-table thead th {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    padding: 16px !important;
+    background-color: #1890ff !important;
+    color: white !important;
+    text-align: center !important;
+  }
+
+  nz-table tbody td {
+    font-size: 18px !important;
+    padding: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  /* Linhas da tabela mais altas */
+  nz-table tr {
+    height: 60px !important;
+  }
+
+  /* Status badges maiores */
+  nz-tag,
+  nz-badge {
+    font-size: 16px !important;
+    padding: 6px 12px !important;
+  }
+
+  /* Cards com mais espaçamento */
+  nz-card {
+    font-size: 18px !important;
+  }
+
+  nz-card-head {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    padding: 20px !important;
+  }
+
+  /* Botões maiores */
+  button {
+    font-size: 18px !important;
+    min-height: 45px !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  :host ::ng-deep {
+    nz-table thead th {
+      font-size: 24px !important;
+      padding: 20px !important;
+    }
+
+    nz-table tbody td {
+      font-size: 22px !important;
+      padding: 18px !important;
+    }
+
+    nz-table tr {
+      height: 70px !important;
+    }
+
+    .dash-header h3 {
+      font-size: 40px !important;
+    }
+  }
 }

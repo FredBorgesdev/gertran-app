@@ -1,41 +1,41 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LoadUnloadByMacroComponent} from './load-unload-by-macro/load-unload-by-macro.component';
-import {LoadUnloadByPointComponent} from './load-unload-by-point/load-unload-by-point.component';
-import {LoadUnloadByRadiusComponent} from './load-unload-by-radius/load-unload-by-radius.component';
-import {TripsLateComponent} from './trips-late/trips-late.component';
-import {TravelRequestsComponent} from './travel-requests/travel-requests.component';
-import {AvailableVehiclesComponent} from './available-vehicles/available-vehicles.component';
-import {LogisticsComponent} from './logistics/logistics.component';
-import {TravelStartComponent} from './travel-start/travel-start.component';
-import {TravelEndComponent} from './travel-end/travel-end.component';
-import {ClosingComponent} from './closing/closing.component';
-import {ScheduledTripsComponent} from './scheduled-trips/scheduled-trips.component';
-import {InsuranceCompaniesComponent} from './insurance-companies/insurance-companies.component';
-import {CommandsHistoryComponent} from './commands-history/commands-history.component';
-import {PositionsHistoryComponent} from './positions-history/positions-history.component';
-import {BaitsComponent} from './baits/baits.component';
-import {OperationalAuditCommandsComponent} from './operational-audit-commands/operational-audit-commands.component';
-import {OperationalAuditMessagesComponent} from './operational-audit-messages/operational-audit-messages.component';
-import {MacrovehicleComponent} from './macrovehicle/macrovehicle.component';
-import {AnalyticalReportComponent} from './analytical-report/analytical-report.component';
-import {Permissions} from '../authentication/permissions';
-import {ChecklistHistoryComponent} from './checklist-history/checklist-history.component';
-import {WorkdayComponent} from './workday/workday.component';
-import {LogisticReportComponent} from './logistic-report/logistic-report.component';
-import {FatigueReportComponent} from './fatigue-report/fatigue-report.component';
-import {MonitoringRequestsComponent} from "./dashboards/monitoring-requests/monitoring-requests.component";
-import {ChecklistsComponent} from "./dashboards/checklists/checklists.component";
-import {IncidentsComponent} from "./incidents/incidents.component";
-import {PanicHistoryComponent} from "./panic-history/panic-history.component";
-import {AlertsComponent as DashboardAlertsComponent} from "./dashboards/alerts/alerts.component";
-import {AlertsComponent} from "./alerts/alerts.component";
-import {DashboardMapsComponent} from "./dashboards/maps/maps.component";
-import {ClientComponent} from "./dashboards/client/client.component";
-import {TechnologiesComponent} from "./technologies/technologies.component";
-import {Tv1Component} from "./dashboards/tv1/tv1.component";
-import {InsuranceComponent} from "./insurance/insurance.component";
-import {GridComponent} from "./dashboards/grid/grid.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoadUnloadByMacroComponent } from './load-unload-by-macro/load-unload-by-macro.component';
+import { LoadUnloadByPointComponent } from './load-unload-by-point/load-unload-by-point.component';
+import { LoadUnloadByRadiusComponent } from './load-unload-by-radius/load-unload-by-radius.component';
+import { TripsLateComponent } from './trips-late/trips-late.component';
+import { TravelRequestsComponent } from './travel-requests/travel-requests.component';
+import { AvailableVehiclesComponent } from './available-vehicles/available-vehicles.component';
+import { LogisticsComponent } from './logistics/logistics.component';
+import { TravelStartComponent } from './travel-start/travel-start.component';
+import { TravelEndComponent } from './travel-end/travel-end.component';
+import { ClosingComponent } from './closing/closing.component';
+import { ScheduledTripsComponent } from './scheduled-trips/scheduled-trips.component';
+import { InsuranceCompaniesComponent } from './insurance-companies/insurance-companies.component';
+import { CommandsHistoryComponent } from './commands-history/commands-history.component';
+import { PositionsHistoryComponent } from './positions-history/positions-history.component';
+import { BaitsComponent } from './baits/baits.component';
+import { OperationalAuditCommandsComponent } from './operational-audit-commands/operational-audit-commands.component';
+import { OperationalAuditMessagesComponent } from './operational-audit-messages/operational-audit-messages.component';
+import { MacrovehicleComponent } from './macrovehicle/macrovehicle.component';
+import { AnalyticalReportComponent } from './analytical-report/analytical-report.component';
+import { Permissions } from '../authentication/permissions';
+import { ChecklistHistoryComponent } from './checklist-history/checklist-history.component';
+import { WorkdayComponent } from './workday/workday.component';
+import { LogisticReportComponent } from './logistic-report/logistic-report.component';
+import { FatigueReportComponent } from './fatigue-report/fatigue-report.component';
+import { MonitoringRequestsComponent } from "./dashboards/monitoring-requests/monitoring-requests.component";
+import { ChecklistsComponent } from "./dashboards/checklists/checklists.component";
+import { IncidentsComponent } from "./incidents/incidents.component";
+import { PanicHistoryComponent } from "./panic-history/panic-history.component";
+import { AlertsComponent as DashboardAlertsComponent } from "./dashboards/alerts/alerts.component";
+import { AlertsComponent } from "./alerts/alerts.component";
+import { DashboardMapsComponent } from "./dashboards/maps/maps.component";
+import { ClientComponent } from "./dashboards/client/client.component";
+import { TechnologiesComponent } from "./technologies/technologies.component";
+import { Tv1Component } from "./dashboards/tv1/tv1.component";
+import { InsuranceComponent } from "./insurance/insurance.component";
+import { GridComponent } from "./dashboards/grid/grid.component";
 import { ControlTower1 } from './dashboards/tc1/tc1.component';
 import { ControlTower2 } from './dashboards/tc2/tc2.component';
 import { ControlTower3 } from './dashboards/tc3/tc3.component';
@@ -207,6 +207,8 @@ const routes: Routes = [
   {
     path: 'dashboards/maps',
     component: DashboardMapsComponent,
+    // Sem permissão - acessível para staff Gertran
+    // Clientes são redirecionados automaticamente no componente
   },
   {
     path: 'dashboards/client',
@@ -214,11 +216,11 @@ const routes: Routes = [
   },
   {
     path: 'dashboards/tc1',
-    component: ControlTower2,
+    component: ControlTower1,
   },
   {
     path: 'dashboards/tc2',
-    component: ControlTower1,
+    component: ControlTower2,
   },
   {
     path: 'dashboards/tc-gertran',
@@ -232,7 +234,10 @@ const routes: Routes = [
     path: 'dashboards/tc4',
     component: ControlTower4,
     data: {
-      permission: Permissions.VIEW_DASHBOARD_TC4
+      permission: Permissions.VIEW_DASHBOARD_TC4,
+      // ATENÇÃO: Esta tela deve ser acessada APENAS por staff Gertran
+      // Mostra dados globais de todos os clientes para central de monitoramento
+      requireGertranStaff: true
     }
   },
   {
