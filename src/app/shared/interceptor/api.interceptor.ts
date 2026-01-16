@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -6,9 +6,9 @@ import {
   HttpInterceptor,
   HttpResponse, HttpHeaders, HttpErrorResponse
 } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {environment} from 'src/environments/environment';
-import {catchError, map, mergeMap, retryWhen} from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { catchError, map, mergeMap, retryWhen } from 'rxjs/operators';
 import camelcaseKeys from 'camelcase-keys-deep';
 import decamelizeKeys from 'decamelize-keys-deep';
 import Cookie from 'js-cookie';
@@ -70,10 +70,15 @@ export class ApiInterceptor implements HttpInterceptor {
       }),
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
+          // Não processar Blob (PDF, imagens, etc.)
+          if (event.body instanceof Blob) {
+            return event;
+          }
+
           if (Array.isArray(event.body)) {
-            return event.clone({body: event.body.map(camelcaseKeys)});
+            return event.clone({ body: event.body.map(camelcaseKeys) });
           } else {
-            return event.clone({body: camelcaseKeys(event.body)});
+            return event.clone({ body: camelcaseKeys(event.body) });
           }
         }
       }),
@@ -94,14 +99,14 @@ export class ApiInterceptor implements HttpInterceptor {
     ) {
       headers['X-Customer-Key'] = Cookie.get(GERTRAN_CUSTOMER_ID);
     }
-  
+
     // // Add ngrok-skip-browser-warning header to bypass warning
     // // if (url && url.includes('ngrok.com')) {
     //   headers['ngrok-skip-browser-warning'] = ' s';
     // // }
     // // Set a custom User-Agent to avoid triggering the warning page
     // headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
-  
+
     return new HttpHeaders(headers);
   }
 
