@@ -569,7 +569,6 @@ export class ReportsService {
   }
 
   getChecklistHistory(form: BaseVehicleFilter): Observable<ChecklistHistory[]> {
-    console.log('[CHECKLIST HISTORY FRONTEND] Iniciando requisição com form:', form);
 
     const filtersParams: any = {};
     if (form.from) filtersParams.from_date = form.from;
@@ -579,13 +578,7 @@ export class ReportsService {
     if (form.from_monitoring_request !== undefined && form.from_monitoring_request !== null) {
       filtersParams.from_monitoring_request = form.from_monitoring_request;
     }
-
-    console.log('[CHECKLIST HISTORY FRONTEND] Parâmetros montados:', filtersParams);
-
     const params = new HttpParams({ fromObject: filtersParams });
-
-    console.log('[CHECKLIST HISTORY FRONTEND] URL completa:', 'reports/tracking/checklisthistory?1=1');
-    console.log('[CHECKLIST HISTORY FRONTEND] Params:', params.toString());
 
     return this.http.get<ChecklistHistory[]>('reports/tracking/checklisthistory?1=1', { params });
   }
@@ -802,15 +795,8 @@ export class ReportsService {
 
   getDdrs(filters?: BaseDdrFilter): Observable<GetAllResponse<Ddr[]>> {
     const filtersParams: any = {
-      // from_date: filters.from,
-      // to_date: filters.to,
-      // customer: filters.customer,
-      // id: filters.plate
     };
 
-    // if (filters.customer){
-    //   filtersParams.customer = filters.customer
-    // }
     if (filters.ddr) {
       filtersParams.id = filters.ddr;
     }
@@ -825,7 +811,6 @@ export class ReportsService {
       to_date: filters.to
     };
 
-    // Só adiciona customer se tiver valor
     if (filters.customer) {
       fromObject.customer = filters.customer;
     }
