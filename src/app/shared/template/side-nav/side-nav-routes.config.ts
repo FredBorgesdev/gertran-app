@@ -139,7 +139,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: [
           {
             path: 'reports/dashboards/tc1',
-            title: 'TORRE CONTROLE 1',
+            title: 'TORRE CONTROLE 1 - OPERAÇÃO',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -148,10 +148,11 @@ export const ROUTES: SideNavInterface[] = [
             },
             submenu: [],
             permission: Permissions.VIEW_DASHBOARD_TC1,
+            gertranStaffOnly: true // TRAVADO: Só equipe interna vê
           },
           {
             path: 'reports/dashboards/tc2',
-            title: 'TORRE CONTROLE 2',
+            title: 'TORRE CONTROLE 2 - SM',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -159,7 +160,8 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
-            permission: Permissions.VIEW_DASHBOARD_TC2
+            permission: Permissions.VIEW_DASHBOARD_TC2,
+            gertranStaffOnly: true // TRAVADO: Só equipe interna vê
           },
           {
             path: 'reports/dashboards/tc3',
@@ -171,7 +173,8 @@ export const ROUTES: SideNavInterface[] = [
               fullscreen: true
             },
             submenu: [],
-            permission: Permissions.VIEW_DASHBOARD_TC3
+            permission: Permissions.VIEW_DASHBOARD_TC3,
+            gertranStaffOnly: true // TRAVADO: Só equipe interna vê
           },
           {
             path: 'reports/dashboards/tc4',
@@ -184,19 +187,19 @@ export const ROUTES: SideNavInterface[] = [
             },
             submenu: [],
             permission: Permissions.VIEW_DASHBOARD_TC4,
-            gertranStaffOnly: true,  // Apenas staff Gertran
+            gertranStaffOnly: true, // TRAVADO: Só equipe interna vê
           },
           {
             path: 'reports/dashboards/maps',
             title: 'Mapa',
             iconType: 'nzIcon',
             iconTheme: 'outline',
-            icon: 'environment',  // Ícone de mapa
+            icon: 'environment',
             queryParams: {
               fullscreen: true
             },
             submenu: [],
-            gertranStaffOnly: true,  // Apenas staff Gertran - oculto para clientes
+            // SEM 'gertranStaffOnly' -> LIBERADO: Cliente consegue ver o Mapa!
           },
           {
             path: 'reports/dashboards/monitoring-requests',
