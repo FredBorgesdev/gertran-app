@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 const getRandomStatus = () => {
   const statuses = ['warning', 'danger', 'success', 'info'];
@@ -132,6 +133,16 @@ export class MonitoringService {
       monitoringItem(getRandomStatus()),
       monitoringItem(getRandomStatus()),
     ];
+  }
+
+  getMonitoringStatusSum(): Observable<any> {
+    return of({
+      total: 100,
+      success: 40,
+      warning: 30,
+      danger: 20,
+      info: 10
+    });
   }
 
   getMapData(id: string): MonitoringMapData {
