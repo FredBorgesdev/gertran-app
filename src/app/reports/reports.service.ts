@@ -569,6 +569,8 @@ export class ReportsService {
   }
 
   getChecklistHistory(form: BaseVehicleFilter): Observable<ChecklistHistory[]> {
+    console.log('[CHECKLIST HISTORY FRONTEND] Iniciando requisição com form:', form);
+
     const filtersParams: any = {};
     if (form.from) filtersParams.from_date = form.from;
     if (form.to) filtersParams.to_date = form.to;
@@ -577,7 +579,13 @@ export class ReportsService {
     if (form.from_monitoring_request !== undefined && form.from_monitoring_request !== null) {
       filtersParams.from_monitoring_request = form.from_monitoring_request;
     }
+
+    console.log('[CHECKLIST HISTORY FRONTEND] Parâmetros montados:', filtersParams);
+
     const params = new HttpParams({ fromObject: filtersParams });
+
+    console.log('[CHECKLIST HISTORY FRONTEND] URL completa:', 'reports/tracking/checklisthistory?1=1');
+    console.log('[CHECKLIST HISTORY FRONTEND] Params:', params.toString());
 
     return this.http.get<ChecklistHistory[]>('reports/tracking/checklisthistory?1=1', { params });
   }
@@ -810,5 +818,19 @@ export class ReportsService {
       fromObject: filtersParams
     });
     return this.http.get<GetAllResponse<Ddr[]>>('reports/settings/ddrs?1=1', { params });
+  }
+  getMonitoringDailySummary(filters: any): Observable<any[]> {
+    let fromObject: any = {
+      from_date: filters.from,
+      to_date: filters.to
+    };
+
+    // Só adiciona customer se tiver valor
+    if (filters.customer) {
+      fromObject.customer = filters.customer;
+    }
+
+    const params = new HttpParams({ fromObject });
+    return this.http.get<any[]>('reports/monitoring/dailysummary', { params });
   }
 }
