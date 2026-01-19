@@ -166,29 +166,47 @@ export class ControlTower4 implements OnInit, OnDestroy {
           label: '',
           data: dataObj.labels.map(x => x.count),
           backgroundColor: dataObj.labels.map(x => x.color),
+
+          // AQUI: Removemos a borda branca entre as fatias
           borderWidth: 0,
           borderColor: 'transparent',
           hoverOffset: 15
         }]
       },
       options: {
-        responsive: false,
+        responsive: true, // Mudei para true para respeitar o flexbox do pai se necessário
+        maintainAspectRatio: false, // Importante para esticar no layout
         animation: { duration: 0 },
+
         plugins: {
-          legend: { display: false },
+          legend: { display: false }, // Remove legenda nativa
           title: { display: false },
           tooltip: { enabled: true },
-          datalabels: false,
-          outlabels: false,
-          labels: false
+
+          // AQUI: Configuração explícita para matar as linhas e textos
+          datalabels: {
+            display: false,
+            anchor: 'end',
+            align: 'start',
+            offset: 0
+          },
+          outlabels: {
+            display: false
+          }
         },
+
+        // AQUI: Garante que não tenha eixos (padrão em pizza, mas bom garantir)
         scales: {
           x: { display: false },
           y: { display: false }
         },
-        maintainAspectRatio: false,
-        width: 300,
-        height: 200,
+
+        // AQUI: Configuração global de elementos para remover bordas
+        elements: {
+          arc: {
+            borderWidth: 0
+          }
+        }
       },
     };
 

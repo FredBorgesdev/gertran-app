@@ -3,84 +3,86 @@
     <div class="logo">
       <img src="assets/images/logo/logogertran.png" alt="Gertran">
     </div>
-    <h3>VEICULOS MONITORADOS POR TERMINAL</h3>
+    <h3></h3>
   </div>
-  <div class="container-fluid" style="max-width: 1800px; margin: 0 auto; padding: 0 15px;">
-    <nz-card>
-      <div class="row">
-        <div class="col-12">
-          <h2 class="text-center m-b-1">VEÍCULOS MONITORADOS</h2>
 
-          <nz-card class="m-b-20" style="background-color:#ffffff; border: 1px solid #d9d9d9; border-radius: 8px;">
-            <div class="row">
+  <div class="main-content-wrapper">
+    <div class="container-fluid h-100">
+      <nz-card class="main-card h-100">
+        <div class="row h-100">
+          <div class="col-12 h-100 d-flex flex-column">
 
-              <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <div class="m-b-1">
-                  <span
-                    style="font-weight: bold; display: block; text-align: center; margin-bottom: 20px; font-size: 16px;">
-                    TERMINAIS BH - VIAGENS MONITORADAS<br>(últimos 7 dias)
-                  </span>
-                  <div class="row align-items-center">
-                    <div class="col-xl-5 col-lg-12 d-flex justify-content-center mb-3">
-                      <canvas id="operationsPositionsChart"
-                        style="width: 280px; height: 280px; max-width: 100%;"></canvas>
+            <h2 class="text-center section-title">VEÍCULOS MONITORADOS</h2>
+
+            <nz-card class="inner-card flex-grow-1">
+              <div class="row h-100 align-items-center">
+
+                <div class="col-lg-6 col-md-6 col-sm-12 chart-column">
+                  <div class="chart-content">
+                    <div class="chart-header">
+                      <span>TERMINAIS BH - VIAGENS MONITORADAS<br>(últimos 7 dias)</span>
+                      <div class="total-badge">TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}</div>
                     </div>
-                    <div class="col-xl-7 col-lg-12">
-                      <div style="text-align: left; padding-left: 15px;">
-                        <h5 style="font-weight: bold; margin-bottom: 15px; font-size: 18px;">
-                          TOTAL: {{ operationsPositionsData.totalOperationsPositionsData }}
-                        </h5>
-                        <div *ngFor="let label of operationsPositionsData.labels"
-                          style="margin-bottom: 10px; display: flex; align-items: center; flex-wrap: nowrap;">
-                          <span
-                            style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;"
-                            [style.background-color]="label.color"></span>
-                          <span style="margin-left: 10px; font-size: 14px; line-height: 1.4; word-break: break-word;">
-                            {{ label.status }}: <strong>{{ getPositionData(label) }}</strong>
-                          </span>
-                        </div>
+
+                    <div class="chart-body d-flex flex-row align-items-center justify-content-around w-100">
+
+                      <div class="canvas-wrapper">
+                        <canvas id="operationsPositionsChart"></canvas>
                       </div>
+
+                      <div class="legend-wrapper">
+                        <ul class="legend-list">
+                          <li *ngFor="let label of operationsPositionsData.labels" class="legend-item">
+                            <span [style.background-color]="label.color" class="color-dot"></span>
+
+                            <div class="legend-info">
+                              <strong class="legend-title">{{ label.status }}</strong>
+                              <div class="legend-value">Total: {{ getPositionData(label) }}</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                <div class="m-b-1">
-                  <span
-                    style="font-weight: bold; display: block; text-align: center; margin-bottom: 20px; font-size: 16px;">
-                    VIAGENS MONITORADAS<br>(últimos 7 dias)
-                  </span>
-                  <div class="row align-items-center">
-                    <div class="col-xl-5 col-lg-12 d-flex justify-content-center mb-3">
-                      <canvas id="positonsChart" style="width: 280px; height: 280px; max-width: 100%;"></canvas>
+                <div class="col-lg-6 col-md-6 col-sm-12 chart-column">
+                  <div class="chart-content">
+                    <div class="chart-header">
+                      <span>VIAGENS MONITORADAS<br>(últimos 7 dias)</span>
+                      <div class="total-badge">TOTAL: {{ positionsData.totalPositionsMonitoring }}</div>
                     </div>
-                    <div class="col-xl-7 col-lg-12">
-                      <div style="text-align: left; padding-left: 15px;">
-                        <h5 style="font-weight: bold; margin-bottom: 15px; font-size: 18px;">
-                          TOTAL: {{ positionsData.totalPositionsMonitoring }}
-                        </h5>
-                        <div *ngFor="let label of positionsData.labels"
-                          style="margin-bottom: 10px; display: flex; align-items: center;">
-                          <span
-                            style="display: inline-block; width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;"
-                            [style.background-color]="label.color"></span>
-                          <span style="margin-left: 10px; font-size: 14px;">
-                            {{ label.status }}: <strong>{{ getPositionData(label) }}</strong>
-                          </span>
-                        </div>
+
+                    <div class="chart-body d-flex flex-row align-items-center justify-content-around w-100">
+
+                      <div class="canvas-wrapper">
+                        <canvas id="positonsChart"></canvas>
                       </div>
+
+                      <div class="legend-wrapper">
+                        <ul class="legend-list">
+                          <li *ngFor="let label of positionsData.labels" class="legend-item">
+                            <span [style.background-color]="label.color" class="color-dot"></span>
+                            <div class="legend-info">
+                              <strong class="legend-title">{{ label.status }}</strong>
+                              <div class="legend-value">Total: {{ getPositionData(label) }}</div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
                     </div>
                   </div>
                 </div>
+
               </div>
+            </nz-card>
 
-            </div>
-          </nz-card>
-
+          </div>
         </div>
-      </div>
-    </nz-card>
+      </nz-card>
+    </div>
   </div>
   <app-fixed-buttons></app-fixed-buttons>
 </div>
