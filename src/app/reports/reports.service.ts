@@ -816,6 +816,6 @@ export class ReportsService {
     }
 
     const params = new HttpParams({ fromObject });
-    return this.http.get<any[]>('reports/monitoring/dailysummary', { params });
+    return this.http.get<any[]>('reports/monitoring/dailysummary?1=1', { params });
   }
 }
