@@ -118,7 +118,7 @@ export class PositionsService implements ApiService<Position> {
     if (filters?.travelStatus) {
       params.travel_status = filters.travelStatus;
     }
-    if (filters?.travelling) {
+    if (filters?.travelling !== undefined) {
       params.travelling = filters.travelling;
     }
     if (filters?.allowGlobal) {
