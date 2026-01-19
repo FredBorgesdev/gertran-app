@@ -139,7 +139,7 @@ export const ROUTES: SideNavInterface[] = [
         submenu: [
           {
             path: 'reports/dashboards/tc1',
-            title: 'TORRE CONTROLE 1 - OPERAÇÃO',
+            title: 'OPERAÇÃO TERMINAL',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -152,7 +152,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/tc2',
-            title: 'TORRE CONTROLE 2 - SM',
+            title: 'SM',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -165,7 +165,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/tc3',
-            title: 'TORRE CONTROLE 3',
+            title: 'CHECKLISTS',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -178,7 +178,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/tc4',
-            title: 'TORRE CONTROLE 4',
+            title: 'TERMINAIS PIZZA',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',
@@ -203,7 +203,7 @@ export const ROUTES: SideNavInterface[] = [
           },
           {
             path: 'reports/dashboards/monitoring-requests',
-            title: 'Solicitações de monitoramento',
+            title: 'LIBERAÇÃO',
             iconType: 'nzIcon',
             iconTheme: 'outline',
             icon: 'bar-chart',

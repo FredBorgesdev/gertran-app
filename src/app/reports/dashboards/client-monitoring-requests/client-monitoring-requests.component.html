@@ -1,32 +1,24 @@
-  <h1 [class]="(hideHeader && 'header-small') + ' text-center m-b-'">
-    Solicitações de monitoramento
-  </h1>
+<div class="moldura">
 
-  <!-- <h3 [class]="(hideHeader && 'header-small') + ' text-center'">
-    Hora atual: {{ currentTime }} - Próxima atualização em {{ formatSeconds(nextUpdate) }}
-  </h3> -->
+  <div class="dash-header" [class.header-small]="hideHeader">
 
-  <img
-    *ngIf="!hideHeader"
-    src="assets/images/logo/logogertran.png"
-    alt="Gertran"
-    class="logo"
-  >
+    <div class="logo" *ngIf="!hideHeader">
+      <img src="assets/images/logo/logogertran.png" alt="Gertran">
+    </div>
 
-<div class="d-flex justify-content-between" *ngIf="!hideHeader">
-  <span>
-    <div class="square bg-danger"></div> Acima de 15 minutos
-    <div class="square bg-alert"></div> Acima de 10 minutos
-    <div class="square bg-default"></div> No prazo
-  </span>
+    <h3 *ngIf="!hideHeader">SOLICITAÇÕES DE MONITORAMENTO</h3>
+
+  </div>
+
+  <div class="d-flex justify-content-between m-b-10" *ngIf="!hideHeader" style="padding: 0 15px;">
+    <span>
+      <div class="square bg-danger"></div> Acima de 15 minutos
+      <div class="square bg-alert"></div> Acima de 10 minutos
+      <div class="square bg-default"></div> No prazo
+    </span>
+  </div>
+
+  <app-monitoring-requests-table-client [underReview]="underReviewResponse"
+    (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"></app-monitoring-requests-table-client>
+
 </div>
-
-<!-- <div style="border: 2px solid red; padding: 10px; margin-bottom: 10px; background: #ffe6e6;">
-  <strong>DEBUG DO PAI:</strong> <br>
-  Total de itens (results) recebidos da API: **{{ underReviewResponse?.results?.length ?? 'Carregando...' }}**
-</div> -->
-
-<app-monitoring-requests-table-client
-  [underReview]="underReviewResponse"
-  (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"
-></app-monitoring-requests-table-client>

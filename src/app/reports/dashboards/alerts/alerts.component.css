@@ -1,11 +1,17 @@
+/* ==========================================================================
+   ESTILOS GERAIS (Base)
+   ========================================================================== */
 .dash-header {
   display: flex;
   align-items: center;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-  margin-top: -25px;
   margin-bottom: 10px;
+
+  /* PADRÃO DAS OUTRAS TELAS */
   padding: 10px 10px 10px 130px;
+  min-height: 90px;
+  position: relative;
 }
 
 .dash-header-title {
@@ -16,119 +22,62 @@
   color: #fff;
   margin: 0 10px;
   height: 40px;
+  white-space: nowrap;
 }
 
 .dash-header .anticon {
   font-size: 24px;
   margin-right: 10px;
+  color: #333;
 }
 
-.dash-header .anticon + .dash-header-title {
-  margin-left: 0px;
-}
-
-.content {
-  display: flex;
-  justify-content: space-between;
-}
-
-.content h3 {
-  margin: 0;
-  text-align: left;
-}
-
-.dash-select {
-  width: 400px;
-  height: 40px;
-}
-
-.dash-title {
-  font-size: 30px;
-}
-
-.dash-list {
-  list-style: none;
-}
-
-li {
-  padding: 10px;
-  margin: 0 -15px;
-  font-size: 20px;
-  border-bottom: 1px solid #cecece;
-
-  display: grid;
-  grid-template-columns: 100px 1fr 1fr;
-  grid-gap: 5px;
-}
-
-.justify-self-end {
-  justify-self: end;
-}
-
-.danger {
-  background: #eb5a5a;
-}
-
-.warning {
-  background: yellow;
-}
-
+/* Logo Absolute (Padrão) */
 .dash-header .logo {
   background-color: #fff;
   width: auto;
   height: 70px;
-  margin-left: 20px;
   border: 1px solid #72849a;
   border-top: 0px;
-  border-radius: 0pxx;
   padding: 5px;
   box-shadow: 0px 0px 5px #72849a;
+
   position: absolute;
   top: 0px;
   left: -3px;
+  z-index: 10;
 }
 
 .dash-header .logo img {
   height: 60px !important;
   width: auto !important;
+  display: block;
 }
 
+.dash-select {
+  width: 400px;
+  margin: 0 15px;
+}
 
-.table-header {
-  color: #2a2a2a;
-  font-size: 0.75rem;
+.content {
+  margin-bottom: 15px;
+}
+
+.dash-title {
+  font-size: 32px;
   font-weight: bold;
-  background: #ededed;
-  border: 1px solid #2a2a2a;
-  border-collapse: collapse;
+  color: #0000;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
-.custom-table th,
-.custom-table td {
-  border: 1px solid black;
-}
-
-th, td {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.max-width-cell {
-  max-width: 200px; /* Set your desired maximum width */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+/* Legenda */
 .square {
   height: 16px;
   width: 16px;
   display: inline-block;
   border: 1px solid black;
-}
-
-.square:not(:first-of-type) {
-  margin-left: 10px;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 .bg-alert {
@@ -141,4 +90,107 @@ th, td {
 
 .bg-danger {
   background: #eb5a5a;
+}
+
+/* ==========================================================================
+   FORÇAR ESTILOS NO ANT DESIGN (A Mágica acontece aqui)
+   ========================================================================== */
+:host ::ng-deep .custom-table th {
+  /* FORÇA O CABEÇALHO AZUL IGUAL AO 'SM' */
+  background-color: #1890ff !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  text-transform: uppercase;
+  border: 1px solid black !important;
+  padding: 12px 8px !important;
+  text-align: center !important;
+}
+
+:host ::ng-deep .custom-table td {
+  border: 1px solid black !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  padding: 10px 8px !important;
+  color: #000 !important;
+}
+
+/* Classes de cor para as linhas (precisam do ::ng-deep se forem injetadas na tr) */
+:host ::ng-deep tr.danger td {
+  background-color: #eb5a5a !important;
+}
+
+:host ::ng-deep tr.warning td {
+  background-color: yellow !important;
+}
+
+/* Se precisar de cor para texto nas linhas vermelhas/amarelas, ajuste aqui */
+
+/* ==========================================================================
+   RESPONSIVIDADE: TELAS GRANDES / TV (1920px+)
+   Iguala ao tamanho da tela 'Solicitações de Monitoramento'
+   ========================================================================== */
+@media (min-width: 1920px) {
+
+  /* Header da Página */
+  .dash-header {
+    min-height: 100px;
+    padding-left: 160px;
+  }
+
+  .dash-header-title {
+    font-size: 24px;
+    height: 50px;
+    padding: 10px 40px;
+  }
+
+  .dash-header .anticon {
+    font-size: 32px;
+  }
+
+  .dash-title {
+    font-size: 36px;
+    /* Título do Terminal Gigante */
+    margin-bottom: 20px;
+  }
+
+  /* Filtro/Select Gigante */
+  .dash-select {
+    width: 500px;
+  }
+
+  :host ::ng-deep .ant-select-selector {
+    height: 50px !important;
+    font-size: 20px !important;
+    display: flex;
+    align-items: center;
+  }
+
+  /* TABELA GIGANTE (Escala para TV) */
+  :host ::ng-deep .custom-table th {
+    font-size: 22px !important;
+    /* Fonte do cabeçalho bem grande */
+    padding: 20px !important;
+  }
+
+  :host ::ng-deep .custom-table td {
+    font-size: 20px !important;
+    /* Fonte dos dados bem grande */
+    padding: 18px !important;
+  }
+
+  /* Altura da linha para dar respiro */
+  :host ::ng-deep nz-table tr {
+    height: 65px !important;
+  }
+
+  /* Ajuste da legenda */
+  span {
+    font-size: 20px;
+  }
+
+  .square {
+    width: 24px;
+    height: 24px;
+  }
 }
