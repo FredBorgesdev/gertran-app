@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core'; // Adicionado HostListener
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from "@angular/router";
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -23,7 +23,6 @@ interface OperationData {
 export class ControlTower1 implements OnInit {
   operationsData: OperationData[] = [];
 
-  // Variável para controle da tela cheia
   isFullScreen = false;
 
   constructor(
@@ -83,17 +82,6 @@ export class ControlTower1 implements OnInit {
     }).format(value || 0);
   }
 
-  goTo(link: string, qp?: any) {
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([link], { queryParams: qp })
-    );
-    window.open(url, '_blank');
-  }
-
-  /* ==========================================================================
-     LÓGICA DE TELA CHEIA (FULLSCREEN)
-     ========================================================================== */
-
   toggleFullScreen(): void {
     if (!this.isFullScreen) {
       this.openFullscreen();
@@ -106,11 +94,11 @@ export class ControlTower1 implements OnInit {
     const elem = document.documentElement as any;
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { /* Firefox */
+    } else if (elem.mozRequestFullScreen) {
       elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    } else if (elem.msRequestFullscreen) {
       elem.msRequestFullscreen();
     }
     this.isFullScreen = true;
@@ -120,24 +108,21 @@ export class ControlTower1 implements OnInit {
     const doc = document as any;
     if (doc.exitFullscreen) {
       doc.exitFullscreen();
-    } else if (doc.mozCancelFullScreen) { /* Firefox */
+    } else if (doc.mozCancelFullScreen) {
       doc.mozCancelFullScreen();
-    } else if (doc.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    } else if (doc.webkitExitFullscreen) {
       doc.webkitExitFullscreen();
-    } else if (doc.msExitFullscreen) { /* IE/Edge */
+    } else if (doc.msExitFullscreen) {
       doc.msExitFullscreen();
     }
     this.isFullScreen = false;
   }
+
   @HostListener('document:fullscreenchange', ['$event'])
   @HostListener('document:webkitfullscreenchange', ['$event'])
   @HostListener('document:mozfullscreenchange', ['$event'])
   @HostListener('document:MSFullscreenChange', ['$event'])
   fullscreenModes(event: any) {
-    this.checkScreenMode();
-  }
-
-  checkScreenMode() {
     if (document.fullscreenElement) {
       this.isFullScreen = true;
     } else {

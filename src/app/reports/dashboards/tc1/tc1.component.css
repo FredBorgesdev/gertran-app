@@ -1,8 +1,4 @@
-/* ==========================================================================
-   ESTRUTURA BASE
-   ========================================================================== */
 .moldura {
-  /* Fixado para garantir tela cheia sem scroll externo */
   position: fixed;
   top: 0;
   left: 0;
@@ -10,44 +6,45 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  background-color: #f0f2f5;
-  overflow-y: auto;
-  /* Permite scroll interno se a tabela for muito grande */
-  overflow-x: hidden;
+  background-color: white;
+  overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0;
   margin: 0;
+  z-index: 999;
 }
 
-/* ==========================================================================
-   CABEÇALHO
-   ========================================================================== */
 .dash-header {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Espaça logo, título e botão */
   background: #ededed;
   border-bottom: 1px solid #72849a;
-  margin: 0px 0px 33px 0px;
-  padding: 10px 30px 10px 130px;
+  margin: 0;
+  padding: 5px 30px 5px 130px;
+  height: 90px;
   position: relative;
+  z-index: 10;
 }
 
 .header-content {
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  padding-left: 0;
 }
 
 .dash-header h3 {
   margin: 0;
   text-align: left;
   font-weight: bold;
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
 }
 
-/* LOGO FIXA */
 .logo {
   background-color: #fff;
   width: auto;
@@ -59,7 +56,6 @@
   position: absolute;
   top: 0px;
   left: 20px;
-  /* Ajuste para não cortar à esquerda */
   z-index: 10;
 }
 
@@ -68,7 +64,6 @@
   width: auto !important;
 }
 
-/* BOTÃO TELA CHEIA (NOVO) */
 .btn-fullscreen {
   height: 40px;
   font-size: 16px;
@@ -79,167 +74,17 @@
   color: #fff;
   transition: all 0.3s ease;
   z-index: 20;
+  min-height: 45px;
 }
 
 .btn-fullscreen i {
   margin-right: 8px;
 }
 
-/* ==========================================================================
-   TABELA E CONTEÚDO
-   ========================================================================== */
-.custom-table th,
-.custom-table td {
-  border: 1px solid #000000;
-}
-
-th.table-header {
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: bold;
-  background: #1890ff;
-  border: 1px solid #000000;
-  padding: 12px 8px;
-  text-transform: uppercase;
-}
-
-th,
-td {
-  font-weight: bold;
-  font-size: 18px;
-  padding: 14px 8px;
-}
-
-/* ==========================================================================
-   OVERRIDES ANGULAR / VISUALIZAÇÃO GRANDE
-   ========================================================================== */
-:host ::ng-deep {
-  .dash-header h3 {
-    font-size: 32px !important;
-  }
-
-  nz-table {
-    font-size: 18px !important;
-  }
-
-  nz-table thead th {
-    font-size: 20px !important;
-    font-weight: bold !important;
-    padding: 18px !important;
-    background-color: #1890ff !important;
-    color: white !important;
-    text-align: center !important;
-  }
-
-  nz-table tbody td {
-    font-size: 18px !important;
-    padding: 16px !important;
-    font-weight: 500 !important;
-  }
-
-  nz-table tr {
-    height: 60px !important;
-  }
-
-  nz-tag {
-    font-size: 16px !important;
-    padding: 8px 16px !important;
-  }
-
-  nz-card {
-    font-size: 18px !important;
-  }
-
-  nz-card-head {
-    font-size: 22px !important;
-    font-weight: bold !important;
-    padding: 18px !important;
-  }
-
-  button {
-    font-size: 18px !important;
-    min-height: 45px !important;
-  }
-
-  input,
-  nz-select,
-  nz-date-picker {
-    font-size: 18px !important;
-    min-height: 45px !important;
-  }
-
-  nz-pagination {
-    font-size: 18px !important;
-  }
-
-  nz-pagination li {
-    font-size: 18px !important;
-    min-width: 45px !important;
-    min-height: 45px !important;
-  }
-}
-
-/* ==========================================================================
-   MÍDIA TV / VIDEOWALL (1920px+)
-   ========================================================================== */
-@media (min-width: 1920px) {
-  :host ::ng-deep {
-    .dash-header h3 {
-      font-size: 40px !important;
-    }
-
-    nz-table thead th {
-      font-size: 24px !important;
-      padding: 22px !important;
-    }
-
-    nz-table tbody td {
-      font-size: 22px !important;
-      padding: 20px !important;
-    }
-
-    nz-table tr {
-      height: 70px !important;
-    }
-
-    nz-tag {
-      font-size: 20px !important;
-      padding: 12px 20px !important;
-    }
-
-    nz-card-head {
-      font-size: 26px !important;
-      padding: 22px !important;
-    }
-
-    button {
-      font-size: 20px !important;
-      min-height: 50px !important;
-    }
-
-    input,
-    nz-select,
-    nz-date-picker {
-      font-size: 20px !important;
-      min-height: 50px !important;
-    }
-
-    nz-pagination li {
-      font-size: 20px !important;
-      min-width: 50px !important;
-      min-height: 50px !important;
-    }
-  }
-}
-
-/* ==========================================================================
-   EFEITO "GHOST" (Ocultar botão em tela cheia)
-   ========================================================================== */
 .btn-fullscreen.btn-hidden {
   opacity: 0;
   transform: translateY(-20px);
   pointer-events: none;
-  transition: all 0.5s ease-in-out;
 }
 
 .btn-fullscreen.btn-hidden:hover,
@@ -250,96 +95,74 @@ td {
   box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
 }
 
-/* ==========================================================================
-   ESTRUTURA BASE
-   ========================================================================== */
-.moldura {
-  /* Fixado para garantir tela cheia sem scroll externo */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  background-color: #f0f2f5;
-  overflow-y: auto;
-  /* Permite scroll interno se a tabela for muito grande */
-  overflow-x: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0;
-  margin: 0;
-}
-
-/* ==========================================================================
-   CABEÇALHO
-   ========================================================================== */
-.dash-header {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  /* Espaça logo, título e botão */
-  background: #ededed;
-  border-bottom: 1px solid #72849a;
-  margin: 0px 0px 33px 0px;
-  padding: 10px 30px 10px 130px;
-  position: relative;
-}
-
-.header-content {
+nz-card {
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 10px;
 }
 
-.dash-header h3 {
-  margin: 0;
-  text-align: left;
-  font-weight: bold;
-}
-
-/* LOGO FIXA */
-.logo {
-  background-color: #fff;
-  width: auto;
-  height: 70px;
-  border: 1px solid #72849a;
-  border-top: 0px;
-  padding: 5px;
-  box-shadow: 0px 0px 5px #72849a;
-  position: absolute;
-  top: 0px;
-  left: 20px;
-  /* Ajuste para não cortar à esquerda */
-  z-index: 10;
-}
-
-.logo img {
-  height: 60px !important;
-  width: auto !important;
-}
-
-/* BOTÃO TELA CHEIA (NOVO) */
-.btn-fullscreen {
-  height: 40px;
-  font-size: 16px;
+:host ::ng-deep .ant-card-body {
+  flex: 1;
   display: flex;
+  flex-direction: column;
+  padding: 10px !important;
+  height: 100%;
+  overflow: hidden;
+}
+
+.row,
+.col-lg-12,
+.operations-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+.legend-row {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  background-color: #1890ff;
-  border-color: #1890ff;
-  color: #fff;
-  transition: all 0.3s ease;
-  z-index: 20;
+  margin-bottom: 10px;
+  padding-right: 10px;
 }
 
-.btn-fullscreen i {
-  margin-right: 8px;
+.legend-container {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
 
-/* ==========================================================================
-   TABELA E CONTEÚDO
-   ========================================================================== */
+.legend-item {
+  margin-left: 15px;
+}
+
+.square {
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.bg-alert {
+  background: yellow;
+}
+
+.bg-default {
+  background: green;
+}
+
+.bg-danger {
+  background: red;
+}
+
 .custom-table th,
 .custom-table td {
   border: 1px solid #000000;
@@ -347,154 +170,119 @@ td {
 
 th.table-header {
   color: #ffffff;
-  font-size: 1.1rem;
   font-weight: bold;
   background: #1890ff;
   border: 1px solid #000000;
-  padding: 12px 8px;
   text-transform: uppercase;
+  text-align: center;
 }
 
-th,
-td {
-  font-weight: bold;
-  font-size: 18px;
-  padding: 14px 8px;
-}
-
-/* ==========================================================================
-   OVERRIDES ANGULAR / VISUALIZAÇÃO GRANDE
-   ========================================================================== */
 :host ::ng-deep {
-  .dash-header h3 {
-    font-size: 32px !important;
-  }
 
   nz-table {
-    font-size: 18px !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: 25px !important;
+  }
+
+  nz-table nz-spin-nested-loading,
+  nz-table .ant-spin-container,
+  nz-table .ant-table,
+  nz-table .ant-table-container,
+  nz-table .ant-table-content,
+  nz-table table {
+    height: 100%;
   }
 
   nz-table thead th {
     font-size: 20px !important;
     font-weight: bold !important;
-    padding: 18px !important;
-    background-color: #1890ff !important;
-    color: white !important;
-    text-align: center !important;
+    padding: 16px !important;
+    height: 60px !important;
+    white-space: nowrap;
   }
 
   nz-table tbody td {
     font-size: 18px !important;
-    padding: 16px !important;
+    padding: 14px !important;
     font-weight: 500 !important;
   }
 
   nz-table tr {
-    height: 60px !important;
+    height: 9%;
+    min-height: 60px !important;
   }
 
   nz-tag {
     font-size: 16px !important;
-    padding: 8px 16px !important;
-  }
-
-  nz-card {
-    font-size: 18px !important;
+    padding: 6px 12px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   nz-card-head {
-    font-size: 22px !important;
+    font-size: 24px !important;
     font-weight: bold !important;
-    padding: 18px !important;
-  }
-
-  button {
-    font-size: 18px !important;
-    min-height: 45px !important;
-  }
-
-  input,
-  nz-select,
-  nz-date-picker {
-    font-size: 18px !important;
-    min-height: 45px !important;
-  }
-
-  nz-pagination {
-    font-size: 18px !important;
-  }
-
-  nz-pagination li {
-    font-size: 18px !important;
-    min-width: 45px !important;
-    min-height: 45px !important;
+    padding: 20px !important;
   }
 }
 
-/* ==========================================================================
-   MÍDIA TV / VIDEOWALL (1920px+)
-   ========================================================================== */
 @media (min-width: 1920px) {
-  :host ::ng-deep {
-    .dash-header h3 {
-      font-size: 40px !important;
-    }
 
+  .dash-header {
+    height: 110px;
+    padding: 10px 30px 10px 160px;
+  }
+
+  .dash-header h3 {
+    font-size: 40px !important;
+  }
+
+  .logo {
+    height: 90px;
+    left: 30px;
+  }
+
+  .logo img {
+    height: 80px !important;
+  }
+
+  .btn-fullscreen {
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .legend-container {
+    font-size: 20px;
+  }
+
+  .square {
+    height: 20px;
+    width: 20px;
+  }
+
+  :host ::ng-deep {
     nz-table thead th {
       font-size: 24px !important;
-      padding: 22px !important;
+      padding: 20px !important;
+      height: 80px !important;
     }
 
     nz-table tbody td {
       font-size: 22px !important;
-      padding: 20px !important;
+      padding: 18px !important;
     }
 
     nz-table tr {
-      height: 70px !important;
+      height: 12% !important;
     }
 
     nz-tag {
       font-size: 20px !important;
-      padding: 12px 20px !important;
-    }
-
-    nz-card-head {
-      font-size: 26px !important;
-      padding: 22px !important;
-    }
-
-    button {
-      font-size: 20px !important;
-      min-height: 50px !important;
-    }
-
-    input,
-    nz-select,
-    nz-date-picker {
-      font-size: 20px !important;
-      min-height: 50px !important;
-    }
-
-    nz-pagination li {
-      font-size: 20px !important;
-      min-width: 50px !important;
-      min-height: 50px !important;
+      padding: 8px 16px !important;
     }
   }
-}
-
-.btn-fullscreen.btn-hidden {
-  opacity: 0;
-  transform: translateY(-20px);
-  pointer-events: none;
-  transition: all 0.5s ease-in-out;
-}
-
-.btn-fullscreen.btn-hidden:hover,
-.dash-header:hover .btn-fullscreen.btn-hidden {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
 }
