@@ -1,14 +1,14 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {Checklist, ChecklistsService} from '../../../checklists/checklists.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {AuthenticationService} from '../../../authentication/authentication.service';
-import {BaseCrudListComponent} from '../../../base-crud/base-crud-list/base-crud-list.component';
-import {Subject, timer} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {differenceInMinutes, format} from "date-fns";
-import {DatePipe} from "@angular/common";
+import { Component, Input, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { Checklist, ChecklistsService } from '../../../checklists/checklists.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { AuthenticationService } from '../../../authentication/authentication.service';
+import { BaseCrudListComponent } from '../../../base-crud/base-crud-list/base-crud-list.component';
+import { Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { differenceInMinutes, format } from "date-fns";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: 'app-checklists',
@@ -20,13 +20,14 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
   @Input() hideHeader = false;
   currentTime = '';
   currentTimeInterval: any;
+  isFullScreen = false;
 
   checklistColumns = [
-    {title: 'Data/Hora', width: '14%'},
-    {title: 'Placa', width: '8%'},
-    {title: 'Tecnologia', width: '10%'},
-    {title: 'Cliente'},
-    {title: 'Atualização', width: '16%'},
+    { title: 'Data/Hora', width: '14%' },
+    { title: 'Placa', width: '8%' },
+    { title: 'Tecnologia', width: '10%' },
+    { title: 'Cliente' },
+    { title: 'Atualização', width: '16%' },
   ];
 
   stopRefreshing = new Subject();
@@ -98,5 +99,53 @@ export class ChecklistsComponent extends BaseCrudListComponent<Checklist> implem
     }
 
     return `Atualizado à ${diffInMinutes}m`;
+  }
+
+  toggleFullScreen(): void {
+    if (!this.isFullScreen) {
+      this.openFullscreen();
+    } else {
+      this.closeFullscreen();
+    }
+  }
+
+  openFullscreen() {
+    const elem = document.documentElement as any;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+    this.isFullScreen = true;
+  }
+
+  closeFullscreen() {
+    const doc = document as any;
+    if (doc.exitFullscreen) {
+      doc.exitFullscreen();
+    } else if (doc.mozCancelFullScreen) {
+      doc.mozCancelFullScreen();
+    } else if (doc.webkitExitFullscreen) {
+      doc.webkitExitFullscreen();
+    } else if (doc.msExitFullscreen) {
+      doc.msExitFullscreen();
+    }
+    this.isFullScreen = false;
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  fullscreenModes(event: any) {
+    if (document.fullscreenElement) {
+      this.isFullScreen = true;
+    } else {
+      this.isFullScreen = false;
+    }
   }
 }

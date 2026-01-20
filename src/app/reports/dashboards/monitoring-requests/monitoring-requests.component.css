@@ -1,54 +1,62 @@
+.moldura {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0;
+  margin: 0;
+  z-index: 999;
+}
+
 .dash-header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-  margin: 0px 0px 30px 0px;
-  padding: 10px 10px 10px 130px;
+  margin: 0;
+  padding: 5px 30px 5px 130px;
+  height: 90px;
+  position: relative;
+  z-index: 10;
 }
 
-.dash-header-title {
-  background: #72849a;
-  border-radius: 3px;
-  padding: 8px 40px 3px;
-  font-size: 17px;
-  color: #fff;
-  margin: 0 10px;
-  height: 40px;
-}
-
-.dash-header .anticon {
-  font-size: 24px;
+.header-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0;
 }
 
 .dash-header h3 {
   margin: 0;
   text-align: left;
-}
-
-.content {
-  display: flex;
-  justify-content: space-between;
-}
-
-.content h3 {
-  margin: 0;
-  text-align: left;
+  font-weight: bold;
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
 }
 
 .logo {
   background-color: #fff;
   width: auto;
   height: 70px;
-  margin-left: 20px;
   border: 1px solid #72849a;
   border-top: 0px;
-  border-radius: 0pxx;
   padding: 5px;
   box-shadow: 0px 0px 5px #72849a;
   position: absolute;
   top: 0px;
-  left: -3px;
+  left: 20px;
+  z-index: 10;
 }
 
 .logo img {
@@ -56,23 +64,52 @@
   width: auto !important;
 }
 
-.custom-table th,
-.custom-table td {
-  border: 1px solid black;
+.btn-fullscreen {
+  height: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+  transition: all 0.3s ease;
+  z-index: 20;
+  min-height: 45px;
 }
 
-th,
-td {
-  font-weight: bold;
-  font-size: 18px;
+.btn-fullscreen i {
+  margin-right: 8px;
 }
 
-.moldura {
-  position: relative;
-  min-height: 100vh;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+.btn-fullscreen.btn-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.btn-fullscreen.btn-hidden:hover,
+.dash-header:hover .btn-fullscreen.btn-hidden {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
+}
+
+nz-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 10px;
+}
+
+:host ::ng-deep .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px !important;
+  height: 100%;
+  overflow: hidden;
 }
 
 .square {
@@ -98,16 +135,7 @@ td {
   background: red;
 }
 
-/* Melhorias para visualização à distância em telas grandes */
 :host ::ng-deep {
-
-  /* Títulos e headers maiores */
-  .dash-header h3 {
-    font-size: 32px !important;
-    font-weight: bold !important;
-  }
-
-  /* Tabelas mais legíveis */
   nz-table {
     font-size: 18px !important;
   }
@@ -126,19 +154,16 @@ td {
     font-weight: 500 !important;
   }
 
-  /* Linhas da tabela mais altas */
   nz-table tr {
     height: 60px !important;
   }
 
-  /* Status badges maiores */
   nz-tag,
   nz-badge {
     font-size: 16px !important;
     padding: 6px 12px !important;
   }
 
-  /* Cards com mais espaçamento */
   nz-card {
     font-size: 18px !important;
   }
@@ -149,15 +174,36 @@ td {
     padding: 20px !important;
   }
 
-  /* Botões maiores */
   button {
     font-size: 18px !important;
     min-height: 45px !important;
   }
 }
 
-/* Responsividade para telas muito grandes (6 monitores) */
 @media (min-width: 1920px) {
+  .dash-header {
+    height: 110px;
+    padding: 10px 30px 10px 160px;
+  }
+
+  .dash-header h3 {
+    font-size: 40px !important;
+  }
+
+  .logo {
+    height: 90px;
+    left: 30px;
+  }
+
+  .logo img {
+    height: 80px !important;
+  }
+
+  .btn-fullscreen {
+    height: 50px;
+    font-size: 20px;
+  }
+
   :host ::ng-deep {
     nz-table thead th {
       font-size: 24px !important;
@@ -171,10 +217,6 @@ td {
 
     nz-table tr {
       height: 70px !important;
-    }
-
-    .dash-header h3 {
-      font-size: 40px !important;
     }
   }
 }

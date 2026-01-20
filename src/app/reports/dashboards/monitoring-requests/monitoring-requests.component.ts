@@ -1,14 +1,14 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {GetAllResponse, getCurrentPage} from '../../../shared/services/api.service';
+import { Component, Input, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { GetAllResponse, getCurrentPage } from '../../../shared/services/api.service';
 import {
   MonitoringRequests,
   MonitoringRequestsService,
   Status
 } from '../../../monitoring-requests/monitoring-requests.service';
-import {NzTableQueryParams} from 'ng-zorro-antd/table';
-import {Subject, timer} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {format} from 'date-fns';
+import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-monitoring-requests',
@@ -22,6 +22,7 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
 
   stopTimer = new Subject();
   nextUpdate = 60;
+  isFullScreen = false;
 
   constructor(
     private monitoringRequestService: MonitoringRequestsService,
@@ -105,5 +106,53 @@ export class MonitoringRequestsComponent implements OnInit, OnDestroy {
 
   formatSeconds(nextUpdate: number): string {
     return `00:00:${nextUpdate.toString().padStart(2, '0')}`;
+  }
+
+  toggleFullScreen(): void {
+    if (!this.isFullScreen) {
+      this.openFullscreen();
+    } else {
+      this.closeFullscreen();
+    }
+  }
+
+  openFullscreen() {
+    const elem = document.documentElement as any;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+    this.isFullScreen = true;
+  }
+
+  closeFullscreen() {
+    const doc = document as any;
+    if (doc.exitFullscreen) {
+      doc.exitFullscreen();
+    } else if (doc.mozCancelFullScreen) {
+      doc.mozCancelFullScreen();
+    } else if (doc.webkitExitFullscreen) {
+      doc.webkitExitFullscreen();
+    } else if (doc.msExitFullscreen) {
+      doc.msExitFullscreen();
+    }
+    this.isFullScreen = false;
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  fullscreenModes(event: any) {
+    if (document.fullscreenElement) {
+      this.isFullScreen = true;
+    } else {
+      this.isFullScreen = false;
+    }
   }
 }

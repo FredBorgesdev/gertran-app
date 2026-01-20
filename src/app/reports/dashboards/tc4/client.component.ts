@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, HostListener } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Router } from "@angular/router";
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
@@ -16,31 +16,14 @@ export class ControlTower4 implements OnInit, OnDestroy {
 
   isLoading = false;
   intervalId: any;
+  isFullScreen = false;
 
-  colors = ['#95ffa1', '#fcffab', '#86ffff', '#fcffab', '#ffd371'];
-
-  // Dados do Gráfico da Direita
-  positionsData = {
-    labels: [
-      { status: 'VIAGEM', count: 0, color: '#95ffa1' },
-      { status: 'PERNOITE', count: 0, color: '#fcffab' },
-      { status: 'PARADO', count: 0, color: '#86ffff' },
-      { status: 'AGUARDANDO INICIO', count: 0, color: '#fcffab' },
-      { status: 'CLIENTE', count: 0, color: '#ffd371' }
-    ],
-    totalPositionsMonitoring: 0,
-    totalMonitoredValue: 0,
-  };
-
-  // Dados do Gráfico da Esquerda
   operationsPositionsData = {
     labels: [],
     totalOperationsPositionsData: 0
   };
 
-  // Referências dos gráficos (Removido 'monitoring')
   private charts: { [key: string]: Chart | null } = {
-    positions: null,
     terminals: null
   };
 
@@ -59,7 +42,6 @@ export class ControlTower4 implements OnInit, OnDestroy {
     }
 
     this.updateCharts();
-
     this.intervalId = setInterval(() => {
       this.updateCharts();
     }, 15 * 60 * 1000);
@@ -75,11 +57,8 @@ export class ControlTower4 implements OnInit, OnDestroy {
   updateCharts() {
     this.isLoading = true;
     this.loadPositions();
-    // loadMonitoringRequests foi removido
     setTimeout(() => this.isLoading = false, 1000);
   }
-
-  // --- CARREGAMENTO DOS 2 GRÁFICOS DE CIMA ---
 
   loadPositions(): void {
     const queryParams = new URLSearchParams(window.location.search);
@@ -91,50 +70,23 @@ export class ControlTower4 implements OnInit, OnDestroy {
     const filters: any = { from: fromDate, to: toDate };
     if (customer) filters.customer = customer;
 
-    // 1. Gráfico de Status (Direita)
-    this.reportsService.getMonitoringTravelStatusSummary(filters).subscribe({
-      next: (summary) => {
-        this.positionsData.labels.forEach(l => l.count = 0);
-        const aguardando = (summary as any).aguardando_inicio ?? (summary as any).aguardandoInicio ?? 0;
-        const map: Record<string, number> = {
-          'VIAGEM': (summary as any).viagem || 0,
-          'PERNOITE': (summary as any).pernoite || 0,
-          'PARADO': (summary as any).parado || 0,
-          'AGUARDANDO INICIO': aguardando,
-          'CLIENTE': (summary as any).cliente || 0,
-        };
-        this.positionsData.labels.forEach(l => { l.count = map[l.status] || 0; });
-        this.positionsData.totalPositionsMonitoring = summary.total || Object.values(map).reduce((a, b) => a + b, 0);
-        this.positionsData.totalMonitoredValue = (summary as any).totalValue || 0;
-        this.renderChart('positonsChart', this.positionsData, 'positions');
-      },
-      error: () => {
-        // Fallback
-        this.service.getAll({ limit: 3000 }, { customer, fromDate, toDate }).subscribe(result => {
-          const validItems = result.results.filter(i => i.status !== 'draft' && i.status !== 'canceled');
-          this.positionsData.labels.forEach(l => l.count = 0);
-          validItems.forEach(item => {
-            const tStatus = (item as any).travelStatus;
-            switch (tStatus) {
-              case 'in_progress': case 'contingency': case 'logistic_management':
-                this.incrementStatusCount('VIAGEM', 'positionsData'); break;
-              case 'driver_in_overnight': this.incrementStatusCount('PERNOITE', 'positionsData'); break;
-              case 'stopped': this.incrementStatusCount('PARADO', 'positionsData'); break;
-              case 'waiting_for_start': this.incrementStatusCount('AGUARDANDO INICIO', 'positionsData'); break;
-              case 'vehicle_in_customer': this.incrementStatusCount('CLIENTE', 'positionsData'); break;
-            }
-          });
-          this.positionsData.totalPositionsMonitoring = validItems.length;
-          this.renderChart('positonsChart', this.positionsData, 'positions');
-        });
-      }
-    });
-
-    // 2. Gráfico de Terminais (Esquerda)
     this.reportsService.getTerminalsSummary(filters).subscribe({
       next: (items) => {
         const filtered = items.filter(i => !/gertran/i.test(i.label || ''));
-        const chartColors = ['#ff6b6b', '#4d96ff', '#ffd166', '#06d6a0', '#8d99ae', '#f4a261', '#118ab2'];
+
+        // --- CORES DE ALTO CONTRASTE (SEM AZUIS REPETIDOS) ---
+        // Sequência planejada para diferenciar fatias vizinhas
+        const chartColors = [
+          '#1565C0', // Azul Escuro Forte (Corporativo)
+          '#E65100', // Laranja Escuro (High Visibility)
+          '#2E7D32', // Verde Floresta (Sóbrio)
+          '#C62828', // Vermelho Intenso (Alerta)
+          '#F9A825', // Amarelo Ouro (Escuro para não sumir no branco)
+          '#6A1B9A', // Roxo Profundo (Bem distinto do azul)
+          '#455A64', // Cinza Azulado (Neutro forte)
+          '#00838F'  // Ciano Escuro (Diferente do Azul Royal)
+        ];
+
         this.operationsPositionsData.labels = filtered.map((it, idx) => ({
           status: it.label || 'Sem terminal',
           count: it.count || 0,
@@ -146,8 +98,6 @@ export class ControlTower4 implements OnInit, OnDestroy {
       error: (err) => console.warn(err)
     });
   }
-
-  // --- RENDERIZAÇÃO ---
 
   private renderChart(canvasId: string, dataObj: any, chartKey: string) {
     const ctx = document.getElementById(canvasId) as HTMLCanvasElement;
@@ -166,75 +116,52 @@ export class ControlTower4 implements OnInit, OnDestroy {
           label: '',
           data: dataObj.labels.map(x => x.count),
           backgroundColor: dataObj.labels.map(x => x.color),
-
-          // AQUI: Removemos a borda branca entre as fatias
-          borderWidth: 0,
-          borderColor: 'transparent',
-          hoverOffset: 15
+          borderWidth: 5,
+          borderColor: '#ffffff',
+          hoverOffset: 10,
+          datalabels: { display: false }
         }]
       },
       options: {
-        responsive: true, // Mudei para true para respeitar o flexbox do pai se necessário
-        maintainAspectRatio: false, // Importante para esticar no layout
-        animation: { duration: 0 },
+        responsive: true,
+        maintainAspectRatio: true,
+        animation: { duration: 800, animateRotate: true, animateScale: true },
+        layout: { padding: 20 },
 
         plugins: {
-          legend: { display: false }, // Remove legenda nativa
+          legend: { display: false },
           title: { display: false },
-          tooltip: { enabled: true },
-
-          // AQUI: Configuração explícita para matar as linhas e textos
-          datalabels: {
-            display: false,
-            anchor: 'end',
-            align: 'start',
-            offset: 0
+          tooltip: {
+            enabled: true,
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            titleFont: { size: 16, weight: 'bold' },
+            bodyFont: { size: 14 },
+            padding: 12,
+            cornerRadius: 4,
+            displayColors: true,
+            borderColor: '#fff',
+            borderWidth: 1
           },
-          outlabels: {
-            display: false
-          }
+          // Mantive as configurações de ocultar caso funcione em algum momento,
+          // mas sem insistir muito já que o plugin é global.
+          datalabels: { display: false },
+          labels: { render: () => '', fontColor: 'transparent', fontSize: 0 },
+          outlabels: { display: false }
         },
 
-        // AQUI: Garante que não tenha eixos (padrão em pizza, mas bom garantir)
-        scales: {
-          x: { display: false },
-          y: { display: false }
-        },
-
-        // AQUI: Configuração global de elementos para remover bordas
         elements: {
           arc: {
-            borderWidth: 0
+            borderWidth: 5,
+            borderColor: '#ffffff'
           }
         }
-      },
+      }
     };
 
     this.charts[chartKey] = new Chart(ctx, config);
   }
 
-  // --- Helpers ---
-
-  getClass(index: number): string {
-    return 'legend-item legend-color' + (index + 1);
-  }
-
-  getPositionData(label: any): number {
-    return label.count;
-  }
-
-  splitLabels(array: any[], chunkSize: number): any[][] {
-    const result = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      result.push(array.slice(i, i + chunkSize));
-    }
-    return result;
-  }
-
-  incrementStatusCount(status: string, obj: string) {
-    const label = this[obj].labels.find(label => label.status === status);
-    if (label) label.count++;
-  }
+  getPositionData(label: any): number { return label.count; }
 
   returnRange7Days() {
     const currentDate = new Date();
@@ -253,7 +180,30 @@ export class ControlTower4 implements OnInit, OnDestroy {
     return `${year}-${month}-${day}`;
   }
 
-  formatCurrency(value: number): string {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
+  toggleFullScreen(): void {
+    if (!this.isFullScreen) this.openFullscreen();
+    else this.closeFullscreen();
+  }
+
+  openFullscreen() {
+    const elem = document.documentElement as any;
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+    else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+    this.isFullScreen = true;
+  }
+
+  closeFullscreen() {
+    const doc = document as any;
+    if (doc.exitFullscreen) doc.exitFullscreen();
+    else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
+    else if (doc.msExitFullscreen) doc.msExitFullscreen();
+    this.isFullScreen = false;
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  fullscreenModes(event: any) {
+    this.isFullScreen = !!document.fullscreenElement;
   }
 }

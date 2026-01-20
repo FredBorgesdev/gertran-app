@@ -1,145 +1,185 @@
-/* ==========================================================================
-   ESTRUTURA BASE
-   ========================================================================== */
 .moldura {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #f5f5f5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0;
+  margin: 0;
+  z-index: 999;
 }
 
 .dash-header {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-  padding: 10px 10px 10px 130px;
-  min-height: 90px;
-  flex-shrink: 0;
+  margin: 0;
+  padding: 5px 30px 5px 130px;
+  height: 90px;
+  position: relative;
+  z-index: 10;
 }
 
-.main-content-wrapper {
+.header-content {
   flex: 1;
-  padding: 10px 15px 15px 15px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0;
 }
 
-.container-fluid {
-  max-width: 100%;
-  width: 100%;
+.dash-header h3 {
+  margin: 0;
+  text-align: left;
+  font-weight: bold;
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
 }
 
-:host ::ng-deep .main-card>.ant-card-body,
-:host ::ng-deep .inner-card>.ant-card-body {
-  height: 100%;
-  padding: 24px;
-}
-
-.main-card {
-  background: transparent !important;
-  border: none !important;
-}
-
-.inner-card {
-  background-color: #ffffff;
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Logo */
 .logo {
   background-color: #fff;
   width: auto;
   height: 70px;
-  margin-left: 20px;
   border: 1px solid #72849a;
   border-top: 0px;
   padding: 5px;
   box-shadow: 0px 0px 5px #72849a;
   position: absolute;
   top: 0px;
-  left: -3px;
+  left: 20px;
   z-index: 10;
 }
 
 .logo img {
   height: 60px !important;
   width: auto !important;
-  display: block;
 }
 
-.section-title {
-  font-weight: 800;
-  color: #1890ff;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  font-size: 24px;
-}
-
-/* ==========================================================================
-   GRÁFICOS E LEGENDAS (NOVO ESTILO)
-   ========================================================================== */
-.chart-column {
-  height: 100%;
+.btn-fullscreen {
+  height: 40px;
+  font-size: 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-right: 1px solid #f0f0f0;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+  transition: all 0.3s ease;
+  z-index: 20;
+  min-height: 45px;
 }
 
-.chart-column:last-child {
-  border-right: none;
+.btn-fullscreen i {
+  margin-right: 8px;
 }
 
-.chart-content {
-  width: 100%;
-  height: 100%;
+.btn-fullscreen.btn-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.btn-fullscreen.btn-hidden:hover,
+.dash-header:hover .btn-fullscreen.btn-hidden {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
+}
+
+nz-card {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* Centraliza verticalmente o bloco todo */
+  overflow: hidden;
+  margin: 10px;
 }
 
-.chart-header {
+:host ::ng-deep .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px !important;
+  height: 100%;
+  overflow: hidden;
+}
+
+.row,
+.col-lg-12,
+.chart-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+}
+
+.chart-card {
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+}
+
+.chart-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 30px;
+  gap: 40px;
+}
+
+.canvas-container {
+  flex: 0 0 auto;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.legend-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+
+.total-info {
+  background: #f0f0f0;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
   text-align: center;
-  margin-bottom: 20px;
-  font-weight: bold;
+}
+
+.total-info strong {
+  display: block;
   font-size: 18px;
   color: #333;
+  margin-bottom: 8px;
 }
 
-.total-badge {
-  font-size: 16px;
-  color: #666;
-  margin-top: 5px;
+.total-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1890ff;
 }
 
-/* Áreas Flexíveis */
-.canvas-wrapper {
-  flex: 1.2;
-  /* Ocupa um pouco mais de espaço que a lista */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 250px;
-}
-
-.legend-wrapper {
-  flex: 1;
-  text-align: left;
-  padding-left: 20px;
-  max-height: 350px;
-  overflow-y: auto;
-  /* Scroll se a lista for muito grande */
-}
-
-/* Estilo da Lista (igual à referência) */
 .legend-list {
   list-style: none;
   padding: 0;
@@ -147,110 +187,162 @@
 }
 
 .legend-item {
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border-radius: 6px;
+  border-left: 4px solid transparent;
+  transition: all 0.2s ease;
 }
 
-.color-dot {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  margin-right: 10px;
-  margin-top: 4px;
+.legend-item:hover {
+  background: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.color-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  margin-right: 15px;
   flex-shrink: 0;
-  border-radius: 2px;
-  /* Levemente arredondado */
 }
 
-.legend-info {
+.legend-details {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
-.legend-title {
-  font-size: 14px;
+.legend-name {
+  font-size: 16px;
   color: #333;
-  line-height: 1.2;
+  margin-bottom: 4px;
 }
 
-.legend-value {
-  margin-top: 2px;
-  font-size: 13px;
+.legend-count {
+  font-size: 14px;
   color: #666;
+  font-weight: 500;
 }
 
-/* Ajuste do Canvas */
-canvas {
-  width: 100% !important;
-  height: auto !important;
-  max-height: 300px;
-  /* Limite para telas pequenas */
+:host ::ng-deep {
+  nz-table {
+    font-size: 18px !important;
+  }
+
+  nz-table thead th {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    padding: 16px !important;
+    background-color: #1890ff !important;
+    color: white !important;
+    text-align: center !important;
+  }
+
+  nz-table tbody td {
+    font-size: 18px !important;
+    padding: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  nz-table tr {
+    height: 60px !important;
+  }
+
+  nz-tag,
+  nz-badge {
+    font-size: 16px !important;
+    padding: 6px 12px !important;
+  }
+
+  nz-card {
+    font-size: 18px !important;
+  }
+
+  nz-card-head {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    padding: 20px !important;
+  }
+
+  button {
+    font-size: 18px !important;
+    min-height: 45px !important;
+  }
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE: TV (1920px+)
-   ========================================================================== */
 @media (min-width: 1920px) {
-
-  /* Header */
   .dash-header {
-    min-height: 110px;
-    padding-left: 160px;
+    height: 110px;
+    padding: 10px 30px 10px 160px;
+  }
+
+  .dash-header h3 {
+    font-size: 40px !important;
   }
 
   .logo {
     height: 90px;
+    left: 30px;
   }
 
   .logo img {
     height: 80px !important;
   }
 
-  /* Títulos */
-  .section-title {
-    font-size: 40px !important;
-    margin-bottom: 40px;
-  }
-
-  .chart-header {
-    font-size: 28px !important;
-    margin-bottom: 50px;
-  }
-
-  .total-badge {
-    font-size: 24px;
-  }
-
-  /* Gráficos Gigantes */
-  .canvas-wrapper {
-    min-height: 400px;
-  }
-
-  canvas {
-    max-height: 500px !important;
-    /* Permite crescer muito na TV */
-  }
-
-  /* Legenda Gigante */
-  .legend-item {
-    margin-bottom: 15px;
-    padding-bottom: 12px;
-  }
-
-  .color-dot {
-    width: 20px;
-    height: 20px;
-    margin-right: 15px;
-  }
-
-  .legend-title {
+  .btn-fullscreen {
+    height: 50px;
     font-size: 20px;
   }
 
-  .legend-value {
-    font-size: 18px;
+  .canvas-container {
+    width: 700px;
+    height: 700px;
+  }
+
+  .total-info strong {
+    font-size: 26px;
+  }
+
+  .total-value {
+    font-size: 52px;
+  }
+
+  .legend-item {
+    padding: 18px 24px;
+    margin-bottom: 14px;
+  }
+
+  .color-indicator {
+    width: 36px;
+    height: 36px;
+    margin-right: 24px;
+  }
+
+  .legend-name {
+    font-size: 24px;
+  }
+
+  .legend-count {
+    font-size: 20px;
+  }
+
+  :host ::ng-deep {
+    nz-table thead th {
+      font-size: 24px !important;
+      padding: 20px !important;
+    }
+
+    nz-table tbody td {
+      font-size: 22px !important;
+      padding: 18px !important;
+    }
+
+    nz-table tr {
+      height: 70px !important;
+    }
   }
 }

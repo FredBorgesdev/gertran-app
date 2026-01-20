@@ -1,70 +1,66 @@
 <nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
-  <div class="dash-header">
-    <div class="logo">
-      <img
-        *ngIf="!hideHeader"
-        src="assets/images/logo/logogertran.png"
-        alt="Gertran"
-      >
+  <div class="moldura" #contentDiv>
+    <div class="dash-header">
+      <div class="logo">
+        <img *ngIf="!hideHeader" src="assets/images/logo/logogertran.png" alt="Gertran">
+      </div>
+
+      <div class="header-content">
+        <h3 [class]="(hideHeader && 'header-small')">
+          Check-list por veículo
+        </h3>
+      </div>
+
+      <button *ngIf="!hideHeader" nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen"
+        [class.btn-hidden]="isFullScreen">
+        <i nz-icon [nzType]="isFullScreen ? 'compress' : 'expand'"></i>
+        <span class="btn-text">{{ isFullScreen ? 'Sair' : 'Tela Cheia' }}</span>
+      </button>
     </div>
-    <h3 [class]="(hideHeader && 'header-small') + ' text-center m-b-0'">
-      Check-list por veículo
-    </h3>
+
+    <nz-card>
+      <div class="content">
+        <h4 [class]="(hideHeader && 'header-small') + ' text-center m-b-15'">
+          Tempo: {{ currentTime }}
+          &nbsp;
+          &nbsp;
+          &nbsp;
+          Total - {{resources?.count ?? '0'}}
+        </h4>
+        <div class="d-flex justify-content-between" *ngIf="!hideHeader">
+          <span class="d-flex m-b-10" style="align-items: center;">
+            <div class="square bg-danger m-r-5"></div> Acima de 15 minutos
+            <div class="square bg-alert m-r-5"></div> Acima de 10 minutos
+            <div class="square bg-default m-r-5"></div> No prazo
+          </span>
+        </div>
+      </div>
+      <nz-table #checklistTable [nzData]="resources?.results" [nzTotal]="resources?.count"
+        [nzPageSize]="resources?.limit" [nzPageIndex]="page" [nzFrontPagination]="false" nzSize="small"
+        (nzQueryParams)="handleQueryParamsChange($event)" class="custom-table"
+        style="table-layout: fixed !important;width: 100%;">
+        <thead>
+          <tr>
+            <th class="text-center table-header" *ngFor="let column of checklistColumns" [nzWidth]="column.width">{{
+              column.title }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of checklistTable.data;  let i=index" [class]="getRowClass(item)">
+            <td class="text-center">
+              {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td class="text-center">
+              {{item.vehicle.plate}}
+            </td>
+            <td class="text-center">
+              {{item.vehicle?.trackers?.[0]?.trackerModel.trackerTechnology.name}}
+            </td>
+            <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
+            <td class="text-center">{{ getUpdateDiff(item) }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
   </div>
-  
-<nz-card>
-  <div class="content">
-    <h4 [class]="(hideHeader && 'header-small') + ' text-center m-b-15'">
-      Tempo: {{ currentTime }}
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      Total - {{resources?.count ?? '0'}}
-    </h4>
-    <div class="d-flex justify-content-between" *ngIf="!hideHeader">
-      <span class="d-flex m-b-10" style="align-items: center;">
-        <div class="square bg-danger m-r-5"></div> Acima de 15 minutos
-        <div class="square bg-alert m-r-5"></div> Acima de 10 minutos
-        <div class="square bg-default m-r-5"></div> No prazo
-      </span>
-    </div>
-  </div>
-  <nz-table
-    #checklistTable
-    [nzData]="resources?.results"
-    [nzTotal]="resources?.count"
-    [nzPageSize]="resources?.limit"
-    [nzPageIndex]="page"
-    [nzFrontPagination]="false"
-    nzSize="small"
-    (nzQueryParams)="handleQueryParamsChange($event)"
-    class="custom-table"
-    style="table-layout: fixed !important;width: 100%;"
-  >
-    <thead>
-    <tr>
-      <th
-        class="text-center table-header"
-        *ngFor="let column of checklistColumns"
-        [nzWidth]="column.width"
-      >{{ column.title }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of checklistTable.data;  let i=index" [class]="getRowClass(item)">
-      <td class="text-center">
-        {{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}
-      </td>
-      <td class="text-center">
-        {{item.vehicle.plate}}
-      </td>
-      <td class="text-center">
-        {{item.vehicle?.trackers?.[0]?.trackerModel.trackerTechnology.name}}
-      </td>
-      <td class="text-center">{{item.customer?.tradingName ?? 'GERTRAN' }}</td>
-      <td class="text-center">{{ getUpdateDiff(item) }}</td>
-    </tr>
-    </tbody>
-  </nz-table>
-</nz-card>
 </nz-spin>
