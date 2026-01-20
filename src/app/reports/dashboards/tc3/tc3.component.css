@@ -61,21 +61,31 @@
   border: 1px solid black;
 }
 
-th, td {
+th,
+td {
   font-weight: bold;
   font-size: 18px;
 }
 
 .moldura {
-  position: relative;
-  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
+  margin: 0;
+  z-index: 999;
 }
 
 /* Melhorias para visualização à distância em telas grandes */
 :host ::ng-deep {
+
   /* Títulos e headers maiores */
   .dash-header h3 {
     font-size: 32px !important;
@@ -107,7 +117,8 @@ th, td {
   }
 
   /* Status badges maiores */
-  nz-tag, nz-badge {
+  nz-tag,
+  nz-badge {
     font-size: 16px !important;
     padding: 6px 12px !important;
   }
@@ -128,6 +139,104 @@ th, td {
     font-size: 18px !important;
     min-height: 45px !important;
   }
+}
+
+.dash-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ededed;
+  border-bottom: 1px solid #72849a;
+  margin: 0;
+  padding: 5px 30px 5px 130px;
+  height: 90px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0;
+}
+
+.dash-header h3 {
+  margin: 0;
+  text-align: left;
+  font-weight: bold;
+  font-size: 32px;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.logo {
+  background-color: #fff;
+  width: auto;
+  height: 70px;
+  border: 1px solid #72849a;
+  border-top: 0px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px #72849a;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  z-index: 10;
+}
+
+.logo img {
+  height: 60px !important;
+  width: auto !important;
+}
+
+.btn-fullscreen {
+  height: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+  transition: all 0.3s ease;
+  z-index: 20;
+  min-height: 45px;
+}
+
+.btn-fullscreen i {
+  margin-right: 8px;
+}
+
+.btn-fullscreen.btn-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.btn-fullscreen.btn-hidden:hover,
+.dash-header:hover .btn-fullscreen.btn-hidden {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
+}
+
+nz-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 10px;
+}
+
+:host ::ng-deep .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px !important;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Responsividade para telas muito grandes (6 monitores) */

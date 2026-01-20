@@ -1,9 +1,18 @@
-<div class="moldura">
+<div class="moldura" #contentDiv>
   <div class="dash-header">
     <div class="logo">
       <img src="assets/images/logo/logogertran.png" alt="Gertran">
     </div>
-    <h3>SOLICITAÇÕES DE MONITORAMENTO</h3>
+
+    <div class="header-content">
+      <h3>SOLICITAÇÕES DE MONITORAMENTO</h3>
+    </div>
+
+    <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen"
+      [class.btn-hidden]="isFullScreen">
+      <i nz-icon [nzType]="isFullScreen ? 'compress' : 'expand'"></i>
+      <span class="btn-text">{{ isFullScreen ? 'Sair' : 'Tela Cheia' }}</span>
+    </button>
   </div>
   <nz-card>
     <div class="row">
@@ -12,5 +21,4 @@
       </div>
     </div>
   </nz-card>
-  <app-fixed-buttons></app-fixed-buttons>
 </div>
