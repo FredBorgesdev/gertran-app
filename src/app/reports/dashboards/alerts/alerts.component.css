@@ -3,9 +3,13 @@
   flex-direction: column;
   height: 100vh;
   max-height: 100vh;
+  width: 100vw;
   overflow: hidden;
   background-color: #f0f2f5;
   padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .dash-header {
@@ -15,7 +19,6 @@
   justify-content: space-between;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-
   margin: 0px 0px 10px 0px;
   padding: 10px 10px 10px 130px;
   height: 90px;
@@ -49,7 +52,7 @@
   box-shadow: 0px 0px 5px #72849a;
   position: absolute;
   top: 0px;
-  left: -3px;
+  left: 20px;
   z-index: 10;
 }
 
@@ -57,7 +60,6 @@
   height: 60px !important;
   width: auto !important;
 }
-
 
 .dash-header-title {
   background: #72849a;
@@ -72,6 +74,32 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+}
+
+.btn-fullscreen {
+  height: 40px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+  transition: all 0.3s ease;
+  z-index: 20;
+}
+
+.btn-fullscreen.btn-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.btn-fullscreen.btn-hidden:hover,
+.dash-header:hover .btn-fullscreen.btn-hidden {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
 }
 
 nz-card.content-card {
@@ -92,19 +120,32 @@ nz-card.content-card {
 
 .legend-row {
   flex: 0 0 auto;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 5px;
 }
 
 .table-wrapper {
   flex: 1;
-  overflow-y: auto;
+  overflow: hidden;
   border: 1px solid #e8e8e8;
 }
 
 .legend-container {
   font-size: 15px;
   font-weight: bold;
+  text-align: right;
+}
+
+.page-indicator {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1890ff;
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 4px;
+  padding: 4px 15px;
 }
 
 .square {
@@ -129,6 +170,11 @@ nz-card.content-card {
 }
 
 :host ::ng-deep {
+  nz-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
   .ant-select-selector {
     height: 40px !important;
     font-size: 16px !important;
@@ -148,18 +194,25 @@ nz-card.content-card {
     color: white !important;
     border: 1px solid black !important;
     text-align: center !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   nz-table tbody td {
     font-size: 14px !important;
-    padding: 8px 5px !important;
+    padding: 6px 5px !important;
     font-weight: 600 !important;
     border: 1px solid black !important;
     color: #000 !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    line-height: 1.1;
+    vertical-align: middle;
   }
 
   nz-table tr {
-    height: 45px !important;
+    height: 48px !important;
   }
 
   .custom-table tr.danger td {
@@ -172,13 +225,11 @@ nz-card.content-card {
 }
 
 @media (min-width: 1367px) {
-
   .dash-select {
     width: 400px;
   }
 
   :host ::ng-deep {
-
     nz-table thead th {
       font-size: 18px !important;
       padding: 12px !important;
@@ -186,17 +237,20 @@ nz-card.content-card {
 
     nz-table tbody td {
       font-size: 16px !important;
-      padding: 10px !important;
+      padding: 8px 10px !important;
     }
 
     nz-table tr {
       height: 55px !important;
     }
-
   }
 }
 
 @media (min-width: 1920px) {
+  .moldura {
+    padding: 15px;
+  }
+
   .dash-header {
     height: 110px;
     padding-left: 170px;
@@ -205,7 +259,7 @@ nz-card.content-card {
 
   .logo {
     height: 90px;
-    left: 10px;
+    left: 20px;
   }
 
   .logo img {
@@ -226,6 +280,16 @@ nz-card.content-card {
     width: 500px;
   }
 
+  .btn-fullscreen {
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .page-indicator {
+    font-size: 24px;
+    padding: 5px 20px;
+  }
+
   .legend-container {
     font-size: 20px;
     margin-bottom: 15px;
@@ -242,19 +306,15 @@ nz-card.content-card {
       font-size: 22px !important;
     }
 
-    .btn-fullscreen {
-      height: 50px;
-      font-size: 20px;
-    }
-
     nz-table thead th {
       font-size: 24px !important;
       padding: 20px !important;
+      height: 60px !important;
     }
 
     nz-table tbody td {
       font-size: 22px !important;
-      padding: 18px !important;
+      padding: 10px 15px !important;
     }
 
     nz-table tr {

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, HostListener } from '@angular/core'; // 1. Adicionado HostListener
+import { Component, Input, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { Terminals, TerminalsService } from "../../../terminals/terminals.service";
 import { DatePipe } from "@angular/common";
 import { Alert, AlertsService, AlertTypes } from "../../../monitoring/alerts.service";
@@ -12,16 +12,26 @@ import { differenceInMinutes } from "date-fns";
 })
 export class AlertsComponent implements OnInit, OnDestroy {
   @Input() showTitle = true;
-  terminals: Terminals[] = [];
-  currentTime = '';
-  intervals: any[] = [];
-  currentTerminal: Terminals;
-  currentAlerts: Alert[] = [];
-  isLoading = false;
-  currentCount = 0;
-  currentLimit = 0;
 
-  // 2. Variável de controle da tela cheia
+  // Dados
+  terminals: Terminals[] = [];
+  currentTerminal: Terminals;
+
+  // Controle de Dados
+  allAlerts: Alert[] = [];       // Todos os alertas carregados do terminal
+  displayedAlerts: Alert[] = []; // Apenas os 10 que aparecem na tela agora
+
+  // Paginação Automática
+  currentPage = 1;
+  totalPages = 1;
+  pageSize = 10; // MÁXIMO de linhas por tela (para não cortar na TV)
+
+  // Timers
+  rotationTimer: any;
+  clockTimer: any;
+
+  currentTime = '';
+  isLoading = false;
   isFullScreen = false;
 
   constructor(
@@ -31,132 +41,125 @@ export class AlertsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // 1. Carrega lista de terminais
     this.terminalsService.getAll({}).subscribe((data) => {
       this.terminals = data.results;
-
-      this.setTerminalAndLoadAlerts();
-
-      const getRandomTerminalInterval = setInterval(() => {
-        this.setTerminalAndLoadAlerts();
-      }, 1000 * 60 * 3);
-
-      this.intervals.push(getRandomTerminalInterval);
+      // Começa o ciclo pelo primeiro
+      this.loadNextTerminal();
     });
 
-    const timeInterval = setInterval(() => {
+    // 2. Relógio
+    this.clockTimer = setInterval(() => {
       this.currentTime = this.datePipe.transform(new Date(), 'HH:mm:ss');
     }, 1000);
-
-    this.intervals.push(timeInterval);
   }
 
   ngOnDestroy(): void {
-    this.intervals.forEach(interval => clearInterval(interval));
+    clearTimeout(this.rotationTimer);
+    clearInterval(this.clockTimer);
   }
 
-  getNextTerminal(): Terminals {
-    const currentTerminalIndex = this.terminals.findIndex(terminal => terminal === this.currentTerminal);
+  // --- LÓGICA DO CARROSSEL DE PÁGINAS ---
 
-    if (currentTerminalIndex === this.terminals.length - 1) {
-      return this.terminals[0];
+  loadNextTerminal(): void {
+    if (this.rotationTimer) clearTimeout(this.rotationTimer);
+
+    // Define qual é o próximo terminal da lista
+    if (!this.currentTerminal) {
+      this.currentTerminal = this.terminals[0];
+    } else {
+      const currentIndex = this.terminals.findIndex(t => t.id === this.currentTerminal.id);
+      const nextIndex = (currentIndex + 1) % this.terminals.length;
+      this.currentTerminal = this.terminals[nextIndex];
     }
 
-    return this.terminals[currentTerminalIndex + 1];
+    this.fetchAlertsAndStartRotation();
   }
 
-  setTerminalAndLoadAlerts(terminal?: Terminals): void {
-    const nextTerminal = terminal || this.getNextTerminal();
+  fetchAlertsAndStartRotation(): void {
+    this.isLoading = true;
 
-    if (terminal) {
-      this.isLoading = true;
-    }
-
-    this.alertsService.getAlerts({ limit: 12 }, {
-      terminal: nextTerminal.id,
+    // Busca até 100 alertas (para garantir que pegamos tudo)
+    this.alertsService.getAlerts({ limit: 100 }, {
+      terminal: this.currentTerminal.id,
       alertType: AlertTypes.terminal,
       alertsOnly: true,
-    }).subscribe((data) => {
-      this.currentAlerts = data.results.reverse();
-      this.currentTerminal = nextTerminal;
-      this.currentCount = data.count;
-      this.currentLimit = data.limit;
-      if (terminal) {
+    }).subscribe({
+      next: (data) => {
+        this.allAlerts = data.results.reverse();
+
+        // Calcula quantas páginas esse terminal terá
+        this.currentPage = 1;
+        this.totalPages = Math.ceil(this.allAlerts.length / this.pageSize);
+        if (this.totalPages === 0) this.totalPages = 1;
+
+        // Exibe a primeira página
+        this.updateDisplayedPage();
         this.isLoading = false;
+
+        // Agenda a próxima rotação (Página ou Terminal)
+        this.scheduleNextStep();
+      },
+      error: () => {
+        this.isLoading = false;
+        // Se der erro, pula para o próximo terminal em 5s
+        this.rotationTimer = setTimeout(() => this.loadNextTerminal(), 5000);
       }
     });
   }
 
+  updateDisplayedPage() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedAlerts = this.allAlerts.slice(startIndex, endIndex);
+  }
+
+  scheduleNextStep() {
+    const displayTime = 30000;
+
+    this.rotationTimer = setTimeout(() => {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.updateDisplayedPage();
+        this.scheduleNextStep();
+      } else {
+        this.loadNextTerminal();
+      }
+    }, displayTime);
+  }
+
+  onTerminalChange(terminal: Terminals) {
+    if (this.rotationTimer) clearTimeout(this.rotationTimer);
+    this.currentTerminal = terminal;
+    this.fetchAlertsAndStartRotation();
+  }
+
   getClass(alert: Alert): string {
     const diffInMinutes = differenceInMinutes(new Date(), new Date(alert.receivedAt));
-
-    if (diffInMinutes >= 15) {
-      return 'danger';
-    }
-
-    if (diffInMinutes >= 10) {
-      return 'warning';
-    }
-
+    if (diffInMinutes >= 15) return 'danger';
+    if (diffInMinutes >= 10) return 'warning';
     return '';
   }
-
-  getRollingTimeInMinutes(alert: Alert): string {
-    return `${differenceInMinutes(new Date(), new Date(alert.receivedAt))} minutos`;
-  }
-
-  /* ==========================================================================
-     LÓGICA DE TELA CHEIA (FULLSCREEN)
-     ========================================================================== */
-
   toggleFullScreen(): void {
-    if (!this.isFullScreen) {
-      this.openFullscreen();
-    } else {
-      this.closeFullscreen();
-    }
+    if (!this.isFullScreen) this.openFullscreen();
+    else this.closeFullscreen();
   }
 
   openFullscreen() {
     const elem = document.documentElement as any;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { /* Firefox */
-      elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE/Edge */
-      elem.msRequestFullscreen();
-    }
-    this.isFullScreen = true;
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
   }
 
   closeFullscreen() {
     const doc = document as any;
-    if (doc.exitFullscreen) {
-      doc.exitFullscreen();
-    } else if (doc.mozCancelFullScreen) { /* Firefox */
-      doc.mozCancelFullScreen();
-    } else if (doc.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-      doc.webkitExitFullscreen();
-    } else if (doc.msExitFullscreen) { /* IE/Edge */
-      doc.msExitFullscreen();
-    }
-    this.isFullScreen = false;
+    if (doc.exitFullscreen) doc.exitFullscreen();
+    else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
   }
 
   @HostListener('document:fullscreenchange', ['$event'])
   @HostListener('document:webkitfullscreenchange', ['$event'])
-  @HostListener('document:mozfullscreenchange', ['$event'])
-  @HostListener('document:MSFullscreenChange', ['$event'])
   fullscreenModes(event: any) {
-    this.checkScreenMode();
-  }
-
-  checkScreenMode() {
-    if (document.fullscreenElement) {
-      this.isFullScreen = true;
-    } else {
-      this.isFullScreen = false;
-    }
+    this.isFullScreen = !!document.fullscreenElement;
   }
 }

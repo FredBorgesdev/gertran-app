@@ -8,7 +8,7 @@
 
       <h3 class="dash-header-title" *ngIf="showTitle">ALERTAS</h3>
 
-      <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="setTerminalAndLoadAlerts($event)"
+      <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="onTerminalChange($event)"
         nzPlaceHolder="Selecione o Terminal">
         <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal"></nz-option>
       </nz-select>
@@ -19,7 +19,8 @@
       </div>
     </div>
 
-    <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen">
+    <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen"
+      [class.btn-hidden]="isFullScreen">
       <i nz-icon [nzType]="isFullScreen ? 'compress' : 'expand'"></i>
       <span class="btn-text">{{ isFullScreen ? 'Sair' : 'Tela Cheia' }}</span>
     </button>
@@ -27,6 +28,10 @@
 
   <nz-card class="content-card">
     <div class="legend-row">
+      <div class="page-indicator" *ngIf="totalPages > 1">
+        EXIBINDO PÁGINA {{ currentPage }} DE {{ totalPages }}
+      </div>
+
       <span class="legend-container">
         <span class="legend-item">
           <div class="square bg-danger"></div> > 15 min
@@ -43,20 +48,20 @@
     <h4 *ngIf="isLoading" class="text-center">Carregando dados...</h4>
 
     <div class="table-wrapper">
-      <nz-table #table [nzData]="currentAlerts" [nzFrontPagination]="false" nzBordered [nzShowPagination]="false"
+      <nz-table #table [nzData]="displayedAlerts" [nzFrontPagination]="false" nzBordered [nzShowPagination]="false"
         class="custom-table">
         <thead>
           <tr>
-            <th class="text-center" style="width: 10%;">PLACA</th>
-            <th class="text-center">CLIENTE</th>
-            <th class="text-center">POSIÇÃO</th>
-            <th class="text-center" style="width: 15%;">ORIGEM</th>
-            <th class="text-center" style="width: 15%;">DESTINO</th>
-            <th class="text-center">ALERTA</th>
+            <th class="text-center" style="width: 8%;">PLACA</th>
+            <th class="text-center" style="width: 12%;">CLIENTE</th>
+            <th class="text-center" style="width: 20%;">POSIÇÃO</th>
+            <th class="text-center" style="width: 12%;">ORIGEM</th>
+            <th class="text-center" style="width: 12%;">DESTINO</th>
+            <th class="text-center" style="width: 36%;">ALERTA</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of currentAlerts" [class]="getClass(item)">
+          <tr *ngFor="let item of displayedAlerts" [class]="getClass(item)">
             <td class="text-center">{{item.vehicle.plate}}</td>
             <td class="text-center">{{item.customer.tradingName}}</td>
             <td class="text-center">{{item.position.pointReference}}</td>
