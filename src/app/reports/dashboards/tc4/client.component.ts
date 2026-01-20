@@ -74,17 +74,15 @@ export class ControlTower4 implements OnInit, OnDestroy {
       next: (items) => {
         const filtered = items.filter(i => !/gertran/i.test(i.label || ''));
 
-        // --- CORES DE ALTO CONTRASTE (SEM AZUIS REPETIDOS) ---
-        // Sequência planejada para diferenciar fatias vizinhas
         const chartColors = [
-          '#1565C0', // Azul Escuro Forte (Corporativo)
-          '#E65100', // Laranja Escuro (High Visibility)
-          '#2E7D32', // Verde Floresta (Sóbrio)
-          '#C62828', // Vermelho Intenso (Alerta)
-          '#F9A825', // Amarelo Ouro (Escuro para não sumir no branco)
-          '#6A1B9A', // Roxo Profundo (Bem distinto do azul)
-          '#455A64', // Cinza Azulado (Neutro forte)
-          '#00838F'  // Ciano Escuro (Diferente do Azul Royal)
+          '#1565C0', // Azul Escuro Forte
+          '#E65100', // Laranja Escuro
+          '#2E7D32', // Verde Floresta
+          '#C62828', // Vermelho Intenso
+          '#F9A825', // Amarelo Ouro
+          '#6A1B9A', // Roxo Profundo
+          '#455A64', // Cinza Azulado
+          '#00838F'  // Ciano Escuro
         ];
 
         this.operationsPositionsData.labels = filtered.map((it, idx) => ({
@@ -142,11 +140,19 @@ export class ControlTower4 implements OnInit, OnDestroy {
             borderColor: '#fff',
             borderWidth: 1
           },
-          // Mantive as configurações de ocultar caso funcione em algum momento,
-          // mas sem insistir muito já que o plugin é global.
+
           datalabels: { display: false },
-          labels: { render: () => '', fontColor: 'transparent', fontSize: 0 },
-          outlabels: { display: false }
+
+          outlabels: { display: false },
+
+          labels: {
+            render: 'label',
+            fontColor: 'transparent',
+            fontSize: 0,
+            arc: false, // Força não desenhar no arco
+            position: 'outside', // Tira de dentro da fatia
+            textMargin: 100 // Empurra pra longe se desenhar
+          }
         },
 
         elements: {

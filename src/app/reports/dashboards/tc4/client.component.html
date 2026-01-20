@@ -25,10 +25,6 @@
             </div>
 
             <div class="legend-container">
-              <div class="total-info">
-                <strong>TOTAL DE VIAGENS</strong>
-                <div class="total-value">{{ operationsPositionsData.totalOperationsPositionsData }}</div>
-              </div>
               <ul class="legend-list">
                 <li *ngFor="let label of operationsPositionsData.labels" class="legend-item">
                   <span [style.background-color]="label.color" class="color-indicator"></span>
