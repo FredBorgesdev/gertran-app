@@ -1,9 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Terminals, TerminalsService} from "../../../terminals/terminals.service";
-import {DatePipe} from "@angular/common";
-import {Alert, AlertsService, AlertTypes} from "../../../monitoring/alerts.service";
-import {differenceInMinutes, subMinutes} from "date-fns";
-import { NzTableQueryParams } from 'ng-zorro-antd/table';
+import { Component, Input, OnDestroy, OnInit, HostListener } from '@angular/core'; // 1. Adicionado HostListener
+import { Terminals, TerminalsService } from "../../../terminals/terminals.service";
+import { DatePipe } from "@angular/common";
+import { Alert, AlertsService, AlertTypes } from "../../../monitoring/alerts.service";
+import { differenceInMinutes } from "date-fns";
 
 @Component({
   selector: 'app-alerts-page',
@@ -12,22 +11,24 @@ import { NzTableQueryParams } from 'ng-zorro-antd/table';
   providers: [DatePipe]
 })
 export class AlertsComponent implements OnInit, OnDestroy {
-  @Input() showTitle = true
+  @Input() showTitle = true;
   terminals: Terminals[] = [];
   currentTime = '';
   intervals: any[] = [];
   currentTerminal: Terminals;
   currentAlerts: Alert[] = [];
   isLoading = false;
-  currentCount = 0
-  currentLimit = 0
+  currentCount = 0;
+  currentLimit = 0;
+
+  // 2. Variável de controle da tela cheia
+  isFullScreen = false;
 
   constructor(
     private terminalsService: TerminalsService,
     private alertsService: AlertsService,
     private datePipe: DatePipe,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.terminalsService.getAll({}).subscribe((data) => {
@@ -70,37 +71,20 @@ export class AlertsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
     }
 
-    this.alertsService.getAlerts({limit: 12}, {
+    this.alertsService.getAlerts({ limit: 12 }, {
       terminal: nextTerminal.id,
       alertType: AlertTypes.terminal,
       alertsOnly: true,
     }).subscribe((data) => {
       this.currentAlerts = data.results.reverse();
       this.currentTerminal = nextTerminal;
-      this.currentCount = data.count
-      this.currentLimit = data.limit
+      this.currentCount = data.count;
+      this.currentLimit = data.limit;
       if (terminal) {
         this.isLoading = false;
       }
     });
   }
-
-
-  // handleQueryParamsChange(params: NzTableQueryParams): void {
-    // if (params.pageIndex < this.page) {
-    //   const url = this.replaceOffsetWithPage(this.resources.previous, params.pageIndex);
-    //   this.loadResources(url);
-    // } else if (params.pageIndex > this.page) {
-    //   const url = this.replaceOffsetWithPage(this.resources.next, params.pageIndex);
-    //   this.loadResources(url);
-    // }
-  // }
-
-  // replaceOffsetWithPage(url: string, page: number): string {
-  //   const limit = +url.match(/limit=\d+/)[0].split('=')[1];
-
-  //   return url.replace(/offset=\d+/, `offset=${(limit * page) - limit}`);
-  // }
 
   getClass(alert: Alert): string {
     const diffInMinutes = differenceInMinutes(new Date(), new Date(alert.receivedAt));
@@ -118,5 +102,61 @@ export class AlertsComponent implements OnInit, OnDestroy {
 
   getRollingTimeInMinutes(alert: Alert): string {
     return `${differenceInMinutes(new Date(), new Date(alert.receivedAt))} minutos`;
+  }
+
+  /* ==========================================================================
+     LÓGICA DE TELA CHEIA (FULLSCREEN)
+     ========================================================================== */
+
+  toggleFullScreen(): void {
+    if (!this.isFullScreen) {
+      this.openFullscreen();
+    } else {
+      this.closeFullscreen();
+    }
+  }
+
+  openFullscreen() {
+    const elem = document.documentElement as any;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+    this.isFullScreen = true;
+  }
+
+  closeFullscreen() {
+    const doc = document as any;
+    if (doc.exitFullscreen) {
+      doc.exitFullscreen();
+    } else if (doc.mozCancelFullScreen) { /* Firefox */
+      doc.mozCancelFullScreen();
+    } else if (doc.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+      doc.webkitExitFullscreen();
+    } else if (doc.msExitFullscreen) { /* IE/Edge */
+      doc.msExitFullscreen();
+    }
+    this.isFullScreen = false;
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  fullscreenModes(event: any) {
+    this.checkScreenMode();
+  }
+
+  checkScreenMode() {
+    if (document.fullscreenElement) {
+      this.isFullScreen = true;
+    } else {
+      this.isFullScreen = false;
+    }
   }
 }

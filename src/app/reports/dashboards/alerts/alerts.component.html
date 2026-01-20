@@ -1,61 +1,76 @@
-<div class="dash-header">
-  <div class="logo" *ngIf="showTitle">
-    <img src="assets/images/logo/logogertran.png" alt="Gertran">
+<div class="moldura" #contentDiv>
+  <div class="dash-header">
+    <div class="logo">
+      <img src="assets/images/logo/logogertran.png" alt="Gertran">
+    </div>
+
+    <div class="header-content">
+
+      <h3 class="dash-header-title" *ngIf="showTitle">ALERTAS</h3>
+
+      <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="setTerminalAndLoadAlerts($event)"
+        nzPlaceHolder="Selecione o Terminal">
+        <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal"></nz-option>
+      </nz-select>
+
+      <div class="clock-wrapper">
+        <i nz-icon nzType="clock-circle" nzTheme="outline" class="clock-icon"></i>
+        <h3 class="dash-header-title">{{ currentTime }}</h3>
+      </div>
+    </div>
+
+    <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen">
+      <i nz-icon [nzType]="isFullScreen ? 'compress' : 'expand'"></i>
+      <span class="btn-text">{{ isFullScreen ? 'Sair' : 'Tela Cheia' }}</span>
+    </button>
   </div>
 
-  <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
-
-  <h1 class="dash-header-title" *ngIf="showTitle">
-    Alertas
-  </h1>
-
-  <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="setTerminalAndLoadAlerts($event)">
-    <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name" [nzValue]="terminal"></nz-option>
-  </nz-select>
-
-  <h1 class="dash-header-title">
-    {{ currentTime }}
-  </h1>
-</div>
-
-<h4 *ngIf="isLoading">Carregando...</h4>
-<nz-card>
-  <div class="content">
-    <h3 class="dash-title">
-      {{ currentTerminal?.name }}
-    </h3>
-    <div class="d-flex justify-content-between m-b-10" style="align-items: center;">
-      <span>
-        <div class="square bg-danger m-r-5"></div> Acima de 15 minutos
-        <div class="square bg-alert m-r-5"></div> Acima de 10 minutos
-        <div class="square bg-default m-r-5"></div> No prazo
+  <nz-card class="content-card">
+    <div class="legend-row">
+      <span class="legend-container">
+        <span class="legend-item">
+          <div class="square bg-danger"></div> > 15 min
+        </span>
+        <span class="legend-item">
+          <div class="square bg-alert"></div> > 10 min
+        </span>
+        <span class="legend-item">
+          <div class="square bg-default"></div> No prazo
+        </span>
       </span>
     </div>
-  </div>
 
+    <h4 *ngIf="isLoading" class="text-center">Carregando dados...</h4>
 
-  <nz-table #table [nzData]="currentAlerts" [nzFrontPagination]="false" nzSize="small" class="custom-table">
-    <thead>
-      <tr>
-        <th class="table-header text-center" style="width: 5%;">Placa</th>
-        <th class="table-header text-center">Cliente</th>
-        <th class="table-header text-center">Posição</th>
-        <th class="table-header text-center" style="width: 15%;">Origem</th>
-        <th class="table-header text-center" style="width: 15%;">Destino</th>
-        <th class="table-header text-center">Alerta</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of currentAlerts; let i=index" [class]="getClass(item)">
-        <td class="text-center">{{item.vehicle.plate}}</td>
-        <td class="text-center">{{item.customer.tradingName}}</td>
-        <td class="text-center">{{item.position.pointReference}}</td>
-        <td class="text-center">{{item.position.positionInfo.originCity}} - {{item.position.positionInfo.originState}}
-        </td>
-        <td class="text-center">{{item.position.positionInfo.destinyCity}} - {{item.position.positionInfo.destinyState}}
-        </td>
-        <td class="text-center">{{item.message}} - {{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-      </tr>
-    </tbody>
-  </nz-table>
-</nz-card>
+    <div class="table-wrapper">
+      <nz-table #table [nzData]="currentAlerts" [nzFrontPagination]="false" nzBordered [nzShowPagination]="false"
+        class="custom-table">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 10%;">PLACA</th>
+            <th class="text-center">CLIENTE</th>
+            <th class="text-center">POSIÇÃO</th>
+            <th class="text-center" style="width: 15%;">ORIGEM</th>
+            <th class="text-center" style="width: 15%;">DESTINO</th>
+            <th class="text-center">ALERTA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of currentAlerts" [class]="getClass(item)">
+            <td class="text-center">{{item.vehicle.plate}}</td>
+            <td class="text-center">{{item.customer.tradingName}}</td>
+            <td class="text-center">{{item.position.pointReference}}</td>
+            <td class="text-center">{{item.position.positionInfo.originCity}} -
+              {{item.position.positionInfo.originState}}</td>
+            <td class="text-center">{{item.position.positionInfo.destinyCity}} -
+              {{item.position.positionInfo.destinyState}}</td>
+            <td class="text-center">
+              <strong>{{item.message}}</strong> <br>
+              <small>{{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</small>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </nz-card>
+</div>
