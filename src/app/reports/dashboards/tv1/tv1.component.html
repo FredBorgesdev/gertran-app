@@ -1,13 +1,5 @@
 <div class="moldura" #contentDiv>
   <div class="dash-header">
-    <div class="logo">
-      <img src="assets/images/logo/logogertran.png" alt="Gertran">
-    </div>
-
-    <div class="header-content">
-      <h3 class="dash-header-title">CENTRAL DE OPERAÇÕES</h3>
-    </div>
-
     <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen"
       [class.btn-hidden]="isFullScreen">
       <i nz-icon [nzType]="isFullScreen ? 'compress' : 'expand'"></i>
@@ -27,19 +19,13 @@
   </div>
 
   <footer class="dash-footer">
-    <div class="footer-item">
-      <i nz-icon nzType="environment" nzTheme="outline"></i>
-      <span>Rua dos Guajajaras, 880 - Centro, Belo Horizonte - MG</span>
-    </div>
-    <div class="footer-separator">|</div>
-    <div class="footer-item">
-      <i nz-icon nzType="phone" nzTheme="outline"></i>
-      <span>(31) 3235-0991</span>
-    </div>
-    <div class="footer-separator">|</div>
-    <div class="footer-item">
-      <i nz-icon nzType="mail" nzTheme="outline"></i>
+    <div class="footer-item main-contact">
+      <i nz-icon nzType="mail" nzTheme="outline" class="icon-mail"></i>
       <span>gertran@gertran.com.br</span>
+    </div>
+    <div class="footer-item sub-contact">
+      <i nz-icon nzType="phone" nzTheme="outline" class="icon-phone"></i>
+      <span>(31) 3235-0991</span>
     </div>
   </footer>
 </div>

@@ -6,7 +6,8 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  background-color: #f0f2f5;
+  background-color: white;
+  /* Fundo geral branco */
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -14,59 +15,24 @@
   z-index: 9999;
 }
 
+/* ==========================================================================
+   CABEÇALHO (Limpo)
+   ========================================================================== */
 .dash-header {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: #ededed;
-  border-bottom: 1px solid #72849a;
-  height: 110px;
-  padding: 0;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  z-index: 10;
-}
-
-.logo {
-  background-color: #fff;
-  width: auto;
+  justify-content: flex-end;
+  background: white;
+  /* Fundo branco */
+  border-bottom: none;
+  /* Sem borda */
+  box-shadow: none;
+  /* Sem sombra para ficar plano */
   height: 90px;
-  border: 1px solid #72849a;
-  border-top: 0px;
-  padding: 8px;
-  box-shadow: 0px 0px 5px #72849a;
-  position: absolute;
-  top: 0px;
-  left: 20px;
+  padding: 0 30px;
+  position: relative;
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo img {
-  height: 75px !important;
-  width: auto !important;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.dash-header-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: #72849a;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  text-align: center;
 }
 
 .btn-fullscreen {
@@ -79,21 +45,23 @@
   color: #fff;
   transition: all 0.3s ease;
   z-index: 20;
-  position: absolute;
-  right: 30px;
 }
 
 .btn-fullscreen i {
   margin-right: 8px;
 }
 
+/* ==========================================================================
+   HERO CONTENT
+   ========================================================================== */
 .hero-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at center, #ffffff 0%, #f0f2f5 100%);
+  /* Gradiente sutil de branco para um cinza muito claro no centro */
+  background: radial-gradient(circle at center, #ffffff 50%, #fcfcfc 100%);
   padding: 20px;
   overflow: hidden;
   position: relative;
@@ -102,19 +70,20 @@
 
 .logo-container {
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
 }
 
 .big-logo {
-  height: 320px;
+  height: 380px;
   width: auto;
-  filter: drop-shadow(0px 15px 25px rgba(0, 0, 0, 0.15));
+  /* Sombra azulada suave para destacar no fundo branco */
+  filter: drop-shadow(0px 20px 30px rgba(24, 144, 255, 0.15));
   animation: floatLogo 6s ease-in-out infinite;
   position: relative;
   z-index: 2;
-  max-height: 40vh;
+  max-height: 50vh;
 }
 
 .text-container {
@@ -122,25 +91,17 @@
   z-index: 2;
 }
 
-.company-name {
-  font-size: 60px;
-  font-weight: 900;
-  color: #2c3e50;
-  margin: 0;
-  letter-spacing: 8px;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
 .company-slogan {
-  font-size: 22px;
+  font-size: 24px;
   color: #1890ff;
-  font-weight: 600;
-  letter-spacing: 6px;
+  font-weight: 700;
+  letter-spacing: 8px;
   margin-top: 15px;
   text-transform: uppercase;
-  border-top: 2px solid #72849a;
-  padding-top: 15px;
+
+  border-top: 3px solid #1890ff;
+
+  padding-top: 20px;
   display: inline-block;
 }
 
@@ -150,7 +111,7 @@
   }
 
   50% {
-    transform: translateY(-15px);
+    transform: translateY(-20px);
   }
 
   100% {
@@ -158,149 +119,151 @@
   }
 }
 
+/* ==========================================================================
+   RODAPÉ (Limpo e com Ícones Coloridos)
+   ========================================================================== */
 .dash-footer {
   flex: 0 0 auto;
-  background: #ededed;
-  border-top: 1px solid #72849a;
-  padding: 15px 20px;
+  background: white;
+  /* Fundo branco */
+  border-top: none;
+  /* Sem borda */
+  padding: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #333;
-  min-height: 60px;
+  min-height: 90px;
   z-index: 5;
+  gap: 12px;
+  /* Espaçamento um pouco maior entre os itens */
 }
 
 .footer-item {
   display: flex;
   align-items: center;
-  font-size: 16px;
   font-weight: 600;
   white-space: nowrap;
 }
 
+/* Estilo base para os ícones do rodapé */
 .footer-item i {
   font-size: 20px;
-  color: #1890ff;
-  margin-right: 8px;
+  margin-right: 12px;
 }
 
-.footer-separator {
-  margin: 0 20px;
-  color: #72849a;
-  font-weight: lighter;
+/* Ícone de E-mail (Branco no círculo azul) */
+.icon-mail {
+  color: white;
+  /* Ícone branco */
+  background-color: #1890ff;
+  /* Fundo azul para contraste */
+  padding: 8px;
+  border-radius: 50%;
+  /* Círculo perfeito */
+  font-size: 18px !important;
+  /* Ajuste fino do tamanho dentro do círculo */
+  box-shadow: 0 4px 8px rgba(24, 144, 255, 0.2);
+  /* Sombra suave */
 }
 
+/* Ícone de Telefone (Verde) */
+.icon-phone {
+  color: #28a745;
+  /* Cor verde */
+  font-size: 24px !important;
+  /* Um pouco maior para equilibrar com o círculo do e-mail */
+}
+
+.main-contact {
+  font-size: 20px;
+  color: #2c3e50;
+}
+
+.sub-contact {
+  font-size: 18px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE
+   ========================================================================== */
 @media (min-width: 1920px) {
   .dash-header {
-    height: 140px;
-  }
-
-  .logo {
     height: 110px;
-    width: auto;
-    left: 30px;
-  }
-
-  .logo img {
-    height: 95px !important;
-  }
-
-  .dash-header-title {
-    font-size: 42px;
   }
 
   .btn-fullscreen {
     height: 50px;
     font-size: 20px;
-    right: 40px;
+    margin-right: 20px;
   }
 
   .big-logo {
-    height: 500px;
-    max-height: 50vh;
-  }
-
-  .company-name {
-    font-size: 90px;
-    letter-spacing: 15px;
+    height: 580px;
+    max-height: 60vh;
   }
 
   .company-slogan {
-    font-size: 36px;
-    letter-spacing: 12px;
-    margin-top: 30px;
+    font-size: 38px;
+    letter-spacing: 14px;
+    margin-top: 40px;
+    padding-top: 30px;
   }
 
   .dash-footer {
     padding: 30px;
-    min-height: 90px;
+    min-height: 120px;
+    gap: 15px;
   }
 
-  .footer-item {
+  .main-contact {
+    font-size: 28px;
+  }
+
+  .sub-contact {
     font-size: 24px;
   }
 
-  .footer-item i {
-    font-size: 28px;
-    margin-right: 15px;
+  /* Aumenta os ícones na TV */
+  .icon-mail {
+    padding: 10px;
+    font-size: 22px !important;
   }
 
-  .footer-separator {
-    margin: 0 40px;
+  .icon-phone {
+    font-size: 30px !important;
   }
 }
 
 @media (max-width: 1366px) {
   .dash-header {
-    height: 90px;
-  }
-
-  .logo {
     height: 70px;
-    left: 15px;
-  }
-
-  .logo img {
-    height: 60px !important;
-  }
-
-  .dash-header-title {
-    font-size: 20px;
   }
 
   .big-logo {
-    height: 200px;
-  }
-
-  .company-name {
-    font-size: 40px;
+    height: 240px;
   }
 
   .company-slogan {
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
+
+  .main-contact {
+    font-size: 16px;
+  }
+
+  .sub-contact {
     font-size: 14px;
-    letter-spacing: 2px;
-  }
-
-  .dash-footer {
-    padding: 10px;
-    flex-wrap: wrap;
-  }
-
-  .footer-item {
-    font-size: 13px;
-    margin: 0 10px;
-  }
-
-  .footer-separator {
-    display: none;
-  }
-
-  .btn-fullscreen {
-    right: 15px;
   }
 }
 
+/* ==========================================================================
+   BOTÃO FANTASMA
+   ========================================================================== */
 .btn-fullscreen.btn-hidden {
   opacity: 0;
   transform: translateY(-20px);
