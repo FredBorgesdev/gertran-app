@@ -8,7 +8,8 @@
       <h3 class="dash-header-title">CENTRAL DE OPERAÇÕES</h3>
     </div>
 
-    <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen">
+    <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen"
+      [class.btn-hidden]="isFullScreen">
       <i nz-icon [nzType]="isFullScreen ? 'compress' : 'expand'"></i>
       <span class="btn-text">{{ isFullScreen ? 'Sair' : 'Tela Cheia' }}</span>
     </button>
@@ -21,7 +22,6 @@
     </div>
 
     <div class="text-container">
-      <h1 class="company-name">GERTRAN</h1>
       <p class="company-slogan">SEGURANÇA E INTELIGÊNCIA LOGÍSTICA</p>
     </div>
   </div>

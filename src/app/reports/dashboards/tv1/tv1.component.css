@@ -1,25 +1,31 @@
 .moldura {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
   background-color: #f0f2f5;
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  z-index: 9999;
 }
 
 .dash-header {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background: #ededed;
   border-bottom: 1px solid #72849a;
-
   height: 110px;
-  padding: 0 30px 0 160px;
+  padding: 0;
   position: relative;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  z-index: 10;
 }
 
 .logo {
@@ -45,11 +51,9 @@
 }
 
 .header-content {
-  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: 20px;
+  justify-content: center;
   height: 100%;
 }
 
@@ -62,6 +66,7 @@
   letter-spacing: 1px;
   display: flex;
   align-items: center;
+  text-align: center;
 }
 
 .btn-fullscreen {
@@ -71,6 +76,11 @@
   align-items: center;
   background-color: #1890ff;
   border-color: #1890ff;
+  color: #fff;
+  transition: all 0.3s ease;
+  z-index: 20;
+  position: absolute;
+  right: 30px;
 }
 
 .btn-fullscreen i {
@@ -86,11 +96,15 @@
   background: radial-gradient(circle at center, #ffffff 0%, #f0f2f5 100%);
   padding: 20px;
   overflow: hidden;
+  position: relative;
+  min-height: 0;
 }
 
 .logo-container {
   position: relative;
   margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .big-logo {
@@ -100,6 +114,7 @@
   animation: floatLogo 6s ease-in-out infinite;
   position: relative;
   z-index: 2;
+  max-height: 40vh;
 }
 
 .text-container {
@@ -153,6 +168,7 @@
   align-items: center;
   color: #333;
   min-height: 60px;
+  z-index: 5;
 }
 
 .footer-item {
@@ -176,10 +192,8 @@
 }
 
 @media (min-width: 1920px) {
-
   .dash-header {
     height: 140px;
-    padding-left: 200px;
   }
 
   .logo {
@@ -199,10 +213,12 @@
   .btn-fullscreen {
     height: 50px;
     font-size: 20px;
+    right: 40px;
   }
 
   .big-logo {
     height: 500px;
+    max-height: 50vh;
   }
 
   .company-name {
@@ -238,7 +254,6 @@
 @media (max-width: 1366px) {
   .dash-header {
     height: 90px;
-    padding-left: 120px;
   }
 
   .logo {
@@ -280,4 +295,23 @@
   .footer-separator {
     display: none;
   }
+
+  .btn-fullscreen {
+    right: 15px;
+  }
+}
+
+.btn-fullscreen.btn-hidden {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-fullscreen.btn-hidden:hover,
+.dash-header:hover .btn-fullscreen.btn-hidden {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  box-shadow: 0 4px 15px rgba(24, 144, 255, 0.4);
 }
