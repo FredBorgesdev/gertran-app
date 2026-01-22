@@ -13,20 +13,16 @@ import { differenceInMinutes } from "date-fns";
 export class AlertsComponent implements OnInit, OnDestroy {
   @Input() showTitle = true;
 
-  // Dados
   terminals: Terminals[] = [];
   currentTerminal: Terminals;
 
-  // Controle de Dados
-  allAlerts: Alert[] = [];       // Todos os alertas carregados do terminal
-  displayedAlerts: Alert[] = []; // Apenas os 10 que aparecem na tela agora
+  allAlerts: Alert[] = [];
+  displayedAlerts: Alert[] = [];
 
-  // Paginação Automática
   currentPage = 1;
   totalPages = 1;
-  pageSize = 10; // MÁXIMO de linhas por tela (para não cortar na TV)
+  pageSize = 10;
 
-  // Timers
   rotationTimer: any;
   clockTimer: any;
 
@@ -41,14 +37,11 @@ export class AlertsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // 1. Carrega lista de terminais
     this.terminalsService.getAll({}).subscribe((data) => {
       this.terminals = data.results;
-      // Começa o ciclo pelo primeiro
       this.loadNextTerminal();
     });
 
-    // 2. Relógio
     this.clockTimer = setInterval(() => {
       this.currentTime = this.datePipe.transform(new Date(), 'HH:mm:ss');
     }, 1000);
@@ -59,12 +52,9 @@ export class AlertsComponent implements OnInit, OnDestroy {
     clearInterval(this.clockTimer);
   }
 
-  // --- LÓGICA DO CARROSSEL DE PÁGINAS ---
-
   loadNextTerminal(): void {
     if (this.rotationTimer) clearTimeout(this.rotationTimer);
 
-    // Define qual é o próximo terminal da lista
     if (!this.currentTerminal) {
       this.currentTerminal = this.terminals[0];
     } else {
@@ -79,7 +69,6 @@ export class AlertsComponent implements OnInit, OnDestroy {
   fetchAlertsAndStartRotation(): void {
     this.isLoading = true;
 
-    // Busca até 100 alertas (para garantir que pegamos tudo)
     this.alertsService.getAlerts({ limit: 100 }, {
       terminal: this.currentTerminal.id,
       alertType: AlertTypes.terminal,
@@ -88,21 +77,17 @@ export class AlertsComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.allAlerts = data.results.reverse();
 
-        // Calcula quantas páginas esse terminal terá
         this.currentPage = 1;
         this.totalPages = Math.ceil(this.allAlerts.length / this.pageSize);
         if (this.totalPages === 0) this.totalPages = 1;
 
-        // Exibe a primeira página
         this.updateDisplayedPage();
         this.isLoading = false;
 
-        // Agenda a próxima rotação (Página ou Terminal)
         this.scheduleNextStep();
       },
       error: () => {
         this.isLoading = false;
-        // Se der erro, pula para o próximo terminal em 5s
         this.rotationTimer = setTimeout(() => this.loadNextTerminal(), 5000);
       }
     });
@@ -136,10 +121,15 @@ export class AlertsComponent implements OnInit, OnDestroy {
 
   getClass(alert: Alert): string {
     const diffInMinutes = differenceInMinutes(new Date(), new Date(alert.receivedAt));
-    if (diffInMinutes >= 15) return 'danger';
-    if (diffInMinutes >= 10) return 'warning';
+    // Padronização com a tabela de liberação:
+    // Vermelho (> 15 min)
+    if (diffInMinutes >= 15) return 'bg-danger-legend';
+    // Amarelo (> 10 min)
+    if (diffInMinutes >= 10) return 'bg-warning-legend';
+    // Padrão (Branco)
     return '';
   }
+
   toggleFullScreen(): void {
     if (!this.isFullScreen) this.openFullscreen();
     else this.closeFullscreen();

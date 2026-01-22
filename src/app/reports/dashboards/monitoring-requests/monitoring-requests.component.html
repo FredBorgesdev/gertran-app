@@ -5,7 +5,7 @@
     </div>
 
     <div class="header-content">
-      <h3>LIBERAÇÃO</h3>
+      <h3>HISTÓRICO DE LIBERAÇÃO</h3>
     </div>
 
     <button nz-button nzType="primary" (click)="toggleFullScreen()" class="btn-fullscreen"
@@ -20,24 +20,32 @@
       <div class="col-lg-12 col-md-12 col-sm-12 m-b-20">
         <nz-card class="operations-card">
 
-          <div class="d-flex justify-content-start m-b-20" style="align-items: center; gap: 20px;">
+          <div class="d-flex justify-content-end m-b-20" style="align-items: center; gap: 20px;">
+
             <span style="display: flex; align-items: center;">
-              <div class="square bg-danger m-r-5" style="width: 20px; height: 20px; display: inline-block;"></div>
-              Acima de 15 minutos
+              <div class="square m-r-5"
+                style="width: 20px; height: 20px; display: inline-block; background-color: #52c41a; border: 1px solid black;">
+              </div>
+              Aprovado
             </span>
+
+            <span style="display: flex; align-items: center;">
+              <div class="square m-r-5"
+                style="width: 20px; height: 20px; display: inline-block; background-color: red; border: 1px solid black;">
+              </div>
+              Reprovado
+            </span>
+
             <span style="display: flex; align-items: center;">
               <div class="square bg-alert m-r-5"
-                style="width: 20px; height: 20px; display: inline-block; background-color: #faad14;"></div>
-              Acima de 10 minutos
+                style="width: 20px; height: 20px; display: inline-block; background-color: yellow; border: 1px solid black;">
+              </div>
+              > 10 min
             </span>
-            <span style="display: flex; align-items: center;">
-              <div class="square bg-default m-r-5"
-                style="width: 20px; height: 20px; display: inline-block; background-color: #d9d9d9;"></div>
-              No prazo
-            </span>
+
           </div>
 
-          <app-monitoring-requests-table-minimal [underReview]="underReviewResponse"
+          <app-monitoring-requests-table-minimal [underReview]="combinedResponse"
             (handleQueryParamsChange)="handleQueryParamsChange($event, loadUnderReview)"></app-monitoring-requests-table-minimal>
 
         </nz-card>

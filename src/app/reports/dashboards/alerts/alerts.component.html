@@ -5,7 +5,6 @@
     </div>
 
     <div class="header-content">
-
       <h3 class="dash-header-title" *ngIf="showTitle">ALERTAS</h3>
 
       <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="onTerminalChange($event)"
@@ -28,16 +27,12 @@
 
   <nz-card class="content-card">
     <div class="legend-row">
-      <div class="page-indicator" *ngIf="totalPages > 1">
-        EXIBINDO PÁGINA {{ currentPage }} DE {{ totalPages }}
-      </div>
-
       <span class="legend-container">
         <span class="legend-item">
-          <div class="square bg-danger"></div> > 15 min
+          <div class="square bg-danger-legend"></div> > 15 min
         </span>
         <span class="legend-item">
-          <div class="square bg-alert"></div> > 10 min
+          <div class="square bg-warning-legend"></div> > 10 min
         </span>
         <span class="legend-item">
           <div class="square bg-default"></div> No prazo
@@ -62,13 +57,21 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of displayedAlerts" [class]="getClass(item)">
-            <td class="text-center">{{item.vehicle.plate}}</td>
-            <td class="text-center">{{item.customer.tradingName}}</td>
-            <td class="text-center">{{item.position.pointReference}}</td>
-            <td class="text-center">{{item.position.positionInfo.originCity}} -
-              {{item.position.positionInfo.originState}}</td>
-            <td class="text-center">{{item.position.positionInfo.destinyCity}} -
-              {{item.position.positionInfo.destinyState}}</td>
+            <td class="text-center">
+              <strong>{{item.vehicle.plate}}</strong>
+            </td>
+            <td class="text-center">
+              <strong>{{item.customer.tradingName}}</strong>
+            </td>
+            <td class="text-center">
+              <strong>{{item.position.pointReference}}</strong>
+            </td>
+            <td class="text-center">
+              <strong>{{item.position.positionInfo.originCity}} - {{item.position.positionInfo.originState}}</strong>
+            </td>
+            <td class="text-center">
+              <strong>{{item.position.positionInfo.destinyCity}} - {{item.position.positionInfo.destinyState}}</strong>
+            </td>
             <td class="text-center">
               <strong>{{item.message}}</strong> <br>
               <small>{{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</small>

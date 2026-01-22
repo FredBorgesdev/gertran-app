@@ -1,3 +1,4 @@
+/* --- ESTRUTURA GERAL --- */
 .moldura {
   display: flex;
   flex-direction: column;
@@ -5,11 +6,12 @@
   max-height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: #f0f2f5;
+  background-color: white;
   padding: 0;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 999;
 }
 
 .dash-header {
@@ -18,11 +20,12 @@
   align-items: center;
   justify-content: space-between;
   background: #ededed;
-  border-bottom: 1px solid #72849a;
-  margin: 0px 0px 10px 0px;
+  border-bottom: 2px solid #72849a;
+  margin: 0;
   padding: 10px 10px 10px 130px;
   height: 90px;
   position: relative;
+  z-index: 20;
 }
 
 .header-content {
@@ -47,17 +50,16 @@
   width: auto;
   height: 70px;
   border: 1px solid #72849a;
-  border-top: 0px;
   padding: 5px;
   box-shadow: 0px 0px 5px #72849a;
   position: absolute;
-  top: 0px;
+  top: 0;
   left: 20px;
-  z-index: 10;
+  z-index: 30;
 }
 
 .logo img {
-  height: 60px !important;
+  height: 100% !important;
   width: auto !important;
 }
 
@@ -104,48 +106,44 @@
 
 nz-card.content-card {
   flex: 1;
-  margin: 10px 15px 15px 15px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border: none !important;
 }
 
 :host ::ng-deep .ant-card-body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px !important;
+  padding: 0 !important;
   overflow: hidden;
 }
 
 .legend-row {
   flex: 0 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 5px;
+  padding: 5px 15px;
 }
 
 .table-wrapper {
   flex: 1;
   overflow: hidden;
-  border: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
 }
 
 .legend-container {
   font-size: 15px;
   font-weight: bold;
-  text-align: right;
 }
 
-.page-indicator {
-  font-size: 18px;
-  font-weight: 800;
-  color: #1890ff;
-  background: #e6f7ff;
-  border: 1px solid #91d5ff;
-  border-radius: 4px;
-  padding: 4px 15px;
+.legend-item {
+  margin-left: 15px;
 }
 
 .square {
@@ -157,24 +155,23 @@ nz-card.content-card {
   vertical-align: sub;
 }
 
-.bg-alert {
-  background: yellow;
-}
-
 .bg-default {
   background: white;
+  border: 1px solid black;
 }
 
-.bg-danger {
-  background: #eb5a5a;
+.bg-danger-legend {
+  background: red !important;
+  color: white !important;
 }
 
+.bg-warning-legend {
+  background-color: yellow !important;
+  color: black !important;
+}
+
+/* --- TABELA E FONTES --- */
 :host ::ng-deep {
-  nz-table {
-    table-layout: fixed;
-    width: 100%;
-  }
-
   .ant-select-selector {
     height: 40px !important;
     font-size: 16px !important;
@@ -187,9 +184,27 @@ nz-card.content-card {
     margin: 0 10px;
   }
 
+  .custom-table,
+  nz-table {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .custom-table nz-spin-nested-loading,
+  .custom-table .ant-spin-container,
+  .custom-table .ant-table,
+  .custom-table .ant-table-container,
+  .custom-table .ant-table-content,
+  .custom-table table {
+    height: 100% !important;
+    border-collapse: collapse;
+  }
+
+  /* Cabeçalho: 18px */
   nz-table thead th {
-    font-size: 14px !important;
-    padding: 10px 5px !important;
+    font-size: 18px !important;
+    padding: 5px !important;
     background-color: #1890ff !important;
     color: white !important;
     border: 1px solid black !important;
@@ -197,30 +212,55 @@ nz-card.content-card {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 60px;
   }
 
+  /* Linhas do corpo: Padrão Branco, 10% altura */
+  nz-table tbody tr {
+    height: 10% !important;
+    background-color: white !important;
+    /* Branco Padrão */
+  }
+
+  /* Células: 18px */
   nz-table tbody td {
-    font-size: 14px !important;
-    padding: 6px 5px !important;
+    font-size: 18px !important;
+    padding: 0 10px !important;
     font-weight: 600 !important;
     border: 1px solid black !important;
+    /* Borda Preta */
     color: #000 !important;
+    /* Texto Preto Padrão */
     white-space: normal !important;
     word-wrap: break-word !important;
     line-height: 1.1;
     vertical-align: middle;
   }
 
-  nz-table tr {
-    height: 48px !important;
+  /* ESTILOS ESPECÍFICOS PARA LINHAS COLORIDAS */
+
+  /* Vermelho Puro (>15 min) - Texto BRANCO */
+  .custom-table tbody tr.bg-danger-legend td {
+    background: red !important;
+    color: white !important;
+    border-color: black !important;
   }
 
-  .custom-table tr.danger td {
-    background-color: #eb5a5a !important;
+  .custom-table tbody tr.bg-danger-legend strong,
+  .custom-table tbody tr.bg-danger-legend small {
+    color: white !important;
   }
 
-  .custom-table tr.warning td {
-    background-color: yellow !important;
+  /* Amarelo Puro (>10 min) - Texto PRETO (Para leitura) */
+  .custom-table tbody tr.bg-warning-legend td {
+    background: yellow !important;
+    color: black !important;
+    border-color: black !important;
+  }
+
+  .custom-table tbody tr.bg-warning-legend strong,
+  .custom-table tbody tr.bg-warning-legend small {
+    color: black !important;
   }
 }
 
@@ -228,29 +268,10 @@ nz-card.content-card {
   .dash-select {
     width: 400px;
   }
-
-  :host ::ng-deep {
-    nz-table thead th {
-      font-size: 18px !important;
-      padding: 12px !important;
-    }
-
-    nz-table tbody td {
-      font-size: 16px !important;
-      padding: 8px 10px !important;
-    }
-
-    nz-table tr {
-      height: 55px !important;
-    }
-  }
 }
 
+/* --- TELAS GRANDES (26px/24px) --- */
 @media (min-width: 1920px) {
-  .moldura {
-    padding: 15px;
-  }
-
   .dash-header {
     height: 110px;
     padding-left: 170px;
@@ -260,10 +281,6 @@ nz-card.content-card {
   .logo {
     height: 90px;
     left: 20px;
-  }
-
-  .logo img {
-    height: 80px !important;
   }
 
   .dash-header-title {
@@ -285,14 +302,8 @@ nz-card.content-card {
     font-size: 20px;
   }
 
-  .page-indicator {
-    font-size: 24px;
-    padding: 5px 20px;
-  }
-
   .legend-container {
     font-size: 20px;
-    margin-bottom: 15px;
   }
 
   .square {
@@ -307,18 +318,15 @@ nz-card.content-card {
     }
 
     nz-table thead th {
-      font-size: 24px !important;
+      font-size: 26px !important;
       padding: 20px !important;
-      height: 60px !important;
+      height: 80px !important;
     }
 
+    /* Dados Grandes */
     nz-table tbody td {
-      font-size: 22px !important;
-      padding: 10px 15px !important;
-    }
-
-    nz-table tr {
-      height: 75px !important;
+      font-size: 24px !important;
+      padding: 0 15px !important;
     }
   }
 }

@@ -123,16 +123,17 @@ nz-card {
   margin-left: 10px;
 }
 
+/* Cores Padronizadas na Legenda */
 .bg-alert {
-  background: yellow;
+  background-color: yellow !important;
 }
 
 .bg-default {
-  background: white;
+  background-color: white !important;
 }
 
 .bg-danger {
-  background: red;
+  background-color: red !important;
 }
 
 :host ::ng-deep {

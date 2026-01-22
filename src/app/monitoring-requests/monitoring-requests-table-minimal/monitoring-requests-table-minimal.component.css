@@ -1,69 +1,209 @@
+/* --- ESTRUTURA GERAL (Container Fixo) --- */
+.moldura {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 999;
+}
+
 .dash-header {
+  flex: 0 0 auto;
+  height: 90px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: #ededed;
-  border-bottom: 1px solid #72849a;
-  margin: -25px -15px 10px -15px;
-  padding: 10px 10px 10px 130px;
+  border-bottom: 2px solid #72849a;
+  padding: 0 30px 0 130px;
+  position: relative;
+  z-index: 20;
+}
+
+.dash-header h3 {
+  margin: 0;
+  font-weight: bold;
+  font-size: 28px;
+  color: #000;
+  text-transform: uppercase;
 }
 
 .logo {
   background-color: #fff;
-  width: auto;
-  height: 70px;
-  margin-left: 20px;
-  border: 1px solid #72849a;
-  border-top: 0px;
-  border-radius: 0pxx;
+  height: 80px;
   padding: 5px;
+  border: 1px solid #72849a;
   box-shadow: 0px 0px 5px #72849a;
   position: absolute;
-  top: 0px;
-  left: -3px;
+  top: 0;
+  left: 20px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo img {
-  height: 60px !important;
-  width: auto !important;
+  max-height: 100%;
+  width: auto;
 }
 
-.bg-alert {
-  background: yellow;
-  font-weight: bold;
-}
-
-.bg-waiting_for_start {
-  background: green;
-}
-
-.bg-danger {
-  background: #eb5a5a;
-  font-weight: bold;
-}
-
-th.table-header {
-  color: #2a2a2a;
-  font-size: 0.75rem;
-  font-weight: bold;
-  background: #ededed;
-  border: 1px solid #2a2a2a;
-  border-collapse: collapse;
-}
-
-.max-width-cell {
-  max-width: 200px; /* Set your desired maximum width */
+nz-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  border: none !important;
 }
 
-
-.custom-table th,
-.custom-table td {
-  border: 1px solid black;
+:host ::ng-deep .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  height: 100%;
+  overflow: hidden;
 }
 
+.row,
+.col-lg-12,
+.operations-card {
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 
-th, td {
-  font-weight: bold;
+.sub-text {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 4px;
+  font-weight: normal;
+  display: block;
+}
+
+:host ::ng-deep {
+
+  .custom-table,
+  nz-table {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .custom-table nz-spin-nested-loading,
+  .custom-table .ant-spin-container,
+  .custom-table .ant-table,
+  .custom-table .ant-table-container,
+  .custom-table .ant-table-content,
+  .custom-table table {
+    height: 100% !important;
+    border-collapse: collapse;
+  }
+
+  .custom-table thead>tr>th {
+    background: #1890ff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    border: 1px solid #000;
+    height: 60px;
+    font-size: 18px;
+    padding: 5px !important;
+  }
+
+  .custom-table tbody>tr {
+    height: 10% !important;
+
+    background-color: rgb(255, 255, 255);
+  }
+
+  .custom-table tbody>tr>td {
+    /* Borda PRETA em todas as células */
+    border: 1px solid #000 !important;
+
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 10px !important;
+    vertical-align: middle;
+    color: #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .custom-table tbody>tr.bg-danger-legend>td {
+    background: red !important;
+    color: white !important;
+  }
+
+  .custom-table tbody>tr.bg-danger-legend strong,
+  .custom-table tbody>tr.bg-danger-legend span,
+  .custom-table tbody>tr.bg-danger-legend .sub-text {
+    color: white !important;
+  }
+
+  .custom-table tbody>tr.bg-warning-legend>td {
+    background: yellow !important;
+    color: black !important;
+  }
+
+  .custom-table tbody>tr.bg-warning-legend strong,
+  .custom-table tbody>tr.bg-warning-legend span,
+  .custom-table tbody>tr.bg-warning-legend .sub-text {
+    color: black !important;
+  }
+
+  .custom-table tbody>tr.bg-success-legend>td {
+    background: #52c41a !important;
+    color: white !important;
+  }
+
+  .custom-table tbody>tr.bg-success-legend strong,
+  .custom-table tbody>tr.bg-success-legend span,
+  .custom-table tbody>tr.bg-success-legend .sub-text {
+    color: white !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  .dash-header {
+    height: 110px;
+    padding-left: 160px;
+  }
+
+  .dash-header h3 {
+    font-size: 38px;
+  }
+
+  .logo {
+    height: 100px;
+    width: 120px;
+  }
+
+  :host ::ng-deep {
+    .custom-table thead>tr>th {
+      font-size: 24px !important;
+      height: 80px;
+    }
+
+    .custom-table tbody>tr>td {
+      font-size: 22px !important;
+      padding: 0 20px !important;
+    }
+
+    .custom-table tbody>tr>td span {
+      font-size: 0.85em !important;
+    }
+  }
 }
