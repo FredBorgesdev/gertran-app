@@ -2,7 +2,6 @@ import { Component, Input, OnDestroy, OnInit, HostListener } from '@angular/core
 import { Terminals, TerminalsService } from "../../../terminals/terminals.service";
 import { DatePipe } from "@angular/common";
 import { Alert, AlertsService, AlertTypes } from "../../../monitoring/alerts.service";
-import { differenceInMinutes } from "date-fns";
 
 @Component({
   selector: 'app-alerts-page',
@@ -120,13 +119,14 @@ export class AlertsComponent implements OnInit, OnDestroy {
   }
 
   getClass(alert: Alert): string {
-    const diffInMinutes = differenceInMinutes(new Date(), new Date(alert.receivedAt));
-    // Padronização com a tabela de liberação:
-    // Vermelho (> 15 min)
-    if (diffInMinutes >= 15) return 'bg-danger-legend';
-    // Amarelo (> 10 min)
-    if (diffInMinutes >= 10) return 'bg-warning-legend';
-    // Padrão (Branco)
+    const severity = (alert as any).severity;
+
+    if (severity === 'danger') {
+      return 'bg-danger-legend';
+    }
+    if (severity === 'warning') {
+      return 'bg-warning-legend';
+    }
     return '';
   }
 

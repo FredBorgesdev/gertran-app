@@ -1,11 +1,14 @@
 <div class="moldura" #contentDiv>
+
   <div class="dash-header">
     <div class="logo">
       <img src="assets/images/logo/logogertran.png" alt="Gertran">
     </div>
 
     <div class="header-content">
-      <h3 class="dash-header-title" *ngIf="showTitle">ALERTAS</h3>
+      <div class="dash-header-title-box" *ngIf="showTitle">
+        <h3>ALERTAS</h3>
+      </div>
 
       <nz-select class="dash-select" [ngModel]="currentTerminal" (ngModelChange)="onTerminalChange($event)"
         nzPlaceHolder="Selecione o Terminal">
@@ -14,7 +17,7 @@
 
       <div class="clock-wrapper">
         <i nz-icon nzType="clock-circle" nzTheme="outline" class="clock-icon"></i>
-        <h3 class="dash-header-title">{{ currentTime }}</h3>
+        <h3 class="clock-text">{{ currentTime }}</h3>
       </div>
     </div>
 
@@ -25,60 +28,67 @@
     </button>
   </div>
 
-  <nz-card class="content-card">
-    <div class="legend-row">
-      <span class="legend-container">
-        <span class="legend-item">
-          <div class="square bg-danger-legend"></div> > 15 min
-        </span>
-        <span class="legend-item">
-          <div class="square bg-warning-legend"></div> > 10 min
-        </span>
-        <span class="legend-item">
-          <div class="square bg-default"></div> No prazo
-        </span>
-      </span>
-    </div>
+  <div class="content-body">
+    <nz-card class="full-height-card">
 
-    <h4 *ngIf="isLoading" class="text-center">Carregando dados...</h4>
+      <div class="status-bar">
+        <h4 *ngIf="isLoading" class="loading-text">Carregando dados...</h4>
+        <span *ngIf="!isLoading"></span>
 
-    <div class="table-wrapper">
-      <nz-table #table [nzData]="displayedAlerts" [nzFrontPagination]="false" nzBordered [nzShowPagination]="false"
-        class="custom-table">
+        <span class="legend-container">
+          <span class="legend-item">
+            <div class="square" style="background-color: red; border: 1px solid black;"></div> Urgente
+          </span>
+          <span class="legend-item">
+            <div class="square" style="background-color: yellow; border: 1px solid black;"></div> Alerta
+          </span>
+        </span>
+      </div>
+
+      <nz-table #table [nzData]="displayedAlerts" [nzFrontPagination]="false" [nzShowPagination]="false" nzSize="small"
+        nzTableLayout="fixed" class="custom-table full-height-table">
+
         <thead>
           <tr>
-            <th class="text-center" style="width: 8%;">PLACA</th>
-            <th class="text-center" style="width: 12%;">CLIENTE</th>
-            <th class="text-center" style="width: 20%;">POSIÇÃO</th>
-            <th class="text-center" style="width: 12%;">ORIGEM</th>
-            <th class="text-center" style="width: 12%;">DESTINO</th>
-            <th class="text-center" style="width: 36%;">ALERTA</th>
+            <th class="text-center table-header" style="width: 10%;">PLACA</th>
+            <th class="text-center table-header" style="width: 15%;">CLIENTE</th>
+            <th class="text-center table-header" style="width: 18%;">POSIÇÃO</th>
+            <th class="text-center table-header" style="width: 12%;">ORIGEM</th>
+            <th class="text-center table-header" style="width: 12%;">DESTINO</th>
+            <th class="text-center table-header" style="width: 33%;">ALERTA</th>
           </tr>
         </thead>
+
         <tbody>
           <tr *ngFor="let item of displayedAlerts" [class]="getClass(item)">
+            <td class="text-center"><strong>{{item.vehicle?.plate}}</strong></td>
             <td class="text-center">
-              <strong>{{item.vehicle.plate}}</strong>
+              <div class="truncate-cell"><strong>{{item.customer?.tradingName}}</strong></div>
             </td>
             <td class="text-center">
-              <strong>{{item.customer.tradingName}}</strong>
+              <div class="truncate-cell"><strong>{{item.position?.pointReference ?? '-'}}</strong></div>
             </td>
             <td class="text-center">
-              <strong>{{item.position.pointReference}}</strong>
+              <div class="cell-content">
+                <strong>{{item.position?.positionInfo?.originCity ?? '-'}}</strong>
+                <small class="sub-text">{{item.position?.positionInfo?.originState}}</small>
+              </div>
             </td>
             <td class="text-center">
-              <strong>{{item.position.positionInfo.originCity}} - {{item.position.positionInfo.originState}}</strong>
+              <div class="cell-content">
+                <strong>{{item.position?.positionInfo?.destinyCity ?? '-'}}</strong>
+                <small class="sub-text">{{item.position?.positionInfo?.destinyState}}</small>
+              </div>
             </td>
             <td class="text-center">
-              <strong>{{item.position.positionInfo.destinyCity}} - {{item.position.positionInfo.destinyState}}</strong>
-            </td>
-            <td class="text-center">
-              <strong>{{item.message}}</strong> <br>
-              <small>{{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</small>
+              <div class="cell-content">
+                <strong>{{item.message}}</strong>
+                <small class="sub-text">{{ item.receivedAt | date: 'dd/MM/yyyy HH:mm:ss' }}</small>
+              </div>
             </td>
           </tr>
         </tbody>
       </nz-table>
-    </div>
-  </nz-card>
+    </nz-card>
+  </div>
 </div>
