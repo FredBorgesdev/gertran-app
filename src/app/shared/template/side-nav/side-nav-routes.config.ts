@@ -48,6 +48,18 @@ export const ROUTES: SideNavInterface[] = [
         permission: Permissions.MONITORING_VIEW_CHECKLIST
       },
       {
+        path: '/plate-out-grid/details',
+        title: 'Placas fora do grid',
+        iconType: 'nzIcon',
+        iconTheme: 'outline',
+        icon: 'eye',
+        queryParams: {
+          'navbar-closed': true
+        },
+        submenu: [],
+        permission: Permissions.REPORTS_VIEW_COMMANDS_HISTORY_REPORT
+      },
+      {
         path: '',
         title: 'Monitoramento Pessoal',
         iconType: 'nzIcon',
@@ -326,19 +338,19 @@ export const ROUTES: SideNavInterface[] = [
         gertranStaffOnly: true,
         permission: Permissions.GERTRAN_DIRECT_VIEW_GERTRANDIRECT
       },
-      {
-        path: '/plate-out-grid/details',
-        title: 'Placas fora do grid',
-        iconType: 'nzIcon',
-        iconTheme: 'outline',
-        icon: 'eye',
-        queryParams: {
-          'navbar-closed': true
-        },
-        submenu: [],
-        gertranStaffOnly: true,
-        permission: Permissions.MONITORINGREQUESTPLATEOUTGRID_VIEW_GERTRANDIRECT
-      },
+      // {
+      //   path: '/plate-out-grid/details',
+      //   title: 'Placas fora do grid',
+      //   iconType: 'nzIcon',
+      //   iconTheme: 'outline',
+      //   icon: 'eye',
+      //   queryParams: {
+      //     'navbar-closed': true
+      //   },
+      //   submenu: [],
+      //   // gertranStaffOnly: true,
+      //   permission: Permissions.MONITORINGREQUESTPLATEOUTGRID_VIEW_GERTRANDIRECT
+      // },
       {
         path: '/monitoring-request-history/monitoring-request-history',
         title: 'Alterações Solicitação',
