@@ -1,16 +1,16 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import ApiService, {Choice, DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
-import {Observable} from 'rxjs';
-import {Invoice} from './invoices.service';
-import {Customer} from '../customers/customers.service';
-import {Truck} from '../trucks/trucks.service';
-import {Position} from '../monitoring/positions.service';
-import {ArmedGuard} from './armed-guard.service';
-import {Bait} from './baits.service';
-import {Terminals} from '../terminals/terminals.service';
-import {Checklist} from '../checklists/checklists.service';
-import {SharedOperationsItem} from "../customers/shared-operations.service";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import ApiService, { Choice, DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import { Observable } from 'rxjs';
+import { Invoice } from './invoices.service';
+import { Customer } from '../customers/customers.service';
+import { Truck } from '../trucks/trucks.service';
+import { Position } from '../monitoring/positions.service';
+import { ArmedGuard } from './armed-guard.service';
+import { Bait } from './baits.service';
+import { Terminals } from '../terminals/terminals.service';
+import { Checklist } from '../checklists/checklists.service';
+import { SharedOperationsItem } from "../customers/shared-operations.service";
 
 export enum Status {
   DRAFT = 'draft',
@@ -29,7 +29,7 @@ export enum Status {
   IMPORTED_UNAVAILABLE = 'imported_unavailable',
 }
 
-export interface ChecklistSet{
+export interface ChecklistSet {
   reviewedAt: string;
   status: string;
 }
@@ -74,7 +74,7 @@ export interface MonitoringRequests {
     cpf: string;
     cnhNumber: string;
     rg: string;
-    cnhValidity:string;
+    cnhValidity: string;
     cnhCategory: string;
   };
   auxiliaryDriver: {
@@ -122,16 +122,16 @@ export interface MonitoringRequests {
     justification: string;
   };
   ocrNumber: string;
-  user:{
-    id:any,
-    name:any
+  user: {
+    id: any,
+    name: any
   };
   trackerTechnology: {
     id: string;
     name: string;
   };
   operationType: string;
-  branchOffice?: {tradingName:string};
+  branchOffice?: { tradingName: string };
 }
 
 
@@ -158,17 +158,18 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
     toDate?: string;
     customer?: string;
     plate?: string;
+    ordering?: string;
   }): Observable<GetAllResponse<MonitoringRequests>> {
-    if(window.location.pathname == '/reports/dashboards/tc2' || 
-    window.location.pathname == '/reports/dashboards/client' ||
-    window.location.pathname == '/reports/dashboards/tc-gertran' 
+    if (window.location.pathname == '/reports/dashboards/tc2' ||
+      window.location.pathname == '/reports/dashboards/client' ||
+      window.location.pathname == '/reports/dashboards/tc-gertran'
     )
       pagination.limit = 10
 
-    if(window.location.pathname == '/reports/dashboards/tc3')
+    if (window.location.pathname == '/reports/dashboards/tc3')
       pagination.limit = 10
 
-    const params: any = {limit: pagination.limit || DEFAULT_LIMIT};
+    const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
     if (pagination.url) {
       new URL(pagination.url).searchParams.forEach((value, key) => {
         params[key] = value;
@@ -197,7 +198,15 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
       params.plate = filters.plate;
     }
 
-    return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', {params});
+    if (filters?.ordering) {
+      params.ordering = filters.ordering;
+    }
+
+    if (pagination.offset) {
+      params.offset = pagination.offset;
+    }
+
+    return this.http.get<GetAllResponse<MonitoringRequests>>('monitoring/monitoring-requests', { params });
   }
 
   get(id: string): Observable<MonitoringRequests> {
@@ -237,28 +246,28 @@ export class MonitoringRequestsService implements ApiService<MonitoringRequests>
   get possibleStatus(): PossibleStatus {
     return {
       [Status.DRAFT]: [
-        {label: 'Em análise', value: Status.UNDER_REVIEW},
+        { label: 'Em análise', value: Status.UNDER_REVIEW },
       ],
       [Status.UNDER_REVIEW]: [
-        {label: 'Iniciar viagem', value: Status.IN_PROGRESS},
+        { label: 'Iniciar viagem', value: Status.IN_PROGRESS },
         // {label: 'Liberar', value: Status.WAITING_FOR_START},
-        {label: 'Cancelar', value: Status.CANCELED},
-        {label: 'Reprovar', value: Status.REPROVED},
-        {label: 'Finalizar viagem', value: Status.FINISHED},
+        { label: 'Cancelar', value: Status.CANCELED },
+        { label: 'Reprovar', value: Status.REPROVED },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
       ],
       [Status.WAITING_FOR_START]: [
-        {label: 'Iniciar viagem', value: Status.IN_PROGRESS},
-        {label: 'Finalizar viagem', value: Status.FINISHED},
+        { label: 'Iniciar viagem', value: Status.IN_PROGRESS },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
       ],
       [Status.IN_PROGRESS]: [
-        {label: 'Finalizar viagem', value: Status.FINISHED},
+        { label: 'Finalizar viagem', value: Status.FINISHED },
       ],
       [Status.REPROVED]: [
-        {label: 'Solicitar Reavaliação', value: Status.UNDER_REVIEW},
-        {label: 'Finalizar viagem', value: Status.FINISHED},
+        { label: 'Solicitar Reavaliação', value: Status.UNDER_REVIEW },
+        { label: 'Finalizar viagem', value: Status.FINISHED },
       ],
       [Status.FINISHED]: [
-        {label: 'Em andamento', value: Status.IN_PROGRESS},
+        { label: 'Em andamento', value: Status.IN_PROGRESS },
       ]
     };
   }
