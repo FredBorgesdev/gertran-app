@@ -1,0 +1,94 @@
+<nz-spin nzTip="Aguarde..." [nzSpinning]="isLoading">
+    <nz-card>
+        <form [formGroup]="validateForm" class="m-b-10">
+            <div class="row">
+                <div class="col-lg-2 col-md-6 col-sm-12 m-b-10" *ngIf="authService.customerId">
+                    <nz-select nzPlaceHolder="Cliente" formControlName="customer">
+                        <nz-option *ngFor="let customer of authService.user.customer" [nzLabel]="customer.tradingName"
+                            [nzValue]="customer.id"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 m-b-10" *ngIf="!authService.customerId">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cliente" formControlName="customer"
+                        nzSize="small" (nzScrollToBottom)="selectableCustomerService.loadMoreCustomers()"
+                        (nzOnSearch)="selectableCustomerService.searchByName($event)"
+                        [nzDropdownRender]="selectLoading">
+                        <nz-option *ngFor="let customer of selectableCustomerService.customers"
+                            [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+                    <nz-select nzPlaceHolder="Terminais" formControlName="terminal"
+                        (ngModelChange)="onTerminalChange($event)" nzSize="small">
+                        <nz-option *ngFor="let terminal of terminals" [nzLabel]="terminal.name"
+                            [nzValue]="terminal.id"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+        </form>
+
+        <nz-table #table [nzData]="monitoringData" [nzFrontPagination]="false" nzTableLayout="fixed" nzSize="small"
+            [nzTotal]="total" [nzPageIndex]="pageIndex" [nzPageSize]="pageSize"
+            (nzQueryParams)="onQueryParamsChange($event)" [nzLoading]="isLoading" class="no-scroll-table no-hover-row"
+            [nzScroll]="{ x: '1600px', y: 'calc(100vh - 250px)' }">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of monitoringColumns" [nzLeft]="column.nzLeft" [nzWidth]="column.width"
+                        class="text-center" [style]="column.style">
+                        {{ column.title }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of table.data; let i=index; trackBy: trackByMonitoringId"
+                    (dblclick)="goToMonitoringRequest(item.id)">
+                    <td nzLeft class="text-center">{{ ((pageIndex - 1) * pageSize) + i + 1 }}</td>
+                    <td nzLeft>
+                        <div class="d-flex" style="white-space: nowrap;">
+                            <a *ngIf="authService.user.isGertranStaff" class="m-r-5" nz-button nzShape="circle"
+                                nz-tooltip nzTooltipTitle="Aprovação de checklist" style="display: block;"
+                                [style.background-color]="item.checklistReleased?.status == 'approved' ? 'green' : 'red'">
+                                &nbsp;
+                            </a>
+                            <a class="m-r-5" style="display: block; color: black;" nz-button nzShape="circle" nz-tooltip
+                                nzTooltipTitle="Liberações das últimas 72H">
+                                {{ item.quantityReleasedTravels > 0 ? item.quantityReleasedTravels : 0 }}
+                            </a>
+                            <button (click)="goToMonitoringRequest(item.id)" class="m-r-5" nz-button nzType="default"
+                                nz-tooltip nzTooltipTitle="Visualizar" style="color: black;">
+                                <i nz-icon nzType="eye" nzTheme="outline"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td nz-tooltip [nzTooltipTitle]="item.id">{{item.code | id}}</td>
+                    <td class="font-weight-bold text-center">{{ item.vehiclePlate || '-' }}</td>
+                    <td class="text-center">{{ item.wagonsPlates || '-' }}</td>
+                    <td nz-tooltip [nzTooltipTitle]="item.trackerTechnologyName" class="text-center">
+                        <img *ngIf="item.trackerTechnologyName && item.trackerTechnologyName !== 'N/A'"
+                            [src]="'assets/images/brand/200x200/' + item.trackerTechnologyName.toLowerCase() + '.png'"
+                            alt="logo" width="20px" height="20px" style="vertical-align: middle;" />
+                    </td>
+                    <td class="text-center">{{ item.trackerSerialNumber }}</td>
+                    <td nz-tooltip [nzTooltipTitle]="item.baits">{{ item.baits }}</td>
+                    <td>{{ item.ocrNumber || 'N/A' }}</td>
+                    <td>{{ item.company }}</td>
+                    <td>{{ item.driverName || '-' }}</td>
+                    <td>{{ item.updateDiff }}</td>
+                    <td>
+                        <span style="display:block">{{ item.departure | date: 'dd/MM/yyyy' }}</span>
+                        <small>{{ item.departure | date: 'HH:mm' }}</small>
+                    </td>
+                    <td>
+                        <span style="display:block">{{ item.arrival | date: 'dd/MM/yyyy' }}</span>
+                        <small>{{ item.arrival | date: 'HH:mm' }}</small>
+                    </td>
+                    <td nzEllipsis [nzTooltipTitle]="item.lastPosition">{{ item.lastPosition }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </nz-card>
+</nz-spin>
+
+<ng-template #selectLoading>
+    <nz-spin *ngIf="selectableCustomerService.isLoadingMoreData"></nz-spin>
+</ng-template>

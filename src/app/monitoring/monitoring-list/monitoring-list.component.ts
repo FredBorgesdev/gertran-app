@@ -174,7 +174,6 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.refreshAlertCount.subscribe(() => this.setAlertsCount());
     this.refreshPositions.subscribe(() => this.subscribeToMonitoringData());
 
-    // this.refreshMonitoringRequestReleasedAlertCount.subscribe(() => this.loadMonitoringRequestReleasedAlerts())
     this.validateForm = this.formBuilder.group({
       customer: [this.activatedRoute.snapshot.queryParams.customer],
       terminal: [this.activatedRoute.snapshot.queryParams.terminal],
@@ -205,6 +204,10 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
     this.selectableCustomerService.init();
     this.terminalsService.getAll({ limit: 50 }).subscribe(data => {
       this.terminals = data.results;
+      this.terminals.push({
+        id: 'liberacao',
+        name: 'Terminal BH 8 - Liberação',
+      } as any);
     });
   }
 
@@ -272,6 +275,11 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
   }
 
   loadPositions(): void {
+    if (this.validateForm.get('terminal').value === 'liberacao') {
+      this.router.navigate(['/monitoring/liberacao']);
+      return;
+    }
+
     this.router.navigate([], {
       queryParams: {
         customer: this.validateForm.get('customer').value,
@@ -475,12 +483,12 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
           )
 
           const aaa = [...smFilterLostTrackandContingence, ...smFilter, ...reproved];
-          const withPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == true)
-          const withOutPanic = aaa.filter(x=> x.monitoringRequest?.hasPanicButtonAlert == false)
+          const withPanic = aaa.filter(x => x.monitoringRequest?.hasPanicButtonAlert == true)
+          const withOutPanic = aaa.filter(x => x.monitoringRequest?.hasPanicButtonAlert == false)
 
           this.monitoringData = [...withPanic, ...withOutPanic]
 
-        }else{
+        } else {
           this.monitoringData = data.results
         }
 
@@ -527,7 +535,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
         severity,
         terminal: this.validateForm.get('terminal').value,
         customer: this.validateForm.get('customer').value,
-        monitoring_request : monitoring_request
+        monitoring_request: monitoring_request
       },
       nzOkText: 'Fechar',
       nzCancelText: null,
@@ -535,7 +543,7 @@ export class MonitoringListComponent implements OnInit, OnDestroy {
       nzAfterClose: this.refreshAlertCount,
     });
   }
-  
+
 
   openMonitoringRequestReleasedAlertModal(): void {
     this.modal.create({

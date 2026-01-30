@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
-import ApiService, {DEFAULT_LIMIT, GetAllResponse, Pagination} from '../shared/services/api.service';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import ApiService, { DEFAULT_LIMIT, GetAllResponse, Pagination } from '../shared/services/api.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface Tracker {
   id: string;
   trackerId: string;
-  trackerModel: {
-    id: string;
-    name: string;
-    trackerTechnology: {
-      id: string;
-      name: string;
-    }
-  };
+  tracker_id?: string;
+  trackerModel: any;
+  tracker_model?: any;
   isMain: boolean;
+  is_main?: boolean;
   sascarDigit: string;
+  sascar_digit?: string;
 }
 
 @Injectable({

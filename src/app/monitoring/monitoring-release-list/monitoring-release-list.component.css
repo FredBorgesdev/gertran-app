@@ -1,0 +1,25 @@
+:host ::ng-deep .no-hover-row .ant-table-tbody>tr:hover>td {
+    background-color: #4473c5 !important;
+    color: white !important;
+    font-weight: 700;
+}
+
+:host ::ng-deep .no-hover-row .ant-table-tbody>tr>td {
+    background-color: #4473c5;
+    color: white;
+    font-weight: 700;
+    border-bottom: 1px solid white;
+}
+
+:host ::ng-deep .no-hover-row .ant-table-tbody>tr>td.ant-table-cell-fix-left,
+:host ::ng-deep .no-hover-row .ant-table-tbody>tr>td.ant-table-cell-fix-right {
+    background-color: #4473c5;
+    color: white;
+    font-weight: 500;
+}
+
+:host ::ng-deep .no-hover-row .ant-table-tbody>tr:hover>td.ant-table-cell-fix-left,
+:host ::ng-deep .no-hover-row .ant-table-tbody>tr:hover>td.ant-table-cell-fix-right {
+    background-color: #4473c5 !important;
+    font-weight: 500;
+}
