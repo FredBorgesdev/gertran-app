@@ -57,13 +57,29 @@
     </tr>
   </table>
   <br>
-  <h2>Veiculo</h2>
+  <h2>Veículo</h2>
   <table class="custom-bordered-table">
     <tr>
       <th class="first-column">Placa</th>
       <td>{{monitoringRequest?.data?.truck?.vehicle?.plate}}</td>
+      <th class="first-column">Marca</th>
+      <td>{{monitoringRequest?.data?.truck?.vehicle?.manufacturer?.name}}</td>
+    </tr>
+    <tr>
+      <th class="first-column">Modelo</th>
+      <td>{{monitoringRequest?.data?.truck?.vehicle?.vehicleModel?.name}}</td>
+      <th class="first-column">Tipo</th>
+      <td>{{monitoringRequest?.data?.truck?.vehicle?.vehicleModelType?.name}}</td>
+    </tr>
+    <tr>
+      <th class="first-column">Cor</th>
+      <td>{{monitoringRequest?.data?.truck?.vehicle?.color}}</td>
+      <th class="first-column">Ano Fab./Modelo</th>
+      <td>{{monitoringRequest?.data?.truck?.vehicle?.modelYear}}</td>
+    </tr>
+    <tr>
       <th class="first-column">Carretas</th>
-      <td>{{monitoringRequest?.wagonPlates}}</td>
+      <td colspan="3">{{monitoringRequest?.wagonPlates}}</td>
     </tr>
   </table>
   <br>
@@ -96,9 +112,9 @@
       <td>{{monitoringRequest?.ocrNumber}}</td>
       <th>Pesquisa Cadastral Realizada por</th>
       <td>
-        {{ monitoringRequest?.data?.surveyConductedBy === 'others' 
-            ? '(Outros) ' + monitoringRequest?.data?.surveyConductedByOthers 
-            : monitoringRequest?.data?.surveyConductedBy }}
+        {{ monitoringRequest?.data?.surveyConductedBy === 'others'
+        ? '(Outros) ' + monitoringRequest?.data?.surveyConductedByOthers
+        : monitoringRequest?.data?.surveyConductedBy }}
       </td>
     </tr>
     <tr>
@@ -268,13 +284,15 @@
       <div nz-col [nzSpan]="6">
         <nz-form-item>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label class="text-bold">Checklist feito em: {{monitoringRequest?.data?.checklist.reviewedAt | date: 'dd/MM/yyyy'}}</label>
+            <label class="text-bold">Checklist feito em: {{monitoringRequest?.data?.checklist.reviewedAt | date:
+              'dd/MM/yyyy'}}</label>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-control [nzSpan]="null" [nzOffset]="null">
-            <label class="text-bold">Checklist expira em: {{monitoringRequest?.data?.checklist.expirationDate | date: 'dd/MM/yyyy'}}</label>
+            <label class="text-bold">Checklist expira em: {{monitoringRequest?.data?.checklist.expirationDate | date:
+              'dd/MM/yyyy'}}</label>
           </nz-form-control>
         </nz-form-item>
       </div>

@@ -6,8 +6,7 @@
     <br>
   </div>
   <div style="flex-shrink: 0; margin-left: auto;">
-    <img height="100px" src="https://web3.gertran.com.br/assets/images/logo/logogertran.png" alt="Logo"
-      class="logo" />
+    <img height="100px" src="https://web3.gertran.com.br/assets/images/logo/logogertran.png" alt="Logo" class="logo" />
   </div>
 </div>
 
@@ -84,16 +83,31 @@
 
 
 <h2 style="text-align: center;margin-top: 12px; font-weight: bolder;">
-  Veiculo
+  Veículo
 </h2>
-
 
 <table class="custom-bordered-table">
   <tr>
     <th class="first-column">Placa</th>
     <td>{{monitoringRequest?.data?.truck?.vehicle?.plate}}</td>
+    <th class="first-column">Marca</th>
+    <td>{{monitoringRequest?.data?.truck?.vehicle?.manufacturer?.name}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">Modelo</th>
+    <td>{{monitoringRequest?.data?.truck?.vehicle?.vehicleModel?.name}}</td>
+    <th class="first-column">Tipo</th>
+    <td>{{monitoringRequest?.data?.truck?.vehicle?.vehicleModelType?.name}}</td>
+  </tr>
+  <tr>
+    <th class="first-column">Cor</th>
+    <td>{{monitoringRequest?.data?.truck?.vehicle?.color}}</td>
+    <th class="first-column">Ano Fab./Modelo</th>
+    <td>{{monitoringRequest?.data?.truck?.vehicle?.modelYear}}</td>
+  </tr>
+  <tr>
     <th class="first-column">Carretas</th>
-    <td>{{monitoringRequest?.wagonPlates}}</td>
+    <td colspan="3">{{monitoringRequest?.wagonPlates}}</td>
   </tr>
 </table>
 
@@ -111,8 +125,8 @@
     <th class="first-column">Num de serie</th>
   </tr>
   <tr *ngFor="let tracker of monitoringRequest?.data.truck.vehicle.trackers ?? []">
-    <td>{{tracker.trackerModel.trackerTechnology.name}}</td>
-    <td>{{tracker.trackerId}}</td>
+    <td>{{tracker?.trackerModel?.trackerTechnology?.name}}</td>
+    <td>{{tracker?.trackerId}}</td>
   </tr>
 
 </table>
@@ -128,16 +142,16 @@
     <th>Operação</th>
     <td>{{monitoringRequest?.data?.operation?.name}}</td>
     <th>Operação Compartilhada</th>
-    <td>{{monitoringRequest?.data?.sharedOperation?.name}}  {{monitoringRequest?.data?.sharedOperation?.email}}</td>
+    <td>{{monitoringRequest?.data?.sharedOperation?.name}} {{monitoringRequest?.data?.sharedOperation?.email}}</td>
   </tr>
   <tr>
     <th>Ordem de carregamento / OCR</th>
     <td>{{monitoringRequest?.ocrNumber}}</td>
     <th>Pesquisa Cadastral Realizada por</th>
     <td>
-      {{ monitoringRequest?.data?.surveyConductedBy === 'others' 
-          ? '(Outros) ' + monitoringRequest?.data?.surveyConductedByOthers 
-          : monitoringRequest?.data?.surveyConductedBy }}
+      {{ monitoringRequest?.data?.surveyConductedBy === 'others'
+      ? '(Outros) ' + monitoringRequest?.data?.surveyConductedByOthers
+      : monitoringRequest?.data?.surveyConductedBy }}
     </td>
   </tr>
   <tr>

@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MonitoringRequestsService, Status} from '../monitoring-requests.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Terminals, TerminalsService} from '../../terminals/terminals.service';
-import {UtilsService} from '../../shared/services/utils.service';
-import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
+import { Component, Input, OnInit } from '@angular/core';
+import { MonitoringRequestsService, Status } from '../monitoring-requests.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Terminals, TerminalsService } from '../../terminals/terminals.service';
+import { UtilsService } from '../../shared/services/utils.service';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import MonitoringRequest from '../monitoring-request';
-import {ChecklistsService} from '../../checklists/checklists.service';
-import {AuthenticationService} from "../../authentication/authentication.service";
-import { ReportsService,BasePeriodFilter  } from 'src/app/reports/reports.service';
+import { ChecklistsService } from '../../checklists/checklists.service';
+import { AuthenticationService } from "../../authentication/authentication.service";
+import { ReportsService, BasePeriodFilter } from 'src/app/reports/reports.service';
 import { IncidentsModalComponent } from 'src/app/monitoring/incidents-modal/incidents-modal.component';
 import { Position } from 'src/app/monitoring/positions.service';
 
@@ -118,7 +118,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       }
   
       `
-      ],
+    ],
   };
 
   possibleStatus = [];
@@ -213,11 +213,11 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     const toDate = this.formatDate(currentDate);
     return { fromDate, toDate };
   }
-  
+
   formatDate(date) {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = (date.getDate()+1).toString().padStart(2, '0');
+    const day = (date.getDate() + 1).toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
 
@@ -225,24 +225,29 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   loadMonitoringRequest(): void {
     this.isLoading = true;
     this.monitoringRequestService.get(this.monitoringRequestId).subscribe(result => {
-      const {fromDate,toDate} = this.returnRange3Days()
+      const { fromDate, toDate } = this.returnRange3Days();
 
-      if(result?.customer?.id != undefined){
+      if (result?.customer?.id != undefined) {
         const periodFielter: BasePeriodFilter = {
-          from:fromDate,
-          to:toDate,
-          customer:result.customer.id
-        }
+          from: fromDate,
+          to: toDate,
+          customer: result.customer.id
+        };
 
-        
+        // Mantido o comentário original conforme seu arquivo
         // this.reportsService.getVehiclesReleased(periodFielter)
         // .toPromise().then(releasedMonitoringRequests=>{
         //   this.lastReleasedMonitoringRequests = releasedMonitoringRequests
         //   .filter(x=>x.truck.id==result.truck.id && x.id != this.monitoringRequestId)
         // })
       }
-
       this.monitoringRequest = new MonitoringRequest(result);
+
+      if (this.monitoringRequest.data && (this.monitoringRequest.data as any).route_coordinates) {
+        (this.monitoringRequest.data as any).route_coordinates = [];
+      }
+
+
       this.setPossibleStatus();
       this.isLoading = false;
       this.patchFormsValues();
@@ -267,15 +272,15 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       terminal: this.monitoringRequest.data.terminal?.id
     });
 
-    if(this.monitoringRequest.data.status == Status.UNDER_REVIEW){
+    if (this.monitoringRequest.data.status == Status.UNDER_REVIEW) {
       this.checklistForm.patchValue({
-        hasMacro:true,
-        hasEmbeddedIntelligence:true,
+        hasMacro: true,
+        hasEmbeddedIntelligence: true,
         driverDoorChecked: true,
         passengerDoorChecked: true,
-        wagonEngagedChecked:true,
-        panelSensorChecked:true,
-        trunkChecked:true,
+        wagonEngagedChecked: true,
+        panelSensorChecked: true,
+        trunkChecked: true,
         sirenChecked: true,
         blockChecked: true,
         trunkLockChecked: true,
@@ -285,29 +290,29 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
   }
 
   loadTerminals(): void {
-    this.terminalsService.getAll({limit: 999}).subscribe(result => {
+    this.terminalsService.getAll({ limit: 999 }).subscribe(result => {
       this.terminals = result.results;
     });
   }
 
 
-  checkRealease(body): boolean{
-    if(body.terminal == undefined) {
+  checkRealease(body): boolean {
+    if (body.terminal == undefined) {
       alert('Terminal não foi selecionado!')
       return true
     }
 
 
-    if(!body.checklist.allowedTravel){
+    if (!body.checklist.allowedTravel) {
       const releaseTravelIfConfirmed = confirm("Veículo com viagem não autorizada, tem certeza em continuar liberação para viagem? ");
-      if(!releaseTravelIfConfirmed){
+      if (!releaseTravelIfConfirmed) {
         return true
       }
     }
 
-    if(body.checklist.status == 'reproved'){
+    if (body.checklist.status == 'reproved') {
       const releaseTravelIfConfirmed = confirm("Veículo com status de checklist reprovado, tem certeza em continuar liberação para viagem?");
-      if(!releaseTravelIfConfirmed){
+      if (!releaseTravelIfConfirmed) {
         return true
       }
     }
@@ -332,8 +337,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
 
 
-    if(status == Status.WAITING_FOR_START){
-      if(this.checkRealease(body)) return
+    if (status == Status.WAITING_FOR_START) {
+      if (this.checkRealease(body)) return
 
     }
 
@@ -342,7 +347,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       this.monitoringRequest.data.travelStatus === 'none'
     ) {
 
-      if(this.checkRealease(body)) return
+      if (this.checkRealease(body)) return
 
       body.travelStatus = 'in_progress';
     }
@@ -372,7 +377,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
     return this.monitoringRequestService.release(this.monitoringRequest.data.id, body).toPromise().then(() => {
       this.message.success('Status atualizado com sucesso.');
       this.isLoading = false;
-      this.modal.destroy({updateList: true});
+      this.modal.destroy({ updateList: true });
     }).catch(() => {
       this.message.error('Não foi possível atualizar o status.');
       this.isLoading = false;
@@ -384,7 +389,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       if (this.monitoringRequest?.data?.status === Status.REPROVED) {
         this.possibleStatus = this.monitoringRequestService.possibleStatus[
           this.monitoringRequest?.data?.status
-          ];
+        ];
       }
 
       return;
@@ -392,21 +397,21 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
 
     this.possibleStatus = this.monitoringRequestService.possibleStatus[
       this.monitoringRequest?.data?.status
-      ] || [];
+    ] || [];
   }
 
 
-  getLocalInstalaition(vehicleInstalation): String{
-    if(vehicleInstalation == 'truck')
+  getLocalInstalaition(vehicleInstalation): String {
+    if (vehicleInstalation == 'truck')
       return 'Cavalo'
-    if(vehicleInstalation=='wagon')
+    if (vehicleInstalation == 'wagon')
       return 'Carreta'
-    if(vehicleInstalation=='load')
+    if (vehicleInstalation == 'load')
       return 'Carga'
   }
-  
+
   openIncidentsModal(): void {
-    
+
     const item: Position = {
       monitoringRequest: {
         id: this.monitoringRequest.data.id,
@@ -414,7 +419,7 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
         travelSteps: [],
         travelStatus: '',
         status: '',
-        hasPanicButtonAlert:false,
+        hasPanicButtonAlert: false,
       },
       id: '',
       ignition: false,
@@ -461,8 +466,8 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       nzContent: IncidentsModalComponent,
       nzWidth: '80%',
       nzComponentParams: {
-        position:item,
-        blank:true
+        position: item,
+        blank: true
       },
     });
   }
