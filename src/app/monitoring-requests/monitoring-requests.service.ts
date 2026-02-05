@@ -41,6 +41,7 @@ export interface MonitoringRequests {
   releasedAt: string;
   publishedAt: string;
   createdAt: string;
+  vehicleManufacturer?: string;
   loadingOrders: {
     id: string;
     ocrNumber: string;

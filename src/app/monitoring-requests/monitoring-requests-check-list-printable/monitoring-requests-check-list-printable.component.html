@@ -91,7 +91,8 @@
     <th class="first-column">Placa</th>
     <td>{{monitoringRequest?.data?.truck?.vehicle?.plate}}</td>
     <th class="first-column">Marca</th>
-    <td>{{monitoringRequest?.data?.truck?.vehicle?.manufacturer?.name}}</td>
+    <td>{{monitoringRequest?.data?.vehicleManufacturer ||
+      monitoringRequest?.data?.truck?.vehicle?.vehicleModel?.manufacturer?.name || '-'}}</td>
   </tr>
   <tr>
     <th class="first-column">Modelo</th>
