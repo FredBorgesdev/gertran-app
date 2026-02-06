@@ -1,27 +1,27 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {RoutesService} from '../../routes/routes.service';
-import {BLANK_ROUTE} from '../routes-modal/routes-modal.component';
-import {ActivatedRoute} from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { RoutesService } from '../../routes/routes.service';
+import { BLANK_ROUTE } from '../routes-modal/routes-modal.component';
+import { ActivatedRoute } from '@angular/router';
 import polyline from '@mapbox/polyline';
 
-import {MapModalComponent} from '../map-modal/map-modal.component';
-import {environment} from '../../../environments/environment';
-import {addSeconds, differenceInDays, differenceInHours, format, setHours} from 'date-fns';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { MapModalComponent } from '../map-modal/map-modal.component';
+import { environment } from '../../../environments/environment';
+import { addSeconds, differenceInDays, differenceInHours, format, setHours } from 'date-fns';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {Choice} from '../../shared/services/api.service';
-import {PointTypes, Stop, StopsService} from '../../stops/stops.service';
-import {TravelStepService} from '../travel-step.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {forkJoin} from 'rxjs';
-import {DirectionsService} from '../../shared/services/directions.service';
-import {MonitoringRequests} from '../monitoring-requests.service';
-import {SelectablePointService} from "../../stops/selectable-point.service";
-import {googlePlacesOptions} from "../../shared/data/google-places-options";
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { Choice } from '../../shared/services/api.service';
+import { PointTypes, Stop, StopsService } from '../../stops/stops.service';
+import { TravelStepService } from '../travel-step.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { forkJoin } from 'rxjs';
+import { DirectionsService } from '../../shared/services/directions.service';
+import { MonitoringRequests } from '../monitoring-requests.service';
+import { SelectablePointService } from "../../stops/selectable-point.service";
+import { googlePlacesOptions } from "../../shared/data/google-places-options";
 import brazilianStates from "../../shared/data/brazilian-states";
-import {AddressSelectComponent} from "../../shared/address-select/address-select.component";
+import { AddressSelectComponent } from "../../shared/address-select/address-select.component";
 
 interface LatLng {
   lat: number;
@@ -74,7 +74,7 @@ export class PointsTabComponent implements OnInit {
     this._routeCoordinates = this.monitoringRequest.routeCoordinates;
 
     this.isLoading = true;
-    this.service.getAll({limit: 50}, this.monitoringRequest.id).subscribe((points) => {
+    this.service.getAll({ limit: 50 }, this.monitoringRequest.id).subscribe((points) => {
       points.results.forEach((point) => {
         const formGroup = this.addPoint();
         const pointWithDate = {
@@ -84,7 +84,7 @@ export class PointsTabComponent implements OnInit {
         formGroup.patchValue(pointWithDate);
       });
 
-      const {firstPoint, waypoints, lastPoint} = this.setPointsCorrectTypes();
+      const { firstPoint, waypoints, lastPoint } = this.setPointsCorrectTypes();
       this.validateForm.patchValue({
         points: [
           firstPoint?.value,
@@ -98,7 +98,7 @@ export class PointsTabComponent implements OnInit {
       this.message.error('Erro ao carregar paradas');
     });
 
-    const {routeId} = this.activatedRoute.snapshot.queryParams || {};
+    const { routeId } = this.activatedRoute.snapshot.queryParams || {};
     if (!routeId || routeId === BLANK_ROUTE.id) {
       return;
     }
@@ -199,16 +199,21 @@ export class PointsTabComponent implements OnInit {
       nominatimAddress.address.village ||
       nominatimAddress.address.municipality ||
       nominatimAddress.address.state;
-      const stateObj = brazilianStates.find(
-        ({ name }) => name === nominatimAddress.address.state
-      );
-      const state = stateObj ? stateObj.abbreviation : 'XX'; // Valor padrão 'XX' caso não encontre o estado.
+
+    const stateObj = brazilianStates.find(
+      ({ name }) => name === nominatimAddress.address.state
+    );
+    let state = stateObj ? stateObj.abbreviation : 'XX'; // Valor padrão 'XX' caso não encontre o estado.
 
     const latValue = nominatimAddress.lat ?? nominatimAddress.latitude;
     const lonValue = nominatimAddress.lon ?? nominatimAddress.longitude;
     const latitude = Number(latValue).toFixed(6);
     const longitude = Number(lonValue).toFixed(6);
     const zipCode = nominatimAddress.address.postcode;
+
+    if (state === 'XX' && Number(latitude) <= -17.80 && Number(latitude) >= -21.40) {
+      state = 'ES';
+    }
 
     formGroup.patchValue({
       latitude,
@@ -217,6 +222,8 @@ export class PointsTabComponent implements OnInit {
       city,
       zipCode,
     });
+
+    formGroup.get('state').markAsDirty();
 
     this._routeCoordinates = (await this.getRouteCoordinates()).coordinates;
     this.calculateEtaForAllPoints().then();
@@ -237,16 +244,16 @@ export class PointsTabComponent implements OnInit {
     const firstPoint = pointControls.find(
       (formGroup) => formGroup.value.pointType === 'start'
     ) || pointControls[0];
-    const lastPoint =  pointControls[pointControls.length - 1];
+    const lastPoint = pointControls[pointControls.length - 1];
     const waypoints = pointControls.slice(1, pointControls.length - 1);
 
-    firstPoint?.patchValue({pointType: PointTypes.START});
+    firstPoint?.patchValue({ pointType: PointTypes.START });
     waypoints?.forEach((point) => {
-      point.patchValue({pointType: PointTypes.WAYPOINT});
+      point.patchValue({ pointType: PointTypes.WAYPOINT });
     });
 
-    if(pointControls.length > 1){
-      lastPoint?.patchValue({pointType: PointTypes.END});
+    if (pointControls.length > 1) {
+      lastPoint?.patchValue({ pointType: PointTypes.END });
     }
 
     return {
@@ -277,8 +284,8 @@ export class PointsTabComponent implements OnInit {
       // }
 
       const eta = await this.calculateETA(
-        {lat: previousPoint.value.latitude, lng: previousPoint.value.longitude},
-        {lat: currentPoint.value.latitude, lng: currentPoint.value.longitude},
+        { lat: previousPoint.value.latitude, lng: previousPoint.value.longitude },
+        { lat: currentPoint.value.latitude, lng: currentPoint.value.longitude },
       );
 
       // if (!eta) {
@@ -313,7 +320,7 @@ export class PointsTabComponent implements OnInit {
       });
       directions.setOrigin([origin.lng, origin.lat]);
       directions.setDestination([destination.lng, destination.lat]);
-      directions.on('route', ({route}) => {
+      directions.on('route', ({ route }) => {
         resolve(route[0]?.duration);
       });
     });
