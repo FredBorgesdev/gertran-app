@@ -243,11 +243,6 @@ export class MonitoringRequestsCheckListComponent implements OnInit {
       }
       this.monitoringRequest = new MonitoringRequest(result);
 
-      if (this.monitoringRequest.data && (this.monitoringRequest.data as any).route_coordinates) {
-        (this.monitoringRequest.data as any).route_coordinates = [];
-      }
-
-
       this.setPossibleStatus();
       this.isLoading = false;
       this.patchFormsValues();
