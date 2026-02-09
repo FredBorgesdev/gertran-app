@@ -12,6 +12,26 @@ export interface BaseDdrFilter {
   ddr: string;
 }
 
+export interface InsuranceCompanyReportFilter {
+  insuranceCompany?: string;
+  broker?: string;
+  customer?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export interface InsuranceCompanyReportItem {
+  id: string;
+  tradingName: string;
+  cnpj: string;
+  corporateName: string;
+  insuranceCompanyName: string;
+  brokerName: string;
+  validityStart: string;
+  lastUpdate: string;
+  contactInfo: string;
+}
+
 export interface MobilePictures {
   id: string;
   latitude: string,
@@ -817,5 +837,28 @@ export class ReportsService {
 
     const params = new HttpParams({ fromObject });
     return this.http.get<any[]>('reports/monitoring/dailysummary?1=1', { params });
+  }
+
+  getInsuranceCompanyReport(filters: InsuranceCompanyReportFilter): Observable<InsuranceCompanyReportItem[]> {
+    const fromObject: Record<string, string> = {};
+
+    if (filters.insuranceCompany) {
+      fromObject.insurance_company = filters.insuranceCompany;
+    }
+    if (filters.broker) {
+      fromObject.broker = filters.broker;
+    }
+    if (filters.customer) {
+      fromObject.customer = filters.customer;
+    }
+    if (filters.startDate) {
+      fromObject.start_date = filters.startDate;
+    }
+    if (filters.endDate) {
+      fromObject.end_date = filters.endDate;
+    }
+
+    const params = new HttpParams({ fromObject });
+    return this.http.get<InsuranceCompanyReportItem[]>('reports/insurance-companies/list?1=1', { params });
   }
 }

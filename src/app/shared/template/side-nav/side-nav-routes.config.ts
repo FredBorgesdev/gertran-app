@@ -582,6 +582,14 @@ export const ROUTES: SideNavInterface[] = [
           //   icon: 'line-chart',
           //   submenu: []
           // },
+          {
+            path: '/reports/insurance-report',
+            title: 'Seguradoras e Corretoras',
+            iconType: 'nzIcon',
+            iconTheme: 'outline',
+            icon: 'bar-chart',
+            submenu: [],
+          },
         ]
       },
       {

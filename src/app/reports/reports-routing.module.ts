@@ -47,6 +47,7 @@ import { WorkdayEmployedComponent } from './workday-employed/workday-employed.co
 import { MobilePictureComponent } from './mobile-pictures/mobile-picture.component';
 import { AutomationsReportComponent } from './automations/automations.component';
 import { DdrReportComponent } from './ddrs/ddrs-report.component';
+import { InsuranceReportComponent } from './insurance-report/insurance-report.component';
 
 const routes: Routes = [
   {
@@ -279,6 +280,10 @@ const routes: Routes = [
   {
     path: 'ddr',
     component: DdrReportComponent
+  },
+  {
+    path: 'insurance-report',
+    component: InsuranceReportComponent
   },
 ];
 

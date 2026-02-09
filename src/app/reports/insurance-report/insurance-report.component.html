@@ -1,0 +1,130 @@
+<nz-spin [nzSpinning]="isLoading">
+    <div class="pages-header">
+        <div class="row m-b-10">
+            <div class="col-lg-9 col-md-8 col-sm-12">
+                <div class="d-md-flex">
+                    <div class="m-r-20">
+                        <h2>RELATÓRIO DE SEGURADORAS</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 text-right">
+                <img src="assets/images/logo/logogertran.png" alt="Gertran Gerenciamento de Riscos"
+                    class="header-logo" />
+            </div>
+        </div>
+    </div>
+
+    <nz-card>
+        <form [formGroup]="validateForm" nz-form nzLayout="vertical" class="m-t-10">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+                    <nz-form-item class="m-b-0">
+                        <nz-form-label>Seguradora</nz-form-label>
+                        <nz-form-control>
+                            <nz-select formControlName="insuranceCompany" nzAllowClear nzShowSearch
+                                nzPlaceHolder="Selecione uma seguradora">
+                                <nz-option *ngFor="let ic of insuranceCompanies" [nzLabel]="ic.name"
+                                    [nzValue]="ic.id"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+                    <nz-form-item class="m-b-0">
+                        <nz-form-label>Corretora</nz-form-label>
+                        <nz-form-control>
+                            <nz-select formControlName="broker" nzAllowClear nzShowSearch
+                                nzPlaceHolder="Selecione uma corretora">
+                                <nz-option *ngFor="let br of brokers" [nzLabel]="br.name" [nzValue]="br.id"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+                    <nz-form-item class="m-b-0">
+                        <nz-form-label>Cliente</nz-form-label>
+                        <nz-form-control>
+                            <nz-select formControlName="customer" nzAllowClear nzShowSearch nzServerSearch
+                                nzPlaceHolder="Selecione um cliente"
+                                (nzOnSearch)="selectableCustomerService.searchByName($event)">
+                                <nz-option *ngFor="let customer of selectableCustomerService.customers"
+                                    [nzLabel]="customer.tradingName" [nzValue]="customer.id"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+                    <nz-form-item class="m-b-0">
+                        <nz-form-label>Período de Vigência</nz-form-label>
+                        <nz-form-control>
+                            <nz-range-picker [(ngModel)]="dateRange" [ngModelOptions]="{ standalone: true }"
+                                nzFormat="dd/MM/yyyy" (ngModelChange)="onDateRangeChange($event)"
+                                style="width: 100%;"></nz-range-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <div class="row m-t-5">
+                <div class="col-lg-3 col-md-6 col-sm-12 m-b-10">
+                    <nz-form-item class="m-b-0">
+                        <nz-form-label>Pesquisar</nz-form-label>
+                        <nz-form-control>
+                            <nz-input-group nzPrefixIcon="search">
+                                <input nz-input placeholder="Buscar na tabela..." [ngModel]="searchValue"
+                                    [ngModelOptions]="{ standalone: true }" (ngModelChange)="onSearch($event)" />
+                            </nz-input-group>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+
+        <div class="page-buttons m-t-10">
+            <button nz-button (click)="generatePdf()">Gerar PDF</button>
+            <button nz-button (click)="generateExcel()">Gerar Planilha</button>
+            <button nz-button nzType="primary" (click)="generateReport()">Gerar Relatório</button>
+        </div>
+
+        <div class="applied-filters m-t-15 m-b-10" *ngIf="appliedFiltersText">
+            <span class="filters-label">Filtros aplicados:</span> {{ appliedFiltersText }}
+        </div>
+
+        <nz-table #reportTable [nzData]="filteredData" nzBordered class="m-t-10" [nzFrontPagination]="true"
+            [nzPageSize]="50" nzSize="small">
+            <thead>
+                <tr>
+                    <th class="report-header">Transportador</th>
+                    <th class="report-header">CNPJ</th>
+                    <th class="report-header">Razão Social</th>
+                    <th class="report-header">Seguradora</th>
+                    <th class="report-header">Corretora</th>
+                    <th class="report-header">Início Vigência</th>
+                    <th class="report-header">Atualizado Em</th>
+                    <th class="report-header">Contato</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of reportTable.data">
+                    <td>{{ safeValue(row.tradingName) }}</td>
+                    <td>{{ formatCnpj(row.cnpj) }}</td>
+                    <td>{{ safeValue(row.corporateName) }}</td>
+                    <td>{{ safeValue(row.insuranceCompanyName) }}</td>
+                    <td>{{ safeValue(row.brokerName) }}</td>
+                    <td>{{ safeValue(row.validityStart) }}</td>
+                    <td>{{ safeValue(row.lastUpdate) }}</td>
+                    <td>{{ safeValue(row.contactInfo) }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <div class="report-footer m-t-20" *ngIf="filteredData.length > 0">
+            <span class="footer-left">Gerado em: {{ today | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span class="footer-right">Usuário: {{ authService.user.name | uppercase }}</span>
+        </div>
+    </nz-card>
+</nz-spin>
