@@ -5,14 +5,14 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import {BaseWorkdayFilter} from '../../reports.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
-import {SelectableCustomerServiceService} from '../../../customers/selectable-customer-service.service';
-import {XlsxExporterService} from '../../../shared/services/xlsx-exporter.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {format, subMonths} from 'date-fns';
-import {SelectableDriversService} from '../../../drivers/selectable-drivers.service';
+import { BaseWorkdayFilter } from '../../reports.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
+import { SelectableCustomerServiceService } from '../../../customers/selectable-customer-service.service';
+import { XlsxExporterService } from '../../../shared/services/xlsx-exporter.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { format, subMonths } from 'date-fns';
+import { SelectableDriversService } from '../../../drivers/selectable-drivers.service';
 import autoTable from 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
@@ -38,7 +38,7 @@ export class BaseWorkdayFilterComponent implements OnInit {
   @Input() showExtraFields: boolean = true;
 
   hoursMask = [/[0-2]/, /[0-9]/, ':', /[0-5]/, /[0-9]/];
-  selectedDriverName: any|null;
+  selectedDriverName: any | null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,7 +67,7 @@ export class BaseWorkdayFilterComponent implements OnInit {
       driver: [null, []],
       nightShiftStart: [null, []],
       nightShiftEnd: [null, []],
-      reportFormat: ['analytic', [Validators.required]],
+      reportFormat: ['synthetic', [Validators.required]],
     });
 
     this.validateForm.valueChanges.subscribe(() => {
@@ -109,12 +109,12 @@ export class BaseWorkdayFilterComponent implements OnInit {
       return;
     }
 
-    this.selectableTrucksService.loadMoreTrucks({customerId});
+    this.selectableTrucksService.loadMoreTrucks({ customerId });
   }
 
-  getFilterSelectedDataDriverCustomer():void{
+  getFilterSelectedDataDriverCustomer(): void {
     this.emitGetFilterSelectedDataDriverCustomer.emit({
-      driver:this.validateForm.value.driver,
+      driver: this.validateForm.value.driver,
       customer: this.validateForm.value.customer,
     })
   }
@@ -123,7 +123,7 @@ export class BaseWorkdayFilterComponent implements OnInit {
     const fromDate = format(this.validateForm.controls.from.value, 'yyyy-MM-dd');
     const toDate = format(this.validateForm.controls.to.value, 'yyyy-MM-dd');
     this.emitGetFilterSelectedDataDriverCustomerDate.emit({
-      driver:this.validateForm.value.driver,
+      driver: this.validateForm.value.driver,
       customer: this.validateForm.value.customer,
       fromDate: fromDate,
       toDate: toDate,
@@ -150,12 +150,12 @@ export class BaseWorkdayFilterComponent implements OnInit {
     const fileNameWithCustomer = `${this.fileName} - ${this.customerName}`;
 
     let dataToExcel = []
-    if (this.validateForm.controls.reportFormat.value === 'analytic'){
+    if (this.validateForm.controls.reportFormat.value === 'analytic') {
       for (let i = 0; i < this.rows.length; i++) {
         dataToExcel.push({
-          'id':this.rows[i].id,
-          'data/hora':this.rows[i].startedAt,
-          'status': this.rows[i].status ,
+          'id': this.rows[i].id,
+          'data/hora': this.rows[i].startedAt,
+          'status': this.rows[i].status,
           'origem': (this.rows[i].positionEvent ? this.rows[i].positionEvent.eventDescription : 'Registrado pelo Sistema').replace(/\n/g, ''),
           'motorista': this.rows[i].driver.name,
           'veículo': this.rows[i].vehicle.plate
@@ -163,7 +163,7 @@ export class BaseWorkdayFilterComponent implements OnInit {
       }
       this.xlsxExporterService.generate(fileNameWithCustomer, dataToExcel);
 
-    }else{
+    } else {
       this.xlsxExporterService.generate(fileNameWithCustomer, this.rows)
     }
   }
@@ -174,7 +174,7 @@ export class BaseWorkdayFilterComponent implements OnInit {
     const toDate = format(this.validateForm.controls.to.value, 'dd/MM/yyyy');
 
     this.generatePDF2.emit({
-      name: this.selectedDriverName, 
+      name: this.selectedDriverName,
       from: fromDate,
       to: toDate
     });
@@ -189,7 +189,7 @@ export class BaseWorkdayFilterComponent implements OnInit {
       didDrawPage: (data) => {
         doc.addImage('assets/images/logo/logogertran.png', 'PNG', 80, 10, 50, 50);
       },
-      margin: {top: 70},
+      margin: { top: 70 },
       columnStyles: {
         0: {
           cellWidth: 30,
@@ -211,5 +211,5 @@ export class BaseWorkdayFilterComponent implements OnInit {
         (customer) => customer.id === this.validateForm.controls.customer.value
       )?.tradingName;
   }
-  
+
 }

@@ -631,16 +631,19 @@ export class ReportsService {
   }
 
   getWorkdayHistorySynthetic(form: BaseWorkdayFilter): Observable<Workday[]> {
-    const params = new HttpParams({
-      fromObject: {
-        from_date: form.from,
-        to_date: form.to,
-        customer: form.customer,
-        driver: form.driver,
-        end_night_shift: form.nightShiftEnd,
-        start_night_shift: form.nightShiftStart
-      }
-    });
+    const fromObject: any = {
+      from_date: form.from,
+      to_date: form.to,
+      customer: form.customer,
+      driver: form.driver,
+    };
+    if (form.nightShiftEnd) {
+      fromObject.end_night_shift = form.nightShiftEnd;
+    }
+    if (form.nightShiftStart) {
+      fromObject.start_night_shift = form.nightShiftStart;
+    }
+    const params = new HttpParams({ fromObject });
 
     return this.http.get<Workday[]>('reports/workdays/synthetic?1=1', { params });
   }

@@ -34,6 +34,8 @@ import { WorkdayJustificationComponent } from './extra/workday-justification/wor
 import { LogisticReportComponent } from './logistic-report/logistic-report.component';
 import { NgChartsModule } from 'ng2-charts';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { environment } from '../../environments/environment';
 import { SimpleHourPipe } from './pipes/simple-hour.pipe';
@@ -148,6 +150,8 @@ import { InsuranceReportComponent } from './insurance-report/insurance-report.co
     ReportsRoutingModule,
     NgChartsModule,
     NzStatisticModule,
+    NzCollapseModule,
+    NzTagModule,
     NgxMapboxGLModule.withConfig({
       accessToken: environment.mapboxAccessToken,
     }),

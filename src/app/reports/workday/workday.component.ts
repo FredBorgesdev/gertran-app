@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {BaseWorkdayFilter, ReportsService} from '../reports.service';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {WorkdayJustificationComponent} from '../extra/workday-justification/workday-justification.component';
+import { Component, OnInit } from '@angular/core';
+import { BaseWorkdayFilter, ReportsService } from '../reports.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { WorkdayJustificationComponent } from '../extra/workday-justification/workday-justification.component';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable'; 
+import autoTable from 'jspdf-autotable';
 import { WorkdayService, Workday as WorkdayPolicy } from '../../workdays/workday.service';
 import { AuthenticationService } from '../../authentication/authentication.service';
 
@@ -41,6 +41,7 @@ export class WorkdayComponent implements OnInit {
   isLoading = false;
   workdayRows: any[] = [];
   reportFormat = 'synthetic';
+  syntheticTotals: any = {};
   summary: { violations: number; days: number; weeklyViolations: number } = { violations: 0, days: 0, weeklyViolations: 0 };
   private policy: WorkdayPolicy | null = null;
   private customerId: string | null = null;
@@ -67,43 +68,46 @@ export class WorkdayComponent implements OnInit {
   }
 
   adjustHours(hoursString: string): string {
+    if (!hoursString) {
+      return '00:00:00';
+    }
     const parts = hoursString.split(' ');
-    
+
     let totalSeconds = 0;
-  
+
     if (parts.length === 2) {
       const days = parseInt(parts[0], 10);
-      const timeParts = parts[1].split(':'); 
-  
+      const timeParts = parts[1].split(':');
+
       const hours = parseInt(timeParts[0], 10);
       const minutes = parseInt(timeParts[1], 10);
       const seconds = parseInt(timeParts[2], 10);
-  
+
       totalSeconds += days * 24 * 3600;
-      totalSeconds += hours * 3600; 
-      totalSeconds += minutes * 60; 
-      totalSeconds += seconds; 
+      totalSeconds += hours * 3600;
+      totalSeconds += minutes * 60;
+      totalSeconds += seconds;
     } else if (parts.length === 1) {
       const timeParts = parts[0].split(':');
       const hours = parseInt(timeParts[0], 10);
       const minutes = parseInt(timeParts[1], 10);
       const seconds = parseInt(timeParts[2], 10);
-  
+
       totalSeconds += hours * 3600;
       totalSeconds += minutes * 60;
       totalSeconds += seconds;
     }
-  
+
     const adjustedHours = Math.floor(totalSeconds / 3600);
     const adjustedMinutes = Math.floor((totalSeconds % 3600) / 60);
     const adjustedSeconds = totalSeconds % 60;
-  
+
     return `${String(adjustedHours).padStart(2, '0')}:${String(adjustedMinutes).padStart(2, '0')}:${String(adjustedSeconds).padStart(2, '0')}`;
   }
-  
+
   groupByDate(workdays: any[]): { date: string; records: any[] }[] {
     const grouped: { [key: string]: any[] } = {};
-  
+
     workdays.forEach((workday) => {
       const date = new Date(workday.startedAt).toLocaleDateString('pt-BR');
       if (!grouped[date]) {
@@ -111,13 +115,21 @@ export class WorkdayComponent implements OnInit {
       }
       grouped[date].push(workday);
     });
-  
+
     return Object.keys(grouped).map((date) => ({ date, records: grouped[date] }));
   }
-  
+
   generateReport(form: BaseWorkdayFilter): void {
     this.isLoading = true;
+    this.reportFormat = form.reportFormat || this.reportFormat;
     const isAnalytic = this.reportFormat === 'analytic';
+
+    // Validação: motorista obrigatório para ambos formatos
+    if (!form.driver) {
+      this.isLoading = false;
+      this.message.error('Selecione um motorista para gerar o relatório');
+      return;
+    }
 
     const getReport = isAnalytic ?
       this.reportsService.getWorkdayHistoryAnalytical.bind(this.reportsService) :
@@ -130,6 +142,9 @@ export class WorkdayComponent implements OnInit {
       const rows = isAnalytic ? workdays : this.formatSyntheticReport(workdays);
       this.workdayRows = isAnalytic || !this.policy ? rows : this.applyPolicy(rows, this.policy);
       this.summary = this.buildSummary(this.workdayRows);
+      if (!isAnalytic) {
+        this.syntheticTotals = this.calculateTotals(this.workdayRows);
+      }
       this.isLoading = false;
     };
 
@@ -158,7 +173,7 @@ export class WorkdayComponent implements OnInit {
   }
 
 
-  alaliticalReport(event): void{
+  alaliticalReport(event): void {
     const doc = new jsPDF('landscape');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -166,38 +181,38 @@ export class WorkdayComponent implements OnInit {
     const headerStartY = 10;
     const logoWidth = 50;
     const logoHeight = 20;
-    const divWidth = pageWidth - logoWidth - 20; 
+    const divWidth = pageWidth - logoWidth - 20;
 
     const header = (data) => {
       doc.setFillColor(255, 255, 255);
       doc.rect(10, headerStartY, divWidth, 20, 'F');
 
       doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold'); 
+      doc.setFont('helvetica', 'bold');
 
-      doc.setTextColor(0, 0, 0); 
+      doc.setTextColor(0, 0, 0);
       doc.text(`Relatório Jornada de ${event.name}`, 50, headerStartY + 12);
 
-      doc.setFont('helvetica', 'normal'); 
+      doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
       doc.text(`Periodo de ${event.from} à ${event.to}`, 50, headerStartY + 17);
 
       const logoUrl = 'assets/images/logo/logogertran.png';
-      doc.addImage(logoUrl, 'PNG', 260, headerStartY, logoWidth-25, logoHeight);
+      doc.addImage(logoUrl, 'PNG', 260, headerStartY, logoWidth - 25, logoHeight);
       doc.setLineWidth(0.5);
-      doc.line(10, headerStartY + 25, pageWidth - 10, headerStartY + 25); 
+      doc.line(10, headerStartY + 25, pageWidth - 10, headerStartY + 25);
     };
 
     const headers = [
-      ['Data Hora','Status', 'Origem'],
+      ['Data Hora', 'Status', 'Origem'],
     ];
 
 
     const groupedData = this.workdayRows.map(row => {
       return [
-          this.formatTimeToBrazilian(new Date(row.startedAt)), 
-          row.status,
-          row.positionEvent ? row.positionEvent.eventDescription : 'Registrado pelo Sistema'
+        this.formatTimeToBrazilian(new Date(row.startedAt)),
+        row.status,
+        row.positionEvent ? row.positionEvent.eventDescription : 'Registrado pelo Sistema'
       ]
     })
 
@@ -223,15 +238,15 @@ export class WorkdayComponent implements OnInit {
       didDrawPage: (data) => {
         header(data);
         const pageCount = doc.getNumberOfPages()
-        const str = `Página ${pageCount}`; 
+        const str = `Página ${pageCount}`;
         doc.setFontSize(10);
         doc.text(str, data.settings.margin.right, doc.internal.pageSize.getHeight() - 10);
-      },   
+      },
     });
     doc.save('relatorio-jornada.pdf');
   }
 
-  synteticReport(event):void{
+  synteticReport(event): void {
     const doc = new jsPDF('landscape');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -239,27 +254,63 @@ export class WorkdayComponent implements OnInit {
     const headerStartY = 10;
     const logoWidth = 50;
     const logoHeight = 20;
-    const divWidth = pageWidth - logoWidth - 20; 
+    const divWidth = pageWidth - logoWidth - 20;
 
+
+    const summaryData = this.syntheticTotals || {};
+    const summaryStartY = headerStartY + 28;
 
     const header = (data) => {
       doc.setFillColor(255, 255, 255);
       doc.rect(10, headerStartY, divWidth, 20, 'F');
 
       doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold'); 
+      doc.setFont('helvetica', 'bold');
 
-      doc.setTextColor(0, 0, 0); 
+      doc.setTextColor(0, 0, 0);
       doc.text(`Relatório Jornada de ${event.name}`, 50, headerStartY + 12);
 
-      doc.setFont('helvetica', 'normal'); 
+      doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
       doc.text(`Periodo de ${event.from} à ${event.to}`, 50, headerStartY + 17);
 
       const logoUrl = 'assets/images/logo/logogertran.png';
-      doc.addImage(logoUrl, 'PNG', 260, headerStartY, logoWidth-25, logoHeight);
+      doc.addImage(logoUrl, 'PNG', 260, headerStartY, logoWidth - 25, logoHeight);
       doc.setLineWidth(0.5);
-      doc.line(10, headerStartY + 25, pageWidth - 10, headerStartY + 25); 
+      doc.line(10, headerStartY + 25, pageWidth - 10, headerStartY + 25);
+    };
+
+    // Desenhar resumo apenas na primeira página
+    const drawSummary = () => {
+      const boxY = summaryStartY;
+      const boxH = 18;
+      const colW = (pageWidth - 20) / 4;
+      const labels = ['Dias no Período', 'Dias Trabalhados', 'Total Jornada', 'Violações'];
+      const values = [
+        String(summaryData.totalDays || 0),
+        String(summaryData.daysWorked || 0),
+        summaryData.workdayHours || '00:00:00',
+        String(summaryData.violations || 0),
+      ];
+      const colors: [number, number, number][] = [
+        [0, 0, 0], [0, 0, 0], [0, 0, 0],
+        (summaryData.violations || 0) > 0 ? [207, 19, 34] : [63, 134, 0],
+      ];
+
+      for (let i = 0; i < 4; i++) {
+        const x = 10 + i * colW;
+        doc.setFillColor(245, 245, 245);
+        doc.roundedRect(x + 2, boxY, colW - 4, boxH, 2, 2, 'F');
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(100, 100, 100);
+        doc.text(labels[i], x + colW / 2, boxY + 6, { align: 'center' });
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(colors[i][0], colors[i][1], colors[i][2]);
+        doc.text(values[i], x + colW / 2, boxY + 14, { align: 'center' });
+      }
+      doc.setTextColor(0, 0, 0);
     };
 
     const formatHours = (hoursStr: string): string => {
@@ -275,7 +326,7 @@ export class WorkdayComponent implements OnInit {
       const [hours, minutes, seconds] = hoursStr.split(':').map(Number);
       return hours + minutes / 60 + seconds / 3600;
     }
-    
+
     function convertToTimeString(decimalHours: number): string {
       const hours = Math.floor(decimalHours);
       const minutes = Math.floor((decimalHours - hours) * 60);
@@ -284,13 +335,13 @@ export class WorkdayComponent implements OnInit {
     }
 
     function formatDateTime(dateTime: string): string {
-      if(dateTime == null)
+      if (dateTime == null)
         return ''
       const options: Intl.DateTimeFormatOptions = {
-        day: '2-digit', 
-        month: '2-digit', 
-        year: 'numeric', 
-        hour: '2-digit', 
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
         minute: '2-digit',
         second: '2-digit'
       };
@@ -298,7 +349,7 @@ export class WorkdayComponent implements OnInit {
     }
 
     const headers = [
-      ['Data','Entrada' ,'Saida', 'Jornada', 'Direção', 'Refeição', 'Espera', 'Descanso', 'Hora extra', 'Ad. noturno'],
+      ['Data', 'Entrada', 'Saida', 'Jornada', 'Direção', 'Refeição', 'Espera', 'Descanso', 'Interjornada', 'Hora extra', 'Ad. noturno'],
     ];
 
     const totals = {
@@ -307,6 +358,7 @@ export class WorkdayComponent implements OnInit {
       lunchHours: 0,
       waitingHours: 0,
       restHours: 0,
+      interworkdayHours: 0,
       extraHours: 0,
       nightShiftHours: 0,
     };
@@ -317,6 +369,7 @@ export class WorkdayComponent implements OnInit {
       totals.lunchHours += convertToDecimal(row.lunchHours);
       totals.waitingHours += convertToDecimal(row.waitingHours);
       totals.restHours += convertToDecimal(row.restHours);
+      totals.interworkdayHours += convertToDecimal(row.interworkdayHours || '00:00:00');
       totals.extraHours += convertToDecimal(row.extraHours);
       totals.nightShiftHours += convertToDecimal(row.nightShiftHours);
     });
@@ -328,7 +381,8 @@ export class WorkdayComponent implements OnInit {
       return [
         formattedDate, formatDateTime(row.workdayTime), formatDateTime(row.endOfWorkday),
         formatHours(row.workdayHours), formatHours(row.drivingHours), formatHours(row.lunchHours),
-        formatHours(row.waitingHours), formatHours(row.restHours), formatHours(row.extraHours), formatHours(row.nightShiftHours)
+        formatHours(row.waitingHours), formatHours(row.restHours), formatHours(row.interworkdayHours || '00:00:00'),
+        formatHours(row.extraHours), formatHours(row.nightShiftHours)
       ]
     });
 
@@ -336,13 +390,17 @@ export class WorkdayComponent implements OnInit {
       'Totais', '', '', convertToTimeString(totals.workdayHours),
       convertToTimeString(totals.drivingHours), convertToTimeString(totals.lunchHours),
       convertToTimeString(totals.waitingHours), convertToTimeString(totals.restHours),
+      convertToTimeString(totals.interworkdayHours),
       convertToTimeString(totals.extraHours), convertToTimeString(totals.nightShiftHours)
     ]);
+
+    // Primeira página: header + resumo + tabela abaixo do resumo
+    const tableStartFirstPage = summaryStartY + 22;
 
     autoTable(doc, {
       head: headers,
       body: data,
-      startY: headerStartY + 30,
+      startY: tableStartFirstPage,
       theme: 'striped',
       styles: {
         fontSize: 7,
@@ -352,15 +410,19 @@ export class WorkdayComponent implements OnInit {
       margin: { top: headerStartY + 30 },
       didDrawPage: (data) => {
         header(data);
+        // Desenhar resumo apenas na primeira página
+        if (data.pageNumber === 1) {
+          drawSummary();
+        }
         const pageCount = doc.getNumberOfPages()
-        const str = `Página ${pageCount}`; 
+        const str = `Página ${pageCount}`;
         doc.setFontSize(10);
         doc.text(str, data.settings.margin.right, doc.internal.pageSize.getHeight() - 10);
-      },   
+      },
     });
 
     const totalPages = doc.getNumberOfPages();
-    doc.setPage(totalPages); 
+    doc.setPage(totalPages);
     doc.setFontSize(12);
     const currentDate = new Date();
     const formattedDate = this.formatDate(currentDate);
@@ -397,6 +459,7 @@ export class WorkdayComponent implements OnInit {
 
   valueChanges(params: BaseWorkdayFilter): void {
     this.workdayRows = []
+    this.syntheticTotals = {};
     this.reportFormat = params.reportFormat;
   }
 
@@ -410,8 +473,41 @@ export class WorkdayComponent implements OnInit {
       waitingHours: this.adjustHours(workday.waitingHours),
       extraHours: this.adjustHours(workday.extraHours),
       nightShiftHours: this.adjustHours(workday.nightShiftHours),
+      interworkdayHours: this.adjustHours(workday.interworkdayHours),
     }));
     return _workdays
+  }
+
+  calculateTotals(rows: any[]): any {
+    const durationFields = [
+      'workdayHours', 'drivingHours', 'restHours', 'lunchHours',
+      'waitingHours', 'extraHours', 'nightShiftHours', 'interworkdayHours'
+    ];
+    const totals: any = {};
+    durationFields.forEach(field => {
+      let totalSeconds = 0;
+      rows.forEach(row => {
+        totalSeconds += this.parseDurationSeconds(row[field]);
+      });
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      totals[field] = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    });
+    totals.daysWorked = rows.filter(r => this.parseDurationSeconds(r.workdayHours) > 0).length;
+    totals.totalDays = rows.length;
+    totals.violations = rows.reduce((acc, r) => acc + (r.violationCount || 0), 0);
+    return totals;
+  }
+
+  private parseDurationSeconds(value: string | null | undefined): number {
+    if (!value) return 0;
+    const parts = String(value).split(':');
+    if (parts.length < 2) return 0;
+    const h = parseInt(parts[0], 10) || 0;
+    const m = parseInt(parts[1], 10) || 0;
+    const s = parseInt(parts[2], 10) || 0;
+    return h * 3600 + m * 60 + s;
   }
 
   // ======= Validações legais da jornada =======
@@ -430,9 +526,9 @@ export class WorkdayComponent implements OnInit {
 
     return rows.map(r => {
       const violations: string[] = [];
-      const workMs  = this.parseDurationMs(r.workdayHours);
+      const workMs = this.parseDurationMs(r.workdayHours);
       const driveMs = this.parseDurationMs(r.drivingHours);
-      const restMs  = this.parseDurationMs(r.restHours);
+      const restMs = this.parseDurationMs(r.restHours);
       const lunchMs = this.parseDurationMs(r.lunchHours);
 
       // Limites diários
@@ -499,13 +595,13 @@ export class WorkdayComponent implements OnInit {
     let totalSeconds = 0;
     if (parts.length === 2) {
       const days = parseInt(parts[0], 10) || 0;
-      const [hh='0', mm='0', ss='0'] = parts[1].split(':');
+      const [hh = '0', mm = '0', ss = '0'] = parts[1].split(':');
       totalSeconds += days * 24 * 3600;
       totalSeconds += (parseInt(hh, 10) || 0) * 3600;
       totalSeconds += (parseInt(mm, 10) || 0) * 60;
       totalSeconds += (parseInt(ss, 10) || 0);
     } else {
-      const [hh='0', mm='0', ss='0'] = String(value).split(':');
+      const [hh = '0', mm = '0', ss = '0'] = String(value).split(':');
       totalSeconds += (parseInt(hh, 10) || 0) * 3600;
       totalSeconds += (parseInt(mm, 10) || 0) * 60;
       totalSeconds += (parseInt(ss, 10) || 0);
