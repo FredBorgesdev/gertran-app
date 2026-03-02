@@ -1,24 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {MonitoringRequests, MonitoringRequestsService} from '../monitoring-requests.service';
-import {BaseCrudFormComponent} from '../../base-crud/base-crud-form/base-crud-form.component';
-import {en_US, NzI18nService} from 'ng-zorro-antd/i18n';
-import {Stop, StopsService} from '../../stops/stops.service';
-import {Driver, DriversService} from '../../drivers/drivers.service';
-import {TrucksService} from '../../trucks/trucks.service';
-import {WagonsService} from '../../wagons/wagons.service';
-import {Choice} from '../../shared/services/api.service';
-import {Operations, OperationsService} from '../../operations/operations.service';
-import {SelectableCustomerServiceService} from '../../customers/selectable-customer-service.service';
-import {AuthenticationService} from '../../authentication/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { MonitoringRequests, MonitoringRequestsService } from '../monitoring-requests.service';
+import { BaseCrudFormComponent } from '../../base-crud/base-crud-form/base-crud-form.component';
+import { en_US, NzI18nService } from 'ng-zorro-antd/i18n';
+import { Stop, StopsService } from '../../stops/stops.service';
+import { Driver, DriversService } from '../../drivers/drivers.service';
+import { TrucksService } from '../../trucks/trucks.service';
+import { WagonsService } from '../../wagons/wagons.service';
+import { Choice } from '../../shared/services/api.service';
+import { Operations, OperationsService } from '../../operations/operations.service';
+import { SelectableCustomerServiceService } from '../../customers/selectable-customer-service.service';
+import { AuthenticationService } from '../../authentication/authentication.service';
 import User from '../../users/user';
-import {createNumberMask} from 'text-mask-addons';
-import {SelectableTruckService} from '../../trucks/selectable-truck.service';
-import {SelectableWagonService} from '../../wagons/selectable-wagon.service';
-import {SelectableDriversService} from '../../drivers/selectable-drivers.service';
-import {SharedOperationsItem, SharedOperationsService} from "../../customers/shared-operations.service";
+import { createNumberMask } from 'text-mask-addons';
+import { SelectableTruckService } from '../../trucks/selectable-truck.service';
+import { SelectableWagonService } from '../../wagons/selectable-wagon.service';
+import { SelectableDriversService } from '../../drivers/selectable-drivers.service';
+import { SharedOperationsItem, SharedOperationsService } from "../../customers/shared-operations.service";
 
 @Component({
   selector: 'app-monitoring-requests-form',
@@ -27,7 +27,7 @@ import {SharedOperationsItem, SharedOperationsService} from "../../customers/sha
 })
 export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<MonitoringRequests> implements OnInit {
   adHocMonitoringRequest = 'd591024e-f3c9-46aa-adfc-bc5423fd6184'
-  
+
   stops: Stop[] = [];
   drivers: Driver[] = [];
   surveyConductors: Choice[] = [];
@@ -81,7 +81,7 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
 
     this.isLoading = true;
 
-    this.stopsService.getAll({limit: 50}).subscribe((stops) => {
+    this.stopsService.getAll({ limit: 50 }).subscribe((stops) => {
       this.stops = stops.results;
     });
 
@@ -212,21 +212,33 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   list(): void {
     this.router.navigate(['/monitoring-requests/monitoring-requests-list']);
   }
+  private parseCurrencyToNumber(value: any): number | null {
+    if (!value) return null;
+
+    const numericString = value.toString().replace(/\D/g, '');
+
+    if (!numericString) return null;
+
+    return parseFloat(numericString) / 100;
+  }
 
   sanitizeInputAndSaveDraft(field: string): void {
     const formControl = this.validateForm.get(field);
-    const newValue = formControl.value.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
 
-    this.saveDraft(field, newValue);
+    const cleanValue = this.parseCurrencyToNumber(formControl.value);
+
+    this.saveDraft(field, cleanValue);
   }
 
-  saveDraft(field: string, newValue?: string): void {
+  saveDraft(field: string, newValue?: string | number | null): void {
     const formControl = this.validateForm.get(field);
 
     if (formControl.dirty) {
+      const valueToSave = newValue !== undefined ? newValue : formControl.value;
+
       this.service.update(
         this.resource.id,
-        {[field]: newValue || formControl.value} as any
+        { [field]: valueToSave } as any
       ).subscribe(() => {
         this.message.success('Rascunho salvo com sucesso!');
       });
@@ -254,13 +266,13 @@ export class MonitoringRequestsFormComponent extends BaseCrudFormComponent<Monit
   }
 
   get surveyConductedRowSpan(): number {
-    return this.validateForm.controls.surveyConductedBy.value === 'others' || 
-    this.validateForm.controls.surveyConductedBy.value === 'both' ? 12 : 24;
+    return this.validateForm.controls.surveyConductedBy.value === 'others' ||
+      this.validateForm.controls.surveyConductedBy.value === 'both' ? 12 : 24;
   }
 
   get shouldShowSurveyConductorInput(): boolean {
-    return this.validateForm.controls.surveyConductedBy.value === 'others' || 
-    this.validateForm.controls.surveyConductedBy.value === 'both' ;
+    return this.validateForm.controls.surveyConductedBy.value === 'others' ||
+      this.validateForm.controls.surveyConductedBy.value === 'both';
   }
 
   get user(): User {
