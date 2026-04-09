@@ -12,9 +12,10 @@ export interface SearchItem {
 })
 export class SearchListHelper {
   private colors = [
-    '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC', '#EC407A',
-    '#26C6DA', '#FF7043', '#9CCC65', '#5C6BC0', '#D4E157',
-    '#26A69A', '#FFCA28', '#8D6E63', '#78909C', '#EF5350'
+    '#FFA726', '#AB47BC', '#FF7043', '#9CCC65',
+    '#EC407A', '#26C6DA', '#26A69A', '#FFCA28',
+    '#5C6BC0', '#D4E157', '#42A5F5', '#EF5350', 
+    '#8D6E63', '#78909C', '#1C5FC5', '#66BB6A', 
   ];
 
   constructor() {}
@@ -26,9 +27,9 @@ export class SearchListHelper {
       // console.log(data)
 
       const values: SearchTotalItem[] = [
-        { label: 'Total Consultas', value: data.total_consultas || 0, color: this.colors[0] },
-        { label: 'Total Pesquisas', value: data.total_pesquisas || 0, color: this.colors[1] },
-        { label: 'Total Vitimologias', value: data.total_vitimologias || 0, color: this.colors[2] },
+        { label: 'Consultas', value: data.total_consultas || 0, color: this.colors[0] },
+        { label: 'Pesquisas', value: data.total_pesquisas || 0, color: this.colors[1] },
+        { label: 'Vitimologias', value: data.total_vitimologias || 0, color: this.colors[2] },
       ];
 
       const total = values.reduce((sum, v) => sum + v.value, 0) || 1;

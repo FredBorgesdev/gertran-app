@@ -7,34 +7,94 @@ export class TotalSmPerMonthLineHelper {
   chartOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: true,
+    // 🔤 Fonte global
+    font: {
+      family: 'Arial',
+      size: 12,
+    },
     layout: {
       padding: { top: 12, bottom: 12, left: 8, right: 8 }
     },
     plugins: {
-      legend: { display: false },
-      tooltip: { mode: 'index', intersect: false },
+      legend: {
+        display: false,
+        labels: {
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        }
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        titleFont: {
+          family: 'Arial',
+          size: 12,
+        },
+        bodyFont: {
+          family: 'Arial',
+          size: 12,
+        },
+        footerFont: {
+          family: 'Arial',
+          size: 12,
+        }
+      },
       datalabels: {
         color: '#000',
         anchor: 'end',
         align: 'end',
         clamp: true,
+        clip: false,
         formatter: (value: any) => {
           const n = Number(value) || 0;
           return n.toLocaleString();
         },
-        font: { weight: 'bold', size: 10 },
+        font: {
+          family: 'Arial',
+          size: 12,
+          weight: 'bold',
+        },
       },
     },
     scales: {
       x: {
         display: true,
-        title: { display: true, text: 'Mês' },
+        title: {
+          display: true,
+          text: 'Mês',
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
+        ticks: {
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        }
       },
       y: {
         display: true,
-        title: { display: false, text: 'Total SM' },
+        title: {
+          display: false,
+          text: 'Total SM',
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
         beginAtZero: true,
-        ticks: { padding: 10 },
+        grace: '20%',
+        ticks: {
+          padding: 10,
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
       },
     },
   };
@@ -61,8 +121,8 @@ export class TotalSmPerMonthLineHelper {
           {
             label: `Total SM por Mês (${total.toLocaleString()})`,
             data: valores,
-            backgroundColor: '#42A5F5',
-            borderColor: '#1E88E5',
+            backgroundColor: '#1C5FC5',
+            borderColor: '#0f4596',
             borderWidth: 1,
           }
         ]
@@ -73,8 +133,8 @@ export class TotalSmPerMonthLineHelper {
         datasets: [{
           label: 'Total SM por Mês (0)',
           data: [],
-          backgroundColor: '#42A5F5',
-          borderColor: '#1E88E5',
+          backgroundColor: '#1C5FC5',
+          borderColor: '#0f4596',
           borderWidth: 1,
         }]
       };

@@ -48,7 +48,24 @@ export class TotalSmPerOperationsPercentHelper {
   chartOptions: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 300,
+      easing: 'easeOutQuart'
+    },
+
+    transitions: {
+      active: {
+        animation: {
+          duration: 300
+        }
+      }
+    },
     layout: { padding: 55 },
+    // 🔤 Fonte global
+    font: {
+      family: 'Arial',
+      size: 12,
+    },
     plugins: {
       legend: { display: false },
       datalabels: {
@@ -73,7 +90,11 @@ export class TotalSmPerOperationsPercentHelper {
           return value >= 3;
         },
         textAlign: 'center',
-        font: { weight: 'bold', size: 12 },
+        font: {
+          family: 'Arial',
+          size: 12,
+          weight: 'bold',
+        },
       },
     },
   };
@@ -103,6 +124,7 @@ export class TotalSmPerOperationsPercentHelper {
       const porcentagens = finalData.map(item => item.percentage);
       const quantidades = finalData.map(item => item.total);
       const backgroundColors = finalData.map((_, i) => this.getColor(i));
+     
 
       return {
         labels,
@@ -111,10 +133,18 @@ export class TotalSmPerOperationsPercentHelper {
             label: 'Porcentagem (%)',
             data: porcentagens,
             backgroundColor: backgroundColors,
-            hoverOffset: 30,
+            hoverBackgroundColor: (ctx) => {
+              const index = ctx.dataIndex;
+              const baseColor = this.getColor(index);
+              return this.adjustColor(baseColor, 5);
+            },
+            hoverOffset: 10,
+            hoverBorderWidth: 2,
+            hoverBorderColor: '#00000022',
             totaisBrutos: quantidades, // Agora quantidades terá números reais, não NaN
           } as any
         ],
+        
       };
     } catch (e) {
       console.error("Erro ao processar dados do gráfico:", e);
@@ -122,13 +152,50 @@ export class TotalSmPerOperationsPercentHelper {
     }
   }
 
+  // private getColor(index: number): string {
+  //   const colors = [
+  //      '#3ab54a', '#990074', '#4d0074', '#000072', '#0001be',
+  //      '#25bfbf', '#28997b', '#2b8838', '#68952e', '#bfbf00',
+  //      '#bf7401', '#be0000', '#cd0067', '#cc0098', '#670099',
+  //      '#000098', '#0000fe', '#33fffe', '#36cca6', '#4A0A8A',
+  //      '#8cc63e', '#ffff00', '#fe9900', '#fe0000',
+  //   ];
+  //   return colors[index % colors.length];
+  // }
+  
+  
+  // private getColor(index: number): string {
+  //   const colors = [
+  //     '#7A2E05', '#0A0A7A', '#238A08', '#2E5A1A', '#5A1A4F',
+  //     '#8A0675', '#8A0A2E', '#6A0A8A', '#8A5A0A', '#7A8A0A',
+  //     '#0A8A7A', '#0A5A8A', '#8A8A0A', '#8A3A0A', '#4A0A8A' 
+  //   ];
+  //   return colors[index % colors.length];
+  // }
+  
   private getColor(index: number): string {
     const colors = [
-      '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC',
+      '#1C5FC5', '#66BB6A', '#FFA726', '#AB47BC',
       '#EC407A', '#26C6DA', '#FF7043', '#9CCC65',
       '#5C6BC0', '#D4E157', '#26A69A', '#FFCA28',
-      '#8D6E63', '#78909C', '#EF5350'
+      '#8D6E63', '#78909C', '#42A5F5', '#EF5350',
     ];
     return colors[index % colors.length];
   }
+  private adjustColor(color: string, percent: number): string {
+    const num = parseInt(color.replace('#',''), 16);
+    const amt = Math.round(2.55 * percent);
+
+    const R = (num >> 16) + amt;
+    const G = (num >> 8 & 0x00FF) + amt;
+    const B = (num & 0x0000FF) + amt;
+
+    return "#" + (
+      0x1000000 +
+      (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+      (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+      (B < 255 ? (B < 1 ? 0 : B) : 255)
+    ).toString(16).slice(1);
+  }
 }
+

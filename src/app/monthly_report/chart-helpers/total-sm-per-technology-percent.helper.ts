@@ -6,8 +6,21 @@ import { Injectable } from '@angular/core';
 export class TotalSmPerTechnologyPercentHelper {
   chartOptions = {
     responsive: true,
+    // 🔤 Fonte global
+    font: {
+      family: 'Arial',
+      size: 12,
+    },
     plugins: {
-      legend: { display: true },
+      legend: {
+        display: true,
+        labels: {
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        }
+      },
       title: {
         display: false,
         text: 'Total SM por Tecnologia (Quantidade)',
@@ -17,17 +30,35 @@ export class TotalSmPerTechnologyPercentHelper {
         anchor: 'end',
         align: 'end',
         formatter: (value: number) => `${value}`,
-        font: { weight: 'bold', size: 12 },
+        font: {
+          family: 'Arial',
+          size: 12,
+          weight: 'bold',
+        },
         clamp: true,
       },
     },
     scales: {
       x: {
-        title: { display: true, text: 'Tecnologia' },
+        title: {
+          display: true,
+          text: 'Tecnologia',
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
       },
       y: {
         beginAtZero: true,
-        title: { display: true, text: 'Quantidade' },
+        title: {
+          display: true,
+          text: 'Quantidade',
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
       },
     },
   };
@@ -52,11 +83,12 @@ export class TotalSmPerTechnologyPercentHelper {
         {
           label: 'Quantidade',
           data: quantities,
-          backgroundColor: '#42A5F5', // azul, pode trocar
-          borderColor: '#1E88E5',
+          backgroundColor: '#1C5FC5', // azul, pode trocar
+          borderColor: '#0f4596',
           borderWidth: 1,
         },
       ],
     };
   }
 }
+

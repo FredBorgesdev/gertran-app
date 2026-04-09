@@ -43,9 +43,35 @@ export class TotalSmPerLoadTypePercentHelper {
   chartOptions: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
-    layout: { padding: 55 },
+    radius: '90%',
+    animation: {
+      duration: 300,
+      easing: 'easeOutQuart'
+    },
+
+    transitions: {
+      active: {
+        animation: {
+          duration: 300
+        }
+      }
+    },
+    layout: { padding: 30 },
+    // 🔤 Fonte global
+    font: {
+      family: 'Arial',
+      size: 12,
+    },
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: false,
+        labels: {
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        }
+      },
       datalabels: {
         color: '#000',
         formatter: (value: any, ctx: any) => {
@@ -61,13 +87,17 @@ export class TotalSmPerLoadTypePercentHelper {
         anchor: 'end',
         align: 'end',
         clamp: true,
-        offset: 30,
+        offset: 20,
         display: (ctx) => {
           const value = ctx.dataset.data[ctx.dataIndex] as number;
           return value >= 2;
         },
         textAlign: 'center',
-        font: { weight: 'bold', size: 12 },
+        font: {
+          family: 'Arial',
+          size: 12,
+          weight: 'bold',
+        },
       },
     },
   };
@@ -105,7 +135,14 @@ export class TotalSmPerLoadTypePercentHelper {
           data: valores,
           totaisBrutos: totais, // ⚡ Injetando os valores brutos para o formatter usar
           backgroundColor: backgroundColors,
-          hoverOffset: 30,
+          hoverBackgroundColor: (ctx) => {
+              const index = ctx.dataIndex;
+              const baseColor = this.getColor(index);
+              return this.adjustColor(baseColor, 5);
+            },
+          hoverOffset: 10,
+          hoverBorderWidth: 2,
+          hoverBorderColor: '#00000022',
         } as any], // ⚡ Cast para any evita erro de propriedade desconhecida
       };
     } catch (err) {
@@ -116,11 +153,26 @@ export class TotalSmPerLoadTypePercentHelper {
 
   private getColor(index: number): string {
     const colors = [
-      '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC',
-      '#EC407A', '#26C6DA', '#FF7043', '#9CCC65',
-      '#5C6BC0', '#D4E157', '#26A69A', '#FFCA28',
-      '#8D6E63', '#78909C', '#EF5350'
+    '#1C5FC5', '#66BB6A', '#FFA726', '#AB47BC',
+    '#EC407A', '#26C6DA', '#FF7043', '#9CCC65',
+    '#5C6BC0', '#D4E157', '#26A69A', '#FFCA28',
+    '#8D6E63', '#78909C', '#42A5F5', '#EF5350',
     ];
     return colors[index % colors.length];
+  }
+   private adjustColor(color: string, percent: number): string {
+    const num = parseInt(color.replace('#',''), 16);
+    const amt = Math.round(2.55 * percent);
+
+    const R = (num >> 16) + amt;
+    const G = (num >> 8 & 0x00FF) + amt;
+    const B = (num & 0x0000FF) + amt;
+
+    return "#" + (
+      0x1000000 +
+      (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+      (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+      (B < 255 ? (B < 1 ? 0 : B) : 255)
+    ).toString(16).slice(1);
   }
 }

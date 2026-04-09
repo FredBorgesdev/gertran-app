@@ -13,7 +13,10 @@ export interface WorkerItem {
 })
 export class SearchWorkerListHelper {
   private colors = [
-    '#42A5F5', '#66BB6A', '#FFA726', '#AB47BC', '#EC407A', '#26C6DA'
+    '#FFA726', '#AB47BC', '#FF7043', '#9CCC65',
+    '#EC407A', '#26C6DA', '#26A69A', '#FFCA28',
+    '#5C6BC0', '#D4E157', '#42A5F5', '#EF5350', 
+    '#8D6E63', '#78909C', '#1C5FC5', '#66BB6A',
   ];
 
   build(data: any): WorkerItem[] {

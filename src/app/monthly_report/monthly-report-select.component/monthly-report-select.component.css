@@ -1,3 +1,63 @@
+.pages-header .row div:first-child {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+
+  h1 {
+    margin: 0;
+  }
+
+}
+
+.charts-page {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px 20px 20px;
+
+  .barra {
+    display: flex;
+    background: #fff; /* fundo geral */
+    margin-bottom: 20px;
+  }
+
+  .item {
+    width: 120px;
+    height: 52px;
+  }
+
+  /* cores */
+  .escuro { background: #1c5fc5; clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 0% 100%); }
+  .claro { background: #3f87f5; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); margin-left: -14px; }
+  .mais-claro { background: #3f87f575; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); margin-left: -14px; }
+  .cinza { background: #ededed; clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%); margin-left: -14px; }
+  .cinza-full { background: #ededed; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); width: 100%; margin-left: -54px; display: flex; align-items: center; justify-content: space-between; }
+  
+  h1 {
+    
+    display: flex;
+    align-content: flex-start;
+    text-align: left;
+    margin: unset;
+    font-weight: normal;
+
+    span {
+      font-weight: bold;
+      margin-left: 6px;
+    }
+
+  }
+
+}
+
+.banner {
+  background-color: #f5e37f94;
+  padding: 10px;
+  border-left: #f1c123 3px solid;
+  border-bottom: 1px solid #f1c123;
+  text-transform: none;
+}
+
 .charts-container {
   display: flex;
   flex-wrap: wrap;
@@ -7,37 +67,110 @@
 
 .chart-card {
   background: #fff;
-  padding: 0 5px 0px 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+  padding: 0 15px 10px 15px;
+  border: 1px solid #000;
+  border-radius: 0px;
+  box-shadow: none;
 
-.chart-card h3 {
-  color: white;
-  padding: 8px 12px;
-  border-radius: 4px 4px 0 0;
-  margin: 0 -5px 10px -15px;
-  font-weight: bold;
-}
+  h3 {
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 0;
+    margin: 0 -15px 10px -15px;
+    font-weight: bold;
+    background-color: #ededed;
+    border-bottom: 1px solid #000;
+  }
 
-.chart-card.card_tela {
-  flex: 1 1 30%;
-  max-width: 30%;
-}
+  &.card_tela {
+    /*flex: 1 1 30%;
+    max-width: 30%;*/
+    flex: 1;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
 
-.chart-card.card_tela canvas {
-  height: 330px !important;
-  width: 100% !important;
-}
+    canvas {
+      height: 100% !important;
+      width: 100% !important;
+    }
 
-.chart-card.card_tela ul {
-  height: 280px;
-  overflow-y: auto;
-}
+    .chart-content {
+      background-color: #FFF;
+      font-size: 12px;
 
-.chart-card.card_tela ul.no-scroll {
-  height: auto;
-  overflow: visible;
+      &.big-number {
+        font-size: 72px;
+        font-weight: bold;
+        text-align: center;
+
+        &.positive {
+          color: #1c5fc5;
+        }
+
+        &.negative {
+          color: #EF5350;
+        }
+
+      }
+
+      table {
+        border: 1px solid #000;
+        border-collapse: collapse;
+        width: 100%;
+        
+        th {
+          font-size: 12px;
+          font-weight: bold;
+          text-align: left;
+          border-bottom: 1px solid #000;
+          padding: 6px;
+          background-color: #3f87f575;
+        }
+
+        td {
+          font-size: 12px;
+          font-weight: normal;
+          text-align: left;
+          border-bottom: 1px solid #000;
+          padding: 6px;
+          border-right: 1px solid #000;
+
+          &:last-child {
+            border-right: 0px;
+          }
+
+        }
+
+        tr:last-child {
+          td {
+            border-bottom: 0px;
+          }
+        }
+      }
+
+      .chart_legend {
+        font-size: 12px;
+      }
+
+    }
+
+    ul {
+      overflow-y: auto;
+
+      &.no-scroll {
+        height: auto;
+        overflow: visible;
+      }
+
+      li {
+
+      }
+
+    }
+
+  }
+
 }
 
 .customer-badge {
@@ -55,7 +188,7 @@
 }
 
 .sm h3 {
-  background-color: #007bff;
+  background-color: #000000;
 }
 
 .nc h3 {

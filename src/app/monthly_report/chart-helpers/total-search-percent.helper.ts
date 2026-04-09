@@ -15,9 +15,27 @@ export class TotalSearchPercentHelper {
   chartOptions: ChartOptions<'pie'> = {
     responsive: true,
     maintainAspectRatio: false,
-    layout: { padding: 55 },
+    radius: '90%',
+    // 🔤 Fonte global
+    font: {
+      family: 'Arial',
+      size: 12,
+    },
+    layout: { padding: {
+        left: 60,
+        right: 60
+      }
+     },
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: false,
+        labels: {
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        }
+      },
       datalabels: {
         color: '#000',
         formatter: (value: any, ctx: any) => {
@@ -32,17 +50,26 @@ export class TotalSearchPercentHelper {
         anchor: 'end',
         align: 'end',
         clamp: true,
-        offset: 20,
+        offset: 10,
         display: (ctx) => {
           const value = ctx.dataset.data[ctx.dataIndex] as number;
           return value > 0;
         },
-        font: { weight: 'bold', size: 12 },
+        font: {
+          family: 'Arial',
+          size: 12,
+          weight: 'bold',
+        },
       },
     },
   };
 
-  private colors = ['#42A5F5', '#66BB6A', '#FFA726'];
+  private colors = [
+    '#FFA726', '#AB47BC', '#FF7043', '#9CCC65',
+    '#EC407A', '#26C6DA', '#26A69A', '#FFCA28',
+    '#5C6BC0', '#D4E157', '#42A5F5', '#EF5350', 
+    '#8D6E63', '#78909C', '#1C5FC5', '#66BB6A', 
+  ];
 
   build(item: any): ChartConfiguration<'pie'>['data'] {
     if (!item) return { labels: [], datasets: [{ data: [], backgroundColor: [] }] };
@@ -60,7 +87,7 @@ export class TotalSearchPercentHelper {
           label: 'Totais',
           data: values.map(v => v.value),
           backgroundColor: values.map(v => v.color),
-          hoverOffset: 20,
+          hoverOffset: 10,
         }
       ]
     };

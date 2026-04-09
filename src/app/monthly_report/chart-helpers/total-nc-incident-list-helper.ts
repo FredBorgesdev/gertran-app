@@ -14,9 +14,10 @@ export interface NcIncidentItem {
 export class NcIncidentListHelper {
 
   private colors = [
-    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-    '#9966FF', '#FF9F40', '#C9CBCF', '#B0E57C',
-    '#F45B69', '#8E44AD', '#3498DB'
+    '#EF5350', '#66BB6A', '#FFA726', '#AB47BC',
+    '#EC407A', '#26C6DA', '#FF7043', '#9CCC65',
+    '#5C6BC0', '#D4E157', '#26A69A', '#FFCA28',
+    '#8D6E63', '#78909C', '#42A5F5', '#1C5FC5',
   ];
 
   constructor() {}

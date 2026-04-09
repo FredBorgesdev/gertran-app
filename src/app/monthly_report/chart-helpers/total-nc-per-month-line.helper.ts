@@ -7,10 +7,23 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 export class TotalNcPerMonthLineHelper {
   chartOptions: ChartOptions<'bar'> = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
+    // 🔤 Fonte global
+    font: {
+      family: 'Arial',
+      size: 12,
+    },
     layout: { padding: { top: 12, bottom: 12, left: 8, right: 8 } },
     plugins: {
-      legend: { display: false },
+      legend: {
+        display: false,
+        labels: {
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        }
+      },
       tooltip: { mode: 'index', intersect: false },
       datalabels: {
         color: '#000',
@@ -21,19 +34,38 @@ export class TotalNcPerMonthLineHelper {
           const n = Number(value) || 0;
           return n.toLocaleString();
         },
-        font: { weight: 'bold', size: 10 },
+        font: {
+          family: 'Arial',
+          size: 12,
+          weight: 'bold',
+        },
       },
     },
     scales: {
       x: {
         display: true,
-        title: { display: true, text: 'Mês' },
+        title: {
+          display: true,
+          text: 'Mês',
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
       },
       y: {
         display: true,
-        title: { display: false, text: 'Total NC' },
+        title: {
+          display: false,
+          text: 'Total NC',
+          font: {
+            family: 'Arial',
+            size: 12,
+          }
+        },
         beginAtZero: true,
         ticks: { padding: 10 },
+        grace: '20%',
       },
     },
   };
@@ -64,8 +96,8 @@ export class TotalNcPerMonthLineHelper {
         {
           label: `Total NC por Mês (${total.toLocaleString()})`,
           data: valores,
-          backgroundColor: '#FF6384',
-          borderColor: '#C62828',
+          backgroundColor: '#EF5350',
+          borderColor: '#b43432',
           borderWidth: 1,
         },
       ],
