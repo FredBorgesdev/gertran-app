@@ -46,7 +46,7 @@ export class MonthlyReportSelectComponent implements OnInit {
   selectedPeriodMonths: number = 3;
   reports: MonthlyReport[] = [];
   pagination: Pagination = { limit: 10 };
-  
+
   ncIncidentList: { label: string; total: number; percentage: number }[] = [];
   smPerOperationsList: { label: string; total: number; percentage: number }[] = [];
   ncPerPlatesList: { label: string; total: number; percentage: number; color: string }[] = [];
@@ -60,7 +60,7 @@ export class MonthlyReportSelectComponent implements OnInit {
   smDriverList: { Motorista: string; VeiculoAutomotor: string; QuantidadeDeViagens: number }[] = [];
   smPerLoadTypeList: { label: string; total: number; percentage: number; color: string }[] = [];
   smDriverCurrentMonthList: { Motorista: string; VeiculoAutomotor: string; QuantidadeDeViagens: number }[] = [];
-  
+
   smPerOperationsPiePercent: any;
   smPerOperationsPiePercentChartOptions: any;
   smPerOperationsPiePercentCurrentMonthList: any;
@@ -87,7 +87,7 @@ export class MonthlyReportSelectComponent implements OnInit {
   totalSmCurrentMonth: Number = 0;
   totalNcCurrentMonth: Number = 0;
   totalNc: number = 0;
-  
+
   smPerOperationsPiePercentCurrentMonth: any;
   smPerMonthline: any;
   smPerMonthlineChartOptions: any;
@@ -159,7 +159,7 @@ export class MonthlyReportSelectComponent implements OnInit {
       try { newWin.focus(); } catch (e) { /* ignorar se não puder focar */ }
     }
   }
-  
+
   loadYearMonthOptions() {
     this.monthlyReportService.getYearMonthOptions().subscribe({
       next: (options) => {
