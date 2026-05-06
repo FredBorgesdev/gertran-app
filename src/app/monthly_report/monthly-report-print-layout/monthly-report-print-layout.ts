@@ -32,8 +32,8 @@ Chart.register(...registerables, ChartDataLabels);
 
 @Component({
   selector: 'app-monthly-report-print-layout', // <-- Note que o seletor é diferente
-  templateUrl: './monthly-report-print-layout.component.html', // <-- Aponta pro HTML de impressão
-  styleUrls: ['./monthly-report-print-layout.component.css'], // <-- Aponta pro CSS de impressão
+  templateUrl: './monthly-report-print-layout.html', // <-- Aponta pro HTML de impressão
+  styleUrls: ['./monthly-report-print-layout.css'], // <-- Aponta pro CSS de impressão
 })
 export class MonthlyReportPrintLayoutComponent implements OnInit {
   currentMonthName: string = '';
@@ -419,9 +419,9 @@ export class MonthlyReportPrintLayoutComponent implements OnInit {
         this.customerName = currentReport?.customer?.tradingName || periodReport?.customer?.tradingName || '';
 
         this.applyCharts(periodReport, currentReport);
-        
-        // Opcional: Aciona a impressão automaticamente quando os dados terminam de carregar
-        // setTimeout(() => window.print(), 1000); 
+
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 250);
       },
     });
   }

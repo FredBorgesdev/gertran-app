@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Relatório</title>
-  <link  rel="stylesheet" href="monthly-report-print-layout.css" >
+  <link rel="stylesheet" href="monthly-report-print-layout.css">
 </head>
 
 <body style="font-family: Arial; margin:0; color: black;">
-  
+
   <div class="page-header" style="text-align: center"></div>
   <div class="page-footer"></div>
 
@@ -35,19 +36,24 @@
     <tbody>
       <tr>
         <td>
-          <table width="100%" cellspacing="0" cellpadding="20" style="border-bottom: 1px solid rgb(241, 193, 35); margin-top: 19px;">
+          <table width="100%" cellspacing="0" cellpadding="20"
+            style="border-bottom: 1px solid rgb(241, 193, 35); margin-top: 19px;">
             <tr>
-              <td style="background-color: rgb(245, 227, 127);">Todas as informações aqui são obtidas junto às <strong>Solicitações de Monitoramento (SM)</strong>, enviadas via sistema GertranWeb 3.0, bem como ocorrências de <strong>quantidade de não conformidades por eventos</strong> geradas no decorrer do monitoramento, enquanto a SM consta em viagem.</td>
+              <td style="background-color: rgb(245, 227, 127);">Todas as informações aqui são obtidas junto às
+                <strong>Solicitações de Monitoramento (SM)</strong>, enviadas via sistema GertranWeb 3.0, bem como
+                ocorrências de <strong>quantidade de não conformidades por eventos</strong> geradas no decorrer do
+                monitoramento, enquanto a SM consta em viagem.</td>
             </tr>
           </table>
-          
+
           <table width="100%" cellspacing="4" cellpadding="6" border="0" style="margin-top: 20px;">
             <tr>
               <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
               <td style="width: 20px; height: 48px; background-color: #1c5fc5;"></td>
               <td style="width: 20px; height: 48px; background-color: #3f87f5;"></td>
               <td style="width: 20px; height: 48px; background-color: #3f87f575;"></td>
-              <td align="center" style="background:#ededed; font-size: 20px; text-align: left; padding-left: 20px;">PERÍODO: <strong>{{ selectedOption?.year }}</strong></td>
+              <td align="center" style="background:#ededed; font-size: 20px; text-align: left; padding-left: 20px;">
+                PERÍODO: <strong>{{ selectedOption?.year }}</strong></td>
               <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
             </tr>
           </table>
@@ -71,7 +77,24 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="smPerOperationsPiePercent" [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+                      <div style="height: 301px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        <div style="display: flex; width: 100%; max-width: 520px; gap: 10px; align-items: center; justify-content: center;">
+                          <div style="flex: 0 0 245px; width: 245px; height: 245px; min-width: 0;">
+                            <canvas baseChart [data]="smPerOperationsPiePercent" [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+                          </div>
+                          <div style="flex: 1 1 auto; min-width: 0; max-height: 245px; overflow-y: auto; font-size: 11px;">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                              <li *ngFor="let item of smPerOperationsList" style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                                <span [style.background]="item.color" style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                                <div>
+                                  <strong>{{ item.label }}</strong>
+                                  <div>Total: {{ item.total }}</div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -104,8 +127,9 @@
                 </table></td>  
             </tr>
           </table>    
-        
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -113,13 +137,14 @@
                     <td class="teste"><strong>PRINCIPAIS PONTOS DE ORIGEM</strong></td>
                   </tr>
                   <tr>
-                   <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
-                    <ul style="list-style: none; padding: 0; margin: 0;">
-                      <li *ngFor="let item of smRouteOriginList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
-                        <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
-                      </li>
-                    </ul>
-                  </td>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of smRouteOriginList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
                   </tr>
                 </table>
               </td>
@@ -132,7 +157,8 @@
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
                       <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li *ngFor="let item of smRouteDestinyList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <li *ngFor="let item of smRouteDestinyList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
                           <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
                         </li>
                       </ul>
@@ -143,7 +169,8 @@
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -152,7 +179,8 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="smPerTechnologyBar" [options]="smPerTechnologyBarOptions" [type]="'bar'"></canvas>
+                      <canvas baseChart [data]="smPerTechnologyBar" [options]="smPerTechnologyBarOptions"
+                        [type]="'bar'"></canvas>
                     </td>
                   </tr>
                 </table>
@@ -160,7 +188,8 @@
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="30%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -169,7 +198,22 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+                      <div style="display: flex; height: 301px; gap: 10px; align-items: center;">
+                        <div style="flex: 1 1 55%; min-width: 0;">
+                          <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+                        </div>
+                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                          <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li *ngFor="let item of smPerLoadTypeList" style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                              <span [style.background]="item.color" style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                              <div>
+                                <strong>{{ item.label }}</strong>
+                                <div>Total: {{ item.total }}</div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -182,22 +226,24 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
-                      <table width="100%" style="font-size: 12px; border-collapse: collapse;">
-                        <thead>
-                          <tr>
-                            <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Motorista</th>
-                            <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Veículo</th>
-                            <th style="text-align: right; padding: 5px; border-bottom: 1px solid #ccc;">Viagens</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let item of smDriverList" style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 5px;">{{ item.Motorista }}</td>
-                            <td style="padding: 5px;">{{ item.VeiculoAutomotor }}</td>
-                            <td style="padding: 5px; text-align: right;">{{ item.QuantidadeDeViagens }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <div style="height: 281px; overflow-y: auto;">
+                        <table width="100%" style="font-size: 12px; border-collapse: collapse;">
+                          <thead>
+                            <tr>
+                              <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Motorista</th>
+                              <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Veículo</th>
+                              <th style="text-align: right; padding: 5px; border-bottom: 1px solid #ccc;">Viagens</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let item of smDriverList" style="border-bottom: 1px solid #eee;">
+                              <td style="padding: 5px;">{{ item.Motorista }}</td>
+                              <td style="padding: 5px;">{{ item.VeiculoAutomotor }}</td>
+                              <td style="padding: 5px; text-align: right;">{{ item.QuantidadeDeViagens }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -205,7 +251,8 @@
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -213,16 +260,34 @@
                     <td class="teste"><strong>QUANTIDADE DE NÃO CONFORMIDADE POR EVENTO</strong></td>
                   </tr>
                   <tr>
-                    <td>
-                      <canvas baseChart [data]="ncIncidentPiePercent" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+                    <td style="height: 301px; padding: 10px;">
+                      <div style="display: flex; height: 301px; gap: 10px; align-items: center; overflow: hidden;">
+                        <div style="display: flex; width: 100%; max-width: 540px; gap: 10px; align-items: center; justify-content: center; margin: 0 auto;">
+                          <div style="flex: 0 0 235px; width: 235px; height: 235px; min-width: 0;">
+                            <canvas baseChart [data]="ncIncidentPiePercent" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+                          </div>
+                          <div style="flex: 1 1 auto; min-width: 0; max-height: 235px; overflow-y: auto; font-size: 11px;">
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                              <li *ngFor="let item of ncIncidentList" style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                                <span [style.background]="item.color" style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                                <div>
+                                  <strong>{{ item.label }}</strong>
+                                  <div>Total: {{ item.total }}</div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
-          
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -232,7 +297,8 @@
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
                       <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li *ngFor="let item of ncPerDriverList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <li *ngFor="let item of ncPerDriverList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
                           <strong>{{ item.motorista }}</strong><br>Total NC: {{ item.total }}
                         </li>
                       </ul>
@@ -247,15 +313,17 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions" [type]="'bar'"></canvas>
+                      <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions"
+                        [type]="'bar'"></canvas>
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
           </table>
-          
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -263,8 +331,25 @@
                     <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL</strong></td>
                   </tr>
                   <tr>
-                    <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="searchPieData" [options]="searchPieOptions" [type]="'pie'"></canvas>
+                    <td style="height: 301px; padding: 10px;">
+                      <div style="display: flex; height: 301px; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 55%; min-width: 0; display: flex; justify-content: center;">
+                          <div style="width: 100%; max-width: 260px; max-height: 260px;">
+                            <canvas baseChart [data]="searchPieData" [options]="searchPieOptions" [type]="'pie'"></canvas>
+                          </div>
+                        </div>
+                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                          <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li *ngFor="let item of searchList" style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                              <span [style.background]="item.color" style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                              <div>
+                                <strong>{{ item.label }}</strong>
+                                <div>Total: {{ item.total }}</div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -273,11 +358,30 @@
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                   <tr>
-                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL (TRABALHADORES)</strong></td>
+                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL (TRABALHADORES)</strong>
+                    </td>
                   </tr>
                   <tr>
-                    <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchWorkerPieOptions" [type]="'pie'"></canvas>
+                    <td style="height: 301px; padding: 10px;">
+                      <div style="display: flex; height: 301px; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 55%; min-width: 0; display: flex; justify-content: center;">
+                          <div style="width: 100%; max-width: 260px; max-height: 260px;">
+                            <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchWorkerPieOptions"
+                              [type]="'pie'"></canvas>
+                          </div>
+                        </div>
+                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                          <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li *ngFor="let item of searchWorkerList" style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                              <span [style.background]="item.color" style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                              <div>
+                                <strong>{{ item.label }}</strong>
+                                <div>Total: {{ item.total }}</div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -291,12 +395,14 @@
               <td style="width: 20px; height: 48px; background-color: #1c5fc5;"></td>
               <td style="width: 20px; height: 48px; background-color: #3f87f5;"></td>
               <td style="width: 20px; height: 48px; background-color: #3f87f575;"></td>
-              <td align="center" style="background:#ededed; font-size: 20px; text-align: left; padding-left: 20px;">MÊS DE REFERÊNCIA: <strong style="text-transform: uppercase;">{{ currentMonthName }}</strong></td>
+              <td align="center" style="background:#ededed; font-size: 20px; text-align: left; padding-left: 20px;">MÊS
+                DE REFERÊNCIA: <strong style="text-transform: uppercase;">{{ currentMonthName }}</strong></td>
               <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -304,18 +410,21 @@
                     <td class="teste"><strong>TOTAL SM NO MÊS</strong></td>
                   </tr>
                   <tr>
-                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalSmCurrentMonth }}</td>
+                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalSmCurrentMonth
+                      }}</td>
                   </tr>
                 </table>
               </td>
               <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                   <tr>
-                    <td class="teste"><strong>QUANTIDADE DE SOLICITAÇÃO DE MONITORAMENTO POR OPERAÇÃO NO MÊS</strong></td>
+                    <td class="teste"><strong>QUANTIDADE DE SOLICITAÇÃO DE MONITORAMENTO POR OPERAÇÃO NO MÊS</strong>
+                    </td>
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="smPerOperationsPiePercentCurrentMonth" [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+                      <canvas baseChart [data]="smPerOperationsPiePercentCurrentMonth"
+                        [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
                     </td>
                   </tr>
                 </table>
@@ -327,28 +436,34 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="smPerTechnologyBarCurrentMonth" [options]="smPerTechnologyBarOptions" [type]="'bar'"></canvas>
+                      <canvas baseChart [data]="smPerTechnologyBarCurrentMonth" [options]="smPerTechnologyBarOptions"
+                        [type]="'bar'"></canvas>
                     </td>
                   </tr>
                 </table>
               </td>
             </tr>
             <tr>
-              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">espaço</td>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">espaço
+              </td>
             </tr>
             <tr>
-              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;"><table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                   <tr>
                     <td class="teste"><strong>TOTAL NC NO MÊS</strong></td>
                   </tr>
                   <tr>
-                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalNcCurrentMonth }}</td>
+                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalNcCurrentMonth
+                      }}</td>
                   </tr>
-                </table></td>  
+                </table>
+              </td>
             </tr>
           </table>
-          
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="30%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -358,7 +473,8 @@
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
                       <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li *ngFor="let item of smRouteOriginCurrentMonthList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <li *ngFor="let item of smRouteOriginCurrentMonthList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
                           <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
                         </li>
                       </ul>
@@ -375,7 +491,8 @@
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
                       <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li *ngFor="let item of smRouteDestinyCurrentMonthList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <li *ngFor="let item of smRouteDestinyCurrentMonthList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
                           <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
                         </li>
                       </ul>
@@ -386,7 +503,8 @@
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <td width="40%" style="vertical-align: top; border: 1px solid black;">
               <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                 <tr>
@@ -416,7 +534,8 @@
             </td>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -424,8 +543,25 @@
                     <td class="teste"><strong>QUANTIDADE DE NÃO CONFORMIDADE POR EVENTO NO MÊS</strong></td>
                   </tr>
                   <tr>
-                    <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="ncIncidentPiePercentCurrentMonth" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+                    <td style="height: 301px; padding: 10px;">
+                      <div style="display: flex; height: 301px; gap: 10px; align-items: center;">
+                        <div style="flex: 1 1 55%; min-width: 0; display: flex; justify-content: center; align-items: center;">
+                          <div style="width: calc(100% - 5cm); max-width: 180px; max-height: 180px;">
+                            <canvas baseChart [data]="ncIncidentPiePercentCurrentMonth" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+                          </div>
+                        </div>
+                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                          <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li *ngFor="let item of ncIncidentCurrentMonthList" style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                              <span [style.background]="item.color" style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                              <div>
+                                <strong>{{ item.label }}</strong>
+                                <div>Total: {{ item.total }}</div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -433,7 +569,8 @@
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -443,7 +580,8 @@
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
                       <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li *ngFor="let item of ncPerDriverCurrentMonthList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <li *ngFor="let item of ncPerDriverCurrentMonthList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
                           <strong>{{ item.motorista }}</strong><br>Total NC: {{ item.total }}
                         </li>
                       </ul>
@@ -460,7 +598,8 @@
                   <tr>
                     <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
                       <ul style="list-style: none; padding: 0; margin: 0;">
-                        <li *ngFor="let item of ncOverSpeedDriverList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <li *ngFor="let item of ncOverSpeedDriverList"
+                          style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
                           <strong>{{ item.motorista }}</strong><br>Excessos: {{ item.total }}
                         </li>
                       </ul>
@@ -471,7 +610,8 @@
             </tr>
           </table>
 
-          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+          <table width="100%" cellspacing="20" cellpadding="0" border="0"
+            style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
             <tr>
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
@@ -480,7 +620,8 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="searchCurrentMonthPieData" [options]="searchPieOptions" [type]="'pie'"></canvas>
+                      <canvas baseChart [data]="searchCurrentMonthPieData" [options]="searchPieOptions"
+                        [type]="'pie'"></canvas>
                     </td>
                   </tr>
                 </table>
@@ -489,11 +630,13 @@
               <td width="50%" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                   <tr>
-                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL (TRABALHADORES) NO MÊS</strong></td>
+                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL (TRABALHADORES) NO
+                        MÊS</strong></td>
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <canvas baseChart [data]="searchWorkerCurrentMonthPercentPieData" [options]="searchWorkerPieOptions" [type]="'pie'"></canvas>
+                      <canvas baseChart [data]="searchWorkerCurrentMonthPercentPieData"
+                        [options]="searchWorkerPieOptions" [type]="'pie'"></canvas>
                     </td>
                   </tr>
                 </table>
@@ -507,4 +650,5 @@
   </table>
 
 </body>
+
 </html>

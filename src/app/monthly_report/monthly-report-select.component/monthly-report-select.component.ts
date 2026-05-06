@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MonthlyReportService, YearMonthOption, MonthlyReport } from '../monthly_report.service';
 import { GetAllResponse, Pagination } from 'src/app/shared/services/api.service';
 import { TotalSmPerOperationsPercentHelper } from '../chart-helpers/total-sm-per-operations-percent.helper';
@@ -113,6 +114,7 @@ export class MonthlyReportSelectComponent implements OnInit {
 
   constructor(
     private monthlyReportService: MonthlyReportService,
+    private router: Router,
     private smOperationsHelper: TotalSmPerOperationsPercentHelper,
     private loadTypeHelper: TotalSmPerLoadTypePercentHelper,
     private smPerMonthHelper: TotalSmPerMonthLineHelper,
@@ -140,19 +142,22 @@ export class MonthlyReportSelectComponent implements OnInit {
 
   ngOnInit() {
     this.loadYearMonthOptions();
-
-    
-    const headers = document.getElementsByClassName('header');
-    window.onbeforeprint = () => {
-      Array.from(headers).forEach(h => (h as HTMLElement).style.display = 'none');
-    };
-    
-    window.onafterprint = () => {
-      Array.from(headers).forEach(h => (h as HTMLElement).style.display = '');
-    };
   }
   imprimir() {
-    window.print()
+    if (!this.selectedOption) return;
+
+    const printTree = this.router.createUrlTree(['/print-report', 'impressao'], {
+      queryParams: {
+        year: this.selectedOption.year,
+        month: this.selectedOption.month,
+        period: this.selectedPeriodMonths,
+      },
+    });
+
+    const newWin = window.open(this.router.serializeUrl(printTree), '_blank', 'noopener,noreferrer');
+    if (newWin) {
+      try { newWin.focus(); } catch (e) { /* ignorar se não puder focar */ }
+    }
   }
   
   loadYearMonthOptions() {
