@@ -14,12 +14,33 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button"></div>
-    </div>
+      
+      <div class="col-lg-4 col-md-4 col-sm-12 pages-header-button" style="display: flex; align-items: center; justify-content: flex-end;">
+        <button (click)="imprimir()" style="padding: 8px 16px; background-color: #1677ff; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; transition: background-color 0.2s;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+          </svg>
+          Imprimir Relatório
+        </button>
+      </div>
+      </div>
   </div>
 
   <div class="banner">Todas as informações aqui são obtidas junto às <b>Solicitações de Monitoramento (SM)</b>, enviadas via sistema GertranWeb
     3.0, bem como ocorrências de <b>quantidade de não conformidades por eventos</b> geradas no decorrer do monitoramento, enquanto a SM consta em viagem.</div>
+
+<h1 style="text-align: center; margin: 20px 0;">Informações referente a {{ getPeriodLabel(selectedPeriodMonths).toLowerCase() }}</h1>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+  <button *ngFor="let period of periodOptions" type="button" (click)="setPeriod(period)"
+    [style.backgroundColor]="selectedPeriodMonths === period ? '#1677ff' : '#f0f0f0'"
+    [style.color]="selectedPeriodMonths === period ? '#fff' : '#333'"
+    [style.border]="selectedPeriodMonths === period ? '1px solid #1677ff' : '1px solid #d9d9d9'"
+    style="border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+    {{ getPeriodLabel(period) }}
+  </button>
+</div>
 <div class="charts-page">
   <div class="barra">
     <div class="item escuro"></div>
@@ -27,7 +48,7 @@
     <div class="item mais-claro"></div>
     <div class="item cinza"></div>
     <div class="item cinza-full">
-      <h1>ANO DE REFERÊNCIA:   <span>2025</span></h1>
+      <h1>ANO DE REFERÊNCIA:   <span>{{ selectedOption?.year }}</span></h1>
     </div>
   </div>
   
@@ -321,7 +342,7 @@
     <div class="item mais-claro"></div>
     <div class="item cinza"></div>
     <div class="item cinza-full">
-      <h1>MÊS DE REFERÊNCIA:   <span>{{ currentMonthName }}</span></h1>
+      <!-- <h1>MÊS DE REFERÊNCIA:   <span>{{ currentMonthName }}</span></h1> -->
       <label for="yearMonthSelect" style="display: block; margin-bottom: 8px; font-weight: 600; text-align:center; display: none;"></label>
       <select id="yearMonthSelect" [(ngModel)]="selectedOption" name="yearMonthSelect" (change)="onYearMonthChange()"
         style="padding: 6px 10px; margin-right: 10px; font-size: 16px; width: 200px;">

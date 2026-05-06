@@ -31,11 +31,11 @@ import { forkJoin } from 'rxjs';
 Chart.register(...registerables, ChartDataLabels);
 
 @Component({
-  selector: 'app-monthly-report-select',
-  templateUrl: './monthly-report-select.component.html',
-  styleUrls: ['./monthly-report-select.component.css'],
+  selector: 'app-monthly-report-print-layout', // <-- Note que o seletor é diferente
+  templateUrl: './monthly-report-print-layout.component.html', // <-- Aponta pro HTML de impressão
+  styleUrls: ['./monthly-report-print-layout.component.css'], // <-- Aponta pro CSS de impressão
 })
-export class MonthlyReportSelectComponent implements OnInit {
+export class MonthlyReportPrintLayoutComponent implements OnInit {
   currentMonthName: string = '';
   monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
@@ -139,22 +139,23 @@ export class MonthlyReportSelectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadYearMonthOptions();
+    // Busca na URL os parâmetros que foram passados na tela web
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedYear = urlParams.get('year');
+    const selectedMonth = urlParams.get('month');
+    const selectedPeriod = urlParams.get('period');
 
-    
-    const headers = document.getElementsByClassName('header');
-    window.onbeforeprint = () => {
-      Array.from(headers).forEach(h => (h as HTMLElement).style.display = 'none');
-    };
-    
-    window.onafterprint = () => {
-      Array.from(headers).forEach(h => (h as HTMLElement).style.display = '');
-    };
+    if (selectedYear && selectedMonth) {
+        this.selectedPeriodMonths = selectedPeriod ? parseInt(selectedPeriod, 10) : 3;
+        
+        // Simula a escolha para carregar os relatórios certos
+        this.selectedOption = { year: parseInt(selectedYear, 10), month: parseInt(selectedMonth, 10) };
+        this.loadReports(this.selectedOption.year, this.selectedOption.month);
+    } else {
+        this.loadYearMonthOptions();
+    }
   }
-  imprimir() {
-    window.print()
-  }
-  
+
   loadYearMonthOptions() {
     this.monthlyReportService.getYearMonthOptions().subscribe({
       next: (options) => {
@@ -165,24 +166,6 @@ export class MonthlyReportSelectComponent implements OnInit {
         }
       }
     });
-  }
-
-  onYearMonthChange() {
-    if (this.selectedOption) {
-      this.loadReports(this.selectedOption.year, this.selectedOption.month);
-    }
-  }
-
-  onPeriodChange() {
-    if (this.selectedOption) {
-      this.loadReports(this.selectedOption.year, this.selectedOption.month);
-    }
-  }
-
-  setPeriod(period: number) {
-    if (this.selectedPeriodMonths === period) return;
-    this.selectedPeriodMonths = period;
-    this.onPeriodChange();
   }
 
   getPeriodLabel(period: number): string {
@@ -436,6 +419,9 @@ export class MonthlyReportSelectComponent implements OnInit {
         this.customerName = currentReport?.customer?.tradingName || periodReport?.customer?.tradingName || '';
 
         this.applyCharts(periodReport, currentReport);
+        
+        // Opcional: Aciona a impressão automaticamente quando os dados terminam de carregar
+        // setTimeout(() => window.print(), 1000); 
       },
     });
   }

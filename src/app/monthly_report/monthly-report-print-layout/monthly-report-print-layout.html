@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório</title>
+  <link  rel="stylesheet" href="monthly-report-print-layout.css" >
+</head>
+
+<body style="font-family: Arial; margin:0; color: black;">
+  
+  <div class="page-header" style="text-align: center"></div>
+  <div class="page-footer"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <td>
+          <div class="page-header-space">
+            <table width="100%" cellspacing="4" cellpadding="6" border="0" style="border-bottom: 1px; border-bottom-style: solid; border-bottom-color: #000000;">
+              <tr>
+                <td align="center" style="background:#ededed;">
+                  <img src="http://localhost:4200/assets/images/logo/logogertran.png" style="float: left; left: 20px; top: 0px; width: auto; height: 80px; background-color: #FFFFFF; border-width: 1px; border-color: black; border-style: solid; padding: 10px;">
+                  <h4 style="text-align: left; margin-left: 130px; font-weight: 100; margin-bottom: 5px;">GESTÃO E CONTROLE OPERACIONAL</h4>
+                  <h1 style="text-align: left; margin-left: 130px; margin-top: 0;">{{ customerName || 'NOME DO CLIENTE' }}</h1>
+                </td>
+                <td style="width: 20px; height: 95px; background-color: #3f87f575;"></td>
+                <td style="width: 20px; height: 95px; background-color: #3f87f5;"></td>
+                <td style="width: 20px; height: 95px; background-color: #1c5fc5;"></td>
+              </tr>
+            </table>            
+          </div>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <table width="100%" cellspacing="0" cellpadding="20" style="border-bottom: 1px solid rgb(241, 193, 35); margin-top: 19px;">
+            <tr>
+              <td style="background-color: rgb(245, 227, 127);">Todas as informações aqui são obtidas junto às <strong>Solicitações de Monitoramento (SM)</strong>, enviadas via sistema GertranWeb 3.0, bem como ocorrências de <strong>quantidade de não conformidades por eventos</strong> geradas no decorrer do monitoramento, enquanto a SM consta em viagem.</td>
+            </tr>
+          </table>
+          
+          <table width="100%" cellspacing="4" cellpadding="6" border="0" style="margin-top: 20px;">
+            <tr>
+              <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
+              <td style="width: 20px; height: 48px; background-color: #1c5fc5;"></td>
+              <td style="width: 20px; height: 48px; background-color: #3f87f5;"></td>
+              <td style="width: 20px; height: 48px; background-color: #3f87f575;"></td>
+              <td align="center" style="background:#ededed; font-size: 20px; text-align: left; padding-left: 20px;">PERÍODO: <strong>{{ selectedOption?.year }}</strong></td>
+              <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px;">
+            <tr>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL SM</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalSm }}</td>
+                  </tr>
+                </table>
+              </td>
+              <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTIDADE DE SOLICITAÇÃO DE MONITORAMENTO POR OPERAÇÃO</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="smPerOperationsPiePercent" [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE SOLICITAÇÃO DE MONITORAMENTO POR MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="smPerMonthline" [options]="smPerMonthlineChartOptions" [type]="'bar'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">espaço</td>
+            </tr>
+            <tr>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL SM</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalSmCurrentMonth }}</td>
+                  </tr>
+                </table></td>  
+            </tr>
+          </table>    
+        
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>PRINCIPAIS PONTOS DE ORIGEM</strong></td>
+                  </tr>
+                  <tr>
+                   <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                      <li *ngFor="let item of smRouteOriginList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
+                      </li>
+                    </ul>
+                  </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>PRINCIPAIS PONTOS DE DESTINO</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of smRouteDestinyList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE SOLICITAÇÃO DE MONITORAMENTO POR TECNOLOGIA</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="smPerTechnologyBar" [options]="smPerTechnologyBarOptions" [type]="'bar'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="30%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTIDADE DE SOLICITAÇÃO DE MONITORAMENTO POR TIPO DE CARGA</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td width="30%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>NÚMEROS DE SOLICITAÇÃO DE MONITORAMENTO POR MOTORISTA</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <table width="100%" style="font-size: 12px; border-collapse: collapse;">
+                        <thead>
+                          <tr>
+                            <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Motorista</th>
+                            <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Veículo</th>
+                            <th style="text-align: right; padding: 5px; border-bottom: 1px solid #ccc;">Viagens</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of smDriverList" style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 5px;">{{ item.Motorista }}</td>
+                            <td style="padding: 5px;">{{ item.VeiculoAutomotor }}</td>
+                            <td style="padding: 5px; text-align: right;">{{ item.QuantidadeDeViagens }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTIDADE DE NÃO CONFORMIDADE POR EVENTO</strong></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <canvas baseChart [data]="ncIncidentPiePercent" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTITATIVO NÃO CONFORMIDADE POR MOTORISTA</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of ncPerDriverList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.motorista }}</strong><br>Total NC: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE NÃO CONFORMIDADE POR MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="ncPerMonthLineData" [options]="ncPerMonthLineOptions" [type]="'bar'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="searchPieData" [options]="searchPieOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL (TRABALHADORES)</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchWorkerPieOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="4" cellpadding="6" border="0" style="margin-top: 20px; display: none;">
+            <tr>
+              <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
+              <td style="width: 20px; height: 48px; background-color: #1c5fc5;"></td>
+              <td style="width: 20px; height: 48px; background-color: #3f87f5;"></td>
+              <td style="width: 20px; height: 48px; background-color: #3f87f575;"></td>
+              <td align="center" style="background:#ededed; font-size: 20px; text-align: left; padding-left: 20px;">MÊS DE REFERÊNCIA: <strong style="text-transform: uppercase;">{{ currentMonthName }}</strong></td>
+              <td style="width: 0px; height: 48px; background-color: #FFFFFF;"></td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL SM NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalSmCurrentMonth }}</td>
+                  </tr>
+                </table>
+              </td>
+              <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTIDADE DE SOLICITAÇÃO DE MONITORAMENTO POR OPERAÇÃO NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="smPerOperationsPiePercentCurrentMonth" [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE SOLICITAÇÃO DE MONITORAMENTO POR TECNOLOGIA NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="smPerTechnologyBarCurrentMonth" [options]="smPerTechnologyBarOptions" [type]="'bar'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;">espaço</td>
+            </tr>
+            <tr>
+              <td width="20%" border="0" style="vertical-align: top; border: 1px solid black; display: none;"><table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL NC NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 120px; font-size: 72px; font-weight: bold;" align="center">{{ totalNcCurrentMonth }}</td>
+                  </tr>
+                </table></td>  
+            </tr>
+          </table>
+          
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="30%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>PRINCIPAIS PONTOS DE ORIGEM NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of smRouteOriginCurrentMonthList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td width="30%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>PRINCIPAIS PONTOS DE DESTINO NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of smRouteDestinyCurrentMonthList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.label }}</strong><br>Total: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <td width="40%" style="vertical-align: top; border: 1px solid black;">
+              <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                <tr>
+                  <td class="teste"><strong>NÚMEROS DE SOLICITAÇÃO DE MONITORAMENTO POR MOTORISTA NO MÊS</strong></td>
+                </tr>
+                <tr>
+                  <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                    <table width="100%" style="font-size: 12px; border-collapse: collapse;">
+                      <thead>
+                        <tr>
+                          <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Motorista</th>
+                          <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ccc;">Veículo</th>
+                          <th style="text-align: right; padding: 5px; border-bottom: 1px solid #ccc;">Viagens</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of smDriverCurrentMonthList" style="border-bottom: 1px solid #eee;">
+                          <td style="padding: 5px;">{{ item.Motorista }}</td>
+                          <td style="padding: 5px;">{{ item.VeiculoAutomotor }}</td>
+                          <td style="padding: 5px; text-align: right;">{{ item.QuantidadeDeViagens }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTIDADE DE NÃO CONFORMIDADE POR EVENTO NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="ncIncidentPiePercentCurrentMonth" [options]="ncIncidentPieOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTITATIVO NÃO CONFORMIDADE POR MOTORISTA NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of ncPerDriverCurrentMonthList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.motorista }}</strong><br>Total NC: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>QUANTIDADE DE EXCESSO DE VELOCIDADE POR MOTORISTA NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; vertical-align: top; padding: 10px; font-size: 12px;">
+                      <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li *ngFor="let item of ncOverSpeedDriverList" style="margin-bottom: 5px; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                          <strong>{{ item.motorista }}</strong><br>Excessos: {{ item.total }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" cellspacing="20" cellpadding="0" border="0" style="border-spacing: 20px 10px; margin-top: 50px;" class="page-break">
+            <tr>
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="searchCurrentMonthPieData" [options]="searchPieOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+
+              <td width="50%" style="vertical-align: top; border: 1px solid black;">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
+                  <tr>
+                    <td class="teste"><strong>TOTAL DE FICHAS DE CADASTRO POR ANÁLISE DE PERFIL (TRABALHADORES) NO MÊS</strong></td>
+                  </tr>
+                  <tr>
+                    <td style="height: 301px; padding: 15px;">
+                      <canvas baseChart [data]="searchWorkerCurrentMonthPercentPieData" [options]="searchWorkerPieOptions" [type]="'pie'"></canvas>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

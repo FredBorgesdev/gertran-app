@@ -1,0 +1,86 @@
+.teste {
+  border: 0px;
+  border-bottom: 1px solid #000000;
+  background-color: #EDEDED;
+  padding: 10px;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+
+.page-header, .page-header-space {
+  height: 100px;
+}
+
+.page-footer, .page-footer-space {
+  height: 50px;
+  background-color: #EDEDED;
+}
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  }
+
+.page-header {
+  position: fixed;
+  top: 0mm;
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.page {
+  page-break-after: always;
+}
+
+@media print {
+   body {
+    counter-reset: page;
+  }
+  
+  @page {
+    size: A4 landscape;
+    margin-top: 5mm;
+    margin-right: 5mm;
+    margin-bottom: 5mm;
+    margin-left: 5mm;
+  }
+  
+  * {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+  }
+  
+  .hide-for-printing {
+    display: none;
+  }
+  
+  .page-footer::after {
+    content: "Página " counter(page);
+    display: block;
+    padding: 15px 10px;
+  }
+
+  thead {display: table-header-group;} 
+  tfoot {display: table-footer-group;}
+   
+  button {display: none;}
+   
+  body {margin: 0;}
+  
+  table, tr, td {
+    break-inside: avoid;
+  }
+
+  .page-break {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .no-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

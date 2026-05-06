@@ -50,7 +50,7 @@ export interface YearMonthOption {
 })
 export class MonthlyReportService implements ApiService<MonthlyReport> {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(pagination: Pagination, filters?: { trading_name?: string }): Observable<GetAllResponse<MonthlyReport>> {
     const params: any = { limit: pagination.limit || DEFAULT_LIMIT };
@@ -83,20 +83,34 @@ export class MonthlyReportService implements ApiService<MonthlyReport> {
     return this.http.delete<void>(`monthly-report/${id}/delete`);
   }
 
-  // Novo método para pegar as opções year-month
   getYearMonthOptions(): Observable<YearMonthOption[]> {
     return this.http.get<YearMonthOption[]>(`monthly-report/year-month-options`);
   }
 
-  // Método para buscar relatórios por ano e mês com paginação
   getByYearMonth(year: number, month: number, pagination: Pagination = { limit: DEFAULT_LIMIT }): Observable<GetAllResponse<MonthlyReport>> {
     const params: any = {
       year: year.toString(),
       month: month.toString(),
       limit: pagination.limit || DEFAULT_LIMIT,
       customer_id: 17742
-
     };
+    return this.http.get<GetAllResponse<MonthlyReport>>('monthly-report', { params });
+  }
+
+  getByPeriodWindow(
+    year: number,
+    month: number,
+    periodMonths: number,
+    pagination: Pagination = { limit: DEFAULT_LIMIT }
+  ): Observable<GetAllResponse<MonthlyReport>> {
+    const params: any = {
+      year: year.toString(),
+      month: month.toString(),
+      period_months: periodMonths.toString(),
+      limit: Math.max(pagination.limit || DEFAULT_LIMIT, periodMonths),
+      customer_id: 17742
+    };
+
     return this.http.get<GetAllResponse<MonthlyReport>>('monthly-report', { params });
   }
 }
