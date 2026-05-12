@@ -7,6 +7,9 @@
   border-collapse: collapse;
 }
 
+table {
+  border-collapse: separate;
+}
 
 .page-header, .page-header-space {
   height: 100px;

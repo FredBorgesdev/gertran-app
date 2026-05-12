@@ -41,7 +41,7 @@
       <tr>
         <td>
           <table width="100%" cellspacing="0" cellpadding="20"
-            style="border-bottom: 1px solid rgb(241, 193, 35); margin-top: 19px;">
+            style="border-bottom: 1px solid rgb(241, 193, 35); margin-top: 0px;">
             <tr>
               <td style="background-color: rgb(245, 227, 127);">Todas as informações aqui são obtidas junto às
                 <strong>Solicitações de Monitoramento (SM)</strong>, enviadas via sistema GertranWeb 3.0, bem como
@@ -75,42 +75,37 @@
                   </tr>
                 </table>
               </td>
-              <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
+              <td rowspan="3" width="50%" border="0" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                   <tr>
                     <td class="teste"><strong>QUANTIDADE DE SOLICITAÇÃO DE MONITORAMENTO POR OPERAÇÃO</strong></td>
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <div
-                        style="height: 301px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-                        <div
-                          style="display: flex; width: 100%; max-width: 520px; gap: 10px; align-items: center; justify-content: center;">
-                          <div style="flex: 0 0 245px; width: 245px; height: 245px; min-width: 0;">
-                            <canvas baseChart [data]="smPerOperationsPiePercent"
-                              [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
-                          </div>
-                          <div
-                            style="flex: 1 1 auto; min-width: 0; max-height: 245px; overflow-y: auto; font-size: 11px;">
-                            <ul style="list-style: none; padding: 0; margin: 0;">
-                              <li *ngFor="let item of smPerOperationsList"
-                                style="margin-bottom: 6px; display:flex; align-items:flex-start;">
-                                <span [style.background]="item.color"
-                                  style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
-                                <div>
-                                  <strong>{{ item.label }}</strong>
-                                  <div>Total: {{ item.total }}</div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
+                      <div style="display: flex; flex: 1; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 50%; width: 50%; height: auto; min-width: 0;">
+                          <canvas baseChart [data]="smPerOperationsPiePercent"
+                            [options]="smPerOperationsPiePercentChartOptions" [type]="'pie'"></canvas>
+                        </div>
+                        <div style="flex: 1 1 50%;">
+                          <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li *ngFor="let item of smPerOperationsList"
+                              style="margin-bottom: 6px; display:flex; align-items:flex-start;">
+                              <span [style.background]="item.color"
+                                style="width: 10px; height: 10px; display:inline-block; margin-right: 6px; margin-top: 4px;"></span>
+                              <div>
+                                <strong>{{ item.label }}</strong>
+                                <div>Total: {{ item.total }}</div>
+                              </div>
+                            </li>
+                          </ul>
                         </div>
                       </div>
                     </td>
                   </tr>
                 </table>
               </td>
-              <td rowspan="3" width="40%" border="0" style="vertical-align: top; border: 1px solid black;">
+              <td rowspan="3" width="50%" border="0" style="vertical-align: top; border: 1px solid black;">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="border-spacing: 0px;">
                   <tr>
                     <td class="teste"><strong>TOTAL DE SOLICITAÇÃO DE MONITORAMENTO POR MÊS</strong></td>
@@ -213,11 +208,11 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 15px;">
-                      <div style="display: flex; height: 301px; gap: 10px; align-items: center;">
-                        <div style="flex: 1 1 55%; min-width: 0;">
-                          <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+                      <div style="display: flex; flex: 1; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 60%; justify-items: center; height: auto; min-width: 0;">
+                          <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'" style="max-width: 460px; height: auto;"></canvas>
                         </div>
-                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                        <div style="flex: 1 1 40%; justify-items: center;">
                           <ul style="list-style: none; padding: 0; margin: 0;">
                             <li *ngFor="let item of smPerLoadTypeList"
                               style="margin-bottom: 6px; display:flex; align-items:flex-start;">
@@ -278,16 +273,12 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 10px;">
-                      <div style="display: flex; height: 301px; gap: 10px; align-items: center; overflow: hidden;">
-                        <div
-                          style="display: flex; width: 100%; max-width: 540px; gap: 10px; align-items: center; justify-content: center; margin: 0 auto;">
-                          <div style="flex: 0 0 235px; width: 235px; height: 235px; min-width: 0;">
-                            <canvas baseChart [data]="ncIncidentPiePercent" [options]="ncIncidentPieOptions"
-                              [type]="'pie'"></canvas>
-                          </div>
-                          <div
-                            style="flex: 1 1 auto; min-width: 0; max-height: 235px; overflow-y: auto; font-size: 11px;">
-                            <ul style="list-style: none; padding: 0; margin: 0;">
+                      <div style="display: flex; flex: 1; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 60%; justify-items: center; height: auto; min-width: 0;">
+                          <canvas baseChart [data]="ncIncidentPiePercent" [options]="ncIncidentPieOptions" [type]="'pie'" style="max-width: 700px; max-height: 700px;"></canvas>
+                        </div>
+                        <div style="flex: 1 1 40%; justify-items: center;">
+                          <ul style="list-style: none; padding: 0; margin: 0;">
                               <li *ngFor="let item of ncIncidentList"
                                 style="margin-bottom: 6px; display:flex; align-items:flex-start;">
                                 <span [style.background]="item.color"
@@ -298,7 +289,6 @@
                                 </div>
                               </li>
                             </ul>
-                          </div>
                         </div>
                       </div>
                     </td>
@@ -354,15 +344,11 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 10px;">
-                      <div
-                        style="display: flex; height: 301px; gap: 10px; align-items: center; justify-content: center;">
-                        <div style="flex: 1 1 55%; min-width: 0; display: flex; justify-content: center;">
-                          <div style="width: 100%; max-width: 260px; max-height: 260px;">
-                            <canvas baseChart [data]="searchPieData" [options]="searchPieOptions"
-                              [type]="'pie'"></canvas>
-                          </div>
+                      <div style="display: flex; flex-direction: row; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 60%; display: flex; justify-content: center;">
+                          <canvas baseChart [data]="searchPieData" [options]="searchPieOptions" [type]="'pie'" style="max-height:300px; width: auto;"></canvas>
                         </div>
-                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                        <div style="flex: 1 1 40%; justify-items: center;">
                           <ul style="list-style: none; padding: 0; margin: 0;">
                             <li *ngFor="let item of searchList"
                               style="margin-bottom: 6px; display:flex; align-items:flex-start;">
@@ -389,15 +375,11 @@
                   </tr>
                   <tr>
                     <td style="height: 301px; padding: 10px;">
-                      <div
-                        style="display: flex; height: 301px; gap: 10px; align-items: center; justify-content: center;">
-                        <div style="flex: 1 1 55%; min-width: 0; display: flex; justify-content: center;">
-                          <div style="width: 100%; max-width: 260px; max-height: 260px;">
-                            <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchWorkerPieOptions"
-                              [type]="'pie'"></canvas>
-                          </div>
+                      <div style="display: flex; flex-direction: row; gap: 10px; align-items: center; justify-content: center;">
+                        <div style="flex: 1 1 60%; display: flex; justify-content: center;">
+                          <canvas baseChart [data]="searchWorkerPercentPieData" [options]="searchWorkerPieOptions" [type]="'pie'" style="max-width: 300px; height: auto;"></canvas>
                         </div>
-                        <div style="flex: 1 1 45%; min-width: 0; max-height: 270px; overflow-y: auto; font-size: 11px;">
+                        <div style="flex: 1 1 40%; justify-items: center;">
                           <ul style="list-style: none; padding: 0; margin: 0;">
                             <li *ngFor="let item of searchWorkerList"
                               style="margin-bottom: 6px; display:flex; align-items:flex-start;">
